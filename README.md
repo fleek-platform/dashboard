@@ -144,33 +144,6 @@ Declare an intent to release by executing the command and answering the wizard's
 pnpm changeset:add
 ```
 
-## Basic commands
-
-The Fleek CLI command has the following structure:
-
-```bash
-fleek <service> <command> [options and parameters]
-```
-
-To view all available services and commands use:
-
-```bash
-fleek help
-```
-
-To see all available commands for a service, use the help documentation as any one of the followings:
-
-```bash
-fleek <service> help
-fleek <service> <command> help
-```
-
-To get the version of the Fleek CLI:
-
-```bash
-fleek --version
-```
-
 ## Contributing
 
 This section guides you through the process of contributing to our open-source project. From creating a feature branch to submitting a pull request, get started by:
