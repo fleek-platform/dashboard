@@ -25,6 +25,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 - Nodejs as runtime
 - NPM, Yarn to install the CLI as a client, or PNPM for development
 - Familiarity with text-based user interfaces, command-line interface (CLI)
+- Ports 3000, 6006
 
 ## Install
 
