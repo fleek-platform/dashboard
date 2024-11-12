@@ -1,0 +1,7 @@
+query notifications {
+  notificationSettings {
+    notificationType
+    notificationChannel
+    isEnabled
+  }
+}

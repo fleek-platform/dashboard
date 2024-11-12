@@ -1,0 +1,5 @@
+mutation linkPublicKey($data: LinkPublicKeyDataInput!) {
+  linkPublicKey(data: $data) {
+    id
+  }
+}

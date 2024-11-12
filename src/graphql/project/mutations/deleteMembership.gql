@@ -1,0 +1,5 @@
+mutation deleteMembership($where: DeleteMembershipWhereInput!) {
+  deleteMembership(where: $where) {
+    id
+  }
+}

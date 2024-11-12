@@ -1,0 +1,6 @@
+mutation createZoneForPrivateGateway {
+  createZoneForPrivateGateway {
+    id
+    type
+  }
+}

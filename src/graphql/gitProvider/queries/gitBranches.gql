@@ -1,0 +1,5 @@
+query gitBranches($where: GitApiBranchesWhereInput!) {
+  gitApiBranches(where: $where) {
+    name
+  }
+}

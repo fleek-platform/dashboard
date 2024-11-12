@@ -1,0 +1,4 @@
+# for invited users to a project
+mutation declineInvitation($where: DeclineInvitationWhereInput!) {
+  declineInvitation(where: $where)
+}

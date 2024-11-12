@@ -1,0 +1,8 @@
+query ensRecordByName($where: EnsRecordByNameWhereInput!) {
+  ensRecordByName(where: $where) {
+    id
+    name
+    createdAt
+    status
+  }
+}

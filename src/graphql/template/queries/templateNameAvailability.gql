@@ -1,0 +1,3 @@
+query templateNameAvailability($where: TemplateNameAvailabilityWhereInput!) {
+  templateNameAvailability(where: $where)
+}

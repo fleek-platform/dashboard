@@ -1,0 +1,6 @@
+mutation deleteEnsRecord($where: DeleteEnsRecordWhereInput!) {
+  deleteEnsRecord(where: $where) {
+    id
+    status
+  }
+}

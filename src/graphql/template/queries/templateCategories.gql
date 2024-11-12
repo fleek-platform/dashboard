@@ -1,0 +1,10 @@
+query templateCategories($filter: TemplateCategoriesPaginationInput) {
+  templateCategories(filter: $filter) {
+    data {
+      id
+      name
+      slug
+      templatesCount
+    }
+  }
+}

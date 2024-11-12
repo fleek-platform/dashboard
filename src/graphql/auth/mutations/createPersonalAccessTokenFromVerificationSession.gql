@@ -1,0 +1,6 @@
+mutation createPersonalAccessTokenFromVerificationSession(
+  $where: CreatePersonalAccessTokenFromVerificationSessionWhereInput!
+  $data: CreatePersonalAccessTokenFromVerificationSessionDataInput!
+) {
+  createPersonalAccessTokenFromVerificationSession(where: $where, data: $data)
+}

@@ -1,0 +1,19 @@
+# KEEP ALIGHT WITH CREATEPROJECT.GQL AND PROJECT.GQL
+query projects($filter: ProjectsPaginationInput) {
+  projects(filter: $filter) {
+    data {
+      id
+      name
+      backupStorageOnArweave
+      backupStorageOnFilecoin
+      avatar
+      currentUserMembership {
+        permissionGroup {
+          id
+          name
+          permissions
+        }
+      }
+    }
+  }
+}

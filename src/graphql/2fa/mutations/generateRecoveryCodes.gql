@@ -1,0 +1,5 @@
+mutation generateRecoveryCodes($where: GenerateRecoveryCodesWhereInput!) {
+  generateRecoveryCodes(where: $where) {
+    recoveryCodes
+  }
+}

@@ -1,0 +1,14 @@
+mutation updateUser($data: UpdateUserDataInput!) {
+  updateUser(data: $data) {
+    id
+    email
+    avatar
+    username
+    githubUserAccessToken
+    project {
+      id
+      name
+    }
+    walletAddress
+  }
+}

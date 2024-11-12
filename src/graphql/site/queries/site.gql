@@ -1,0 +1,148 @@
+query site($where: SiteWhereInput!) {
+  site(where: $where) {
+    id
+    avatar
+    slug
+    name
+    sourceProvider
+    sourceRepositoryId
+    sourceRepositoryOwner
+    sourceRepositoryName
+    sourceBranch
+    githubInstallationId
+    enablePreviews
+    baseDirectory
+    buildCommand
+    distDirectory
+    dockerImage
+    cpuLimit
+    memoryLimit
+    buildDurationLimitSeconds
+
+    currentDeployment {
+      cid
+      id
+      status
+      createdAt
+      sourceProvider
+      sourceAuthor
+      sourceMessage
+      sourceRepositoryName
+      sourceRepositoryOwner
+      previewImageUrl
+      previewOnly
+      storageType
+      sourceBranch
+      updatedAt
+      sourceRef
+      startedAt
+      functionDeployments {
+        id
+      }
+    }
+
+    lastDeployment {
+      cid
+      id
+      siteId
+      sourceProvider
+      sourceAuthor
+      sourceMessage
+      sourceBranch
+      storageType
+      sourceRepositoryName
+      sourceRepositoryOwner
+      previewImageUrl
+      createdAt
+      updatedAt
+      startedAt
+      sourceRef
+      status
+      previewOnly
+    }
+
+    ipnsRecords {
+      id
+      hash
+      name
+      ensRecords {
+        __typename
+        createdAt
+        id
+        name
+        status
+        updatedAt
+      }
+    }
+
+    zones {
+      id
+      status
+    }
+
+    secretGroup {
+      id
+      name
+      secrets {
+        id
+        key
+        value
+        visibility
+        updatedAt
+      }
+    }
+
+    # domains - PLEASE KEEP THIS VALUES ALIGN WITH THE ONES IN PrivateGateways.gql
+    domains {
+      __typename
+      id
+      hostname
+      status
+      errorMessage
+      zone {
+        id
+      }
+      dnsConfigs {
+        __typename
+        createdAt
+        id
+        name
+        type
+        updatedAt
+        value
+      }
+      isVerified
+      createdAt
+      updatedAt
+      dnslinkStatus
+    }
+
+    primaryDomain {
+      id
+      hostname
+      isVerified
+    }
+
+    framework {
+      id
+      name
+      avatar
+    }
+
+    gitIntegration {
+      id
+      __typename
+      gitProvider {
+        id
+        name
+        tags
+        enabled
+        sourceProvider
+      }
+      githubAppInstallation {
+        id
+        installationId
+      }
+    }
+  }
+}

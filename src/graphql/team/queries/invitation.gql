@@ -1,0 +1,8 @@
+query invitation($where: InvitationWhereInput!) {
+  invitation(where: $where) {
+    hash
+    projectAvatar
+    projectId
+    projectName
+  }
+}

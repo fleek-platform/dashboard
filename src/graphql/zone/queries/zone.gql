@@ -1,0 +1,6 @@
+query zone($where: ZoneWhereInput!) {
+  zone(where: $where) {
+    id
+    status
+  }
+}

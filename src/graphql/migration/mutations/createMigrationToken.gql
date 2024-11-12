@@ -1,0 +1,3 @@
+mutation createMigrationToken($data: CreateMigrationTokenDataInput!) {
+  createMigrationToken(data: $data)
+}

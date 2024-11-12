@@ -1,0 +1,47 @@
+fragment FleekFunctionFragment on FleekFunction {
+  id
+  name
+  slug
+  invokeUrl
+  status
+  site {
+    id
+    name
+  }
+  currentDeployment {
+    id
+    cid
+    createdAt
+  }
+  createdAt
+  updatedAt
+}
+
+query fleekFunctions($filter: FleekFunctionsPaginationInput, $where: FleekFunctionsWhereInput) {
+  fleekFunctions(filter: $filter, where: $where) {
+    data {
+      ...FleekFunctionFragment
+    }
+    pageCount
+    currentPage
+  }
+}
+
+query fleekFunctionDetail($where: FleekFunctionByNameWhereInput!) {
+  fleekFunctionByName(where: $where) {
+    ...FleekFunctionFragment
+  }
+}
+
+query fleekFunctionDeployments($fleekFunctionId: ID!, $page: Int) {
+  fleekFunctionDeployments(where: { fleekFunctionId: $fleekFunctionId }, filter: { page: $page }) {
+    data {
+      id
+      cid
+      createdAt
+      updatedAt
+    }
+    pageCount
+    currentPage
+  }
+}

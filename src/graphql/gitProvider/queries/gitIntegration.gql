@@ -1,0 +1,5 @@
+query gitIntegration($where: GitIntegrationWhereInput!) {
+  gitIntegration(where: $where) {
+    id
+  }
+}

@@ -1,0 +1,3 @@
+mutation createInvitation($data: CreateInvitationDataInput!) {
+  createInvitation(data: $data)
+}

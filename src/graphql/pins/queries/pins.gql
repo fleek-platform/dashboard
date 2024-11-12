@@ -1,0 +1,63 @@
+fragment PinFragment on Pin {
+  __typename
+  id
+  cid
+  size
+  sizeBigInt
+  extension
+  createdAt
+  filename
+  storedOnArweave
+  storedOnFilecoin
+  arweavePin {
+    bundlrId
+  }
+  filecoinPin {
+    cid
+    deals {
+      dealId
+    }
+  }
+  pathInFolder
+}
+
+fragment FolderFragment on Folder {
+  __typename
+  id
+  createdAt
+  name
+  path
+  sizeBigInt
+}
+
+query listFolder($where: ListFolderWhereInput!, $filter: ListFolderPaginationInput) {
+  listFolder(where: $where, filter: $filter) {
+    pageCount
+    data {
+      ...PinFragment
+      ...FolderFragment
+    }
+  }
+}
+
+query pins($filter: PinsPaginationInput) {
+  pins(filter: $filter) {
+    pageCount
+    data {
+      ...PinFragment
+    }
+  }
+}
+
+query pin($where: PinWhereInput!) {
+  pin(where: $where) {
+    ...PinFragment
+  }
+}
+
+query pinNameAvailabilityInParentFolder(
+  $data: PinNameAvailabilityInParentFolderDataInput!
+  $where: PinNameAvailabilityInParentFolderWhereInput!
+) {
+  pinNameAvailabilityInParentFolder(data: $data, where: $where)
+}

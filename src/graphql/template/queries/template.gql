@@ -1,0 +1,56 @@
+query Template($where: TemplateWhereInput!) {
+  template(where: $where) {
+    id
+    name
+    description
+    banner
+
+    siteId
+    siteAvatar
+    siteSlug
+
+    framework {
+      id
+      name
+      avatar
+    }
+
+    deployment {
+      id
+      previewImageUrl
+
+      sourceProvider
+      sourceRepositoryOwner
+      sourceRepositoryName
+      sourceBranch
+      sourceRef
+
+      build {
+        id
+        baseDirectory
+        buildCommand
+        distDirectory
+        dockerImage
+      }
+    }
+
+    creator {
+      id
+      username
+      avatar
+    }
+
+    category {
+      id
+      name
+      slug
+      templatesCount
+    }
+
+    usageCount
+    reviewStatus
+
+    createdAt
+    updatedAt
+  }
+}

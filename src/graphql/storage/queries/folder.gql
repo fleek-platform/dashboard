@@ -1,0 +1,16 @@
+query folderDetails($where: FolderWhereInput!) {
+  folder(where: $where) {
+    id
+    path
+    name
+    folderCount
+    pinCount
+  }
+}
+
+query folderNameAvailabilityInParentFolder(
+  $data: FolderNameAvailabilityInParentFolderDataInput!
+  $where: FolderNameAvailabilityInParentFolderWhereInput!
+) {
+  folderNameAvailabilityInParentFolder(data: $data, where: $where)
+}

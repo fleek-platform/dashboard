@@ -1,0 +1,9 @@
+query domainByHostname($where: DomainByHostnameWhereInput!) {
+  domainByHostname(where: $where) {
+    id
+    hostname
+    errorMessage
+    createdAt
+    status
+  }
+}

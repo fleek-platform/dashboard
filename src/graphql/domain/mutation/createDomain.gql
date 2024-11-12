@@ -1,0 +1,6 @@
+mutation createDomain($where: CreateDomainWhereInput!, $data: CreateDomainDataInput!) {
+  createDomain(where: $where, data: $data) {
+    id
+    status
+  }
+}

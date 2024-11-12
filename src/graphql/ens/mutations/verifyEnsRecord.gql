@@ -1,0 +1,6 @@
+mutation verifyEnsRecord($where: VerifyEnsRecordWhereInput!) {
+  verifyEnsRecord(where: $where) {
+    id
+    status
+  }
+}

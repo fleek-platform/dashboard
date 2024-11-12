@@ -1,0 +1,3 @@
+query emailAvailability($where: EmailAvailabilityWhereInput!) {
+  emailAvailability(where: $where)
+}

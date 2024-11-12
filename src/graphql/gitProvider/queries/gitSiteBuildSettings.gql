@@ -1,0 +1,9 @@
+query gitSiteBuildSettings($where: SiteBuildSettingsWhereInput!) {
+  siteBuildSettings(where: $where) {
+    buildCommand
+    dockerImage
+    publishDirectory
+    envVars
+    frameworkId
+  }
+}

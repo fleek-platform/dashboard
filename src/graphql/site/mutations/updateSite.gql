@@ -1,0 +1,20 @@
+mutation updateSite($data: UpdateSiteDataInput!, $where: UpdateSiteWhereInput!) {
+  updateSite(data: $data, where: $where) {
+    id
+    name
+    slug
+    sourceProvider
+    sourceRepositoryId
+    sourceRepositoryOwner
+    sourceRepositoryName
+    sourceBranch
+    enablePreviews
+    baseDirectory
+    buildCommand
+    distDirectory
+    dockerImage
+    cpuLimit
+    memoryLimit
+    buildDurationLimitSeconds
+  }
+}

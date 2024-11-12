@@ -1,0 +1,8 @@
+query siteQuota($where: SiteQuotaWhereInput!) {
+  siteQuota(where: $where) {
+    maxDeploymentQueue {
+      total
+      remaining
+    }
+  }
+}

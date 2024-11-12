@@ -1,0 +1,9 @@
+# used to delete invitations by project member
+mutation deleteInvitation($where: DeleteInvitationWhereInput!) {
+  deleteInvitation(where: $where) {
+    id
+    email
+    role
+    createdAt
+  }
+}

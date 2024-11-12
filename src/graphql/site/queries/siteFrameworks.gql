@@ -1,0 +1,16 @@
+query siteFrameworks {
+  siteFrameworks {
+    id
+    name
+    slug
+    avatar
+    dockerImage
+    publishDirectory
+    buildScript
+    recognitionStrategy
+    recognitionArgument
+    templatesCount
+    createdAt
+    updatedAt
+  }
+}

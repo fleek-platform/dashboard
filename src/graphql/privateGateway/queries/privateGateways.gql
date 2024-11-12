@@ -1,0 +1,42 @@
+query privateGateways($filter: PrivateGatewaysPaginationInput) {
+  privateGateways(filter: $filter) {
+    data {
+      id
+      name
+      createdAt
+      zone {
+        id
+      }
+
+      # domains - PLEASE KEEP THIS VALUES ALIGN WITH THE ONES IN Site.gql
+      domains {
+        __typename
+        id
+        hostname
+        status
+        errorMessage
+        zone {
+          id
+        }
+        dnsConfigs {
+          __typename
+          createdAt
+          id
+          name
+          type
+          updatedAt
+          value
+        }
+        isVerified
+        createdAt
+        updatedAt
+      }
+
+      primaryDomain {
+        id
+        hostname
+        isVerified
+      }
+    }
+  }
+}

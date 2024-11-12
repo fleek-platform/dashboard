@@ -1,0 +1,18 @@
+# KEEP ALIGHT WITH CREATEPROJECT.GQL AND PROJECTS.GQL
+query project($where: ProjectWhereInput!) {
+  project(where: $where) {
+    id
+    name
+    backupStorageOnArweave
+    backupStorageOnFilecoin
+    allowAccessFromOfacCountries
+    avatar
+    currentUserMembership {
+      permissionGroup {
+        id
+        name
+        permissions
+      }
+    }
+  }
+}

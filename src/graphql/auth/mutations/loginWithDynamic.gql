@@ -1,0 +1,3 @@
+mutation loginWithDynamic($data: LoginWithDynamicDataInput!) {
+  loginWithDynamic(data: $data)
+}

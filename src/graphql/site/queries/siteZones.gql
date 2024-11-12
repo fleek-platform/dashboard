@@ -1,0 +1,9 @@
+query siteZones($where: SiteWhereInput!) {
+  site(where: $where) {
+    id
+
+    zones {
+      id
+    }
+  }
+}

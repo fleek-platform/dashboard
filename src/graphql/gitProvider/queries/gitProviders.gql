@@ -1,0 +1,10 @@
+query gitProviders {
+  gitProviders {
+    id
+    name
+    tags
+    enabled
+    sourceProvider
+    createdAt
+  }
+}

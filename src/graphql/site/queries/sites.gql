@@ -1,0 +1,121 @@
+query sites($where: SitesWhereInput!, $filter: SitesPaginationInput) {
+  sites(where: $where, filter: $filter) {
+    pageCount
+    totalCount
+    data {
+      __typename
+      id
+      avatar
+      name
+      slug
+      sourceProvider
+      sourceRepositoryId
+      sourceRepositoryOwner
+      sourceRepositoryName
+      sourceBranch
+      githubInstallationId
+      enablePreviews
+      baseDirectory
+      buildCommand
+      distDirectory
+      dockerImage
+      cpuLimit
+      memoryLimit
+      buildDurationLimitSeconds
+
+      lastDeployment {
+        cid
+        id
+        siteId
+        status
+        createdAt
+        sourceProvider
+        sourceAuthor
+        sourceMessage
+        sourceRepositoryName
+        sourceRepositoryOwner
+        previewImageUrl
+        previewOnly
+        storageType
+        sourceBranch
+        updatedAt
+        sourceRef
+      }
+
+      # we need this to get the link sites
+      currentDeployment {
+        cid
+        id
+        status
+        createdAt
+        sourceProvider
+        sourceAuthor
+        sourceMessage
+        sourceRepositoryName
+        sourceRepositoryOwner
+        previewImageUrl
+        previewOnly
+        storageType
+        sourceBranch
+        updatedAt
+        sourceRef
+        functionDeployments {
+          id
+        }
+      }
+
+      # we need this to get the link site
+      ipnsRecords {
+        id
+        hash
+        name
+        ensRecords {
+          __typename
+          createdAt
+          id
+          name
+          status
+          updatedAt
+        }
+      }
+
+      # we need this to get the link site
+      domains {
+        __typename
+        id
+        hostname
+        status
+        errorMessage
+        zone {
+          id
+        }
+        dnsConfigs {
+          __typename
+          createdAt
+          id
+          name
+          type
+          updatedAt
+          value
+        }
+        isVerified
+        createdAt
+        updatedAt
+        dnslinkStatus
+      }
+
+      # we need this to get the link site
+      primaryDomain {
+        id
+        hostname
+        isVerified
+      }
+
+      # we need this to get the link site
+      zones {
+        id
+        status
+      }
+    }
+  }
+}

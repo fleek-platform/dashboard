@@ -1,0 +1,3 @@
+query ensNameAvailability($where: EnsNameAvailabilityWhereInput!) {
+  ensNameAvailability(where: $where)
+}

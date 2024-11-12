@@ -1,0 +1,29 @@
+query deployment($where: DeploymentWhereInput!) {
+  deployment(where: $where) {
+    cid
+    id
+    sourceProvider
+    sourceAuthor
+    sourceMessage
+    sourceBranch
+    sourceRepositoryName
+    sourceRepositoryOwner
+    previewImageUrl
+    previewOnly
+    createdAt
+    startedAt
+    updatedAt
+    sourceRef
+    previewUrlSlug
+    build {
+      id
+      logs {
+        id
+        createdAt
+        text
+      }
+      status
+    }
+    status
+  }
+}

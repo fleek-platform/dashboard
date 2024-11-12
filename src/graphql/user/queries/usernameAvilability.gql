@@ -1,0 +1,3 @@
+query usernameAvailability($where: UsernameAvailabilityWhereInput!) {
+  usernameAvailability(where: $where)
+}

@@ -1,0 +1,15 @@
+mutation createApplication($data: CreateApplicationDataInput!) {
+  createApplication(data: $data) {
+    clientId
+    createdAt
+    id
+    name
+    updatedAt
+    whitelistDomains {
+      hostname
+    }
+    whiteLabelDomains {
+      hostname
+    }
+  }
+}

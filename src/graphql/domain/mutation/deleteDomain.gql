@@ -1,0 +1,10 @@
+mutation deleteDomain($where: DeleteDomainWhereInput!) {
+  deleteDomain(where: $where) {
+    id
+    status
+    hostname
+    zone {
+      id
+    }
+  }
+}

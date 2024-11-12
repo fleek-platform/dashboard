@@ -1,0 +1,11 @@
+query personalAccessTokens($filter: PersonalAccessTokensPaginationInput) {
+  personalAccessTokens(filter: $filter) {
+    data {
+      id
+      name
+      maskedToken
+      createdAt
+      updatedAt
+    }
+  }
+}

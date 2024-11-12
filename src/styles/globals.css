@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Font antialising */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :root[style*='color-scheme: light'],
+  :root[data-theme='light'] {
+    /* Light - Monochrome */
+    --color-ftw-monochrome-normal: 255 255 255;
+    --color-ftw-monochrome-reverse: 0 0 0;
+
+    /* Light - App BG */
+    --color-ftw-app-bg: 249 249 249;
+
+    /* Light - Neutral */
+    --color-ftw-neutral-1: 252 252 252;
+    --color-ftw-neutral-2: 249 249 249;
+    --color-ftw-neutral-3: 240 240 240;
+    --color-ftw-neutral-4: 232 232 232;
+    --color-ftw-neutral-5: 224 224 224;
+    --color-ftw-neutral-6: 217 217 217;
+    --color-ftw-neutral-7: 206 206 206;
+    --color-ftw-neutral-8: 187 187 187;
+    --color-ftw-neutral-9: 141 141 141;
+    --color-ftw-neutral-10: 131 131 131;
+    --color-ftw-neutral-11: 100 100 100;
+    --color-ftw-neutral-12: 32 32 32;
+
+    /* Light - Accent */
+    --color-ftw-accent-1: 253 253 249;
+    --color-ftw-accent-2: 254 252 233;
+    --color-ftw-accent-3: 255 250 184;
+    --color-ftw-accent-4: 255 243 148;
+    --color-ftw-accent-5: 255 231 112;
+    --color-ftw-accent-6: 243 215 104;
+    --color-ftw-accent-7: 228 199 103;
+    --color-ftw-accent-8: 213 174 57;
+    --color-ftw-accent-9: 255 230 41;
+    --color-ftw-accent-10: 255 220 0;
+    --color-ftw-accent-11: 158 108 0;
+    --color-ftw-accent-12: 71 59 31;
+
+    /* Light - Success */
+    --color-ftw-success-1: 251 254 252;
+    --color-ftw-success-2: 244 251 246;
+    --color-ftw-success-3: 230 246 235;
+    --color-ftw-success-4: 214 241 223;
+    --color-ftw-success-5: 196 232 209;
+    --color-ftw-success-6: 173 221 192;
+    --color-ftw-success-7: 142 206 170;
+    --color-ftw-success-8: 91 185 139;
+    --color-ftw-success-9: 48 164 108;
+    --color-ftw-success-10: 43 154 102;
+    --color-ftw-success-11: 33 131 88;
+    --color-ftw-success-12: 25 59 45;
+
+    /* Light - Warning */
+    --color-ftw-warning-1: 254 253 251;
+    --color-ftw-warning-2: 254 251 233;
+    --color-ftw-warning-3: 255 247 194;
+    --color-ftw-warning-4: 255 238 156;
+    --color-ftw-warning-5: 251 229 119;
+    --color-ftw-warning-6: 243 214 115;
+    --color-ftw-warning-7: 233 193 98;
+    --color-ftw-warning-8: 226 163 54;
+    --color-ftw-warning-9: 255 197 61;
+    --color-ftw-warning-10: 255 186 24;
+    --color-ftw-warning-11: 171 100 0;
+    --color-ftw-warning-12: 79 52 34;
+
+    /* Dark - Danger */
+    --color-ftw-danger-1: 255 252 252;
+    --color-ftw-danger-2: 255 247 247;
+    --color-ftw-danger-3: 254 235 236;
+    --color-ftw-danger-4: 255 219 220;
+    --color-ftw-danger-5: 255 205 206;
+    --color-ftw-danger-6: 253 189 190;
+    --color-ftw-danger-7: 244 169 170;
+    --color-ftw-danger-8: 235 142 144;
+    --color-ftw-danger-9: 229 72 77;
+    --color-ftw-danger-10: 220 62 66;
+    --color-ftw-danger-11: 206 44 49;
+    --color-ftw-danger-12: 56 19 22;
+  }
+
+  :root[style*='color-scheme: dark'],
+  :root[data-theme='dark'] {
+    /* Dark - Monochrome */
+    --color-ftw-monochrome-normal: 0 0 0;
+    --color-ftw-monochrome-reverse: 255 255 255;
+
+    /* Dark - App BG */
+    --color-ftw-app-bg: 0 0 0;
+
+    /* Dark - Neutral */
+    --color-ftw-neutral-0: 0 0 0;
+    --color-ftw-neutral-1: 17 17 17;
+    --color-ftw-neutral-2: 25 25 25;
+    --color-ftw-neutral-3: 34 34 34;
+    --color-ftw-neutral-4: 42 42 42;
+    --color-ftw-neutral-5: 49 49 49;
+    --color-ftw-neutral-6: 58 58 58;
+    --color-ftw-neutral-7: 72 72 72;
+    --color-ftw-neutral-8: 96 96 96;
+    --color-ftw-neutral-9: 110 110 110;
+    --color-ftw-neutral-10: 123 123 123;
+    --color-ftw-neutral-11: 180 180 180;
+    --color-ftw-neutral-12: 238 238 238;
+
+    /* Dark - Accent */
+    --color-ftw-accent-1: 20 18 11;
+    --color-ftw-accent-2: 27 24 15;
+    --color-ftw-accent-3: 45 35 5;
+    --color-ftw-accent-4: 54 43 0;
+    --color-ftw-accent-5: 67 53 0;
+    --color-ftw-accent-6: 82 66 2;
+    --color-ftw-accent-7: 102 84 23;
+    --color-ftw-accent-8: 131 106 33;
+    --color-ftw-accent-9: 255 230 41;
+    --color-ftw-accent-10: 255 255 87;
+    --color-ftw-accent-11: 245 225 71;
+    --color-ftw-accent-12: 246 238 180;
+
+    /* Dark - Success */
+    --color-ftw-success-1: 14 21 18;
+    --color-ftw-success-2: 18 27 23;
+    --color-ftw-success-3: 19 45 33;
+    --color-ftw-success-4: 17 59 41;
+    --color-ftw-success-5: 23 73 51;
+    --color-ftw-success-6: 32 87 62;
+    --color-ftw-success-7: 40 104 74;
+    --color-ftw-success-8: 47 124 87;
+    --color-ftw-success-9: 48 164 108;
+    --color-ftw-success-10: 51 176 116;
+    --color-ftw-success-11: 61 214 140;
+    --color-ftw-success-12: 177 241 203;
+
+    /* Dark - Warning */
+    --color-ftw-warning-1: 22 18 12;
+    --color-ftw-warning-2: 29 24 15;
+    --color-ftw-warning-3: 48 32 8;
+    --color-ftw-warning-4: 63 39 0;
+    --color-ftw-warning-5: 77 48 0;
+    --color-ftw-warning-6: 92 61 5;
+    --color-ftw-warning-7: 113 79 25;
+    --color-ftw-warning-8: 143 100 36;
+    --color-ftw-warning-9: 255 197 61;
+    --color-ftw-warning-10: 255 214 10;
+    --color-ftw-warning-11: 255 202 22;
+    --color-ftw-warning-12: 255 231 179;
+
+    /* Dark - Danger */
+    --color-ftw-danger-1: 25 17 17;
+    --color-ftw-danger-2: 32 19 20;
+    --color-ftw-danger-3: 59 18 25;
+    --color-ftw-danger-4: 80 15 28;
+    --color-ftw-danger-5: 97 22 35;
+    --color-ftw-danger-6: 114 35 45;
+    --color-ftw-danger-7: 140 51 58;
+    --color-ftw-danger-8: 181 69 72;
+    --color-ftw-danger-9: 229 72 77;
+    --color-ftw-danger-10: 236 93 94;
+    --color-ftw-danger-11: 255 149 146;
+    --color-ftw-danger-12: 255 209 217;
+  }
+}

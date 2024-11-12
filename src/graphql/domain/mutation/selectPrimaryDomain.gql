@@ -1,0 +1,7 @@
+mutation selectPrimaryDomain($where: SelectPrimaryDomainWhereInput!) {
+  selectPrimaryDomain(where: $where) {
+    __typename
+    id
+    hostname
+  }
+}

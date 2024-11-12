@@ -1,0 +1,3 @@
+query slugAvailability($where: SlugAvailabilityWhereInput!) {
+  slugAvailability(where: $where)
+}

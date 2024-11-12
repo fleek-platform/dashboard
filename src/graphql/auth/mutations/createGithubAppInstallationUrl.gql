@@ -1,0 +1,3 @@
+mutation createGithubAppInstallationUrl($where: CreateGithubAppInstallationUrlWhereInput!) {
+  createGithubAppInstallationUrl(where: $where)
+}

@@ -1,0 +1,5 @@
+mutation leaveProject($where: LeaveProjectWhereInput!) {
+  leaveProject(where: $where) {
+    id
+  }
+}

@@ -1,0 +1,17 @@
+# KEEP ALIGHT WITH PROJECT.GQL AND PROJECTS.GQL
+mutation createProject($data: CreateProjectDataInput!) {
+  createProject(data: $data) {
+    id
+    name
+    backupStorageOnArweave
+    backupStorageOnFilecoin
+    avatar
+    currentUserMembership {
+      permissionGroup {
+        id
+        name
+        permissions
+      }
+    }
+  }
+}

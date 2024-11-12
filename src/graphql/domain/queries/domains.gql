@@ -1,0 +1,11 @@
+query domains($filter: DomainsPaginationInput) {
+  domains(filter: $filter) {
+    data {
+      id
+      errorMessage
+      hostname
+      createdAt
+      status
+    }
+  }
+}

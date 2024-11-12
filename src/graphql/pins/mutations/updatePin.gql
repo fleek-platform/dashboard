@@ -1,0 +1,10 @@
+mutation updatePin($data: UpdatePinDataInput!, $where: UpdatePinWhereInput!) {
+  updatePin(data: $data, where: $where) {
+    id
+    cid
+    size
+    extension
+    createdAt
+    filename
+  }
+}

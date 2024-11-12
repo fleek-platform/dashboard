@@ -1,0 +1,40 @@
+mutation updateTemplate($data: UpdateTemplateDataInput!, $where: UpdateTemplateWhereInput!) {
+  updateTemplate(data: $data, where: $where) {
+    id
+    name
+    banner
+    description
+
+    deployment {
+      previewImageUrl
+
+      sourceProvider
+      sourceRepositoryOwner
+      sourceRepositoryName
+      sourceBranch
+
+      build {
+        id
+        baseDirectory
+        buildCommand
+        distDirectory
+        dockerImage
+      }
+    }
+
+    creator {
+      id
+    }
+
+    category {
+      id
+      name
+      slug
+    }
+
+    reviewStatus
+
+    createdAt
+    updatedAt
+  }
+}

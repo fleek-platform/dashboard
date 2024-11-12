@@ -1,0 +1,23 @@
+mutation createSite($data: CreateSiteDataInput!) {
+  createSite(data: $data) {
+    __typename
+    id
+    name
+    sourceProvider
+    sourceRepositoryId
+    sourceRepositoryOwner
+    sourceRepositoryName
+    sourceBranch
+    enablePreviews
+    baseDirectory
+    buildCommand
+    distDirectory
+    dockerImage
+    cpuLimit
+    memoryLimit
+    buildDurationLimitSeconds
+    secretGroup {
+      id
+    }
+  }
+}

@@ -1,0 +1,30 @@
+mutation retryDeployment($where: RetryDeploymentWhereInput!) {
+  retryDeployment(where: $where) {
+    cid
+    id
+    siteId
+    sourceProvider
+    sourceAuthor
+    sourceMessage
+    sourceBranch
+    storageType
+    sourceRepositoryName
+    sourceRepositoryOwner
+    previewImageUrl
+    createdAt
+    startedAt
+    updatedAt
+    sourceRef
+    status
+    previewOnly
+    build {
+      id
+      logs {
+        id
+        createdAt
+        text
+      }
+      status
+    }
+  }
+}

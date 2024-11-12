@@ -1,0 +1,5 @@
+mutation deletePin($where: DeletePinWhereInput!) {
+  deletePin(where: $where) {
+    id
+  }
+}

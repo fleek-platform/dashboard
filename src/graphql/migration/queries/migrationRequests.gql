@@ -1,0 +1,17 @@
+query migrationRequests {
+  migrationRequests {
+    data {
+      id
+      status
+      teamId
+      teamInfo {
+        sitesCount
+        filesCount
+        usersCount
+        name
+        id
+      }
+      createdAt
+    }
+  }
+}

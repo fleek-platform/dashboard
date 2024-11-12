@@ -1,0 +1,10 @@
+query gitProvider($where: GitProviderWhereInput!) {
+  gitProvider(where: $where) {
+    id
+    name
+    tags
+    enabled
+    sourceProvider
+    createdAt
+  }
+}

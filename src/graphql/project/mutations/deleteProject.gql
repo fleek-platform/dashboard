@@ -1,0 +1,6 @@
+mutation deleteProject($where: DeleteProjectWhereInput!) {
+  deleteProject(where: $where) {
+    id
+    name
+  }
+}

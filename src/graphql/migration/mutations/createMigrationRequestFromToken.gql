@@ -1,0 +1,15 @@
+mutation createMigrationRequestsFromToken($data: CreateMigrationRequestsFromTokenDataInput!) {
+  createMigrationRequestsFromToken(data: $data) {
+    id
+    status
+    teamId
+    teamInfo {
+      sitesCount
+      filesCount
+      usersCount
+      name
+      id
+    }
+    createdAt
+  }
+}

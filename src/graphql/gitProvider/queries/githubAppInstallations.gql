@@ -1,0 +1,7 @@
+query githubAppInstallations($where: GithubAppInstallationsWhereInput!) {
+  githubAppInstallations(where: $where) {
+    id
+    installationId
+    projectId
+  }
+}

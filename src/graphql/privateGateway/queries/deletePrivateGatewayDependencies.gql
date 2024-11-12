@@ -1,0 +1,26 @@
+query deletePrivateGatewayDependencies($where: PrivateGatewayWhereInput!) {
+  privateGateway(where: $where) {
+    name
+
+    primaryDomain {
+      id
+      hostname
+      status
+      isVerified
+    }
+
+    zone {
+      id
+      status
+      type
+    }
+
+    domains {
+      __typename
+      id
+      status
+      hostname
+      isVerified
+    }
+  }
+}

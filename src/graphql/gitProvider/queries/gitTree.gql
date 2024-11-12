@@ -1,0 +1,10 @@
+query gitTree($where: GitApiTreeWhereInput!) {
+  gitApiTree(where: $where) {
+    path
+    mode
+    type
+    sha
+    size
+    url
+  }
+}

@@ -1,0 +1,9 @@
+mutation updateFolder($data: UpdateFolderDataInput!, $where: UpdateFolderWhereInput!) {
+  updateFolder(data: $data, where: $where) {
+    __typename
+    id
+    createdAt
+    name
+    path
+  }
+}

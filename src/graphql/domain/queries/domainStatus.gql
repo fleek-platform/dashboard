@@ -1,0 +1,13 @@
+query domainStatus($where: DomainWhereInput!) {
+  domain(where: $where) {
+    id
+    status
+    errorMessage
+    dnsConfigs {
+      id
+      type
+      name
+      value
+    }
+  }
+}

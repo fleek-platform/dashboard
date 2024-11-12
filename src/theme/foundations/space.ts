@@ -1,0 +1,27 @@
+export const space = {
+  none: '0px',
+  '2xs': '0.25rem',
+  xs: '0.5rem',
+  sm: '1rem',
+  md: '2rem',
+  lg: '3rem',
+  xl: '5rem',
+  '2xl': '8rem',
+  'page-padding': '1rem',
+
+  'spacing-1': '0.25rem',
+  'spacing-2': '0.375rem',
+  'spacing-2-5': '0.5rem',
+  'spacing-3': '0.75rem',
+  'spacing-4': '1rem',
+  'spacing-5': '1.25rem',
+  'spacing-6': '1.5rem',
+  'spacing-6-5': '2rem',
+  'spacing-7': '2.25rem',
+  'spacing-8': '3rem',
+  'spacing-9': '3.5rem',
+  'spacing-99': '10.9375rem',
+
+  'inline-component-padding': '0.75em',
+  'inline-component-gap': '0.375em',
+};

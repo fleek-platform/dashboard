@@ -1,0 +1,34 @@
+query templateDeploy($where: TemplateWhereInput!) {
+  template(where: $where) {
+    id
+    name
+    description
+
+    siteId
+    siteAvatar
+
+    framework {
+      id
+      name
+      avatar
+    }
+
+    deployment {
+      id
+
+      sourceProvider
+      sourceRepositoryOwner
+      sourceRepositoryName
+      sourceBranch
+      sourceRef
+
+      build {
+        id
+        baseDirectory
+        buildCommand
+        distDirectory
+        dockerImage
+      }
+    }
+  }
+}

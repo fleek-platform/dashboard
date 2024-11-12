@@ -1,0 +1,8 @@
+query ipnsRecord($where: IpnsRecordWhereInput!) {
+  ipnsRecord(where: $where) {
+    id
+    name
+    hash
+    createdAt
+  }
+}

@@ -1,0 +1,10 @@
+query invitations($filter: InvitationsPaginationInput) {
+  invitations(filter: $filter) {
+    data {
+      id
+      email
+      role
+      createdAt
+    }
+  }
+}

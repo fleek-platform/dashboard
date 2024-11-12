@@ -1,0 +1,6 @@
+mutation deletePrivateGateway($where: DeletePrivateGatewayWhereInput!) {
+  deletePrivateGateway(where: $where) {
+    id
+    name
+  }
+}

@@ -1,0 +1,17 @@
+query domain($where: DomainWhereInput!) {
+  domain(where: $where) {
+    id
+    hostname
+    createdAt
+    status
+    isVerified
+    errorMessage
+    dnslinkStatus
+    dnsConfigs {
+      id
+      type
+      name
+      value
+    }
+  }
+}

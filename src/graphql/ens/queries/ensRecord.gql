@@ -1,0 +1,14 @@
+query ensRecord($where: EnsRecordWhereInput!) {
+  ensRecord(where: $where) {
+    id
+    name
+    createdAt
+    status
+
+    ipnsRecord {
+      id
+      hash
+      name
+    }
+  }
+}

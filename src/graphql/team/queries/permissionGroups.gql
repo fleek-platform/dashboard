@@ -1,0 +1,9 @@
+query permissionGroups($filter: PermissionGroupsPaginationInput) {
+  permissionGroups(filter: $filter) {
+    data {
+      id
+      name
+      description
+    }
+  }
+}

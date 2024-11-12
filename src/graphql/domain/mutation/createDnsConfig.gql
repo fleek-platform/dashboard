@@ -1,0 +1,11 @@
+mutation createDnsConfig($data: CreateDnsConfigDataInput!, $where: CreateDnsConfigWhereInput!) {
+  createDnsConfig(data: $data, where: $where) {
+    __typename
+    id
+    type
+    name
+    value
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,26 @@
+query domainsByZoneId($where: DomainsByZoneIdWhereInput!, $filter: DomainsByZoneIdPaginationInput) {
+  domainsByZoneId(where: $where, filter: $filter) {
+    data {
+      __typename
+      id
+      hostname
+      status
+      errorMessage
+      zone {
+        id
+      }
+      dnsConfigs {
+        __typename
+        createdAt
+        id
+        name
+        type
+        updatedAt
+        value
+      }
+      isVerified
+      createdAt
+      updatedAt
+    }
+  }
+}

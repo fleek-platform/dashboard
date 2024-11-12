@@ -1,0 +1,3 @@
+query domainAvailability($where: DomainAvailabilityWhereInput!) {
+  domainAvailability(where: $where)
+}

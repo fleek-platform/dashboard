@@ -1,0 +1,17 @@
+mutation verifyDnslink($where: VerifyDnslinkWhereInput!) {
+  verifyDnslink(where: $where) {
+    id
+    hostname
+    createdAt
+    status
+    isVerified
+    errorMessage
+    dnslinkStatus
+    dnsConfigs {
+      id
+      type
+      name
+      value
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation deletePersonalAccessToken($where: DeletePersonalAccessTokenWhereInput!) {
+  deletePersonalAccessToken(where: $where) {
+    id
+  }
+}

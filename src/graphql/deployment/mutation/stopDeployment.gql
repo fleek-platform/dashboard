@@ -1,0 +1,3 @@
+mutation stopDeployment($where: StopDeploymentWhereInput!) {
+  stopDeployment(where: $where)
+}

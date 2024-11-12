@@ -1,0 +1,10 @@
+query protectedActions($filter: TwoFactorProtectedActionsPaginationInput) {
+  twoFactorProtectedActions(filter: $filter) {
+    data {
+      id
+      type
+      name
+      enabled
+    }
+  }
+}

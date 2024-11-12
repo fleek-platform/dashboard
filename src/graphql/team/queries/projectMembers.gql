@@ -1,0 +1,19 @@
+query projectMembers($where: ProjectWhereInput!) {
+  project(where: $where) {
+    memberships {
+      id
+      role
+      createdAt
+      permissionGroup {
+        id
+        name
+        description
+      }
+      user {
+        id
+        email
+        username
+      }
+    }
+  }
+}

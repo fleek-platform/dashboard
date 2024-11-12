@@ -1,0 +1,6 @@
+query ensRecordStatus($where: EnsRecordWhereInput!) {
+  ensRecord(where: $where) {
+    id
+    status
+  }
+}

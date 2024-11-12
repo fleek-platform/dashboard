@@ -1,0 +1,38 @@
+query me {
+  user {
+    id
+    avatar
+    username
+    firstName
+    email
+    githubUserAccessToken
+    project {
+      id
+      name
+      currentUserMembership {
+        permissionGroup {
+          id
+          name
+          permissions
+        }
+      }
+    }
+    secretKeys {
+      id
+      algorithm
+      key
+      digits
+      period
+      isActive
+      isVerified
+      verifiedAt
+    }
+    pendingInvitations {
+      hash
+      projectAvatar
+      projectId
+      projectName
+    }
+    walletAddress
+  }
+}

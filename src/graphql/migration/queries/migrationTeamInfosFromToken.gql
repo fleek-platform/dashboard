@@ -1,0 +1,9 @@
+query migrationTeamInfosFromToken($where: MigrationTeamInfosFromTokenWhereInput!) {
+  migrationTeamInfosFromToken(where: $where) {
+    id
+    name
+    filesCount
+    sitesCount
+    usersCount
+  }
+}

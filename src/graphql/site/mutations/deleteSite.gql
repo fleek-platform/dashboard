@@ -1,0 +1,5 @@
+mutation deleteSite($where: DeleteSiteWhereInput!) {
+  deleteSite(where: $where) {
+    id
+  }
+}

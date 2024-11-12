@@ -1,0 +1,5 @@
+mutation purgeSiteCache($where: PurgeSiteCacheWhereInput!) {
+  purgeSiteCache(where: $where) {
+    id
+  }
+}

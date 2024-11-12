@@ -1,0 +1,17 @@
+query applications($filter: ApplicationsPaginationInput) {
+  applications(filter: $filter) {
+    data {
+      clientId
+      createdAt
+      id
+      name
+      updatedAt
+      whitelistDomains {
+        hostname
+      }
+      whiteLabelDomains {
+        hostname
+      }
+    }
+  }
+}

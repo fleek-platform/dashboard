@@ -1,0 +1,17 @@
+mutation verifyDomain($where: VerifyDomainWhereInput!) {
+  verifyDomain(where: $where) {
+    id
+    hostname
+    createdAt
+    status
+    isVerified
+    errorMessage
+    dnslinkStatus
+    dnsConfigs {
+      id
+      type
+      name
+      value
+    }
+  }
+}

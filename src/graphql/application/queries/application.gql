@@ -1,0 +1,15 @@
+query application($where: ApplicationWhereInput!) {
+  application(where: $where) {
+    clientId
+    createdAt
+    id
+    name
+    updatedAt
+    whitelistDomains {
+      hostname
+    }
+    whiteLabelDomains {
+      hostname
+    }
+  }
+}

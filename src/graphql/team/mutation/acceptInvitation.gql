@@ -1,0 +1,5 @@
+mutation acceptInvitation($where: AcceptInvitationWhereInput!) {
+  acceptInvitation(where: $where) {
+    id
+  }
+}

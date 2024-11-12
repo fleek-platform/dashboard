@@ -1,0 +1,8 @@
+mutation deleteTemplate($where: DeleteTemplateWhereInput!) {
+  deleteTemplate(where: $where) {
+    id
+    creator {
+      id
+    }
+  }
+}

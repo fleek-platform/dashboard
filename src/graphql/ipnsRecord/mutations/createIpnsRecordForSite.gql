@@ -1,0 +1,8 @@
+mutation createIpnsRecordForSite($where: CreateIpnsRecordForSiteWhereInput!) {
+  createIpnsRecordForSite(where: $where) {
+    id
+    name
+    hash
+    createdAt
+  }
+}

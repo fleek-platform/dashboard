@@ -1,0 +1,8 @@
+mutation createSalesContactRequest($data: CreateSalesContactRequestDataInput!) {
+  createSalesContactRequest(data: $data) {
+    id
+    email
+    description
+    createdAt
+  }
+}

@@ -1,0 +1,5 @@
+mutation createZoneForSite($where: CreateZoneForSiteWhereInput!) {
+  createZoneForSite(where: $where) {
+    id
+  }
+}

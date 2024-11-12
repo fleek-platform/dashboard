@@ -1,0 +1,13 @@
+query gitRepositories($where: GitApiInstallationsWhereInput!) {
+  gitApiInstallations(where: $where) {
+    avatar
+    installationId
+    isOrganization
+    name
+    repos {
+      id
+      defaultBranch
+      name
+    }
+  }
+}

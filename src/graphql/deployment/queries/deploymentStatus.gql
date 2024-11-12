@@ -1,0 +1,8 @@
+query deploymentStatus($where: DeploymentWhereInput!) {
+  deployment(where: $where) {
+    id
+    status
+    createdAt
+    updatedAt
+  }
+}

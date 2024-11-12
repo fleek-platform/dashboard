@@ -1,0 +1,9 @@
+mutation deleteFolder($where: DeleteFolderWhereInput!) {
+  deleteFolder(where: $where) {
+    __typename
+    id
+    createdAt
+    name
+    path
+  }
+}

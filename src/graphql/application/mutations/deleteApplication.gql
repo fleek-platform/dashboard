@@ -1,0 +1,5 @@
+mutation deleteApplication($where: DeleteApplicationWhereInput!) {
+  deleteApplication(where: $where) {
+    id
+  }
+}

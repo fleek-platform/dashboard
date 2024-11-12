@@ -1,0 +1,50 @@
+query templates($where: TemplatesWhereInput!, $filter: TemplatesPaginationInput) {
+  templates(where: $where, filter: $filter) {
+    data {
+      id
+      name
+      description
+      usageCount
+      banner
+
+      siteId
+      siteAvatar
+      siteSlug
+
+      framework {
+        id
+        name
+        avatar
+      }
+
+      deployment {
+        id
+        previewImageUrl
+        sourceRepositoryOwner
+      }
+
+      creator {
+        id
+        username
+        avatar
+      }
+
+      category {
+        id
+        name
+        slug
+      }
+
+      reviewStatus
+      reviewComment
+
+      createdAt
+      updatedAt
+    }
+
+    currentPage
+    nextPage
+    isLastPage
+    totalCount
+  }
+}

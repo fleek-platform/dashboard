@@ -1,0 +1,3 @@
+mutation deleteRecoveryCodes($where: DeleteRecoveryCodesWhereInput!) {
+  deleteRecoveryCodes(where: $where)
+}

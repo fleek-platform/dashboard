@@ -1,0 +1,13 @@
+query domainDnsLinkStatus($where: DomainWhereInput!) {
+  domain(where: $where) {
+    id
+    dnslinkStatus
+    errorMessage
+    dnsConfigs {
+      id
+      type
+      name
+      value
+    }
+  }
+}

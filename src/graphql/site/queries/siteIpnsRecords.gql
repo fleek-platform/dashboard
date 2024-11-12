@@ -1,0 +1,10 @@
+query siteIpnsRecords($where: SiteWhereInput!) {
+  site(where: $where) {
+    id
+
+    ipnsRecords {
+      id
+      hash
+    }
+  }
+}

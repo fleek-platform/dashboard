@@ -1,0 +1,5 @@
+query countSitesWithSourceProvider {
+  sites(where: { hasSourceProvider: true }) {
+    totalCount
+  }
+}
