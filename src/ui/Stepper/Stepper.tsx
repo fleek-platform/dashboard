@@ -60,7 +60,11 @@ const Root: React.FC<Stepper.RootProps> = ({ children, initialStep = 1 }) => {
     }
   };
 
-  return <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>{children}</Provider>;
+  return (
+    <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>
+      {children}
+    </Provider>
+  );
 };
 
 const Container = (props: Stepper.ContainerProps): JSX.Element => {
@@ -71,11 +75,15 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
     () =>
       React.Children.toArray(children).map((child, index) => {
         if (!React.isValidElement(child)) {
-          throw new Error('Stepper.Container children must be a valid React element');
+          throw new Error(
+            'Stepper.Container children must be a valid React element',
+          );
         }
 
         if (child.type !== Stepper.Step) {
-          throw new Error('Stepper.Container children must be a Stepper.Step component');
+          throw new Error(
+            'Stepper.Container children must be a Stepper.Step component',
+          );
         }
 
         if (index === currentStep) {
@@ -84,7 +92,7 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
 
         return null;
       }),
-    [children, currentStep]
+    [children, currentStep],
   );
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -96,21 +104,29 @@ const Step = ({
 }: // eslint-disable-next-line react/jsx-no-useless-fragment
 Stepper.StepProps): JSX.Element => <>{children}</>;
 
-const Indicator = forwardStyledRef<HTMLDivElement, Stepper.IndicatorProps>(StepperStyles.Container, (props, ref) => {
-  const { currentStep, totalSteps } = useContext();
-  const steps = Array.from(Array(totalSteps).keys());
+const Indicator = forwardStyledRef<HTMLDivElement, Stepper.IndicatorProps>(
+  StepperStyles.Container,
+  (props, ref) => {
+    const { currentStep, totalSteps } = useContext();
+    const steps = Array.from(Array(totalSteps).keys());
 
-  return (
-    <StepperStyles.Container ref={ref} {...props}>
-      <StepperStyles.Rail>
-        {steps.map((step) => (
-          <StepperStyles.RailDivision key={step} data-active={step <= currentStep} />
-        ))}
-      </StepperStyles.Rail>
-      <StepperStyles.RailDivisionLabel>Step {currentStep + 1}</StepperStyles.RailDivisionLabel>
-    </StepperStyles.Container>
-  );
-});
+    return (
+      <StepperStyles.Container ref={ref} {...props}>
+        <StepperStyles.Rail>
+          {steps.map((step) => (
+            <StepperStyles.RailDivision
+              key={step}
+              data-active={step <= currentStep}
+            />
+          ))}
+        </StepperStyles.Rail>
+        <StepperStyles.RailDivisionLabel>
+          Step {currentStep + 1}
+        </StepperStyles.RailDivisionLabel>
+      </StepperStyles.Container>
+    );
+  },
+);
 
 export const Stepper = {
   useContext,

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 import { ChildrenProps } from '@/types/Props';
-import { StorageProvider, StorageProviderValue } from '@/types/StorageProviders';
+import {
+  StorageProvider,
+  StorageProviderValue,
+} from '@/types/StorageProviders';
 import { createContext } from '@/utils/createContext';
 
 export type StorageSettingsContext = {
@@ -11,7 +14,9 @@ export type StorageSettingsContext = {
   onSaveSubmit: (cloudStorage: StorageProviderValue) => Promise<void>;
 };
 
-export type StorageSettingsProviderProps = ChildrenProps<Pick<StorageSettingsContext, 'onSaveSubmit'>>;
+export type StorageSettingsProviderProps = ChildrenProps<
+  Pick<StorageSettingsContext, 'onSaveSubmit'>
+>;
 
 const [Provider, useContext] = createContext<StorageSettingsContext>({
   hookName: 'useStorageSettingsContext',
@@ -19,7 +24,9 @@ const [Provider, useContext] = createContext<StorageSettingsContext>({
   providerName: 'StorageSettingsProvider',
 });
 
-export const StorageSettingsProvider: React.FC<StorageSettingsProviderProps> = ({ children, onSaveSubmit }) => {
+export const StorageSettingsProvider: React.FC<
+  StorageSettingsProviderProps
+> = ({ children, onSaveSubmit }) => {
   const [selectedStorage, setSelectedStorage] = useState<StorageProvider>();
 
   return (

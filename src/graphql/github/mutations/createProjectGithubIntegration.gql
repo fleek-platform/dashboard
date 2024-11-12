@@ -1,3 +1,5 @@
-mutation createProjectGithubIntegration($data: CreateGithubIntegrationForProjectDataInput!) {
+mutation createProjectGithubIntegration(
+  $data: CreateGithubIntegrationForProjectDataInput!
+) {
   createGithubIntegrationForProject(data: $data)
 }

@@ -6,7 +6,10 @@ type UseTimerProps = {
   intervalDuration?: number;
 };
 
-export const useTimer = ({ enabled, intervalDuration = 1000 }: UseTimerProps) => {
+export const useTimer = ({
+  enabled,
+  intervalDuration = 1000,
+}: UseTimerProps) => {
   const [now, setNow] = useState(DateTime.now().toUTC().toISO());
 
   useEffect(() => {

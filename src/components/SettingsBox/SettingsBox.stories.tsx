@@ -20,7 +20,8 @@ export const Default: Story = (args) => {
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.ActionRow>
@@ -41,7 +42,8 @@ export const WithActionButton: Story = (args) => {
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.ActionRow>
@@ -75,7 +77,8 @@ export const WitLogoUpload: Story = (args) => {
         <SettingsBox.Column>
           <SettingsBox.Title>Title</SettingsBox.Title>
           <SettingsBox.Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua
           </SettingsBox.Text>
         </SettingsBox.Column>
 
@@ -96,7 +99,8 @@ export const WithInputLoading: Story = (args) => {
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.Skeleton variant="input" />
@@ -122,7 +126,8 @@ export const WithLogoLoading: Story = (args) => {
         <SettingsBox.Column>
           <SettingsBox.Title>Title</SettingsBox.Title>
           <SettingsBox.Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua
           </SettingsBox.Text>
         </SettingsBox.Column>
 

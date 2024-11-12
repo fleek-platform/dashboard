@@ -4,4 +4,6 @@ type IsUniqueNameArgs = {
 };
 
 export const isUniqueName = ({ name, list }: IsUniqueNameArgs): boolean =>
-  !list.some((item) => item?.name?.toLocaleUpperCase() === name.toLocaleUpperCase());
+  !list.some(
+    (item) => item?.name?.toLocaleUpperCase() === name.toLocaleUpperCase(),
+  );

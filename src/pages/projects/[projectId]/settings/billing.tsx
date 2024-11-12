@@ -51,14 +51,22 @@ const FeaturePage: React.FC = () => {
       toast.success({ message: 'Plan upgraded successfully' });
     }
 
-    router.replace(routes.project.settings.billing({ projectId: session.project.id }));
+    router.replace(
+      routes.project.settings.billing({ projectId: session.project.id }),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, canceled]);
 
   return (
     <>
-      {flags.billingPlan && <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />}
-      {flags.billingPayment && <Projects.Settings.Sections.Billing.PaymentMethod isLoading={session.loading} />}
+      {flags.billingPlan && (
+        <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
+      )}
+      {flags.billingPayment && (
+        <Projects.Settings.Sections.Billing.PaymentMethod
+          isLoading={session.loading}
+        />
+      )}
       {flags.billingInvoices && <Projects.Settings.Sections.Billing.Invoices />}
     </>
   );
@@ -73,8 +81,9 @@ const ComingSoonPage: React.FC = () => {
       modalContent={
         <>
           <ComingSoon.Modal.Description>
-            Soon we will introduce a credit-based billing system to Fleek, with a usage-based model. Pay storage, hosting, and other Fleek
-            services granularly and only by usage with crypto or credit-card.
+            Soon we will introduce a credit-based billing system to Fleek, with
+            a usage-based model. Pay storage, hosting, and other Fleek services
+            granularly and only by usage with crypto or credit-card.
           </ComingSoon.Modal.Description>
         </>
       }
@@ -116,6 +125,11 @@ const ComingSoonPage: React.FC = () => {
   );
 };
 
-BillingPage.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
+BillingPage.getLayout = (page) => (
+  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
+);
 
-export default withAccess({ Component: BillingPage, requiredPermissions: [constants.PERMISSION.BILLING.VIEW] });
+export default withAccess({
+  Component: BillingPage,
+  requiredPermissions: [constants.PERMISSION.BILLING.VIEW],
+});

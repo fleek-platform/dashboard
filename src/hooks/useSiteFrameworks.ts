@@ -14,11 +14,10 @@ export const useSiteFrameworks = () => {
   const client = useClient();
 
   const queryFn = useCallback(async () => {
-    const result = await client.query<SiteFrameworksQuery, SiteFrameworksQueryVariables>(
-      SiteFrameworksDocument,
-      {},
-      { requestPolicy: 'cache-first' }
-    );
+    const result = await client.query<
+      SiteFrameworksQuery,
+      SiteFrameworksQueryVariables
+    >(SiteFrameworksDocument, {}, { requestPolicy: 'cache-first' });
 
     if (result.error) {
       throw result.error;

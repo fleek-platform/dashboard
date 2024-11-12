@@ -1,7 +1,11 @@
 import { useCallback } from 'react';
 import { useClient } from 'urql';
 
-import { SiteDocument, SiteQuery, SiteQueryVariables } from '@/generated/graphqlClient';
+import {
+  SiteDocument,
+  SiteQuery,
+  SiteQueryVariables,
+} from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';
 
@@ -10,7 +14,10 @@ export type UsePollSiteForDeploymentArgs = {
   pause?: boolean;
 };
 
-export const usePollSiteForDeployment = ({ pause, siteId }: UsePollSiteForDeploymentArgs) => {
+export const usePollSiteForDeployment = ({
+  pause,
+  siteId,
+}: UsePollSiteForDeploymentArgs) => {
   const client = useClient();
 
   const queryFn = useCallback(async () => {
@@ -25,7 +32,7 @@ export const usePollSiteForDeployment = ({ pause, siteId }: UsePollSiteForDeploy
       },
       {
         requestPolicy: 'network-only',
-      }
+      },
     );
 
     return siteResult.data?.site;

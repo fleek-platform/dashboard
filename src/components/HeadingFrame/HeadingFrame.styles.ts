@@ -37,7 +37,8 @@ export const HeadingFrameStyles = {
       content: '""',
       position: 'absolute',
       inset: 0,
-      backgroundImage: 'linear-gradient(303deg, #FFE702 7.28%, #FF3DCF 33.33%, #14BCDF 66.15%, #49F0A1 85.42%, #49E34B 100%)',
+      backgroundImage:
+        'linear-gradient(303deg, #FFE702 7.28%, #FF3DCF 33.33%, #14BCDF 66.15%, #49F0A1 85.42%, #49E34B 100%)',
       filter: 'blur(49.230770111083984px)',
       opacity: 0.3,
     },

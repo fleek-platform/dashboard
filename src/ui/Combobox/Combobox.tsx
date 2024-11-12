@@ -5,7 +5,11 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { sizes } from '@/theme/foundations';
 import { createContext } from '@/utils/createContext';
 
-import { Icon, Input as InputComponent, InputFieldProps as InputProps } from '..';
+import {
+  Icon,
+  Input as InputComponent,
+  InputFieldProps as InputProps,
+} from '..';
 import { Divider } from '../Divider/Divider';
 import { IconName } from '../Icon/IconLibrary';
 import { ComboboxStyles as S } from './Combobox.styles';
@@ -51,14 +55,17 @@ const Options = <T,>({
     extraItems,
   } = useContext() as Combobox.Context<T>;
 
-  const filteredItems = useMemo(() => items.filter((item) => queryFilter(query, item)), [items, query, queryFilter]);
+  const filteredItems = useMemo(
+    () => items.filter((item) => queryFilter(query, item)),
+    [items, query, queryFilter],
+  );
 
   const handleSelect = useCallback(
     (item: T) => {
       setSelected(item);
       setOpen(false);
     },
-    [setSelected, setOpen]
+    [setSelected, setOpen],
   );
 
   const handleExtraItemClick = useCallback(
@@ -66,7 +73,7 @@ const Options = <T,>({
       item.onClick();
       setOpen(false);
     },
-    [setOpen]
+    [setOpen],
   );
 
   return (
@@ -80,22 +87,34 @@ const Options = <T,>({
 
       <S.Scrollable.Root type="auto">
         <S.Scrollable.Bar />
-        <S.Scrollable.Viewport data-attribute={disableSearch ? '' : 'search'} css={{ maxHeight: viewportHeight?.concat(' !important') }}>
+        <S.Scrollable.Viewport
+          data-attribute={disableSearch ? '' : 'search'}
+          css={{ maxHeight: viewportHeight?.concat(' !important') }}
+        >
           <S.Scrollable.Content>
             {filteredItems.map((item, index) => (
               <Fragment key={JSON.stringify(item)}>
-                <S.Option data-state={selected === item ? 'selected' : ''} onClick={() => handleSelect(item)}>
-                  <S.ContentWrapper>{children(item, selected === item)}</S.ContentWrapper>
+                <S.Option
+                  data-state={selected === item ? 'selected' : ''}
+                  onClick={() => handleSelect(item)}
+                >
+                  <S.ContentWrapper>
+                    {children(item, selected === item)}
+                  </S.ContentWrapper>
                   {selected === item && <S.Icon name="check" />}
                 </S.Option>
-                {horizontalDividers && index < filteredItems.length - 1 && <Divider />}
+                {horizontalDividers && index < filteredItems.length - 1 && (
+                  <Divider />
+                )}
               </Fragment>
             ))}
           </S.Scrollable.Content>
         </S.Scrollable.Viewport>
       </S.Scrollable.Root>
 
-      {!searching && filteredItems.length === 0 && <S.Message>{isEmpty}</S.Message>}
+      {!searching && filteredItems.length === 0 && (
+        <S.Message>{isEmpty}</S.Message>
+      )}
 
       {searching && <S.Message>{isSearching}</S.Message>}
       {extraItems && (
@@ -117,7 +136,11 @@ const Options = <T,>({
               </S.ExtraOption>
             );
 
-            return item.tooltip ? <CustomTooltip {...item.tooltip}>{Item}</CustomTooltip> : Item;
+            return item.tooltip ? (
+              <CustomTooltip {...item.tooltip}>{Item}</CustomTooltip>
+            ) : (
+              Item
+            );
           })}
         </>
       )}
@@ -125,7 +148,12 @@ const Options = <T,>({
   );
 };
 
-const Field = <T,>({ children, disableChevron, placeholder, ...props }: Combobox.FieldProps<T>): JSX.Element => {
+const Field = <T,>({
+  children,
+  disableChevron,
+  placeholder,
+  ...props
+}: Combobox.FieldProps<T>): JSX.Element => {
   const {
     selected: [selected],
     open: [open],
@@ -138,8 +166,14 @@ const Field = <T,>({ children, disableChevron, placeholder, ...props }: Combobox
   return (
     <S.Field {...props} isLoading={isLoading} disabled={disabled || isLoading}>
       <InputComponent.Root>
-        {!isLoading && <S.ContentWrapper placeholder={!hasSelected}>{hasSelected ? children(selected) : placeholder}</S.ContentWrapper>}
-        {!isLoading && !disableChevron && <S.Icon name="chevron-down" rotate={open} />}
+        {!isLoading && (
+          <S.ContentWrapper placeholder={!hasSelected}>
+            {hasSelected ? children(selected) : placeholder}
+          </S.ContentWrapper>
+        )}
+        {!isLoading && !disableChevron && (
+          <S.Icon name="chevron-down" rotate={open} />
+        )}
       </InputComponent.Root>
     </S.Field>
   );
@@ -187,7 +221,7 @@ export const Combobox = <T,>({
 
       return searchString.includes(query.toLowerCase());
     },
-    [queryKey]
+    [queryKey],
   );
 
   const refetch = useDebounce((query: string) => {
@@ -299,14 +333,19 @@ export namespace Combobox {
     content: string;
   };
 
-  export type RootProps<T> = Omit<S.RootProps, 'open' | 'onOpenChange' | 'children'> &
+  export type RootProps<T> = Omit<
+    S.RootProps,
+    'open' | 'onOpenChange' | 'children'
+  > &
     Pick<S.WrapperProps, 'css'> &
     Pick<Context<T>, 'selected' | 'items' | 'onQueryChange'> & {
       isLoading?: boolean;
       isDisabled?: boolean;
       isSearching?: boolean;
       children: (elements: Elements<T>) => React.ReactNode;
-    } & (T extends object ? { queryKey: keyof T | (keyof T)[] } : { queryKey?: undefined }) & {
+    } & (T extends object
+      ? { queryKey: keyof T | (keyof T)[] }
+      : { queryKey?: undefined }) & {
       unattached?: boolean;
     } & { extraItems?: ExtraItem[] };
 }

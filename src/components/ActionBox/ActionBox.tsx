@@ -15,7 +15,10 @@ type ActionBoxProps = DisabledProps<
 
 export const ActionBox = forwardStyledRef<HTMLAnchorElement, ActionBoxProps>(
   S.Root,
-  ({ title, description, icon, isDisabled, isRestricted = false, ...props }, ref) => {
+  (
+    { title, description, icon, isDisabled, isRestricted = false, ...props },
+    ref,
+  ) => {
     if (isDisabled || isRestricted) {
       props.href = '#';
     }
@@ -32,5 +35,5 @@ export const ActionBox = forwardStyledRef<HTMLAnchorElement, ActionBoxProps>(
         <S.RightArrow name="arrow-right" />
       </S.Root>
     );
-  }
+  },
 );

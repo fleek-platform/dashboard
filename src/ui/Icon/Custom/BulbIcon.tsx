@@ -1,7 +1,12 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const BulbIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom {...props} viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <S.Custom
+    {...props}
+    viewBox="0 0 38 38"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M21.375 34.4375H16.625C16.3101 34.4375 16.008 34.5626 15.7853 34.7853C15.5626 35.008 15.4375 35.3101 15.4375 35.625C15.4375 35.9399 15.5626 36.242 15.7853 36.4647C16.008 36.6874 16.3101 36.8125 16.625 36.8125H21.375C21.6899 36.8125 21.992 36.6874 22.2147 36.4647C22.4374 36.242 22.5625 35.9399 22.5625 35.625C22.5625 35.3101 22.4374 35.008 22.2147 34.7853C21.992 34.5626 21.6899 34.4375 21.375 34.4375Z"
       fill="currentColor"

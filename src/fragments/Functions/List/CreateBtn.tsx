@@ -10,7 +10,8 @@ import { Button, Dialog } from '@/ui';
 export const CreateBtn = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [createFleekFunctionMutation, createFleekFunction] = useCreateFleekFunctionMutation();
+  const [createFleekFunctionMutation, createFleekFunction] =
+    useCreateFleekFunctionMutation();
   const toast = useToast();
 
   const form = Form.useForm({
@@ -38,7 +39,10 @@ export const CreateBtn = () => {
     setDialogOpen(isOpen);
   };
 
-  const handleKeyDown = useCallback<KeyboardEventHandler>(({ key }) => key === 'Enter' && form.submit(), [form]);
+  const handleKeyDown = useCallback<KeyboardEventHandler>(
+    ({ key }) => key === 'Enter' && form.submit(),
+    [form],
+  );
 
   const loading = createFleekFunctionMutation.fetching;
 
@@ -54,7 +58,12 @@ export const CreateBtn = () => {
         <Form.Provider value={form}>
           <Modal.Heading>Add new function</Modal.Heading>
 
-          <Form.InputField label="Name" name="name" placeholder="Function" onKeyDown={handleKeyDown} />
+          <Form.InputField
+            label="Name"
+            name="name"
+            placeholder="Function"
+            onKeyDown={handleKeyDown}
+          />
 
           <Modal.CTARow>
             <Dialog.Close asChild>

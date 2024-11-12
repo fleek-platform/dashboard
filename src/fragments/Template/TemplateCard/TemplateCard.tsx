@@ -9,13 +9,20 @@ import { TemplateCardStyles as S } from './TemplateCard.styles';
 
 export type TemplateCardProps = LoadingProps<{ template: Templates[0] }>;
 
-export const TemplateCard = forwardStyledRef<HTMLAnchorElement, TemplateCardProps>(Card.Root, ({ isLoading, template, ...props }, ref) => {
+export const TemplateCard = forwardStyledRef<
+  HTMLAnchorElement,
+  TemplateCardProps
+>(Card.Root, ({ isLoading, template, ...props }, ref) => {
   if (isLoading) {
     return <TemplateCardSkeleton />;
   }
 
   return (
-    <S.RootLink {...props} ref={ref} href={routes.template.indexed({ templateId: template.id! })}>
+    <S.RootLink
+      {...props}
+      ref={ref}
+      href={routes.template.indexed({ templateId: template.id! })}
+    >
       <S.Root>
         <S.Cover src={template.banner} />
         <S.ContentWrapper>
@@ -28,7 +35,9 @@ export const TemplateCard = forwardStyledRef<HTMLAnchorElement, TemplateCardProp
                 <Icon name="gear" />
               </S.Icon>
             </Card.Content.Row>
-            <Text className="line-clamp-2 break-words">{template.description}</Text>
+            <Text className="line-clamp-2 break-words">
+              {template.description}
+            </Text>
           </S.HeadingContainer>
           <Card.Content.Row>
             <S.Footer>
@@ -46,12 +55,19 @@ type AuthorAvatarProps = {
   creator: NonNullable<Templates[0]['creator']>;
 };
 
-const AuthorAvatar: React.FC<AuthorAvatarProps> = ({ creator = {} as AuthorAvatarProps['creator'] }) => {
-  const isFleekAuthored = creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
+const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
+  creator = {} as AuthorAvatarProps['creator'],
+}) => {
+  const isFleekAuthored =
+    creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
     <S.AuthorLabel fleek={isFleekAuthored}>
-      <Avatar enableIcon icon={isFleekAuthored ? 'fleek' : 'person'} src={creator.avatar} />
+      <Avatar
+        enableIcon
+        icon={isFleekAuthored ? 'fleek' : 'person'}
+        src={creator.avatar}
+      />
       <Text variant="primary" size="xs">
         {isFleekAuthored ? 'Fleek' : creator.username}
       </Text>

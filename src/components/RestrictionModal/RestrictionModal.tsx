@@ -13,7 +13,11 @@ export type RestrictionModalProps = {
   shouldShowUpgradePlan: boolean;
 };
 
-export const RestrictionModal: React.FC<RestrictionModalProps> = ({ isOpen, shouldShowUpgradePlan, onOpenChange }) => {
+export const RestrictionModal: React.FC<RestrictionModalProps> = ({
+  isOpen,
+  shouldShowUpgradePlan,
+  onOpenChange,
+}) => {
   const session = useSessionContext();
 
   const projectId = session.project.id;
@@ -32,7 +36,8 @@ export const RestrictionModal: React.FC<RestrictionModalProps> = ({ isOpen, shou
             </Dialog.Title>
 
             <Text className="text-center">
-              You&apos;ve reached the limits of your Free plan. To continue without interruption, upgrade your plan.
+              You&apos;ve reached the limits of your Free plan. To continue
+              without interruption, upgrade your plan.
             </Text>
           </Box>
           <Box className="flex-row gap-2 items-baseline">
@@ -66,15 +71,23 @@ export const RestrictionModal: React.FC<RestrictionModalProps> = ({ isOpen, shou
           <Modal.CTARow>
             <Dialog.Close asChild>
               {/* TODO remove py-0 px-2-5 text-sm h-[2rem] once new designs for button are done */}
-              <Button intent="ghost" className="flex-1 py-0 px-2-5 text-sm h-[2rem] rounded-lg">
+              <Button
+                intent="ghost"
+                className="flex-1 py-0 px-2-5 text-sm h-[2rem] rounded-lg"
+              >
                 No thanks
               </Button>
             </Dialog.Close>
 
             {shouldShowUpgradePlan && (
               // TODO remove py-0 px-2-5 text-sm h-[2rem] once new designs for button are done
-              <Link href={routes.project.settings.billing({ projectId })} className="flex-1">
-                <Button className="w-full py-0 px-2-5 text-sm h-[2rem] rounded-lg">Upgrade plan</Button>
+              <Link
+                href={routes.project.settings.billing({ projectId })}
+                className="flex-1"
+              >
+                <Button className="w-full py-0 px-2-5 text-sm h-[2rem] rounded-lg">
+                  Upgrade plan
+                </Button>
               </Link>
             )}
           </Modal.CTARow>

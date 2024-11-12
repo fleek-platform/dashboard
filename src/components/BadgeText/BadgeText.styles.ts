@@ -59,7 +59,7 @@ const compoundVariants = (() => {
         colorScheme: color,
         hoverable: false,
         css: buildColorScheme(color as ColorScheme, false),
-      }
+      },
     );
   }
 

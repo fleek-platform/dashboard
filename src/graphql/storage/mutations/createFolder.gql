@@ -1,4 +1,7 @@
-mutation createFolder($data: CreateFolderDataInput!, $where: CreateFolderWhereInput!) {
+mutation createFolder(
+  $data: CreateFolderDataInput!
+  $where: CreateFolderWhereInput!
+) {
   createFolder(data: $data, where: $where) {
     __typename
     id

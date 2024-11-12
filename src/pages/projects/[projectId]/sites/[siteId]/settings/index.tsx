@@ -5,7 +5,12 @@ import * as zod from 'zod';
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Site, TwoFactorAuthentication } from '@/fragments';
-import { UpdateSiteDataInput, useMeQuery, usePurgeSiteCacheMutation, useSiteQuery } from '@/generated/graphqlClient';
+import {
+  UpdateSiteDataInput,
+  useMeQuery,
+  usePurgeSiteCacheMutation,
+  useSiteQuery,
+} from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useUpdateSite } from '@/hooks/useUpdateSite';
@@ -20,7 +25,10 @@ const SiteSettingsPage: Page = () => {
 
   const siteId = router.query.siteId!;
   const [meQuery] = useMeQuery();
-  const [siteQuery, refetchSiteQuery] = useSiteQuery({ variables: { where: { id: siteId } }, pause: !siteId });
+  const [siteQuery, refetchSiteQuery] = useSiteQuery({
+    variables: { where: { id: siteId } },
+    pause: !siteId,
+  });
 
   const isLoading = siteQuery.fetching || meQuery.fetching;
 
@@ -50,7 +58,10 @@ const SiteSettingsPage: Page = () => {
 
         const data: UpdateSiteDataInput = { name: values.name };
 
-        await updateSite({ updateSiteArgs: data, successMessage: 'Site renamed successfully' });
+        await updateSite({
+          updateSiteArgs: data,
+          successMessage: 'Site renamed successfully',
+        });
       } catch (error) {
         toast.error({ error, log: 'Error updating site' });
       }
@@ -74,7 +85,10 @@ const SiteSettingsPage: Page = () => {
   const handleLogoUpload = async ({ image }: HandleLogoUploadProps) => {
     const data: UpdateSiteDataInput = { avatar: image };
 
-    await updateSite({ updateSiteArgs: data, successMessage: 'Site logo uploaded successfully' });
+    await updateSite({
+      updateSiteArgs: data,
+      successMessage: 'Site logo uploaded successfully',
+    });
     refetchSiteQuery({ requestPolicy: 'network-only' });
   };
 
@@ -99,7 +113,10 @@ const SiteSettingsPage: Page = () => {
         }
 
         const data: UpdateSiteDataInput = { slug: values.slug };
-        await updateSite({ updateSiteArgs: data, successMessage: 'Site slug updated successfully' });
+        await updateSite({
+          updateSiteArgs: data,
+          successMessage: 'Site slug updated successfully',
+        });
       } catch (error) {
         toast.error({ error, log: 'Error updating site slug' });
       }
@@ -116,18 +133,30 @@ const SiteSettingsPage: Page = () => {
         <Site.Settings.Sections.SiteSlug isLoading={isLoading} />
       </Form.Provider>
 
-      <Site.Settings.Sections.SiteLogo onSubmit={handleLogoUpload} isLoading={isLoading} initialImage={siteQuery.data?.site.avatar} />
+      <Site.Settings.Sections.SiteLogo
+        onSubmit={handleLogoUpload}
+        isLoading={isLoading}
+        initialImage={siteQuery.data?.site.avatar}
+      />
 
-      <Site.Settings.Sections.PurgeCache onSubmit={handlePurgeCache} isLoading={isLoading} />
+      <Site.Settings.Sections.PurgeCache
+        onSubmit={handlePurgeCache}
+        isLoading={isLoading}
+      />
 
       <TwoFactorAuthentication.Provider>
-        <Site.Settings.Sections.DeleteSite siteName={siteQuery.data?.site.name} isLoading={isLoading} />
+        <Site.Settings.Sections.DeleteSite
+          siteName={siteQuery.data?.site.name}
+          isLoading={isLoading}
+        />
       </TwoFactorAuthentication.Provider>
     </>
   );
 };
 
-SiteSettingsPage.getLayout = (page) => <Site.Settings.Layout>{page}</Site.Settings.Layout>;
+SiteSettingsPage.getLayout = (page) => (
+  <Site.Settings.Layout>{page}</Site.Settings.Layout>
+);
 
 export default withAccess({
   Component: SiteSettingsPage,

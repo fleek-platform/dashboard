@@ -27,19 +27,29 @@ const StoragePage: Page = () => {
         data.backupStorageOnFilecoin = true;
     }
 
-    await updateProject({ updateProjectArgs: data, successMessage: 'Default storage changed successfully' });
+    await updateProject({
+      updateProjectArgs: data,
+      successMessage: 'Default storage changed successfully',
+    });
   };
 
   return (
     <>
       <Projects.Settings.Sections.Storage.StorageNotifications />
-      <Projects.Settings.Sections.Storage.Provider onSaveSubmit={handleSaveChanges}>
+      <Projects.Settings.Sections.Storage.Provider
+        onSaveSubmit={handleSaveChanges}
+      >
         <Projects.Settings.Sections.Storage.CloudStorage />
       </Projects.Settings.Sections.Storage.Provider>
     </>
   );
 };
 
-StoragePage.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
+StoragePage.getLayout = (page) => (
+  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
+);
 
-export default withAccess({ Component: StoragePage, requiredPermissions: [constants.PERMISSION.STORAGE.EDIT_SETTINGS] });
+export default withAccess({
+  Component: StoragePage,
+  requiredPermissions: [constants.PERMISSION.STORAGE.EDIT_SETTINGS],
+});

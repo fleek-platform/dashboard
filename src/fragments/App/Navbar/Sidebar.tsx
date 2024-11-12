@@ -48,7 +48,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ withNavigation = false }) => {
 
       <S.Sidebar.Content open={isOpen} ref={sidebarRef}>
         <Navbar.Search />
-        {withNavigation && <Navigation stacked onClick={handleNavigationClick} />}
+        {withNavigation && (
+          <Navigation stacked onClick={handleNavigationClick} />
+        )}
       </S.Sidebar.Content>
     </>
   );

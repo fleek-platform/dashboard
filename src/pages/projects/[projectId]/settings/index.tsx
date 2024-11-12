@@ -5,7 +5,11 @@ import { useClient } from 'urql';
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Projects, TwoFactorAuthentication } from '@/fragments';
-import { UpdateProjectDataInput, useProjectQuery, useProjectsQuery } from '@/generated/graphqlClient';
+import {
+  UpdateProjectDataInput,
+  useProjectQuery,
+  useProjectsQuery,
+} from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useUpdateProject } from '@/hooks/useUpdateProject';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -21,7 +25,10 @@ const Settings: Page = () => {
 
   const client = useClient();
   const [projectsQuery] = useProjectsQuery();
-  const [projectQuery] = useProjectQuery({ variables: { where: { id: router.query.projectId! } }, pause: !router.query.projectId });
+  const [projectQuery] = useProjectQuery({
+    variables: { where: { id: router.query.projectId! } },
+    pause: !router.query.projectId,
+  });
   const [, refetchProjectsQuery] = useProjectsQuery();
 
   const isLoading = useMemo(() => {
@@ -37,11 +44,16 @@ const Settings: Page = () => {
       name: Form.createExtraValidation.projectName(client),
     },
     onSubmit: async (values) => {
-      await updateProject({ updateProjectArgs: { name: values.name }, successMessage: 'Project renamed successfully' });
+      await updateProject({
+        updateProjectArgs: { name: values.name },
+        successMessage: 'Project renamed successfully',
+      });
     },
   });
 
-  const handleBlockOfacCountries = async (allowAccessFromOfacCountries: boolean) => {
+  const handleBlockOfacCountries = async (
+    allowAccessFromOfacCountries: boolean,
+  ) => {
     await updateProject({
       updateProjectArgs: { allowAccessFromOfacCountries },
       successMessage: `Access for users from OFAC countries ${allowAccessFromOfacCountries ? 'allowed' : 'blocked'}.`,
@@ -52,7 +64,10 @@ const Settings: Page = () => {
   const handleLogoUpload = async ({ image }: HandleLogoUploadProps) => {
     const data: UpdateProjectDataInput = { avatar: image };
 
-    await updateProject({ updateProjectArgs: data, successMessage: 'Project logo uploaded successfully' });
+    await updateProject({
+      updateProjectArgs: data,
+      successMessage: 'Project logo uploaded successfully',
+    });
     refetchProjectsQuery({ requestPolicy: 'network-only' });
   };
 
@@ -67,8 +82,12 @@ const Settings: Page = () => {
         value={projectQuery.data?.project.allowAccessFromOfacCountries}
         isLoading={isLoading}
         title={'Allow OFAC country access'}
-        text={'Can users from OFAC-blocked countries access sites and private gateways from this project?'}
-        permissions={[constants.PERMISSION.PROJECT.EDIT_ACCESS_FROM_OFAC_COUNTRIES]}
+        text={
+          'Can users from OFAC-blocked countries access sites and private gateways from this project?'
+        }
+        permissions={[
+          constants.PERMISSION.PROJECT.EDIT_ACCESS_FROM_OFAC_COUNTRIES,
+        ]}
       />
 
       <Projects.Settings.Sections.ProjectLogo
@@ -88,7 +107,9 @@ const Settings: Page = () => {
   );
 };
 
-Settings.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
+Settings.getLayout = (page) => (
+  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
+);
 
 export default withAccess({
   Component: Settings,

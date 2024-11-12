@@ -31,7 +31,9 @@ export const parseWhitelistDomains = ({
       ...whiteLabelData.map((whiteLabelData) => whiteLabelData.hostname),
     ];
 
-    return Array.from(new Set(combinedWhitelistDomains)).map((whiteListDomain) => ({ hostname: whiteListDomain }));
+    return Array.from(new Set(combinedWhitelistDomains)).map(
+      (whiteListDomain) => ({ hostname: whiteListDomain }),
+    );
   }
 
   return whitelistData;

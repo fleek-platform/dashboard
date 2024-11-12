@@ -18,11 +18,17 @@ export const MaintenancePage: React.FC = () => {
         <Text as="h1">Sorry, we&apos;re down for maintenance</Text>
         <Text>
           We&apos;ll be back up shortly. Check our&nbsp;
-          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DISCORD} colorScheme="yellow">
+          <ExternalLink
+            href={constants.EXTERNAL_LINK.FLEEK_DISCORD}
+            colorScheme="yellow"
+          >
             Discord
           </ExternalLink>
           &nbsp;or&nbsp;
-          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_TWITTER} colorScheme="yellow">
+          <ExternalLink
+            href={constants.EXTERNAL_LINK.FLEEK_TWITTER}
+            colorScheme="yellow"
+          >
             X
           </ExternalLink>
           &nbsp;for updates.

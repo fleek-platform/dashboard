@@ -8,6 +8,19 @@ type SiteFieldProps = LoadingProps<
   }>
 >;
 
-export const SiteField: React.FC<SiteFieldProps> = ({ isLoading, isDisabled, label }) => {
-  return <Form.InputField name="name" placeholder="Your site name" label={label} isLoading={isLoading} isDisabled={isDisabled} autoFocus />;
+export const SiteField: React.FC<SiteFieldProps> = ({
+  isLoading,
+  isDisabled,
+  label,
+}) => {
+  return (
+    <Form.InputField
+      name="name"
+      placeholder="Your site name"
+      label={label}
+      isLoading={isLoading}
+      isDisabled={isDisabled}
+      autoFocus
+    />
+  );
 };

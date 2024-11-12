@@ -8,7 +8,13 @@ export const BitbucketIcon: React.FC<S.CustomProps> = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <linearGradient id="bitbucket-icon" x1="108.633%" x2="46.927%" y1="13.818%" y2="78.776%">
+    <linearGradient
+      id="bitbucket-icon"
+      x1="108.633%"
+      x2="46.927%"
+      y1="13.818%"
+      y2="78.776%"
+    >
       <stop offset=".18" stopColor="#0052cc" />
       <stop offset="1" stopColor="#2684ff" />
     </linearGradient>

@@ -3,14 +3,23 @@ import { forwardStyledRef } from '@/theme';
 import { Icon } from '../Icon/Icon';
 import { PaginationStyles as PS } from './Pagination.styles';
 import { PaginationItem } from './Pagination.utils';
-import { PaginationItemType, usePagination, UsePaginationArgs } from './usePagination';
+import {
+  PaginationItemType,
+  usePagination,
+  UsePaginationArgs,
+} from './usePagination';
 
-export type PaginationProps = UsePaginationArgs & React.ComponentPropsWithRef<typeof PS.Container>;
+export type PaginationProps = UsePaginationArgs &
+  React.ComponentPropsWithRef<typeof PS.Container>;
 
 export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
   PS.Container,
   ({ totalPages, currentPage, onPageChange: _onPageChange, ...props }, ref) => {
-    const { page: _currentPage, items, onPageChange } = usePagination({ totalPages, currentPage, onPageChange: _onPageChange });
+    const {
+      page: _currentPage,
+      items,
+      onPageChange,
+    } = usePagination({ totalPages, currentPage, onPageChange: _onPageChange });
 
     return (
       <PS.Container {...props} ref={ref}>
@@ -22,7 +31,8 @@ export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
               props: {
                 'aria-label': 'Previous page',
                 disabled: _currentPage === 1,
-                onClick: () => (_currentPage > 1 ? onPageChange(_currentPage - 1) : null),
+                onClick: () =>
+                  _currentPage > 1 ? onPageChange(_currentPage - 1) : null,
               },
               children: <Icon name="chevron-left" />,
             },
@@ -30,7 +40,10 @@ export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
               props: {
                 'aria-label': 'Next page',
                 disabled: _currentPage === (totalPages || 0),
-                onClick: () => (_currentPage < (totalPages || 0) ? onPageChange(_currentPage + 1) : null),
+                onClick: () =>
+                  _currentPage < (totalPages || 0)
+                    ? onPageChange(_currentPage + 1)
+                    : null,
               },
               children: <Icon name="chevron-right" />,
             },
@@ -51,14 +64,18 @@ export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
           }[type];
 
           return (
-            <PS.Button key={`${page}-${index}`} {...button.props} active={page === _currentPage}>
+            <PS.Button
+              key={`${page}-${index}`}
+              {...button.props}
+              active={page === _currentPage}
+            >
               {button.children}
             </PS.Button>
           );
         })}
       </PS.Container>
     );
-  }
+  },
 );
 
 export namespace Paginator {

@@ -1,4 +1,9 @@
-export type UploadStatus = 'uploading' | 'error' | 'success' | 'canceled' | 'duplicate';
+export type UploadStatus =
+  | 'uploading'
+  | 'error'
+  | 'success'
+  | 'canceled'
+  | 'duplicate';
 
 export type Upload = {
   id: string; // needed to update the status of the upload

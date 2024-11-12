@@ -9,11 +9,21 @@ type DeploymentDomainsProps = {
   ens: SiteENSRecord;
 };
 
-export const DeploymentDomains: React.FC<DeploymentDomainsProps> = ({ domain, ens }) => {
+export const DeploymentDomains: React.FC<DeploymentDomainsProps> = ({
+  domain,
+  ens,
+}) => {
   return (
     <>
       {domain && <DataRow label="DNS Updated" text={domain} icon="domain" />}
-      {ens && <DataRow label="ENS Updated" text={ens.name} icon="ens-colored" iconContainerVariant="ens" />}
+      {ens && (
+        <DataRow
+          label="ENS Updated"
+          text={ens.name}
+          icon="ens-colored"
+          iconContainerVariant="ens"
+        />
+      )}
     </>
   );
 };
@@ -22,10 +32,17 @@ type DataRowProps = {
   label: string;
   text?: string;
   icon: IconName;
-  iconContainerVariant?: React.ComponentProps<typeof S.IconContainer>['variant'];
+  iconContainerVariant?: React.ComponentProps<
+    typeof S.IconContainer
+  >['variant'];
 };
 
-export const DataRow: React.FC<DataRowProps> = ({ label, text = '-', icon, iconContainerVariant }) => (
+export const DataRow: React.FC<DataRowProps> = ({
+  label,
+  text = '-',
+  icon,
+  iconContainerVariant,
+}) => (
   <S.Row.Container>
     <S.Domains.Container>
       <S.IconContainer variant={iconContainerVariant}>

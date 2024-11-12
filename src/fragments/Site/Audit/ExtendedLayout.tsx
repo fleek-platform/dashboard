@@ -16,7 +16,10 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
 
   return (
     <SiteLayout>
-      <SubNavigationLayout navigation={navigation} isNavigationLoading={session.loading}>
+      <SubNavigationLayout
+        navigation={navigation}
+        isNavigationLoading={session.loading}
+      >
         {children}
       </SubNavigationLayout>
     </SiteLayout>

@@ -32,14 +32,22 @@ export const SettingsListItem = ({
         marbleSrc && <S.Avatar as={AvatarMarble} name={marbleSrc} />
       )}
 
-      <SettingsListItem.Data title={title} subtitle={subtitle} titleSuffix={titleSuffix} />
+      <SettingsListItem.Data
+        title={title}
+        subtitle={subtitle}
+        titleSuffix={titleSuffix}
+      />
 
       {children}
     </S.Container>
   );
 };
 
-SettingsListItem.Skeleton = ({ enableAvatar, disableTitle, disableSubtitle }: SettingsListItem.SkeletonProps) => {
+SettingsListItem.Skeleton = ({
+  enableAvatar,
+  disableTitle,
+  disableSubtitle,
+}: SettingsListItem.SkeletonProps) => {
   return (
     <S.Container variant="container">
       {enableAvatar && <S.DataSkeleton variant="avatar" />}
@@ -61,13 +69,26 @@ SettingsListItem.DropdownMenu = ({
   ...props
 }: SettingsListItem.DropdownProps) => {
   if (isLoading) {
-    return <Button intent="ghost" size="sm" loading disabled className="self-center p-1"></Button>;
+    return (
+      <Button
+        intent="ghost"
+        size="sm"
+        loading
+        disabled
+        className="self-center p-1"
+      ></Button>
+    );
   }
 
   if (isDisabled) {
     return (
       <PermissionsTooltip hasAccess={hasAccess} asChild>
-        <Button color="ghost" size="sm" disabled={isDisabled} className="self-center p-1">
+        <Button
+          color="ghost"
+          size="sm"
+          disabled={isDisabled}
+          className="self-center p-1"
+        >
           <Icon name="ellipsis-vertical" />
         </Button>
       </PermissionsTooltip>
@@ -77,7 +98,12 @@ SettingsListItem.DropdownMenu = ({
   return (
     <Menu.Root {...props}>
       <Menu.Trigger asChild>
-        <Button intent="ghost" size="sm" loading={isLoading} className="self-center p-1">
+        <Button
+          intent="ghost"
+          size="sm"
+          loading={isLoading}
+          className="self-center p-1"
+        >
           <Icon name="ellipsis-vertical" />
         </Button>
       </Menu.Trigger>
@@ -91,7 +117,12 @@ SettingsListItem.DropdownMenu = ({
   );
 };
 
-SettingsListItem.DropdownMenuItem = ({ icon, children, href, ...props }: SettingsListItem.DropdownMenuItemProps) => {
+SettingsListItem.DropdownMenuItem = ({
+  icon,
+  children,
+  href,
+  ...props
+}: SettingsListItem.DropdownMenuItemProps) => {
   const content = (
     <Menu.Item {...props}>
       {children}
@@ -108,7 +139,11 @@ SettingsListItem.DropdownMenuItem = ({ icon, children, href, ...props }: Setting
 
 SettingsListItem.DropdownMenuSeparator = Menu.Separator;
 
-SettingsListItem.Data = ({ title, subtitle, titleSuffix }: SettingsListItem.DataProps) => (
+SettingsListItem.Data = ({
+  title,
+  subtitle,
+  titleSuffix,
+}: SettingsListItem.DataProps) => (
   <S.DataWrapper>
     <Text as="h3" variant="primary" weight={500}>
       {title}

@@ -16,11 +16,15 @@ import { SettingsItemModal } from '../../../Elements/SettingsItemModal';
 import { VerifyDomainModalStyles as S } from './VerifyDomainModal.styles';
 
 export const VerifyDomainModal: React.FC = () => {
-  const { selectedId, isModalOpen, withDnsLink, closeModal } = useSettingsItemContext();
+  const { selectedId, isModalOpen, withDnsLink, closeModal } =
+    useSettingsItemContext();
   const route = useRouter();
   const toast = useToast();
 
-  const [domainQuery] = useDomainQuery({ variables: { where: { id: selectedId } }, pause: !selectedId || !isModalOpen });
+  const [domainQuery] = useDomainQuery({
+    variables: { where: { id: selectedId } },
+    pause: !selectedId || !isModalOpen,
+  });
 
   const isSiteDomain = route.pathname.includes('sites');
 
@@ -38,11 +42,17 @@ export const VerifyDomainModal: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dnsConfigs]);
 
-  const isLoading = domainQuery.fetching || domainQuery.stale || (withDnsLink && !dnsLinkConfig?.length);
+  const isLoading =
+    domainQuery.fetching ||
+    domainQuery.stale ||
+    (withDnsLink && !dnsLinkConfig?.length);
 
   useEffect(() => {
     if (domainQuery.error) {
-      toast.error({ error: domainQuery.error, log: 'Failed to fetch DNS records' });
+      toast.error({
+        error: domainQuery.error,
+        log: 'Failed to fetch DNS records',
+      });
 
       closeModal();
     }
@@ -62,15 +72,24 @@ export const VerifyDomainModal: React.FC = () => {
         }CNAME record within your DNS provider. After that, confirm you've completed this step by clicking the button below.`}
       </Text>
 
-      <DNSConfigurations dnsConfig={dnsLinkConfig && dnsLinkConfig[0]} hostname={hostname} isLoading={isLoading as true} />
+      <DNSConfigurations
+        dnsConfig={dnsLinkConfig && dnsLinkConfig[0]}
+        hostname={hostname}
+        isLoading={isLoading as true}
+      />
 
-      <LearnMoreMessage prefix="Need help? Follow the instructions" href={constants.EXTERNAL_LINK.FLEEK_DOCS_CUSTOM_DOMAIN}>
+      <LearnMoreMessage
+        prefix="Need help? Follow the instructions"
+        href={constants.EXTERNAL_LINK.FLEEK_DOCS_CUSTOM_DOMAIN}
+      >
         here
       </LearnMoreMessage>
 
       <Modal.CTARow>
         <SettingsItemModal.CloseButton />
-        <SettingsItemModal.SubmitButton disabled={isLoading}>Ok, I&apos;ve added it</SettingsItemModal.SubmitButton>
+        <SettingsItemModal.SubmitButton disabled={isLoading}>
+          Ok, I&apos;ve added it
+        </SettingsItemModal.SubmitButton>
       </Modal.CTARow>
     </SettingsItemModal.Root>
   );
@@ -81,7 +100,11 @@ type DNSConfigurationsProps = LoadingProps<{
   hostname: string;
 }>;
 
-const DNSConfigurations: React.FC<DNSConfigurationsProps> = ({ isLoading, dnsConfig, hostname }) => {
+const DNSConfigurations: React.FC<DNSConfigurationsProps> = ({
+  isLoading,
+  dnsConfig,
+  hostname,
+}) => {
   const { withDnsLink } = useSettingsItemContext();
   const route = useRouter();
 
@@ -95,7 +118,10 @@ const DNSConfigurations: React.FC<DNSConfigurationsProps> = ({ isLoading, dnsCon
     <DataSection
       key={dnsConfig.id}
       config={dnsConfig}
-      hostname={getDomainOrSubdomain({ hostname, withDnsLink: isSiteDomain && withDnsLink })}
+      hostname={getDomainOrSubdomain({
+        hostname,
+        withDnsLink: isSiteDomain && withDnsLink,
+      })}
     />
   );
 };
@@ -105,7 +131,11 @@ type DataSectionProps = LoadingProps<{
   hostname: string;
 }>;
 
-const DataSection: React.FC<DataSectionProps> = ({ isLoading, config, hostname }) => {
+const DataSection: React.FC<DataSectionProps> = ({
+  isLoading,
+  config,
+  hostname,
+}) => {
   const toast = useToast();
 
   if (isLoading) {
@@ -153,7 +183,12 @@ type DataSectionItemProps = LoadingProps<
   }>
 >;
 
-const DataSectionItem: React.FC<DataSectionItemProps> = ({ children, label, onCopy, isLoading }) => {
+const DataSectionItem: React.FC<DataSectionItemProps> = ({
+  children,
+  label,
+  onCopy,
+  isLoading,
+}) => {
   if (isLoading) {
     return <DataSectionItemSkeleton label={label} />;
   }
@@ -169,7 +204,9 @@ const DataSectionItem: React.FC<DataSectionItemProps> = ({ children, label, onCo
   );
 };
 
-const DataSectionItemSkeleton: React.FC<Pick<DataSectionItemProps, 'label'>> = ({ label }) => (
+const DataSectionItemSkeleton: React.FC<
+  Pick<DataSectionItemProps, 'label'>
+> = ({ label }) => (
   <FormField.Root>
     <FormField.Label>{label}</FormField.Label>
     <Modal.Inner.TextSkeleton />

@@ -4,7 +4,9 @@ import { useSiteQuotaQuery } from '@/generated/graphqlClient';
 import { usePermissions } from './usePermissions';
 
 export const useCanDeploySite = ({ siteId }: { siteId: string }) => {
-  const hasDeployPermission = usePermissions({ action: [constants.PERMISSION.SITE.DEPLOY] });
+  const hasDeployPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.DEPLOY],
+  });
   const [siteQuotaQuery, refetchSiteQuotaQuery] = useSiteQuotaQuery({
     variables: { where: { id: siteId } },
     requestPolicy: 'network-only',
@@ -20,7 +22,8 @@ export const useCanDeploySite = ({ siteId }: { siteId: string }) => {
   }
 
   const { siteQuota } = siteQuotaQuery.data;
-  const canDeploy = siteQuota.maxDeploymentQueue.remaining > 0 && hasDeployPermission;
+  const canDeploy =
+    siteQuota.maxDeploymentQueue.remaining > 0 && hasDeployPermission;
 
   return {
     total: siteQuota.maxDeploymentQueue.total,

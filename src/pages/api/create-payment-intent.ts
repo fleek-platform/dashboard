@@ -11,7 +11,10 @@ import { Stripe } from 'stripe';
 // eslint-disable-next-line no-process-env
 const STRIPE_PRIVATE_KEY = process.env.STRIPE_PRIVATE_KEY;
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>,
+) => {
   try {
     if (!STRIPE_PRIVATE_KEY) {
       throw new CreatePaymentIntentError('Stripe secret key is not set');

@@ -12,7 +12,8 @@ export default meta;
 export const Default: StoryObj<SelfManagedSetupProps> = {
   args: {
     title: 'Copy Config Files',
-    description: 'In order to deploy your site, you will need to copy the below code snippets and add them to your project.',
+    description:
+      'In order to deploy your site, you will need to copy the below code snippets and add them to your project.',
     projectId: 'mocked-project-id',
     codeSnippets: [
       {

@@ -9,7 +9,9 @@ export const EmptyFiles: React.FC = () => {
         <Text as="h2" variant="primary" size="2xl" weight={700}>
           No files yet :(
         </Text>
-        <Text size="md">Use the Upload button to store your first file/folder on Fleek.</Text>
+        <Text size="md">
+          Use the Upload button to store your first file/folder on Fleek.
+        </Text>
       </>
     </S.EmptyFiles.Container>
   );

@@ -50,16 +50,27 @@ export const Deploy: React.FC<DeployProps> = ({
 
   return (
     <S.ItemRow isSelfManaged={isSelfManaged} className={className}>
-      <Link href={routes.project.site.deployments.detail({ projectId, siteId, deploymentId: deployment.id })}>
+      <Link
+        href={routes.project.site.deployments.detail({
+          projectId,
+          siteId,
+          deploymentId: deployment.id,
+        })}
+      >
         <S.ItemContainer>
           <Text variant="primary" weight={700}>
             {shortStringFormat({ str: deployment?.id, index: 6 })}
           </Text>
-          <Text size="xs">{isSelfManaged ? 'Deployed from CLI' : environment}</Text>
+          <Text size="xs">
+            {isSelfManaged ? 'Deployed from CLI' : environment}
+          </Text>
         </S.ItemContainer>
 
         <S.ItemContainer>
-          <DeployStatus deployment={deployment} isMostRecentDeployment={isMostRecentDeployment} />
+          <DeployStatus
+            deployment={deployment}
+            isMostRecentDeployment={isMostRecentDeployment}
+          />
         </S.ItemContainer>
 
         {!isSelfManaged && (
@@ -84,7 +95,12 @@ export const Deploy: React.FC<DeployProps> = ({
         </S.AuthorContainer>
       </Link>
       {deployment && (
-        <DropdownMenu isSelfManaged={isSelfManaged} deployment={deployment} onRedeploy={onRedeploy} canRedeploy={canRedeploy} />
+        <DropdownMenu
+          isSelfManaged={isSelfManaged}
+          deployment={deployment}
+          onRedeploy={onRedeploy}
+          canRedeploy={canRedeploy}
+        />
       )}
     </S.ItemRow>
   );
@@ -95,7 +111,10 @@ type DeploymentProps = {
 };
 
 const TimeElapsed: React.FC<DeploymentProps> = ({ deployment }) => {
-  const timeElapsed = getDurationUntilNow({ isoDateString: deployment?.createdAt, shortFormat: true });
+  const timeElapsed = getDurationUntilNow({
+    isoDateString: deployment?.createdAt,
+    shortFormat: true,
+  });
 
   return <>{timeElapsed}</>;
 };
@@ -104,9 +123,10 @@ type DeploySkeletonProps = ChildrenProps<{
   className?: string;
 }>;
 
-export const DeploySkeleton: React.FC<DeploySkeletonProps> = ({ children, className }) => (
-  <S.ItemRow className={className}>{children}</S.ItemRow>
-);
+export const DeploySkeleton: React.FC<DeploySkeletonProps> = ({
+  children,
+  className,
+}) => <S.ItemRow className={className}>{children}</S.ItemRow>;
 
 export const DeployItemSkeleton: React.FC = () => (
   <S.ItemContainer>

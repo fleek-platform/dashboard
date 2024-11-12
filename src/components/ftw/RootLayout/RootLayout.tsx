@@ -13,7 +13,16 @@ import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps } from '@/types/Props';
-import { Box, Button, Icon, IconName, Scrollable, SidebarSidepanel, Skeleton, Text } from '@/ui';
+import {
+  Box,
+  Button,
+  Icon,
+  IconName,
+  Scrollable,
+  SidebarSidepanel,
+  Skeleton,
+  Text,
+} from '@/ui';
 import { cn } from '@/utils/cn';
 import { isServerSide } from '@/utils/isServerSide';
 
@@ -40,16 +49,24 @@ const Container: React.FC<ChildrenProps> = ({ children }) => {
   const { subscription } = useBillingContext();
 
   const shouldShowBanner =
-    !session.loading && (paymentMethodExpired.hasExpired || paymentMethodExpired.isAboutToExpire) && !subscription.data?.endDate;
+    !session.loading &&
+    (paymentMethodExpired.hasExpired || paymentMethodExpired.isAboutToExpire) &&
+    !subscription.data?.endDate;
 
   return (
     <Box className="bg-app-bg min-h-dvh">
       {shouldShowBanner && (
         <Box className="bg-danger-3 py-1 flex items-center">
           <Text className="text-danger-11">
-            Your billing method {paymentMethodExpired.isAboutToExpire && 'is expiring soon.'}
-            {paymentMethodExpired.hasExpired && 'has expired.'} You can update it&nbsp;
-            <Link href={routes.project.settings.billing({ projectId: session.project.id })}>
+            Your billing method{' '}
+            {paymentMethodExpired.isAboutToExpire && 'is expiring soon.'}
+            {paymentMethodExpired.hasExpired && 'has expired.'} You can update
+            it&nbsp;
+            <Link
+              href={routes.project.settings.billing({
+                projectId: session.project.id,
+              })}
+            >
               <u>here.</u>
             </Link>
           </Text>
@@ -65,7 +82,10 @@ type SidebarItemProps = {
   isExact?: boolean;
 };
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ navItem, isExact = false }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  navItem,
+  isExact = false,
+}) => {
   const isActivePage = useIsActivePage({ path: navItem.path, isExact });
 
   return (
@@ -75,8 +95,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem, isExact = false }) =
       className={cn(
         'flex text-neutral-11 hover:bg-neutral-4 active:bg-neutral-5 items-center gap-3 py-2 px-3 text-sm font-medium rounded-lg select-none ring-0 outline-0 focus-visible:ring-2 ring-neutral-8',
         {
-          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11': isActivePage,
-        }
+          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11':
+            isActivePage,
+        },
       )}
     >
       <Icon name={navItem.icon} className="size-4" />
@@ -85,7 +106,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem, isExact = false }) =
   );
 };
 
-const ExternalLinkWrapper: React.FC<ChildrenProps & { href?: string; onClick?: () => void }> = ({ children, href, onClick }) => {
+const ExternalLinkWrapper: React.FC<
+  ChildrenProps & { href?: string; onClick?: () => void }
+> = ({ children, href, onClick }) => {
   if (href) {
     return (
       <ExternalLink
@@ -94,7 +117,10 @@ const ExternalLinkWrapper: React.FC<ChildrenProps & { href?: string; onClick?: (
       >
         <Text className="group-hover:text-neutral-12">{children}</Text>
         <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg shrink-0">
-          <Icon name="arrow-up-right" className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]" />
+          <Icon
+            name="arrow-up-right"
+            className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]"
+          />
         </Box>
       </ExternalLink>
     );
@@ -107,7 +133,10 @@ const ExternalLinkWrapper: React.FC<ChildrenProps & { href?: string; onClick?: (
     >
       <Text className="group-hover:text-neutral-12">{children}</Text>
       <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg shrink-0">
-        <Icon name="arrow-up-right" className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]" />
+        <Icon
+          name="arrow-up-right"
+          className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]"
+        />
       </Box>
     </button>
   );
@@ -119,7 +148,11 @@ type SidebarProps = {
   isNavigationLoading: boolean;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigationLoading }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  slotSidebar,
+  navigation,
+  isNavigationLoading,
+}) => {
   const { openModalWithTab } = useFeedbackModal();
   const version = `Beta v${constants.VERSION}`;
 
@@ -128,7 +161,10 @@ const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigation
 
   useEffect(() => {
     // on the client side, show versions if not prod or user is internal
-    if (!isServerSide() && (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)) {
+    if (
+      !isServerSide() &&
+      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
+    ) {
       setShowVersion(true);
     }
   }, [flags]);
@@ -150,7 +186,11 @@ const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigation
           {isNavigationLoading ? (
             <>
               {Array.from({ length: 5 }).map((_, i) => (
-                <Box key={i} variant="container" className="border-0 flex-row gap-3 py-2 px-3 h-[2rem] items-center">
+                <Box
+                  key={i}
+                  variant="container"
+                  className="border-0 flex-row gap-3 py-2 px-3 h-[2rem] items-center"
+                >
                   <Skeleton variant="text" className="size-4 shrink-0" />
                   <Skeleton variant="text" className="w-1/2 h-2.5" />
                 </Box>
@@ -161,7 +201,11 @@ const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigation
               {navigation
                 .filter((navItem) => navItem.hasAccess)
                 .map((navItem) => (
-                  <SidebarItem key={navItem.path} navItem={navItem} isExact={navItem.isExact} />
+                  <SidebarItem
+                    key={navItem.path}
+                    navItem={navItem}
+                    isExact={navItem.isExact}
+                  />
                 ))}
             </>
           )}
@@ -172,9 +216,15 @@ const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigation
         {showVersions && <VersionTags />}
         <Announcement />
         <Box className="border border-neutral-6 py-2 pt-2.5 rounded-xl">
-          <ExternalLinkWrapper onClick={() => openModalWithTab('FEEDBACK')}>Help & Feedback</ExternalLinkWrapper>
-          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>Documentation</ExternalLinkWrapper>
-          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>Support</ExternalLinkWrapper>
+          <ExternalLinkWrapper onClick={() => openModalWithTab('FEEDBACK')}>
+            Help & Feedback
+          </ExternalLinkWrapper>
+          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
+            Documentation
+          </ExternalLinkWrapper>
+          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>
+            Support
+          </ExternalLinkWrapper>
           <Box className="h-[1px] my-2.5 mx-3 bg-neutral-6" />
           <AccountDropdown />
         </Box>
@@ -183,7 +233,11 @@ const Sidebar: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigation
   );
 };
 
-const SidebarWrapper: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNavigationLoading }) => {
+const SidebarWrapper: React.FC<SidebarProps> = ({
+  slotSidebar,
+  navigation,
+  isNavigationLoading,
+}) => {
   const isMobile = useMediaQueryWindow('(max-width: 1024px)');
 
   if (isMobile) {
@@ -196,7 +250,11 @@ const SidebarWrapper: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNav
             </Button>
           </SidebarSidepanel.Trigger>
           <SidebarSidepanel.Content>
-            <Sidebar slotSidebar={slotSidebar} navigation={navigation} isNavigationLoading={isNavigationLoading} />
+            <Sidebar
+              slotSidebar={slotSidebar}
+              navigation={navigation}
+              isNavigationLoading={isNavigationLoading}
+            />
           </SidebarSidepanel.Content>
         </SidebarSidepanel.Root>
       </Box>
@@ -205,7 +263,11 @@ const SidebarWrapper: React.FC<SidebarProps> = ({ slotSidebar, navigation, isNav
 
   return (
     <Box className="hidden lg:block">
-      <Sidebar slotSidebar={slotSidebar} navigation={navigation} isNavigationLoading={isNavigationLoading} />
+      <Sidebar
+        slotSidebar={slotSidebar}
+        navigation={navigation}
+        isNavigationLoading={isNavigationLoading}
+      />
     </Box>
   );
 };
@@ -215,10 +277,16 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
 
   return (
     <Scrollable.Root className="lg:h-[calc(100vh-5.938rem)] overflow-hidden">
-      <Box className={cn('lg:h-[1px] bg-transparent', { 'lg:bg-neutral-6': hasScrolled })} />
+      <Box
+        className={cn('lg:h-[1px] bg-transparent', {
+          'lg:bg-neutral-6': hasScrolled,
+        })}
+      />
       <Scrollable.VerticalBar />
       <Scrollable.Viewport className="w-full h-full" onScroll={handleScroll}>
-        <Box className="flex flex-col gap-6 p-4 pt-0 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">{children}</Box>
+        <Box className="flex flex-col gap-6 p-4 pt-0 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
+          {children}
+        </Box>
       </Scrollable.Viewport>
     </Scrollable.Root>
   );
@@ -241,9 +309,16 @@ type HeaderProps = {
   breadcrumbs?: BreadcrumbItem[];
 };
 
-const Header: React.FC<HeaderProps> = ({ navigation, isNavigationLoading, slotPage, breadcrumbs }) => {
+const Header: React.FC<HeaderProps> = ({
+  navigation,
+  isNavigationLoading,
+  slotPage,
+  breadcrumbs,
+}) => {
   const router = useRouter();
-  const [route] = navigation.filter((navItem) => router.asPath.includes(navItem.path));
+  const [route] = navigation.filter((navItem) =>
+    router.asPath.includes(navItem.path),
+  );
   const isLoading = isNavigationLoading || (!route && !breadcrumbs);
 
   if (isLoading) {
@@ -252,7 +327,13 @@ const Header: React.FC<HeaderProps> = ({ navigation, isNavigationLoading, slotPa
 
   return (
     <Box className="flex-row items-center flex-wrap justify-between gap-2 p-4 md:gap-0 md:h-10 max-w-[82rem] w-full self-center">
-      <Breadcrumbs breadcrumbs={breadcrumbs || [{ name: route.label, icon: route.icon, url: route.path }]} />
+      <Breadcrumbs
+        breadcrumbs={
+          breadcrumbs || [
+            { name: route.label, icon: route.icon, url: route.path },
+          ]
+        }
+      />
       {slotPage && slotPage}
     </Box>
   );
@@ -266,12 +347,28 @@ type PageProps = ChildrenProps & {
   breadcrumbs?: BreadcrumbItem[];
 };
 
-const Page: React.FC<PageProps> = ({ slotSidebar, slotPage, navigation, isNavigationLoading, breadcrumbs, children }) => (
+const Page: React.FC<PageProps> = ({
+  slotSidebar,
+  slotPage,
+  navigation,
+  isNavigationLoading,
+  breadcrumbs,
+  children,
+}) => (
   <Box className="relative lg:flex-row">
-    <SidebarWrapper slotSidebar={slotSidebar} navigation={navigation} isNavigationLoading={isNavigationLoading} />
+    <SidebarWrapper
+      slotSidebar={slotSidebar}
+      navigation={navigation}
+      isNavigationLoading={isNavigationLoading}
+    />
     <Box className="flex-1 p-2.5 pl-0">
       <Box className="lg:rounded-xl lg:bg-neutral-1 lg:border lg:border-neutral-6">
-        <Header navigation={navigation} isNavigationLoading={isNavigationLoading} slotPage={slotPage} breadcrumbs={breadcrumbs} />
+        <Header
+          navigation={navigation}
+          isNavigationLoading={isNavigationLoading}
+          slotPage={slotPage}
+          breadcrumbs={breadcrumbs}
+        />
         <Content>{children}</Content>
       </Box>
     </Box>
@@ -286,7 +383,9 @@ class RootLayoutError extends Error {
 }
 
 export const RootLayout = () => {
-  throw new RootLayoutError('RootLayout cannot be used as a standalone component. Please use one of the subcomponents instead.');
+  throw new RootLayoutError(
+    'RootLayout cannot be used as a standalone component. Please use one of the subcomponents instead.',
+  );
 };
 
 RootLayout.Container = Container;

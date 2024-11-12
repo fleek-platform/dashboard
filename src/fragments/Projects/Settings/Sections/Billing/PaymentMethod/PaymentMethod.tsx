@@ -18,7 +18,9 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
   const { paymentMethod } = useBillingContext();
 
   const updatePaymentMutation = useUpdatePaymentMethod();
-  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
+  const hasManageBillingPermission = usePermissions({
+    action: [constants.PERMISSION.BILLING.MANAGE],
+  });
 
   const [isUpdatingPlan, setIsUpdatingPlan] = useState(false);
 
@@ -26,7 +28,9 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
 
   useEffect(() => {
     if (paymentMethod.error) {
-      toast.error({ message: 'Error fetching payment method data. Please try again' });
+      toast.error({
+        message: 'Error fetching payment method data. Please try again',
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentMethod.error]);
@@ -42,7 +46,9 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
 
       router.replace(response.url);
     } catch (error) {
-      toast.error({ message: 'Failed to update payment method. Please try again' });
+      toast.error({
+        message: 'Failed to update payment method. Please try again',
+      });
     } finally {
       setIsUpdatingPlan(false);
     }
@@ -60,13 +66,18 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
           subtitle={`Expires ${expirationDate}`}
           avatarIcon="credit-card"
         >
-          <BadgeText colorScheme={hasExpired ? 'red' : 'green'}>{hasExpired ? 'Expired' : 'Active'}</BadgeText>
+          <BadgeText colorScheme={hasExpired ? 'red' : 'green'}>
+            {hasExpired ? 'Expired' : 'Active'}
+          </BadgeText>
           <SettingsListItem.DropdownMenu
             isLoading={isUpdatingPlan}
             isDisabled={!hasManageBillingPermission}
             hasAccess={hasManageBillingPermission}
           >
-            <SettingsListItem.DropdownMenuItem icon="pencil" onClick={onUpdatePayment}>
+            <SettingsListItem.DropdownMenuItem
+              icon="pencil"
+              onClick={onUpdatePayment}
+            >
               Update card details
             </SettingsListItem.DropdownMenuItem>
           </SettingsListItem.DropdownMenu>
@@ -81,7 +92,9 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
 const PaymentTitleContent: React.FC = () => (
   <>
     <SettingsBox.Title>Payment method</SettingsBox.Title>
-    <SettingsBox.Text>The method you use to pay for your Fleek plan.</SettingsBox.Text>
+    <SettingsBox.Text>
+      The method you use to pay for your Fleek plan.
+    </SettingsBox.Text>
   </>
 );
 
@@ -89,7 +102,11 @@ const EmptyMessage: React.FC = () => (
   <SettingsBox.Container>
     <PaymentTitleContent />
     <Box variant="container" className="bg-transparent">
-      <SettingsBox.EmptyContent title="No payment method added" description="Once you add one, it will appear here." showIcon={false} />
+      <SettingsBox.EmptyContent
+        title="No payment method added"
+        description="Once you add one, it will appear here."
+        showIcon={false}
+      />
     </Box>
   </SettingsBox.Container>
 );

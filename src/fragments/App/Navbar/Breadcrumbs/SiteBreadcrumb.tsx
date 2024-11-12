@@ -12,7 +12,12 @@ export type SiteBreadcrumbProps = {
   siteId: string;
 };
 
-export const SiteBreadcrumb: React.FC<SiteBreadcrumbProps> = ({ name, avatar, projectId, siteId }) => {
+export const SiteBreadcrumb: React.FC<SiteBreadcrumbProps> = ({
+  name,
+  avatar,
+  projectId,
+  siteId,
+}) => {
   return (
     <S.Container>
       <S.Divider>/</S.Divider>
@@ -21,7 +26,11 @@ export const SiteBreadcrumb: React.FC<SiteBreadcrumbProps> = ({ name, avatar, pr
       </S.Link>
       <S.Divider>/</S.Divider>
       <S.Link href={routes.project.site.overview({ projectId, siteId })}>
-        {avatar ? <Image src={avatar} alt="Site logo" /> : <AvatarMarble name={siteId} />}
+        {avatar ? (
+          <Image src={avatar} alt="Site logo" />
+        ) : (
+          <AvatarMarble name={siteId} />
+        )}
         <S.Name>{name}</S.Name>
       </S.Link>
     </S.Container>

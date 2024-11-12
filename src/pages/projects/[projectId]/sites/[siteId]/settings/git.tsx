@@ -7,9 +7,14 @@ const GitSettingsPage: Page = () => {
   return <Site.Settings.Sections.Git />;
 };
 
-GitSettingsPage.getLayout = (page) => <Site.Settings.Layout>{page}</Site.Settings.Layout>;
+GitSettingsPage.getLayout = (page) => (
+  <Site.Settings.Layout>{page}</Site.Settings.Layout>
+);
 
 export default withAccess({
   Component: GitSettingsPage,
-  requiredPermissions: [constants.PERMISSION.SITE.ADD_GIT_INTEGRATION, constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION],
+  requiredPermissions: [
+    constants.PERMISSION.SITE.ADD_GIT_INTEGRATION,
+    constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION,
+  ],
 });

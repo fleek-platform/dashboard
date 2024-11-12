@@ -1,4 +1,12 @@
-import { Dispatch, MouseEventHandler, SetStateAction, useCallback, useEffect, useReducer, useRef } from 'react';
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react';
 import { useClient } from 'urql';
 
 import {
@@ -38,7 +46,9 @@ type BaseDeploySiteContext = {
   title?: string;
   setTitle: (title: string) => void;
   handleBackClick?: MouseEventHandler<HTMLButtonElement>;
-  setHandleBackClick: (handleBackClick: MouseEventHandler<HTMLButtonElement>) => void;
+  setHandleBackClick: (
+    handleBackClick: MouseEventHandler<HTMLButtonElement>,
+  ) => void;
   gitUser?: GitUser;
   setGitUser: Dispatch<SetStateAction<GitUser | undefined>>;
   gitBranch?: string;
@@ -84,29 +94,71 @@ export type ProviderState = {
 type State = Record<SourceProvider, ProviderState>;
 
 type ActionType = {
-  type: 'FETCH_START' | 'FETCH_SUCCESS' | 'FETCH_ERROR' | 'REQUIREMENTS_START' | 'REQUIREMENTS_SUCCESS' | 'REQUIREMENTS_ERROR';
+  type:
+    | 'FETCH_START'
+    | 'FETCH_SUCCESS'
+    | 'FETCH_ERROR'
+    | 'REQUIREMENTS_START'
+    | 'REQUIREMENTS_SUCCESS'
+    | 'REQUIREMENTS_ERROR';
   provider: SourceProvider;
   requirements?: ProviderRequirements;
   gitProviderId?: string;
 };
 
 const initialState: State = {
-  GITHUB: { fetching: false, error: false, requirementsError: false, requirementsFetching: false },
-  GITLAB: { fetching: false, error: false, requirementsError: false, requirementsFetching: false },
-  BITBUCKET: { fetching: false, error: false, requirementsError: false, requirementsFetching: false },
+  GITHUB: {
+    fetching: false,
+    error: false,
+    requirementsError: false,
+    requirementsFetching: false,
+  },
+  GITLAB: {
+    fetching: false,
+    error: false,
+    requirementsError: false,
+    requirementsFetching: false,
+  },
+  BITBUCKET: {
+    fetching: false,
+    error: false,
+    requirementsError: false,
+    requirementsFetching: false,
+  },
 };
 
 // eslint-disable-next-line fleek-custom/valid-argument-types
 const reducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case 'FETCH_START':
-      return { ...state, [action.provider]: { ...state[action.provider], fetching: true, error: false } };
+      return {
+        ...state,
+        [action.provider]: {
+          ...state[action.provider],
+          fetching: true,
+          error: false,
+        },
+      };
     case 'FETCH_SUCCESS':
-      return { ...state, [action.provider]: { fetching: false, error: false, gitProviderId: action.gitProviderId } };
+      return {
+        ...state,
+        [action.provider]: {
+          fetching: false,
+          error: false,
+          gitProviderId: action.gitProviderId,
+        },
+      };
     case 'FETCH_ERROR':
       return { ...state, [action.provider]: { fetching: false, error: true } };
     case 'REQUIREMENTS_START':
-      return { ...state, [action.provider]: { ...state[action.provider], requirementsFetching: true, requirementsError: false } };
+      return {
+        ...state,
+        [action.provider]: {
+          ...state[action.provider],
+          requirementsFetching: true,
+          requirementsError: false,
+        },
+      };
     case 'REQUIREMENTS_SUCCESS':
       return {
         ...state,
@@ -118,7 +170,14 @@ const reducer = (state: State, action: ActionType): State => {
         },
       };
     case 'REQUIREMENTS_ERROR':
-      return { ...state, [action.provider]: { ...state[action.provider], requirementsFetching: false, requirementsError: true } };
+      return {
+        ...state,
+        [action.provider]: {
+          ...state[action.provider],
+          requirementsFetching: false,
+          requirementsError: true,
+        },
+      };
     default:
       return state;
   }
@@ -126,7 +185,9 @@ const reducer = (state: State, action: ActionType): State => {
 
 const PREFETCH_SOURCE_PROVIDER = SourceProvider['GITHUB'];
 
-export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseDeploySiteContext }>> = ({ children, value }) => {
+export const DeploySiteProvider: React.FC<
+  React.PropsWithChildren<{ value: BaseDeploySiteContext }>
+> = ({ children, value }) => {
   const client = useClient();
   const session = useSessionContext();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -134,8 +195,13 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
   const prefetchProjectId = useRef<string>();
   const isPopUpOpen = useRef<boolean>();
   const hasSelectedProvider = useRef<boolean>();
-  const pendingActionRef = useRef<((currentProvider?: ProviderState) => void) | null>(null);
-  const pendingRequirementsRef = useRef<{ gitProviderId: string; sourceProvider: SourceProvider }>();
+  const pendingActionRef = useRef<
+    ((currentProvider?: ProviderState) => void) | null
+  >(null);
+  const pendingRequirementsRef = useRef<{
+    gitProviderId: string;
+    sourceProvider: SourceProvider;
+  }>();
 
   const fetchGitProviderRequirements = useCallback(
     async (gitProviderId: string, sourceProvider: SourceProvider) => {
@@ -147,19 +213,35 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
           SiteDeploymentRequirementsMutationVariables
         >(SiteDeploymentRequirementsDocument, { where: { gitProviderId } });
 
-        const { data: providerRequirementsResult } = gitProviderRequirementsMutation;
+        const { data: providerRequirementsResult } =
+          gitProviderRequirementsMutation;
 
-        if (!providerRequirementsResult || gitProviderRequirementsMutation.error) {
-          throw gitProviderRequirementsMutation.error || new Error('Unexpected error fetching site deployment requirements');
+        if (
+          !providerRequirementsResult ||
+          gitProviderRequirementsMutation.error
+        ) {
+          throw (
+            gitProviderRequirementsMutation.error ||
+            new Error('Unexpected error fetching site deployment requirements')
+          );
         }
 
-        const { authorizationUrl, installationUrl, shouldInstall, shouldAuthenticate } =
-          providerRequirementsResult.siteDeploymentRequirements;
+        const {
+          authorizationUrl,
+          installationUrl,
+          shouldInstall,
+          shouldAuthenticate,
+        } = providerRequirementsResult.siteDeploymentRequirements;
 
         dispatch({
           type: 'REQUIREMENTS_SUCCESS',
           provider: sourceProvider,
-          requirements: { authorizationUrl, installationUrl, shouldInstall, shouldAuthenticate },
+          requirements: {
+            authorizationUrl,
+            installationUrl,
+            shouldInstall,
+            shouldAuthenticate,
+          },
         });
 
         return providerRequirementsResult.siteDeploymentRequirements;
@@ -169,12 +251,14 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [client, session.project.id]
+    [client, session.project.id],
   );
 
   const fetchGitProvider = useCallback(
     async (prefetchSourceProvider?: SourceProvider) => {
-      const sourceProvider = prefetchSourceProvider ? prefetchSourceProvider : value.sourceProvider;
+      const sourceProvider = prefetchSourceProvider
+        ? prefetchSourceProvider
+        : value.sourceProvider;
 
       if (!sourceProvider) {
         return;
@@ -182,13 +266,19 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
 
       dispatch({ type: 'FETCH_START', provider: sourceProvider });
 
-      const tag = value.mode === 'template' ? GitProviderTags.templates : GitProviderTags.sites;
+      const tag =
+        value.mode === 'template'
+          ? GitProviderTags.templates
+          : GitProviderTags.sites;
 
       try {
-        const gitProviderQueryResult = await client.query<GitProviderQuery, GitProviderQueryVariables>(
+        const gitProviderQueryResult = await client.query<
+          GitProviderQuery,
+          GitProviderQueryVariables
+        >(
           GitProviderDocument,
           { where: { tag } },
-          { requestPolicy: 'network-only' }
+          { requestPolicy: 'network-only' },
         );
 
         const gitProvider = gitProviderQueryResult.data?.gitProvider;
@@ -197,7 +287,11 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
           throw gitProviderQueryResult.error;
         }
 
-        dispatch({ type: 'FETCH_SUCCESS', provider: sourceProvider, gitProviderId: gitProvider.id });
+        dispatch({
+          type: 'FETCH_SUCCESS',
+          provider: sourceProvider,
+          gitProviderId: gitProvider.id,
+        });
 
         await fetchGitProviderRequirements(gitProvider.id, sourceProvider);
 
@@ -207,7 +301,13 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [client, fetchGitProviderRequirements, value.mode, value.sourceProvider, session.project.id]
+    [
+      client,
+      fetchGitProviderRequirements,
+      value.mode,
+      value.sourceProvider,
+      session.project.id,
+    ],
   );
 
   useEffect(() => {
@@ -224,13 +324,17 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
   }, [fetchGitProvider, state, session.project.id]);
 
   useEffect(() => {
-    const currentProviderState = value.sourceProvider ? state[value.sourceProvider] : undefined;
+    const currentProviderState = value.sourceProvider
+      ? state[value.sourceProvider]
+      : undefined;
 
     if (!currentProviderState) {
       return;
     }
 
-    const isCurrentFetching = currentProviderState.requirementsFetching || currentProviderState.fetching;
+    const isCurrentFetching =
+      currentProviderState.requirementsFetching ||
+      currentProviderState.fetching;
 
     if (!isCurrentFetching && pendingActionRef.current) {
       pendingActionRef.current(currentProviderState);
@@ -238,18 +342,29 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
     }
   }, [value.sourceProvider, state]);
 
-  const currentGitProvider = value.sourceProvider && state[value.sourceProvider] ? state[value.sourceProvider] : undefined;
+  const currentGitProvider =
+    value.sourceProvider && state[value.sourceProvider]
+      ? state[value.sourceProvider]
+      : undefined;
 
   // eslint-disable-next-line fleek-custom/valid-argument-types
-  const checkProviderRequirements = async (currentRequirements?: ProviderRequirements) => {
+  const checkProviderRequirements = async (
+    currentRequirements?: ProviderRequirements,
+  ) => {
     if (!pendingRequirementsRef.current) {
       return;
     }
 
     const { gitProviderId, sourceProvider } = pendingRequirementsRef.current;
-    const requirements = currentRequirements ? currentRequirements : await fetchGitProviderRequirements(gitProviderId, sourceProvider);
+    const requirements = currentRequirements
+      ? currentRequirements
+      : await fetchGitProviderRequirements(gitProviderId, sourceProvider);
 
-    if (!requirements || requirements.shouldInstall || requirements.shouldAuthenticate) {
+    if (
+      !requirements ||
+      requirements.shouldInstall ||
+      requirements.shouldAuthenticate
+    ) {
       return;
     }
 
@@ -275,7 +390,10 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
     const proceed = async (currentProviderState = state[sourceProvider]) => {
       const requirements = currentProviderState.requirements;
 
-      pendingRequirementsRef.current = { gitProviderId: currentProviderState.gitProviderId!, sourceProvider };
+      pendingRequirementsRef.current = {
+        gitProviderId: currentProviderState.gitProviderId!,
+        sourceProvider,
+      };
       value.setGitProviderId(currentProviderState.gitProviderId);
 
       // Only handle authentication on button click
@@ -288,7 +406,10 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
       checkProviderRequirements(requirements);
     };
 
-    if (state[sourceProvider].fetching || state[sourceProvider].requirementsFetching) {
+    if (
+      state[sourceProvider].fetching ||
+      state[sourceProvider].requirementsFetching
+    ) {
       pendingActionRef.current = proceed;
     } else {
       await proceed();
@@ -305,13 +426,17 @@ export const DeploySiteProvider: React.FC<React.PropsWithChildren<{ value: BaseD
         return;
       }
 
-      pendingRequirementsRef.current = { gitProviderId: currentGitProvider.gitProviderId!, sourceProvider: value.sourceProvider! };
+      pendingRequirementsRef.current = {
+        gitProviderId: currentGitProvider.gitProviderId!,
+        sourceProvider: value.sourceProvider!,
+      };
       handleOpenPopUp(currentGitProvider.requirements.installationUrl);
     } catch {}
   };
 
   const isCurrentProviderLoading =
-    (hasSelectedProvider.current && currentGitProvider?.requirementsFetching) || currentGitProvider?.fetching;
+    (hasSelectedProvider.current && currentGitProvider?.requirementsFetching) ||
+    currentGitProvider?.fetching;
 
   return (
     <BaseProvider

@@ -11,7 +11,10 @@ type FilteredFilesResult = {
 };
 
 // util to remove hidden files and filter size
-export const filterFiles = (files: File[], fileSizeLimit: number): FilteredFilesResult => {
+export const filterFiles = (
+  files: File[],
+  fileSizeLimit: number,
+): FilteredFilesResult => {
   const fileReducer = (accumulator: FilteredFilesResult, file: File) => {
     if (file.size > fileSizeLimit) {
       accumulator.rejectedFiles.push({
@@ -38,14 +41,20 @@ export const filterFiles = (files: File[], fileSizeLimit: number): FilteredFiles
     return accumulator;
   };
 
-  const initialReducerValue: FilteredFilesResult = { acceptedFiles: [], rejectedFiles: [] };
+  const initialReducerValue: FilteredFilesResult = {
+    acceptedFiles: [],
+    rejectedFiles: [],
+  };
   const result = files.reduce(fileReducer, initialReducerValue);
 
   return result;
 };
 
 // eslint-disable-next-line fleek-custom/valid-argument-types
-export const filterFolder = (files: FileList, folderSizeLimit: number): Upload => {
+export const filterFolder = (
+  files: FileList,
+  folderSizeLimit: number,
+): Upload => {
   let sizeFolder = 0;
   const mappedFiles: File[] = [];
 
@@ -82,7 +91,9 @@ export const filterFolder = (files: FileList, folderSizeLimit: number): Upload =
     files: mappedFiles,
     status: isBiggerThanMaxSize ? 'error' : 'uploading',
     size: sizeFolder,
-    errorMessage: isBiggerThanMaxSize ? `Folder limit size is ${bytesToSize(folderSizeLimit)}, this folder will not be uploaded` : '',
+    errorMessage: isBiggerThanMaxSize
+      ? `Folder limit size is ${bytesToSize(folderSizeLimit)}, this folder will not be uploaded`
+      : '',
   };
 
   return folderToUpload;

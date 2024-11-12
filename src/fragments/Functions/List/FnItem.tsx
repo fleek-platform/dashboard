@@ -38,7 +38,10 @@ export const FnItemSkeleton = () => {
 
 export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
   const href = routes.project.function.detail({ fnName: fn.name, projectId });
-  const settingsHref = routes.project.function.settings({ fnName: fn.name, projectId });
+  const settingsHref = routes.project.function.settings({
+    fnName: fn.name,
+    projectId,
+  });
   const router = useRouter();
   const navTo = useCallback((url: string) => () => router.push(url), [router]);
 
@@ -46,9 +49,12 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
 
   return (
     <Link
-      className={cn('p-4 cursor-pointer grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50', {
-        'pointer-events-none opacity-50': deleting,
-      })}
+      className={cn(
+        'p-4 cursor-pointer grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50',
+        {
+          'pointer-events-none opacity-50': deleting,
+        },
+      )}
       href={href}
     >
       <Box className="col-span-6">
@@ -67,7 +73,12 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
       </Box>
 
       <Box className="col-span-2">
-        <DeployTime at={fn.currentDeployment?.createdAt} before="Deployed" size="xs" variant="secondary" />
+        <DeployTime
+          at={fn.currentDeployment?.createdAt}
+          before="Deployed"
+          size="xs"
+          variant="secondary"
+        />
       </Box>
 
       <Box className="col-span-2 flex-row items-center gap-3 place-self-end self-center">
@@ -94,7 +105,10 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
                   <Icon name="expand" />
                 </Menu.Item>
               )}
-              <Menu.Item onClick={(e) => e.preventDefault()} onMouseDown={navTo(settingsHref)}>
+              <Menu.Item
+                onClick={(e) => e.preventDefault()}
+                onMouseDown={navTo(settingsHref)}
+              >
                 Settings
                 <Icon name="gear" />
               </Menu.Item>

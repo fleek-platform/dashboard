@@ -12,8 +12,9 @@ const LogPage: Page = () => {
       modalContent={
         <>
           <ComingSoon.Modal.Description>
-            Audit Log will keep track and display all configuration changes and activity for this site, associated to the user that
-            performed it for accountability and troubleshooting purposes.
+            Audit Log will keep track and display all configuration changes and
+            activity for this site, associated to the user that performed it for
+            accountability and troubleshooting purposes.
           </ComingSoon.Modal.Description>
         </>
       }

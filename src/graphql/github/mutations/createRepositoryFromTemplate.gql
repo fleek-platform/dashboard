@@ -1,4 +1,7 @@
-mutation createRepositoryFromTemplate($where: CreateGithubRepoFromTemplateWhereInput!, $data: CreateGithubRepoFromTemplateDataInput!) {
+mutation createRepositoryFromTemplate(
+  $where: CreateGithubRepoFromTemplateWhereInput!
+  $data: CreateGithubRepoFromTemplateDataInput!
+) {
   createGithubRepoFromTemplate(where: $where, data: $data) {
     url
     name

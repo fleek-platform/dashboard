@@ -37,33 +37,48 @@ export const FiatContent: React.FC = () => {
   }, [checkout.state, setStage]);
 
   return match(checkout.state)
-    .with(undefined, 'initial', 'stripe-loaded', 'elements-mounted', 'submitting', 'submit-failed', (state) => {
-      const isLoading = state === 'submitting';
+    .with(
+      undefined,
+      'initial',
+      'stripe-loaded',
+      'elements-mounted',
+      'submitting',
+      'submit-failed',
+      (state) => {
+        const isLoading = state === 'submitting';
 
-      return (
-        <>
-          <S.GapWrapper>
-            <S.Title>Pay with Fiat</S.Title>
-            <S.Text>Select the network and currency to send payment to the recipient address provided below.</S.Text>
-          </S.GapWrapper>
+        return (
+          <>
+            <S.GapWrapper>
+              <S.Title>Pay with Fiat</S.Title>
+              <S.Text>
+                Select the network and currency to send payment to the recipient
+                address provided below.
+              </S.Text>
+            </S.GapWrapper>
 
-          {/* eslint-disable-next-line react/forbid-elements */}
-          <div style={{ minHeight: 285 }} id="payment-element" />
+            {/* eslint-disable-next-line react/forbid-elements */}
+            <div style={{ minHeight: 285 }} id="payment-element" />
 
-          {checkout.submit && (
-            <Button onClick={checkout.submit} loading={isLoading} disabled={isLoading || !checkout.submit}>
-              Pay
-            </Button>
-          )}
+            {checkout.submit && (
+              <Button
+                onClick={checkout.submit}
+                loading={isLoading}
+                disabled={isLoading || !checkout.submit}
+              >
+                Pay
+              </Button>
+            )}
 
-          {checkout.message && (
-            <AlertBox variant="danger" size="sm">
-              {checkout.message}
-            </AlertBox>
-          )}
-        </>
-      );
-    })
+            {checkout.message && (
+              <AlertBox variant="danger" size="sm">
+                {checkout.message}
+              </AlertBox>
+            )}
+          </>
+        );
+      },
+    )
     .with('submit-success', () => <PaymentComplete />)
     .exhaustive();
 };

@@ -1,6 +1,11 @@
 import { useMemo, useState } from 'react';
 
-import { CodeSnippet, ExternalLink, LearnMoreMessage, Modal } from '@/components';
+import {
+  CodeSnippet,
+  ExternalLink,
+  LearnMoreMessage,
+  Modal,
+} from '@/components';
 import { constants } from '@/constants';
 import { useEnsRecordQuery } from '@/generated/graphqlClient';
 import { DisabledProps } from '@/types/Props';
@@ -10,9 +15,13 @@ import { SettingsItemModal } from '../../Elements/SettingsItemModal';
 import { useEnsSettingsContext } from './EnsSettings.context';
 
 export const VerifyEnsRecordManuallyModal: React.FC = () => {
-  const { selectedId, isManualSetupModalOpen, closeSetupModal } = useEnsSettingsContext();
+  const { selectedId, isManualSetupModalOpen, closeSetupModal } =
+    useEnsSettingsContext();
 
-  const [ensRecordQuery] = useEnsRecordQuery({ variables: { where: { id: selectedId } }, pause: !selectedId });
+  const [ensRecordQuery] = useEnsRecordQuery({
+    variables: { where: { id: selectedId } },
+    pause: !selectedId,
+  });
 
   const ipnsName = useMemo(() => {
     if (ensRecordQuery.data?.ensRecord.ipnsRecord.name) {
@@ -33,7 +42,10 @@ export const VerifyEnsRecordManuallyModal: React.FC = () => {
         <Modal.Heading>Set Content Hash</Modal.Heading>
         <Text>
           Head to&nbsp;
-          <ExternalLink href={constants.EXTERNAL_LINK.ENS_DOMAIN} colorScheme="yellow">
+          <ExternalLink
+            href={constants.EXTERNAL_LINK.ENS_DOMAIN}
+            colorScheme="yellow"
+          >
             ens.domains
           </ExternalLink>
           &nbsp; and assign your content hash for&nbsp;
@@ -41,20 +53,35 @@ export const VerifyEnsRecordManuallyModal: React.FC = () => {
         </Text>
 
         <Text>
-          Use <b>IPNS Content Name</b> if you deploy updates to your site frequently, and don&apos;t want to pay gas for every update.
+          Use <b>IPNS Content Name</b> if you deploy updates to your site
+          frequently, and don&apos;t want to pay gas for every update.
         </Text>
 
         <Text>
-          Use <b>IPFS Content Hash</b> if you deploy updates to your site less frequently, and want to pay gas for every update.
+          Use <b>IPFS Content Hash</b> if you deploy updates to your site less
+          frequently, and want to pay gas for every update.
         </Text>
 
-        <Text>Once you do this, come back here and confirm you have added it.</Text>
+        <Text>
+          Once you do this, come back here and confirm you have added it.
+        </Text>
 
-        <CodeSnippet title="IPNS Content Name" code={ipnsName} isLoading={ensRecordQuery.fetching} />
+        <CodeSnippet
+          title="IPNS Content Name"
+          code={ipnsName}
+          isLoading={ensRecordQuery.fetching}
+        />
 
-        <CodeSnippet title="IPFS Content Hash" code={ipfsHash} isLoading={ensRecordQuery.fetching} />
+        <CodeSnippet
+          title="IPFS Content Hash"
+          code={ipfsHash}
+          isLoading={ensRecordQuery.fetching}
+        />
 
-        <LearnMoreMessage prefix="Need Help?" href={constants.EXTERNAL_LINK.FLEEK_DOCS_ENS_NAME}>
+        <LearnMoreMessage
+          prefix="Need Help?"
+          href={constants.EXTERNAL_LINK.FLEEK_DOCS_ENS_NAME}
+        >
           Follow Instructions Here
         </LearnMoreMessage>
 
@@ -68,7 +95,8 @@ export const VerifyEnsRecordManuallyModal: React.FC = () => {
 };
 
 const SubmitButton: React.FC<DisabledProps> = ({ isDisabled }) => {
-  const { selectedId, onSubmitVerification, closeSetupModal } = useEnsSettingsContext();
+  const { selectedId, onSubmitVerification, closeSetupModal } =
+    useEnsSettingsContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -80,7 +108,12 @@ const SubmitButton: React.FC<DisabledProps> = ({ isDisabled }) => {
   };
 
   return (
-    <Button loading={isLoading} disabled={isDisabled || isLoading} onClick={handleSubmit} className="flex-1">
+    <Button
+      loading={isLoading}
+      disabled={isDisabled || isLoading}
+      onClick={handleSubmit}
+      className="flex-1"
+    >
       Ok, I have added it
     </Button>
   );

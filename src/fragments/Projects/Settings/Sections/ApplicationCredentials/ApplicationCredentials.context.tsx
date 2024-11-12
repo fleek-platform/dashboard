@@ -13,7 +13,9 @@ export type ApplicationCredentialsContext = {
   onSubmitDelete: (id: string) => Promise<void>;
 };
 
-export type ApplicationCredentialsProviderProps = ChildrenProps<Pick<ApplicationCredentialsContext, 'onSubmitDelete'>>;
+export type ApplicationCredentialsProviderProps = ChildrenProps<
+  Pick<ApplicationCredentialsContext, 'onSubmitDelete'>
+>;
 
 const [Provider, useContext] = createContext<ApplicationCredentialsContext>({
   hookName: 'useApplicationCredentialsContext',
@@ -21,7 +23,9 @@ const [Provider, useContext] = createContext<ApplicationCredentialsContext>({
   providerName: 'ApplicationCredentialsProvider',
 });
 
-export const ApplicationCredentialsProvider: React.FC<ApplicationCredentialsProviderProps> = ({ children, onSubmitDelete }) => {
+export const ApplicationCredentialsProvider: React.FC<
+  ApplicationCredentialsProviderProps
+> = ({ children, onSubmitDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState('');
 

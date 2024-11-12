@@ -5,7 +5,8 @@ import { getLinkForIPFSGateway } from '@/utils/getLinkForIPFSGateway';
 
 import { useAsync } from './useAsync';
 
-export const proxyUrl = (cid: string) => getLinkForIPFSGateway({ cid, baseURL: constants.IPFS_GATEWAYS.FLEEK_TEST });
+export const proxyUrl = (cid: string) =>
+  getLinkForIPFSGateway({ cid, baseURL: constants.IPFS_GATEWAYS.FLEEK_TEST });
 
 export const useIpfsContent = (cid?: string) => {
   const [{ loading, error }, asyncCall] = useAsync();
@@ -16,7 +17,7 @@ export const useIpfsContent = (cid?: string) => {
       asyncCall(() =>
         fetch(proxyUrl(cid))
           .then((result) => result.text())
-          .then(setData)
+          .then(setData),
       )();
     }
   }, [asyncCall, cid]);

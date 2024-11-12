@@ -10,7 +10,10 @@ export type UseGitUserAndOrganizationsArgs = {
   accessToken: string;
 };
 
-export const useGitUserAndOrganizations = ({ provider, accessToken }: UseGitUserAndOrganizationsArgs) => {
+export const useGitUserAndOrganizations = ({
+  provider,
+  accessToken,
+}: UseGitUserAndOrganizationsArgs) => {
   const gitProvider = useGitProvider({ provider, accessToken });
 
   const queryFn = useCallback(async () => {

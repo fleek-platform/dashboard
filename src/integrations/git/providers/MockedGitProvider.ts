@@ -1,4 +1,7 @@
-import { SiteBuildSettings, SiteBuildSettingsFramework } from '@fleek-platform/sites';
+import {
+  SiteBuildSettings,
+  SiteBuildSettingsFramework,
+} from '@fleek-platform/sites';
 
 import { GitProvider } from '../interfaces/GitProvider';
 

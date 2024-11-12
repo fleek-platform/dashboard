@@ -8,7 +8,10 @@ export const EmptyMessage: React.FC = () => {
       <Text as="h2" variant="primary" size="2xl" weight={700}>
         No sites yet :(
       </Text>
-      <Text size="md">Use the Add New button or select a template below to deploy your first site on Fleek.</Text>
+      <Text size="md">
+        Use the Add New button or select a template below to deploy your first
+        site on Fleek.
+      </Text>
     </SitesStyles.Empty.Wrapper>
   );
 };

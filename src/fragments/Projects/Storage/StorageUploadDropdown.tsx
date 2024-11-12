@@ -5,7 +5,12 @@ import * as zod from 'zod';
 
 import { Form } from '@/components';
 import { constants } from '@/constants';
-import { ListFolderDocument, ListFolderQuery, ListFolderQueryVariables, useCreateFolderMutation } from '@/generated/graphqlClient';
+import {
+  ListFolderDocument,
+  ListFolderQuery,
+  ListFolderQueryVariables,
+  useCreateFolderMutation,
+} from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
@@ -22,14 +27,19 @@ type DropdownItemProps = React.ComponentProps<typeof Menu.Item> & {
   icon: IconName;
 };
 
-export const DropdownItem = forwardStyledRef<HTMLDivElement, DropdownItemProps>(Menu.Item, ({ text, icon, ...props }, ref) => (
-  <Menu.Item {...props} ref={ref}>
-    {text} <Icon name={icon} />
-  </Menu.Item>
-));
+export const DropdownItem = forwardStyledRef<HTMLDivElement, DropdownItemProps>(
+  Menu.Item,
+  ({ text, icon, ...props }, ref) => (
+    <Menu.Item {...props} ref={ref}>
+      {text} <Icon name={icon} />
+    </Menu.Item>
+  ),
+);
 
 export const StorageUploadDropdown: React.FC = () => {
-  const hasUploadPermissions = usePermissions({ action: [constants.PERMISSION.STORAGE.UPLOAD] });
+  const hasUploadPermissions = usePermissions({
+    action: [constants.PERMISSION.STORAGE.UPLOAD],
+  });
   const flags = useFeatureFlags();
   const toast = useToast();
   const router = useRouter();
@@ -66,7 +76,10 @@ export const StorageUploadDropdown: React.FC = () => {
     },
     onSubmit: async (values) => {
       try {
-        const { data, error } = await createFolder({ data: { name: values.name }, where: { parentFolderId: router.query.folderId } });
+        const { data, error } = await createFolder({
+          data: { name: values.name },
+          where: { parentFolderId: router.query.folderId },
+        });
 
         if (error || !data?.createFolder.id) {
           throw error;
@@ -77,8 +90,11 @@ export const StorageUploadDropdown: React.FC = () => {
         await client
           .query<ListFolderQuery, ListFolderQueryVariables>(
             ListFolderDocument,
-            { where: { id: parentFolderId }, filter: { take: constants.FILES_PAGE_SIZE, page: 1 } },
-            { requestPolicy: 'network-only' }
+            {
+              where: { id: parentFolderId },
+              filter: { take: constants.FILES_PAGE_SIZE, page: 1 },
+            },
+            { requestPolicy: 'network-only' },
           )
           .toPromise();
 
@@ -112,12 +128,24 @@ export const StorageUploadDropdown: React.FC = () => {
         <Menu.Content align="end">
           {flags.storageFoldersFeature && (
             <>
-              <DropdownItem text="New folder" icon="add-circle" onClick={handleCreateFolder} />
+              <DropdownItem
+                text="New folder"
+                icon="add-circle"
+                onClick={handleCreateFolder}
+              />
               <Menu.Separator />
             </>
           )}
-          <DropdownItem text="File(s) upload" icon="file" onClick={handleUploadFile} />
-          <DropdownItem text="Folder upload" icon="archive" onClick={handleUploadFolder} />
+          <DropdownItem
+            text="File(s) upload"
+            icon="file"
+            onClick={handleUploadFile}
+          />
+          <DropdownItem
+            text="Folder upload"
+            icon="archive"
+            onClick={handleUploadFolder}
+          />
         </Menu.Content>
       </Menu.Root>
     </>

@@ -21,7 +21,10 @@ const MERCHANT_ID = process.env.CRYPTOMUS_MERCHANT_ID as string;
 // eslint-disable-next-line no-process-env
 const API_URL = process.env.CRYPTOMUS_API_URL as string;
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<CreateCryptoPaymentResponse>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<CreateCryptoPaymentResponse>,
+) => {
   try {
     const { planId, currency, network } = req.body;
 
@@ -94,7 +97,12 @@ type GeneratePaymentUriArgs = {
   token: string;
 };
 
-const generatePaymentUri = ({ network, address, amount, token }: GeneratePaymentUriArgs) => {
+const generatePaymentUri = ({
+  network,
+  address,
+  amount,
+  token,
+}: GeneratePaymentUriArgs) => {
   switch (network) {
     case 'eth':
       if (token === 'USDC') {
@@ -119,7 +127,7 @@ export const request = async (endpoint: string, payload?: RequestArgs) => {
     .update(
       Buffer.from(body || '')
         .toString('base64')
-        .concat(PRIVATE_KEY)
+        .concat(PRIVATE_KEY),
     )
     .digest('hex');
 

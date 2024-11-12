@@ -5,7 +5,16 @@ import { SourceProvider } from '@/generated/graphqlClient';
 import { Deployment } from '@/types/Deployment';
 import { LoadingProps } from '@/types/Props';
 import { Site } from '@/types/Site';
-import { Avatar, Box, Icon, IconName, Image, ImageProps, Skeleton, Text } from '@/ui';
+import {
+  Avatar,
+  Box,
+  Icon,
+  IconName,
+  Image,
+  ImageProps,
+  Skeleton,
+  Text,
+} from '@/ui';
 import { AvatarMarble } from '@/ui/AvatarMarble/AvatarMarble';
 import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -22,12 +31,26 @@ export type SiteCardProps = LoadingProps<{
   deployment?: Site['currentDeployment'];
 }>;
 
-export const SiteCard: React.FC<SiteCardProps> = ({ id, name, avatar, projectId, siteLink, isLoading, deployment, sourceProvider }) => {
+export const SiteCard: React.FC<SiteCardProps> = ({
+  id,
+  name,
+  avatar,
+  projectId,
+  siteLink,
+  isLoading,
+  deployment,
+  sourceProvider,
+}) => {
   if (isLoading) {
     return <SiteSkeleton />;
   }
 
-  const footerText = deployment ? getDurationUntilNow({ isoDateString: deployment.createdAt, shortFormat: true }) : 'No deployments yet';
+  const footerText = deployment
+    ? getDurationUntilNow({
+        isoDateString: deployment.createdAt,
+        shortFormat: true,
+      })
+    : 'No deployments yet';
 
   return (
     <S.Container>
@@ -39,10 +62,18 @@ export const SiteCard: React.FC<SiteCardProps> = ({ id, name, avatar, projectId,
               <Text variant="primary" weight={700} size="md">
                 {name}
               </Text>
-              <Text className={cn('truncate', { 'text-warning-11': !deployment })}>{siteLink || <Skeleton />}</Text>
+              <Text
+                className={cn('truncate', { 'text-warning-11': !deployment })}
+              >
+                {siteLink || <Skeleton />}
+              </Text>
             </S.TextContainer>
             <S.SiteIconWrapper>
-              {avatar ? <Image src={avatar} alt="site logo" /> : <AvatarMarble name={id} rounded={false} />}
+              {avatar ? (
+                <Image src={avatar} alt="site logo" />
+              ) : (
+                <AvatarMarble name={id} rounded={false} />
+              )}
             </S.SiteIconWrapper>
           </S.DetailsRow>
           <S.DetailsFooter>
@@ -99,7 +130,9 @@ const SiteImage: React.FC<SiteImageProps> = ({ src, isLoading }) => {
   );
 };
 
-const getUploadIcon = (sourceProvider: Deployment['sourceProvider']): IconName => {
+const getUploadIcon = (
+  sourceProvider: Deployment['sourceProvider'],
+): IconName => {
   switch (sourceProvider) {
     case SourceProvider.GITHUB:
       return 'github';

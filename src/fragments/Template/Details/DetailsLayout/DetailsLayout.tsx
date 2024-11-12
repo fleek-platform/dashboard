@@ -11,7 +11,10 @@ export type DetailsLayout = React.PropsWithChildren<{
   nav?: React.ReactNode | React.ReactNode[];
 }>;
 
-export const DetailsLayout: React.FC<DetailsLayout> = ({ children, nav: pageNavContent }) => {
+export const DetailsLayout: React.FC<DetailsLayout> = ({
+  children,
+  nav: pageNavContent,
+}) => {
   const flags = useFeatureFlags();
 
   return (
@@ -21,7 +24,14 @@ export const DetailsLayout: React.FC<DetailsLayout> = ({ children, nav: pageNavC
       <App.Content>
         <PageNavigation
           items={[
-            { icon: 'arrow-left', label: 'Go back', path: routes.template.list(), isExact: true, variant: 'primary', hasAccess: true },
+            {
+              icon: 'arrow-left',
+              label: 'Go back',
+              path: routes.template.list(),
+              isExact: true,
+              variant: 'primary',
+              hasAccess: true,
+            },
           ]}
         >
           {pageNavContent}

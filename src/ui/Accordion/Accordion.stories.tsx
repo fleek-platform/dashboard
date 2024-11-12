@@ -38,7 +38,9 @@ export const WithMultipleItems: Story = {
       <Accordion.Root {...args}>
         <Accordion.Item value="item-1">
           <Accordion.Header>
-            <Box css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}>
+            <Box
+              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
+            >
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Source Build
@@ -49,7 +51,9 @@ export const WithMultipleItems: Story = {
         </Accordion.Item>
         <Accordion.Item value="item-2">
           <Accordion.Header>
-            <Box css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}>
+            <Box
+              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
+            >
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Build Breakdown
@@ -60,7 +64,9 @@ export const WithMultipleItems: Story = {
         </Accordion.Item>
         <Accordion.Item value="item-3">
           <Accordion.Header>
-            <Box css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}>
+            <Box
+              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
+            >
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Domains

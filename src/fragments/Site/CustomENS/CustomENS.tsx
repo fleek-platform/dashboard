@@ -9,7 +9,9 @@ import { getActiveEnsList } from '@/utils/getActiveEnsList';
 
 export const CustomENS: React.FC = () => {
   const router = useRouter();
-  const hasENSPermissions = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS] });
+  const hasENSPermissions = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
+  });
 
   const siteId = router.query.siteId!;
   const projectId = router.query.projectId!;
@@ -22,7 +24,10 @@ export const CustomENS: React.FC = () => {
   const site = siteQuery.data?.site!;
 
   const activeEnsList = getActiveEnsList({ site });
-  const addENSRoute = routes.project.site.settings.domains({ siteId, projectId });
+  const addENSRoute = routes.project.site.settings.domains({
+    siteId,
+    projectId,
+  });
   const isActive = activeEnsList.length > 0;
 
   return (

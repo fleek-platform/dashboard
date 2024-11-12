@@ -14,11 +14,17 @@ type TwoFactorModalContextType = {
   isVisible: boolean;
 };
 
-const TwoFactorModalContext = createContext<TwoFactorModalContextType | undefined>(undefined);
+const TwoFactorModalContext = createContext<
+  TwoFactorModalContextType | undefined
+>(undefined);
 
-export const TwoFactorModalProvider: React.FC<ChildrenProps> = ({ children }) => {
+export const TwoFactorModalProvider: React.FC<ChildrenProps> = ({
+  children,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [onConfirm, setOnConfirm] = useState<({ verificationCode, recoveryCode }: TokenSubmitArgs) => void>(() => {});
+  const [onConfirm, setOnConfirm] = useState<
+    ({ verificationCode, recoveryCode }: TokenSubmitArgs) => void
+  >(() => {});
   const [onClose, setOnClose] = useState<() => void>(() => {});
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
 
@@ -53,7 +59,9 @@ export const TwoFactorModalProvider: React.FC<ChildrenProps> = ({ children }) =>
   };
 
   return (
-    <TwoFactorModalContext.Provider value={{ isVisible, showModal, hideModal, setOnClose: handleSetOnClose }}>
+    <TwoFactorModalContext.Provider
+      value={{ isVisible, showModal, hideModal, setOnClose: handleSetOnClose }}
+    >
       {children}
       {isVisible && (
         <Form.Provider value={authenticateForm}>

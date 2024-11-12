@@ -1,7 +1,12 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useMemo } from 'react';
 
-import { BreadcrumbItem, NavigationItem, ProjectGoBack, RootLayout } from '@/components';
+import {
+  BreadcrumbItem,
+  NavigationItem,
+  ProjectGoBack,
+  RootLayout,
+} from '@/components';
 import { constants } from '@/constants';
 import { useSiteQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -36,15 +41,26 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       constants.PERMISSION.SITE.DELETE,
     ],
   });
-  const hasBuildSettingsPermission = usePermissions({ action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS] });
+  const hasBuildSettingsPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
+  });
   const hasDomainsPermissions = usePermissions({
-    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN, constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
+    action: [
+      constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN,
+      constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS,
+    ],
   });
   const hasGitPermissions = usePermissions({
-    action: [constants.PERMISSION.SITE.ADD_GIT_INTEGRATION, constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION],
+    action: [
+      constants.PERMISSION.SITE.ADD_GIT_INTEGRATION,
+      constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION,
+    ],
   });
   const hasEditEnvVariablesPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.VIEW_ENV_VARIABLES, constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
+    action: [
+      constants.PERMISSION.SITE.VIEW_ENV_VARIABLES,
+      constants.PERMISSION.SITE.EDIT_ENV_VARIABLES,
+    ],
   });
 
   const hasSiteSettingsPermission =
@@ -67,11 +83,17 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       return routes.project.site.settings.domains({ projectId, siteId });
     }
 
-    if (hasEditEnvVariablesPermission && (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))) {
+    if (
+      hasEditEnvVariablesPermission &&
+      (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))
+    ) {
       return routes.project.site.settings.environment({ projectId, siteId });
     }
 
-    if (hasGitPermissions && (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))) {
+    if (
+      hasGitPermissions &&
+      (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))
+    ) {
       return routes.project.site.settings.git({ projectId, siteId });
     }
 
@@ -87,7 +109,9 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
     siteQuery.data,
   ]);
 
-  const hasSiteFunctions = Boolean(siteQuery.data?.site.currentDeployment?.functionDeployments.length);
+  const hasSiteFunctions = Boolean(
+    siteQuery.data?.site.currentDeployment?.functionDeployments.length,
+  );
 
   const navigation: NavigationItem[] = [
     {
@@ -100,7 +124,9 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       icon: 'code-working',
       label: 'Deploys',
       path: routes.project.site.deployments.list({ projectId, siteId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS],
+      }),
     },
     {
       icon: 'pulse',
@@ -112,7 +138,9 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       icon: 'analytics',
       label: 'Analytics',
       path: routes.project.site.analytics({ projectId, siteId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_ANALYTICS] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.SITE.VIEW_ANALYTICS],
+      }),
     },
     {
       icon: 'globe-filled',
@@ -149,15 +177,26 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       id: deploymentId || '',
       name: shortStringFormat({ str: deploymentId, index: 6 }) || '',
       icon: 'gear',
-      url: routes.project.site.deployments.detail({ projectId, siteId, deploymentId }),
+      url: routes.project.site.deployments.detail({
+        projectId,
+        siteId,
+        deploymentId,
+      }),
     },
   ];
 
   return (
     <RootLayout.Container>
-      <RootLayout.Head title={RootLayout.Head.titles.site(siteQuery.data?.site.name)} />
+      <RootLayout.Head
+        title={RootLayout.Head.titles.site(siteQuery.data?.site.name)}
+      />
       <RootLayout.Page
-        slotSidebar={<ProjectGoBack projectName={session.project.name} goBackUrl={routes.project.site.list({ projectId })} />}
+        slotSidebar={
+          <ProjectGoBack
+            projectName={session.project.name}
+            goBackUrl={routes.project.site.list({ projectId })}
+          />
+        }
         slotPage={nav}
         navigation={navigation}
         isNavigationLoading={session.loading}

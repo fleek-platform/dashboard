@@ -5,18 +5,28 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { LoadingProps } from '@/types/Props';
 
-export type ProjectLogoProps = LoadingProps<Pick<LogoUploadProps, 'onSubmit' | 'initialImage'>>;
+export type ProjectLogoProps = LoadingProps<
+  Pick<LogoUploadProps, 'onSubmit' | 'initialImage'>
+>;
 
-export const ProjectLogo: React.FC<ProjectLogoProps> = ({ onSubmit, initialImage, isLoading }) => {
+export const ProjectLogo: React.FC<ProjectLogoProps> = ({
+  onSubmit,
+  initialImage,
+  isLoading,
+}) => {
   const session = useSessionContext();
-  const hasChangeAvatarPermission = usePermissions({ action: [constants.PERMISSION.PROJECT.EDIT_AVATAR] });
+  const hasChangeAvatarPermission = usePermissions({
+    action: [constants.PERMISSION.PROJECT.EDIT_AVATAR],
+  });
 
   return (
     <SettingsBox.Container>
       <SettingsBox.ActionRow>
         <SettingsBox.Column>
           <SettingsBox.Title>Project Avatar</SettingsBox.Title>
-          <SettingsBox.Text>Click on the avatar to upload a custom one.</SettingsBox.Text>
+          <SettingsBox.Text>
+            Click on the avatar to upload a custom one.
+          </SettingsBox.Text>
         </SettingsBox.Column>
 
         {isLoading ? (

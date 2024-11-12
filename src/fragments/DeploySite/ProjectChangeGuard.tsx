@@ -6,7 +6,8 @@ import { Stepper } from '@/ui';
 import { useDeploySiteContext } from './DeploySite.context';
 
 export const ProjectChangeGuard: React.FC = () => {
-  const { setGitBranch, setGitUser, setGitRepository, setSourceProvider } = useDeploySiteContext();
+  const { setGitBranch, setGitUser, setGitRepository, setSourceProvider } =
+    useDeploySiteContext();
   const session = useSessionContext();
   const stepper = Stepper.useContext();
 

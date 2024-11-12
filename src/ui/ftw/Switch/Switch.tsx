@@ -11,7 +11,7 @@ const switchVariants = cva(
     'relative flex justify-center items-center w-fit',
     'focus-visible:ring-2 select-none font-medium',
     'disabled:cursor-not-allowed disabled:text-opacity-30',
-    'rounded-full shadow-inner'
+    'rounded-full shadow-inner',
   ),
   {
     variants: {
@@ -29,7 +29,7 @@ const switchVariants = cva(
       size: 'md',
       intent: 'neutral',
     },
-  }
+  },
 );
 
 export type SwitchProps = RadixSwitch.SwitchProps &
@@ -40,7 +40,21 @@ export type SwitchProps = RadixSwitch.SwitchProps &
   };
 
 export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
-  ({ children, loading, size, intent, disabled, checked, className, labelOff, labelOn, ...props }, ref) => {
+  (
+    {
+      children,
+      loading,
+      size,
+      intent,
+      disabled,
+      checked,
+      className,
+      labelOff,
+      labelOn,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <RadixSwitch.Root
         {...props}
@@ -59,7 +73,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
               'justify-start -translate-x-1/2': !checked,
               'after:bg-opacity-30': disabled,
               'after:animate-ping': loading,
-            }
+            },
           )}
         />
 
@@ -75,5 +89,5 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
         </span>
       </RadixSwitch.Root>
     );
-  }
+  },
 );

@@ -9,7 +9,10 @@ export type ErrorBadgeProps = ChildrenProps<{
   errorMessage?: Maybe<string> | undefined;
 }>;
 
-export const ErrorBadge: React.FC<ErrorBadgeProps> = ({ children, errorMessage }) => {
+export const ErrorBadge: React.FC<ErrorBadgeProps> = ({
+  children,
+  errorMessage,
+}) => {
   if (errorMessage) {
     return (
       <CustomTooltip side="top" content={errorMessage}>

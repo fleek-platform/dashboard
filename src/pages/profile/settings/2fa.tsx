@@ -1,5 +1,11 @@
-import { Profile, TwoFactorAuthentication as TFAuthentication } from '@/fragments';
-import { useGetSecretKeysQuery, useUpdateSecretKeyMutation } from '@/generated/graphqlClient';
+import {
+  Profile,
+  TwoFactorAuthentication as TFAuthentication,
+} from '@/fragments';
+import {
+  useGetSecretKeysQuery,
+  useUpdateSecretKeyMutation,
+} from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { type Page } from '@/types/App';
 
@@ -21,7 +27,10 @@ const TwoFactorAuthentication: Page = () => {
         return;
       }
 
-      const verifyResult = await updateSecretKey({ data: { key: true }, where: { id: secretKey.id } });
+      const verifyResult = await updateSecretKey({
+        data: { key: true },
+        where: { id: secretKey.id },
+      });
 
       if (!verifyResult.data) {
         throw verifyResult.error || new Error('Failed to verify token.');
@@ -36,11 +45,19 @@ const TwoFactorAuthentication: Page = () => {
   return (
     <>
       <TFAuthentication.Provider>
-        <TFAuthentication.Sections.Create isLoading={isSecretKeyLoading} hasActiveKey={hasActiveKey} secretKey={secretKey} />
+        <TFAuthentication.Sections.Create
+          isLoading={isSecretKeyLoading}
+          hasActiveKey={hasActiveKey}
+          secretKey={secretKey}
+        />
       </TFAuthentication.Provider>
       {secretKey ? (
         <TFAuthentication.Provider>
-          <TFAuthentication.Sections.Manage updateSecretKey={handleUpdateSecretKey} secretKey={secretKey} isLoading={isSecretKeyLoading} />
+          <TFAuthentication.Sections.Manage
+            updateSecretKey={handleUpdateSecretKey}
+            secretKey={secretKey}
+            isLoading={isSecretKeyLoading}
+          />
         </TFAuthentication.Provider>
       ) : (
         <TFAuthentication.Sections.EmptyManage />
@@ -50,6 +67,8 @@ const TwoFactorAuthentication: Page = () => {
   );
 };
 
-TwoFactorAuthentication.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
+TwoFactorAuthentication.getLayout = (page) => (
+  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
+);
 
 export default TwoFactorAuthentication;

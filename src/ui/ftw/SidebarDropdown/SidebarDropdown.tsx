@@ -6,9 +6,13 @@ import { ChildrenProps } from '@/types/Props';
 import { Icon, IconProps } from '@/ui/Icon/Icon';
 import { cn } from '@/utils/cn';
 
-const DropdownSeparator = () => <DropdownMenu.Separator className="h-[1px] bg-neutral-6" />;
+const DropdownSeparator = () => (
+  <DropdownMenu.Separator className="h-[1px] bg-neutral-6" />
+);
 
-const DropdownContent: React.FC<ChildrenProps & DropdownMenu.DropdownMenuContentProps> = ({ children, className, ...props }) => (
+const DropdownContent: React.FC<
+  ChildrenProps & DropdownMenu.DropdownMenuContentProps
+> = ({ children, className, ...props }) => (
   <DropdownMenu.Portal>
     <DropdownMenu.Content {...props} className={cn(className)}>
       {children}
@@ -25,11 +29,20 @@ type DropdownItemProps = ChildrenProps &
     iconRight?: IconProps['name'];
   };
 
-const DropdownItem = ({ children, onClick, href, isExternalLink, iconLeft, iconRight, className, ...props }: DropdownItemProps) => {
+const DropdownItem = ({
+  children,
+  onClick,
+  href,
+  isExternalLink,
+  iconLeft,
+  iconRight,
+  className,
+  ...props
+}: DropdownItemProps) => {
   const classNames = cn(
     'flex items-center gap-2.5 p-2 ring-0 outline-none focus-visible:bg-neutral-3 hover:bg-neutral-3 cursor-pointer rounded-lg active:bg-neutral-4 outline-0 text-sm text-neutral-11 font-medium',
     { 'justify-between': iconRight },
-    className
+    className,
   );
 
   const Content = () => (
@@ -75,7 +88,9 @@ class SidebarDropdownError extends Error {
 }
 
 export const SidebarDropdown = () => {
-  throw new SidebarDropdownError('Dropdown cannot be used as a standalone component. Please use one of the subcomponents instead.');
+  throw new SidebarDropdownError(
+    'Dropdown cannot be used as a standalone component. Please use one of the subcomponents instead.',
+  );
 };
 
 SidebarDropdown.Root = DropdownMenu.Root;

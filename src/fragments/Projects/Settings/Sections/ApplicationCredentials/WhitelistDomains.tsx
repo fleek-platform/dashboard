@@ -11,7 +11,9 @@ type WhitelistDomainsProps = LoadingProps<{
   whiteListedDomains?: string[];
 }>;
 
-export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({ isLoading }) => {
+export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({
+  isLoading,
+}) => {
   const field = Form.useField<string[]>('whitelistDomains');
 
   const handleAddDomain = () => {
@@ -25,7 +27,7 @@ export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({ isLoading })
   const handleDomainChange = (index: number, value: string) => {
     field.setValue(
       field.value.map((domain, i) => (i === index ? value : domain)),
-      true
+      true,
     );
   };
 
@@ -39,7 +41,13 @@ export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({ isLoading })
         <FormField.Label>Whitelist domains</FormField.Label>
         <Box>
           {field.value.map((domain, index) => (
-            <WhitelistedDomain key={index} value={domain} index={index} onChange={handleDomainChange} onRemove={handleRemoveDomain} />
+            <WhitelistedDomain
+              key={index}
+              value={domain}
+              index={index}
+              onChange={handleDomainChange}
+              onRemove={handleRemoveDomain}
+            />
           ))}
         </Box>
       </S.Whitelist.Container>
@@ -58,7 +66,12 @@ type WhitelistedDomainProps = {
   onRemove: (index: number) => void;
 };
 
-const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({ value, index, onChange, onRemove }) => {
+const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
+  value,
+  index,
+  onChange,
+  onRemove,
+}) => {
   const [error, setError] = useState<string | false>(false);
   const [touched, setTouched] = useState(false);
 
@@ -68,7 +81,10 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({ value, index, onC
   };
 
   useEffect(() => {
-    const validation = createApplicationSchemaNext.shape.data.shape.whitelistDomains.element.safeParse(value);
+    const validation =
+      createApplicationSchemaNext.shape.data.shape.whitelistDomains.element.safeParse(
+        value,
+      );
 
     if (validation.success || !touched) {
       setError(false);
@@ -85,12 +101,19 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({ value, index, onC
     <S.Domain.Container>
       <FormField.Root error={Boolean(error)} className="flex-1">
         <Input.Root error={Boolean(error)}>
-          <Input.Field placeholder="example.com" value={value} onChange={handleValueChange} autoFocus={index !== 0} />
+          <Input.Field
+            placeholder="example.com"
+            value={value}
+            onChange={handleValueChange}
+            autoFocus={index !== 0}
+          />
         </Input.Root>
         {error && <FormField.Hint>{error}</FormField.Hint>}
       </FormField.Root>
 
-      {index !== 0 && <Icon name="close-circle" onClick={() => onRemove(index)} />}
+      {index !== 0 && (
+        <Icon name="close-circle" onClick={() => onRemove(index)} />
+      )}
     </S.Domain.Container>
   );
 };

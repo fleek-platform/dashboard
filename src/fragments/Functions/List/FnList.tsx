@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { AlertBox } from '@/components';
 import { Functions as F } from '@/fragments';
-import { useFunctionsList, UseFunctionsListArgs } from '@/hooks/useFunctionsList';
+import {
+  useFunctionsList,
+  UseFunctionsListArgs,
+} from '@/hooks/useFunctionsList';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Box, Button, Input, Pagination, Text } from '@/ui';
@@ -22,7 +25,8 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
     project: { id: projectId },
   } = useProjectContext();
 
-  const { page, handlePageChange, fleekFunctionsQuery } = useFunctionsList(source);
+  const { page, handlePageChange, fleekFunctionsQuery } =
+    useFunctionsList(source);
 
   useEffect(() => {
     setSearchTerm('');
@@ -59,7 +63,9 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
           <Text as="h2" variant="primary" size="2xl" weight={700}>
             No functions yet :(
           </Text>
-          <Text size="md">Use the CLI or click the button above to create one.</Text>
+          <Text size="md">
+            Use the CLI or click the button above to create one.
+          </Text>
         </Box>
       </>
     );
@@ -68,7 +74,10 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
   const filteredData = data.filter((fleekFn) => {
     const term = searchTerm.toLowerCase();
 
-    return fleekFn.name.toLowerCase().includes(term) || fleekFn.slug.toLowerCase().includes(term);
+    return (
+      fleekFn.name.toLowerCase().includes(term) ||
+      fleekFn.slug.toLowerCase().includes(term)
+    );
   });
 
   return (
@@ -84,21 +93,34 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
 
       <Box className="bg-neutral-2 rounded-xl border border-neutral-6 overflow-hidden">
         {filteredData.length > 0 ? (
-          filteredData.map((fn) => <FnItem key={fn.id} fn={fn} projectId={projectId} source={source} />)
+          filteredData.map((fn) => (
+            <FnItem key={fn.id} fn={fn} projectId={projectId} source={source} />
+          ))
         ) : (
           <Box className="items-center justify-center flex-1 py-10 gap-4">
             <Box className="flex-row gap-1">
               <Text>No results for</Text>
               <Text variant="primary">{searchTerm}</Text>
             </Box>
-            <Button variant="outline" intent="neutral" iconLeft="close-circle" onClick={() => setSearchTerm('')}>
+            <Button
+              variant="outline"
+              intent="neutral"
+              iconLeft="close-circle"
+              onClick={() => setSearchTerm('')}
+            >
               Clear search
             </Button>
           </Box>
         )}
       </Box>
 
-      {pageCount > 1 && <Pagination totalPages={pageCount} currentPage={page} onPageChange={handlePageChange} />}
+      {pageCount > 1 && (
+        <Pagination
+          totalPages={pageCount}
+          currentPage={page}
+          onPageChange={handlePageChange}
+        />
+      )}
     </Box>
   );
 };

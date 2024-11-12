@@ -37,7 +37,7 @@ export const usePagination = (options: UsePaginationArgs) => {
         totalPages: totalPages,
         selectedPage: page,
       }),
-    [totalPages, page]
+    [totalPages, page],
   );
 
   const handlePageChange = useCallback(
@@ -48,7 +48,7 @@ export const usePagination = (options: UsePaginationArgs) => {
         onPageChange(page);
       }
     },
-    [onPageChange]
+    [onPageChange],
   );
 
   return {

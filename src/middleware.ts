@@ -6,18 +6,25 @@ import { constants } from './constants';
 import { matchesPathname } from './utils/matchesPathname';
 
 export const middleware = async (request: MiddlewareArgs) => {
-  const hasAuthentication = Boolean(request.cookies.get('authProviderToken')?.value);
+  const hasAuthentication = Boolean(
+    request.cookies.get('authProviderToken')?.value,
+  );
 
   if (hasAuthentication && request.nextUrl.pathname === routes.home()) {
     // use projectId from cookies (previous login) or default
-    const projectId = request.cookies.get('projectId')?.value || constants.DEFAULT_PROJECT_ID;
+    const projectId =
+      request.cookies.get('projectId')?.value || constants.DEFAULT_PROJECT_ID;
 
     request.nextUrl.pathname = routes.project.home({ projectId });
 
     return NextResponse.redirect(request.nextUrl);
   }
 
-  const isPublicRoute = Boolean(constants.PUBLIC_ROUTES.find((route) => matchesPathname(route, request.nextUrl.pathname)));
+  const isPublicRoute = Boolean(
+    constants.PUBLIC_ROUTES.find((route) =>
+      matchesPathname(route, request.nextUrl.pathname),
+    ),
+  );
 
   if (!hasAuthentication && !isPublicRoute) {
     return NextResponse.redirect(new URL(routes.home(), request.url));
@@ -29,5 +36,7 @@ export const middleware = async (request: MiddlewareArgs) => {
 export const config = {
   matcher: '/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)',
   // Allow package(s) to bypass Edge runtime checks
-  unstable_allowDynamic: ['**/node_modules/.pnpm/jscrypto*/node_modules/jscrypto/**'],
+  unstable_allowDynamic: [
+    '**/node_modules/.pnpm/jscrypto*/node_modules/jscrypto/**',
+  ],
 };

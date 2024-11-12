@@ -4,7 +4,11 @@ import React from 'react';
 import { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
-const Content: React.FC<ChildrenProps & Dialog.DialogContentProps> = ({ children, className, ...props }) => {
+const Content: React.FC<ChildrenProps & Dialog.DialogContentProps> = ({
+  children,
+  className,
+  ...props
+}) => {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="bg-black/20 fixed inset-0 data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out z-10" />
@@ -13,7 +17,7 @@ const Content: React.FC<ChildrenProps & Dialog.DialogContentProps> = ({ children
         aria-describedby="Mobile menu sidebar"
         className={cn(
           'fixed top-0 left-0 bottom-0 data-[state=open]:animate-slide-in-left data-[state=closed]:animate-slide-out-left bg-neutral-2 z-10',
-          className
+          className,
         )}
       >
         <Dialog.Title />
@@ -26,7 +30,7 @@ const Content: React.FC<ChildrenProps & Dialog.DialogContentProps> = ({ children
 
 export const SidebarSidepanel = () => {
   throw new SidebarSidepanelError(
-    'SidebarSidepanel cannot be used as a standalone component. Please use one of the subcomponents instead.'
+    'SidebarSidepanel cannot be used as a standalone component. Please use one of the subcomponents instead.',
   );
 };
 

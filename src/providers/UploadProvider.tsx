@@ -14,12 +14,18 @@ export type ProjectFilesContext = {
   setUploads: Dispatch<SetStateAction<Upload[]>>;
 
   parentFolderId: string | undefined;
-  setParentFolderId: (folderId: string | undefined, path: string | undefined, isNavigating?: boolean) => void;
+  setParentFolderId: (
+    folderId: string | undefined,
+    path: string | undefined,
+    isNavigating?: boolean,
+  ) => void;
 
   absolutePath: string | undefined;
 
   folderHistory: { folderId: string; path: string }[];
-  setFolderHistory: Dispatch<SetStateAction<{ folderId: string; path: string }[]>>;
+  setFolderHistory: Dispatch<
+    SetStateAction<{ folderId: string; path: string }[]>
+  >;
 
   remainingTime?: number; //in milliseconds
 
@@ -42,12 +48,18 @@ export const UploadProvider: React.FC<ChildrenProps> = ({ children }) => {
   const upload = useUpload();
   const router = useRouter();
   const session = useSessionContext();
-  const [folderHistory, setFolderHistory] = useState<{ folderId: string; path: string }[]>([]);
+  const [folderHistory, setFolderHistory] = useState<
+    { folderId: string; path: string }[]
+  >([]);
 
   const parentFolderId = router.query.folderId;
   const absolutePath = router.query.path;
 
-  const setFolder = (folderId: string | undefined, path: string | undefined, isNavigating = false) => {
+  const setFolder = (
+    folderId: string | undefined,
+    path: string | undefined,
+    isNavigating = false,
+  ) => {
     const page = isNavigating ? 1 : router.query.page;
     const folderParam = folderId ? `&folderId=${folderId}` : '';
     const pathParam = path ? `&path=${path}` : '';
@@ -61,12 +73,14 @@ export const UploadProvider: React.FC<ChildrenProps> = ({ children }) => {
       undefined,
       {
         shallow: true,
-      }
+      },
     );
   };
 
   const remainingTime = useMemo(() => {
-    const uploadsWithProgress = uploads.filter((upload) => upload.status === 'uploading' && upload.remainingTime);
+    const uploadsWithProgress = uploads.filter(
+      (upload) => upload.status === 'uploading' && upload.remainingTime,
+    );
 
     if (uploadsWithProgress.length === 0) {
       return undefined;
@@ -120,14 +134,23 @@ export const UploadProvider: React.FC<ChildrenProps> = ({ children }) => {
   };
 
   const retryUpload = async () => {
-    const uplaodsWithError = uploads.filter((upload) => upload.status === 'error' && !upload.errorMessage);
+    const uplaodsWithError = uploads.filter(
+      (upload) => upload.status === 'error' && !upload.errorMessage,
+    );
 
     // TODO: should handle this gracefully, only meaningfull due to ssr
     if (!upload) {
       return;
     }
 
-    Promise.all(uplaodsWithError.map((file) => upload.mutateAsync({ upload: file, updateUpload: (file) => updateUpload(file) })));
+    Promise.all(
+      uplaodsWithError.map((file) =>
+        upload.mutateAsync({
+          upload: file,
+          updateUpload: (file) => updateUpload(file),
+        }),
+      ),
+    );
 
     setUploads((prevUploads) => {
       return prevUploads.map((upload) => {

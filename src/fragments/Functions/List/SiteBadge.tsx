@@ -10,7 +10,11 @@ type SiteBadgeProps = ChildrenProps & {
   siteId: string;
 };
 
-export const SiteBadge: React.FC<SiteBadgeProps> = ({ children, projectId, siteId }) => {
+export const SiteBadge: React.FC<SiteBadgeProps> = ({
+  children,
+  projectId,
+  siteId,
+}) => {
   return (
     <Link
       href={routes.project.site.overview({ projectId, siteId })}

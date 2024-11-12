@@ -32,7 +32,8 @@ export const ActiveList: StoryObj<CustomDomainBoxProps> = {
       },
     ],
     listLabel: 'DNS',
-    emptyText: 'Add a ENS name to your site, this allows you to use your ENS name as a domain access point for the site deployed.',
+    emptyText:
+      'Add a ENS name to your site, this allows you to use your ENS name as a domain access point for the site deployed.',
     CTAHref: '#',
     CTAText: 'Manage domains',
     emptyCTAText: 'Add custom domain',
@@ -49,7 +50,8 @@ export const EmptyList: StoryObj<CustomDomainBoxProps> = {
     isActive: false,
     domainList: [],
     listLabel: 'DNS',
-    emptyText: 'Add a ENS name to your site, this allows you to use your ENS name as a domain access point for the site deployed.',
+    emptyText:
+      'Add a ENS name to your site, this allows you to use your ENS name as a domain access point for the site deployed.',
     CTAHref: ' ',
     CTAText: 'Manage domains',
     emptyCTAText: 'Add custom domain',

@@ -7,9 +7,19 @@ import { withProps } from '@/utils/withProps';
 import { Link } from '../Link/Link';
 import { SettingsBoxStyles as S } from './SettingsBox.styles';
 
-const Title = withProps(Text, { as: 'h2', variant: 'primary', size: 'lg', weight: 700 });
+const Title = withProps(Text, {
+  as: 'h2',
+  variant: 'primary',
+  size: 'lg',
+  weight: 700,
+});
 
-const EmptyContent: React.FC<SettingsBox.EmptyContentProps> = ({ title, description, icon = 'question', showIcon = true }) => (
+const EmptyContent: React.FC<SettingsBox.EmptyContentProps> = ({
+  title,
+  description,
+  icon = 'question',
+  showIcon = true,
+}) => (
   <S.EmptyContent.Container>
     {showIcon && <Icon name={icon} />}
     <Title>{title}</Title>
@@ -17,7 +27,12 @@ const EmptyContent: React.FC<SettingsBox.EmptyContentProps> = ({ title, descript
   </S.EmptyContent.Container>
 );
 
-export const Container: React.FC<SettingsBox.ContainerProps> = ({ children, isBillingDisabled = false, disabledText, ...props }) => {
+export const Container: React.FC<SettingsBox.ContainerProps> = ({
+  children,
+  isBillingDisabled = false,
+  disabledText,
+  ...props
+}) => {
   const session = useSessionContext();
 
   if (isBillingDisabled) {
@@ -31,7 +46,11 @@ export const Container: React.FC<SettingsBox.ContainerProps> = ({ children, isBi
             </Text>
             <Text>{disabledText}</Text>
           </Box>
-          <Link href={routes.project.settings.billing({ projectId: session.project.id })}>
+          <Link
+            href={routes.project.settings.billing({
+              projectId: session.project.id,
+            })}
+          >
             <Button size="sm" className="py-0 px-2-5 text-sm h-[2rem]">
               Upgrade plan
             </Button>
@@ -57,12 +76,19 @@ export const SettingsBox = {
 };
 
 export namespace SettingsBox {
-  export type ContainerProps = React.ComponentPropsWithRef<typeof S.Container> & { disabledText?: string; isBillingDisabled?: boolean };
+  export type ContainerProps = React.ComponentPropsWithRef<
+    typeof S.Container
+  > & { disabledText?: string; isBillingDisabled?: boolean };
   export type ColumnProps = React.ComponentPropsWithRef<typeof S.Column>;
   export type TitleProps = React.ComponentPropsWithRef<typeof Title>;
   export type TextProps = React.ComponentPropsWithRef<typeof Text>;
   export type ActionRowProps = React.ComponentPropsWithRef<typeof S.ActionRow>;
   export type FieldsRowProps = React.ComponentPropsWithRef<typeof S.FieldsRow>;
   export type SkeletonProps = React.ComponentPropsWithRef<typeof S.Skeleton>;
-  export type EmptyContentProps = { title: string; description: string; icon?: IconName; showIcon?: boolean };
+  export type EmptyContentProps = {
+    title: string;
+    description: string;
+    icon?: IconName;
+    showIcon?: boolean;
+  };
 }

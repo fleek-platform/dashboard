@@ -3,7 +3,16 @@ import { constants } from '@fleek-platform/utils-permissions';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { cacheExchange } from '@urql/exchange-graphcache';
-import { createClient, fetchExchange, gql, makeOperation, mapExchange, Operation, Provider, ssrExchange } from 'urql';
+import {
+  createClient,
+  fetchExchange,
+  gql,
+  makeOperation,
+  mapExchange,
+  Operation,
+  Provider,
+  ssrExchange,
+} from 'urql';
 
 import { constants as uiConstants } from '@/constants';
 import {
@@ -84,15 +93,23 @@ import { secrets } from '../secrets';
 
 type AuthState = { token?: string | null };
 
-type AddAuthToOperationProps = { authState?: AuthState | null; operation: Operation };
+type AddAuthToOperationProps = {
+  authState?: AuthState | null;
+  operation: Operation;
+};
 
-const addAuthToOperation = ({ authState, operation }: AddAuthToOperationProps) => {
+const addAuthToOperation = ({
+  authState,
+  operation,
+}: AddAuthToOperationProps) => {
   if (!authState?.token) {
     return operation;
   }
 
   const fetchOptions =
-    typeof operation.context.fetchOptions === 'function' ? operation.context.fetchOptions() : operation.context.fetchOptions || {};
+    typeof operation.context.fetchOptions === 'function'
+      ? operation.context.fetchOptions()
+      : operation.context.fetchOptions || {};
 
   return makeOperation(operation.kind, operation, {
     ...operation.context,
@@ -116,7 +133,10 @@ const getAuth = async ({ token }: { token?: string }) => {
 };
 
 // TODO: Logout user on token expiration
-export const createUrqlClient = ({ token, logout }: { token?: string; logout: () => void }) => {
+export const createUrqlClient = ({
+  token,
+  logout,
+}: { token?: string; logout: () => void }) => {
   const isSsr = isServerSide();
   const ssr = ssrExchange({
     isClient: !isSsr,
@@ -146,22 +166,37 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
           const deletedId = (_result.deleteMembership as { id: string })?.id;
           const projectId = (_args as { projectId: string })?.projectId;
 
-          cache.updateQuery({ query: ProjectMembersDocument, variables: { id: projectId } }, (data) => {
-            if (data && 'project' in data && data.project && Array.isArray(data.memberships)) {
-              return {
-                ...data,
-                memberships: data.memberships.filter((membership) => membership.id !== deletedId),
-              };
-            }
+          cache.updateQuery(
+            { query: ProjectMembersDocument, variables: { id: projectId } },
+            (data) => {
+              if (
+                data &&
+                'project' in data &&
+                data.project &&
+                Array.isArray(data.memberships)
+              ) {
+                return {
+                  ...data,
+                  memberships: data.memberships.filter(
+                    (membership) => membership.id !== deletedId,
+                  ),
+                };
+              }
 
-            return data;
-          });
+              return data;
+            },
+          );
         },
-        createPersonalAccessTokenFromVerificationSession: (_result, _args, cache) => {
+        createPersonalAccessTokenFromVerificationSession: (
+          _result,
+          _args,
+          cache,
+        ) => {
           cache.invalidate('Query', 'personalAccessTokens');
         },
         deletePersonalAccessToken: (result, _args, cache) => {
-          const deletedId = (result.deletePersonalAccessToken as { id: string })?.id;
+          const deletedId = (result.deletePersonalAccessToken as { id: string })
+            ?.id;
 
           if (!deletedId) {
             return;
@@ -172,14 +207,20 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               data &&
               'personalAccessTokens' in data &&
               data.personalAccessTokens &&
-              Array.isArray((data.personalAccessTokens as PersonalAccessTokensWithAggregation).data)
+              Array.isArray(
+                (
+                  data.personalAccessTokens as PersonalAccessTokensWithAggregation
+                ).data,
+              )
             ) {
               const personalAccessTokens: any = data.personalAccessTokens;
 
               return {
                 ...data,
                 personalAccessTokens: {
-                  data: personalAccessTokens.data.filter((pat: PersonalAccessToken) => pat.id !== deletedId),
+                  data: personalAccessTokens.data.filter(
+                    (pat: PersonalAccessToken) => pat.id !== deletedId,
+                  ),
                   __typename: 'PersonalAccessTokensWithAggregation',
                 },
               };
@@ -188,73 +229,113 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
             return data;
           });
         },
-        deleteApplication: (result: DeleteApplicationMutation, _args, cache) => {
+        deleteApplication: (
+          result: DeleteApplicationMutation,
+          _args,
+          cache,
+        ) => {
           const deletedId = result.deleteApplication.id;
 
           if (!deletedId) {
             return;
           }
 
-          cache.updateQuery<ApplicationsQuery, ApplicationsQueryVariables>({ query: ApplicationsDocument }, (data) => {
-            if (data && 'applications' in data && data.applications && Array.isArray(data.applications.data)) {
-              return {
-                ...data,
-                applications: {
-                  ...data.applications,
-                  data: data.applications.data.filter((application) => application.id !== deletedId),
-                },
-              };
-            }
+          cache.updateQuery<ApplicationsQuery, ApplicationsQueryVariables>(
+            { query: ApplicationsDocument },
+            (data) => {
+              if (
+                data &&
+                'applications' in data &&
+                data.applications &&
+                Array.isArray(data.applications.data)
+              ) {
+                return {
+                  ...data,
+                  applications: {
+                    ...data.applications,
+                    data: data.applications.data.filter(
+                      (application) => application.id !== deletedId,
+                    ),
+                  },
+                };
+              }
 
-            return data;
-          });
+              return data;
+            },
+          );
         },
-        createApplication: (result: CreateApplicationMutation, _args, cache) => {
+        createApplication: (
+          result: CreateApplicationMutation,
+          _args,
+          cache,
+        ) => {
           const createdApplicationCredentials = result.createApplication;
 
           cache.updateQuery<ApplicationsQuery, ApplicationsQueryVariables>(
             { query: ApplicationsDocument, variables: { filter: undefined } },
             (data) => {
-              if (data && 'applications' in data && Array.isArray(data.applications.data)) {
+              if (
+                data &&
+                'applications' in data &&
+                Array.isArray(data.applications.data)
+              ) {
                 return {
                   ...data,
                   applications: {
                     ...data.applications,
-                    data: data.applications.data.concat(createdApplicationCredentials),
+                    data: data.applications.data.concat(
+                      createdApplicationCredentials,
+                    ),
                   },
                 };
               }
 
               return null;
-            }
+            },
           );
         },
         createProject: (result, _args, cache, _info) => {
-          cache.updateQuery({ query: ProjectsDocument, variables: { filter: undefined } }, (data) => {
-            if (data && 'projects' in data && Array.isArray((data.projects as ProjectsWithAggregation).data)) {
-              const projects: any = data.projects;
+          cache.updateQuery(
+            { query: ProjectsDocument, variables: { filter: undefined } },
+            (data) => {
+              if (
+                data &&
+                'projects' in data &&
+                Array.isArray((data.projects as ProjectsWithAggregation).data)
+              ) {
+                const projects: any = data.projects;
 
-              return {
-                ...data,
-                projects: {
-                  data: [...projects.data, result.createProject as any],
-                  __typename: 'ProjectsWithAggregation',
-                },
-              };
-            }
+                return {
+                  ...data,
+                  projects: {
+                    data: [...projects.data, result.createProject as any],
+                    __typename: 'ProjectsWithAggregation',
+                  },
+                };
+              }
 
-            return null;
-          });
+              return null;
+            },
+          );
         },
         createPrivateGateway: (result, _args, cache, _info) => {
           cache.updateQuery({ query: PrivateGatewaysDocument }, (data) => {
-            if (data && 'privateGateways' in data && Array.isArray((data.privateGateways as PrivateGatewaysWithAggregation).data)) {
+            if (
+              data &&
+              'privateGateways' in data &&
+              Array.isArray(
+                (data.privateGateways as PrivateGatewaysWithAggregation).data,
+              )
+            ) {
               const privateGateways: any = data.privateGateways;
 
               return {
                 ...data,
                 privateGateways: {
-                  data: [...privateGateways.data, result.createPrivateGateway as any],
+                  data: [
+                    ...privateGateways.data,
+                    result.createPrivateGateway as any,
+                  ],
                   __typename: 'PrivateGatewaysWithAggregation',
                 },
               };
@@ -311,7 +392,11 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
           }
 
           cache.updateQuery({ query: PinsDocument }, (data) => {
-            if (data && 'pins' in data && Array.isArray((data.pins as PinsWithAggregation).data)) {
+            if (
+              data &&
+              'pins' in data &&
+              Array.isArray((data.pins as PinsWithAggregation).data)
+            ) {
               const pins: any = data.pins;
 
               return {
@@ -332,27 +417,43 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
             return data;
           });
         },
-        leaveProject: (_result, args: LeaveProjectMutationVariables, cache, _info) => {
+        leaveProject: (
+          _result,
+          args: LeaveProjectMutationVariables,
+          cache,
+          _info,
+        ) => {
           const projectId = args.where.projectId;
 
           cache.updateQuery<ProjectsQuery, ProjectsQueryVariables>(
             { query: ProjectsDocument, variables: { filter: undefined } },
             (data) => {
-              if (data && 'projects' in data && Array.isArray(data.projects.data)) {
+              if (
+                data &&
+                'projects' in data &&
+                Array.isArray(data.projects.data)
+              ) {
                 return {
                   ...data,
                   projects: {
                     ...data.projects,
-                    data: data.projects.data.filter((project) => project.id !== projectId),
+                    data: data.projects.data.filter(
+                      (project) => project.id !== projectId,
+                    ),
                   },
                 };
               }
 
               return data;
-            }
+            },
           );
         },
-        createTemplate: (result: CreateTemplateMutation, _args, cache, _info) => {
+        createTemplate: (
+          result: CreateTemplateMutation,
+          _args,
+          cache,
+          _info,
+        ) => {
           const createdTemplate = result.createTemplate;
 
           cache.updateQuery<TemplatesQuery, TemplatesQueryVariables>(
@@ -365,7 +466,11 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               },
             },
             (data) => {
-              if (data && 'templates' in data && Array.isArray(data.templates.data)) {
+              if (
+                data &&
+                'templates' in data &&
+                Array.isArray(data.templates.data)
+              ) {
                 return {
                   ...data,
                   templates: {
@@ -376,10 +481,15 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
         },
-        deleteTemplate: (result: DeleteTemplateMutation, _args, cache, _info) => {
+        deleteTemplate: (
+          result: DeleteTemplateMutation,
+          _args,
+          cache,
+          _info,
+        ) => {
           const deletedTemplate = result.deleteTemplate;
 
           cache.updateQuery<TemplatesQuery, TemplatesQueryVariables>(
@@ -392,24 +502,36 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               },
             },
             (data) => {
-              if (data && 'templates' in data && Array.isArray(data.templates.data)) {
+              if (
+                data &&
+                'templates' in data &&
+                Array.isArray(data.templates.data)
+              ) {
                 return {
                   ...data,
                   templates: {
                     ...data.templates,
-                    data: data.templates.data.filter((template) => template.id !== deletedTemplate.id),
+                    data: data.templates.data.filter(
+                      (template) => template.id !== deletedTemplate.id,
+                    ),
                   },
                 };
               }
 
               return data;
-            }
+            },
           );
         },
         createSite: (result: CreateSiteMutation, _args, cache) => {
           const newSite = result.createSite;
           cache.updateQuery<SitesQuery, SitesQueryVariables>(
-            { query: SitesDocument, variables: { where: {}, filter: { take: uiConstants.SITES_PAGE_SIZE, page: 1 } } },
+            {
+              query: SitesDocument,
+              variables: {
+                where: {},
+                filter: { take: uiConstants.SITES_PAGE_SIZE, page: 1 },
+              },
+            },
             (data) => {
               if (data && 'sites' in data && Array.isArray(data.sites.data)) {
                 return {
@@ -422,59 +544,104 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
         },
-        createFleekFunction: (result: CreateFleekFunctionMutation, _args, cache) => {
+        createFleekFunction: (
+          result: CreateFleekFunctionMutation,
+          _args,
+          cache,
+        ) => {
           const newFn = result.createFleekFunction;
           cache.updateQuery<FleekFunctionsQuery, FleekFunctionsQueryVariables>(
-            { query: FleekFunctionsDocument, variables: { filter: { page: 1, take: uiConstants.FUNCTIONS_PAGE_SIZE } } },
+            {
+              query: FleekFunctionsDocument,
+              variables: {
+                filter: { page: 1, take: uiConstants.FUNCTIONS_PAGE_SIZE },
+              },
+            },
             (data) => {
-              if (data && 'fleekFunctions' in data && Array.isArray(data.fleekFunctions.data)) {
+              if (
+                data &&
+                'fleekFunctions' in data &&
+                Array.isArray(data.fleekFunctions.data)
+              ) {
                 return {
                   ...data,
                   fleekFunctions: {
                     ...data.fleekFunctions,
-                    data: [newFn as any, ...data.fleekFunctions.data].slice(0, uiConstants.FUNCTIONS_PAGE_SIZE),
+                    data: [newFn as any, ...data.fleekFunctions.data].slice(
+                      0,
+                      uiConstants.FUNCTIONS_PAGE_SIZE,
+                    ),
                   },
                 };
               }
 
               return data;
-            }
+            },
           );
         },
-        deleteFleekFunction: (result: DeleteFleekFunctionMutation, _args, cache, _info) => {
-          cache.invalidate({ __typename: 'FleekFunction', id: result.deleteFleekFunction.id });
+        deleteFleekFunction: (
+          result: DeleteFleekFunctionMutation,
+          _args,
+          cache,
+          _info,
+        ) => {
+          cache.invalidate({
+            __typename: 'FleekFunction',
+            id: result.deleteFleekFunction.id,
+          });
         },
-        triggerDeployment: (result: TriggerDeploymentMutation, _args, cache) => {
+        triggerDeployment: (
+          result: TriggerDeploymentMutation,
+          _args,
+          cache,
+        ) => {
           const newDeployment = result.triggerDeployment;
 
           // Updates the deployments list first page
           cache.updateQuery<DeploymentsQuery, DeploymentsQueryVariables>(
             {
               query: DeploymentsDocument,
-              variables: { where: { siteId: newDeployment.siteId }, filter: { take: uiConstants.DEPLOYMENTS_PAGE_SIZE, page: 1 } },
+              variables: {
+                where: { siteId: newDeployment.siteId },
+                filter: { take: uiConstants.DEPLOYMENTS_PAGE_SIZE, page: 1 },
+              },
             },
             (data) => {
-              if (data && 'deployments' in data && Array.isArray(data.deployments.data)) {
+              if (
+                data &&
+                'deployments' in data &&
+                Array.isArray(data.deployments.data)
+              ) {
                 return {
                   ...data,
                   deployments: {
                     ...data.deployments,
-                    data: [newDeployment as any, ...data.deployments.data].slice(0, uiConstants.DEPLOYMENTS_PAGE_SIZE),
+                    data: [
+                      newDeployment as any,
+                      ...data.deployments.data,
+                    ].slice(0, uiConstants.DEPLOYMENTS_PAGE_SIZE),
                   },
                 };
               }
 
               return data;
-            }
+            },
           );
 
           cache.updateQuery<DeploymentsQuery, DeploymentsQueryVariables>(
-            { query: DeploymentsDocument, variables: { where: { siteId: newDeployment.siteId } } },
+            {
+              query: DeploymentsDocument,
+              variables: { where: { siteId: newDeployment.siteId } },
+            },
             (data) => {
-              if (data && 'deployments' in data && Array.isArray(data.deployments.data)) {
+              if (
+                data &&
+                'deployments' in data &&
+                Array.isArray(data.deployments.data)
+              ) {
                 return {
                   ...data,
                   deployments: {
@@ -485,11 +652,14 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
 
           cache.updateQuery<SiteQuery, SiteQueryVariables>(
-            { query: SiteDocument, variables: { where: { id: newDeployment.siteId } } },
+            {
+              query: SiteDocument,
+              variables: { where: { id: newDeployment.siteId } },
+            },
             (data) => {
               if (data && 'site' in data) {
                 return {
@@ -502,7 +672,7 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
         },
         retryDeployment: (result: RetryDeploymentMutation, _args, cache) => {
@@ -512,27 +682,44 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
           cache.updateQuery<DeploymentsQuery, DeploymentsQueryVariables>(
             {
               query: DeploymentsDocument,
-              variables: { where: { siteId: newDeployment.siteId }, filter: { take: uiConstants.DEPLOYMENTS_PAGE_SIZE, page: 1 } },
+              variables: {
+                where: { siteId: newDeployment.siteId },
+                filter: { take: uiConstants.DEPLOYMENTS_PAGE_SIZE, page: 1 },
+              },
             },
             (data) => {
-              if (data && 'deployments' in data && Array.isArray(data.deployments.data)) {
+              if (
+                data &&
+                'deployments' in data &&
+                Array.isArray(data.deployments.data)
+              ) {
                 return {
                   ...data,
                   deployments: {
                     ...data.deployments,
-                    data: [newDeployment as any, ...data.deployments.data].slice(0, uiConstants.DEPLOYMENTS_PAGE_SIZE),
+                    data: [
+                      newDeployment as any,
+                      ...data.deployments.data,
+                    ].slice(0, uiConstants.DEPLOYMENTS_PAGE_SIZE),
                   },
                 };
               }
 
               return data;
-            }
+            },
           );
 
           cache.updateQuery<DeploymentsQuery, DeploymentsQueryVariables>(
-            { query: DeploymentsDocument, variables: { where: { siteId: newDeployment.siteId } } },
+            {
+              query: DeploymentsDocument,
+              variables: { where: { siteId: newDeployment.siteId } },
+            },
             (data) => {
-              if (data && 'deployments' in data && Array.isArray(data.deployments.data)) {
+              if (
+                data &&
+                'deployments' in data &&
+                Array.isArray(data.deployments.data)
+              ) {
                 return {
                   ...data,
                   deployments: {
@@ -543,12 +730,15 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
 
           // update Recent Deploy component
           cache.updateQuery<SiteQuery, SiteQueryVariables>(
-            { query: SiteDocument, variables: { where: { id: newDeployment.siteId } } },
+            {
+              query: SiteDocument,
+              variables: { where: { id: newDeployment.siteId } },
+            },
             (data) => {
               if (data && 'site' in data) {
                 return {
@@ -561,7 +751,7 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
         },
         deleteSite: (result: DeleteSiteMutation, _args, cache, _info) => {
@@ -570,19 +760,28 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
         deleteProject: (result: DeleteProjectMutation, _args, cache, _info) => {
           const deletedProject = result.deleteProject;
 
-          cache.updateQuery<ProjectsQuery, ProjectsQueryVariables>({ query: ProjectsDocument }, (data) => {
-            if (data && 'projects' in data && Array.isArray(data.projects.data)) {
-              return {
-                ...data,
-                projects: {
-                  ...data.projects,
-                  data: data.projects.data.filter((project) => project.id !== deletedProject.id),
-                },
-              };
-            }
+          cache.updateQuery<ProjectsQuery, ProjectsQueryVariables>(
+            { query: ProjectsDocument },
+            (data) => {
+              if (
+                data &&
+                'projects' in data &&
+                Array.isArray(data.projects.data)
+              ) {
+                return {
+                  ...data,
+                  projects: {
+                    ...data.projects,
+                    data: data.projects.data.filter(
+                      (project) => project.id !== deletedProject.id,
+                    ),
+                  },
+                };
+              }
 
-            return data;
-          });
+              return data;
+            },
+          );
         },
         deleteDomain: (result: DeleteDomainMutation, _args, cache) => {
           const deletedDomain = result.deleteDomain;
@@ -592,13 +791,19 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
             .inspectFields(key)
             .filter(
               (field) =>
-                field.fieldName === 'domain' || (field.fieldKey === 'domainAvailability' && field.fieldKey.includes(deletedDomain.id))
+                field.fieldName === 'domain' ||
+                (field.fieldKey === 'domainAvailability' &&
+                  field.fieldKey.includes(deletedDomain.id)),
             )
             .forEach((field) => {
               cache.invalidate(key, field.fieldKey);
             });
         },
-        createDnsConfig: (result: CreateDnsConfigMutation, _args: CreateDnsConfigMutationVariables, cache) => {
+        createDnsConfig: (
+          result: CreateDnsConfigMutation,
+          _args: CreateDnsConfigMutationVariables,
+          cache,
+        ) => {
           const dnsConfig = result.createDnsConfig;
           const domainId = _args.where.domainId;
 
@@ -612,7 +817,11 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               },
             },
             (data) => {
-              if (data && 'domain' in data && Array.isArray(data.domain.dnsConfigs)) {
+              if (
+                data &&
+                'domain' in data &&
+                Array.isArray(data.domain.dnsConfigs)
+              ) {
                 return {
                   ...data,
                   domain: {
@@ -624,12 +833,23 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
               }
 
               return data;
-            }
+            },
           );
         },
-        createMigrationRequestsFromToken: (result: CreateMigrationRequestsFromTokenMutation, _args, cache) => {
-          cache.updateQuery<MigrationRequestsQuery, MigrationRequestsQueryVariables>({ query: MigrationRequestsDocument }, (data) => {
-            if (data && 'migrationRequests' in data && Array.isArray(data.migrationRequests.data)) {
+        createMigrationRequestsFromToken: (
+          result: CreateMigrationRequestsFromTokenMutation,
+          _args,
+          cache,
+        ) => {
+          cache.updateQuery<
+            MigrationRequestsQuery,
+            MigrationRequestsQueryVariables
+          >({ query: MigrationRequestsDocument }, (data) => {
+            if (
+              data &&
+              'migrationRequests' in data &&
+              Array.isArray(data.migrationRequests.data)
+            ) {
               return {
                 ...data,
                 migrationRequests: {
@@ -645,82 +865,122 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
             return data;
           });
         },
-        deleteSecretKey: (result: DeleteSecretKeyMutation, _args: DeleteSecretKeyMutationVariables, cache) => {
+        deleteSecretKey: (
+          result: DeleteSecretKeyMutation,
+          _args: DeleteSecretKeyMutationVariables,
+          cache,
+        ) => {
           if (result.deleteSecretKey) {
-            cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({ query: GetSecretKeysDocument }, (data) => {
-              console.log('new keysss');
+            cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>(
+              { query: GetSecretKeysDocument },
+              (data) => {
+                console.log('new keysss');
 
-              if (data && 'user' in data && Array.isArray(data.user.secretKeys)) {
-                return {
-                  ...data,
-                  user: {
-                    ...data.user,
-                    secretKeys: [],
-                  },
-                };
-              }
+                if (
+                  data &&
+                  'user' in data &&
+                  Array.isArray(data.user.secretKeys)
+                ) {
+                  return {
+                    ...data,
+                    user: {
+                      ...data.user,
+                      secretKeys: [],
+                    },
+                  };
+                }
 
-              return data;
-            });
+                return data;
+              },
+            );
 
-            cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({ query: GetSecretKeysDocument }, (data) => {
-              if (data && 'user' in data && Array.isArray(data.user.secretKeys)) {
-                return {
-                  ...data,
-                  user: {
-                    ...data.user,
-                    secretKeys: [],
-                  },
-                };
-              }
+            cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>(
+              { query: GetSecretKeysDocument },
+              (data) => {
+                if (
+                  data &&
+                  'user' in data &&
+                  Array.isArray(data.user.secretKeys)
+                ) {
+                  return {
+                    ...data,
+                    user: {
+                      ...data.user,
+                      secretKeys: [],
+                    },
+                  };
+                }
 
-              return data;
-            });
+                return data;
+              },
+            );
           }
         },
         generateTwoFactorSecretKey: (
           result: GenerateTwoFactorSecretKeyMutation,
           _args: GenerateTwoFactorSecretKeyMutationVariables,
-          cache
+          cache,
         ) => {
           if (!result.generateTwoFactorSecretKey) {
             return;
           }
 
-          cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({ query: GetSecretKeysDocument }, (data) => {
-            if (data && 'user' in data && Array.isArray(data.user.secretKeys)) {
-              return {
-                ...data,
-                user: {
-                  ...data.user,
-                  secretKeys: [result.generateTwoFactorSecretKey],
-                },
-              };
-            }
+          cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>(
+            { query: GetSecretKeysDocument },
+            (data) => {
+              if (
+                data &&
+                'user' in data &&
+                Array.isArray(data.user.secretKeys)
+              ) {
+                return {
+                  ...data,
+                  user: {
+                    ...data.user,
+                    secretKeys: [result.generateTwoFactorSecretKey],
+                  },
+                };
+              }
 
-            return data;
-          });
+              return data;
+            },
+          );
         },
-        updateTwoFactorSecretKey: (result: UpdateSecretKeyMutation, _args: UpdateSecretKeyMutationVariables, cache) => {
+        updateTwoFactorSecretKey: (
+          result: UpdateSecretKeyMutation,
+          _args: UpdateSecretKeyMutationVariables,
+          cache,
+        ) => {
           if (!result.updateTwoFactorSecretKey) {
             return;
           }
 
-          cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({ query: GetSecretKeysDocument }, (data) => {
-            if (data && 'user' in data && Array.isArray(data.user.secretKeys)) {
-              return {
-                ...data,
-                user: {
-                  ...data.user,
-                  secretKeys: [result.updateTwoFactorSecretKey],
-                },
-              };
-            }
+          cache.updateQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>(
+            { query: GetSecretKeysDocument },
+            (data) => {
+              if (
+                data &&
+                'user' in data &&
+                Array.isArray(data.user.secretKeys)
+              ) {
+                return {
+                  ...data,
+                  user: {
+                    ...data.user,
+                    secretKeys: [result.updateTwoFactorSecretKey],
+                  },
+                };
+              }
 
-            return data;
-          });
+              return data;
+            },
+          );
         },
-        enableTwoFactorProtectedAction: (result: EnableProtectedActionMutation, args: EnableProtectedActionMutationVariables, cache) => {
+        enableTwoFactorProtectedAction: (
+          result: EnableProtectedActionMutation,
+          args: EnableProtectedActionMutationVariables,
+          cache,
+        ) => {
           if (!result.enableTwoFactorProtectedAction) {
             return;
           }
@@ -734,7 +994,11 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
 
           cache.writeFragment(fragment, { id: args.where.id, enabled: true });
         },
-        disableTwoFactorProtectedAction: (result: DisableProtectedActionMutation, args: DisableProtectedActionMutationVariables, cache) => {
+        disableTwoFactorProtectedAction: (
+          result: DisableProtectedActionMutation,
+          args: DisableProtectedActionMutationVariables,
+          cache,
+        ) => {
           if (!result.disableTwoFactorProtectedAction) {
             return;
           }
@@ -761,7 +1025,9 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
       mapExchange({
         onError: (error) => {
           const isAuthError = error.graphQLErrors.some(
-            (error) => error.extensions?.name === UnauthenticatedError.toString() || error.message === 'The request is not authenticated.'
+            (error) =>
+              error.extensions?.name === UnauthenticatedError.toString() ||
+              error.message === 'The request is not authenticated.',
           );
 
           if (isAuthError) {
@@ -773,7 +1039,8 @@ export const createUrqlClient = ({ token, logout }: { token?: string; logout: ()
         const authState: AuthState = await getAuth({ token });
 
         return {
-          addAuthToOperation: (operation: Operation) => addAuthToOperation({ authState, operation }),
+          addAuthToOperation: (operation: Operation) =>
+            addAuthToOperation({ authState, operation }),
           refreshAuth: async () => {
             // TODO: Add auth refresh logic
           },

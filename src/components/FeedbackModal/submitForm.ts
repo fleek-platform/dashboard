@@ -43,7 +43,12 @@ const addSignature = (comment: string, email: string, userId: string) => {
   return `${comment}\n\n${metadata.join('\n')}`;
 };
 
-export const submitForm = async (formValuesObject: FormValuesType, resetFn: () => void, selectedTab: string, uploadTokens: string[]) => {
+export const submitForm = async (
+  formValuesObject: FormValuesType,
+  resetFn: () => void,
+  selectedTab: string,
+  uploadTokens: string[],
+) => {
   const { email, comment, firstName, userId, userName } = formValuesObject;
 
   const requestBody = {
@@ -72,7 +77,10 @@ export const submitForm = async (formValuesObject: FormValuesType, resetFn: () =
         throw new SubmitSupportFormError(errorText, response.status);
       }
 
-      throw new SubmitSupportFormError('Network response was not ok', response.status);
+      throw new SubmitSupportFormError(
+        'Network response was not ok',
+        response.status,
+      );
     }
 
     resetFn();
@@ -90,7 +98,10 @@ export class FileUploadError extends Error {
   }
 }
 export class SubmitSupportFormError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
     this.name = 'SubmitSupportFormError';
   }

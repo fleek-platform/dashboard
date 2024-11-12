@@ -7,7 +7,11 @@ export type DisableModalProps = {
 } & Dialog.RootProps &
   LoadingProps;
 
-export const DisableModal: React.FC<DisableModalProps> = ({ onConfirmDelete, isLoading, ...dialogProps }) => (
+export const DisableModal: React.FC<DisableModalProps> = ({
+  onConfirmDelete,
+  isLoading,
+  ...dialogProps
+}) => (
   <Dialog.Root {...dialogProps}>
     <Dialog.Overlay />
     <Dialog.Portal>
@@ -15,12 +19,14 @@ export const DisableModal: React.FC<DisableModalProps> = ({ onConfirmDelete, isL
         <Modal.Heading>Disable Two-factor Authentication</Modal.Heading>
         <Text>Are you sure you want to disable two-factor authentication?</Text>
         <Text>
-          Two-factor authentication adds an additional layer of security to your account by requiring more than just a password or wallet
-          connection to sign in.
+          Two-factor authentication adds an additional layer of security to your
+          account by requiring more than just a password or wallet connection to
+          sign in.
         </Text>
         <Text>
-          Fleek highly recommends that you keep two-factor authentication enabled on your account. If you need to change your configuration,
-          or generate new recovery codes, you can do that in the settings below.
+          Fleek highly recommends that you keep two-factor authentication
+          enabled on your account. If you need to change your configuration, or
+          generate new recovery codes, you can do that in the settings below.
         </Text>
         <Modal.CTARow>
           <Dialog.Close asChild>
@@ -28,7 +34,12 @@ export const DisableModal: React.FC<DisableModalProps> = ({ onConfirmDelete, isL
               Cancel
             </Button>
           </Dialog.Close>
-          <Button intent="danger" onClick={onConfirmDelete} loading={isLoading} className="flex-1">
+          <Button
+            intent="danger"
+            onClick={onConfirmDelete}
+            loading={isLoading}
+            className="flex-1"
+          >
             Disable
           </Button>
         </Modal.CTARow>

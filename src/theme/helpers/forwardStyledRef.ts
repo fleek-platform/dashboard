@@ -12,7 +12,10 @@ const StitchesInternal = Symbol.for('sxs.internal');
  * Forwards style properties with the ref of the given component.
  * Follows the code of stitches on https://github.com/stitchesjs/stitches/blob/canary/packages/react/src/features/styled.js#L40-L44
  */
-export const forwardStyledRef = <T, P = {}>(Component: StyledComponent<any, any, any, any>, args: ForwardStyledRefArgs<T, P>) => {
+export const forwardStyledRef = <T, P = {}>(
+  Component: StyledComponent<any, any, any, any>,
+  args: ForwardStyledRefArgs<T, P>,
+) => {
   const Element = styled(forwardRef(args));
 
   return Object.assign(Element, {

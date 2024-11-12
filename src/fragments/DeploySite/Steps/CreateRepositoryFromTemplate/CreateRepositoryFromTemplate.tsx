@@ -21,7 +21,16 @@ import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
 import { GitProvider } from '@/integrations/git';
 import { LoadingProps } from '@/types/Props';
-import { Avatar, Box, Checkbox, Combobox, FormField, Icon, Stepper, Text } from '@/ui';
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Combobox,
+  FormField,
+  Icon,
+  Stepper,
+  Text,
+} from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
@@ -30,11 +39,26 @@ import { CreateRepositoryFromTemplateStyles as S } from './CreateRepositoryFromT
 
 export const CreateTemplateFromRepositoryStep: React.FC = () => {
   const featureFlags = useFeatureFlags();
-  const { gitProviderId, sourceProvider, gitUser, setGitRepository, gitRepository, templateId, setSourceProvider, accessToken } =
-    useDeploySiteContext();
-  const [templateDeployQuery] = useTemplateDeployQuery({ variables: { where: { id: templateId! } }, requestPolicy: 'network-only' });
-  const [, createRepositoryFromTemplate] = useCreateRepositoryFromTemplateMutation();
-  const [gitIntegrationQuery] = useGitIntegrationQuery({ variables: { where: { gitProviderId: gitProviderId! } }, pause: !gitProviderId });
+  const {
+    gitProviderId,
+    sourceProvider,
+    gitUser,
+    setGitRepository,
+    gitRepository,
+    templateId,
+    setSourceProvider,
+    accessToken,
+  } = useDeploySiteContext();
+  const [templateDeployQuery] = useTemplateDeployQuery({
+    variables: { where: { id: templateId! } },
+    requestPolicy: 'network-only',
+  });
+  const [, createRepositoryFromTemplate] =
+    useCreateRepositoryFromTemplateMutation();
+  const [gitIntegrationQuery] = useGitIntegrationQuery({
+    variables: { where: { gitProviderId: gitProviderId! } },
+    pause: !gitProviderId,
+  });
   const createSiteForm = Form.useContext();
   const toast = useToast();
   const router = useRouter();
@@ -71,7 +95,10 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     onSubmit: async (values) => {
       try {
         if (!git || !gitUser || !templateGit.slug || !templateGit.repository) {
-          toast.error({ message: 'It is not possible to use this template. Please contact the support.' });
+          toast.error({
+            message:
+              'It is not possible to use this template. Please contact the support.',
+          });
 
           return;
         }
@@ -80,10 +107,14 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
 
         if (featureFlags.enableBackendGitIntegration) {
           const gitIntegrationId = gitIntegrationQuery.data?.gitIntegration.id;
-          const installationId = await git.getInstallationId({ slug: gitUser.slug });
+          const installationId = await git.getInstallationId({
+            slug: gitUser.slug,
+          });
 
           if (!gitIntegrationId || !installationId) {
-            toast.error({ message: 'Failed to find git provider installation' });
+            toast.error({
+              message: 'Failed to find git provider installation',
+            });
           }
 
           const createResponse = await createRepositoryFromTemplate({
@@ -98,7 +129,10 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
           });
 
           if (!createResponse.data || createResponse.error) {
-            throw createResponse.error || new Error('Failed to create repository from template');
+            throw (
+              createResponse.error ||
+              new Error('Failed to create repository from template')
+            );
           }
 
           const repository = createResponse.data.createGithubRepoFromTemplate;
@@ -135,10 +169,22 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     }
 
     // null is not allowed as value
-    createSiteForm.fields.buildCommand.setValue(templateGit.buildCommand ?? undefined, true);
-    createSiteForm.fields.distDirectory.setValue(templateGit.distDirectory ?? undefined, true);
-    createSiteForm.fields.dockerImage.setValue(templateGit.dockerImage ?? undefined, true);
-    createSiteForm.fields.baseDirectory.setValue(templateGit.baseDirectory ?? undefined, true);
+    createSiteForm.fields.buildCommand.setValue(
+      templateGit.buildCommand ?? undefined,
+      true,
+    );
+    createSiteForm.fields.distDirectory.setValue(
+      templateGit.distDirectory ?? undefined,
+      true,
+    );
+    createSiteForm.fields.dockerImage.setValue(
+      templateGit.dockerImage ?? undefined,
+      true,
+    );
+    createSiteForm.fields.baseDirectory.setValue(
+      templateGit.baseDirectory ?? undefined,
+      true,
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateGit]);
@@ -212,7 +258,11 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
           isLoading={showSkeleton}
         />
         <PrivateRepositoryField />
-        {showSkeleton ? <SettingsBox.Skeleton /> : <S.SubmitButton>Create and deploy template</S.SubmitButton>}
+        {showSkeleton ? (
+          <SettingsBox.Skeleton />
+        ) : (
+          <S.SubmitButton>Create and deploy template</S.SubmitButton>
+        )}
       </Form.Provider>
     </S.Container>
   );
@@ -222,16 +272,19 @@ const AccountField: React.FC = () => {
   const router = useRouter();
   const toast = useToast();
   const client = useClient();
-  const { sourceProvider, gitUser, setGitUser, gitProviderId, accessToken } = useDeploySiteContext();
+  const { sourceProvider, gitUser, setGitUser, gitProviderId, accessToken } =
+    useDeploySiteContext();
 
   const gitUsersAndOrganizations = useGitUserAndOrganizations({
     provider: sourceProvider as GitProvider.Name,
     accessToken: accessToken as string,
   });
-  const [countSitesWithSourceProviderQuery] = useCountSitesWithSourceProviderQuery();
+  const [countSitesWithSourceProviderQuery] =
+    useCountSitesWithSourceProviderQuery();
 
   const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching || (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+    countSitesWithSourceProviderQuery.fetching ||
+    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
   const users = useMemo(() => {
     const { data } = gitUsersAndOrganizations;
 
@@ -243,7 +296,12 @@ const AccountField: React.FC = () => {
       setGitUser(data.user);
     }
 
-    return [data.user, ...data.organizations.filter((organization) => organization.isOrganization)];
+    return [
+      data.user,
+      ...data.organizations.filter(
+        (organization) => organization.isOrganization,
+      ),
+    ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gitUsersAndOrganizations.data]);
 
@@ -255,7 +313,9 @@ const AccountField: React.FC = () => {
     const projectId = router.query.projectId!;
 
     if (!projectId || !gitProviderId) {
-      toast.error({ message: 'Unexpected error when generating url, please try again' });
+      toast.error({
+        message: 'Unexpected error when generating url, please try again',
+      });
 
       return null;
     }
@@ -264,10 +324,18 @@ const AccountField: React.FC = () => {
       const createInstallationUrlResult = await client.mutation<
         CreateGithubAppInstallationUrlMutation,
         CreateGithubAppInstallationUrlMutationVariables
-      >(CreateGithubAppInstallationUrlDocument, { where: { projectId, gitProviderId } });
+      >(CreateGithubAppInstallationUrlDocument, {
+        where: { projectId, gitProviderId },
+      });
 
-      if (createInstallationUrlResult.error || !createInstallationUrlResult.data?.createGithubAppInstallationUrl) {
-        throw createInstallationUrlResult.error || new Error('Failed to create GithubApp Installation Url');
+      if (
+        createInstallationUrlResult.error ||
+        !createInstallationUrlResult.data?.createGithubAppInstallationUrl
+      ) {
+        throw (
+          createInstallationUrlResult.error ||
+          new Error('Failed to create GithubApp Installation Url')
+        );
       }
 
       openPopUpWindow({
@@ -275,7 +343,10 @@ const AccountField: React.FC = () => {
         onClose: () => gitUsersAndOrganizations.refetch(),
       });
     } catch (error) {
-      toast.error({ error, log: 'Failed to create GithubApp Installation Url' });
+      toast.error({
+        error,
+        log: 'Failed to create GithubApp Installation Url',
+      });
     }
   };
 
@@ -295,7 +366,8 @@ const AccountField: React.FC = () => {
             disabled: shouldDisableAddOrganization,
             tooltip: shouldDisableAddOrganization
               ? {
-                  content: 'You already have sites that depend on the current GitHub installation.',
+                  content:
+                    'You already have sites that depend on the current GitHub installation.',
                   side: 'left',
                 }
               : undefined,
@@ -304,7 +376,15 @@ const AccountField: React.FC = () => {
       >
         {({ Field, Options }) => (
           <>
-            <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
+            <Field
+              placeholder={
+                <>
+                  {<Icon name={sourceProviderIcon[sourceProvider!]} />} Select
+                </>
+              }
+            >
+              {UserItem}
+            </Field>
 
             <Options>{UserItem}</Options>
           </>
@@ -328,7 +408,8 @@ const PrivateRepositoryField: React.FC = () => {
 
   return (
     <S.CheckboxWrapper onClick={() => field.setValue(!field.value, true)}>
-      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create private Git repository
+      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create
+      private Git repository
     </S.CheckboxWrapper>
   );
 };
@@ -340,7 +421,13 @@ type TitleRowProps = LoadingProps<{
   repository: string;
 }>;
 
-const TitleRow: React.FC<TitleRowProps> = ({ isLoading, image, name, slug, repository }) => {
+const TitleRow: React.FC<TitleRowProps> = ({
+  isLoading,
+  image,
+  name,
+  slug,
+  repository,
+}) => {
   if (isLoading) {
     return (
       <S.TemplateHeader.TitleRow>

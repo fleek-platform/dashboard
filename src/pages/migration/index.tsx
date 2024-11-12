@@ -50,4 +50,8 @@ const MigrationPage: Page = () => {
 MigrationPage.getLayout = (page) => <Migration.Layout>{page}</Migration.Layout>;
 
 // eslint-disable-next-line fleek-custom/no-unequal-resolver-names
-export default withAccess({ Component: MigrationPage, requiredPermissions: null, featureFlagName: 'enableMigrationFlow' });
+export default withAccess({
+  Component: MigrationPage,
+  requiredPermissions: null,
+  featureFlagName: 'enableMigrationFlow',
+});

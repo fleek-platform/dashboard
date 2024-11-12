@@ -4,35 +4,68 @@ import { BadgeText, Form, SettingsModal } from '@/components';
 import { useGitRepositoryTree } from '@/hooks/useGitRepositoryTree';
 import { GitProvider } from '@/integrations/git';
 import { LoadingProps } from '@/types/Props';
-import { Box, Button, FormField, Icon, Input, RadioGroup, Scrollable, Text } from '@/ui';
+import {
+  Box,
+  Button,
+  FormField,
+  Icon,
+  Input,
+  RadioGroup,
+  Scrollable,
+  Text,
+} from '@/ui';
 
 import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
-import { BaseDirectoryRadioGroup as RadioGroupV2, BaseDirectoryRadioGroupProps as RadioGroupV2Props } from './BaseDirectoryRadioGroup';
+import {
+  BaseDirectoryRadioGroup as RadioGroupV2,
+  BaseDirectoryRadioGroupProps as RadioGroupV2Props,
+} from './BaseDirectoryRadioGroup';
 
 const PATH = Symbol('path');
 const LABEL = 'Base Directory';
 
-type DeprecatedProps<T, K> = ({ deprecated: true } & T) | ({ deprecated?: false } & K);
+type DeprecatedProps<T, K> =
+  | ({ deprecated: true } & T)
+  | ({ deprecated?: false } & K);
 
 type BaseDirectoryFieldProps = {
   fieldName: string;
   isDisabled?: boolean;
 } & DeprecatedProps<DeprecatedBaseDirectoryFieldProps, RadioGroupV2Props>;
 
-type DeprecatedBaseDirectoryFieldProps = LoadingProps<Partial<BaseDirectoryRadioGroupProps>>;
+type DeprecatedBaseDirectoryFieldProps = LoadingProps<
+  Partial<BaseDirectoryRadioGroupProps>
+>;
 
-export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => {
+export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
+  props,
+) => {
   const field = Form.useField<string>(props.fieldName);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const initialValue = useRef<string>(field.value);
   const fieldValue = useRef<string>(field.value);
 
   const isLoading = props.deprecated
-    ? props.isLoading || !props.sourceProvider || !props.repository || !props.slug || !props.branch
-    : !props.gitProviderId || !props.sourceRepositoryOwner || !props.sourceRepositoryName || !props.sourceBranch;
+    ? props.isLoading ||
+      !props.sourceProvider ||
+      !props.repository ||
+      !props.slug ||
+      !props.branch
+    : !props.gitProviderId ||
+      !props.sourceRepositoryOwner ||
+      !props.sourceRepositoryName ||
+      !props.sourceBranch;
 
   if (isLoading) {
-    return <Form.InputField name={props.fieldName} label={LABEL} placeholder="./" isLoading={isLoading} disableValidMessage />;
+    return (
+      <Form.InputField
+        name={props.fieldName}
+        label={LABEL}
+        placeholder="./"
+        isLoading={isLoading}
+        disableValidMessage
+      />
+    );
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -90,7 +123,11 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => 
           <FormField.Label>{LABEL}</FormField.Label>
           <S.Trigger.RowWrapper>
             <Input.Root disabled={props.isDisabled}>
-              <Input.Field readOnly value={field.value || './'} disabled={props.isDisabled} />
+              <Input.Field
+                readOnly
+                value={field.value || './'}
+                disabled={props.isDisabled}
+              />
             </Input.Root>
 
             <Button intent="neutral" disabled={props.isDisabled} size="sm">
@@ -114,7 +151,10 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => 
         </SettingsModal.Close>
 
         <SettingsModal.Close asChild>
-          <SettingsModal.ConfirmButton onClick={handleConfirm} className="flex-1">
+          <SettingsModal.ConfirmButton
+            onClick={handleConfirm}
+            className="flex-1"
+          >
             Continue
           </SettingsModal.ConfirmButton>
         </SettingsModal.Close>
@@ -184,7 +224,10 @@ const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = ({
   }, [getRepositoryTree]);
 
   return (
-    <RadioGroup.Root value={field.value} onValueChange={(value) => field.setValue(value, true)}>
+    <RadioGroup.Root
+      value={field.value}
+      onValueChange={(value) => field.setValue(value, true)}
+    >
       <S.RecursiveFolders.Row root>
         <RadioGroup.Item value="" />
         <Text>{repository}</Text>
@@ -194,7 +237,11 @@ const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = ({
       <Scrollable.Root>
         <Scrollable.VerticalBar />
         <S.ScrollableViewport>
-          <RecursiveFolders isLoading={!accessToken || (getRepositoryTree.isLoading as true)} folders={folders} selected={field.value} />
+          <RecursiveFolders
+            isLoading={!accessToken || (getRepositoryTree.isLoading as true)}
+            folders={folders}
+            selected={field.value}
+          />
         </S.ScrollableViewport>
       </Scrollable.Root>
     </RadioGroup.Root>
@@ -208,7 +255,11 @@ type RecursiveFoldersProps = LoadingProps<{
   selected: string;
 }>;
 
-const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, isLoading }) => {
+const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
+  folders,
+  selected,
+  isLoading,
+}) => {
   if (isLoading) {
     return <RecursiveFoldersSkeleton />;
   }
@@ -219,7 +270,9 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         const folderPath = value[PATH];
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [showNested, setShowNested] = useState(selected.startsWith(folderPath));
+        const [showNested, setShowNested] = useState(
+          selected.startsWith(folderPath),
+        );
 
         const hasNested = Object.keys(value).length > 0;
 
@@ -234,7 +287,10 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         return (
           <Box key={key}>
             <S.RecursiveFolders.Row onClick={handleShowNested}>
-              <S.RecursiveFolders.Indicator hasNested={hasNested} showNested={showNested && hasNested}>
+              <S.RecursiveFolders.Indicator
+                hasNested={hasNested}
+                showNested={showNested && hasNested}
+              >
                 <Icon name="chevron-right" />
               </S.RecursiveFolders.Indicator>
               <RadioGroup.Item value={folderPath} onClick={handleSelect} />

@@ -7,7 +7,11 @@ type ProjectGoBackProps = {
   goBackUrl: string;
 };
 
-export const ProjectGoBack: React.FC<ProjectGoBackProps> = ({ isLoading = false, projectName, goBackUrl }) => {
+export const ProjectGoBack: React.FC<ProjectGoBackProps> = ({
+  isLoading = false,
+  projectName,
+  goBackUrl,
+}) => {
   return (
     <Link
       href={goBackUrl}

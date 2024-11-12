@@ -43,17 +43,22 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   );
 };
 
-type ContainerProps = ChildrenProps<React.ComponentPropsWithRef<typeof S.Content>>;
+type ContainerProps = ChildrenProps<
+  React.ComponentPropsWithRef<typeof S.Content>
+>;
 
-const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(S.Content, ({ children, ...props }, ref) => {
-  return (
-    <S.Layout>
-      <S.Content {...props} ref={ref}>
-        {children}
-      </S.Content>
-    </S.Layout>
-  );
-});
+const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(
+  S.Content,
+  ({ children, ...props }, ref) => {
+    return (
+      <S.Layout>
+        <S.Content {...props} ref={ref}>
+          {children}
+        </S.Content>
+      </S.Layout>
+    );
+  },
+);
 
 type LoginButtonProps = {
   title: string;

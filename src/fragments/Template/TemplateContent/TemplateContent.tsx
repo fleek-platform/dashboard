@@ -12,7 +12,10 @@ import { TemplateContentStyles as S } from './TemplateContent.styles';
 
 type TemplateContentProps = LoadingProps<{ template: Template }>;
 
-export const TemplateContent: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
+export const TemplateContent: React.FC<TemplateContentProps> = ({
+  template,
+  isLoading,
+}) => {
   if (isLoading) {
     return <TemplateContentSkeleton />;
   }
@@ -42,7 +45,11 @@ const Readme: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
   const readme = useReadme(template);
 
   if (readme.isLoading || isLoading) {
-    return <S.Details.ReadmeLoadingContainer>{new Array(6).fill(<ComingSoon.Skeleton.TextSkeleton />)}</S.Details.ReadmeLoadingContainer>;
+    return (
+      <S.Details.ReadmeLoadingContainer>
+        {new Array(6).fill(<ComingSoon.Skeleton.TextSkeleton />)}
+      </S.Details.ReadmeLoadingContainer>
+    );
   }
 
   if (readme.error || !readme.data) {

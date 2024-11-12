@@ -1,7 +1,12 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const BannedIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom {...props} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <S.Custom
+    {...props}
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g id="ban" clipPath="url(#clip0_13866_6844)">
       <path
         id="Vector"

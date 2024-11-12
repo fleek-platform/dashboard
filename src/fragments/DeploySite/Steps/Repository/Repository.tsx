@@ -13,7 +13,13 @@ import { RepositoryListContent } from './RepositoryListContent';
 import { UserCombobox } from './UserCombobox';
 
 export const RepositoryStep: React.FC = () => {
-  const { sourceProvider, gitUser, setGitUser, setSourceProvider, accessToken } = useDeploySiteContext();
+  const {
+    sourceProvider,
+    gitUser,
+    setGitUser,
+    setSourceProvider,
+    accessToken,
+  } = useDeploySiteContext();
   const [searchValue, setSearchValue] = useState('');
   const gitUsersAndOrganizations = useGitUserAndOrganizations({
     provider: sourceProvider as GitProvider.Name,
@@ -30,7 +36,9 @@ export const RepositoryStep: React.FC = () => {
     },
   });
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => setSearchValue(event.target.value);
+  const handleSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => setSearchValue(event.target.value);
 
   const users = useMemo(() => {
     const { data } = gitUsersAndOrganizations;
@@ -41,7 +49,11 @@ export const RepositoryStep: React.FC = () => {
 
     const users = [data.user, ...data.organizations];
 
-    if (!gitUser || (gitUser.slug === data.user.slug && gitUser.installationId !== data.user.installationId)) {
+    if (
+      !gitUser ||
+      (gitUser.slug === data.user.slug &&
+        gitUser.installationId !== data.user.installationId)
+    ) {
       // sets default for user
       setGitUser(data.user);
     }
@@ -63,13 +75,18 @@ export const RepositoryStep: React.FC = () => {
       return [];
     }
 
-    return data.filter((repo) => repo.name.toLowerCase().includes(searchValue.toLowerCase()));
+    return data.filter((repo) =>
+      repo.name.toLowerCase().includes(searchValue.toLowerCase()),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gitUserRepositories.data, searchValue]);
 
   useEffect(() => {
     if (gitUsersAndOrganizations.error) {
-      toast.error({ error: gitUsersAndOrganizations.error, log: 'Error fetching git users and organizations' });
+      toast.error({
+        error: gitUsersAndOrganizations.error,
+        log: 'Error fetching git users and organizations',
+      });
       setSourceProvider(undefined); // skips authentication step
       stepper.prevStep();
     }
@@ -85,21 +102,41 @@ export const RepositoryStep: React.FC = () => {
   return (
     <>
       <S.Container>
-        <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+        <Text
+          as="h2"
+          variant="primary"
+          size="xl"
+          weight={700}
+          className="self-start"
+        >
           Select Repository
         </Text>
 
         <S.Wrapper>
-          <UserCombobox users={users} isLoading={gitUsersAndOrganizations.isLoading} onRefetch={handleRefetch} />
+          <UserCombobox
+            users={users}
+            isLoading={gitUsersAndOrganizations.isLoading}
+            onRefetch={handleRefetch}
+          />
 
           <Input.Root>
             <Input.Icon name="magnify" />
-            <Input.Field placeholder="Search" value={searchValue} onChange={handleSearchChange} />
+            <Input.Field
+              placeholder="Search"
+              value={searchValue}
+              onChange={handleSearchChange}
+            />
           </Input.Root>
         </S.Wrapper>
 
         <S.List.Scrollable.Root type="auto">
-          <RepositoryListContent repos={repos} loading={gitUserRepositories.isLoading || gitUsersAndOrganizations.isLoading} />
+          <RepositoryListContent
+            repos={repos}
+            loading={
+              gitUserRepositories.isLoading ||
+              gitUsersAndOrganizations.isLoading
+            }
+          />
         </S.List.Scrollable.Root>
       </S.Container>
 

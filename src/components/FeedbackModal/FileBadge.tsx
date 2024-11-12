@@ -21,7 +21,11 @@ const FileBadge: React.FC<FileBadgeProps> = ({ file, onRemove }) => {
   return (
     <BadgeText colorScheme="slate">
       {truncatedFileName}
-      <Icon name="close-circle" className="hover:cursor-pointer hover:opacity-80" onClick={onRemove} />
+      <Icon
+        name="close-circle"
+        className="hover:cursor-pointer hover:opacity-80"
+        onClick={onRemove}
+      />
     </BadgeText>
   );
 };

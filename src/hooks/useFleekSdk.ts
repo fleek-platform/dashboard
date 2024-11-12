@@ -26,17 +26,20 @@ export const useFleekSdk = () => {
       }
 
       try {
-        const { StaticAccessTokenService, FleekSdk } = await import('@fleek-platform/sdk');
-        
-        const accessTokenService = new StaticAccessTokenService({ 
-          accessToken: cookies.values.accessToken 
+        const { StaticAccessTokenService, FleekSdk } = await import(
+          '@fleek-platform/sdk'
+        );
+
+        const accessTokenService = new StaticAccessTokenService({
+          accessToken: cookies.values.accessToken,
         });
 
         const client = new FleekSdk({
           accessTokenService,
           graphqlServiceApiUrl: secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL,
           uploadProxyApiUrl: secrets.NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL,
-          ipfsStorageApiUrl: secrets.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,
+          ipfsStorageApiUrl:
+            secrets.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,
         });
 
         setFleekSdk(client);

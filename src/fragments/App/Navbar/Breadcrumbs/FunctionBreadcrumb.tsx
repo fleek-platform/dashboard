@@ -9,7 +9,10 @@ export type FunctionBreadcrumbProps = {
   projectId: string;
 };
 
-export const FunctionBreadcrumb: React.FC<FunctionBreadcrumbProps> = ({ name, projectId }) => {
+export const FunctionBreadcrumb: React.FC<FunctionBreadcrumbProps> = ({
+  name,
+  projectId,
+}) => {
   return (
     <S.Container>
       <S.Divider>/</S.Divider>
@@ -17,7 +20,9 @@ export const FunctionBreadcrumb: React.FC<FunctionBreadcrumbProps> = ({ name, pr
         <S.Name>Functions</S.Name>
       </S.Link>
       <S.Divider>/</S.Divider>
-      <S.Link href={routes.project.function.detail({ projectId, fnName: name })}>
+      <S.Link
+        href={routes.project.function.detail({ projectId, fnName: name })}
+      >
         <Icon name="code" />
         <S.Name>{name}</S.Name>
       </S.Link>

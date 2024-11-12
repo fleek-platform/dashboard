@@ -11,7 +11,10 @@ type UseSiteBuildSettingsGuardProps = {
   refetchSiteQuery?: UseQueryExecute;
 };
 
-export const useSiteBuildSettingsGuard = ({ siteQuery, refetchSiteQuery }: UseSiteBuildSettingsGuardProps) => {
+export const useSiteBuildSettingsGuard = ({
+  siteQuery,
+  refetchSiteQuery,
+}: UseSiteBuildSettingsGuardProps) => {
   const gitIntegration = siteQuery?.data?.site?.gitIntegration;
   const gitProvider = gitIntegration?.gitProvider;
   const githubAppInstallation = gitIntegration?.githubAppInstallation;
@@ -20,35 +23,61 @@ export const useSiteBuildSettingsGuard = ({ siteQuery, refetchSiteQuery }: UseSi
   const shouldInstall = !githubAppInstallation?.installationId;
 
   const ManageGitIntegrationComponent = useMemo(() => {
-    if (!siteQuery || siteQuery.error || siteQuery.fetching || !hasSourceProvider || !gitProvider || !shouldInstall) {
+    if (
+      !siteQuery ||
+      siteQuery.error ||
+      siteQuery.fetching ||
+      !hasSourceProvider ||
+      !gitProvider ||
+      !shouldInstall
+    ) {
       return null;
     }
 
     return (
       <ManageGitIntegration
         provider={gitProvider}
-        refetchGitIntegration={() => (refetchSiteQuery ? refetchSiteQuery({ requestPolicy: 'network-only' }) : undefined)}
+        refetchGitIntegration={() =>
+          refetchSiteQuery
+            ? refetchSiteQuery({ requestPolicy: 'network-only' })
+            : undefined
+        }
       />
     );
-  }, [gitProvider, hasSourceProvider, refetchSiteQuery, shouldInstall, siteQuery]);
+  }, [
+    gitProvider,
+    hasSourceProvider,
+    refetchSiteQuery,
+    shouldInstall,
+    siteQuery,
+  ]);
 
   return {
     gitProvider,
     shouldInstall,
     isLoading: siteQuery?.fetching,
     ManageGitIntegrationComponent,
-    refetchGitIntegration: () => (refetchSiteQuery ? refetchSiteQuery({ requestPolicy: 'network-only' }) : undefined),
+    refetchGitIntegration: () =>
+      refetchSiteQuery
+        ? refetchSiteQuery({ requestPolicy: 'network-only' })
+        : undefined,
   };
 };
 
-type ManageGitIntegrationProps = ProviderDetailsProps & { refetchGitIntegration: () => void };
+type ManageGitIntegrationProps = ProviderDetailsProps & {
+  refetchGitIntegration: () => void;
+};
 
-const ManageGitIntegration = ({ provider, refetchGitIntegration }: ManageGitIntegrationProps) => {
+const ManageGitIntegration = ({
+  provider,
+  refetchGitIntegration,
+}: ManageGitIntegrationProps) => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Site disconnected</SettingsBox.Title>
       <SettingsBox.Text>
-        The Git integration for this site was disconnected. Please reconnect it to continue using it on Fleek.
+        The Git integration for this site was disconnected. Please reconnect it
+        to continue using it on Fleek.
       </SettingsBox.Text>
       <ProviderDetails provider={provider} onClose={refetchGitIntegration} />
     </SettingsBox.Container>

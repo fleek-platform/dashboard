@@ -33,8 +33,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem }) => {
       className={cn(
         'flex text-neutral-11 hover:bg-neutral-4 active:bg-neutral-5 items-center gap-3 py-2 px-3 text-sm font-medium rounded-lg select-none ring-0 outline-0 focus-visible:ring-2 ring-neutral-8 whitespace-nowrap',
         {
-          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11': isActivePage,
-        }
+          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11':
+            isActivePage,
+        },
       )}
     >
       {navItem.label}
@@ -47,17 +48,26 @@ type SubNavigationProps = {
   isNavigationLoading: boolean;
 };
 
-export const SubNavigationLayout: React.FC<SubNavigationProps & ChildrenProps> = ({ navigation, isNavigationLoading, children }) => {
+export const SubNavigationLayout: React.FC<
+  SubNavigationProps & ChildrenProps
+> = ({ navigation, isNavigationLoading, children }) => {
   return (
     <>
-      <Scrollable.Root type="auto" className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden">
+      <Scrollable.Root
+        type="auto"
+        className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden"
+      >
         <Scrollable.HorizontalBar className="peer" />
         <Scrollable.Viewport className="w-full h-full peer-data-[state=visible]:pb-4">
           <Box className="flex-row gap-2 flex-nowrap overflow-auto">
             {isNavigationLoading ? (
               <>
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Skeleton key={i} variant="text" className="w-1/6 h-[2rem] rounded-lg" />
+                  <Skeleton
+                    key={i}
+                    variant="text"
+                    className="w-1/6 h-[2rem] rounded-lg"
+                  />
                 ))}
               </>
             ) : (

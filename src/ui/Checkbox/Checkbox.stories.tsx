@@ -25,7 +25,13 @@ export const withStatusControl: StoryFn<CheckboxProps> = (args) => {
       setChecked(!checked);
     };
 
-    return <Checkbox {...args} checked={checked} onCheckedChange={handleCheckedChange} />;
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onCheckedChange={handleCheckedChange}
+      />
+    );
   };
 
   return <CheckboxElement />;

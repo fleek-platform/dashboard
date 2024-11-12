@@ -11,7 +11,11 @@ type DnsLinkBadgeProps = {
   errorMessage?: ErrorBadgeProps['errorMessage'];
 };
 
-export const DnsLinkBadge: React.FC<DnsLinkBadgeProps> = ({ domainId, dnsLinkStatus, errorMessage }) => {
+export const DnsLinkBadge: React.FC<DnsLinkBadgeProps> = ({
+  domainId,
+  dnsLinkStatus,
+  errorMessage,
+}) => {
   const { setWithDnsLink, openModal } = useSettingsItemContext();
 
   const handleOpenDomainModal = () => {
@@ -23,12 +27,22 @@ export const DnsLinkBadge: React.FC<DnsLinkBadgeProps> = ({ domainId, dnsLinkSta
     <>
       {match(dnsLinkStatus)
         .with(DnslinkStatus.CREATED, () => (
-          <BadgeText hoverable colorScheme="amber" onClick={handleOpenDomainModal}>
+          <BadgeText
+            hoverable
+            colorScheme="amber"
+            onClick={handleOpenDomainModal}
+          >
             Set DNSLink Record
           </BadgeText>
         ))
-        .with(DnslinkStatus.VERIFICATION_FAILED, () => <ErrorBadge errorMessage={errorMessage}>Verification DNSLink Failed</ErrorBadge>)
-        .with(DnslinkStatus.VERIFIED, () => <BadgeText colorScheme="slate">DNSLink</BadgeText>)
+        .with(DnslinkStatus.VERIFICATION_FAILED, () => (
+          <ErrorBadge errorMessage={errorMessage}>
+            Verification DNSLink Failed
+          </ErrorBadge>
+        ))
+        .with(DnslinkStatus.VERIFIED, () => (
+          <BadgeText colorScheme="slate">DNSLink</BadgeText>
+        ))
         .exhaustive()}
     </>
   );

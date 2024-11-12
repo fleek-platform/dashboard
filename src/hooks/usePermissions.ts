@@ -14,7 +14,10 @@ export const usePermissions = ({ action }: UsePermissionsArgs) => {
     return false;
   }
 
-  const hasPermission = hasRequiredPermissions({ permissions, requiredPermissions: action });
+  const hasPermission = hasRequiredPermissions({
+    permissions,
+    requiredPermissions: action,
+  });
 
   return hasPermission;
 };

@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
 import { AlertBox, Modal } from '@/components';
-import { useDeleteFolderMutation, useDeletePinMutation } from '@/generated/graphqlClient';
+import {
+  useDeleteFolderMutation,
+  useDeletePinMutation,
+} from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { Button, Dialog, Text } from '@/ui';
 
 import { modalType, useStorageContext } from '../Storage.context';
 
 export const DeletePinModal: React.FC = () => {
-  const { isDeleteModalOpen, selectedItemName, isFolder, closeModal } = useStorageContext();
+  const { isDeleteModalOpen, selectedItemName, isFolder, closeModal } =
+    useStorageContext();
 
   const handleOpenChange = () => {
     if (isDeleteModalOpen) {
@@ -23,9 +27,13 @@ export const DeletePinModal: React.FC = () => {
       <Modal.Content>
         <Modal.Heading>Delete {isFolder ? 'Folder' : 'File'}</Modal.Heading>
         <Text>
-          The <b>{selectedItemName}</b> {isFolder ? 'folder' : 'file'} will be deleted from your project.
+          The <b>{selectedItemName}</b> {isFolder ? 'folder' : 'file'} will be
+          deleted from your project.
         </Text>
-        <Text>Are you sure you want to proceed? This action is irreversible, and cannot be undone</Text>
+        <Text>
+          Are you sure you want to proceed? This action is irreversible, and
+          cannot be undone
+        </Text>
         <AlertBox variant="danger" size="sm">
           Warning: This action is irreversible.
         </AlertBox>
@@ -49,7 +57,8 @@ const CloseButton: React.FC = () => (
 
 const SubmitButton: React.FC = () => {
   const toast = useToast();
-  const { closeModal, selectedPinId, selectedFolderId, selectedItemName } = useStorageContext();
+  const { closeModal, selectedPinId, selectedFolderId, selectedItemName } =
+    useStorageContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const [, deletePin] = useDeletePinMutation();
@@ -64,7 +73,9 @@ const SubmitButton: React.FC = () => {
       if (selectedPinId) {
         deletePinResult = await deletePin({ where: { id: selectedPinId } });
       } else if (selectedFolderId) {
-        deletePinResult = await deleteFolder({ where: { id: selectedFolderId } });
+        deletePinResult = await deleteFolder({
+          where: { id: selectedFolderId },
+        });
       }
 
       if (!deletePinResult?.data) {
@@ -81,7 +92,13 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button intent="danger" loading={isLoading} disabled={isLoading} onClick={handleDeletePin} className="flex-1">
+    <Button
+      intent="danger"
+      loading={isLoading}
+      disabled={isLoading}
+      onClick={handleDeletePin}
+      className="flex-1"
+    >
       Delete
     </Button>
   );

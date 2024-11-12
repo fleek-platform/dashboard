@@ -2,7 +2,11 @@ import { useState } from 'react';
 
 import { LearnMoreMessage, SettingsBox } from '@/components';
 import { constants } from '@/constants';
-import { useDisableProtectedActionMutation, useEnableProtectedActionMutation, useProtectedActionsQuery } from '@/generated/graphqlClient';
+import {
+  useDisableProtectedActionMutation,
+  useEnableProtectedActionMutation,
+  useProtectedActionsQuery,
+} from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { Box, Button, Checkbox, Text } from '@/ui';
 
@@ -16,11 +20,14 @@ export const Settings = () => {
   const [, enableProtectedAction] = useEnableProtectedActionMutation();
   const [, disableProtectedAction] = useDisableProtectedActionMutation();
 
-  const protectedActions = protectedActionsQuery.data?.twoFactorProtectedActions.data || [];
+  const protectedActions =
+    protectedActionsQuery.data?.twoFactorProtectedActions.data || [];
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [checkboxChangeMap, setCheckboxChangeMap] = useState<CheckboxChangeMap>({});
+  const [checkboxChangeMap, setCheckboxChangeMap] = useState<CheckboxChangeMap>(
+    {},
+  );
 
   const handleButtonClick = async () => {
     if (!isEditing) {
@@ -32,8 +39,11 @@ export const Settings = () => {
 
     setIsSubmitting(true);
 
-    const mutationsArray = Object.entries(checkboxChangeMap).map(([id, value]) =>
-      value ? enableProtectedAction({ where: { id } }) : disableProtectedAction({ where: { id } })
+    const mutationsArray = Object.entries(checkboxChangeMap).map(
+      ([id, value]) =>
+        value
+          ? enableProtectedAction({ where: { id } })
+          : disableProtectedAction({ where: { id } }),
     );
 
     await Promise.allSettled(mutationsArray)
@@ -44,14 +54,22 @@ export const Settings = () => {
           }
         });
       })
-      .catch(() => toast.error({ message: 'Unexpected error when saving protected actions changes' }));
+      .catch(() =>
+        toast.error({
+          message: 'Unexpected error when saving protected actions changes',
+        }),
+      );
     setIsSubmitting(false);
     setCheckboxChangeMap({});
 
     setIsEditing(false);
   };
 
-  const handleCheckboxClick = (checked: boolean, originalValue: boolean, id: string) => {
+  const handleCheckboxClick = (
+    checked: boolean,
+    originalValue: boolean,
+    id: string,
+  ) => {
     if (checked !== originalValue) {
       setCheckboxChangeMap({ ...checkboxChangeMap, [id]: checked });
 
@@ -67,10 +85,15 @@ export const Settings = () => {
     <SettingsBox.Container>
       <S.TextSection>
         <SettingsBox.Title>Two-factor Settings</SettingsBox.Title>
-        <SettingsBox.Text>Toggle which activity should prompt two-factor authentication.</SettingsBox.Text>
+        <SettingsBox.Text>
+          Toggle which activity should prompt two-factor authentication.
+        </SettingsBox.Text>
       </S.TextSection>
       {protectedActions.length === 0 ? (
-        <SettingsBox.EmptyContent title="No Protected Actions" description="Currently there are no protected actions available" />
+        <SettingsBox.EmptyContent
+          title="No Protected Actions"
+          description="Currently there are no protected actions available"
+        />
       ) : (
         <>
           <S.RowContainer>
@@ -78,9 +101,19 @@ export const Settings = () => {
               <S.SettingsRow key={protectedAction.id}>
                 <Box>
                   <Checkbox
-                    checked={protectedAction.id in checkboxChangeMap ? checkboxChangeMap[protectedAction.id] : protectedAction.enabled}
+                    checked={
+                      protectedAction.id in checkboxChangeMap
+                        ? checkboxChangeMap[protectedAction.id]
+                        : protectedAction.enabled
+                    }
                     disabled={!isEditing || isSubmitting}
-                    onCheckedChange={(checked: boolean) => handleCheckboxClick(checked, protectedAction.enabled, protectedAction.id)}
+                    onCheckedChange={(checked: boolean) =>
+                      handleCheckboxClick(
+                        checked,
+                        protectedAction.enabled,
+                        protectedAction.id,
+                      )
+                    }
                   />
                   <Text weight={700}>{protectedAction.name}</Text>
                 </Box>
@@ -88,8 +121,16 @@ export const Settings = () => {
             ))}
           </S.RowContainer>
           <SettingsBox.ActionRow>
-            <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_2FA_ACTIONS}>two-factor Settings</LearnMoreMessage>
-            <Button onClick={handleButtonClick} intent={isEditing ? 'accent' : 'neutral'} loading={isSubmitting}>
+            <LearnMoreMessage
+              href={constants.EXTERNAL_LINK.FLEEK_DOCS_2FA_ACTIONS}
+            >
+              two-factor Settings
+            </LearnMoreMessage>
+            <Button
+              onClick={handleButtonClick}
+              intent={isEditing ? 'accent' : 'neutral'}
+              loading={isSubmitting}
+            >
               {isEditing ? 'Save settings' : 'Edit settings'}
             </Button>
           </SettingsBox.ActionRow>

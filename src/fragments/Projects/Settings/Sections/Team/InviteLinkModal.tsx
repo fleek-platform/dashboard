@@ -7,7 +7,11 @@ type InviteLinkModalProps = {
   closeModal: () => void;
 };
 
-export const InviteLinkModal: React.FC<InviteLinkModalProps> = ({ inviteLink, isOpen, closeModal }) => {
+export const InviteLinkModal: React.FC<InviteLinkModalProps> = ({
+  inviteLink,
+  isOpen,
+  closeModal,
+}) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={closeModal}>
       <Dialog.Overlay />
@@ -15,8 +19,8 @@ export const InviteLinkModal: React.FC<InviteLinkModalProps> = ({ inviteLink, is
       <Modal.Content>
         <Modal.Heading>Invite link</Modal.Heading>
         <Text>
-          Allow others to join your Fleek project through the link below. Those who join with this link will be given a &lsquo;Member&rsquo;
-          role.
+          Allow others to join your Fleek project through the link below. Those
+          who join with this link will be given a &lsquo;Member&rsquo; role.
         </Text>
         <CodeSnippet title="Copy invite link" code={inviteLink || ' '} />
 

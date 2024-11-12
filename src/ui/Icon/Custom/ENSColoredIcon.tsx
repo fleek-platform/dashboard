@@ -1,7 +1,12 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const EnsColoredIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom {...props} viewBox="0 0 72.7 80.9" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <S.Custom
+    {...props}
+    viewBox="0 0 72.7 80.9"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <style>{'.st1{fill:#a0a8d4}'}</style>
     <g id="Layer_1_00000049216471798175502890000006318023516466656703_">
       <linearGradient

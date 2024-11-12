@@ -1,3 +1,5 @@
-query privateGatewayNameAvailability($where: PrivateGatewayNameAvailabilityWhereInput!) {
+query privateGatewayNameAvailability(
+  $where: PrivateGatewayNameAvailabilityWhereInput!
+) {
   privateGatewayNameAvailability(where: $where)
 }

@@ -11,7 +11,9 @@ export const LoginStyles = {
   Container: styled(Box, {
     width: '$modal-width',
     maxWidth: '$full',
-    variants: { variant: { container: { gap: '$spacing-6', borderRadius: '$xl' } } },
+    variants: {
+      variant: { container: { gap: '$spacing-6', borderRadius: '$xl' } },
+    },
     defaultVariants: { variant: 'container' },
   }),
   ContentWrapper: styled(Box, {

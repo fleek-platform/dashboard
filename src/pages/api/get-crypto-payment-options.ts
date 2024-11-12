@@ -6,7 +6,10 @@ import { CryptoPaymentNetwork, CryptoPaymentOption } from '@/types/Billing';
  * Warning: This is a POC for getting payment token options for Cryptomus.
  */
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<GetCryptoPaymentOptionsResponse>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<GetCryptoPaymentOptionsResponse>,
+) => {
   try {
     /**
      * As we are going to use stablecoins and lock the payment for its amounts,
@@ -34,13 +37,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<GetCryptoPaymen
      *
      */
 
-    const options = Object.entries(coins).map<CryptoPaymentOption>(([coin, coinNetworks]) => ({
-      title: coin,
-      symbol: coin,
-      iconSrc: `https://storage.cryptomus.com/currencies/${coin}.svg`,
-      networks: coinNetworks.map((network) => networks[network] as CryptoPaymentNetwork),
-      // exchangeRate: exchangeRates[coin] || 0,
-    }));
+    const options = Object.entries(coins).map<CryptoPaymentOption>(
+      ([coin, coinNetworks]) => ({
+        title: coin,
+        symbol: coin,
+        iconSrc: `https://storage.cryptomus.com/currencies/${coin}.svg`,
+        networks: coinNetworks.map(
+          (network) => networks[network] as CryptoPaymentNetwork,
+        ),
+        // exchangeRate: exchangeRates[coin] || 0,
+      }),
+    );
 
     res.status(200).json({ options });
   } catch (error) {
@@ -78,7 +85,8 @@ const networks: Record<string, CryptoPaymentNetwork> = {
   ARBITRUM: {
     id: 'ARBITRUM',
     title: 'Arbitrum',
-    iconSrc: 'https://pbs.twimg.com/profile_images/1653532864309239810/ZjT_zBAS_400x400.png',
+    iconSrc:
+      'https://pbs.twimg.com/profile_images/1653532864309239810/ZjT_zBAS_400x400.png',
   },
   AVALANCHE: {
     id: 'Avalanche C-Chain',

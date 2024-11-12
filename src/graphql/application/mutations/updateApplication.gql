@@ -1,4 +1,7 @@
-mutation updateApplication($data: UpdateApplicationDataInput!, $where: UpdateApplicationWhereInput!) {
+mutation updateApplication(
+  $data: UpdateApplicationDataInput!
+  $where: UpdateApplicationWhereInput!
+) {
   updateApplication(data: $data, where: $where) {
     id
     name

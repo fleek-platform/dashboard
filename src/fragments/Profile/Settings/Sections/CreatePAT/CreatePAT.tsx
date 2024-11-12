@@ -15,21 +15,42 @@ export type CreatePATProps = LoadingProps<{
   closeModal: () => void;
 }>;
 
-export const CreatePAT: React.FC<CreatePATProps> = ({ closeModal, modalState, isLoading }) => {
+export const CreatePAT: React.FC<CreatePATProps> = ({
+  closeModal,
+  modalState,
+  isLoading,
+}) => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Personal Access Tokens</SettingsBox.Title>
-      <SettingsBox.Text>Create a personal access token to utilize in Fleek integrations.</SettingsBox.Text>
+      <SettingsBox.Text>
+        Create a personal access token to utilize in Fleek integrations.
+      </SettingsBox.Text>
 
-      <Form.InputField name="patName" placeholder="Name" isLoading={isLoading} />
+      <Form.InputField
+        name="patName"
+        placeholder="Name"
+        isLoading={isLoading}
+      />
 
       <SettingsBox.ActionRow>
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PAT}>personal access tokens</LearnMoreMessage>
-        {isLoading ? <SettingsBox.Skeleton variant="button" /> : <Form.SubmitButton>Add token</Form.SubmitButton>}
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PAT}>
+          personal access tokens
+        </LearnMoreMessage>
+        {isLoading ? (
+          <SettingsBox.Skeleton variant="button" />
+        ) : (
+          <Form.SubmitButton>Add token</Form.SubmitButton>
+        )}
       </SettingsBox.ActionRow>
 
       <Dialog.Root open={modalState?.isOpen} onOpenChange={closeModal}>
-        {closeModal && <CreatePATModal closeModal={closeModal} patValue={modalState?.patValue} />}
+        {closeModal && (
+          <CreatePATModal
+            closeModal={closeModal}
+            patValue={modalState?.patValue}
+          />
+        )}
       </Dialog.Root>
     </SettingsBox.Container>
   );

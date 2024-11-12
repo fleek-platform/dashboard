@@ -21,7 +21,9 @@ const [Provider, useContext] = createContext<FeedbackModalContextType>({
   providerName: 'FeedbackModal.Provider',
 });
 
-export const FeedbackModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FeedbackModalProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<TAB>('PROBLEM');
 

@@ -6,7 +6,9 @@ import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 
 export type UseTemplateGitDataArgs = Pick<Template, 'deployment'>;
 
-export const useTemplateGitData = (template?: UseTemplateGitDataArgs): TemplateGitData => {
+export const useTemplateGitData = (
+  template?: UseTemplateGitDataArgs,
+): TemplateGitData => {
   return useMemo(() => {
     const deployment = template?.deployment;
 

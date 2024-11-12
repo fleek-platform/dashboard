@@ -6,7 +6,11 @@ type DateFormatArgs = {
   stringFormat?: string; // i.e 'HH:mm:ss.SSS' to show 15:30:45.123
 };
 
-export const dateFormat = ({ dateISO, format, stringFormat }: DateFormatArgs) => {
+export const dateFormat = ({
+  dateISO,
+  format,
+  stringFormat,
+}: DateFormatArgs) => {
   if (stringFormat) {
     return DateTime.fromISO(dateISO).toFormat(stringFormat);
   }

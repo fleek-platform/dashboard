@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-import { SettingsItemContext, SettingsItemProvider } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
+import {
+  SettingsItemContext,
+  SettingsItemProvider,
+} from '@/fragments/Site/Settings/Elements/SettingsItem.context';
 import { usePrivateGatewaysQuery } from '@/generated/graphqlClient';
 import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
@@ -12,12 +15,17 @@ export type PrivateGatewayContext = {
 
   selectedZoneId: string;
 
-  onSubmitDeletePrivateGateway: (privateGatewayId: string) => Promise<boolean | undefined>;
+  onSubmitDeletePrivateGateway: (
+    privateGatewayId: string,
+  ) => Promise<boolean | undefined>;
 };
 
 export type PrivateGatewayProviderProps = ChildrenProps<
   Pick<PrivateGatewayContext, 'onSubmitDeletePrivateGateway'> &
-    Pick<SettingsItemContext, 'onSubmitVerification' | 'onSubmitDelete' | 'onSubmitPrimaryDomain'>
+    Pick<
+      SettingsItemContext,
+      'onSubmitVerification' | 'onSubmitDelete' | 'onSubmitPrimaryDomain'
+    >
 >;
 
 const [Provider, useContext] = createContext<PrivateGatewayContext>({

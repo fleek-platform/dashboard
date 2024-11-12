@@ -11,7 +11,10 @@ import { Log } from '@/utils/log';
  * This API endpoint is responsible for parsing the hostname and returning the IP address and country of the hostname
  * using the `dns` Node.js native module. Without the endpoint the UI would have to make the request to the DNS server.
  */
-const handler = async (req: NextApiRequest, res: NextApiResponse<HostnameLookupResponse>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<HostnameLookupResponse>,
+) => {
   const { hostname } = req.query;
 
   if (typeof hostname !== 'string') {
@@ -42,7 +45,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<HostnameLookupR
         return uint8Array;
       } catch (cause) {
         Log.error(`Error fetching raw block for CID ${cid}: ${cause}`);
-        throw new HostnameLookupError(`unable to fetch raw block for CID ${cid}`);
+        throw new HostnameLookupError(
+          `unable to fetch raw block for CID ${cid}`,
+        );
       }
     };
 

@@ -17,7 +17,13 @@ type UpdateFormProps = PropsWithChildren<{
   onSubmit: (v: Record<string, string>) => Promise<void>;
 }>;
 
-export const UpdateForm = ({ children, type, value, isLoading, onSubmit }: UpdateFormProps) => {
+export const UpdateForm = ({
+  children,
+  type,
+  value,
+  isLoading,
+  onSubmit,
+}: UpdateFormProps) => {
   const client = useClient();
   const [saving, setSaving] = useState(false);
   const form = Form.useForm({
@@ -52,7 +58,11 @@ export const UpdateForm = ({ children, type, value, isLoading, onSubmit }: Updat
 
         <Box className="flex-row items-center justify-between">
           {children}
-          {isLoading ? <SettingsBox.Skeleton variant="button" /> : <Form.SubmitButton loading={saving}>Save Changes</Form.SubmitButton>}
+          {isLoading ? (
+            <SettingsBox.Skeleton variant="button" />
+          ) : (
+            <Form.SubmitButton loading={saving}>Save Changes</Form.SubmitButton>
+          )}
         </Box>
       </Box>
     </Form.Provider>

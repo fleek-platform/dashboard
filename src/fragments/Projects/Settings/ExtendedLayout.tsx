@@ -22,23 +22,33 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
       label: 'General',
       path: routes.project.settings.general({ projectId }),
       hasAccess: usePermissions({
-        action: [constants.PERMISSION.PROJECT.EDIT_NAME, constants.PERMISSION.PROJECT.DELETE, constants.PERMISSION.PROJECT.EDIT_AVATAR],
+        action: [
+          constants.PERMISSION.PROJECT.EDIT_NAME,
+          constants.PERMISSION.PROJECT.DELETE,
+          constants.PERMISSION.PROJECT.EDIT_AVATAR,
+        ],
       }),
     },
     {
       label: 'Storage',
       path: routes.project.settings.storage({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS],
+      }),
     },
     {
       label: 'Private gateways',
       path: routes.project.settings.privateGateways({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW],
+      }),
     },
     {
       label: 'Application credentials',
       path: routes.project.settings.applicationCredentials({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW],
+      }),
     },
     {
       label: 'Git integrations',
@@ -53,13 +63,21 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
     {
       label: 'Billing',
       path: routes.project.settings.billing({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE, constants.PERMISSION.BILLING.VIEW] }),
+      hasAccess: usePermissions({
+        action: [
+          constants.PERMISSION.BILLING.MANAGE,
+          constants.PERMISSION.BILLING.VIEW,
+        ],
+      }),
     },
   ];
 
   return (
     <ProjectLayout>
-      <SubNavigationLayout navigation={navigation} isNavigationLoading={session.loading}>
+      <SubNavigationLayout
+        navigation={navigation}
+        isNavigationLoading={session.loading}
+      >
         {children}
       </SubNavigationLayout>
     </ProjectLayout>

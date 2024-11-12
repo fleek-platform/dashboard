@@ -3,7 +3,12 @@ import { withProps } from '@/utils/withProps';
 
 import { ModalStyles as S } from './Modal.styles';
 
-const Heading = withProps(Text, { as: 'h1', variant: 'primary', size: 'xl', weight: 700 });
+const Heading = withProps(Text, {
+  as: 'h1',
+  variant: 'primary',
+  size: 'xl',
+  weight: 700,
+});
 
 export const Modal = {
   Content: S.Content,
@@ -26,7 +31,9 @@ export namespace Modal {
   export type CTARow = React.ComponentPropsWithRef<typeof S.CTARow>;
   export type RadioGroup = {
     Root: React.ComponentPropsWithRef<typeof S.RadioGroup.Root>;
-    ItemContainer: React.ComponentPropsWithRef<typeof S.RadioGroup.ItemContainer>;
+    ItemContainer: React.ComponentPropsWithRef<
+      typeof S.RadioGroup.ItemContainer
+    >;
   };
   export type Inner = {
     Container: React.ComponentPropsWithRef<typeof S.Inner.Container>;

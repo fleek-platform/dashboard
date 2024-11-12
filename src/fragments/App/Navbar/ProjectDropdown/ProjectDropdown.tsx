@@ -15,11 +15,23 @@ type MenuItemProps = {
   onClick: () => void;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ project, selectedProject, onClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  project,
+  selectedProject,
+  onClick,
+}) => {
   return (
-    <S.MenuItem.Wrapper checked={selectedProject?.id === project.id} onClick={onClick}>
+    <S.MenuItem.Wrapper
+      checked={selectedProject?.id === project.id}
+      onClick={onClick}
+    >
       <S.MenuItem.Container>
-        {project.avatar ? <Avatar title={project.id} src={project.avatar} /> : <AvatarMarble name={project.id} rounded />} {project.name}
+        {project.avatar ? (
+          <Avatar title={project.id} src={project.avatar} />
+        ) : (
+          <AvatarMarble name={project.id} rounded />
+        )}{' '}
+        {project.name}
       </S.MenuItem.Container>
       {project.id === selectedProject?.id && (
         <Menu.ItemIndicator>
@@ -36,7 +48,11 @@ export type ProjectDropdownProps = {
   onProjectChange: (project: Project) => void;
 };
 
-export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({ projects, selectedProject, onProjectChange }) => {
+export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
+  projects,
+  selectedProject,
+  onProjectChange,
+}) => {
   const session = useSessionContext();
   const projectId = session.project.id;
   // eslint-disable-next-line fleek-custom/valid-argument-types
@@ -57,7 +73,12 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({ projects, sele
         <S.ProjectSelected>
           <Link href={routes.project.home({ projectId })}>
             {selectedProject?.avatar ? (
-              <Avatar enableIcon icon="image" title={selectedProject?.id} src={selectedProject?.avatar} />
+              <Avatar
+                enableIcon
+                icon="image"
+                title={selectedProject?.id}
+                src={selectedProject?.avatar}
+              />
             ) : (
               <AvatarMarble name={selectedProject?.id} rounded />
             )}

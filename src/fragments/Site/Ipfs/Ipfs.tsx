@@ -11,7 +11,13 @@ export type IpfsProps = LoadingProps<{
   isFn?: boolean;
 }>;
 
-export const Ipfs: React.FC<IpfsProps> = ({ isLoading, isFn, cid, ipns, active }) => {
+export const Ipfs: React.FC<IpfsProps> = ({
+  isLoading,
+  isFn,
+  cid,
+  ipns,
+  active,
+}) => {
   if (isLoading) {
     return <IpfsSkeleton />;
   }
@@ -20,7 +26,9 @@ export const Ipfs: React.FC<IpfsProps> = ({ isLoading, isFn, cid, ipns, active }
     <BoxWithFooter
       footerIcon="ipfs-grayscale"
       footerIconLabel="IPFS"
-      footer={isFn ? 'The hash for your function' : 'The hash for your site content'}
+      footer={
+        isFn ? 'The hash for your function' : 'The hash for your site content'
+      }
       iconContainerVariant="ipfs"
     >
       <S.Container>
@@ -28,7 +36,9 @@ export const Ipfs: React.FC<IpfsProps> = ({ isLoading, isFn, cid, ipns, active }
           <Text as="h3" variant="primary" size="lg" weight={700}>
             IPFS
           </Text>
-          <BadgeText colorScheme={active ? 'green' : 'slate'}>{active ? 'Current' : 'Pending'}</BadgeText>
+          <BadgeText colorScheme={active ? 'green' : 'slate'}>
+            {active ? 'Current' : 'Pending'}
+          </BadgeText>
         </S.Header>
         <S.Column>
           <Text size="xs" weight={500}>

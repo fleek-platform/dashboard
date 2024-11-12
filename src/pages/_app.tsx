@@ -13,7 +13,14 @@ import { AppContext, AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { isServerSide } from '@/utils/isServerSide';
 
-const App = ({ Component, pageProps, requestCookies, maintenanceMode, environment, noCanonical }: AppProps) => {
+const App = ({
+  Component,
+  pageProps,
+  requestCookies,
+  maintenanceMode,
+  environment,
+  noCanonical,
+}: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
 
@@ -53,10 +60,14 @@ const App = ({ Component, pageProps, requestCookies, maintenanceMode, environmen
 };
 
 App.getInitialProps = async ({ Component, ctx }: AppContext) => {
-  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const pageProps = Component.getInitialProps
+    ? await Component.getInitialProps(ctx)
+    : {};
   const environment = getMutableSecrets();
   const maintenanceMode = getMaintenanceMode();
-  const noCanonical = ['/templates', '/templates/[templateId]'].includes(ctx.pathname);
+  const noCanonical = ['/templates', '/templates/[templateId]'].includes(
+    ctx.pathname,
+  );
 
   return {
     pageProps,

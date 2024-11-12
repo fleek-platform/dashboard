@@ -4,7 +4,10 @@ import { useEnsAddress } from 'wagmi';
 
 import { BadgeText, CustomTooltip, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
-import { EnsRecordStatus, useEnsRecordStatusQuery } from '@/generated/graphqlClient';
+import {
+  EnsRecordStatus,
+  useEnsRecordStatusQuery,
+} from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { EnsRecord } from '@/types/EnsRecord';
 import { Icon } from '@/ui';
@@ -15,13 +18,21 @@ import { useEnsSettingsContext } from './EnsSettings.context';
 
 export type EnsRecordItemProps = EnsRecord;
 
-export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({ id, name, createdAt, status: initialStatus }) => {
+export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({
+  id,
+  name,
+  createdAt,
+  status: initialStatus,
+}) => {
   const { openModal } = useEnsSettingsContext();
-  const [ensRecordStatusQuery, refetchEnsRecordStatusQuery] = useEnsRecordStatusQuery({
-    variables: { where: { id } },
-    requestPolicy: 'network-only',
+  const [ensRecordStatusQuery, refetchEnsRecordStatusQuery] =
+    useEnsRecordStatusQuery({
+      variables: { where: { id } },
+      requestPolicy: 'network-only',
+    });
+  const hasVerifyENSPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
   });
-  const hasVerifyENSPermission = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS] });
 
   const { status = initialStatus } = ensRecordStatusQuery.data?.ensRecord || {};
 
@@ -48,9 +59,14 @@ export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({ id, name, cre
   });
 
   return (
-    <SettingsListItem title={name} subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}>
+    <SettingsListItem
+      title={name}
+      subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
+    >
       {match(status)
-        .with(EnsRecordStatus.ACTIVE, () => <BadgeText colorScheme="green">Active</BadgeText>)
+        .with(EnsRecordStatus.ACTIVE, () => (
+          <BadgeText colorScheme="green">Active</BadgeText>
+        ))
         .with(EnsRecordStatus.CREATED, () => (
           <EnsRecordCreated
             isBuyable={!ensAddressOwner}
@@ -64,13 +80,23 @@ export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({ id, name, cre
           </BadgeText>
         ))
         .with(EnsRecordStatus.VERIFYING_FAILED, () => (
-          <BadgeText hoverable={hasVerifyENSPermission} colorScheme="red" onClick={handleOpenEnsModal}>
+          <BadgeText
+            hoverable={hasVerifyENSPermission}
+            colorScheme="red"
+            onClick={handleOpenEnsModal}
+          >
             Verification Failed
           </BadgeText>
         ))
         .exhaustive()}
 
-      <DropdownMenu name={name} id={id} status={status} handleOpenEnsModal={handleOpenEnsModal} isBuyable={!ensAddressOwner} />
+      <DropdownMenu
+        name={name}
+        id={id}
+        status={status}
+        handleOpenEnsModal={handleOpenEnsModal}
+        isBuyable={!ensAddressOwner}
+      />
     </SettingsListItem>
   );
 };
@@ -81,7 +107,11 @@ type EnsRecordCreatedProps = {
   handleOpenEnsModal: () => void;
 };
 
-const EnsRecordCreated: React.FC<EnsRecordCreatedProps> = ({ isBuyable, hasVerifyPermission, handleOpenEnsModal }) => {
+const EnsRecordCreated: React.FC<EnsRecordCreatedProps> = ({
+  isBuyable,
+  hasVerifyPermission,
+  handleOpenEnsModal,
+}) => {
   if (isBuyable) {
     return (
       <CustomTooltip
@@ -96,7 +126,11 @@ const EnsRecordCreated: React.FC<EnsRecordCreatedProps> = ({ isBuyable, hasVerif
   }
 
   return (
-    <BadgeText hoverable={hasVerifyPermission} colorScheme="amber" onClick={handleOpenEnsModal}>
+    <BadgeText
+      hoverable={hasVerifyPermission}
+      colorScheme="amber"
+      onClick={handleOpenEnsModal}
+    >
       Set Content Record
     </BadgeText>
   );
@@ -110,11 +144,21 @@ type DropdownMenuProps = {
   handleOpenEnsModal: () => void;
 };
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ name, id, status, isBuyable, handleOpenEnsModal }) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  name,
+  id,
+  status,
+  isBuyable,
+  handleOpenEnsModal,
+}) => {
   const { onSubmitDelete } = useEnsSettingsContext();
   const [isLoading, setIsLoading] = useState(false);
-  const hasVerifyENSPermission = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS] });
-  const hasRemoveENSPermission = usePermissions({ action: [constants.PERMISSION.SITE.DELETE_ENS] });
+  const hasVerifyENSPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
+  });
+  const hasRemoveENSPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.DELETE_ENS],
+  });
 
   const handleDelete = async () => {
     if (onSubmitDelete) {
@@ -127,17 +171,26 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ name, id, status, isBuyable
   const hasAccess = hasVerifyENSPermission || hasRemoveENSPermission;
 
   const shouldDisableMenu =
-    (status !== EnsRecordStatus.ACTIVE && !hasVerifyENSPermission && !hasRemoveENSPermission) ||
+    (status !== EnsRecordStatus.ACTIVE &&
+      !hasVerifyENSPermission &&
+      !hasRemoveENSPermission) ||
     /* we shouldn't have this cases since we're checking if the ens has an owner in the input field validation, 
       but just in case there are ens added before we introduced the ens field validation */
     (isBuyable && status === EnsRecordStatus.CREATED);
 
   return (
-    <SettingsListItem.DropdownMenu isLoading={isLoading} isDisabled={shouldDisableMenu} hasAccess={hasAccess}>
+    <SettingsListItem.DropdownMenu
+      isLoading={isLoading}
+      isDisabled={shouldDisableMenu}
+      hasAccess={hasAccess}
+    >
       {match(status)
         .with(EnsRecordStatus.ACTIVE, () => (
           <>
-            <SettingsListItem.DropdownMenuItem href={getLinkForDomain(name)} icon="external-link">
+            <SettingsListItem.DropdownMenuItem
+              href={getLinkForDomain(name)}
+              icon="external-link"
+            >
               Visit
             </SettingsListItem.DropdownMenuItem>
           </>
@@ -151,7 +204,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ name, id, status, isBuyable
             <>
               {hasVerifyENSPermission && (
                 <>
-                  <SettingsListItem.DropdownMenuItem icon="check" onClick={handleOpenEnsModal}>
+                  <SettingsListItem.DropdownMenuItem
+                    icon="check"
+                    onClick={handleOpenEnsModal}
+                  >
                     Verify
                   </SettingsListItem.DropdownMenuItem>
                 </>
@@ -163,7 +219,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ name, id, status, isBuyable
           <>
             {hasVerifyENSPermission && (
               <>
-                <SettingsListItem.DropdownMenuItem icon="refresh" onClick={handleOpenEnsModal}>
+                <SettingsListItem.DropdownMenuItem
+                  icon="refresh"
+                  onClick={handleOpenEnsModal}
+                >
                   Retry Verification
                 </SettingsListItem.DropdownMenuItem>
               </>
@@ -175,7 +234,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ name, id, status, isBuyable
       {hasRemoveENSPermission && (
         <>
           <SettingsListItem.DropdownMenuSeparator />
-          <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDelete}>
+          <SettingsListItem.DropdownMenuItem
+            icon="trash"
+            onClick={handleDelete}
+          >
             Remove
           </SettingsListItem.DropdownMenuItem>
         </>

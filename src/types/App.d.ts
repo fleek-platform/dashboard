@@ -1,5 +1,8 @@
 import type { NextPage } from 'next';
-import type { AppContext as NextAppContext, AppProps as NextAppProps } from 'next/app';
+import type {
+  AppContext as NextAppContext,
+  AppProps as NextAppProps,
+} from 'next/app';
 
 import { CookiesContext } from '@/providers/CookiesProvider';
 

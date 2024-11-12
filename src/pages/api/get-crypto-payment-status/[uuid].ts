@@ -11,7 +11,10 @@ import { request } from '../create-crypto-payment';
  * The better way would be handling it through webhooks.
  * Read more about it: https://doc.cryptomus.com/payments/webhook
  */
-const handler = async (req: NextApiRequest, res: NextApiResponse<GetCryptoPaymentStatusResponse>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<GetCryptoPaymentStatusResponse>,
+) => {
   try {
     const { uuid } = req.query;
 

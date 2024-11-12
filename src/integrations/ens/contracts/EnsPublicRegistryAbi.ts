@@ -2,9 +2,21 @@ export const abi = [
   {
     inputs: [
       { internalType: 'contract ENS', name: '_ens', type: 'address' },
-      { internalType: 'contract INameWrapper', name: 'wrapperAddress', type: 'address' },
-      { internalType: 'address', name: '_trustedETHController', type: 'address' },
-      { internalType: 'address', name: '_trustedReverseRegistrar', type: 'address' },
+      {
+        internalType: 'contract INameWrapper',
+        name: 'wrapperAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_trustedETHController',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_trustedReverseRegistrar',
+        type: 'address',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -13,7 +25,12 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: true, internalType: 'uint256', name: 'contentType', type: 'uint256' },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'contentType',
+        type: 'uint256',
+      },
     ],
     name: 'ABIChanged',
     type: 'event',
@@ -31,8 +48,18 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: false, internalType: 'uint256', name: 'coinType', type: 'uint256' },
-      { indexed: false, internalType: 'bytes', name: 'newAddress', type: 'bytes' },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'coinType',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'newAddress',
+        type: 'bytes',
+      },
     ],
     name: 'AddressChanged',
     type: 'event',
@@ -40,8 +67,18 @@ export const abi = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'operator', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
       { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
@@ -50,9 +87,19 @@ export const abi = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: 'address', name: 'owner', type: 'address' },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: true, internalType: 'address', name: 'delegate', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'delegate',
+        type: 'address',
+      },
       { indexed: true, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'Approved',
@@ -72,7 +119,12 @@ export const abi = [
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
       { indexed: false, internalType: 'bytes', name: 'name', type: 'bytes' },
-      { indexed: false, internalType: 'uint16', name: 'resource', type: 'uint16' },
+      {
+        indexed: false,
+        internalType: 'uint16',
+        name: 'resource',
+        type: 'uint16',
+      },
       { indexed: false, internalType: 'bytes', name: 'record', type: 'bytes' },
     ],
     name: 'DNSRecordChanged',
@@ -83,7 +135,12 @@ export const abi = [
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
       { indexed: false, internalType: 'bytes', name: 'name', type: 'bytes' },
-      { indexed: false, internalType: 'uint16', name: 'resource', type: 'uint16' },
+      {
+        indexed: false,
+        internalType: 'uint16',
+        name: 'resource',
+        type: 'uint16',
+      },
     ],
     name: 'DNSRecordDeleted',
     type: 'event',
@@ -92,8 +149,18 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: false, internalType: 'bytes', name: 'lastzonehash', type: 'bytes' },
-      { indexed: false, internalType: 'bytes', name: 'zonehash', type: 'bytes' },
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'lastzonehash',
+        type: 'bytes',
+      },
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'zonehash',
+        type: 'bytes',
+      },
     ],
     name: 'DNSZonehashChanged',
     type: 'event',
@@ -102,8 +169,18 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: true, internalType: 'bytes4', name: 'interfaceID', type: 'bytes4' },
-      { indexed: false, internalType: 'address', name: 'implementer', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'bytes4',
+        name: 'interfaceID',
+        type: 'bytes4',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'implementer',
+        type: 'address',
+      },
     ],
     name: 'InterfaceChanged',
     type: 'event',
@@ -131,7 +208,12 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: true, internalType: 'string', name: 'indexedKey', type: 'string' },
+      {
+        indexed: true,
+        internalType: 'string',
+        name: 'indexedKey',
+        type: 'string',
+      },
       { indexed: false, internalType: 'string', name: 'key', type: 'string' },
       { indexed: false, internalType: 'string', name: 'value', type: 'string' },
     ],
@@ -142,7 +224,12 @@ export const abi = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'node', type: 'bytes32' },
-      { indexed: false, internalType: 'uint64', name: 'newVersion', type: 'uint64' },
+      {
+        indexed: false,
+        internalType: 'uint64',
+        name: 'newVersion',
+        type: 'uint64',
+      },
     ],
     name: 'VersionChanged',
     type: 'event',

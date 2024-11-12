@@ -6,10 +6,12 @@ const defaultGradients = {
 export const gradient = {
   light: {
     ...defaultGradients,
-    'coming-soon-overlay': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 69.79%)',
+    'coming-soon-overlay':
+      'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 69.79%)',
   },
   dark: {
     ...defaultGradients,
-    'coming-soon-overlay': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #111 69.79%)',
+    'coming-soon-overlay':
+      'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #111 69.79%)',
   },
 };

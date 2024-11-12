@@ -35,7 +35,10 @@ type Story = StoryObj<SetupModalProps>;
 
 // eslint-disable-next-line fleek-custom/valid-argument-types
 const ComponentWithForm = (args: SetupModalProps) => {
-  const verify2FAForm = Form.useForm<Create2FAFormValues, Create2FAFormResponse>({
+  const verify2FAForm = Form.useForm<
+    Create2FAFormValues,
+    Create2FAFormResponse
+  >({
     values: {
       secretKeyId: '',
       token: '',

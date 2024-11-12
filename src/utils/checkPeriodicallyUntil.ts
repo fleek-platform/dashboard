@@ -42,7 +42,12 @@ export const checkPeriodicallyUntil = async <T>({
 
       // If we're still good to go, then we retry the operation
       try {
-        const nextResult = await checkPeriodicallyUntil({ conditionFn, period, tries: tries - 1, abortSignal });
+        const nextResult = await checkPeriodicallyUntil({
+          conditionFn,
+          period,
+          tries: tries - 1,
+          abortSignal,
+        });
 
         resolve(nextResult);
       } catch (error) {

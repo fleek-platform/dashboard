@@ -3,9 +3,16 @@ import { Text } from '@/ui';
 
 import { ComingSoonStyles as S } from './ComingSoon.styles';
 
-export type ComingSoonOverlayProps = ChildrenProps<LoadingProps<{ title?: string; description: string }>>;
+export type ComingSoonOverlayProps = ChildrenProps<
+  LoadingProps<{ title?: string; description: string }>
+>;
 
-export const ComingSoonOverlay: React.FC<ComingSoonOverlayProps> = ({ children, isLoading, title = 'Coming Soon', description }) => {
+export const ComingSoonOverlay: React.FC<ComingSoonOverlayProps> = ({
+  children,
+  isLoading,
+  title = 'Coming Soon',
+  description,
+}) => {
   if (isLoading) {
     return <>{children}</>;
   }

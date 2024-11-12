@@ -12,7 +12,9 @@ type GetLinkPartsForSiteSlugArgs = {
   slug: string;
 };
 
-export const getLinkPartsForSiteSlug = ({ slug }: GetLinkPartsForSiteSlugArgs): LinkParts => {
+export const getLinkPartsForSiteSlug = ({
+  slug,
+}: GetLinkPartsForSiteSlugArgs): LinkParts => {
   const protocol = 'https://';
   const domain = `.${secrets.NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN}`;
 

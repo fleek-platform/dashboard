@@ -11,13 +11,20 @@ type DeletePrimaryDomainModalProps = ChildrenProps<{
   comboboxLabel?: string;
 }>;
 
-export const DeletePrimaryDomainModal: React.FC<DeletePrimaryDomainModalProps> = ({
+export const DeletePrimaryDomainModal: React.FC<
+  DeletePrimaryDomainModalProps
+> = ({
   children,
   title = 'Remove Domain',
   comboboxLabel = 'New Primary Domain',
 }) => {
-  const { isDeletePrimaryDomainModalOpen, activeDomains, closeDeleteModal, newPrimaryDomain, setNewPrimaryDomain } =
-    useSettingsItemContext();
+  const {
+    isDeletePrimaryDomainModalOpen,
+    activeDomains,
+    closeDeleteModal,
+    newPrimaryDomain,
+    setNewPrimaryDomain,
+  } = useSettingsItemContext();
 
   const handleOpenChange = () => {
     if (isDeletePrimaryDomainModalOpen) {
@@ -26,7 +33,10 @@ export const DeletePrimaryDomainModal: React.FC<DeletePrimaryDomainModalProps> =
   };
 
   return (
-    <Dialog.Root open={isDeletePrimaryDomainModalOpen} onOpenChange={handleOpenChange}>
+    <Dialog.Root
+      open={isDeletePrimaryDomainModalOpen}
+      onOpenChange={handleOpenChange}
+    >
       <Dialog.Overlay />
       <Modal.Content>
         <Modal.Heading>{title}</Modal.Heading>
@@ -34,10 +44,16 @@ export const DeletePrimaryDomainModal: React.FC<DeletePrimaryDomainModalProps> =
         <FormField.Root>
           <FormField.Label>{comboboxLabel}</FormField.Label>
 
-          <Combobox items={activeDomains} selected={[newPrimaryDomain, setNewPrimaryDomain]} queryKey="hostname">
+          <Combobox
+            items={activeDomains}
+            selected={[newPrimaryDomain, setNewPrimaryDomain]}
+            queryKey="hostname"
+          >
             {({ Field, Options }) => (
               <>
-                <Field placeholder="Select Domain">{(selected) => selected.hostname}</Field>
+                <Field placeholder="Select Domain">
+                  {(selected) => selected.hostname}
+                </Field>
 
                 <Options>{(item) => item.hostname}</Options>
               </>
@@ -60,7 +76,8 @@ export const DeletePrimaryDomainModal: React.FC<DeletePrimaryDomainModalProps> =
 };
 
 const SubmitButton: React.FC = () => {
-  const { selectedId, newPrimaryDomain, onSubmitDelete, closeDeleteModal } = useSettingsItemContext();
+  const { selectedId, newPrimaryDomain, onSubmitDelete, closeDeleteModal } =
+    useSettingsItemContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {

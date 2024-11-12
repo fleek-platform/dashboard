@@ -60,8 +60,15 @@ export const statusDataMap: Record<DeploymentStatus, StatusData> = {
 
 type GetDeploymentLinkForRepositoryArgs = Deployment;
 
-export const getDeploymentLinkForRepository = (deployment: GetDeploymentLinkForRepositoryArgs) => {
-  const { sourceProvider, sourceRepositoryOwner: slug, sourceRepositoryName: name, sourceRef } = deployment;
+export const getDeploymentLinkForRepository = (
+  deployment: GetDeploymentLinkForRepositoryArgs,
+) => {
+  const {
+    sourceProvider,
+    sourceRepositoryOwner: slug,
+    sourceRepositoryName: name,
+    sourceRef,
+  } = deployment;
   const provider = parseAPISourceProvider(sourceProvider);
 
   if (!provider || !name || !slug || !name || !sourceRef) {

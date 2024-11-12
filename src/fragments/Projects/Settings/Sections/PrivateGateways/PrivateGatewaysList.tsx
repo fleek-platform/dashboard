@@ -15,7 +15,10 @@ type PrivateGatewayListProps = LoadingProps<{
   privateGateways: PrivateGateway[];
 }>;
 
-export const PrivateGatewaysList: React.FC<PrivateGatewayListProps> = ({ isLoading, privateGateways = [] }) => {
+export const PrivateGatewaysList: React.FC<PrivateGatewayListProps> = ({
+  isLoading,
+  privateGateways = [],
+}) => {
   const { setActiveDomains } = useSettingsItemContext();
 
   useEffect(() => {
@@ -23,10 +26,15 @@ export const PrivateGatewaysList: React.FC<PrivateGatewayListProps> = ({ isLoadi
 
     privateGateways.forEach((privateGateway) =>
       privateGateway.domains.forEach((domain) => {
-        if (isActiveDomain({ domain, primaryDomainId: privateGateway.primaryDomain?.id! })) {
+        if (
+          isActiveDomain({
+            domain,
+            primaryDomainId: privateGateway.primaryDomain?.id!,
+          })
+        ) {
           activeDomains.push(domain);
         }
-      })
+      }),
     );
 
     setActiveDomains(activeDomains);
@@ -36,8 +44,15 @@ export const PrivateGatewaysList: React.FC<PrivateGatewayListProps> = ({ isLoadi
   return (
     <>
       {!isLoading &&
-        privateGateways.map((privateGateway) => <PrivateGatewayListItem key={privateGateway.id} privateGateway={privateGateway} />)}
-      {!isLoading && privateGateways.length === 0 && <EmptyPrivateGatewaysList />}
+        privateGateways.map((privateGateway) => (
+          <PrivateGatewayListItem
+            key={privateGateway.id}
+            privateGateway={privateGateway}
+          />
+        ))}
+      {!isLoading && privateGateways.length === 0 && (
+        <EmptyPrivateGatewaysList />
+      )}
       {isLoading && <CardSkeleton />}
     </>
   );
@@ -46,7 +61,10 @@ export const PrivateGatewaysList: React.FC<PrivateGatewayListProps> = ({ isLoadi
 const EmptyPrivateGatewaysList: React.FC = () => (
   <SettingsBox.Container>
     <SettingsBox.Title>Manage Private Gateways</SettingsBox.Title>
-    <SettingsBox.EmptyContent title="No Private Gateways" description="Once you create a private gateway, it will appear here." />
+    <SettingsBox.EmptyContent
+      title="No Private Gateways"
+      description="Once you create a private gateway, it will appear here."
+    />
   </SettingsBox.Container>
 );
 

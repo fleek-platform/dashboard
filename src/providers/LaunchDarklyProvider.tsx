@@ -6,7 +6,9 @@ import { secrets } from '@/secrets';
 
 type LaunchDarklyProviderProps = React.PropsWithChildren<{}>;
 
-export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({ children }) => {
+export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({
+  children,
+}) => {
   return (
     <LDProvider clientSideID={secrets.NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID}>
       <Identifier />

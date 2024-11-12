@@ -17,7 +17,10 @@ const BillingPage: Page<BillingPageProps> = (props) => {
 };
 
 const FeaturePage: React.FC<BillingPageProps> = ({ plan }) => {
-  const form = Form.useForm({ values: { promoCode: '' }, onSubmit: async () => {} });
+  const form = Form.useForm({
+    values: { promoCode: '' },
+    onSubmit: async () => {},
+  });
 
   return (
     <Form.Provider value={form}>
@@ -32,7 +35,9 @@ const FeaturePage: React.FC<BillingPageProps> = ({ plan }) => {
   );
 };
 
-BillingPage.getLayout = (page) => <BillingCheckout.Layout>{page}</BillingCheckout.Layout>;
+BillingPage.getLayout = (page) => (
+  <BillingCheckout.Layout>{page}</BillingCheckout.Layout>
+);
 
 export default BillingPage;
 
@@ -43,7 +48,12 @@ export const getServerSideProps = async () => {
         id: 'plan-id',
         name: 'Pro Plan',
         description: 'Our most popular plan for hobby developers.',
-        benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
+        benefits: [
+          'Domain/ENS not configured',
+          'Domain/ENS not configured',
+          'Domain/ENS not configured',
+          'Domain/ENS not configured',
+        ],
         price: 20,
         stripePriceId: 'price_1OrOi1LFrhXIfuJy8zKfqUKn',
       } satisfies BillingPlan,

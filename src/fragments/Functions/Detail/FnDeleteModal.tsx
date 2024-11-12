@@ -12,23 +12,38 @@ export type FnDeleteModalProps = ChildrenProps<{
   fnId: string;
 }>;
 
-export const FnDeleteModal: React.FC<FnDeleteModalProps> = ({ children, fnName, fnId }) => {
+export const FnDeleteModal: React.FC<FnDeleteModalProps> = ({
+  children,
+  fnName,
+  fnId,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [, handleDelete] = useDeleteFunction({ id: fnId });
   const form = Form.useForm({
     values: { name: '' },
     schema: zod.object({
-      name: zod.literal(fnName, { errorMap: () => ({ message: 'Incorrect function name' }) }),
+      name: zod.literal(fnName, {
+        errorMap: () => ({ message: 'Incorrect function name' }),
+      }),
     }),
     onSubmit: handleDelete,
   });
 
   return (
     <Form.Provider value={form}>
-      <SettingsDeleteModal trigger={children} open={isOpen} onOpenChange={setIsOpen}>
-        <SettingsDeleteModal.Heading>Confirm Function Deletion</SettingsDeleteModal.Heading>
+      <SettingsDeleteModal
+        trigger={children}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <SettingsDeleteModal.Heading>
+          Confirm Function Deletion
+        </SettingsDeleteModal.Heading>
 
-        <Text>If you are positive you want to delete your Function, use the field below to confirm and click delete.</Text>
+        <Text>
+          If you are positive you want to delete your Function, use the field
+          below to confirm and click delete.
+        </Text>
 
         <Form.InputField
           name="name"

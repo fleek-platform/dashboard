@@ -7,7 +7,10 @@ export type UseIsActivePageArgs = {
   isExact?: boolean;
 };
 
-export const useIsActivePage = ({ path, isExact = false }: UseIsActivePageArgs): boolean => {
+export const useIsActivePage = ({
+  path,
+  isExact = false,
+}: UseIsActivePageArgs): boolean => {
   const router = useRouter();
 
   return useMemo<boolean>(() => {

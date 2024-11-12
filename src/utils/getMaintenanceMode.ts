@@ -22,7 +22,9 @@ const updateMaintenanceMode = async (): Promise<void> => {
 
 const checkMaintenanceMode = async (): Promise<boolean> => {
   try {
-    const response = await fetch(secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL + '/ping');
+    const response = await fetch(
+      secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL + '/ping',
+    );
 
     return response.status !== 200;
   } catch (error) {

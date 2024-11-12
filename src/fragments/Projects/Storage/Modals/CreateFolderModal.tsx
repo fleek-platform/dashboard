@@ -6,7 +6,10 @@ type CreateFolderModalProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({ open, onOpenChange }) => {
+export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({
+  open,
+  onOpenChange,
+}) => {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Overlay />
@@ -14,10 +17,16 @@ export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({ open, onOp
       <Modal.Content>
         <Modal.Heading>New folder</Modal.Heading>
 
-        <Form.InputField label="Folder name" placeholder="Enter folder name" name="name" />
+        <Form.InputField
+          label="Folder name"
+          placeholder="Enter folder name"
+          name="name"
+        />
         <Modal.CTARow>
           <CloseButton />
-          <Form.SubmitButton className="flex-1">Create folder</Form.SubmitButton>
+          <Form.SubmitButton className="flex-1">
+            Create folder
+          </Form.SubmitButton>
         </Modal.CTARow>
       </Modal.Content>
     </Dialog.Root>

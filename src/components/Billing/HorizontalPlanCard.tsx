@@ -7,7 +7,10 @@ import { PriceTag } from './PriceTag';
 
 export type HorizontalPlanCardProps = ChildrenProps<HeaderProps>;
 
-export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({ children, ...headerProps }) => {
+export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({
+  children,
+  ...headerProps
+}) => {
   return (
     <S.Container horizontal>
       <Header {...headerProps} />
@@ -25,7 +28,14 @@ type HeaderProps = LoadingProps<{
   withOverload?: boolean;
 }>;
 
-const Header: React.FC<HeaderProps> = ({ title, description, price, isActive, isLoading, withOverload }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  description,
+  price,
+  isActive,
+  isLoading,
+  withOverload,
+}) => {
   if (isLoading) {
     return (
       <S.HeaderWrapper>

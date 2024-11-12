@@ -9,8 +9,14 @@ export const Layout: React.FC<ChildrenProps> = ({ children }) => {
 
   return (
     <RootLayout.Container>
-      <RootLayout.Head title={RootLayout.Head.titles.deploy(session.project.name)} />
-      <RootLayout.Page slotSidebar={<ProjectDropdown />} navigation={navigation} isNavigationLoading={session.loading}>
+      <RootLayout.Head
+        title={RootLayout.Head.titles.deploy(session.project.name)}
+      />
+      <RootLayout.Page
+        slotSidebar={<ProjectDropdown />}
+        navigation={navigation}
+        isNavigationLoading={session.loading}
+      >
         {children}
       </RootLayout.Page>
     </RootLayout.Container>

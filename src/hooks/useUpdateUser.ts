@@ -1,4 +1,8 @@
-import { UpdateUserDataInput, UpdateUserMutationVariables, useUpdateUserMutation } from '@/generated/graphqlClient';
+import {
+  UpdateUserDataInput,
+  UpdateUserMutationVariables,
+  useUpdateUserMutation,
+} from '@/generated/graphqlClient';
 
 import { useToast } from './useToast';
 

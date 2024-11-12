@@ -49,7 +49,12 @@ const FeaturePage: React.FC<BillingPageProps> = ({ plans, sections }) => {
     <>
       <BillingPlans.Hero />
 
-      <Billing.HorizontalPlanCard title="Free Plan" description="Our most popular plan for hobby developers." price="0" isActive />
+      <Billing.HorizontalPlanCard
+        title="Free Plan"
+        description="Our most popular plan for hobby developers."
+        price="0"
+        isActive
+      />
 
       <BillingPlans.PlanCardsWrapper>
         {plansWithHandler.slice(1).map((plan, index) => (
@@ -78,7 +83,9 @@ const FeaturePage: React.FC<BillingPageProps> = ({ plans, sections }) => {
   );
 };
 
-BillingPage.getLayout = (page) => <BillingPlans.Layout>{page}</BillingPlans.Layout>;
+BillingPage.getLayout = (page) => (
+  <BillingPlans.Layout>{page}</BillingPlans.Layout>
+);
 
 export const getServerSideProps = async () => {
   return {
@@ -87,7 +94,12 @@ export const getServerSideProps = async () => {
         {
           name: 'Free Plan',
           description: 'Our most popular plan for hobby developers.',
-          benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
+          benefits: [
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+          ],
           color: {
             scheme: 'neutral' as const,
           },
@@ -103,7 +115,12 @@ export const getServerSideProps = async () => {
         {
           name: 'Basic Plan',
           description: 'Our most popular plan for hobby developers.',
-          benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
+          benefits: [
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+          ],
           price: '10',
           color: {
             scheme: 'success' as const,
@@ -119,7 +136,12 @@ export const getServerSideProps = async () => {
         {
           name: 'Pro Plan',
           description: 'Our most popular plan for hobby developers.',
-          benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
+          benefits: [
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+          ],
           price: '20',
           color: {
             scheme: 'accent' as const,
@@ -135,7 +157,12 @@ export const getServerSideProps = async () => {
         {
           name: 'Enterprise Plan',
           description: 'Our most popular plan for hobby developers.',
-          benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
+          benefits: [
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+            'Domain/ENS not configured',
+          ],
           price: 'Custom',
           color: {
             scheme: 'neutral' as const,
@@ -170,4 +197,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default withAccess({ Component: BillingPage, requiredPermissions: [constants.PERMISSION.BILLING.VIEW] });
+export default withAccess({
+  Component: BillingPage,
+  requiredPermissions: [constants.PERMISSION.BILLING.VIEW],
+});
