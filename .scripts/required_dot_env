@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! find . -maxdepth 1 -name ".env*" -type f | grep -q '.env'; then
+    echo "👹 Oops! A dot env (.env*) file is required. Check the README to learn how to setup and try again!"
+    exit 1
+fi
+
+echo "✅ Found a .env* file!"

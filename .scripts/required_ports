@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# TODO: Dynamic auth widen port range 300(0..4)
+required_ports=(3000 6006)
+
+for port in $required_ports; do
+  if lsof -i :3000 | grep -q LISTEN; then
+    echo "👹 Oops! Required port $port is in use. Close the process using port $port and try again!"
+    exit 1
+  fi
+done
+
+echo "✅ Required dev ports are free!"

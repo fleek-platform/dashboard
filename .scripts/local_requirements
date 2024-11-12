@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+trap 'echo "🦖 Exited process due to issues. If you need help, check the readme at https://github.com/fleek-platform/client-dashboard"' ERR
+
+# Check port availability
+.scripts/required_ports
+
+# Check for dotenv
+.scripts/required_dot_env
