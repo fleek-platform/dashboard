@@ -10,6 +10,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 
 ## Overview
 
+* [🎮 Environment Setup](#environment-setup)
 * [🤖 Install](#install)
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
@@ -27,11 +28,9 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 - Familiarity with text-based user interfaces, command-line interface (CLI)
 - Ports 3000, 6006
 
-## Install
+You'll also need to [setup](#environment-setup) the development environment.
 
-WIP
-
-## Development
+## Environment Setup
 
 For developers looking to contribute to the User Dashboard, [clone](https://github.com/fleek-platform/user-dashboard) the repository and follow the [contribution guide](#contributing).
 
@@ -68,11 +67,34 @@ NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
 
 💡 The variables above point to our production environment, the same you interact with as an end-user.
 
-Next, install the project dependencies:
+Next, you can proceed to [install](#install) the project dependencies.
+
+## Install
+
+Start by installing the project dependencies:
 
 ```sh
 pnpm i
 ```
+
+## Development
+
+Run a local development server by executing the command:
+
+```sh
+pnpm dev
+```
+
+It'll try to start the development server. Once ready, you should get a local address:
+
+```sh
+- Local:        http://localhost:3000
+```
+
+> [!NOTE]  
+> The project's built with Nextjs, that might be familiar to you.
+
+Open the address [http://localhost:3000](http://localhost:3000) in your favourite development browser.
 
 ### Code Format
 
