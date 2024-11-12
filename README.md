@@ -1,4 +1,4 @@
-![](.repo/images/repo/banner.png?202409201714)
+![](.repo/images/repo/banner.png?202411121019)
 
 # ⚡️Fleek-Platform Client Dashboard ⚡️
 
