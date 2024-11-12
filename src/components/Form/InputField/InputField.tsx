@@ -114,7 +114,7 @@ export const InputField: React.FC<InputFieldProps> = ({
             name={name}
             disabled={isDisabled}
             className={inputFieldClassName}
-            {...(htmlAttributes as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            {...(htmlAttributes as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         )}
 

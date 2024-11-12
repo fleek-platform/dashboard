@@ -24,14 +24,11 @@ import {
 const PATH = Symbol('path');
 const LABEL = 'Base Directory';
 
-type DeprecatedProps<T, K> =
-  | ({ deprecated: true } & T)
-  | ({ deprecated?: false } & K);
-
 type BaseDirectoryFieldProps = {
+  deprecated?: boolean;
   fieldName: string;
   isDisabled?: boolean;
-} & DeprecatedProps<DeprecatedBaseDirectoryFieldProps, RadioGroupV2Props>;
+} & Partial<RadioGroupV2Props> & Partial<DeprecatedBaseDirectoryFieldProps>;
 
 type DeprecatedBaseDirectoryFieldProps = LoadingProps<
   Partial<BaseDirectoryRadioGroupProps>
