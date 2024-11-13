@@ -26,7 +26,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 - Nodejs as runtime
 - NPM, Yarn to install the CLI as a client, or PNPM for development
 - Familiarity with text-based user interfaces, command-line interface (CLI)
-- Ports 3000, 6006
+- One available port for UI in the range of 3000 to 3002 and storybook at 6006
 
 You'll also need to [setup](#environment-setup) the development environment.
 
@@ -85,14 +85,19 @@ Run a local development server by executing the command:
 pnpm dev
 ```
 
-It'll try to start the development server. Once ready, you should get a local address:
+> [!NOTE]  
+> The project's built with Nextjs, that might be familiar to you.
+
+It'll try to start the development server. Once ready, you should get a local address in the output.
+
+For example, let's say it was bound to the default port 3000, you'd get:
 
 ```sh
 - Local:        http://localhost:3000
 ```
 
-> [!NOTE]  
-> The project's built with Nextjs, that might be familiar to you.
+> [!WARNING]
+> If the port 3000 is not free on execution a different port's utilized. Check the output for the correct address, please!
 
 Open the address [http://localhost:3000](http://localhost:3000) in your favourite development browser.
 
