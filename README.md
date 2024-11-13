@@ -26,7 +26,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 - Nodejs as runtime
 - NPM, Yarn to install the CLI as a client, or PNPM for development
 - Familiarity with text-based user interfaces, command-line interface (CLI)
-- One available port for UI in the range of 3000 to 3002 and storybook at 6006
+- Ports: UI (3000-3002, one free), Storybook (6006).
 
 You'll also need to [setup](#environment-setup) the development environment.
 
