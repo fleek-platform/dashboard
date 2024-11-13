@@ -1,4 +1,4 @@
-import { SiteBuildSettings } from '@fleek-platform/sites';
+import { SiteBuildSettings } from '@fleek-platform/utils-sites';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useClient } from 'urql';

@@ -1,7 +1,7 @@
 import {
   SiteBuildSettings,
   SiteBuildSettingsData,
-} from '@fleek-platform/sites';
+} from '@fleek-platform/utils-sites';
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { Form } from '@/components';

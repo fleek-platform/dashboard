@@ -1,7 +1,7 @@
 import {
   SiteBuildSettingsData,
   SiteBuildSettingsOptions,
-} from '@fleek-platform/sites';
+} from '@fleek-platform/utils-sites';
 
 export type GitProvider = {
   getUserAndOrganizations: () => Promise<GitProvider.UserData>;

@@ -1,4 +1,4 @@
-import { SiteBuildSettings } from '@fleek-platform/sites';
+import { SiteBuildSettings } from '@fleek-platform/utils-sites';
 import { DateTime } from 'luxon';
 import { Octokit } from 'octokit';
 
