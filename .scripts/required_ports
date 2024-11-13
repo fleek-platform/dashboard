@@ -1,13 +1,30 @@
 #!/bin/bash
 
-# TODO: Dynamic auth widen port range 300(0..4)
-required_ports=(3000 6006)
+showErrorMsg() {
+  echo "👹 Oops! Required port $port is in use. Close the process using port $port and try again!"
+}
 
-for port in $required_ports; do
-  if lsof -i :3000 | grep -q LISTEN; then
-    echo "👹 Oops! Required port $port is in use. Close the process using port $port and try again!"
-    exit 1
+ui_ports=(3000 3001 3002)
+ui_port_count=0
+storybook_port=6006
+
+for port in "${ui_ports[@]}"; do
+  if ! lsof -i :$port | grep -q LISTEN; then
+    ((ui_port_count+=1))
+    echo "🔎 Port $port is free"
   fi
 done
 
+if [[ "$ui_port_count" -eq 0 ]]; then
+  showErrorMsg
+  exit 1
+fi
+
+if lsof -i :$storybook_port | grep -q LISTEN; then
+  showErrorMsg
+  exit 1
+else
+  echo "🔎 Port $storybook_port is free"
+fi
+    
 echo "✅ Required dev ports are free!"
