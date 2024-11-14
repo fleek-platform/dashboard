@@ -18,6 +18,7 @@
 # misc
 .DS_Store
 *.pem
+.tests
 
 # debug
 npm-debug.log*
@@ -43,3 +44,8 @@ storybook-static
 
 test/results
 test/assets/generated
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
