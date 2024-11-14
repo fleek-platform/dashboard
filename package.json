@@ -9,6 +9,8 @@
     "dev:check_required": ".scripts/local_requirements",
     "format": "pnpm exec biome format --write ./src",
     "format:check": "pnpm exec biome format ./src",
+    "format:tests": "pnpm run format:e2e",
+    "format:e2e": "pnpm exec biome format --write ./tests/e2e",
     "format:unsafe": "pnpm exec biome check --write --unsafe ./src",
     "lint": "pnpm exec biome lint --write --changed --no-errors-on-unmatched ./src",
     "lint:check": "pnpm exec biome lint ./src",
