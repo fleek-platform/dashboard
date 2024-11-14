@@ -21,7 +21,38 @@ describe('On Home page', () => {
       const el = page.locator('header');
       await expect(el).toContainText('Sign in');
     });
-  });  
+  });
+
+  describe('Invalid cookie token user', () => {
+    beforeEach(async ({ page }) => {
+      const invalidToken = 'abcdef';
+      await page.context().addCookies([{
+        name: 'accessToken',
+        value: invalidToken,
+        domain: 'localhost',
+        path: '/',
+      }, {
+        name: 'authProviderToken',
+        value: invalidToken,
+        domain: 'localhost',
+        path: '/',
+      },{
+        name: 'projectId',
+        value: 'cm0dprxuf0006lms9sz9riexw',
+        domain: 'localhost',
+        path: '/',
+      }]);
+      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}`);
+    });
+
+    it('Should redirect to the homepage', async ({ page }) => {
+      await page.waitForURL('**/', {
+        timeout: 0,
+        waitUntil: 'networkidle',
+      });
+      await expect(page).toHaveTitle(/Home - Fleek/);      
+    });
+  });
 });
 
 

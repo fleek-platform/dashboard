@@ -17,6 +17,7 @@
     "storybook:build": "storybook build",
     "test": ".scripts/run_tests",
     "test:e2e": "pnpm exec playwright test --reporter=list",
+    "test:ui": "pnpm exec playwright test --ui",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {

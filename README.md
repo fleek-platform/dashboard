@@ -15,6 +15,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
   - [Changeset](#changeset)
+  - [Test Runner](#test-runner)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -154,6 +155,27 @@ Declare an intent to release by executing the command and answering the wizard's
 
 ```sh
 pnpm changeset:add
+```
+
+### Test Runner
+
+The project has two category of tests:
+
+- End-to-End (e2e) built on playwright to facility testing the UI/UX interface. The network calls are mocked to facilitate rapid development and focus on the interface;
+- Functional (Unit tests), which assert pure functions, e.g. data transformations, calculations, etc, a separate concern over the presentation;
+
+Run all tests can be executed by:
+
+```sh
+pnpm run test
+```
+
+Alternatively, you can inspect the available tests in the package.json scripts section.
+
+For example, you can launch end-to-end tests, on a chrome browser:
+
+```sh
+pnpm run test:ui
 ```
 
 ## Contributing
