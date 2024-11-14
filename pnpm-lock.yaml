@@ -113,9 +113,6 @@ importers:
       cookies-next:
         specifier: ^2.1.1
         version: 2.1.2
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       ethers:
         specifier: ^5.7.2
         version: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -145,10 +142,10 @@ importers:
         version: 3.5.0
       next:
         specifier: 14.2.7
-        version: 14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
+        version: 14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
       next-themes:
         specifier: ^0.2.1
-        version: 0.2.1(next@14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.2.1(next@14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       octokit:
         specifier: ^2.1.0
         version: 2.1.0(encoding@0.1.13)
@@ -160,7 +157,7 @@ importers:
         version: 8.4.49
       posthog-js:
         specifier: ^1.169.0
-        version: 1.184.1
+        version: 1.184.2
       qrcode:
         specifier: ^1.5.3
         version: 1.5.4
@@ -240,9 +237,12 @@ importers:
       '@fleek-platform/utils-validation':
         specifier: ^2.4.0
         version: 2.4.0(bufferutil@4.0.8)(typescript@5.3.3)(utf-8-validate@5.0.10)
+      '@playwright/test':
+        specifier: ^1.48.2
+        version: 1.48.2
       '@storybook/addon-essentials':
         specifier: ^7.0.15
-        version: 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack-sources@3.2.3)
+        version: 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/addon-interactions':
         specifier: ^7.0.15
         version: 7.6.20
@@ -260,7 +260,7 @@ importers:
         version: 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/nextjs':
         specifier: ^7.0.15
-        version: 7.6.20(@swc/core@1.9.2(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(encoding@0.1.13)(esbuild@0.18.20)(next@14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)(type-fest@2.19.0)(typescript@5.3.3)(webpack-hot-middleware@2.26.1)(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))
+        version: 7.6.20(@swc/core@1.9.2(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(encoding@0.1.13)(esbuild@0.18.20)(next@14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)(type-fest@2.19.0)(typescript@5.3.3)(webpack-hot-middleware@2.26.1)(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))
       '@storybook/react':
         specifier: ^7.0.15
         version: 7.6.20(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.3.3)
@@ -303,6 +303,9 @@ importers:
       concurrently:
         specifier: ^7.6.0
         version: 7.6.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@15.9.0)
@@ -1689,8 +1692,8 @@ packages:
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
 
-  '@graphql-tools/executor@1.3.2':
-    resolution: {integrity: sha512-U8nAR709IPNjwf0aLG6U9FlX0t7vA4cdWvL4RtMR/L/Ll4OHZ39OqUtq6moy+kLRRwLTqLif6iiUYrxnWpUGXw==}
+  '@graphql-tools/executor@1.3.3':
+    resolution: {integrity: sha512-lpkgokF6vjGHNluANOTsWoSM0vuvUuVpjY1810tvM6Vlyoq2tJ+nmqweGbMsq/GLhmZQP1lY/nOkj2zPJXLWiw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -1700,14 +1703,14 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/merge@9.0.8':
-    resolution: {integrity: sha512-RG9NEp4fi0MoFi0te4ahqTMYuavQnXlpEZxxMomdCa6CI5tfekcVm/rsLF5Zt8O4HY+esDt9+4dCL+aOKvG79w==}
+  '@graphql-tools/merge@9.0.9':
+    resolution: {integrity: sha512-w9yaU7UMRQvtkTYZHo+c7cS7LO7rqc2H6g3k0aUs8VE9YlFYG1bYdxvEPM5bloaoVqr5TmbqIZqzl1CHeJKilQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/schema@10.0.7':
-    resolution: {integrity: sha512-Cz1o+rf9cd3uMgG+zI9HlM5mPlnHQUlk/UQRZyUlPDfT+944taLaokjvj7AI6GcOFVf4f2D11XthQp+0GY31jQ==}
+  '@graphql-tools/schema@10.0.8':
+    resolution: {integrity: sha512-jkCSq+DdT6Rf/MN3oVz250AMFWZO0E5kh0C2K+kJfS80iBW7/7kLjiSbKz+WD9UBtsJPW2zyzKYC4ylU4jmnLw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -1717,8 +1720,8 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/utils@10.5.5':
-    resolution: {integrity: sha512-LF/UDWmMT0mnobL2UZETwYghV7HYBzNaGj0SAkCYOMy/C3+6sQdbcTksnoFaKR9XIVD78jNXEGfivbB8Zd+cwA==}
+  '@graphql-tools/utils@10.5.6':
+    resolution: {integrity: sha512-JAC44rhbLzXUHiltceyEpWkxmX4e45Dfg19wRFoA9EbDxQVbOzVNF76eEECdg0J1owFsJwfLqCwz7/6xzrovOw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -2404,6 +2407,11 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@playwright/test@1.48.2':
+    resolution: {integrity: sha512-54w1xCWfXuax7dz4W2M9uw0gDyh+ti/0K/MxcCUxChFh37kkdxPdfZDw5QBbuPUJHr1CiHJ1hXgSs+GgeQc5Zw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@pmmmwh/react-refresh-webpack-plugin@0.5.15':
     resolution: {integrity: sha512-LFWllMA55pzB9D34w/wXUCf8+c+IYKuJDgxiZ3qMhl64KRMBHYM1I3VdGaD2BV5FNPV2/S2596bppxHbv2ZydQ==}
@@ -4581,8 +4589,8 @@ packages:
     resolution: {integrity: sha512-OAAEIbyspvQwkcRGutYN3D0a+hzQogvcZ7I3hf6vg742ZEq52yMJTGtkwjl3KZRmzzUltd/oEMxEGsXFLjnuLQ==}
     engines: {node: '>=18.0.0'}
 
-  '@whatwg-node/server@0.9.54':
-    resolution: {integrity: sha512-AFwts1RNnnPwpGnbCqyb7fwaE3ROBgkIstpmtXqb2YklFIlQ97Y1rabzeoyKoQqQxX89nMRmfsLAwPzfCpV9pw==}
+  '@whatwg-node/server@0.9.55':
+    resolution: {integrity: sha512-FW04dJZfgBGaGoHQosCTeSOXKksCVzMLMV5YZPMpUfEmkH8VeDjCIMguvw2cKgrjnLjwQ1J3irLg2eNQbLxLNg==}
     engines: {node: '>=18.0.0'}
 
   '@xtuc/ieee754@1.2.0':
@@ -6005,8 +6013,8 @@ packages:
     resolution: {integrity: sha512-M9qw6oUILGVrcENMSRRefE1MbHPIz0h79EKIeJWK9v563aT9Qkh8aEHPO1H5vi970wPirNY+jO9OpFoLiMsMGA==}
     engines: {node: '>=6'}
 
-  electron-to-chromium@1.5.57:
-    resolution: {integrity: sha512-xS65H/tqgOwUBa5UmOuNSLuslDo7zho0y/lgQw35pnrqiZh7UOWHCeL/Bt6noJATbA6tpQJGCifsFsIRZj1Fqg==}
+  electron-to-chromium@1.5.58:
+    resolution: {integrity: sha512-al2l4r+24ZFL7WzyPTlyD0fC33LLzvxqLCwurtBibVPghRGO9hSTl+tis8t1kD7biPiH/en4U0I7o/nQbYeoVA==}
 
   elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -7795,8 +7803,8 @@ packages:
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
-  markdown-to-jsx@7.6.1:
-    resolution: {integrity: sha512-kZCvhxW70lZQoP3h75piO/CTmDX87jE0aPzw46u7dRZ4AykBYAYbn4Zu3wav0vBzn4PZ8k0kgknVOeEzdBtMPA==}
+  markdown-to-jsx@7.6.2:
+    resolution: {integrity: sha512-gEcyiJXzBxmId2Y/kydLbD6KRNccDiUy/Src1cFGn3s2X0LZZ/hUiEc2VisFyA5kUE3SXclTCczjQiAuqKZiFQ==}
     engines: {node: '>= 10'}
     peerDependencies:
       react: '>= 0.14.0'
@@ -8884,8 +8892,8 @@ packages:
     resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.184.1:
-    resolution: {integrity: sha512-q/1Kdard5SZnL2smrzeKcD+RuUi2PnbidiN4D3ThK20bNrhy5Z2heIy9SnRMvEiARY5lcQ7zxmDCAKPBKGSOtQ==}
+  posthog-js@1.184.2:
+    resolution: {integrity: sha512-n7OxFntH7m4sw/GsuUAliWGqBDV7g7IemvjwGISCQFQpf5cSqZgmvT2V2O3GHXpONiEgwL/Ud/+zWmhZbWLExg==}
 
   preact@10.24.3:
     resolution: {integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==}
@@ -9883,8 +9891,8 @@ packages:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
 
-  streamx@2.20.1:
-    resolution: {integrity: sha512-uTa0mU6WUC65iUvzKH4X9hEdvSW7rbPxPtwfWiLMSj3qTdQbAiUboZTxauKfpFuGIGa1C2BYijZ7wgdUXICJhA==}
+  streamx@2.20.2:
+    resolution: {integrity: sha512-aDGDLU+j9tJcUdPGOaHmVF1u/hhI+CsGkT02V3OKlHDV7IukOI+nTWAGkiZEKCO35rWN1wIr4tS7YFr1f4qSvA==}
 
   strict-uri-encode@1.1.0:
     resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==}
@@ -10466,14 +10474,9 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  unplugin@1.15.0:
-    resolution: {integrity: sha512-jTPIs63W+DUEDW207ztbaoO7cQ4p5aVaB823LSlxpsFEU3Mykwxf3ZGC/wzxFJeZlASZYgVrWeo7LgOrqJZ8RA==}
+  unplugin@1.16.0:
+    resolution: {integrity: sha512-5liCNPuJW8dqh3+DM6uNM2EI3MLLpCKp/KY+9pB5M2S2SR2qvvDHhKgBOaTWEbZTAws3CXfB0rKTIolWKL05VQ==}
     engines: {node: '>=14.0.0'}
-    peerDependencies:
-      webpack-sources: ^3
-    peerDependenciesMeta:
-      webpack-sources:
-        optional: true
 
   unstorage@1.13.1:
     resolution: {integrity: sha512-ELexQHUrG05QVIM/iUeQNdl9FXDZhqLJ4yP59fnmn2jGUh0TEulwOgov1ubOb3Gt2ZGK/VMchJwPDNVEGWQpRg==}
@@ -12967,9 +12970,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.8': {}
 
-  '@graphql-tools/executor@1.3.2(graphql@15.9.0)':
+  '@graphql-tools/executor@1.3.3(graphql@15.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.5.5(graphql@15.9.0)
+      '@graphql-tools/utils': 10.5.6(graphql@15.9.0)
       '@graphql-typed-document-node/core': 3.2.0(graphql@15.9.0)
       '@repeaterjs/repeater': 3.0.6
       graphql: 15.9.0
@@ -12982,16 +12985,16 @@ snapshots:
       graphql: 15.9.0
       tslib: 2.8.1
 
-  '@graphql-tools/merge@9.0.8(graphql@15.9.0)':
+  '@graphql-tools/merge@9.0.9(graphql@15.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.5.5(graphql@15.9.0)
+      '@graphql-tools/utils': 10.5.6(graphql@15.9.0)
       graphql: 15.9.0
       tslib: 2.8.1
 
-  '@graphql-tools/schema@10.0.7(graphql@15.9.0)':
+  '@graphql-tools/schema@10.0.8(graphql@15.9.0)':
     dependencies:
-      '@graphql-tools/merge': 9.0.8(graphql@15.9.0)
-      '@graphql-tools/utils': 10.5.5(graphql@15.9.0)
+      '@graphql-tools/merge': 9.0.9(graphql@15.9.0)
+      '@graphql-tools/utils': 10.5.6(graphql@15.9.0)
       graphql: 15.9.0
       tslib: 2.8.1
       value-or-promise: 1.0.12
@@ -13004,7 +13007,7 @@ snapshots:
       tslib: 2.8.1
       value-or-promise: 1.0.11
 
-  '@graphql-tools/utils@10.5.5(graphql@15.9.0)':
+  '@graphql-tools/utils@10.5.6(graphql@15.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@15.9.0)
       cross-inspect: 1.0.1
@@ -13805,6 +13808,10 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@playwright/test@1.48.2':
+    dependencies:
+      playwright: 1.48.2
 
   '@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.2)(type-fest@2.19.0)(webpack-hot-middleware@2.26.1)(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))':
     dependencies:
@@ -15187,14 +15194,14 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@storybook/addon-docs@7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack-sources@3.2.3)':
+  '@storybook/addon-docs@7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@jest/transform': 29.7.0
       '@mdx-js/react': 2.3.0(react@18.3.1)
       '@storybook/blocks': 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/client-logger': 7.6.20
       '@storybook/components': 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@storybook/csf-plugin': 7.6.20(webpack-sources@3.2.3)
+      '@storybook/csf-plugin': 7.6.20
       '@storybook/csf-tools': 7.6.20
       '@storybook/global': 5.0.0
       '@storybook/mdx2-csf': 1.1.0
@@ -15215,14 +15222,13 @@ snapshots:
       - '@types/react-dom'
       - encoding
       - supports-color
-      - webpack-sources
 
-  '@storybook/addon-essentials@7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack-sources@3.2.3)':
+  '@storybook/addon-essentials@7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@storybook/addon-actions': 7.6.20
       '@storybook/addon-backgrounds': 7.6.20
       '@storybook/addon-controls': 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@storybook/addon-docs': 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack-sources@3.2.3)
+      '@storybook/addon-docs': 7.6.20(@types/react-dom@18.0.9)(@types/react@18.0.9)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/addon-highlight': 7.6.20
       '@storybook/addon-measure': 7.6.20
       '@storybook/addon-outline': 7.6.20
@@ -15240,7 +15246,6 @@ snapshots:
       - '@types/react-dom'
       - encoding
       - supports-color
-      - webpack-sources
 
   '@storybook/addon-highlight@7.6.20':
     dependencies:
@@ -15350,7 +15355,7 @@ snapshots:
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
-      markdown-to-jsx: 7.6.1(react@18.3.1)
+      markdown-to-jsx: 7.6.2(react@18.3.1)
       memoizerific: 1.11.3
       polished: 4.3.1
       react: 18.3.1
@@ -15651,13 +15656,12 @@ snapshots:
       - encoding
       - supports-color
 
-  '@storybook/csf-plugin@7.6.20(webpack-sources@3.2.3)':
+  '@storybook/csf-plugin@7.6.20':
     dependencies:
       '@storybook/csf-tools': 7.6.20
-      unplugin: 1.15.0(webpack-sources@3.2.3)
+      unplugin: 1.16.0
     transitivePeerDependencies:
       - supports-color
-      - webpack-sources
 
   '@storybook/csf-tools@7.6.20':
     dependencies:
@@ -15748,7 +15752,7 @@ snapshots:
 
   '@storybook/mdx2-csf@1.1.0': {}
 
-  '@storybook/nextjs@7.6.20(@swc/core@1.9.2(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(encoding@0.1.13)(esbuild@0.18.20)(next@14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)(type-fest@2.19.0)(typescript@5.3.3)(webpack-hot-middleware@2.26.1)(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))':
+  '@storybook/nextjs@7.6.20(@swc/core@1.9.2(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(encoding@0.1.13)(esbuild@0.18.20)(next@14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)(type-fest@2.19.0)(typescript@5.3.3)(webpack-hot-middleware@2.26.1)(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -15778,7 +15782,7 @@ snapshots:
       fs-extra: 11.2.0
       image-size: 1.1.1
       loader-utils: 3.3.1
-      next: 14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
+      next: 14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.96.1(@swc/core@1.9.2(@swc/helpers@0.5.15))(esbuild@0.18.20))
       pnp-webpack-plugin: 1.7.0(typescript@5.3.3)
       postcss: 8.4.49
@@ -17468,7 +17472,7 @@ snapshots:
       fast-querystring: 1.1.2
       tslib: 2.8.1
 
-  '@whatwg-node/server@0.9.54':
+  '@whatwg-node/server@0.9.55':
     dependencies:
       '@whatwg-node/fetch': 0.10.1
       tslib: 2.8.1
@@ -17905,7 +17909,7 @@ snapshots:
 
   bare-stream@2.3.2:
     dependencies:
-      streamx: 2.20.1
+      streamx: 2.20.2
     optional: true
 
   base-x@3.0.10:
@@ -18080,7 +18084,7 @@ snapshots:
   browserslist@4.24.2:
     dependencies:
       caniuse-lite: 1.0.30001680
-      electron-to-chromium: 1.5.57
+      electron-to-chromium: 1.5.58
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
 
@@ -18978,7 +18982,7 @@ snapshots:
     dependencies:
       encoding: 0.1.13
 
-  electron-to-chromium@1.5.57: {}
+  electron-to-chromium@1.5.58: {}
 
   elliptic@6.5.4:
     dependencies:
@@ -19975,13 +19979,13 @@ snapshots:
   graphql-yoga@5.1.1(graphql@15.9.0):
     dependencies:
       '@envelop/core': 5.0.2
-      '@graphql-tools/executor': 1.3.2(graphql@15.9.0)
-      '@graphql-tools/schema': 10.0.7(graphql@15.9.0)
-      '@graphql-tools/utils': 10.5.5(graphql@15.9.0)
+      '@graphql-tools/executor': 1.3.3(graphql@15.9.0)
+      '@graphql-tools/schema': 10.0.8(graphql@15.9.0)
+      '@graphql-tools/utils': 10.5.6(graphql@15.9.0)
       '@graphql-yoga/logger': 2.0.0
       '@graphql-yoga/subscription': 5.0.1
       '@whatwg-node/fetch': 0.9.23
-      '@whatwg-node/server': 0.9.54
+      '@whatwg-node/server': 0.9.55
       dset: 3.1.4
       graphql: 15.9.0
       lru-cache: 10.4.3
@@ -21201,7 +21205,7 @@ snapshots:
 
   markdown-table@3.0.4: {}
 
-  markdown-to-jsx@7.6.1(react@18.3.1):
+  markdown-to-jsx@7.6.2(react@18.3.1):
     dependencies:
       react: 18.3.1
 
@@ -22003,15 +22007,15 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  next-themes@0.2.1(next@14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next-themes@0.2.1(next@14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      next: 14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
+      next: 14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
   next-tick@1.1.0: {}
 
-  next@14.2.7(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7):
+  next@14.2.7(@babel/core@7.26.0)(@playwright/test@1.48.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.7):
     dependencies:
       '@next/env': 14.2.7
       '@swc/helpers': 0.5.5
@@ -22032,6 +22036,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 14.2.7
       '@next/swc-win32-ia32-msvc': 14.2.7
       '@next/swc-win32-x64-msvc': 14.2.7
+      '@playwright/test': 1.48.2
       sass: 1.80.7
     transitivePeerDependencies:
       - '@babel/core'
@@ -22659,7 +22664,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.184.1:
+  posthog-js@1.184.2:
     dependencies:
       core-js: 3.39.0
       fflate: 0.4.8
@@ -23953,7 +23958,7 @@ snapshots:
 
   streamsearch@1.1.0: {}
 
-  streamx@2.20.1:
+  streamx@2.20.2:
     dependencies:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
@@ -24189,7 +24194,7 @@ snapshots:
     dependencies:
       b4a: 1.6.7
       fast-fifo: 1.3.2
-      streamx: 2.20.1
+      streamx: 2.20.2
 
   tar@4.4.19:
     dependencies:
@@ -24564,12 +24569,10 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin@1.15.0(webpack-sources@3.2.3):
+  unplugin@1.16.0:
     dependencies:
       acorn: 8.14.0
       webpack-virtual-modules: 0.6.2
-    optionalDependencies:
-      webpack-sources: 3.2.3
 
   unstorage@1.13.1(idb-keyval@6.2.1):
     dependencies:
