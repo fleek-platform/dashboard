@@ -5,7 +5,7 @@
     "build": "next build",
     "build:ci": "pnpm run build",
     "clean": "rm -rf node_modules src/generated",
-    "dev": "pnpm dev:check_required && next dev",
+    "dev": ".scripts/start_dev_server",
     "dev:check_required": ".scripts/local_requirements",
     "format": "pnpm exec biome format --write ./src",
     "format:check": "pnpm exec biome format ./src",
