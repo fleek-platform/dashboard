@@ -26,7 +26,7 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 - Nodejs as runtime
 - NPM, Yarn to install the CLI as a client, or PNPM for development
 - Familiarity with text-based user interfaces, command-line interface (CLI)
-- Ports: UI (3000-3002, one free), Storybook (6006).
+- Ports: UI (declared as NEXT_DEV_SERVER_PORT), Storybook (6006).
 
 You'll also need to [setup](#environment-setup) the development environment.
 
@@ -41,12 +41,13 @@ For runtime we utilize [Nodejs](https://nodejs.org/en/download) and [PNPM](https
 Create a new file named .env in the root directory of your project. This file will store environment variables needed for local development.
 
 ```sh
-touch .env.production
+touch .env.development
 ```
 
-Open the .env.production file in a text editor and add the following:
+Open the .env.development file in a text editor and add the following:
 
 ```sh
+NEXT_DEV_SERVER_PORT=3001
 NEXT_PUBLIC_SDK__AUTHENTICATION_URL="https://graphql.service.fleek.xyz/graphql"
 NEXT_PUBLIC_UI_FLEEK_REST_API_URL="https://api.fleek.xyz"
 NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID="de23a5f0-aaa5-412e-8212-4fb056a3b30d"
@@ -65,7 +66,12 @@ NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL="https://uploads.service.fleek.xyz",
 NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
 ```
 
-💡 The variables above point to our production environment, the same you interact with as an end-user.
+💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
+
+![WARNING]
+> Set the NODE_ENV variable to select the corresponding environment file (.env*), e.g. NODE_ENV="production" would read the file .env.production
+> Keep it simple, name the file to the corresponding environment like .env.<NODE_ENV>
+> The test runner ignores .env.local.*
 
 Next, you can proceed to [install](#install) the project dependencies.
 
@@ -97,6 +103,7 @@ For example, let's say it was bound to the default port 3000, you'd get:
 ```
 
 > [!WARNING]
+> Consider the configured port declared as NEXT_DEV_SERVER_PORT
 > If the port 3000 is not free on execution a different port's utilized. Check the output for the correct address, please!
 
 Open the address [http://localhost:3000](http://localhost:3000) in your favourite development browser.
