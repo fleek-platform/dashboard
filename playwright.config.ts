@@ -14,8 +14,7 @@ if (!hasDevServerPortEnvVar()) {
   process.exit(1);
 }
 
-const { hostname, port } = getDevServerDetails();
-const url = `http://${hostname}:${port}`;
+const { url } = getDevServerDetails();
 
 /**
  * See https://playwright.dev/docs/test-configuration.

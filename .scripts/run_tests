@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Parse env
+source .tests/.env
+
+dev_server_url="http://localhost:${NEXT_DEV_SERVER_PORT}"
+http_success_status="HTTP/1.1 200 OK"
+
+if ! curl -sfLI "$dev_server_url" | grep -q "$http_success_status"; then
+  echo "👹 Oops! Couldn't ping the development server. Have you started it yet?"
+  exit 1
+fi
+
+echo "✅ The dev server is running."
+
+echo "🤖 Should start the e2e tests..."
+pnpm run test:e2e
