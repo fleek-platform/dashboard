@@ -204,5 +204,10 @@ describe('On Home page', () => {
         await expect(item).toBeVisible();
       }
     });
+
+    // TODO: Write test for Version
+    // and fix the mock data response
+    // see role in
+    // src/components/Version/VersionTags.tsx
   });
 });
