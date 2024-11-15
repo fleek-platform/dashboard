@@ -189,5 +189,20 @@ describe('On Home page', () => {
     it('Should have useful articles', async ({ page }) => {
       await expect(page.getByText('Useful articles')).toBeVisible();
     });
+
+    it('Should have a menu', async ({ page }) => {
+      const menu = page.getByRole('menu');
+      await expect(menu).toBeVisible();
+    });
+
+    it('Should have a menu item for Dashboard', async ({ page }) => {
+      const role = 'menu';
+      const list = ['Dashboard', 'Hosting', 'Storage', 'Functions', 'Settings'];
+
+      for (const name of list) {
+        const item = page.getByRole(role).filter({ hasText: name });
+        await expect(item).toBeVisible();
+      }
+    });
   });
 });
