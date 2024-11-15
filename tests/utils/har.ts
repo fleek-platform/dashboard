@@ -1,4 +1,15 @@
 import fs from 'fs';
+import path from 'path';
+
+const __project_root = path.resolve(__dirname, '../../');
+const harBasePath = path.resolve(__project_root, 'tests/e2e/HAR');
+export const harFilePaths = {
+  page: {
+    projects: {
+      home: `${harBasePath}/projects_home.har`
+    },
+  },
+};
 
 export const extractHARContentAsJSON = (filepath: string) => {
   try {

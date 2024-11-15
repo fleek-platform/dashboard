@@ -1,4 +1,5 @@
 import { test as it, expect } from '@playwright/test';
+import { harFilePaths } from '../utils/har';
 
 const { describe, beforeEach, afterEach } = it;
 
@@ -98,8 +99,6 @@ describe('On Home page', () => {
         },
       ]);
 
-      const harFilePath = './tests/e2e/HAR/projects_home.har';
-
       // TODO: Block unnecessary requests
       // Mock the following:
       // latestBlogPosts, api.staging.fleeksandbox.xyz/api/v1/
@@ -114,7 +113,7 @@ describe('On Home page', () => {
       // });
       // Does the routeFromHAR regex would work for a url list?
 
-      await page.routeFromHAR(harFilePath, {
+      await page.routeFromHAR(harFilePaths.page.projects.home, {
         url: /fleek.*.xyz\/graphql/,
         update: false,
         notFound: 'abort',
