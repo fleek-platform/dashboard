@@ -124,10 +124,36 @@ describe('On Home page', () => {
             contentType: 'application/json',
             body: JSON.stringify(latestBlogPosts),
           });
-        } else {
-          await route.continue();
+
+          return;
         }
+
+        await route.continue();
       });
+
+      await page.route(
+        '**',
+        async (route) => {
+          const url = route.request().url();
+
+          if (url.includes('dynamicauth.com')) {
+            console.log('Blocking dynamicauth.com request:', url);
+            // await route.abort();
+            await route.fulfill({
+              status: 200,
+              contentType: 'application/json',
+              body: JSON.stringify({}),
+            });
+
+            return;
+          }
+
+          await route.continue();
+        },
+        {
+          times: Infinity,
+        },
+      );
 
       await page.routeFromHAR(harFilePaths.page.projects.home, {
         url: /fleek.*.xyz\/graphql/,
