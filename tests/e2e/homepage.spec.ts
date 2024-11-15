@@ -159,5 +159,9 @@ describe('On Home page', () => {
       await expect(page.getByText('Get on Fleek!')).toBeVisible();
       await expect(page.getByText('Become a Fleek power user')).toBeVisible();
     });
+
+    it('Should have useful articles', async ({ page }) => {
+      await expect(page.getByText('Useful articles')).toBeVisible();
+    });
   });
 });
