@@ -1,6 +1,6 @@
 import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
-
+import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 const { describe, beforeEach, afterEach } = it;
 
 describe('On Home page', () => {
@@ -13,8 +13,9 @@ describe('On Home page', () => {
       await page.evaluate(() => {
         localStorage.clear();
         sessionStorage.clear();
-        document.cookie.split(';').forEach(cookie => {
-          document.cookie = cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+        document.cookie.split(';').forEach((cookie) => {
+          document.cookie =
+            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
         });
       });
     });
@@ -64,8 +65,9 @@ describe('On Home page', () => {
       await page.evaluate(() => {
         localStorage.clear();
         sessionStorage.clear();
-        document.cookie.split(';').forEach(cookie => {
-          document.cookie = cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+        document.cookie.split(';').forEach((cookie) => {
+          document.cookie =
+            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
         });
       });
     });
@@ -77,7 +79,8 @@ describe('On Home page', () => {
 
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
-      const validMockToken = 'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibW9jayJ9.lTEPeyG1YviT2jZiYcs0hMPY2gMZVhpYJt0bTu1HE3k';
+      const validMockToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibW9jayJ9.lTEPeyG1YviT2jZiYcs0hMPY2gMZVhpYJt0bTu1HE3k';
       await page.context().addCookies([
         {
           name: 'accessToken',
@@ -103,6 +106,7 @@ describe('On Home page', () => {
       // Mock the following:
       // latestBlogPosts, api.staging.fleeksandbox.xyz/api/v1/
       // by pass any others
+      // Block unnecessary requests
       // await page.route('**/*', async (route) => {
       //   const url = route.request().url();
       //   if (!url.startsWith('http://localhost') && !url.includes('/graphql')) {
@@ -111,12 +115,25 @@ describe('On Home page', () => {
       //   }
       //   await route.continue();
       // });
-      // Does the routeFromHAR regex would work for a url list?
+
+      await page.route(/fleek.*.xyz\/api\/.*/, async (route) => {
+        const url = route.request().url();
+        if (url.includes('latestBlogPosts.json')) {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify(latestBlogPosts),
+          });
+        } else {
+          await route.continue();
+        }
+      });
 
       await page.routeFromHAR(harFilePaths.page.projects.home, {
         url: /fleek.*.xyz\/graphql/,
+        // TODO: Unfortunately multiple doesn't seem to work
+        // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
         update: false,
-        notFound: 'abort',
       });
 
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}`);
@@ -126,8 +143,9 @@ describe('On Home page', () => {
       await page.evaluate(() => {
         localStorage.clear();
         sessionStorage.clear();
-        document.cookie.split(';').forEach(cookie => {
-          document.cookie = cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+        document.cookie.split(';').forEach((cookie) => {
+          document.cookie =
+            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
         });
       });
     });

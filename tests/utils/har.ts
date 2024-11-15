@@ -6,7 +6,7 @@ const harBasePath = path.resolve(__project_root, 'tests/e2e/HAR');
 export const harFilePaths = {
   page: {
     projects: {
-      home: `${harBasePath}/projects_home.har`
+      home: `${harBasePath}/projects_home.har`,
     },
   },
 };
@@ -18,4 +18,4 @@ export const extractHARContentAsJSON = (filepath: string) => {
   } catch (err) {
     console.error('Failed to extract HAR content as JSON', err);
   }
-}
+};
