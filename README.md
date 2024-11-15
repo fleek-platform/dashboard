@@ -15,7 +15,9 @@ The Client's Dashboard the interface for managing all Fleek platform services, w
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
   - [Changeset](#changeset)
-  - [Test Runner](#test-runner)
+  - [Regression Suite](#regression-suite)
+* [💍 Tests](#Tests)
+  - [End-to-End](#end-to-end-e2e)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -157,14 +159,20 @@ Declare an intent to release by executing the command and answering the wizard's
 pnpm changeset:add
 ```
 
-### Test Runner
+### Regression Suite
+
+Regression in software testing refers to when a previously working feature stops working after new changes are made. When contributing make sure that changes are healthy and cause issues.
+
+Learn how to run and write tests [here](#tests).
+
+## Tests
 
 The project has two category of tests:
 
 - End-to-End (e2e) built on playwright to facility testing the UI/UX interface. The network calls are mocked to facilitate rapid development and focus on the interface;
 - Functional (Unit tests), which assert pure functions, e.g. data transformations, calculations, etc, a separate concern over the presentation;
 
-Run all tests can be executed by:
+You can run all tests by executing the command:
 
 ```sh
 pnpm run test
@@ -177,6 +185,30 @@ For example, you can launch end-to-end tests, on a chrome browser:
 ```sh
 pnpm run test:ui
 ```
+
+### Good practices
+
+Here are some recommendations when writing tests.
+
+#### End-to-end (E2E)
+
+- Block any unnecessary network requests, e.g., third-party services, such as analytics, etc
+- Use headless mode for fast feedback
+- Prepare and clean data or state for each test
+- Prioritize user flows, e.g. prefer role selection instead of specifying implementation details such as ID, Class, or element names (DOM locators)
+- Prefer tools provided by Playwright
+- Tests should be independent and isolated, e.g. avoid sharing state across test cases depending on others
+- Use the mode `Browser/UI` to see the tests in actions to see how the application render, inspect network logs, etc
+- Tests should have the ability to run concurrently, e.g., you'd rather have 5 workers computing instead of waiting sequentially to save you time
+- Mock API calls providing the expected data structure in the response, to prioritize testing the interface, e.g., you're testing that the user-interface corresponds to the user-journey goals NOT the service-side availability
+- Handle exceptions gracefully, e.g., test cases where the API response fails, etc
+- Use the HAR file from your browser session
+- Avoid writing tests for static elements that's useless to the end-user
+- Avoid placing timeouts in the test
+
+#### Unit-tests
+
+WIP
 
 ## Contributing
 
