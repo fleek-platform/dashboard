@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.0-noble
+      options: --user 1001
     env:
       # TODO: For testing CI/CD only, should be to settings
       NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://graphql.service.staging.fleeksandbox.xyz/graphql"
@@ -61,9 +64,6 @@ jobs:
 
       - name: Install
         run: pnpm i
-
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
 
       - name: Start development server in background
         run: |
