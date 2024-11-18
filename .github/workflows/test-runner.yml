@@ -26,6 +26,7 @@ jobs:
       NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME: "dry.run"
       NEXT_DEV_SERVER_PORT: 3001
       NEXT_PUBLIC_TEST_MODE: 1
+      NODE_ENV: 'development'
     timeout-minutes: 30
     steps:
       - name: Checkout repository
@@ -63,9 +64,10 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
-      # TODO: Build prod and serve
-      - name: Dev server
-        run: pnpm dev
+      - name: Start development server in background
+        run: |
+          pnpm dev &
+          .scripts/await_dev_server "$NEXT_DEV_SERVER_PORT"
 
       - name: Run tests
         run: |
