@@ -16,6 +16,9 @@ if (!hasDevServerPortEnvVar()) {
 
 const { url } = getDevServerDetails();
 
+// TODO: Delete the following
+console.log(`[debug] process.env.PLAYWRIGHT_WORKERS = ${process.env.PLAYWRIGHT_WORKERS}`);
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -24,7 +27,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  workers: process.env.CI ? process.env.PLAYWRIGHT_WORKERS : undefined,
+  workers: process.env.CI ? 2 : undefined,
   reporter: 'list',
   use: {
     trace: 'on-first-retry',
