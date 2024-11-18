@@ -71,7 +71,7 @@ NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
 
-> ![WARNING]
+> [!WARNING]
 > Set the NODE_ENV variable to select the corresponding environment file (.env*), e.g. NODE_ENV="production" would read the file .env.production
 > Keep it simple, name the file to the corresponding environment like .env.<NODE_ENV>
 > The test runner ignores .env.local.*
