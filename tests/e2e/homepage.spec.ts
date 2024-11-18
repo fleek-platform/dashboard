@@ -63,6 +63,7 @@ describe('On Home page', () => {
 
       const navigationPromise = page.waitForNavigation({
         waitUntil: 'load',
+        waitUntil: 'networkidle',
       });
 
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
