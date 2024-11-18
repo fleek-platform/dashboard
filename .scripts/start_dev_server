@@ -62,10 +62,11 @@ test_artifacts_path=".tests"
 
 if [[ "$interactive_mode" -eq 1 ]]; then
   dotEnvUserInputHandling
+
+  # Requirements quick check
+  pnpm dev:check_required
 fi
 
-# Requirements quick check
-pnpm dev:check_required
 
 # The test server is interested
 # in the port number
