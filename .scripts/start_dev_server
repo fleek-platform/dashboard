@@ -2,12 +2,23 @@
 
 set -e
 
+# Interactive mode setup
+interactive_mode=$([[ -n "$CI" ]] && { [[ "$CI" = "true" ]] || [[ "$CI" = "1" ]]; } && echo 0 || echo 1)
+
+# Variables setup
+dev_environment="development"
+dot_env_ls=$(getDotEnvs)
+dot_env_count=$(getDotEnvs | wc -w | xargs)
+check_env_filename=""
+test_artifacts_path=".tests"
+
 getDotEnvs() {
   find . -maxdepth 1 -name ".env*" -type f -exec basename {} \;
 }
 
 createTestsDotEnv() {
   if [[ ! -d "$test_artifacts_path" ]]; then
+    echo "test_artifacts_path = $test_artifacts_path"
     mkdir "$test_artifacts_path"
   fi
 
@@ -21,37 +32,39 @@ createTestsDotEnv() {
   echo "NEXT_DEV_SERVER_PORT=$NEXT_DEV_SERVER_PORT" >> "$tests_dot_env_path"
 }
 
-# Interactive
-interactive_mode=$([[ -n "$CI" ]] && { [[ "$CI" = "true" ]] || [[ "$CI" = "1" ]]; } && echo 0 || echo 1)
+dotEnvUserInputHandling() {
 
-# Check dotenv files
-dev_environment="development"
-dot_env_ls=$(getDotEnvs)
-dot_env_count=$(getDotEnvs | wc -w | xargs)
-check_env_filename=""
-test_artifacts_path=".tests"
+  if [[ "$dot_env_count" -gt 1 ]]; then
+    read -rp "⚠️ WARNING: Found $dot_env_count .env files! The process is going to try load .env.development. For any questions check the README file! Press ENTER process continue..."
 
-if [[ "$dot_env_count" -gt 1 ]]; then
-  echo "⚠️ WARNING: Found $dot_env_count .env files! The process is going to try load .env.development"
-  [[ "$interactive_mode" -eq 1 ]] && read -rp "Any questions? Please read the README file! Press ENTER process continue..."
+    check_env_filename=".env.$dev_environment"
+    if [[ ! -f "$check_env_filename" ]]; then
+      echo "👹 Oops! The file $check_env_filename doesn't exist. Since you have $dot_env_count, we need you to declare a .env.development"
+      exit 1
+    fi
+  else
+    check_env_filename="$dot_env_ls"
 
-  check_env_filename=".env.$dev_environment"
-  if [[ ! -f "$check_env_filename" ]]; then
-    echo "👹 Oops! The file $check_env_filename doesn't exist. Since you have $dot_env_count, we need you to declare a .env.development"
-    exit 1
+    if [[ "$check_env_filename" != ".env.$dev_environment" ]]; then
+      read -rp "⚠️ WARNING: The filename $check_env_filename  doesn't match NODE_ENV=development. To avoid confusion, consider renaming it to .env.development. This change will clearly indicate that the file is specifically for the development environment, aligning with NODE_ENV setting when running the development server. Press ENTER process continue..."
+    fi
   fi
-else
-  check_env_filename="$dot_env_ls"
 
-  if [[ "$interactive_mode" -eq 1 ]] && [[ "$check_env_filename" != ".env.$dev_environment" ]]; then
-    read -rp "⚠️ WARNING: The filename $check_env_filename  doesn't match NODE_ENV=development. To avoid confusion, consider renaming it to .env.development. This change will clearly indicate that the file is specifically for the development environment, aligning with NODE_ENV setting when running the development server. Press ENTER process continue..."
-  fi
+  echo "🤖 Should parse $check_env_filename..."
+  source "$check_env_filename"
+}
+
+startDevServer() {
+  echo "🤖 Should start the server at localhost:$NEXT_DEV_SERVER_PORT..."
+  pnpm exec next dev --port $NEXT_DEV_SERVER_PORT
+}
+
+
+if [[ "$interactive_mode" -eq 1 ]]; then
+  dotEnvUserInputHandling
 fi
 
-echo "🤖 Should parse $check_env_filename..."
-source "$check_env_filename"
-
-# Create a quick check
+# Requirements quick check
 pnpm dev:check_required
 
 # The test server is interested
