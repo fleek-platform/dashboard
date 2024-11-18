@@ -2,15 +2,6 @@
 
 set -e
 
-# Interactive mode setup
-interactive_mode=$([[ -n "$CI" ]] && { [[ "$CI" = "true" ]] || [[ "$CI" = "1" ]]; } && echo 0 || echo 1)
-
-# Variables setup
-dev_environment="development"
-dot_env_ls=$(getDotEnvs)
-dot_env_count=$(getDotEnvs | wc -w | xargs)
-check_env_filename=""
-test_artifacts_path=".tests"
 
 getDotEnvs() {
   find . -maxdepth 1 -name ".env*" -type f -exec basename {} \;
@@ -59,6 +50,15 @@ startDevServer() {
   pnpm exec next dev --port $NEXT_DEV_SERVER_PORT
 }
 
+# Interactive mode setup
+interactive_mode=$([[ -n "$CI" ]] && { [[ "$CI" = "true" ]] || [[ "$CI" = "1" ]]; } && echo 0 || echo 1)
+
+# Variables setup
+dev_environment="development"
+dot_env_ls=$(getDotEnvs)
+dot_env_count=$(getDotEnvs | wc -w | xargs)
+check_env_filename=""
+test_artifacts_path=".tests"
 
 if [[ "$interactive_mode" -eq 1 ]]; then
   dotEnvUserInputHandling
