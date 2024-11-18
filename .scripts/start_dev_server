@@ -9,18 +9,19 @@ getDotEnvs() {
 
 createTestsDotEnv() {
   if [[ ! -d "$test_artifacts_path" ]]; then
-    echo "test_artifacts_path = $test_artifacts_path"
     mkdir "$test_artifacts_path"
   fi
 
   tests_dot_env_path="$test_artifacts_path/.env"
 
-  if ! rm "$tests_dot_env_path"; then
-    echo "👹 Oops! Failed to delete $tests_dot_env_path for some reason..."
-    exit 1
+  if [[ -f "$tests_dot_env_path" ]]; then
+    if ! rm "$tests_dot_env_path"; then
+      echo "👹 Oops! Failed to delete $tests_dot_env_path for some reason..."
+      exit 1
+    fi
   fi
 
-  echo "NEXT_DEV_SERVER_PORT=$NEXT_DEV_SERVER_PORT" >> "$tests_dot_env_path"
+  echo "NEXT_DEV_SERVER_PORT=$NEXT_DEV_SERVER_PORT" > "$tests_dot_env_path"
 }
 
 dotEnvUserInputHandling() {
