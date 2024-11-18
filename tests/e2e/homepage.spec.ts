@@ -36,8 +36,10 @@ describe('On Home page', () => {
   });
 
   describe('Invalid cookie token user', () => {
+    const invalidToken = 'abcdef';
+    const projectId = 'cls4v91mt0001l708wu51eozd';
+
     beforeEach(async ({ page }) => {
-      const invalidToken = 'abcdef';
       await page.context().addCookies([
         {
           name: 'accessToken',
@@ -53,12 +55,11 @@ describe('On Home page', () => {
         },
         {
           name: 'projectId',
-          value: 'cls4v91mt0001l708wu51eozd',
+          value: projectId,
           domain: 'localhost',
           path: '/',
         },
       ]);
-      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}`);
     });
 
     afterEach(async ({ page }) => {
@@ -73,7 +74,9 @@ describe('On Home page', () => {
     });
 
     it('Should redirect to the homepage', async ({ page }) => {
-      await page.waitForURL('**/', { timeout: 5000 });
+      const promise = page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`);
+      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
+      await promise;
       await expect(page).toHaveTitle(/Home - Fleek/);
     });
   });
