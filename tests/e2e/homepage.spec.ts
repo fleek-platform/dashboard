@@ -137,8 +137,6 @@ describe('On Home page', () => {
           const url = route.request().url();
 
           if (url.includes('dynamicauth.com')) {
-            console.log('Blocking dynamicauth.com request:', url);
-            // await route.abort();
             await route.fulfill({
               status: 200,
               contentType: 'application/json',
