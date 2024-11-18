@@ -60,6 +60,7 @@ describe('On Home page', () => {
           path: '/',
         },
       ]);
+      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
     });
 
     afterEach(async ({ page }) => {
@@ -74,9 +75,9 @@ describe('On Home page', () => {
     });
 
     it('Should redirect to the homepage', async ({ page }) => {
-      const promise = page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`);
-      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
-      await promise;
+      await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
+        waitUntil: 'domcontentloaded',
+      });
       await expect(page).toHaveTitle(/Home - Fleek/);
     });
   });

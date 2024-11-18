@@ -16,9 +16,6 @@ if (!hasDevServerPortEnvVar()) {
 
 const { url } = getDevServerDetails();
 
-// TODO: Delete the following
-console.log(`[debug] process.env.PLAYWRIGHT_WORKERS = ${process.env.PLAYWRIGHT_WORKERS}`);
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
