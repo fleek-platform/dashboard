@@ -1,0 +1,28 @@
+#!/bin/bash
+
+max_count=10
+count=0
+timeout=15
+port=$1
+dev_server_url="http://localhost:$port"
+
+if [[ -z "$1" ]]; then
+  echo "👹 Oops! Missing port number. When calling the script make sure you pass the port number as an argument."
+  exit 1
+fi
+
+echo "🤖 Await for development server at $dev_server_url"
+
+while ! curl -s "$dev_server_url" > /dev/null; do
+  if [[ $count -ge $max_count ]]; then
+    echo "👹 Oops! The dev server failed to start after $max_count for some reason..."
+    exit 1
+  fi
+    
+  echo "⏳ Waiting for dev server..."
+
+  count=$((count + 1))
+  sleep "$timeout"
+done
+
+echo "✅ Dev server is ready!"
