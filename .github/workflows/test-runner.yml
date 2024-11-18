@@ -1,0 +1,72 @@
+name: 💍 Tester runner
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://dry.run"
+      NEXT_PUBLIC_UI_FLEEK_REST_API_URL: "https://dry.run"
+      NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID: "dry.run"
+      NEXT_PUBLIC_UI__FEEDBACK_FISH_PROJECT_ID: "dry.run"
+      NEXT_PUBLIC_UI__GTM_ID: "dry.run"
+      NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID: "dry.run"
+      NEXT_PUBLIC_UI__LOG_ROCKET_ID: "dry.run"
+      NEXT_PUBLIC_UI__POSTHOG_HOST: "https://dry.run"
+      NEXT_PUBLIC_UI__POSTHOG_KEY: "dry.run"
+      NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN: "dry.run"
+      NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY: "dry.run"
+      NEXT_PUBLIC_UI__WEB3AUTH_CLIENT_ID: "dry.run"
+      NEXT_PUBLIC_UI__ZENDESK_PROXY_API: "https://dry.run"
+      NEXT_PUBLIC_ZENDESK_PROXY_HOSTNAME: "dry.run"
+      NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL: "https://dry.run"
+      NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME: "dry.run"
+      NEXT_DEV_SERVER_PORT: 3001
+      NEXT_PUBLIC_TEST_MODE: 1
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install
+        run: pnpm i
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      # TODO: Build prod and serve
+      - name: Dev server
+        run: pnpm dev
+
+      - name: Run tests
+        run: |
+          pnpm test
