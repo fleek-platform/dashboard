@@ -73,6 +73,7 @@ describe('On Home page', () => {
     });
 
     it('Should redirect to the homepage', async ({ page }) => {
+      await page.waitForURL('**/', { timeout: 5000 });
       await expect(page).toHaveTitle(/Home - Fleek/);
     });
   });
