@@ -1,12 +1,12 @@
 ![](.repo/images/repo/banner.png?202411121019)
 
-# ⚡️Fleek-Platform Client Dashboard ⚡️
+# ⚡️Fleek-Platform Dashboard ⚡️
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Tests](https://github.com/fleek-platform/cli/actions/workflows/test-runner.yml/badge.svg)
 
-The Client's Dashboard the interface for managing all Fleek platform services, which includes site deployments, functions and storage.
+The Dashboard is the interface for managing all Fleek platform services, which includes site deployments, functions and storage.
 
 ## Overview
 
@@ -35,7 +35,7 @@ You'll also need to [setup](#environment-setup) the development environment.
 
 ## Environment Setup
 
-For developers looking to contribute to the User Dashboard, [clone](https://github.com/fleek-platform/user-dashboard) the repository and follow the [contribution guide](#contributing).
+For developers looking to contribute to the User Dashboard, [clone](https://github.com/fleek-platform/dashboard) the repository and follow the [contribution guide](#contributing).
 
 Once cloned, you'll have to set up the local development environment, e.g. to have access to the source-code, iterate, run tests and much more.
 

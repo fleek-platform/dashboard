@@ -2,7 +2,7 @@
 
 set -e
 
-trap 'echo "🦖 Exited process due to issues. If you need help, check the readme at https://github.com/fleek-platform/client-dashboard"' ERR
+trap 'echo "🦖 Exited process due to issues. If you need help, check the readme at https://github.com/fleek-platform/dashboard"' ERR
 
 # Check port availability
 .scripts/required_ports
