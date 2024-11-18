@@ -60,7 +60,14 @@ describe('On Home page', () => {
           path: '/',
         },
       ]);
+
+      const navigationPromise = page.waitForNavigation({
+        waitUntil: 'load',
+      });
+
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
+
+    await navigationPromise;
     });
 
     afterEach(async ({ page }) => {
@@ -75,9 +82,16 @@ describe('On Home page', () => {
     });
 
     it('Should redirect to the homepage', async ({ page }) => {
-      await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
-        waitUntil: 'domcontentloaded',
-      });
+      await Promise.all([
+        page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
+          waitUntil: 'networkidle',
+        }),
+        page.waitForLoadState('networkidle', { timeout: 10000 })
+      ]);
+
+      const currentUrl = page.url();
+      expect(currentUrl).toBe(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`);
+
       await expect(page).toHaveTitle(/Home - Fleek/);
     });
   });
