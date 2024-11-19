@@ -64,7 +64,8 @@ describe('On Home page', () => {
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
 
       await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'load',
+        timeout: 5000,
       });
     });
 
