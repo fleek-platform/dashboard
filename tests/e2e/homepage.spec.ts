@@ -61,13 +61,14 @@ describe('On Home page', () => {
         },
       ]);
 
-      const urlPromise = page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
-        waitUntil: 'domcontentloaded',
-      });
-  
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
 
-      await urlPromise;
+      const currentUrl = page.url();
+      console.log(`[debug] Current URL after navigation: ${currentUrl}`);
+
+      await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
+        waitUntil: 'domcontentloaded',
+      });
     });
 
     afterEach(async ({ page }) => {
