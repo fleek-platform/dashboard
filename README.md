@@ -18,6 +18,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Regression Suite](#regression-suite)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
+  - [CI/CD Runner](#cicd-runner)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -170,7 +171,7 @@ Learn how to run and write tests [here](#tests).
 The project has two category of tests:
 
 - End-to-End (e2e) built on playwright to facility testing the UI/UX interface. The network calls are mocked to facilitate rapid development and focus on the interface;
-- Functional (Unit tests), which assert pure functions, e.g. data transformations, calculations, etc, a separate concern over the presentation;
+- Unit tests, which assert pure functions, e.g. data transformations, calculations, etc, a separate concern over the presentation;
 
 You can run all tests by executing the command:
 
@@ -209,6 +210,12 @@ Here are some recommendations when writing tests.
 #### Unit-tests
 
 WIP
+
+#### CI/CD Runner
+
+On CI/CD runners, low specs cause inconsistent runs to mitigate any inconsistency playwright's team recommends running in a single worker [CI/Workers](https:playwright.dev/docs/ciworkers).
+
+Note that launching a [large](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners/about-larger-runners), e.g. `macos-latest-xlarge` runner is more efficient but increases cost dramatically.
 
 ## Contributing
 

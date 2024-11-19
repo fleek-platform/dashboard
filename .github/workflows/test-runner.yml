@@ -6,7 +6,12 @@ on:
 
 jobs:
   build:
-    # Low specs seem to cause inconsistent runs
+    # On CI/CD runners, low specs cause inconsistent runs
+    # To mitigate any inconsistency playwright's team
+    # recommends running in a single worker
+    # https://playwright.dev/docs/ci#workers
+    # Note: That launching a `macos-latest-xlarge`
+    # is more efficient but increases cost dramatically
     runs-on: ubuntu-latest
     env:
       # TODO: For testing CI/CD only, should be to settings

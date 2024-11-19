@@ -24,6 +24,12 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
+  // On CI/CD runners, low specs cause inconsistent runs
+  // To mitigate any inconsistency playwright's team
+  // recommends running in a single worker
+  // https://playwright.dev/docs/ci//workers
+  // Note: That launching a `macos-latest-xlarge`
+  // is more efficient but increases cost dramatically
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
   use: {
