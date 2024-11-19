@@ -61,12 +61,14 @@ describe('On Home page', () => {
         },
       ]);
 
-      await Promise.race([
-        page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`),
-        page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
-          waitUntil: 'load',
-        }),
-      ]);
+      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
+
+      const currentUrlA = page.url();
+      console.log(`[debug] Current URL after navigation request: ${currentUrlA}`);
+
+      await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
+        waitUntil: 'domcontentloaded',
+      });
 
       const currentUrlB = page.url();
       console.log(`[debug] Current URL after navigation wait: ${currentUrlB}`);
