@@ -99,6 +99,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             isActivePage,
         },
       )}
+      role="menuitem"
     >
       <Icon name={navItem.icon} className="size-4" />
       {navItem.label}

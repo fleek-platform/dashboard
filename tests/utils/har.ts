@@ -7,6 +7,7 @@ export const harFilePaths = {
   page: {
     projects: {
       home: `${harBasePath}/projects_home.har`,
+      settings: `${harBasePath}/projects_settings.har`,
     },
   },
 };

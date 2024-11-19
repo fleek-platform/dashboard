@@ -201,6 +201,8 @@ const DeleteProjectButton = forwardRef<
       disabled={isOnlyProject || !hasDeleteProjectPermission}
       {...props}
       ref={ref}
+      role="button"
+      aria-label="Delete project"
     >
       Delete project
     </Button>
