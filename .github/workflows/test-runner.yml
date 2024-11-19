@@ -6,7 +6,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Lower specs seem to cause inconsistent runs
+    runs-on: macos-latest-xlarge
     env:
       # TODO: For testing CI/CD only, should be to settings
       NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://graphql.service.staging.fleeksandbox.xyz/graphql"
