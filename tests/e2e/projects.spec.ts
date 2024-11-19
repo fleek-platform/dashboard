@@ -150,12 +150,85 @@ describe('On Project settings page', () => {
           await expect(page.getByText(expectText)).toBeVisible();
         });
 
-        it('Should have Save changes text', async ({ page }) => {
+        it('Should have Save changes button', async ({ page }) => {
           const role = 'button';
           const name = 'Save changes';
           await expect(page.getByRole(role, { name })).toBeVisible();
         });
-      })
+      });
+
+      describe('On Settings navigation to Private Gateways', () => {
+        beforeEach(async ({ page }) => {
+          await page.route('**/graphql', async (route) => {
+            const request = route.request();
+            const postData = request.postDataJSON();
+
+            if (
+              postData.operationName === 'privateGatewayNameAvailability') {
+              await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                  data: {
+                    privateGatewayNameAvailability: true,
+                  }
+                })
+              });
+            } else {
+              await route.continue();
+            }
+          });
+
+          const name = 'private gateways';
+          const menuitem = page.getByRole('navigation').getByRole('menuitem').filter({ hasText: name });
+          menuitem.click();
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/private-gateways/`
+          await page.waitForURL(url);
+        });
+
+        it('Should have Private Gateway text', async ({ page }) => {
+          const expectText = 'Private Gateway';
+          await expect(page.getByText(expectText).first()).toBeVisible();
+        });
+
+        it('Should have Create Private Gateway button', async ({ page }) => {
+          const role = 'button';
+          const name = 'Create private gateway';
+          await expect(page.getByRole(role, { name })).toBeDisabled();
+        });
+
+        describe('On Private Gateway user input', async () => {
+          beforeEach(async ({ page }) => {
+            await page.route('**/graphql', async (route) => {
+              const request = route.request();
+              const postData = request.postDataJSON();
+
+              if (
+                postData.operationName === 'privateGatewayNameAvailability') {
+                await route.fulfill({
+                  status: 200,
+                  contentType: 'application/json',
+                  body: JSON.stringify({
+                    data: {
+                      privateGatewayNameAvailability: true,
+                    }
+                  })
+                });
+              } else {
+                await route.continue();
+              }
+            });
+
+            await page.getByRole('textbox').fill('some user input');
+          });
+
+          it('should Create Private Gateway button be enabled', async ({ page}) => {
+            const input = page.getByRole('textbox', { name: 'User Input Gateway' });
+            await input.fill('user input gateway');
+            await expect(page.getByRole('button', { name: 'Create private gateway' })).toBeEnabled();
+          });
+        });
+      });
     });
   });
 });
