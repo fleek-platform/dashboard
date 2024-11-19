@@ -1,7 +1,7 @@
 import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
-const { describe, beforeEach, afterEach } = it;
+const { describe, beforeEach, afterEach, beforeAll } = it;
 
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
@@ -75,7 +75,6 @@ describe('On Project settings page', () => {
         update: false,
       });
 
-
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
     });
 
@@ -102,6 +101,12 @@ describe('On Project settings page', () => {
         const menuitem = page.getByRole(role).filter({ hasText: name });
         menuitem.click();
         const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/`
+        await page.waitForURL(url);
+      });
+
+      afterEach(async ({ page}) => {
+        const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`
+        await page.goto(url);
         await page.waitForURL(url);
       });
 
@@ -137,6 +142,14 @@ describe('On Project settings page', () => {
           const menuitem = page.getByRole('navigation').getByRole('menuitem').filter({ hasText: name });
           menuitem.click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`
+          await page.waitForURL(url, {
+            waitUntil: "domcontentloaded",
+          });
+        });
+
+        afterEach(async ({ page}) => {
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`
+          await page.goto(url);
           await page.waitForURL(url);
         });
 
@@ -152,42 +165,38 @@ describe('On Project settings page', () => {
 
         it('Should have Save changes button', async ({ page }) => {
           const role = 'button';
-          const name = 'Save changes';
+          const name = 'Save storage layer changes';
           await expect(page.getByRole(role, { name })).toBeVisible();
         });
       });
 
       describe('On Settings navigation to Private Gateways', () => {
         beforeEach(async ({ page }) => {
-          await page.route('**/graphql', async (route) => {
-            const request = route.request();
-            const postData = request.postDataJSON();
-
-            if (
-              postData.operationName === 'privateGatewayNameAvailability') {
-              await route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify({
-                  data: {
-                    privateGatewayNameAvailability: true,
-                  }
-                })
-              });
-            } else {
-              await route.continue();
-            }
+          await page.routeFromHAR(harFilePaths.page.projects.settings.private_gateways, {
+            url: /fleek.*.xyz\/graphql/,
+            // TODO: Unfortunately multiple doesn't seem to work
+            // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
+            update: false,
           });
 
-          const name = 'private gateways';
-          const menuitem = page.getByRole('navigation').getByRole('menuitem').filter({ hasText: name });
-          menuitem.click();
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/private-gateways/`
-          await page.waitForURL(url);
+          page.getByRole('navigation').getByRole('menuitem', { name: 'private gateways' }).click();
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/private-gateways/`;
+          await page.waitForURL(url, {
+            waitUntil: "domcontentloaded",
+          });
+          // Help ensure expected page by one of its elements
+          await page.getByText('Configure a private DNS endpoint to access your storage on Fleek.').waitFor();
         });
 
+        // TODO: Causes timeout
+        // afterEach(async ({ page}) => {
+        //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`
+        //   page.getByRole('navigation').getByRole('menuitem').filter({ hasText: 'general' }).click();
+        //   await page.waitForURL(url);
+        // });
+
         it('Should have Private Gateway text', async ({ page }) => {
-          const expectText = 'Private Gateway';
+          const expectText = 'Configure a private DNS endpoint to access your storage on Fleek.';
           await expect(page.getByText(expectText).first()).toBeVisible();
         });
 
@@ -227,6 +236,41 @@ describe('On Project settings page', () => {
             await input.fill('user input gateway');
             await expect(page.getByRole('button', { name: 'Create private gateway' })).toBeEnabled();
           });
+        });
+      });
+
+
+      describe('On Settings navigation to Storage', () => {
+        beforeEach(async ({ page }) => {
+          const name = 'storage';
+          const menuitem = page.getByRole('navigation').getByRole('menuitem').filter({ hasText: name });
+          menuitem.click();
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`
+          await page.waitForURL(url, {
+            waitUntil: "domcontentloaded",
+          });
+        });
+
+        afterEach(async ({ page}) => {
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`
+          await page.goto(url);
+          await page.waitForURL(url);
+        });
+
+        it('Should have Storage text', async ({ page }) => {
+          const expectText = 'Storage';
+          await expect(page.getByText(expectText).first()).toBeVisible();
+        });
+
+        it('Should have Default Storage text', async ({ page }) => {
+          const expectText = 'Default Storage';
+          await expect(page.getByText(expectText)).toBeVisible();
+        });
+
+        it('Should have Save changes button', async ({ page }) => {
+          const role = 'button';
+          const name = 'Save storage layer changes';
+          await expect(page.getByRole(role, { name })).toBeVisible();
         });
       });
     });
