@@ -63,15 +63,9 @@ describe('On Home page', () => {
 
       await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
 
-      const currentUrlA = page.url();
-      console.log(`[debug] Current URL after navigation request: ${currentUrlA}`);
-
       await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
         waitUntil: 'domcontentloaded',
       });
-
-      const currentUrlB = page.url();
-      console.log(`[debug] Current URL after navigation wait: ${currentUrlB}`);
     });
 
     afterEach(async ({ page }) => {
@@ -87,7 +81,6 @@ describe('On Home page', () => {
 
     it('Should redirect to the homepage url', async ({ page }) => {
       const currentUrl = page.url();
-      console.log(`[debug] currentUrl = ${currentUrl}`);
       expect(currentUrl).toBe(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`);
     });
 
