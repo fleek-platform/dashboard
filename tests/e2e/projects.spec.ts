@@ -130,6 +130,32 @@ describe('On Project settings page', () => {
         const name = 'Delete project';
         await expect(page.getByRole(role, { name })).toBeVisible();
       });
+
+      describe('On Settings navigation to Storage', () => {
+        beforeEach(async ({ page }) => {
+          const name = 'storage';
+          const menuitem = page.getByRole('navigation').getByRole('menuitem').filter({ hasText: name });
+          menuitem.click();
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`
+          await page.waitForURL(url);
+        });
+
+        it('Should have Storage text', async ({ page }) => {
+          const expectText = 'Storage';
+          await expect(page.getByText(expectText).first()).toBeVisible();
+        });
+
+        it('Should have Default Storage text', async ({ page }) => {
+          const expectText = 'Default Storage';
+          await expect(page.getByText(expectText)).toBeVisible();
+        });
+
+        it('Should have Save changes text', async ({ page }) => {
+          const role = 'button';
+          const name = 'Save changes';
+          await expect(page.getByRole(role, { name })).toBeVisible();
+        });
+      })
     });
   });
 });
