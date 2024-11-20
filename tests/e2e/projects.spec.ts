@@ -70,8 +70,6 @@ describe('On Project settings page', () => {
 
       await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
         url: /fleek.*.xyz\/graphql/,
-        // TODO: Unfortunately multiple doesn't seem to work
-        // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
         update: false,
       });
 
@@ -240,6 +238,7 @@ describe('On Project settings page', () => {
             .getByRole('menuitem', { name: 'application credentials' }).click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
+          // To help assert correct page
           await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
         });
 
@@ -291,6 +290,7 @@ describe('On Project settings page', () => {
             .getByRole('menuitem', { name: 'application credentials' }).click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
+          // To help assert correct page
           await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
         });
 
@@ -299,14 +299,11 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Manage Credentials text', async ({ page }) => {
-          const expectText = 'Manage Credentials';
-          await expect(page.getByText(expectText)).toBeVisible();
+          await expect(page.getByText('Manage Credentials')).toBeVisible();
         });
 
         it('Should have Save changes button', async ({ page }) => {
-          const role = 'button';
-          const name = 'Create application credential';
-          await expect(page.getByRole(role, { name })).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Create application credential' })).toBeVisible();
         });
 
         it('Should have credentials empty text', async ({ page }) => {
