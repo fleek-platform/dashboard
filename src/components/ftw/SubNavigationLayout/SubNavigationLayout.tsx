@@ -38,6 +38,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem }) => {
         },
       )}
       role="menuitem"
+      aria-label={navItem.label}
     >
       {navItem.label}
     </Link>
