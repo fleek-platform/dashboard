@@ -7,7 +7,12 @@ export const harFilePaths = {
   page: {
     projects: {
       home: `${harBasePath}/projects_home.har`,
-      settings: `${harBasePath}/projects_settings.har`,
+      settings: {
+        general: `${harBasePath}/projects_settings.har`,
+        private_gateways: `${harBasePath}/projects_settings_private_gateways.har`,
+        application_credentials: `${harBasePath}/projects_settings_application_credentials.har`,
+        all: `${harBasePath}/all_dashboard.har`,
+      },
     },
   },
 };
