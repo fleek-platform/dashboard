@@ -1,0 +1,16 @@
+#!/bin/bash
+
+hash() {
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    md5
+  else
+    md5sum
+  fi
+}
+
+if [[ -z "$1" ]]; then
+  echo "👹 Oops! Missing source argument. Call the script with an argument for directory path, e.g. hash_dir ./src"
+  exit 1
+fi
+
+find $1 -type f -exec hash {} \; | sort | hash
