@@ -12,7 +12,7 @@ jobs:
     # https://playwright.dev/docs/ci#workers
     # Note: That launching a `macos-latest-xlarge`
     # is more efficient but increases cost dramatically
-    runs-on: macos-latest-large
+    runs-on: macos-latest-xlarge
     continue-on-error: false
     env:
       # TODO: For testing CI/CD only, should be to settings
