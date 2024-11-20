@@ -46,6 +46,8 @@ export const AddApplicationCredentials: React.FC<LoadingProps> = ({
             <Button
               onClick={() => setIsModalOpen(true)}
               disabled={!hasAppCredentialsCreatePermission}
+              role="button"
+              aria-label="Create application credential"
             >
               Create application credential
             </Button>
