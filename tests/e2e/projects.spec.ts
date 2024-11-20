@@ -101,11 +101,11 @@ describe('On Project settings page', () => {
         await page.waitForURL(url);
       });
 
-      afterEach(async ({ page }) => {
-        page.getByRole('menuitem', { name: 'dashboard' }).click();
-        const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`;
-        await page.waitForURL(url);
-      });
+      // afterEach(async ({ page }) => {
+      //   page.getByRole('menuitem', { name: 'dashboard' }).click();
+      //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`;
+      //   await page.waitForURL(url);
+      // });
 
       it('Should have navigation bar', async ({ page }) => {
         const role = 'navigation';
