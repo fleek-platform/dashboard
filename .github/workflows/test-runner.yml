@@ -12,7 +12,8 @@ jobs:
     # https://playwright.dev/docs/ci#workers
     # Note: That launching a `macos-latest-xlarge`
     # is more efficient but increases cost dramatically
-    runs-on: ubuntu-latest
+    runs-on: macos-latest-large
+    continue-on-error: false
     env:
       # TODO: For testing CI/CD only, should be to settings
       NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://graphql.service.staging.fleeksandbox.xyz/graphql"
@@ -38,6 +39,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Help reduce number of executions for cost saving
+      # due to need of large runners, e.g. `macos-latest-large`
+      - name: Local test run checkup
+        run: |
+          if ! .scripts/has_local_test_run; then
+            echo "👹 Oops! Seems that local tests haven't been run. Please run tests locally and commit any changes before pushing."
+            exit 1
+          fi
+
+          echo "✅ Local tests were run!"
 
       - name: Install Node.js
         uses: actions/setup-node@v4
