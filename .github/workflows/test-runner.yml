@@ -51,6 +51,22 @@ jobs:
 
           echo "✅ Local tests were run!"
 
+      - uses: actions/cache@v4
+        id: cache_test_run_hash_state
+        with:
+          path: |
+            .tests/hash
+          key: ${{ runner.os }}-test-runner-${{ hashFiles('.tests/hash') }}
+
+      - name: Check if test run required
+        run: |
+          if [[ "${{ steps.cache_test_run_hash_state.outputs.cache-hit }}" = "true" ]]; then
+            echo "⚠️ Tests already ran successfully!"
+            exit 0
+          else
+            echo "🤖 Should proceed and run tests..."
+          fi
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
