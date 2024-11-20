@@ -1,0 +1,18 @@
+#!/bin/bash
+
+info_path=".tests/hash"
+test_target_dir="./src"
+expected=$(cat "$info_path")
+hash=$(.scripts/hash_dir "$test_target_dir")
+current="[TEST_RUN] $hash"
+
+echo "🔍 Check for local test run..."
+
+if [[ "$current" != "$expected" ]]; then
+	echo "⚠️Expected $expected, but got $current"
+	exit 1
+fi
+
+echo "✅ Test runs match expected $hash"
+
+exit 0
