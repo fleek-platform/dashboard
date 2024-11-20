@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Shared variables
+export info_path=".tests/hash"
+export csv_paths="src,tests"
