@@ -3,10 +3,19 @@
 # Should wait for development server readyness
 .scripts/await_dev_server "$NEXT_DEV_SERVER_PORT"
 
-echo "🤖 Should start the e2e tests..."
-pnpm run test:e2e
+onFailure() {
+  echo "👹 Oops! Test runner failed!"
+  exit 1
+}
 
-info_path=".tests/info"
+trap cleanup SIGINT
+
+echo "🤖 Should start the e2e tests..."
+if ! pnpm run test:e2e; then
+  onFailure
+fi
+
+info_path=".tests/hash"
 test_target_dir="./src"
 hash=$(.scripts/hash_dir "$test_target_dir")
 
