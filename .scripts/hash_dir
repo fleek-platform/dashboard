@@ -5,9 +5,8 @@ if [[ -z "$1" ]]; then
   exit 1
 fi
 
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  find $1 -type f -exec md5 {} \; | sort | md5
-else
-  find $1 -type f -exec md5sum {} \; | sort | md5sum
-fi
+# This command finds all files in the directory,
+# sorts them alphabetically, hashes their contents 
+# to generate individual file hashes, then creates 
+# a shorter overall hash of those individual hashes
+find "$1" -type f | sort | xargs shasum | shasum | cut -d ' ' -f1
