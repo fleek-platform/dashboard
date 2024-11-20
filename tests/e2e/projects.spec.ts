@@ -80,16 +80,16 @@ describe('On Project settings page', () => {
       );
     });
 
-    // afterEach(async ({ page }) => {
-    //   await page.evaluate(() => {
-    //     localStorage.clear();
-    //     sessionStorage.clear();
-    //     document.cookie.split(';').forEach((cookie) => {
-    //       document.cookie =
-    //         cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-    //     });
-    //   });
-    // });
+    afterEach(async ({ page }) => {
+      await page.evaluate(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+        document.cookie.split(';').forEach((cookie) => {
+          document.cookie =
+            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+        });
+      });
+    });
 
     it('Should redirect to projects page', async ({ page }) => {
       const expectTitle = 'First Project - Fleek';
@@ -103,11 +103,11 @@ describe('On Project settings page', () => {
         await page.waitForURL(url);
       });
 
-      // afterEach(async ({ page }) => {
-      //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
-      //   await page.goto(url);
-      //   await page.waitForURL(url);
-      // });
+      afterEach(async ({ page }) => {
+        page.getByRole('menuitem', { name: 'dashboard' }).click();
+        const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`;
+        await page.waitForURL(url);
+      });
 
       it('Should have navigation bar', async ({ page }) => {
         const role = 'navigation';
@@ -152,12 +152,6 @@ describe('On Project settings page', () => {
           });
         });
 
-        // afterEach(async ({ page }) => {
-        //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
-        //   await page.goto(url);
-        //   await page.waitForURL(url);
-        // });
-
         it('Should have Storage text', async ({ page }) => {
           const expectText = 'Storage';
           await expect(page.getByText(expectText).first()).toBeVisible();
@@ -190,13 +184,6 @@ describe('On Project settings page', () => {
             )
             .waitFor();
         });
-
-        // TODO: Causes timeout
-        // afterEach(async ({ page}) => {
-        //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`
-        //   page.getByRole('navigation').getByRole('menuitem').filter({ hasText: 'general' }).click();
-        //   await page.waitForURL(url);
-        // });
 
         it('Should have Private Gateway text', async ({ page }) => {
           const expectText =
