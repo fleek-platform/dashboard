@@ -7,8 +7,8 @@ fi
 
 args=($(echo "$1" | sed 's/,/ /g' | xargs))
 
-# This command finds all files in the directory,
+# This command finds all files (ts|tsx) in the directory,
 # sorts them alphabetically, hashes their contents 
 # to generate individual file hashes, then creates 
 # a shorter overall hash of those individual hashes
-find "${args[@]}" -type f | sort | xargs shasum | shasum | cut -d ' ' -f1
+find "${args[@]}" -type f \( -name "*.ts" -o -name "*.tsx" \) | sort | xargs sha1sum | sha1sum | cut -d ' ' -f1

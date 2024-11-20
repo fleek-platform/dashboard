@@ -7,12 +7,12 @@ format() {
 # Required vars (shared)
 source .scripts/test_runner_vars
 
-tests_path="./tests"
 expected=$(cat "$info_path")
 hash=$(.scripts/hash_dir "$csv_paths")
+hashTrimmed="${hash:0:6}"
 current="[TEST_RUN] $hash"
 
-echo "🔍 Check for local test run..."
+echo "🔍 Check for local test run with $hashTrimmed..."
 
 if [[ "$current" != "$expected" ]]; then
 	echo "⚠️Expected $(format "$expected"), but got $(format "$current")"

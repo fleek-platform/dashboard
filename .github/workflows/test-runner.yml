@@ -13,9 +13,14 @@ jobs:
       # use dashboard settings instead
       NEXT_DEV_SERVER_PORT: 3001
     timeout-minutes: 5
+    outputs:
+      should_run_tests: ${{ steps.check_if_test_run_required.outputs.should_run_tests }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
 
       # Help reduce number of executions for cost saving
       # due to need of large runners, e.g. `macos-latest-large`
@@ -36,18 +41,21 @@ jobs:
           key: ${{ runner.os }}-test-runner-${{ hashFiles('.tests/hash') }}
 
       - name: Check if test run required
+        id: check_if_test_run_required
         run: |
-          if [[ "${{ steps.cache_test_run_hash_state.outputs.cache-hit }}" = "true" ]]; then
+          cache_hit="${{ steps.cache_test_run_hash_state.outputs.cache-hit }}"
+
+          if [[ "$cache_hit" = "true" ]]; then
             echo "⚠️ Tests already ran successfully!"
-            echo "run_tests=false" >> "$GITHUB_OUTPUT"
+            echo "should_run_tests=false" >> "$GITHUB_OUTPUT"
           else
-            echo "run_tests=true" >> "$GITHUB_OUTPUT"
+            echo "should_run_tests=true" >> "$GITHUB_OUTPUT"
             echo "🤖 Should proceed and run tests..."
           fi
 
   run_tests:
     needs: checkups
-    if: ${{ needs.checkups.outputs.run_tests == true }}
+    if: ${{ needs.checkups.outputs.should_run_tests == 'true' }}
     runs-on: macos-latest-xlarge
     continue-on-error: false
     timeout-minutes: 15
@@ -76,6 +84,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
 
       - name: Install Node.js
         uses: actions/setup-node@v4
