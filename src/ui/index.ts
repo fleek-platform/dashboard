@@ -27,5 +27,3 @@ export * from './ftw/Text/Text';
 export * from './ftw/Switch/Switch';
 export * from './ftw/SidebarDropdown/SidebarDropdown';
 export * from './ftw/SidebarSidepanel/SidebarSidepanel';
-
-// EOF
