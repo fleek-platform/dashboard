@@ -39,15 +39,15 @@ jobs:
         run: |
           if [[ "${{ steps.cache_test_run_hash_state.outputs.cache-hit }}" = "true" ]]; then
             echo "⚠️ Tests already ran successfully!"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "run_tests=false" >> "$GITHUB_OUTPUT"
           else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "run_tests=true" >> "$GITHUB_OUTPUT"
             echo "🤖 Should proceed and run tests..."
           fi
 
   run_tests:
     needs: checkups
-    if: ${{ needs.checkups.outputs.skip != true }}
+    if: ${{ needs.checkups.outputs.run_tests == true }}
     runs-on: macos-latest-xlarge
     continue-on-error: false
     timeout-minutes: 15
