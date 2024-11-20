@@ -1,7 +1,7 @@
 import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
-const { describe, beforeEach, afterEach, beforeAll } = it;
+const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
 
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
@@ -68,7 +68,7 @@ describe('On Project settings page', () => {
         },
       );
 
-      await page.routeFromHAR(harFilePaths.page.projects.home, {
+      await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
         url: /fleek.*.xyz\/graphql/,
         // TODO: Unfortunately multiple doesn't seem to work
         // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
@@ -80,16 +80,16 @@ describe('On Project settings page', () => {
       );
     });
 
-    afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
-    });
+    // afterEach(async ({ page }) => {
+    //   await page.evaluate(() => {
+    //     localStorage.clear();
+    //     sessionStorage.clear();
+    //     document.cookie.split(';').forEach((cookie) => {
+    //       document.cookie =
+    //         cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+    //     });
+    //   });
+    // });
 
     it('Should redirect to projects page', async ({ page }) => {
       const expectTitle = 'First Project - Fleek';
@@ -98,19 +98,16 @@ describe('On Project settings page', () => {
 
     describe('On settings panel', async () => {
       beforeEach(async ({ page }) => {
-        const role = 'menuitem';
-        const name = 'settings';
-        const menuitem = page.getByRole(role).filter({ hasText: name });
-        menuitem.click();
+        page.getByRole('menuitem', { name: 'settings' }).click();
         const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/`;
         await page.waitForURL(url);
       });
 
-      afterEach(async ({ page }) => {
-        const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
-        await page.goto(url);
-        await page.waitForURL(url);
-      });
+      // afterEach(async ({ page }) => {
+      //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
+      //   await page.goto(url);
+      //   await page.waitForURL(url);
+      // });
 
       it('Should have navigation bar', async ({ page }) => {
         const role = 'navigation';
@@ -141,30 +138,25 @@ describe('On Project settings page', () => {
       });
 
       it('Should have Delete Project text', async ({ page }) => {
-        const role = 'button';
-        const name = 'Delete project';
-        await expect(page.getByRole(role, { name })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Delete project' })).toBeVisible();
       });
 
       describe('On Settings navigation to Storage', () => {
         beforeEach(async ({ page }) => {
-          const name = 'storage';
-          const menuitem = page
+          page
             .getByRole('navigation')
-            .getByRole('menuitem')
-            .filter({ hasText: name });
-          menuitem.click();
+            .getByRole('menuitem', { name: 'storage' }).click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`;
           await page.waitForURL(url, {
             waitUntil: 'domcontentloaded',
           });
         });
 
-        afterEach(async ({ page }) => {
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
-          await page.goto(url);
-          await page.waitForURL(url);
-        });
+        // afterEach(async ({ page }) => {
+        //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
+        //   await page.goto(url);
+        //   await page.waitForURL(url);
+        // });
 
         it('Should have Storage text', async ({ page }) => {
           const expectText = 'Storage';
@@ -177,24 +169,12 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Save changes button', async ({ page }) => {
-          const role = 'button';
-          const name = 'Save storage layer changes';
-          await expect(page.getByRole(role, { name })).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Save storage layer changes' })).toBeVisible();
         });
       });
 
       describe('On Settings navigation to Private Gateways', () => {
         beforeEach(async ({ page }) => {
-          await page.routeFromHAR(
-            harFilePaths.page.projects.settings.private_gateways,
-            {
-              url: /fleek.*.xyz\/graphql/,
-              // TODO: Unfortunately multiple doesn't seem to work
-              // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
-              update: false,
-            },
-          );
-
           page
             .getByRole('navigation')
             .getByRole('menuitem', { name: 'private gateways' })
@@ -225,9 +205,7 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Create Private Gateway button', async ({ page }) => {
-          const role = 'button';
-          const name = 'Create private gateway';
-          await expect(page.getByRole(role, { name })).toBeDisabled();
+          await expect(page.getByRole('button', { name: 'Create private gateway' })).toBeDisabled();
         });
 
         describe('On Private Gateway user input', async () => {
@@ -268,70 +246,66 @@ describe('On Project settings page', () => {
         });
       });
 
-      describe('On Settings navigation to Application Credentials', () => {
+      describe('On Settings navigation to Application Credentials (with credentials data)', () => {
         beforeEach(async ({ page }) => {
-          // await page.route('**/graphql', async (route) => {
-          //   const request = route.request();
-          //   const postData = request.postDataJSON();
-
-          //   if (postData.operationName === 'applications') {
-          //     await route.fulfill({
-          //       status: 200,
-          //       contentType: 'application/json',
-          //       body: JSON.stringify({
-          //         data: {
-          //           applications: {
-          //             __typename: 'ApplicationsWithAggregation',
-          //             data: [
-          //               {
-          //                 __typename: 'Application',
-          //                 clientId: 'client_merCEQdEt9LpM1qvGEJM',
-          //                 createdAt: '2024-02-19T13:42:22.695Z',
-          //                 id: 'clsszkeef0001jn082sf0dvul',
-          //                 name: 'My application',
-          //                 updatedAt: '2024-10-28T10:36:14.428Z',
-          //                 whitelistDomains: [
-          //                   {
-          //                     __typename: 'ApplicationWhitelistDomain',
-          //                     hostname: 'test.co.uk',
-          //                   },
-          //                 ],
-          //                 whiteLabelDomains: [
-          //                   {
-          //                     __typename: 'ApplicationWhiteLabelDomain',
-          //                     hostname: 'test.co.uk',
-          //                   },
-          //                 ],
-          //               },
-          //             ],
-          //           },
-          //         },
-          //       }),
-          //     });
-          //   } else {
-          //     await route.continue();
-          //   }
-          // });
-
-          const name = 'application credentials';
-          const menuitem = page
+          page
             .getByRole('navigation')
-            .getByRole('menuitem')
-            .filter({ hasText: name });
-          menuitem.click();
+            .getByRole('menuitem', { name: 'application credentials' }).click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
           await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
         });
 
-        // TODO: Causes timeout
-        // afterEach(async ({ page}) => {
-        //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/`;
-        //   await page.getByRole('navigation', {
-        //     name: 'general',
-        //   }).click();
-        //   await page.waitForURL(url);
-        // });
+        it('Should have Application Credentials table items', async ({ page }) => {
+          const table = page.getByRole('table', { name: 'application credential list' });
+          const rowCount = await table.getByRole('row').count();
+          expect(rowCount > 1).toBeTruthy();
+        });
+
+        it('Should have Manage Credentials text', async ({ page }) => {
+          const expectText = 'Manage Credentials';
+          await expect(page.getByText(expectText)).toBeVisible();
+        });
+      });
+
+      describe('On Settings navigation to Application Credentials (no-credentials data)', () => {
+        let shouldOverrideApplications = false;
+
+        beforeAll(() => {
+          shouldOverrideApplications = true;
+        });
+
+        afterAll(() => {
+          shouldOverrideApplications = false;
+        });
+
+        beforeEach(async ({ page }) => {
+          await page.route('**/graphql', async (route) => {
+            if (!shouldOverrideApplications) route.continue();
+            
+            const request = route.request();
+            const postData = request.postDataJSON();
+
+            if (postData.operationName === 'applications') {
+              await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                  data: null,
+                }),
+              });
+            } else {
+              await route.continue();
+            }
+          });
+         
+          page
+            .getByRole('navigation')
+            .getByRole('menuitem', { name: 'application credentials' }).click();
+          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
+          await page.waitForURL(url);
+          await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
+        });
 
         it('Should have Application Credentials text', async ({ page }) => {
           await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
@@ -346,6 +320,11 @@ describe('On Project settings page', () => {
           const role = 'button';
           const name = 'Create application credential';
           await expect(page.getByRole(role, { name })).toBeVisible();
+        });
+
+        it('Should have credentials empty text', async ({ page }) => {
+          const expectText = 'Once you add credentials, they will appear here.';
+          await expect(page.getByText(expectText)).toBeVisible();
         });
       });
     });
