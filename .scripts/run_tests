@@ -5,3 +5,17 @@
 
 echo "🤖 Should start the e2e tests..."
 pnpm run test:e2e
+
+info_path=".tests/info"
+test_target_dir="./src"
+hash=$(.scripts/hash_dir "$test_target_dir")
+
+if [[ -z "$hash" ]]; then
+  echo "👹 Oops! Failed to hash source directory for test runner"
+  exit 1
+fi
+
+echo "[TEST_RUN] $hash" > "$info_path"
+
+echo
+echo "✅ Test runner completed!"
