@@ -6,16 +6,11 @@ on:
 
 jobs:
   checkups:
-    # On CI/CD runners, low specs cause inconsistent runs
-    # To mitigate any inconsistency playwright's team
-    # recommends running in a single worker
-    # https://playwright.dev/docs/ci#workers
-    # Note: That launching a `macos-latest-xlarge`
-    # is more efficient but increases cost dramatically
     runs-on: ubuntu-latest
     continue-on-error: false
     env:
-      # TODO: For testing CI/CD only, should be to settings
+      # TODO: For testing CI/CD only
+      # use dashboard settings instead
       NEXT_DEV_SERVER_PORT: 3001
     timeout-minutes: 5
     steps:
@@ -58,7 +53,8 @@ jobs:
     continue-on-error: false
     timeout-minutes: 15
     env:
-      # TODO: For testing CI/CD only, should be to settings
+      # TODO: For testing CI/CD only
+      # use dashboard settings instead
       NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://graphql.service.staging.fleeksandbox.xyz/graphql"
       NEXT_PUBLIC_UI_FLEEK_REST_API_URL: "https://api.staging.fleeksandbox.xyz"
       NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID: "c4d4ccad-9460-419c-9ca3-494488f8c892"
