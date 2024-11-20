@@ -5,14 +5,14 @@ on:
   push:
 
 jobs:
-  build:
+  checkups:
     # On CI/CD runners, low specs cause inconsistent runs
     # To mitigate any inconsistency playwright's team
     # recommends running in a single worker
     # https://playwright.dev/docs/ci#workers
     # Note: That launching a `macos-latest-xlarge`
     # is more efficient but increases cost dramatically
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
     continue-on-error: false
     env:
       # TODO: For testing CI/CD only, should be to settings
@@ -35,7 +35,7 @@ jobs:
       NEXT_DEV_SERVER_PORT: 3001
       NEXT_PUBLIC_TEST_MODE: 1
       NODE_ENV: 'development'
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -62,18 +62,25 @@ jobs:
         run: |
           if [[ "${{ steps.cache_test_run_hash_state.outputs.cache-hit }}" = "true" ]]; then
             echo "⚠️ Tests already ran successfully!"
-            exit 0
-          else
-            echo "🤖 Should proceed and run tests..."
           fi
 
+          echo "🤖 Should proceed and run tests..."
+          echo "skip=$({{ steps.cache_test_run_hash_state.outputs.cache-hit }})" >> "$GITHUB_OUTPUT"
+
+  run_tests:
+    needs: checkups
+    if: ${{ needs.checkups.outputs.skip != 'true' }}
+    runs-on: macos-latest-xlarge
+    continue-on-error: false
+    timeout-minutes: 15
+    steps:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        
+      
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
