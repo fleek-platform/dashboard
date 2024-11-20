@@ -224,7 +224,6 @@ describe('On Home page', () => {
 
     // TODO: Write test for Version
     // and fix the mock data response
-    // see role in
-    // src/components/Version/VersionTags.tsx
+    // check role in src/components/Version/VersionTags.tsx
   });
 });

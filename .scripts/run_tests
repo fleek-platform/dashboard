@@ -15,9 +15,10 @@ if ! pnpm run test:e2e; then
   onFailure
 fi
 
-info_path=".tests/hash"
-test_target_dir="./src"
-hash=$(.scripts/hash_dir "$test_target_dir")
+# Required vars (shared)
+source .scripts/test_runner_vars
+
+hash=$(.scripts/hash_dir "$csv_paths")
 
 if [[ -z "$hash" ]]; then
   echo "👹 Oops! Failed to hash source directory for test runner"

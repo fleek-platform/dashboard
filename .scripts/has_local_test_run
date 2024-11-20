@@ -1,15 +1,21 @@
 #!/bin/bash
 
-info_path=".tests/hash"
-test_target_dir="./src"
+format() {
+  echo "$1" | cut -d ' ' -f2
+}
+
+# Required vars (shared)
+source .scripts/test_runner_vars
+
+tests_path="./tests"
 expected=$(cat "$info_path")
-hash=$(.scripts/hash_dir "$test_target_dir")
+hash=$(.scripts/hash_dir "$csv_paths")
 current="[TEST_RUN] $hash"
 
 echo "🔍 Check for local test run..."
 
 if [[ "$current" != "$expected" ]]; then
-	echo "⚠️Expected $expected, but got $current"
+	echo "⚠️Expected $(format "$expected"), but got $(format "$current")"
 	exit 1
 fi
 
