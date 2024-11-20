@@ -61,11 +61,16 @@ describe('On Home page', () => {
         },
       ]);
 
-      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`);
+      await page.goto(
+        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`,
+      );
 
-      await page.waitForURL(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`, {
-        waitUntil: 'domcontentloaded',
-      });
+      await page.waitForURL(
+        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`,
+        {
+          waitUntil: 'domcontentloaded',
+        },
+      );
     });
 
     afterEach(async ({ page }) => {
@@ -81,7 +86,9 @@ describe('On Home page', () => {
 
     it('Should redirect to the homepage url', async ({ page }) => {
       const currentUrl = page.url();
-      expect(currentUrl).toBe(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`);
+      expect(currentUrl).toBe(
+        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`,
+      );
     });
 
     it('Should redirect to the homepage with title', async ({ page }) => {
