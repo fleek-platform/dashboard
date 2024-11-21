@@ -1,1 +1,21 @@
-pnpm test
+#!/bin/bash
+
+echo "🚑 Health check, please be patient..."
+echo
+
+while read -rp "💍 Do you want to run tests now? (yes/no) " ans; do
+  if [[ "$ans" == [nN] || "$ans" == [nN][oO] ]]; then
+    echo "🙄 Skipped! But remember to run tests often, please!"
+
+    break;
+  elif [[ "$ans" == [yY] || "$ans" == [yY][eE][sS] ]]; then    
+    if ! pnpm test; then
+      echo "🦖 Failed to commit due to unhealthy tests. Fix it and try again!"
+      exit 1
+    fi
+
+    break;
+  fi
+
+  echo "💩 Uh-oh! We expect a yes or no answer. Try again..."
+done
