@@ -38,6 +38,7 @@ jobs:
         with:
           name: test-run-hash
           path: test-run-hash          
+        continue-on-error: true
 
       - name: Check if test run required
         id: check_if_test_run_required
