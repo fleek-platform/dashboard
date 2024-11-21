@@ -11,4 +11,7 @@ args=($(echo "$1" | sed 's/,/ /g' | xargs))
 # sorts them alphabetically, hashes their contents 
 # to generate individual file hashes, then creates 
 # a shorter overall hash of those individual hashes
-find "${args[@]}" -type f \( -name "*.ts" -o -name "*.tsx" \) | sort | xargs sha1sum | sha1sum | cut -d ' ' -f1
+# Use `openssl sha1` as its preinstall on macos and ubuntu
+# Other hashers, e.g. md5 (macos) differs from md5sum (ubuntu)
+# or, sha1sum's not installed by default on gh macos runner
+find "${args[@]}" -type f \( -name "*.ts" -o -name "*.tsx" \) | sort | xargs openssl sha1 | openssl sha1 | cut -d ' ' -f2
