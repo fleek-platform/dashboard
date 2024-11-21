@@ -33,12 +33,24 @@ jobs:
 
           echo "✅ Local tests were run!"
 
+      - name: Check for test run hash
+        id: has_test_run_hash
+        shell: bash
+        run: |
+          name="test_run_hash"
+          has_test_run_hash=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${name} | jq -r '.exists')
+    
+          if [[ "$has_test_run_hash" = "true" ]]; then
+            echo "has_test_run_hash=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Download test run hash artifact
         uses: actions/download-artifact@v4
+        if: ${{ steps.has_test_run-hash.output.has_test_run_hash == 'true'}}
         with:
-          name: test-run-hash
-          path: test-run-hash          
-        continue-on-error: true
+          name: test_run_hash
+          path: test_run_hash          
 
       - name: Check if test run required
         id: check_if_test_run_required
@@ -46,7 +58,7 @@ jobs:
         run: |
           source .scripts/test_runner_vars
 
-          latest_test_run_hash=$(cat test-run-hash)
+          latest_test_run_hash=$(cat test_run_hash)
           expected_hash=$(.scripts/hash_dir "$csv_paths")
 
           if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
@@ -138,7 +150,7 @@ jobs:
             exit 1
           fi
 
-          if ! cp .tests/hash test-run-hash; then
+          if ! cp .tests/hash test_run_hash; then
             echo "👹 Oops! Failed to save test hash artifact"
             exit 1
           fi
@@ -146,5 +158,5 @@ jobs:
       - name: Upload test run hash artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-run-hash
-          path: test-run-hash
+          name: test_run_hash
+          path: test_run_hash
