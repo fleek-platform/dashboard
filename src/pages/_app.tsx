@@ -1,40 +1,36 @@
+// pages/_app.tsx
 import '@/styles/globals.css';
 
 import LogRocket from 'logrocket';
 import Head from 'next/head';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
+import { Auth } from '@/components/Auth';
 import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
-import { AppContext, AppProps } from '@/types/App';
+import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
-import { isServerSide } from '@/utils/isServerSide';
 
-const App = ({
-  Component,
-  pageProps,
-  requestCookies,
-  maintenanceMode,
-  environment,
-  noCanonical,
-}: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
+  const [noCanonical, setNoCanonical] = useState(false);
+  const [maintenanceMode, setMaintenanceMode] = useState(false);
 
-  useMemo(() => {
-    // Initialize client side
-
+  useEffect(() => {
     if (secrets.TEST_MODE) {
-      // Override secrets with environment variables on test mode
+      const environment = getMutableSecrets();
       Object.assign(secrets, environment);
-
-      return;
+    } else {
+      LogRocket.init(secrets.NEXT_PUBLIC_UI__LOG_ROCKET_ID);
     }
 
-    LogRocket.init(secrets.NEXT_PUBLIC_UI__LOG_ROCKET_ID);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setMaintenanceMode(getMaintenanceMode());
+
+    const pathname = window.location.pathname;
+    setNoCanonical(['/templates', '/templates/[templateId]'].includes(pathname));
   }, []);
 
   if (maintenanceMode) {
@@ -48,33 +44,15 @@ const App = ({
           <link rel="canonical" href="https://app.fleek.xyz/" key="canonical" />
         </Head>
       )}
-      <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
-        <h1>{noCanonical}</h1>
-        {getLayout(<Component {...pageProps} />)}
-        <ToastsContainer />
-        <FeedbackModal />
+      <Providers forcedTheme={forcedTheme}>
+        <Auth>
+          {getLayout(<Component {...pageProps} />)}
+          <ToastsContainer />
+          <FeedbackModal />
+        </Auth>
       </Providers>
     </>
   );
-};
-
-App.getInitialProps = async ({ Component, ctx }: AppContext) => {
-  const pageProps = Component.getInitialProps
-    ? await Component.getInitialProps(ctx)
-    : {};
-  const environment = getMutableSecrets();
-  const maintenanceMode = getMaintenanceMode();
-  const noCanonical = ['/templates', '/templates/[templateId]'].includes(
-    ctx.pathname,
-  );
-
-  return {
-    pageProps,
-    requestCookies: isServerSide() && ctx.req?.cookies,
-    maintenanceMode,
-    environment,
-    noCanonical,
-  };
 };
 
 export default App;

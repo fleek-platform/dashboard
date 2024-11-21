@@ -1,3 +1,4 @@
+// TODO: DEPRECATE, delete middleware
 import { routes } from '@fleek-platform/utils-routes';
 import type { NextRequest as MiddlewareArgs } from 'next/server';
 import { NextResponse } from 'next/server';

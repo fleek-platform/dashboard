@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // eslint-disable-next-line no-process-env
-  output: process.env.STANDALONE_RELEASE === 'true' ? 'standalone' : undefined,
+  output: 'export',
 
   reactStrictMode: true,
   swcMinify: false,
