@@ -44,8 +44,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ghToken="$GITHUB_TOKEN"
-          orgRepo="${{ github.repository }}"
+          orgRepo="fleek-platform/dashboard"
           targetArtifactFilename="test_run_hash"
+
+          echo "[debug] ghToken = $ghToken, orgRepo = $orgRepo, targetArtifactFilename = $targetArtifactFilename"
 
           if ! .scripts/download_artifact "$ghToken" "$orgRepo" "$targetArtifactFilename"; then
             echo "👹 Oops! Failed to download artifact $targetArtifactFilename"
