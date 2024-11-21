@@ -51,8 +51,6 @@ jobs:
           orgRepo="fleek-platform/dashboard"
           targetArtifactFilename="test_run_hash"
 
-          echo "[debug] ghToken = $ghToken, orgRepo = $orgRepo, targetArtifactFilename = $targetArtifactFilename"
-
           if ! .scripts/download_artifact "$ghToken" "$orgRepo" "$targetArtifactFilename"; then
             echo "👹 Oops! Failed to download artifact $targetArtifactFilename"
             exit 1
@@ -71,13 +69,6 @@ jobs:
             echo "⚠️A test run hash wasn't found"
           fi
 
-      - name: Download test run hash artifact
-        uses: actions/download-artifact@v4
-        if: ${{ steps.has_test_run_hash.output.match == 'true'}}
-        with:
-          name: test_run_hash
-          path: test_run_hash          
-
       # It checks if a test has already run
       # for the current source state
       - name: Check if test run required
@@ -92,6 +83,8 @@ jobs:
 
             latest_test_run_hash=$(cat test_run_hash)
             expected_hash=$(.scripts/hash_dir "$csv_paths")
+
+            echo "[debug] latest_test_run_hash = $latest_test_run_hash, expected_hash = $expected_hash"
 
             if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
               echo "⚠️ Tests already ran successfully!"
