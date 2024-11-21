@@ -20,7 +20,8 @@
     "test": ".scripts/run_tests",
     "test:e2e": "pnpm exec playwright test --reporter=list",
     "test:ui": "pnpm exec playwright test --ui",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "prepare": "husky"
   },
   "dependencies": {
     "@biomejs/biome": "^1.8.3",
@@ -125,6 +126,7 @@
     "concurrently": "^7.6.0",
     "dotenv": "^16.4.5",
     "graphql-tag": "^2.12.6",
+    "husky": "^9.1.7",
     "lodash": "^4.17.21",
     "postcss": "^8.4.38",
     "sass": "^1.56.1",
