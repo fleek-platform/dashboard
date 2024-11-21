@@ -43,6 +43,10 @@ jobs:
     
           if [[ "$has_test_run_hash" = "true" ]]; then
             echo "has_test_run_hash=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Found a test run hash"
+          else
+            echo "has_test_run_hash=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️A test run hash wasn't found"
           fi
 
       - name: Download test run hash artifact
@@ -56,17 +60,22 @@ jobs:
         id: check_if_test_run_required
         shell: bash
         run: |
-          source .scripts/test_runner_vars
-
-          latest_test_run_hash=$(cat test_run_hash)
-          expected_hash=$(.scripts/hash_dir "$csv_paths")
-
-          if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
-            echo "⚠️ Tests already ran successfully!"
-            echo "should_run_tests=false" >> "$GITHUB_OUTPUT"
-          else
+          if [[ ! -f test_run_hash ]]; then
             echo "should_run_tests=true" >> "$GITHUB_OUTPUT"
-            echo "🤖 Should proceed and run tests..."
+            echo "⚠️Test run hash not found, will proceed and run tests..."
+          else
+            source .scripts/test_runner_vars
+
+            latest_test_run_hash=$(cat test_run_hash)
+            expected_hash=$(.scripts/hash_dir "$csv_paths")
+
+            if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
+              echo "⚠️ Tests already ran successfully!"
+              echo "should_run_tests=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_run_tests=true" >> "$GITHUB_OUTPUT"
+              echo "🤖 Should proceed and run tests..."
+            fi            
           fi
 
   run_tests:
