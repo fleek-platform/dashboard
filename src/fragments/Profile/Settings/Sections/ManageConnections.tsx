@@ -10,8 +10,8 @@ import { BadgeText, Form, SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { useToast } from '@/hooks/useToast';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Box, type IconName } from '@/ui';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { Box, IconName } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { shortStringFormat } from '@/utils/stringFormat';
 

@@ -3,8 +3,8 @@ import { useClient } from 'urql';
 
 import {
   SiteDocument,
-  type SiteQuery,
-  type SiteQueryVariables,
+  SiteQuery,
+  SiteQueryVariables,
 } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';

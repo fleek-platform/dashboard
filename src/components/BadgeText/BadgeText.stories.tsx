@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Icon } from '@/ui';
 
 import { BadgeText } from './BadgeText';
-import type { BadgeTextStyles } from './BadgeText.styles';
+import { BadgeTextStyles } from './BadgeText.styles';
 
 const meta: Meta = {
   title: 'Library/Components/Badge Text',

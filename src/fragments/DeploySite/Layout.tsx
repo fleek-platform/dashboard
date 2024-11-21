@@ -1,7 +1,7 @@
 import { ProjectDropdown, RootLayout } from '@/components';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 export const Layout: React.FC<ChildrenProps> = ({ children }) => {
   const session = useSessionContext();

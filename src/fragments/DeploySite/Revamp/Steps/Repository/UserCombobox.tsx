@@ -1,9 +1,9 @@
 import {
-  type GitRepositoriesQuery,
+  GitRepositoriesQuery,
   useCountSitesWithSourceProviderQuery,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, Icon } from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 

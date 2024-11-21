@@ -1,6 +1,6 @@
 import { forwardStyledRef } from '@/theme';
-import type { DisabledProps } from '@/types/Props';
-import { Box, type IconName, Text } from '@/ui';
+import { DisabledProps } from '@/types/Props';
+import { Box, IconName, Text } from '@/ui';
 
 import { ActionBoxStyles as S } from './ActionBox.styles';
 

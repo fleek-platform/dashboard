@@ -1,5 +1,5 @@
 import { DomainStatus } from '@/generated/graphqlClient';
-import type { SiteDomain } from '@/types/Site';
+import { SiteDomain } from '@/types/Site';
 
 type IsActiveDomainArgs = {
   domain: Pick<SiteDomain, 'id' | 'isVerified' | 'status'>;

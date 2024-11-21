@@ -8,9 +8,9 @@ import { Profile } from '@/fragments';
 import { useCreateTemplateMutation } from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useToast } from '@/hooks/useToast';
-import type { Page } from '@/types/App';
-import type { Site } from '@/types/Site';
-import type { TemplateCategory } from '@/types/Template';
+import { Page } from '@/types/App';
+import { Site } from '@/types/Site';
+import { TemplateCategory } from '@/types/Template';
 
 const TemplatesSettingsPage: Page = () => {
   const flags = useFeatureFlags();
@@ -96,11 +96,15 @@ const ComingSoonPage: React.FC = () => {
   return (
     <ComingSoon.Modal
       imgSrc={`/assets/static/${resolvedTheme}/templates-coming-soon.png`}
-      modalContent=<ComingSoon.Modal.Description>
-        Soon we will introduce the create template flow, here you will be able
-        to upload templates to the public Fleek template gallery, where any
-        other Fleek user can pick and deploy them.
-      </ComingSoon.Modal.Description>
+      modalContent={
+        <>
+          <ComingSoon.Modal.Description>
+            Soon we will introduce the create template flow, here you will be
+            able to upload templates to the public Fleek template gallery, where
+            any other Fleek user can pick and deploy them.
+          </ComingSoon.Modal.Description>
+        </>
+      }
     >
       <ComingSoon.Skeleton.Container>
         <ComingSoon.Skeleton.Box>

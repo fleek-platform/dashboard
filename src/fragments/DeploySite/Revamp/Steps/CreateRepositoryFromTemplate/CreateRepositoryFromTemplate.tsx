@@ -14,7 +14,7 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import {
   Avatar,
   Box,
@@ -28,7 +28,7 @@ import {
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
 import {
-  type GitUser,
+  GitUser,
   useDeploySiteContext,
   useStepSetup,
 } from '../../DeploySite.context';

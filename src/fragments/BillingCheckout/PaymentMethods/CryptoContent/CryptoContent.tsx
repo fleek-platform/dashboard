@@ -4,7 +4,7 @@ import { match } from 'ts-pattern';
 import { useCryptoPaymentCheckout } from '@/hooks/useCryptoPaymentCheckout';
 import { useCryptoPaymentStatus } from '@/hooks/useCryptoPaymentStatus';
 import { useToast } from '@/hooks/useToast';
-import type { CryptoPayment } from '@/types/Billing';
+import { CryptoPayment } from '@/types/Billing';
 
 import { useBillingCheckoutContext } from '../../Context';
 import { PaymentComplete } from './PaymentComplete';

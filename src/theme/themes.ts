@@ -1,4 +1,4 @@
-import { type PropertyValue, createStitches } from '@stitches/react';
+import { createStitches, PropertyValue } from '@stitches/react';
 
 import { borderWidths } from './foundations/borderWidths';
 import { colors } from './foundations/colors';
@@ -88,7 +88,7 @@ export const styled = ((...args: any[]) => {
         base.defaultProps || {},
         arg.defaultVariants,
       );
-      arg.defaultVariants = undefined;
+      delete arg.defaultVariants;
     }
   }
 

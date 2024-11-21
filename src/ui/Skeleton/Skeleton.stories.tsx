@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Skeleton, type SkeletonProps } from './Skeleton';
+import { Skeleton, SkeletonProps } from './Skeleton';
 
 const meta: Meta = {
   title: 'Library/Atoms/Skeleton',

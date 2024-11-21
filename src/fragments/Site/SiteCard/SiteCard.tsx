@@ -2,16 +2,16 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
 import { SourceProvider } from '@/generated/graphqlClient';
-import type { Deployment } from '@/types/Deployment';
-import type { LoadingProps } from '@/types/Props';
-import type { Site } from '@/types/Site';
+import { Deployment } from '@/types/Deployment';
+import { LoadingProps } from '@/types/Props';
+import { Site } from '@/types/Site';
 import {
   Avatar,
   Box,
   Icon,
-  type IconName,
+  IconName,
   Image,
-  type ImageProps,
+  ImageProps,
   Skeleton,
   Text,
 } from '@/ui';

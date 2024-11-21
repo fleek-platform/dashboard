@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, IconLibrary } from '@/ui';
 
-import { IconTooltip, type IconTooltipProps } from './IconTooltip';
+import { IconTooltip, IconTooltipProps } from './IconTooltip';
 
 const meta: Meta = {
   title: 'Library/Components/Icon Tooltip',

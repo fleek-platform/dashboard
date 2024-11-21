@@ -1,22 +1,17 @@
-import {
-  type MouseEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { useClient } from 'urql';
 
 import {
   GitAccessTokenDocument,
-  type GitAccessTokenQuery,
-  type GitAccessTokenQueryVariables,
+  GitAccessTokenQuery,
+  GitAccessTokenQueryVariables,
   GithubAppInstallationsDocument,
-  type GithubAppInstallationsQuery,
-  type GithubAppInstallationsQueryVariables,
+  GithubAppInstallationsQuery,
+  GithubAppInstallationsQueryVariables,
 } from '@/generated/graphqlClient';
-import { GitHub, type GitProvider } from '@/integrations/git';
+import { GitHub, GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { SiteSourceProvider } from '@/types/Site';
+import { SiteSourceProvider } from '@/types/Site';
 import { Stepper } from '@/ui';
 import { createContext } from '@/utils/createContext';
 

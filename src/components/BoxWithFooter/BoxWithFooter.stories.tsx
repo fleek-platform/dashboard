@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { BoxWithFooter, type BoxWithFooterProps } from './BoxWithFooter';
+import { BoxWithFooter, BoxWithFooterProps } from './BoxWithFooter';
 
 const meta: Meta = {
   title: 'Library/Components/Box with Footer',

@@ -1,6 +1,6 @@
 /* eslint-disable fleek-custom/valid-argument-types */
 import { useToastContext } from '@/providers/ToastProvider';
-import type { Toast } from '@/types/Toast';
+import { Toast } from '@/types/Toast';
 import { Log } from '@/utils/log';
 
 export type PushToast = Omit<Toast, 'id' | 'type'>;

@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
-  type AuthProviders,
-  type AuthWith,
+  AuthProviders,
+  AuthWith,
   useAuthProviders,
 } from '@/hooks/useAuthProviders';
 import { usePostHog } from '@/hooks/usePostHog';
@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         // if in site page, redirect to sites list first
         if (router.query.siteId) {
           await router.replace(routes.project.site.list({ projectId }));
-          router.query.siteId = undefined;
+          delete router.query.siteId;
         }
 
         return requestAccessToken(provider, projectId);

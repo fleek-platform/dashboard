@@ -2,7 +2,7 @@ import { ExternalLink, FleekLogoDotted, LayoutHead } from '@/components';
 import { constants } from '@/constants';
 import { QueryClientProvider } from '@/providers/QueryClientProvider';
 import { ThemeProvider } from '@/providers/ThemeProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { App } from '../App/App';

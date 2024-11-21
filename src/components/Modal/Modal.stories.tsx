@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import { Button, Dialog, Divider, FormField, Text } from '@/ui';
 

@@ -1,4 +1,4 @@
-import type { EnsRecord as GraphEnsRecord } from '@/generated/graphqlClient';
+import { EnsRecord as GraphEnsRecord } from '@/generated/graphqlClient';
 
 export type EnsRecord = Pick<
   GraphEnsRecord,

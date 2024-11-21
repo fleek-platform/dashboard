@@ -1,17 +1,17 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import {
-  type BreadcrumbItem,
+  BreadcrumbItem,
   ProjectDropdown,
   RootLayout,
-  type SubNavigationItem,
+  SubNavigationItem,
   SubNavigationLayout,
 } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 export type ProfileSettingsLayoutProps = ChildrenProps;
 

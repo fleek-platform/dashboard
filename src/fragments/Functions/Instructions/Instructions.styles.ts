@@ -23,7 +23,7 @@ export const InstructionsStyles = {
     flexDirection: 'row',
     alignItems: 'center',
 
-    '> span': {
+    [`> span`]: {
       textSize: '$sm',
       textCategory: '$tertiary',
       color: '$text-secondary',

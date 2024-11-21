@@ -1,9 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import {
-  LearnMoreMessage,
-  type LearnMoreMessageProps,
-} from './LearnMoreMessage';
+import { LearnMoreMessage, LearnMoreMessageProps } from './LearnMoreMessage';
 
 const meta: Meta = {
   title: 'Library/Components/Learn More Message',

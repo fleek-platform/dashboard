@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-import type { HostnameLookupResponse } from '@/pages/api/hostname-lookup';
+import { HostnameLookupResponse } from '@/pages/api/hostname-lookup';
 import { Log } from '@/utils/log';
 
 type UseHostnameLookupArgs = {

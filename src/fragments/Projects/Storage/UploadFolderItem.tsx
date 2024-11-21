@@ -1,4 +1,4 @@
-import type { MutableRefObject } from 'react';
+import { MutableRefObject } from 'react';
 
 import { useUpload } from '@/hooks/useUpload';
 import { useUploadSizeLimit } from '@/hooks/useUploadSizeLimit';

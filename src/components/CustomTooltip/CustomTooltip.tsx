@@ -1,7 +1,7 @@
-import type { TooltipTriggerProps } from '@radix-ui/react-tooltip';
+import { TooltipTriggerProps } from '@radix-ui/react-tooltip';
 
 import { forwardStyledRef } from '@/theme';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Tooltip } from '@/ui';
 
 import { CustomTooltipStyles as S } from './CustomTooltip.styles';

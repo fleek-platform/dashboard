@@ -1,6 +1,6 @@
-import type { BadgeTextColor, PreviewImageProps } from '@/components';
-import type { Deployment, DeploymentStatus } from '@/types/Deployment';
-import type { IconName, IconProps } from '@/ui';
+import { BadgeTextColor, PreviewImageProps } from '@/components';
+import { Deployment, DeploymentStatus } from '@/types/Deployment';
+import { IconName, IconProps } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 

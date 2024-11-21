@@ -1,11 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { type SubNavigationItem, SubNavigationLayout } from '@/components';
+import { SubNavigationItem, SubNavigationLayout } from '@/components';
 import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 import { Layout as ProjectLayout } from '../Layout';
 

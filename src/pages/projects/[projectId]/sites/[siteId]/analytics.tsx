@@ -2,7 +2,7 @@ import { ComingSoon } from '@/components';
 import { constants } from '@/constants';
 import { Site } from '@/fragments';
 import { useTheme } from '@/providers/ThemeProvider';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const AnalyticsPage: Page = () => {
@@ -11,11 +11,15 @@ const AnalyticsPage: Page = () => {
   return (
     <ComingSoon.Modal
       imgSrc={`/assets/static/${resolvedTheme}/analytics-coming-soon.png`}
-      modalContent=<ComingSoon.Modal.Description>
-        Keep track of visitors coming to your page, the pages they view, and the
-        performance of your website. Analytics are privacy-friendly and
-        don&apos;t store personal information.
-      </ComingSoon.Modal.Description>
+      modalContent={
+        <>
+          <ComingSoon.Modal.Description>
+            Keep track of visitors coming to your page, the pages they view, and
+            the performance of your website. Analytics are privacy-friendly and
+            don&apos;t store personal information.
+          </ComingSoon.Modal.Description>
+        </>
+      }
     >
       <ComingSoon.Skeleton.Container>
         <ComingSoon.Skeleton.Row>

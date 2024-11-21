@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import type { GitUserAccessToken as AccessToken } from '@/generated/graphqlClient';
+import { GitUserAccessToken as AccessToken } from '@/generated/graphqlClient';
 
 type GitUserAccessToken = Pick<AccessToken, 'createdAt' | 'token'>;
 

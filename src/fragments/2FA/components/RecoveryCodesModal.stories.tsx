@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import {
-  RecoveryCodesModal,
   type RecoveryCodesModalProps,
+  RecoveryCodesModal,
 } from './RecoveryCodesModal';
 
 const meta: Meta = {

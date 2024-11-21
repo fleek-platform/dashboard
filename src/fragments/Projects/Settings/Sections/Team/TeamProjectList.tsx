@@ -4,14 +4,14 @@ import { BadgeText, PermissionsTooltip, SettingsListItem } from '@/components';
 import { SettingsBox } from '@/components/SettingsBox/SettingsBox';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { LoadingProps } from '@/types/Props';
-import type { PermissionGroup, ProjectMember } from '@/types/TeamProject';
+import { LoadingProps } from '@/types/Props';
+import { PermissionGroup, ProjectMember } from '@/types/TeamProject';
 import { Box, Icon, Skeleton } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import { RoleCombobox } from './AddTeamMember';
 import {
-  type TeamProjectContext,
+  TeamProjectContext,
   TeamProjectProvider,
   useTeamProjectContext,
 } from './TeamProject.context';

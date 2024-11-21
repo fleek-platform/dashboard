@@ -2,7 +2,7 @@ import { SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { DomainsListItem } from '@/fragments/Site/Settings/Sections/CustomDomains/DomainsListItem';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { PrivateGateway } from '@/types/PrivateGateway';
+import { PrivateGateway } from '@/types/PrivateGateway';
 import { Button, Icon, Menu } from '@/ui';
 import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 import { getPrivateGatewayHostname } from '@/utils/getPrivateGatewayHostname';

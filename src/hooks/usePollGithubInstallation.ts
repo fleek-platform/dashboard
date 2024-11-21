@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import { useClient } from 'urql';
 
 import {
-  type GitUserAccessToken,
-  type GithubAppInstallation,
   GithubAppInstallationsDocument,
-  type GithubAppInstallationsQuery,
-  type GithubAppInstallationsQueryVariables,
+  GithubAppInstallationsQuery,
+  GithubAppInstallationsQueryVariables,
+  GitUserAccessToken,
+  GithubAppInstallation,
 } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';
@@ -63,11 +63,8 @@ export const usePollGithubInstallation = ({
         return false;
       }
 
-      // TODO: Why the inferred type's not correct?
-      return data.some(
-        (gitHubAppInstallation: GithubAppInstallation) =>
-          gitHubAppInstallation.installationId,
-      );
+      // TODO: Why the inferred type's not correct? 
+      return data.some((gitHubAppInstallation: GithubAppInstallation ) => gitHubAppInstallation.installationId);
     },
     refetchInterval: 3_000,
     onFinishedCallback,

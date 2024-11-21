@@ -1,5 +1,5 @@
 import { functionName } from '@fleek-platform/utils-validation';
-import { type KeyboardEventHandler, useCallback, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useState } from 'react';
 import zod from 'zod';
 
 import { Form, Modal } from '@/components';

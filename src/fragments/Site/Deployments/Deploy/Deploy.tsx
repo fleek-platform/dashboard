@@ -3,15 +3,15 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
-import type { Deployment } from '@/types/Deployment';
-import type { ChildrenProps } from '@/types/Props';
+import { Deployment } from '@/types/Deployment';
+import { ChildrenProps } from '@/types/Props';
 import { Icon, Skeleton, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { shortStringFormat } from '@/utils/stringFormat';
 
 import { DeployStyles as S } from './Deploy.styles';
 import { DeployStatus } from './DeployStatus';
-import { DropdownMenu, type DropdownMenuProps } from './DropdownMenu';
+import { DropdownMenu, DropdownMenuProps } from './DropdownMenu';
 
 export type DeployProps = {
   deployment: Deployment;

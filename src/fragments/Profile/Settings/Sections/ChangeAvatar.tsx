@@ -1,6 +1,6 @@
-import { LogoUpload, type LogoUploadProps, SettingsBox } from '@/components';
+import { LogoUpload, LogoUploadProps, SettingsBox } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 
 export type ChangeAvatarProps = LoadingProps<
   Pick<LogoUploadProps, 'onSubmit' | 'initialImage'>

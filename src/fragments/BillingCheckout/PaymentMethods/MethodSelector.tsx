@@ -1,10 +1,7 @@
-import type { ChildrenProps } from '@/types/Props';
-import { Button, type IconName } from '@/ui';
+import { ChildrenProps } from '@/types/Props';
+import { Button, IconName } from '@/ui';
 
-import {
-  type BillingCheckoutContext,
-  useBillingCheckoutContext,
-} from '../Context';
+import { BillingCheckoutContext, useBillingCheckoutContext } from '../Context';
 import { PaymentMethodsStyles as S } from './PaymentMethods.styles';
 
 export const MethodSelector: React.FC = () => {

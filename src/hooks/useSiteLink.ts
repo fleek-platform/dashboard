@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { DomainStatus, useSiteQuery } from '@/generated/graphqlClient';
-import type { Site } from '@/types/Site';
+import { Site } from '@/types/Site';
 import { getActiveEnsList } from '@/utils/getActiveEnsList';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 import { getLinkForIPFSGateway } from '@/utils/getLinkForIPFSGateway';
@@ -29,7 +29,7 @@ export const useSiteLink = ({
     const getLink = () => {
       const primaryDomain = siteData?.primaryDomain;
 
-      if (primaryDomain?.isVerified && primaryDomain.hostname) {
+      if (primaryDomain && primaryDomain.isVerified && primaryDomain.hostname) {
         // we should not have Primary Domain that are not Active but just to double check
         return getLinkForDomain(primaryDomain.hostname);
       }

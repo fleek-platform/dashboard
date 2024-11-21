@@ -4,14 +4,11 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Site } from '@/fragments';
 import { useSiteBuildSettingsGuard } from '@/fragments/GitIntegration/useSiteBuildSettingsGuard';
-import {
-  type UpdateSiteDataInput,
-  useSiteQuery,
-} from '@/generated/graphqlClient';
+import { UpdateSiteDataInput, useSiteQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useUpdateSite } from '@/hooks/useUpdateSite';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { isSiteSelfManaged } from '@/utils/isSiteSelfManaged';
 import { withAccess } from '@/utils/withAccess';
 

@@ -1,6 +1,6 @@
 import { AlertBox, Billing, Form, LearnMoreMessage } from '@/components';
 import { useToast } from '@/hooks/useToast';
-import type { BillingPlan, CryptoPaymentOption } from '@/types/Billing';
+import { BillingPlan, CryptoPaymentOption } from '@/types/Billing';
 import { Divider, Icon } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 

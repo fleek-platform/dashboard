@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { AvatarMarble, type AvatarMarbleProps } from './AvatarMarble';
+import { AvatarMarble, AvatarMarbleProps } from './AvatarMarble';
 
 const meta: Meta<AvatarMarbleProps> = {
   title: 'Library/Molecules/Avatar Marble',

@@ -2,7 +2,7 @@ import { Form } from '@/components';
 import { BillingCheckout, NotFound } from '@/fragments';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import type { Page } from '@/types/App';
-import type { BillingPlan } from '@/types/Billing';
+import { BillingPlan } from '@/types/Billing';
 
 type BillingPageProps = Awaited<ReturnType<typeof getServerSideProps>>['props'];
 

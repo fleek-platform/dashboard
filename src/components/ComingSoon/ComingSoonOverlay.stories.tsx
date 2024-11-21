@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box, Button, Text } from '@/ui';
 

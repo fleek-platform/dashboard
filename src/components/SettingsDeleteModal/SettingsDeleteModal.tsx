@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
 
 import { AlertBox } from '../AlertBox/AlertBox';

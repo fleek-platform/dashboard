@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Template } from '@/fragments';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 
 const TemplatesPage: Page = () => {
   const [frameworkId, setFrameworkId] = useState<string | null>();

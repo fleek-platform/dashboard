@@ -5,8 +5,8 @@ import { constants } from '@/constants';
 import { useDomainQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import type { DnsConfig } from '@/types/Domain';
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
+import { DnsConfig } from '@/types/Domain';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Divider, FormField, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDomainOrSubdomain } from '@/utils/getDomainOrSubdomain';
@@ -73,7 +73,7 @@ export const VerifyDomainModal: React.FC = () => {
       </Text>
 
       <DNSConfigurations
-        dnsConfig={dnsLinkConfig?.[0]}
+        dnsConfig={dnsLinkConfig && dnsLinkConfig[0]}
         hostname={hostname}
         isLoading={isLoading as true}
       />

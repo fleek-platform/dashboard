@@ -7,8 +7,8 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import {
   ListFolderDocument,
-  type ListFolderQuery,
-  type ListFolderQueryVariables,
+  ListFolderQuery,
+  ListFolderQueryVariables,
   useCreateFolderMutation,
 } from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
@@ -16,7 +16,7 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { forwardStyledRef } from '@/theme';
-import { Button, Icon, type IconName, Menu } from '@/ui';
+import { Button, Icon, IconName, Menu } from '@/ui';
 
 import { CreateFolderModal } from './Modals/CreateFolderModal';
 import { UploadFilesItem } from './UploadFilesItem';

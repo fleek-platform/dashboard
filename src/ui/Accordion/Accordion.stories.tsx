@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '../Box/Box';
 import { Input } from '../ftw/Input/Input';

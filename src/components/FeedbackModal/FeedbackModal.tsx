@@ -1,13 +1,18 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { email } from '@fleek-platform/utils-validation';
-import type React from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import * as zod from 'zod';
 
 import { Form, Link } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { type TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
+import { TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { Box, Button, Dialog, Divider, Icon, Input, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
@@ -15,8 +20,8 @@ import { useFormField } from '../Form/FormProvider';
 import FileBadge from './FileBadge';
 import {
   FileUploadError,
-  SubmitSupportFormError,
   submitForm,
+  SubmitSupportFormError,
   uploadFile,
 } from './submitForm';
 
@@ -279,34 +284,36 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           Contact us
         </Text>
         {!user?.email && (
-          <Box className="flex flex-col items-start gap-2 mt-3">
-            <span className="text-xs">Email</span>
-            <Form.InputField
-              name="email"
-              placeholder="Enter your email"
-              disableValidMessage
-              className="focus:outline-none"
-              inputRootClassName="w-full border border-gray-300 rounded-lg text-sm"
-              formFieldRootClassName="w-full"
-            />
-            <Link
-              href={routes.profile.settings.loginConnections()}
-              onClick={feedbackModal.toggleModal}
-            >
-              <Box
-                className="flex flex-row gap-2 items-center hover:cursor-pointer hover:opacity-100 opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:opacity-100 "
-                as="button"
-                role="button"
-                tabIndex={0}
-                aria-label="Attach images, files or videos"
+          <>
+            <Box className="flex flex-col items-start gap-2 mt-3">
+              <span className="text-xs">Email</span>
+              <Form.InputField
+                name="email"
+                placeholder="Enter your email"
+                disableValidMessage
+                className="focus:outline-none"
+                inputRootClassName="w-full border border-gray-300 rounded-lg text-sm"
+                formFieldRootClassName="w-full"
+              />
+              <Link
+                href={routes.profile.settings.loginConnections()}
+                onClick={feedbackModal.toggleModal}
               >
-                <Icon name="plus" />
-                <Text>
-                  Add your email to your account to avoid entering it again.
-                </Text>
-              </Box>
-            </Link>
-          </Box>
+                <Box
+                  className="flex flex-row gap-2 items-center hover:cursor-pointer hover:opacity-100 opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:opacity-100 "
+                  as="button"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Attach images, files or videos"
+                >
+                  <Icon name="plus" />
+                  <Text>
+                    Add your email to your account to avoid entering it again.
+                  </Text>
+                </Box>
+              </Link>
+            </Box>
+          </>
         )}
       </Box>
       <Divider />

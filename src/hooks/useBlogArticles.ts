@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { constants } from '@/constants';
-import type { ArticleItemProps } from '@/fragments/Projects/Home/Sections/Articles';
+import { ArticleItemProps } from '@/fragments/Projects/Home/Sections/Articles';
 import { Log } from '@/utils/log';
 
 const MAX_CACHED_TIME = 24 * 60 * 60 * 1000;

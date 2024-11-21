@@ -1,6 +1,6 @@
 import {
   SiteBuildSettings,
-  type SiteBuildSettingsData,
+  SiteBuildSettingsData,
 } from '@fleek-platform/utils-sites';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
@@ -11,7 +11,7 @@ import {
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, FormField, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';

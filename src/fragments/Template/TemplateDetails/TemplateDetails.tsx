@@ -1,8 +1,8 @@
 import { ExternalLink } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
-import type { Template } from '@/types/Template';
-import { type IconName, Skeleton, Text } from '@/ui';
+import { LoadingProps } from '@/types/Props';
+import { Template } from '@/types/Template';
+import { IconName, Skeleton, Text } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 import { getLinkForTemplateReport } from '@/utils/getLinkForTemplateReport';
 import { firstLetterUpperCase } from '@/utils/stringFormat';

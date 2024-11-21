@@ -8,10 +8,6 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Site } from '@/fragments';
 import {
-  ZoneDocument,
-  type ZoneQuery,
-  type ZoneQueryVariables,
-  ZoneStatus,
   useCreateDomainMutation,
   useCreateEnsRecordMutation,
   useCreateIpnsRecordForSiteMutation,
@@ -23,11 +19,15 @@ import {
   useVerifyDnslinkMutation,
   useVerifyDomainMutation,
   useVerifyEnsRecordMutation,
+  ZoneDocument,
+  ZoneQuery,
+  ZoneQueryVariables,
+  ZoneStatus,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteEnsRecordsQuery } from '@/hooks/useSiteEnsRecordsQuery';
 import { useToast } from '@/hooks/useToast';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { checkPeriodicallyUntil } from '@/utils/checkPeriodicallyUntil';
 import { withAccess } from '@/utils/withAccess';
 

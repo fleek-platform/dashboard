@@ -8,7 +8,7 @@ import {
 } from '@/components';
 import { constants } from '@/constants';
 import { useEnsRecordQuery } from '@/generated/graphqlClient';
-import type { DisabledProps } from '@/types/Props';
+import { DisabledProps } from '@/types/Props';
 import { Button, Dialog, Text } from '@/ui';
 
 import { SettingsItemModal } from '../../Elements/SettingsItemModal';

@@ -1,6 +1,6 @@
 import { useSiteLink } from '@/hooks/useSiteLink';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { SiteListItem } from '@/types/Site';
+import { SiteListItem } from '@/types/Site';
 import { Pagination } from '@/ui';
 
 import { SiteCard } from '../SiteCard/SiteCard';

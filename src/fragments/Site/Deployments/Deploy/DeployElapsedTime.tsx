@@ -1,7 +1,7 @@
 import { match } from 'ts-pattern';
 
 import { useTimer } from '@/hooks/useTimer';
-import type { Deployment } from '@/types/Deployment';
+import { Deployment } from '@/types/Deployment';
 import { getDuration } from '@/utils/getDurationUntilNow';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 

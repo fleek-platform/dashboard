@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { StatusChip, type StatusChipProps } from './StatusChip';
+import { StatusChip, StatusChipProps } from './StatusChip';
 
 const meta: Meta = {
   title: 'Library/Components/Satus Chip',

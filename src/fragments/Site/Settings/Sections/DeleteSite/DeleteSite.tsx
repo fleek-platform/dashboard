@@ -17,10 +17,10 @@ import {
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import type { LoadingProps } from '@/types/Props';
-import { Button, type ButtonProps } from '@/ui';
+import { LoadingProps } from '@/types/Props';
+import { Button, ButtonProps } from '@/ui';
 
-import { DeleteSiteModal, type DeleteSiteModalProps } from './DeleteSiteModal';
+import { DeleteSiteModal, DeleteSiteModalProps } from './DeleteSiteModal';
 
 export type DeleteSiteProps = LoadingProps<
   Pick<DeleteSiteModalProps, 'siteName'>

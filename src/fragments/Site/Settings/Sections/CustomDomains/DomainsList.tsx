@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { SiteDomain } from '@/types/Site';
+import { SiteDomain } from '@/types/Site';
 import { isActiveDomain } from '@/utils/isActiveDomain';
 
 import { useSettingsItemContext } from '../../Elements/SettingsItem.context';

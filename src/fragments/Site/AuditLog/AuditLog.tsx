@@ -1,6 +1,6 @@
 import { ExternalLink } from '@/components';
-import type { LoadingProps } from '@/types/Props';
-import { Box, Button, Icon, type IconName, Skeleton, Text } from '@/ui';
+import { LoadingProps } from '@/types/Props';
+import { Box, Button, Icon, IconName, Skeleton, Text } from '@/ui';
 
 import { AuditLogStyles as S } from './AuditLog.styles';
 

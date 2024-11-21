@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import type { CryptoPaymentStatus } from '@/types/Billing';
+import { CryptoPaymentStatus } from '@/types/Billing';
 
 import { request } from '../create-crypto-payment';
 

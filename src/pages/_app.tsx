@@ -8,7 +8,7 @@ import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
-import type { AppContext, AppProps } from '@/types/App';
+import { AppContext, AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { isServerSide } from '@/utils/isServerSide';
 

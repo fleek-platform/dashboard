@@ -1,15 +1,15 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import {
-  type BreadcrumbItem,
-  type NavigationItem,
+  BreadcrumbItem,
+  NavigationItem,
   ProjectGoBack,
   RootLayout,
 } from '@/components';
 import { useFleekFunctionDetailQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 import { FunctionDetailProvider } from './Context';
 

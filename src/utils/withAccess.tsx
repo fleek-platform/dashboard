@@ -57,17 +57,19 @@ export const withAccess = ({
         }
 
         return featureFlag;
+      } else {
+        return hasPermission;
       }
-      return hasPermission;
     }, [featureFlags, permissions, session.loading]);
 
     if (hasAccess || session.loading) {
       return <>{getLayout(<Component {...pageProps} />)}</>;
+    } else {
+      return (
+        <NotFound.Page.Layout>
+          <NotFound.Page.Content />
+        </NotFound.Page.Layout>
+      );
     }
-    return (
-      <NotFound.Page.Layout>
-        <NotFound.Page.Content />
-      </NotFound.Page.Layout>
-    );
   };
 };

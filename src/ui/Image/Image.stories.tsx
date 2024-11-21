@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Image, type ImageProps } from './Image';
+import { Image, ImageProps } from './Image';
 
 const meta: Meta = {
   title: 'Library/Atoms/Image',

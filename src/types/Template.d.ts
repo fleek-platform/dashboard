@@ -1,4 +1,4 @@
-import type {
+import {
   TemplateCategory as GeneratedTemplateCategory,
   TemplateQuery,
   TemplatesQuery,

@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { BadgeText } from '@/components';
 import { Icon } from '@/ui';

@@ -7,7 +7,7 @@ export class BackendApiClient {
   constructor(args: BackendApiClient.Arguments) {
     this.headers = {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${args.accessToken}`,
+      Authorization: 'Bearer ' + args.accessToken,
     };
   }
 

@@ -2,7 +2,7 @@ import LogRocket from 'logrocket';
 import { useEffect } from 'react';
 
 import { useMeQuery } from '@/generated/graphqlClient';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 export const LogRocketProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [meQuery] = useMeQuery();

@@ -1,7 +1,7 @@
 import { ComingSoon } from '@/components';
 import { Site } from '@/fragments';
 import { useTheme } from '@/providers/ThemeProvider';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 
 const LogPage: Page = () => {
   const { resolvedTheme = 'dark' } = useTheme();
@@ -9,11 +9,15 @@ const LogPage: Page = () => {
   return (
     <ComingSoon.Modal
       imgSrc={`/assets/static/${resolvedTheme}/audit-coming-soon.png`}
-      modalContent=<ComingSoon.Modal.Description>
-        Audit Log will keep track and display all configuration changes and
-        activity for this site, associated to the user that performed it for
-        accountability and troubleshooting purposes.
-      </ComingSoon.Modal.Description>
+      modalContent={
+        <>
+          <ComingSoon.Modal.Description>
+            Audit Log will keep track and display all configuration changes and
+            activity for this site, associated to the user that performed it for
+            accountability and troubleshooting purposes.
+          </ComingSoon.Modal.Description>
+        </>
+      }
     >
       <ComingSoon.Skeleton.Container>
         <ComingSoon.Skeleton.Box>

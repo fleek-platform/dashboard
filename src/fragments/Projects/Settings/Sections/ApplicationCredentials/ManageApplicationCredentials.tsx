@@ -9,15 +9,15 @@ import {
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
-import type { Credential } from '@/types/Credentials';
-import type { LoadingProps } from '@/types/Props';
+import { Credential } from '@/types/Credentials';
+import { LoadingProps } from '@/types/Props';
 import { Box, Divider, Icon, Skeleton, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { parseWhitelistDomains } from '@/utils/whitelistDomains';
 
 import {
-  type ApplicationCredentialsContext,
+  ApplicationCredentialsContext,
   ApplicationCredentialsProvider,
   useApplicationCredentialsContext,
 } from './ApplicationCredentials.context';
@@ -39,10 +39,7 @@ export const ManageApplicationCredentials: React.FC<
 
   return (
     <ApplicationCredentialsProvider onSubmitDelete={onSubmitDelete}>
-      <SettingsBox.Container
-        role="table"
-        aria-label="Application credential list"
-      >
+      <SettingsBox.Container role="table" aria-label="Application credential list">
         <Header />
         {credentials?.length === 0 ? (
           <SettingsBox.EmptyContent

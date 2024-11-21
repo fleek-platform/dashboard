@@ -106,21 +106,21 @@ export const TemplateOverviewStyles = {
         textDecoration: 'none',
       },
 
-      '> span': {
+      [`> span`]: {
         color: '$text-secondary',
       },
       [`> ${Avatar}`]: {
         fontSize: '$xs',
         background: '$surface-avatar-icon',
         marginRight: '$spacing-2-5',
-        '> span': { color: '$icon-slate' },
+        [`> span`]: { color: '$icon-slate' },
       },
       variants: {
         variant: {
           monochrome: {
             [`> ${Avatar}`]: {
               background: '$surface-logo',
-              '> span': { color: '$surface-monochrome' },
+              [`> span`]: { color: '$surface-monochrome' },
             },
           },
         },

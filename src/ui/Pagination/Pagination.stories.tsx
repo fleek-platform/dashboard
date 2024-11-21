@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Pagination, type PaginationProps } from './Pagination';
+import { Pagination, PaginationProps } from './Pagination';
 
 const meta: Meta = {
   title: 'Library/Components/Paginator',

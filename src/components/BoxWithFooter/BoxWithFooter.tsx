@@ -1,5 +1,5 @@
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Box, Icon, type IconName, Skeleton, Text } from '@/ui';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { Box, Icon, IconName, Skeleton, Text } from '@/ui';
 
 import { BoxWithFooterStyles as S } from './BoxWithFooter.styles';
 

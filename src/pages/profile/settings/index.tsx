@@ -8,8 +8,8 @@ import { Form } from '@/components';
 import { Profile } from '@/fragments';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
-import type { Page } from '@/types/App';
-import type { HandleLogoUploadProps } from '@/types/Logo';
+import { Page } from '@/types/App';
+import { HandleLogoUploadProps } from '@/types/Logo';
 
 const GeneralSettingsPage: Page = () => {
   const [meQuery] = useMeQuery();

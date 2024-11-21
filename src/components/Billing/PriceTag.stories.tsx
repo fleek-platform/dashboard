@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { PriceTag, type PriceTagProps } from './PriceTag';
+import { PriceTag, PriceTagProps } from './PriceTag';
 
 const meta: Meta = {
   title: 'Library/Components/Billing/Price Tag',

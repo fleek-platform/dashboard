@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import {
   InputField,
-  type InputFieldProps,
+  InputFieldProps,
 } from '@/components/Form/InputField/InputField';
 import { Text } from '@/ui';
 

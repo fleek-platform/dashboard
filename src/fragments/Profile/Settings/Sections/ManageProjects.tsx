@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 
 import { BadgeText, SettingsBox, SettingsListItem } from '@/components';
 import {
-  type Project,
+  Project,
   Role,
   useLeaveProjectMutation,
   useMeQuery,

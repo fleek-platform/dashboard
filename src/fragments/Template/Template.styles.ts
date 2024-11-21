@@ -89,10 +89,10 @@ export const TemplateStyles = {
         padding: '0 $spacing-2',
         borderRadius: '$sm',
       },
-      'p, td': {
+      ['p, td']: {
         color: '$text-secondary',
       },
-      'h1, h2': {
+      ['h1, h2']: {
         paddingBottom: '$spacing-2',
         baseBorder: '$border-slate',
         borderTop: '0',
@@ -102,7 +102,7 @@ export const TemplateStyles = {
       a: {
         color: '$text-yellow',
       },
-      'table, td, th': {
+      ['table, td, th']: {
         padding: '$spacing-2',
         baseBorder: '$border-slate',
         borderCollapse: 'collapse',
@@ -237,10 +237,10 @@ export const TemplateStyles = {
         overflow: 'hidden',
       }),
       CollapsibleContent: styled(Box, {
-        '&[data-state='open']': {
+        [`&[data-state='open']`]: {
           animation: `${KeyFrames.slideCollapsibleDown} 200ms ease-out`,
         },
-        '&[data-state='closed']': {
+        [`&[data-state='closed']`]: {
           animation: `${KeyFrames.slideCollapsibleUp} 200ms ease-out`,
         },
       }),

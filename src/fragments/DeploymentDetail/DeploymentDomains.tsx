@@ -1,6 +1,6 @@
 import { BadgeText } from '@/components';
-import type { SiteENSRecord } from '@/types/Site';
-import { Box, Icon, type IconName, Text } from '@/ui';
+import { SiteENSRecord } from '@/types/Site';
+import { Box, Icon, IconName, Text } from '@/ui';
 
 import { DeploymentStyles as S } from './DeploymentDetail.styles';
 

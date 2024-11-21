@@ -1,4 +1,4 @@
-import type { Site } from '@/types/Site';
+import { Site } from '@/types/Site';
 
 type GetSiteCurrentDeploymentArgs = Site | undefined;
 

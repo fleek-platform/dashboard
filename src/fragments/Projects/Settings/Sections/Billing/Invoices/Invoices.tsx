@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DateTime } from 'luxon';
 
 import { BadgeText, SettingsBox, SettingsListItem } from '@/components';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 

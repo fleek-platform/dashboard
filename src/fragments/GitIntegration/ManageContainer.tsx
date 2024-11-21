@@ -1,6 +1,6 @@
 import { SettingsListItem } from '@/components';
-import type { GitProvidersQuery } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
+import { GitProvidersQuery } from '@/generated/graphqlClient';
+import { LoadingProps } from '@/types/Props';
 
 import { ProviderDetails } from './ProviderDetails';
 

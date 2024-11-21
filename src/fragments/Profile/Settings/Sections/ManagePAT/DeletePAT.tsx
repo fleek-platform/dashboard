@@ -1,6 +1,6 @@
 import { AlertBox, Form } from '@/components';
 import { ProfileStyles as S } from '@/fragments/Profile/Profile.styles';
-import type { PersonalAccessToken } from '@/generated/graphqlClient';
+import { PersonalAccessToken } from '@/generated/graphqlClient';
 import { Button, Dialog, Text } from '@/ui';
 
 export type DeletePATModalProps = {

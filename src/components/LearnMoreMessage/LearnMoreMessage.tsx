@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { LearnMoreMessageStyles as S } from './LearnMoreMessage.styles';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type ApplicationCredentialsContext = {

@@ -1,4 +1,4 @@
-import type { GitRepositoriesQuery } from '@/generated/graphqlClient';
+import { GitRepositoriesQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { Button, Icon, Stepper, Text } from '@/ui';
 

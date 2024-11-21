@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import type { ChildrenProps } from '@/types/Props';
-import type {
+import { ChildrenProps } from '@/types/Props';
+import {
   StorageProvider,
   StorageProviderValue,
 } from '@/types/StorageProviders';

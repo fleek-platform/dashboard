@@ -1,5 +1,5 @@
-import type { CodeSnippetProps } from '@/components';
-import type { FleekRootConfig, Site } from '@/types/Site';
+import { CodeSnippetProps } from '@/components';
+import { FleekRootConfig, Site } from '@/types/Site';
 
 type GetSelfManagedFileSnippetsArgs = Site;
 

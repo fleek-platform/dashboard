@@ -1,4 +1,4 @@
-import { DateTime, type DateTimeFormatOptions } from 'luxon';
+import { DateTime, DateTimeFormatOptions } from 'luxon';
 
 type DateFormatArgs = {
   dateISO: string;

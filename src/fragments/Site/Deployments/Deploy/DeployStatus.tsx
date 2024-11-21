@@ -1,5 +1,5 @@
 import { BadgeText } from '@/components';
-import type { Deployment } from '@/types/Deployment';
+import { Deployment } from '@/types/Deployment';
 import { Box, Icon, Text } from '@/ui';
 import { statusDataMap } from '@/utils/deployUtils';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';

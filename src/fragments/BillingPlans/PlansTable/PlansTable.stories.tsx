@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { PlansTable, type PlansTableProps } from './PlansTable';
+import { PlansTable, PlansTableProps } from './PlansTable';
 
 const meta: Meta = {
   title: 'Library/Fragments/Billing/Plans Table',

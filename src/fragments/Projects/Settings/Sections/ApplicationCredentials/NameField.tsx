@@ -1,5 +1,5 @@
 import { Form } from '@/components';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 
 export const NameField: React.FC<LoadingProps> = ({ isLoading }) => {
   return (

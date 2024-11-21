@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import type { UseQueryExecute } from 'urql';
+import { UseQueryExecute } from 'urql';
 
-import type { PrimaryDomainItem } from '@/types/Domain';
-import type { ChildrenProps } from '@/types/Props';
+import { PrimaryDomainItem } from '@/types/Domain';
+import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 type OpenDeleteModalProps = {

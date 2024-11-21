@@ -10,8 +10,8 @@ import { BaseDirectoryField } from '@/components/BaseDirectoryField/BaseDirector
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
-import type { LoadingProps } from '@/types/Props';
-import type { SiteFramework } from '@/types/Site';
+import { LoadingProps } from '@/types/Props';
+import { SiteFramework } from '@/types/Site';
 import { Avatar, Combobox, FormField } from '@/ui';
 
 export type SiteBuildProps = LoadingProps<{

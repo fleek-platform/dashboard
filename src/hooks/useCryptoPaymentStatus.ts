@@ -1,6 +1,6 @@
-import { type UseQueryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import type { CryptoPaymentStatus } from '@/types/Billing';
+import { CryptoPaymentStatus } from '@/types/Billing';
 
 export const useCryptoPaymentStatus = ({
   variables,

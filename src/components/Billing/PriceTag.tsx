@@ -1,4 +1,4 @@
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 import { BillingStyles as S } from './Billing.styles';
 

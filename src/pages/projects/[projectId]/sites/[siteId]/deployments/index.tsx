@@ -6,7 +6,7 @@ import { useCanDeploySite } from '@/hooks/useCanDeploySite';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useTriggerSiteDeployment } from '@/hooks/useSiteRedeploy';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { Button } from '@/ui';
 import { isSiteSelfManaged } from '@/utils/isSiteSelfManaged';
 import { withAccess } from '@/utils/withAccess';

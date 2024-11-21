@@ -11,5 +11,5 @@ export const bytesToSize = (bytes: number) => {
 
   const sizeIndex = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return `${Number.parseFloat((bytes / k ** sizeIndex).toFixed(decimals))} ${sizes[sizeIndex]}`;
+  return `${parseFloat((bytes / Math.pow(k, sizeIndex)).toFixed(decimals))} ${sizes[sizeIndex]}`;
 };

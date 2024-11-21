@@ -1,5 +1,5 @@
 import { LayoutHead } from '@/components';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 import { App } from '../App/App';
 import { LoginStyles as S } from './Login.styles';

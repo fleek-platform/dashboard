@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { QrCode, type QrCodeProps } from './QrCode';
+import { QrCode, QrCodeProps } from './QrCode';
 
 const meta: Meta = {
   title: 'Library/Components/Qr Code',

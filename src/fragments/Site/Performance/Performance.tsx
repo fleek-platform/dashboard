@@ -1,4 +1,4 @@
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Box, Button, Skeleton, Text } from '@/ui';
 
 import { PerformanceStyles as S } from './Performance.styles';

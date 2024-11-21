@@ -4,7 +4,7 @@ import type {
   AppProps as NextAppProps,
 } from 'next/app';
 
-import type { CookiesContext } from '@/providers/CookiesProvider';
+import { CookiesContext } from '@/providers/CookiesProvider';
 
 export type Page<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;

@@ -1,8 +1,8 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
 import { Icon } from '../Icon/Icon';
-import { IconLibrary, type IconName } from '../Icon/IconLibrary';
+import { IconLibrary, IconName } from '../Icon/IconLibrary';
 import { Combobox } from './Combobox';
 
 const meta: Meta = {
@@ -15,11 +15,13 @@ export default meta;
 type Item = { id: number; label: string; icon: IconName };
 
 const icons = Object.keys(IconLibrary) as IconName[];
-const Items: Item[] = new Array(30).fill(null).map((_, index) => ({
-  id: index,
-  label: `Option ${index}`,
-  icon: icons[Math.floor(Math.random() * icons.length)],
-}));
+const Items: Item[] = new Array(30)
+  .fill(null)
+  .map((_, index) => ({
+    id: index,
+    label: `Option ${index}`,
+    icon: icons[Math.floor(Math.random() * icons.length)],
+  }));
 
 export const Default: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {

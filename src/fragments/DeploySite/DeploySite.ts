@@ -2,7 +2,7 @@ import { AsideContent } from './AsideContent';
 import { BackButton } from './BackButton';
 import { sourceProviderLabel } from './DeploySite.constants';
 import {
-  type DeploySiteContext,
+  DeploySiteContext,
   DeploySiteProvider,
   useDeploySiteContext,
 } from './DeploySite.context';

@@ -25,17 +25,15 @@ export const getDurationUntilNow = ({
 
   if (diff.as('seconds') < 60) {
     return 'just now';
-  }
-  if (diff.as('minutes') < 60) {
+  } else if (diff.as('minutes') < 60) {
     return `${Math.floor(diff.as('minutes'))}${shortFormat ? 'm' : `minute${Math.floor(diff.as('minutes')) > 1 ? 's' : ''}`} ago`;
-  }
-  if (diff.as('hours') < 24) {
+  } else if (diff.as('hours') < 24) {
     return `${Math.floor(diff.as('hours'))}${shortFormat ? 'h' : `hour${Math.floor(diff.as('hours')) > 1 ? 's' : ''}`} ago`;
-  }
-  if (diff.as('days') < 365) {
+  } else if (diff.as('days') < 365) {
     return `${Math.floor(diff.as('days'))}${shortFormat ? 'd' : `day${Math.floor(diff.as('days')) > 1 ? 's' : ''}`} ago`;
+  } else {
+    return `more than ${Math.floor(diff.as('years'))}${shortFormat ? 'y' : `year${Math.floor(diff.as('years')) > 1 ? 's' : ''}`} ago`;
   }
-  return `more than ${Math.floor(diff.as('years'))}${shortFormat ? 'y' : `year${Math.floor(diff.as('years')) > 1 ? 's' : ''}`} ago`;
 };
 
 type GetDurationArgs = {
@@ -60,20 +58,17 @@ export const getDuration = ({
 
     if (diff.as('seconds') < 60) {
       return `${Math.floor(diff.as('seconds'))}s`;
-    }
-    if (diff.as('minutes') < 60) {
+    } else if (diff.as('minutes') < 60) {
       return `${Math.floor(diff.as('minutes'))}m ${Math.floor(diff.as('seconds') % 60)}s`;
-    }
-    if (diff.as('hours') < 24) {
+    } else if (diff.as('hours') < 24) {
       return `${Math.floor(diff.as('hours'))}h ${Math.floor(diff.as('minutes') % 60)}m`;
-    }
-    if (diff.as('days') < 30) {
+    } else if (diff.as('days') < 30) {
       return `${Math.floor(diff.as('days'))}d`;
-    }
-    if (diff.as('months') < 12) {
+    } else if (diff.as('months') < 12) {
       return `${Math.floor(diff.as('months'))}month${Math.floor(diff.as('months')) > 1 ? 's' : ''}`;
+    } else {
+      return `more than ${Math.floor(diff.as('years'))}${`year${Math.floor(diff.as('years')) > 1 ? 's' : ''}`}`;
     }
-    return `more than ${Math.floor(diff.as('years'))}${`year${Math.floor(diff.as('years')) > 1 ? 's' : ''}`}`;
   } catch {
     return '-';
   }
@@ -95,9 +90,9 @@ export const convertToReadableTime = (timeInMilliseconds: number) => {
 
   if (seconds <= 60) {
     return `${seconds} second${seconds > 1 ? 's' : ''}`;
-  }
-  if (minutes <= 60) {
+  } else if (minutes <= 60) {
     return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+  } else {
+    return `${hours} hour${hours > 1 ? 's' : ''}`;
   }
-  return `${hours} hour${hours > 1 ? 's' : ''}`;
 };

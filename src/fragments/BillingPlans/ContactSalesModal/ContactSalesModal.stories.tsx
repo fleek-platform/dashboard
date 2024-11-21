@@ -1,11 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '@/ui';
 
-import {
-  ContactSalesModal,
-  type ContactSalesModalProps,
-} from './ContactSalesModal';
+import { ContactSalesModal, ContactSalesModalProps } from './ContactSalesModal';
 
 const meta: Meta = {
   title: 'Library/Fragments/Billing/Contact Sales Modal',

@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react';
 import { forwardStyledRef } from '@/theme';
 import { createContext } from '@/utils/createContext';
 
-import type { Box } from '../Box/Box';
+import { Box } from '../Box/Box';
 import { StepperStyles } from './Stepper.styles';
 
 export type SelectContext = {

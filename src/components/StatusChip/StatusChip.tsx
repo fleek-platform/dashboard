@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { useSystemStatus } from '@/hooks/useSystemStatus';
 import { forwardStyledRef } from '@/theme';

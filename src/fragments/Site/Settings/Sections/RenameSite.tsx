@@ -7,7 +7,7 @@ import {
 import { SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 
 export const RenameSite: React.FC<LoadingProps> = ({ isLoading }) => {
   const hasEditPermission = usePermissions({

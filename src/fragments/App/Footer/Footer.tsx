@@ -1,6 +1,5 @@
 import { routes } from '@fleek-platform/utils-routes';
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ExternalLink, FleekLogo, StatusChip } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';

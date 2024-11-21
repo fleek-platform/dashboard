@@ -1,5 +1,5 @@
-import type { ChildrenProps } from '@/types/Props';
-import { Box, Button, type ButtonProps, Icon, type IconName, Text } from '@/ui';
+import { ChildrenProps } from '@/types/Props';
+import { Box, Button, ButtonProps, Icon, IconName, Text } from '@/ui';
 
 import { PlansTableStyles as S } from './PlansTable.styles';
 

@@ -20,7 +20,22 @@ const buildColorScheme = (color: ColorScheme, hoverable: boolean): any => {
         ? {
             cursor: 'pointer',
             '&:hover': {
-              backgroundColor: '$surface-actionable',
+              backgroundColor: `$surface-actionable`,
+            },
+          }
+        : {
+            cursor: 'default',
+          }),
+    };
+  } else {
+    return {
+      backgroundColor: `$surface-${color}-light`,
+      color: `$text-${color}`,
+      ...(hoverable
+        ? {
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: `$surface-${color}-actionable`,
             },
           }
         : {
@@ -28,20 +43,6 @@ const buildColorScheme = (color: ColorScheme, hoverable: boolean): any => {
           }),
     };
   }
-  return {
-    backgroundColor: `$surface-${color}-light`,
-    color: `$text-${color}`,
-    ...(hoverable
-      ? {
-          cursor: 'pointer',
-          '&:hover': {
-            backgroundColor: `$surface-${color}-actionable`,
-          },
-        }
-      : {
-          cursor: 'default',
-        }),
-  };
 };
 
 const compoundVariants = (() => {

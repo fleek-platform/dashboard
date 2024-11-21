@@ -1,7 +1,7 @@
 import { BadgeText } from '@/components';
-import { Button, type ButtonProps, Icon } from '@/ui';
+import { Button, ButtonProps, Icon } from '@/ui';
 
-import { BenefitsList, type BenefitsListProps } from './BenefitsList';
+import { BenefitsList, BenefitsListProps } from './BenefitsList';
 import { BillingStyles as S } from './Billing.styles';
 import { PriceTag } from './PriceTag';
 

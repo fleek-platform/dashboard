@@ -1,13 +1,9 @@
-import {
-  LogoUpload,
-  type LogoUploadProps,
-  PermissionsTooltip,
-} from '@/components';
+import { LogoUpload, LogoUploadProps, PermissionsTooltip } from '@/components';
 import { SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 
 export type ProjectLogoProps = LoadingProps<
   Pick<LogoUploadProps, 'onSubmit' | 'initialImage'>

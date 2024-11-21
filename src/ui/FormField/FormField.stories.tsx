@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 import { Box } from '../Box/Box';
 import { Combobox } from '../Combobox/Combobox';
-import { Icon } from '../Icon/Icon';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
+import { Icon } from '../Icon/Icon';
 import { FormField } from './FormField';
 
 const meta: Meta = {

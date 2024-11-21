@@ -1,6 +1,6 @@
 import { constants } from '@/constants';
 import { DeploymentDetail } from '@/fragments';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const DeploymentDetailPage: Page = () => {

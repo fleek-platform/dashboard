@@ -1,5 +1,5 @@
 import { Form } from '@/components';
-import type { DisabledProps, LoadingProps } from '@/types/Props';
+import { DisabledProps, LoadingProps } from '@/types/Props';
 
 export const KeyField: React.FC<LoadingProps<DisabledProps>> = ({
   isLoading,

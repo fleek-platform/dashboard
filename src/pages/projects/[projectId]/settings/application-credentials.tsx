@@ -12,7 +12,7 @@ import {
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const ApplicationCredentials: Page = () => {

@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { SettingsBox, SettingsListItem } from '@/components';
 import { useSettingsItemContext } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
-import type { PrivateGateway } from '@/types/PrivateGateway';
-import type { LoadingProps } from '@/types/Props';
-import type { SiteDomain } from '@/types/Site'; // TODO unify type between Site Domain and PGW Domain
+import { PrivateGateway } from '@/types/PrivateGateway';
+import { LoadingProps } from '@/types/Props';
+import { SiteDomain } from '@/types/Site'; // TODO unify type between Site Domain and PGW Domain
 import { Box } from '@/ui';
 import { isActiveDomain } from '@/utils/isActiveDomain';
 

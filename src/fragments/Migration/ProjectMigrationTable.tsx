@@ -1,8 +1,8 @@
-import type { MigrationStatus } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
-import { Icon, type IconName, Text } from '@/ui';
+import { MigrationStatus } from '@/generated/graphqlClient';
+import { LoadingProps } from '@/types/Props';
+import { Icon, IconName, Text } from '@/ui';
 
-import type { MigrationRequest } from './Migration';
+import { MigrationRequest } from './Migration';
 import { MigrationStyles as S } from './Migration.styles';
 
 export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({
@@ -23,7 +23,7 @@ export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({
             <S.Content.Table.HeaderCell>Projects</S.Content.Table.HeaderCell>
             <S.Content.Table.HeaderCell>Sites</S.Content.Table.HeaderCell>
             <S.Content.Table.HeaderCell>Files</S.Content.Table.HeaderCell>
-            <S.Content.Table.HeaderCell />
+            <S.Content.Table.HeaderCell></S.Content.Table.HeaderCell>
           </S.Content.Table.Row>
         </S.Content.Table.Header>
         {migrationRequests && !isLoading ? (

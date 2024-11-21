@@ -1,4 +1,4 @@
-import { BadgeTextStyles, type ColorScheme } from './BadgeText.styles';
+import { type ColorScheme, BadgeTextStyles } from './BadgeText.styles';
 
 export const BadgeText = BadgeTextStyles;
 

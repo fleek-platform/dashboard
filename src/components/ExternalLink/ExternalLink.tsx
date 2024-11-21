@@ -1,5 +1,5 @@
 import { forwardStyledRef } from '@/theme';
-import { Icon, type IconName } from '@/ui';
+import { Icon, IconName } from '@/ui';
 
 import { ExternalLinkElement } from './ExternalLink.styles';
 

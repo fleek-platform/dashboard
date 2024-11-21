@@ -1,13 +1,13 @@
-import { type UseQueryArgs, useClient } from 'urql';
+import { useClient, UseQueryArgs } from 'urql';
 
 import {
   EnsRecordsByIpnsIdDocument,
-  type EnsRecordsByIpnsIdQuery,
-  type EnsRecordsByIpnsIdQueryVariables,
-  type Exact,
+  EnsRecordsByIpnsIdQuery,
+  EnsRecordsByIpnsIdQueryVariables,
+  Exact,
   useSiteIpnsRecordsQuery,
 } from '@/generated/graphqlClient';
-import type { SiteENSRecord } from '@/types/Site';
+import { SiteENSRecord } from '@/types/Site';
 
 import { useQueryWithCallback } from './useQueryWithCallback';
 
@@ -44,7 +44,8 @@ export const useSiteEnsRecordsQuery = (args: UseSiteEnsRecordsQueryArgs) => {
       );
 
       return ensRecordsByIpnsId
-        .flatMap((item) => item.data?.ensRecordsByIpnsId.data)
+        .map((item) => item.data?.ensRecordsByIpnsId.data)
+        .flat()
         .filter(Boolean) as Data;
     },
   });

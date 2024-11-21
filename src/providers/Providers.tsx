@@ -1,6 +1,6 @@
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
-import { type CookiesContext, CookiesProvider } from './CookiesProvider';
+import { CookiesContext, CookiesProvider } from './CookiesProvider';
 import { DynamicProvider } from './DynamicProvider';
 import { FeedbackModalProvider } from './FeedbackModalProvider';
 import { LaunchDarklyProvider } from './LaunchDarklyProvider';

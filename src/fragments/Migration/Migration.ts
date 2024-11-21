@@ -1,4 +1,4 @@
-import type { MigrationRequest as MigrationRequestType } from '@/generated/graphqlClient';
+import { MigrationRequest as MigrationRequestType } from '@/generated/graphqlClient';
 
 import { AsideContent } from './AsideContent';
 import { Layout } from './Layout';

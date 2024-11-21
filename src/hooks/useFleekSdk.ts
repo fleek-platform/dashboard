@@ -1,5 +1,5 @@
 import { SecretNotFoundError } from '@fleek-platform/errors';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useCookies } from '@/providers/CookiesProvider';
 import { secrets } from '@/secrets';

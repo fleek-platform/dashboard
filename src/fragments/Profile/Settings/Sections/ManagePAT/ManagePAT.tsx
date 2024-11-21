@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { Form, SettingsBox, SettingsListItem } from '@/components';
-import type { PersonalAccessToken } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
+import { PersonalAccessToken } from '@/generated/graphqlClient';
+import { LoadingProps } from '@/types/Props';
 import { Box } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 

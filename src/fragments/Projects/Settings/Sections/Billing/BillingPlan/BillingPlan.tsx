@@ -16,8 +16,8 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
-import type { Plan } from '@/types/Billing';
-import type { LoadingProps } from '@/types/Props';
+import { Plan } from '@/types/Billing';
+import { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 

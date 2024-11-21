@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Octokit, RequestError } from 'octokit';
 import { useCallback } from 'react';
 
-import type { Template } from '@/types/Template';
+import { Template } from '@/types/Template';
 import { Log } from '@/utils/log';
 
 import { useTemplateGitData } from './useTemplateGitData';
@@ -15,7 +15,9 @@ const decode = (data: string) =>
     window
       .atob(data)
       .split('')
-      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`)
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
       .join(''),
   );
 

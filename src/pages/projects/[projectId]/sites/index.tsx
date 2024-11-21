@@ -6,7 +6,7 @@ import { Projects, Site } from '@/fragments';
 import { useSitesQuery } from '@/generated/graphqlClient';
 import { useQueryPagination } from '@/hooks/useQueryPagination';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const Sites: Page = () => {

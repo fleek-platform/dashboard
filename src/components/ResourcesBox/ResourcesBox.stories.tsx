@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ExternalLink } from '../ExternalLink/ExternalLink';
-import { ResourcesBox, type ResourcesBoxProps } from './ResourcesBox';
+import { ResourcesBox, ResourcesBoxProps } from './ResourcesBox';
 
 const meta: Meta = {
   title: 'Library/Components/Resources Box',

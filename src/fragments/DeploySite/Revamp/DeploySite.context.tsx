@@ -1,7 +1,7 @@
 import {
-  type Dispatch,
-  type MouseEventHandler,
-  type SetStateAction,
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
   useCallback,
   useEffect,
   useReducer,
@@ -11,12 +11,12 @@ import { useClient } from 'urql';
 
 import {
   GitProviderDocument,
-  type GitProviderQuery,
-  type GitProviderQueryVariables,
+  GitProviderQuery,
+  GitProviderQueryVariables,
   GitProviderTags,
   SiteDeploymentRequirementsDocument,
-  type SiteDeploymentRequirementsMutation,
-  type SiteDeploymentRequirementsMutationVariables,
+  SiteDeploymentRequirementsMutation,
+  SiteDeploymentRequirementsMutationVariables,
   SourceProvider,
 } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -183,7 +183,7 @@ const reducer = (state: State, action: ActionType): State => {
   }
 };
 
-const PREFETCH_SOURCE_PROVIDER = SourceProvider.GITHUB;
+const PREFETCH_SOURCE_PROVIDER = SourceProvider['GITHUB'];
 
 export const DeploySiteProvider: React.FC<
   React.PropsWithChildren<{ value: BaseDeploySiteContext }>

@@ -1,19 +1,19 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { createSiteSchema } from '@fleek-platform/utils-validation';
-import { type MouseEventHandler, useMemo, useState } from 'react';
+import { MouseEventHandler, useMemo, useState } from 'react';
 import { useClient } from 'urql';
 
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { DeploySite } from '@/fragments';
-import type {
+import {
   GitRepository,
   GitUser,
 } from '@/fragments/DeploySite/Revamp/DeploySite.context';
 import {
   GitIntegrationDocument,
-  type GitIntegrationQuery,
-  type GitIntegrationQueryVariables,
+  GitIntegrationQuery,
+  GitIntegrationQueryVariables,
   SecretVisibility,
   useCountSitesWithSourceProviderQuery,
   useCreateSecretMutation,
@@ -26,7 +26,7 @@ import { useToast } from '@/hooks/useToast';
 import type { GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
 import type { Page } from '@/types/App';
-import type { SiteNewSecret, SiteSourceProvider } from '@/types/Site';
+import { SiteNewSecret, SiteSourceProvider } from '@/types/Site';
 import { Stepper } from '@/ui';
 import { getAPISourceProvider } from '@/utils/getSourceProvider';
 import { Log } from '@/utils/log';
@@ -126,7 +126,7 @@ const NewSite = () => {
             githubInstallationId:
               mode === 'self'
                 ? undefined
-                : Number.parseInt(gitUser?.installationId as string),
+                : parseInt(gitUser?.installationId as string),
             dockerImage: values?.dockerImage,
 
             frameworkId: values.frameworkId ?? undefined,
@@ -184,7 +184,7 @@ const NewSite = () => {
 
   const mode = useMemo(() => {
     if (router.query.templateId) {
-      router.query.mode = undefined;
+      delete router.query.mode;
 
       return 'template';
     }
@@ -396,7 +396,7 @@ const LegacyNewSite = () => {
 
   const mode = useMemo(() => {
     if (router.query.templateId) {
-      router.query.mode = undefined;
+      delete router.query.mode;
 
       return 'template';
     }

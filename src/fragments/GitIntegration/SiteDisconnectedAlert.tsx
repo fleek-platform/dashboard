@@ -1,10 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
-import type { UseQueryState } from 'urql';
+import { UseQueryState } from 'urql';
 
 import { AlertBox } from '@/components';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Site } from '@/types/Site';
+import { Site } from '@/types/Site';
 import { Button } from '@/ui';
 
 import { GitIntegrationStyles as S } from './GitIntegrationStyles.styles';

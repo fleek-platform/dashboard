@@ -1,9 +1,9 @@
 import {
   SiteBuildSettings,
-  type SiteBuildSettingsFramework,
+  SiteBuildSettingsFramework,
 } from '@fleek-platform/utils-sites';
 
-import type { GitProvider } from '../interfaces/GitProvider';
+import { GitProvider } from '../interfaces/GitProvider';
 
 export class MockedGitProvider implements GitProvider {
   public async getUserAndOrganizations() {

@@ -1,9 +1,9 @@
 import { constants } from '@/constants';
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
 
 import {
   CustomTooltip,
-  type CustomTooltipProps,
+  CustomTooltipProps,
 } from '../CustomTooltip/CustomTooltip';
 
 export type PermissionsTooltipProps = LoadingProps<

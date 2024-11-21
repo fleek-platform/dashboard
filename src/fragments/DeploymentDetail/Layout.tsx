@@ -2,8 +2,8 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useMemo } from 'react';
 
 import {
-  type BreadcrumbItem,
-  type NavigationItem,
+  BreadcrumbItem,
+  NavigationItem,
   ProjectGoBack,
   RootLayout,
 } from '@/components';

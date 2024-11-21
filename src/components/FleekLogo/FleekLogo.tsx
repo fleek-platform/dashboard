@@ -1,7 +1,7 @@
 import darkBolt from '@/images/fleek-bolt-dark.png';
 import lightBolt from '@/images/fleek-bolt-light.png';
 import { useTheme } from '@/providers/ThemeProvider';
-import type { typography } from '@/theme/foundations';
+import { typography } from '@/theme/foundations';
 
 import { FleekLogoStyles as S } from './FleekLogo.styles';
 

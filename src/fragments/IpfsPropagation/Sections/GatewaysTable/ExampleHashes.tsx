@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 
 import { constants } from '@/constants';
 import { Box, Button, Icon, Text } from '@/ui';

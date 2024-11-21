@@ -1,4 +1,4 @@
-import type { DisabledProps, LoadingProps } from '@/types/Props';
+import { DisabledProps, LoadingProps } from '@/types/Props';
 
 import { Form } from '../Form/Form';
 

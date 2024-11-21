@@ -12,7 +12,7 @@ import { VerifyDomainModal } from '@/fragments/Site/Settings/Sections/CustomDoma
 import { usePrivateGatewaysQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { DisabledProps } from '@/types/Props';
+import { DisabledProps } from '@/types/Props';
 import { Button } from '@/ui';
 
 import { DeletePrimaryDomainModal } from './DeletePrimaryDomainModal';

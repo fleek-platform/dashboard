@@ -1,9 +1,9 @@
 import { SettingsBox, SettingsListItem } from '@/components';
 import { useSiteQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
-import type { GitProvider } from '@/integrations/git';
-import type { LoadingProps } from '@/types/Props';
-import type { Site } from '@/types/Site';
+import { GitProvider } from '@/integrations/git';
+import { LoadingProps } from '@/types/Props';
+import { Site } from '@/types/Site';
 import { Button } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';

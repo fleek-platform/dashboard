@@ -1,13 +1,13 @@
 import {
   LogoUpload,
-  type LogoUploadProps,
+  LogoUploadProps,
   PermissionsTooltip,
   SettingsBox,
 } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 
 export type SiteLogoProps = LoadingProps<
   Pick<LogoUploadProps, 'onSubmit' | 'initialImage'>

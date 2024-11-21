@@ -1,8 +1,8 @@
-import { type MouseEventHandler, useMemo, useState } from 'react';
+import { MouseEventHandler, useMemo, useState } from 'react';
 
 import { BadgeText, Form } from '@/components';
 import { useGitTreeQuery } from '@/generated/graphqlClient';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Box, Icon, RadioGroup, Scrollable, Text } from '@/ui';
 
 import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';

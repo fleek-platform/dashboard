@@ -1,12 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { TemplateReviewStatus } from '@/generated/graphqlClient';
 import { Box } from '@/ui';
 
-import {
-  TemplateOverview,
-  type TemplateOverviewProps,
-} from './TemplateOverview';
+import { TemplateOverview, TemplateOverviewProps } from './TemplateOverview';
 
 const meta: Meta = {
   title: 'Library/Fragments/Template/Overview',

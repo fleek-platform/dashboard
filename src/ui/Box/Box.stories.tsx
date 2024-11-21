@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Text } from '../ftw/Text/Text';
-import { Box, type BoxProps } from './Box';
+import { Box, BoxProps } from './Box';
 
 const meta: Meta = {
   title: 'Library/Atoms/Box',

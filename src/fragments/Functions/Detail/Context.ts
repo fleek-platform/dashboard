@@ -2,7 +2,7 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useCallback } from 'react';
 
 import {
-  type FleekFunctionDetailQuery,
+  FleekFunctionDetailQuery,
   useDeleteFleekFunctionMutation,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';

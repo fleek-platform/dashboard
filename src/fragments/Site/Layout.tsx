@@ -2,8 +2,8 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useMemo } from 'react';
 
 import {
-  type BreadcrumbItem,
-  type NavigationItem,
+  BreadcrumbItem,
+  NavigationItem,
   ProjectGoBack,
   RootLayout,
 } from '@/components';
@@ -12,7 +12,7 @@ import { useSiteQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { isSiteSelfManaged } from '@/utils/isSiteSelfManaged';
 
 export type SiteLayoutProps = ChildrenProps<{

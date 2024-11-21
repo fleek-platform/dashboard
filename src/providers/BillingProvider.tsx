@@ -1,18 +1,18 @@
-import type { UseQueryResult } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useGetPaymentMethod } from '@/hooks/useGetPaymentMethod';
 import { useGetSubscription } from '@/hooks/useGetSubscription';
 import { useGetTeam } from '@/hooks/useGetTeam';
-import type {
+import {
   PaymentMethodResponse,
   Plan,
   PlanRestriction,
   SubscriptionResponse,
   TeamResponse,
 } from '@/types/Billing';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type BillingContext = {

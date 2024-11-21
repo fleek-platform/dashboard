@@ -12,13 +12,13 @@ import {
   useVerifySecretKeyMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type { SecretKey } from '@/types/2FA';
+import { SecretKey } from '@/types/2FA';
 import { Button } from '@/ui';
 import { getManualSecret, getURI } from '@/utils/TOTP';
 
-import { TwoFactorAuthentication } from './TwoFactorAuthentication';
 import { DisableModal } from './components/DisableModal';
 import { SetupModal } from './components/SetupModal';
+import { TwoFactorAuthentication } from './TwoFactorAuthentication';
 
 type CreateProps = {
   isLoading: boolean;

@@ -3,13 +3,13 @@ import { useClient } from 'urql';
 
 import {
   DeploymentDocument,
-  type DeploymentQuery,
-  type DeploymentQueryVariables,
+  DeploymentQuery,
+  DeploymentQueryVariables,
   SiteDocument,
-  type SiteQuery,
-  type SiteQueryVariables,
+  SiteQuery,
+  SiteQueryVariables,
 } from '@/generated/graphqlClient';
-import type { DeploymentStatus } from '@/types/Deployment';
+import { DeploymentStatus } from '@/types/Deployment';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 
 import { usePolling } from './usePolling';

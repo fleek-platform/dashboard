@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 
-import type { StatusRadioProps } from '@/components';
-import { type BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
+import { StatusRadioProps } from '@/components';
+import { BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type {
+import {
   DeploymentBuild,
   DeploymentStatus as ParsedDeploymentStatus,
 } from '@/types/Deployment';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Accordion, Box, Button, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { dateFormat } from '@/utils/dateFormats';
@@ -76,7 +76,7 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
 
   const steps = isSelfManaged
     ? DeploymentSteps['self-managed']
-    : DeploymentSteps.managed;
+    : DeploymentSteps['managed'];
 
   return (
     <S.Accordion.Root

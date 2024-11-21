@@ -7,7 +7,7 @@ import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useUpdatePaymentMethod } from '@/hooks/useUpdatePaymentMethod';
 import { useBillingContext } from '@/providers/BillingProvider';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Box, Skeleton } from '@/ui';
 import { getDiffInMoths } from '@/utils/getDiffInMoths';
 import { firstLetterUpperCase } from '@/utils/stringFormat';

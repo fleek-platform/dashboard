@@ -1,4 +1,4 @@
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Button, Text } from '@/ui';
 
 import { ExternalLink } from '../ExternalLink/ExternalLink';

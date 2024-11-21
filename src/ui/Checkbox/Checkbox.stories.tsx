@@ -1,7 +1,7 @@
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import { Checkbox, type CheckboxProps } from './Checkbox';
+import { Checkbox, CheckboxProps } from './Checkbox';
 
 const meta: Meta = {
   title: 'Library/Atoms/Checkbox',

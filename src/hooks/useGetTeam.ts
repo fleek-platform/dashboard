@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
 import { useCookies } from '@/providers/CookiesProvider';
-import type { ProjectResponse, TeamResponse } from '@/types/Billing';
+import { ProjectResponse, TeamResponse } from '@/types/Billing';
 import { Log } from '@/utils/log';
 
 type UseGetTeamArgs = {

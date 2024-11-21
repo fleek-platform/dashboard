@@ -1,13 +1,12 @@
 import { envVarName, envVarValue } from '@fleek-platform/utils-validation';
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import type { z } from 'zod';
+import React, { useEffect, useRef, useState } from 'react';
+import { z } from 'zod';
 
 import { BaseDirectoryField, Form, ToggleButton } from '@/components';
 import { constants } from '@/constants';
 import { useDebounce } from '@/hooks/useDebounce';
 import { space } from '@/theme/foundations/space';
-import type { SiteNewSecret } from '@/types/Site';
+import { SiteNewSecret } from '@/types/Site';
 import { Button, Divider, FormField, Icon, Input, Text } from '@/ui';
 
 import { useDeploySiteContext } from '../../DeploySite.context';
@@ -53,8 +52,9 @@ export const Advanced: React.FC = () => {
       return () => {
         observer.disconnect();
       };
+    } else {
+      ref.style.height = '0px';
     }
-    ref.style.height = '0px';
   }, [containerRef, enabled]);
 
   const handleToggleAdvanced = () => {

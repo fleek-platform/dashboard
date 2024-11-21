@@ -17,8 +17,8 @@ import {
   useTemplatesQuery,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type { LoadingProps } from '@/types/Props';
-import type { Templates } from '@/types/Template';
+import { LoadingProps } from '@/types/Props';
+import { Templates } from '@/types/Template';
 import { Icon } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';

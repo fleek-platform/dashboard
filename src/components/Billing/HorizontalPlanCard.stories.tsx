@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import {
   HorizontalPlanCard,
-  type HorizontalPlanCardProps,
+  HorizontalPlanCardProps,
 } from './HorizontalPlanCard';
 
 const meta: Meta = {

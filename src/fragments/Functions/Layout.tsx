@@ -1,6 +1,6 @@
 import { Projects } from '@/fragments';
 import { Functions as F } from '@/fragments';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 export const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (

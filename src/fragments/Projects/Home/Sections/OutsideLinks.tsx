@@ -1,5 +1,5 @@
 import { constants } from '@/constants';
-import { type TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
+import { TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';

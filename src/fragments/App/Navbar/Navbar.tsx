@@ -1,10 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { FleekLogo, type FleekLogoProps, Link } from '@/components';
+import { FleekLogo, FleekLogoProps, Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { forwardStyledRef } from '@/theme';
-import type { ChildrenProps } from '@/types/Props';
-import { Button, type ButtonProps, Input } from '@/ui';
+import { ChildrenProps } from '@/types/Props';
+import { Button, ButtonProps, Input } from '@/ui';
 
 import { NavbarStyles as S } from './Navbar.styles';
 import { Navigation } from './Navigation';

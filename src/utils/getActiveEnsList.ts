@@ -1,5 +1,5 @@
 import { EnsRecordStatus } from '@/generated/graphqlClient';
-import type { Site } from '@/types/Site';
+import { Site } from '@/types/Site';
 
 type GetActiveEnsListArgs = {
   site: Site;

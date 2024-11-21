@@ -1,13 +1,13 @@
+import { IBM_Plex_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import {
   ThemeProvider as NextThemesProvider,
   useTheme as useNextTheme,
 } from 'next-themes';
-import { IBM_Plex_Sans } from 'next/font/google';
-import localFont from 'next/font/local';
 import { useEffect, useState } from 'react';
 
 import { themeGlobals, themes } from '@/theme';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 
 const plex = IBM_Plex_Sans({
   subsets: ['latin'],

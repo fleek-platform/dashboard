@@ -1,6 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
-import type { PinQuery } from '@/generated/graphqlClient';
+import { PinQuery } from '@/generated/graphqlClient';
 import { bytesToSize } from '@/utils/fileSizeFormt';
 
 import { DeployTime } from '../List/DeployTime';

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Icon, type IconProps } from './Icon';
+import { Icon, IconProps } from './Icon';
 import { IconLibrary } from './IconLibrary';
 
 const meta: Meta = {

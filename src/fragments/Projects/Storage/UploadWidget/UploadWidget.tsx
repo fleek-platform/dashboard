@@ -1,10 +1,10 @@
 import { useUploadContext } from '@/providers/UploadProvider';
-import type { Upload } from '@/types/Upload';
+import { Upload } from '@/types/Upload';
 import { Box } from '@/ui';
 
 import { UploadFile } from './UploadFile';
-import { UploadWidgetStyles as S } from './UploadWidget.styles';
 import { UploadingSate } from './UploadingState';
+import { UploadWidgetStyles as S } from './UploadWidget.styles';
 
 export type UploadWidgetProps = {
   uploads: Upload[];

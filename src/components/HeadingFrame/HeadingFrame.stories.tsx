@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { HeadingFrame, type HeadingFrameProps } from './HeadingFrame';
+import { HeadingFrame, HeadingFrameProps } from './HeadingFrame';
 
 const meta: Meta = {
   title: 'Library/Components/Heading Frame',

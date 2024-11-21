@@ -1,8 +1,8 @@
 import { routes } from '@fleek-platform/utils-routes';
-import type React from 'react';
+import React from 'react';
 
 import { Link } from '@/components';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Icon, Text } from '@/ui';
 
 type SiteBadgeProps = ChildrenProps & {

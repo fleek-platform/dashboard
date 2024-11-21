@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Input } from '@/ui';
 
 import {
   PermissionsTooltip,
-  type PermissionsTooltipProps,
+  PermissionsTooltipProps,
 } from './PermissionsTooltip';
 
 const meta: Meta = {

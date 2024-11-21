@@ -6,7 +6,7 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 
-import type { OverallMigrationStatus } from '../Migration';
+import { OverallMigrationStatus } from '../Migration';
 import { useMigrationContext } from '../Migration.context';
 import { MigrationStyles as S } from '../Migration.styles';
 import { MigrationCard } from '../MigrationCard';

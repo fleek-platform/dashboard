@@ -1,3 +1,3 @@
-import type { PrivateGatewaysQuery } from '@/generated/graphqlClient';
+import { PrivateGatewaysQuery } from '@/generated/graphqlClient';
 
 export type PrivateGateway = PrivateGatewaysQuery['privateGateways']['data'][0];

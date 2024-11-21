@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { BenefitsList, type BenefitsListProps } from './BenefitsList';
+import { BenefitsList, BenefitsListProps } from './BenefitsList';
 
 const meta: Meta = {
   title: 'Library/Components/Billing/Benefits List',

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
 import { useCookies } from '@/providers/CookiesProvider';
-import type { CheckoutResponse, PlanResponse } from '@/types/Billing';
+import { CheckoutResponse, PlanResponse } from '@/types/Billing';
 
 import { useRouter } from './useRouter';
 
@@ -16,44 +16,48 @@ export const useFleekCheckout = () => {
   });
 
   const checkout = async () => {
-    const plan = await backendApi.fetch({
-      url: '/api/v1/plans',
-    });
+    try {
+      const plan = await backendApi.fetch({
+        url: '/api/v1/plans',
+      });
 
-    if (!plan.ok) {
-      throw plan.statusText;
+      if (!plan.ok) {
+        throw plan.statusText;
+      }
+
+      const PlansResponse: PlanResponse[] = await plan.json();
+
+      // always keep the plan name aligned with what's on stripe plan name
+      const planId = PlansResponse.find(
+        (plan) => plan.name.toUpperCase() === 'PRO',
+      )?.id;
+
+      if (!planId) {
+        throw new Error('Plan not found');
+      }
+
+      const response = await backendApi.fetch({
+        url: '/api/v1/subscriptions/checkout',
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify({
+          projectId,
+          planId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          'There was an error trying to upgrade your plan. Please try again.',
+        );
+      }
+
+      const result: CheckoutResponse = await response.json();
+
+      return result;
+    } catch (error) {
+      throw error;
     }
-
-    const PlansResponse: PlanResponse[] = await plan.json();
-
-    // always keep the plan name aligned with what's on stripe plan name
-    const planId = PlansResponse.find(
-      (plan) => plan.name.toUpperCase() === 'PRO',
-    )?.id;
-
-    if (!planId) {
-      throw new Error('Plan not found');
-    }
-
-    const response = await backendApi.fetch({
-      url: '/api/v1/subscriptions/checkout',
-      method: 'POST',
-      redirect: 'follow',
-      body: JSON.stringify({
-        projectId,
-        planId,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        'There was an error trying to upgrade your plan. Please try again.',
-      );
-    }
-
-    const result: CheckoutResponse = await response.json();
-
-    return result;
   };
 
   return useMutation({

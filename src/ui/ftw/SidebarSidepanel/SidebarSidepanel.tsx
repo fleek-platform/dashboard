@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import type React from 'react';
+import React from 'react';
 
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
 const Content: React.FC<ChildrenProps & Dialog.DialogContentProps> = ({

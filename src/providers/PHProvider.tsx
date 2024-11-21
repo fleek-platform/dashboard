@@ -1,11 +1,10 @@
 import posthogJs from 'posthog-js';
-import type React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { useMeQuery } from '@/generated/graphqlClient';
 import { usePostHog } from '@/hooks/usePostHog';
 import { secrets } from '@/secrets';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { isServerSide } from '@/utils/isServerSide';
 import { Log } from '@/utils/log';
 

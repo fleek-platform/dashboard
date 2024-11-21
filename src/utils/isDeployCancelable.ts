@@ -1,5 +1,5 @@
 import { DeploymentStatus } from '@/generated/graphqlClient';
-import type { Deployment } from '@/types/Deployment';
+import { Deployment } from '@/types/Deployment';
 
 type IsDeployCancelableArgs = {
   deployment: Deployment;

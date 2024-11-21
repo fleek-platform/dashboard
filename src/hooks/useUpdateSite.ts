@@ -1,6 +1,6 @@
 import {
-  type UpdateSiteDataInput,
-  type UpdateSiteMutationVariables,
+  UpdateSiteDataInput,
+  UpdateSiteMutationVariables,
   useUpdateSiteMutation,
 } from '@/generated/graphqlClient';
 

@@ -5,7 +5,7 @@ import { BadgeText, SettingsListItem as Menu } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
-import type { Folder, Pin } from '@/types/StorageProviders';
+import { Folder, Pin } from '@/types/StorageProviders';
 import { Icon } from '@/ui';
 import { getLinkForIPFSDownload } from '@/utils/getLinkForIPFSdownload';
 
@@ -101,18 +101,22 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
       <Menu.DropdownMenu side="left" align="center">
         {publicUrl && (
-          <Menu.DropdownMenuItem icon="arrow-up-right" href={publicUrl}>
-            View public URL
-          </Menu.DropdownMenuItem>
+          <>
+            <Menu.DropdownMenuItem icon="arrow-up-right" href={publicUrl}>
+              View public URL
+            </Menu.DropdownMenuItem>
+          </>
         )}
 
         {pin?.cid && (
-          <Menu.DropdownMenuItem
-            icon="arrow-up-right"
-            href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}
-          >
-            View on IPFS
-          </Menu.DropdownMenuItem>
+          <>
+            <Menu.DropdownMenuItem
+              icon="arrow-up-right"
+              href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}
+            >
+              View on IPFS
+            </Menu.DropdownMenuItem>
+          </>
         )}
         <Menu.DropdownMenuSeparator />
 

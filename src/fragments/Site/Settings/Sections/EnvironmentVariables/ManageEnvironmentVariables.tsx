@@ -6,8 +6,8 @@ import { Form, SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { SecretVisibility } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { LoadingProps } from '@/types/Props';
-import type { SiteSecret } from '@/types/Site';
+import { LoadingProps } from '@/types/Props';
+import { SiteSecret } from '@/types/Site';
 import { Box, FormField, Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
@@ -15,7 +15,7 @@ import { EnvironmentVariablesStyles as S } from './EnvironmentVariables.styles';
 import { ValueField } from './Fields/ValueField';
 import { VisibilityField } from './Fields/VisibilityField';
 import {
-  type ManageEnvironmentVariablesContext,
+  ManageEnvironmentVariablesContext,
   ManageEnvironmentVariablesProvider,
   useManageEnvironmentVariablesContext,
 } from './ManageEnvironmentVariables.context';

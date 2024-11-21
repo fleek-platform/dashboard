@@ -1,9 +1,8 @@
-import type React from 'react';
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { Form } from '@/components';
-import type { TokenSubmitArgs } from '@/types/2FA';
-import type { ChildrenProps } from '@/types/Props';
+import { TokenSubmitArgs } from '@/types/2FA';
+import { ChildrenProps } from '@/types/Props';
 import { Dialog } from '@/ui';
 
 import { AuthenticationModal } from './components/AuthenticationModal';

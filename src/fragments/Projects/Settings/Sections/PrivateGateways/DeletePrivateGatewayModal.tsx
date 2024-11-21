@@ -5,9 +5,9 @@ import {
   useDeletePrivateGatewayDependenciesQuery,
   usePrivateGatewaysQuery,
 } from '@/generated/graphqlClient';
-import type { Domain } from '@/types/Domain';
-import type { ChildrenProps, LoadingProps } from '@/types/Props';
-import type { SiteDomain } from '@/types/Site';
+import { Domain } from '@/types/Domain';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { SiteDomain } from '@/types/Site';
 import { Button, Combobox, FormField, Input, Stepper, Text } from '@/ui';
 import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 import { isActiveDomain } from '@/utils/isActiveDomain';

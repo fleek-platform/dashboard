@@ -1,4 +1,4 @@
-import type { DeploymentStatus } from '@/types/Deployment';
+import { DeploymentStatus } from '@/types/Deployment';
 
 type CanRedeploySiteArgs = {
   status: DeploymentStatus;

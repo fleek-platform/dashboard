@@ -13,7 +13,7 @@ import {
   usePersonalAccessTokensQuery,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 import { Log } from '@/utils/log';
 
 const PersonalAccessTokensPage: Page = () => {

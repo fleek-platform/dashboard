@@ -18,8 +18,8 @@ import {
 import { useTeamRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
-import type { DisabledProps, LoadingProps } from '@/types/Props';
-import type {
+import { DisabledProps, LoadingProps } from '@/types/Props';
+import {
   CreateInvitationModalState,
   PermissionGroup,
 } from '@/types/TeamProject';

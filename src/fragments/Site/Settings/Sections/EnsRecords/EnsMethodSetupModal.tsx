@@ -6,7 +6,7 @@ import { AlertBox, BadgeText, LearnMoreMessage, Modal } from '@/components';
 import { constants } from '@/constants';
 import { useEnsRecordQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import type { DisabledProps } from '@/types/Props';
+import { DisabledProps } from '@/types/Props';
 import { Box, Button, RadioGroup, Text } from '@/ui';
 import { Dialog } from '@/ui';
 
@@ -44,7 +44,9 @@ export const EnsMethodSetupModal: React.FC = () => {
           wallet.authenticated &&
           wallet.connected &&
           wallet.address === ensAddressOwner,
-      ) !== undefined;
+      ) === undefined
+        ? false
+        : true;
 
     if (dynamicUserHasWallet) {
       if (currentAddress === ensAddressOwner) {

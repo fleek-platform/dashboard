@@ -1,5 +1,5 @@
 import { Functions as F, Site } from '@/fragments';
-import type { Page } from '@/types/App';
+import { Page } from '@/types/App';
 
 const Functions: Page = () => {
   return <F.Sections.List source="site" />;

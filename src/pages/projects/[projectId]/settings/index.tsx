@@ -6,15 +6,15 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Projects, TwoFactorAuthentication } from '@/fragments';
 import {
-  type UpdateProjectDataInput,
+  UpdateProjectDataInput,
   useProjectQuery,
   useProjectsQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useUpdateProject } from '@/hooks/useUpdateProject';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Page } from '@/types/App';
-import type { HandleLogoUploadProps } from '@/types/Logo';
+import { Page } from '@/types/App';
+import { HandleLogoUploadProps } from '@/types/Logo';
 import { withAccess } from '@/utils/withAccess';
 
 const Settings: Page = () => {

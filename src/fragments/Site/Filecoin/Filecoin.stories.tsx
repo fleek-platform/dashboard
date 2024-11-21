@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Filecoin, type FilecoinProps } from './Filecoin';
+import { Filecoin, FilecoinProps } from './Filecoin';
 
 const meta: Meta = {
   title: 'Library/Fragments/Site/Filecoin',

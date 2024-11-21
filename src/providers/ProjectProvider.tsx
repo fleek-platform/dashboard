@@ -8,7 +8,7 @@ import {
   useProjectsQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
-import type { ProjectList } from '@/types/Project';
+import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
 import { Log } from '@/utils/log';
 
@@ -159,7 +159,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const isLoading = useMemo(() => {
     if (!cookies.values.authProviderToken) {
-      projectsQuery.data = undefined; // this is forcing a cache clean for when it has logout
+      delete projectsQuery.data; // this is forcing a cache clean for when it has logout
 
       return false;
     }

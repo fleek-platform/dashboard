@@ -5,8 +5,8 @@ import * as zod from 'zod';
 import { Form } from '@/components';
 import {
   ListFolderDocument,
-  type ListFolderQuery,
-  type ListFolderQueryVariables,
+  ListFolderQuery,
+  ListFolderQueryVariables,
   useUpdateFolderMutation,
   useUpdatePinMutation,
 } from '@/generated/graphqlClient';

@@ -1,9 +1,9 @@
 import { createApplicationSchemaNext } from '@fleek-platform/utils-validation';
 import { useEffect, useState } from 'react';
-import type { z } from 'zod';
+import { z } from 'zod';
 
 import { Form, SettingsBox } from '@/components';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Box, Button, FormField, Icon, Input } from '@/ui';
 
 import { ApplicationCredentialsStyles as S } from './ApplicationCredentials.styles';
@@ -91,9 +91,7 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
       setError(false);
     } else {
       const timeout = setTimeout(() => {
-        setError(
-          (validation as z.SafeParseError<string>).error.issues[0].message,
-        );
+        setError((validation as z.SafeParseError<string>).error.issues[0].message);
       }, 700);
 
       return () => clearTimeout(timeout);

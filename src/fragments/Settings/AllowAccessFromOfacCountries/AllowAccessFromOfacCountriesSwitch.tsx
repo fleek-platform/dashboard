@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { PermissionsTooltip, SettingsBox } from '@/components';
 import { usePermissions } from '@/hooks/usePermissions';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Switch } from '@/ui';
 
 export type AllowAccessFromOfacCountriesSwitchProps = {

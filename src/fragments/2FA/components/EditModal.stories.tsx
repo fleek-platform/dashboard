@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Form } from '@/components';
-import type { Create2FAFormResponse, Create2FAFormValues } from '@/types/2FA';
+import { Create2FAFormResponse, Create2FAFormValues } from '@/types/2FA';
 
-import { EditModal, type EditModalProps } from './EditModal';
+import { EditModal, EditModalProps } from './EditModal';
 
 const meta: Meta = {
   title: 'Library/Fragments/2FA/Modals/Edit',

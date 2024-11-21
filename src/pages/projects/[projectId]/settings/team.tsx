@@ -14,8 +14,8 @@ import {
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Page } from '@/types/App';
-import type { HandleUpdateRoleProps } from '@/types/TeamProject';
+import { Page } from '@/types/App';
+import { HandleUpdateRoleProps } from '@/types/TeamProject';
 import { withAccess } from '@/utils/withAccess';
 
 const TeamPage: Page = () => {

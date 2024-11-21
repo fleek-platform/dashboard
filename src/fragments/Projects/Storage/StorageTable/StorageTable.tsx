@@ -73,7 +73,7 @@ export const StorageTable: React.FC = () => {
       const primaryDomain =
         privateGatewaysQuery.data?.privateGateways?.data[0].primaryDomain;
 
-      if (primaryDomain?.isVerified) {
+      if (primaryDomain && primaryDomain.isVerified) {
         // we should not have Primary Domain that are not Active but just to double check
         setPrivateGatewayDomain(primaryDomain.hostname);
       } else {

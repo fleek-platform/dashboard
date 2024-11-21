@@ -1,8 +1,8 @@
 import { LearnMoreMessage } from '@/components';
-import type { ChildrenProps } from '@/types/Props';
+import { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
-import type { MigrationRequest, OverallMigrationStatus } from './Migration';
+import { MigrationRequest, OverallMigrationStatus } from './Migration';
 import { MigrationStyles } from './Migration.styles';
 import { MigrationStatusBox } from './MigrationStatusBox';
 import { ProjectMigrationTable } from './ProjectMigrationTable';

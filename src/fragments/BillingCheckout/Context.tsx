@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import type { BillingPlan, CryptoPaymentOption } from '@/types/Billing';
-import type { ChildrenProps } from '@/types/Props';
+import { BillingPlan, CryptoPaymentOption } from '@/types/Billing';
+import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type BillingCheckoutContext = {

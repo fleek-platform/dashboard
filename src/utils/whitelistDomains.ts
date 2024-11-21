@@ -1,5 +1,5 @@
-import type { ApplicationQuery } from '@/generated/graphqlClient';
-import type { Credential } from '@/types/Credentials';
+import { ApplicationQuery } from '@/generated/graphqlClient';
+import { Credential } from '@/types/Credentials';
 
 type ParseWhiteListDomainsResponse = {
   __typename?: 'ApplicationWhitelistDomain' | 'ApplicationWhiteLabelDomain';

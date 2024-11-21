@@ -1,4 +1,4 @@
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Skeleton } from '@/ui';
 
 import { PreviewImageStyles as S } from './PreviewImage.styles';

@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { DomainStatus } from '@/generated/graphqlClient';
 
-import { CustomDomainBox, type CustomDomainBoxProps } from './CustomDomainBox';
+import { CustomDomainBox, CustomDomainBoxProps } from './CustomDomainBox';
 
 const meta: Meta = {
   title: 'Library/Components/Custom Domain Box',

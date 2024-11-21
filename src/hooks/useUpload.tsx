@@ -4,10 +4,10 @@ import { useClient } from 'urql';
 import { constants } from '@/constants';
 import {
   ListFolderDocument,
-  type ListFolderQuery,
-  type ListFolderQueryVariables,
+  ListFolderQuery,
+  ListFolderQueryVariables,
 } from '@/generated/graphqlClient';
-import type { Upload, UploadProgress, UploadStatus } from '@/types/Upload';
+import { Upload, UploadProgress, UploadStatus } from '@/types/Upload';
 import { Log } from '@/utils/log';
 
 import { useFleekSdk } from './useFleekSdk';
@@ -56,18 +56,22 @@ export const useUpload = () => {
       let uploadResult: UploadPinResponse | undefined;
 
       if (upload.type === 'file') {
-        uploadResult = await fleekSdk.storage().uploadFile({
-          file: upload.file as File,
-          parentFolderId,
-          onUploadProgress,
-        });
+        uploadResult = await fleekSdk
+          .storage()
+          .uploadFile({
+            file: upload.file as File,
+            parentFolderId,
+            onUploadProgress,
+          });
       } else {
-        uploadResult = await fleekSdk.storage().uploadVirtualDirectory({
-          files: upload.files as File[],
-          directoryName: upload.name,
-          parentFolderId,
-          onUploadProgress,
-        });
+        uploadResult = await fleekSdk
+          .storage()
+          .uploadVirtualDirectory({
+            files: upload.files as File[],
+            directoryName: upload.name,
+            parentFolderId,
+            onUploadProgress,
+          });
       }
 
       if (uploadResult) {

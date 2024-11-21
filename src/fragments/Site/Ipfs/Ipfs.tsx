@@ -1,5 +1,5 @@
 import { BadgeText, BoxWithFooter } from '@/components';
-import type { LoadingProps } from '@/types/Props';
+import { LoadingProps } from '@/types/Props';
 import { Skeleton, Text } from '@/ui';
 
 import { IpfsStyles as S } from './Ipfs.styles';

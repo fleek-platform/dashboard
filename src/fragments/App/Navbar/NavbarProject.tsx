@@ -13,8 +13,8 @@ import { useRouter } from '@/hooks/useRouter';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import type { Project } from '@/types/Project';
-import type { ChildrenProps } from '@/types/Props';
+import { Project } from '@/types/Project';
+import { ChildrenProps } from '@/types/Props';
 
 import { Navbar } from '../Navbar/Navbar';
 import { NavbarStyles as S } from './Navbar.styles';

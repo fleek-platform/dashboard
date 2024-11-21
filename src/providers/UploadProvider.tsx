@@ -1,16 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
-import {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from '@/hooks/useRouter';
 import { useUpload } from '@/hooks/useUpload';
-import type { ChildrenProps } from '@/types/Props';
-import type { Upload, UploadStatus } from '@/types/Upload';
+import { ChildrenProps } from '@/types/Props';
+import { Upload, UploadStatus } from '@/types/Upload';
 import { createContext } from '@/utils/createContext';
 
 import { useSessionContext } from './SessionProvider';
@@ -98,11 +92,9 @@ export const UploadProvider: React.FC<ChildrenProps> = ({ children }) => {
   const overallUploadStatus = useMemo(() => {
     if (uploads.some((upload) => upload.status === 'uploading')) {
       return 'uploading';
-    }
-    if (uploads.every((upload) => upload.status === 'error')) {
+    } else if (uploads.every((upload) => upload.status === 'error')) {
       return 'error';
-    }
-    if (uploads.some((upload) => upload.status === 'canceled')) {
+    } else if (uploads.some((upload) => upload.status === 'canceled')) {
       return 'canceled';
     }
 
