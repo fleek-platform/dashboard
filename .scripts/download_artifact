@@ -5,7 +5,7 @@ orgRepo="$2"
 targetArtifactFilename="$3"
 outputFilename="latestArtifact.zip"
 
-if [[ ! -z "$1" || ! -z "$2" || ! -z "$3" ]]; then
+if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
   echo "👹 Oops! Missing arguments, e.g. github token, organisation repository, artifact name, etc"
   exit 1
 fi
@@ -56,9 +56,9 @@ echo "✅ Got artifact id $latestArtifactId of name $latestArtifactName"
 
 if ! curl -sL \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $token" \
+  -H "Authorization: Bearer $ghToken" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  "https://api.github.com/repos/$org/$repo/actions/artifacts/$latestArtifactId/zip" \
+  "https://api.github.com/repos/$orgRepo/actions/artifacts/$latestArtifactId/zip" \
   --output "$outputFilename"; then
   echo "👹 Oops! Failed download the artifact id $latestArtifactId"
   exit 1
