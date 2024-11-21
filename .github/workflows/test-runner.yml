@@ -36,10 +36,19 @@ jobs:
       - name: Check for test run hash
         id: has_test_run_hash
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           name="test_run_hash"
           has_test_run_hash=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${name} | jq -r '.exists')
+
+          echo "[DEBUG] curl artifacts"
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${name}
+
+          echo "[DEBUG] gh run view"
+          gh run view --json artifacts --jq '.artifacts[].name'
     
           if [[ "$has_test_run_hash" = "true" ]]; then
             echo "has_test_run_hash=true" >> "$GITHUB_OUTPUT"
@@ -51,7 +60,7 @@ jobs:
 
       - name: Download test run hash artifact
         uses: actions/download-artifact@v4
-        if: ${{ steps.has_test_run-hash.output.has_test_run_hash == 'true'}}
+        if: ${{ steps.has_test_run_hash.output.has_test_run_hash == 'true'}}
         with:
           name: test_run_hash
           path: test_run_hash          
