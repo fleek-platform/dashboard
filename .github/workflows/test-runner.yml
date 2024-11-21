@@ -56,6 +56,8 @@ jobs:
           name: test_run_hash
           path: test_run_hash          
 
+      # It checks if a test has already run
+      # for the current source state
       - name: Check if test run required
         id: check_if_test_run_required
         shell: bash
