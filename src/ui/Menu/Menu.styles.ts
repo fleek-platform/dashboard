@@ -1,6 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-import { css, KeyFrames, styled } from '@/theme';
+import { KeyFrames, css, styled } from '@/theme';
 
 const Trigger = styled(DropdownMenu.Trigger, {
   cursor: 'pointer',

@@ -1,17 +1,18 @@
-import React, { Fragment, useCallback, useMemo, useState } from 'react';
+import type React from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 
-import { CustomTooltip, CustomTooltipProps } from '@/components';
+import { CustomTooltip, type CustomTooltipProps } from '@/components';
 import { useDebounce } from '@/hooks/useDebounce';
-import { sizes } from '@/theme/foundations';
+import type { sizes } from '@/theme/foundations';
 import { createContext } from '@/utils/createContext';
 
 import {
   Icon,
   Input as InputComponent,
-  InputFieldProps as InputProps,
+  type InputFieldProps as InputProps,
 } from '..';
 import { Divider } from '../Divider/Divider';
-import { IconName } from '../Icon/IconLibrary';
+import type { IconName } from '../Icon/IconLibrary';
 import { ComboboxStyles as S } from './Combobox.styles';
 
 const [Provider, useContext] = createContext<Combobox.Context<unknown>>({

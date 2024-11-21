@@ -1,6 +1,6 @@
 import { Link } from '@/components/Link/Link';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box, Scrollable, Skeleton, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 

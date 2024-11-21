@@ -1,4 +1,4 @@
-import {
+import type {
   SiteBuildSettingsData,
   SiteBuildSettingsOptions,
 } from '@fleek-platform/utils-sites';

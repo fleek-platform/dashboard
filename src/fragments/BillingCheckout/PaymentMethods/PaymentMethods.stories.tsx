@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { BillingPlan } from '@/types/Billing';
+import type { BillingPlan } from '@/types/Billing';
 
 import { BillingCheckoutProvider } from '../Context';
 import { PaymentMethods } from './PaymentMethods';

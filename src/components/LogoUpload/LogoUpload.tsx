@@ -1,10 +1,10 @@
-import { ChangeEventHandler, useRef, useState } from 'react';
+import { type ChangeEventHandler, useRef, useState } from 'react';
 
 import { constants } from '@/constants';
 import { useToast } from '@/hooks/useToast';
 import { forwardStyledRef } from '@/theme';
-import { HandleLogoUploadProps } from '@/types/Logo';
-import { DisabledProps } from '@/types/Props';
+import type { HandleLogoUploadProps } from '@/types/Logo';
+import type { DisabledProps } from '@/types/Props';
 import { Icon, Input } from '@/ui';
 import { AvatarMarble } from '@/ui/AvatarMarble/AvatarMarble';
 
@@ -49,7 +49,7 @@ export const LogoUpload: React.FC<LogoUploadProps> = forwardStyledRef<
     };
 
     const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
-      const selectedFile = event.target.files![0];
+      const selectedFile = event.target.files?.[0];
 
       if (!selectedFile) {
         return;

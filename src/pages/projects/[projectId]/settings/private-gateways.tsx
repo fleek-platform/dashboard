@@ -8,6 +8,10 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
 import {
+  ZoneDocument,
+  type ZoneQuery,
+  type ZoneQueryVariables,
+  ZoneStatus,
   useCreateDomainMutation,
   useCreatePrivateGatewayMutation,
   useCreateZoneForPrivateGatewayMutation,
@@ -16,16 +20,12 @@ import {
   usePrivateGatewaysQuery,
   useSelectPrimaryDomainMutation,
   useVerifyDomainMutation,
-  ZoneDocument,
-  ZoneQuery,
-  ZoneQueryVariables,
-  ZoneStatus,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { checkPeriodicallyUntil } from '@/utils/checkPeriodicallyUntil';
 import { withAccess } from '@/utils/withAccess';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 class PrivateGatewayCreationError extends Error {}
 

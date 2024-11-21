@@ -1,4 +1,4 @@
-import * as RadixAccordion from '@radix-ui/react-accordion';
+import type * as RadixAccordion from '@radix-ui/react-accordion';
 
 import { forwardStyledRef } from '@/theme';
 

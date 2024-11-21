@@ -14,7 +14,7 @@ import {
   useSiteRedeploy,
   useTriggerSiteDeployment,
 } from '@/hooks/useSiteRedeploy';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { Box, Button } from '@/ui';
 import { getSelfManagedFileSnippets } from '@/utils/getSelfManagedFileSnippets';
 import { getSiteCurrentDeployment } from '@/utils/getSiteCurrentDeployment';

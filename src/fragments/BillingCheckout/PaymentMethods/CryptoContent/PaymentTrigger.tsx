@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { constants } from '@/constants';
 import { useCryptoPaymentOptions } from '@/hooks/useCryptoPaymentOptions';
-import { CryptoPaymentOption } from '@/types/Billing';
-import { DisabledProps, LoadingProps } from '@/types/Props';
+import type { CryptoPaymentOption } from '@/types/Billing';
+import type { DisabledProps, LoadingProps } from '@/types/Props';
 import { Button, Combobox, FormField, Image } from '@/ui';
 
 import { useBillingCheckoutContext } from '../../Context';

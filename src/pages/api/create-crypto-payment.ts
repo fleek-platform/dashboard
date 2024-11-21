@@ -1,8 +1,8 @@
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import { DateTime } from 'luxon';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { CryptoPayment } from '@/types/Billing';
+import type { CryptoPayment } from '@/types/Billing';
 
 /**
  * Warning: This is a POC for creating a payment intent with Cryptomus.

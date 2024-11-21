@@ -333,7 +333,8 @@ const Step2: React.FC = () => {
             </S.Modal.CTARow>
           </>
         );
-      } else if (primaryWallet) {
+      }
+      if (primaryWallet) {
         // logged with wallet but no linked wallet is the ens owner, user should connect to that wallet
 
         return (
@@ -358,7 +359,8 @@ const Step2: React.FC = () => {
             </S.Modal.CTARow>
           </>
         );
-      } else if (linkedWalletEnsOwner) {
+      }
+      if (linkedWalletEnsOwner) {
         // logged with email but has a linked wallet that is the ens owner, user should connect to that wallet
 
         return (
@@ -381,26 +383,25 @@ const Step2: React.FC = () => {
             </S.Modal.CTARow>
           </>
         );
-      } else {
-        // logged with email but  but no linked wallet is the ens owner, user should link a new wallet
-
-        return (
-          <>
-            <Text>{constants.ENS_TEXTS.EMAIL_LOGGED_NO_LINKED_WALLET}</Text>
-            <WalletItem
-              title="Connect this Wallet:"
-              address={ensAddressOwner}
-              subtitle={`Owns ${ensNameSelected}`}
-            />
-
-            <S.Modal.CTARow>
-              <Button onClick={handleConnectWallet}>Connect wallet</Button>
-
-              <SettingsItemModal.CloseButton />
-            </S.Modal.CTARow>
-          </>
-        );
       }
+      // logged with email but  but no linked wallet is the ens owner, user should link a new wallet
+
+      return (
+        <>
+          <Text>{constants.ENS_TEXTS.EMAIL_LOGGED_NO_LINKED_WALLET}</Text>
+          <WalletItem
+            title="Connect this Wallet:"
+            address={ensAddressOwner}
+            subtitle={`Owns ${ensNameSelected}`}
+          />
+
+          <S.Modal.CTARow>
+            <Button onClick={handleConnectWallet}>Connect wallet</Button>
+
+            <SettingsItemModal.CloseButton />
+          </S.Modal.CTARow>
+        </>
+      );
     }
   };
 

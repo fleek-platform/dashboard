@@ -1,8 +1,9 @@
-import React, { ReactElement, ReactNode } from 'react';
+import type React from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { match } from 'ts-pattern';
 
-import { DisabledProps } from '@/types/Props';
-import { FormField, Input, InputVariants } from '@/ui';
+import type { DisabledProps } from '@/types/Props';
+import { FormField, Input, type InputVariants } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { useFormField } from '../FormProvider';

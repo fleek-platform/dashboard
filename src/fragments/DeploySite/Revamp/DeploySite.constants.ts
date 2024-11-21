@@ -1,5 +1,5 @@
 import { SourceProvider } from '@/generated/graphqlClient';
-import { IconName } from '@/ui';
+import type { IconName } from '@/ui';
 
 type MixedSourceProvider = SourceProvider | 'self';
 

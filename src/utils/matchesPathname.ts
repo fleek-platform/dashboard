@@ -17,7 +17,8 @@ export const matchesPathname = (pathname: string, asPath: string): boolean => {
     if (patternSeg.startsWith('[[') && patternSeg.endsWith(']]')) {
       catchAllEncountered = true;
       break;
-    } else if (patternSeg.startsWith('[...') && patternSeg.endsWith(']')) {
+    }
+    if (patternSeg.startsWith('[...') && patternSeg.endsWith(']')) {
       catchAllEncountered = true;
 
       if (pathSeg === 'MISSING') {
@@ -25,7 +26,8 @@ export const matchesPathname = (pathname: string, asPath: string): boolean => {
       }
 
       break;
-    } else if (patternSeg.startsWith('[') && patternSeg.endsWith(']')) {
+    }
+    if (patternSeg.startsWith('[') && patternSeg.endsWith(']')) {
       if (pathSeg === 'MISSING') {
         return false;
       }

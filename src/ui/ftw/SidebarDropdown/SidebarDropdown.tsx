@@ -1,9 +1,9 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import React from 'react';
+import type React from 'react';
 
 import { Link } from '@/components';
-import { ChildrenProps } from '@/types/Props';
-import { Icon, IconProps } from '@/ui/Icon/Icon';
+import type { ChildrenProps } from '@/types/Props';
+import { Icon, type IconProps } from '@/ui/Icon/Icon';
 import { cn } from '@/utils/cn';
 
 const DropdownSeparator = () => (

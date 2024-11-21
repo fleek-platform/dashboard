@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
-import { Toast } from '@/types/Toast';
+import type { ChildrenProps } from '@/types/Props';
+import type { Toast } from '@/types/Toast';
 import { createContext } from '@/utils/createContext';
 
 export type ToastContext = {

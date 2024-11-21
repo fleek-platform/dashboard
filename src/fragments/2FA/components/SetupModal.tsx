@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
 import {
   AlertBox,
@@ -8,8 +8,8 @@ import {
   Modal,
 } from '@/components';
 import { constants } from '@/constants';
-import { Create2FAFormResponse, Create2FAFormValues } from '@/types/2FA';
-import { LoadingProps } from '@/types/Props';
+import type { Create2FAFormResponse, Create2FAFormValues } from '@/types/2FA';
+import type { LoadingProps } from '@/types/Props';
 import { Button, Dialog, Divider, Icon, Stepper, Text } from '@/ui';
 
 import { Styles as S } from '../2FAStyles.styles';

@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { MigrationStatus } from '@/generated/graphqlClient';
 import { Box, Button } from '@/ui';
 
 import { MigrationStyles } from './Migration.styles';
-import { MigrationCard, MigrationCardProps } from './MigrationCard';
+import { MigrationCard, type MigrationCardProps } from './MigrationCard';
 
 const meta: Meta = {
   title: 'Library/Fragments/Migration/Card',

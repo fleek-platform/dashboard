@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 
-import { HandleLogoUploadProps } from '@/types/Logo';
+import type { HandleLogoUploadProps } from '@/types/Logo';
 import { Button } from '@/ui';
 
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';

@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { CodeSnippet, CodeSnippetProps } from './CodeSnippet';
+import { CodeSnippet, type CodeSnippetProps } from './CodeSnippet';
 
 const meta: Meta = {
   title: 'Library/Components/Code Snippet',

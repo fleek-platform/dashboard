@@ -1,6 +1,6 @@
 import { useToast } from '@/hooks/useToast';
 import { forwardStyledRef } from '@/theme';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Box, Button, Skeleton, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 

@@ -77,7 +77,8 @@ const FnDetailContent = ({
   });
   // skip fetching the content until size is known and less than X bytes
   const [ipfsContent] = useIpfsContent(
-    (pinQuery.data?.pin.size || Infinity) > FUNCTIONS_MAX_DISPLAY_BYTES
+    (pinQuery.data?.pin.size || Number.POSITIVE_INFINITY) >
+      FUNCTIONS_MAX_DISPLAY_BYTES
       ? undefined
       : cid,
   );

@@ -1,9 +1,9 @@
-import {
+import type {
   Folder as FolderModel,
   ListFolderQuery,
   PinsQuery,
 } from '@/generated/graphqlClient';
-import { IconName } from '@/ui';
+import type { IconName } from '@/ui';
 
 export type StorageProviderValue = 'arweave' | 'filecoin' | 'all';
 

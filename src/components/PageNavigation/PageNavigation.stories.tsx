@@ -1,9 +1,9 @@
 import { routes } from '@fleek-platform/utils-routes';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button, Icon } from '@/ui';
 
-import { PageNavigation, PageNavigationProps } from './PageNavigation';
+import { PageNavigation, type PageNavigationProps } from './PageNavigation';
 
 const meta: Meta = {
   title: 'Library/Components/Page Nav',

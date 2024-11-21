@@ -1,4 +1,4 @@
-import {
+import type {
   SiteFrameworksQuery,
   SiteQuery,
   SitesQuery,

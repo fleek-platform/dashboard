@@ -1,7 +1,7 @@
-import { MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 
 import { forwardStyledRef } from '@/theme';
-import { Icon, IconName } from '@/ui';
+import { Icon, type IconName } from '@/ui';
 
 import { AlertBoxStyles as S } from './AlertBox.styles';
 

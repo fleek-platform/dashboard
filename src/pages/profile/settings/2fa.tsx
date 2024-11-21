@@ -7,7 +7,7 @@ import {
   useUpdateSecretKeyMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { type Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const TwoFactorAuthentication: Page = () => {
   const toast = useToast();

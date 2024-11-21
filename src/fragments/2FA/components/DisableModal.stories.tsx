@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { type DisableModalProps, DisableModal } from './DisableModal';
+import { DisableModal, type DisableModalProps } from './DisableModal';
 
 const meta: Meta = {
   title: 'Library/Fragments/2FA/Modals/Disable',

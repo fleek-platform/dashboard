@@ -1,5 +1,5 @@
 import { Form } from '@/components';
-import { DisabledProps, LoadingProps } from '@/types/Props';
+import type { DisabledProps, LoadingProps } from '@/types/Props';
 
 type ValueFieldProps = LoadingProps<
   DisabledProps<{

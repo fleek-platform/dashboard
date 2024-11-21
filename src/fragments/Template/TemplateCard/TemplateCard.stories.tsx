@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { TemplateReviewStatus } from '@/generated/graphqlClient';
 import { Box } from '@/ui';
 
-import { TemplateCard, TemplateCardProps } from './TemplateCard';
+import { TemplateCard, type TemplateCardProps } from './TemplateCard';
 
 const meta: Meta = {
   title: 'Library/Fragments/Template/Card',

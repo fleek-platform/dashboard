@@ -2,7 +2,7 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import Package from '../package.json';
 import { secrets } from './secrets';
-import {
+import type {
   StorageProvider,
   StorageProviderValue,
 } from './types/StorageProviders';

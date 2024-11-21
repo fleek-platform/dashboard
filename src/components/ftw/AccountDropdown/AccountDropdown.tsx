@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useEnsAvatar, useEnsName } from 'wagmi';
 
 import { constants } from '@/constants';
-import { MeQuery, useMeQuery } from '@/generated/graphqlClient';
+import { type MeQuery, useMeQuery } from '@/generated/graphqlClient';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';

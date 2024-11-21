@@ -1,7 +1,7 @@
 import { capitalize } from 'lodash';
 
-import { type BadgeTextColor, BadgeText } from '@/components';
-import { type FleekFunctionStatus } from '@/generated/graphqlClient';
+import { BadgeText, type BadgeTextColor } from '@/components';
+import type { FleekFunctionStatus } from '@/generated/graphqlClient';
 
 type StatusBadgeProps = {
   status?: FleekFunctionStatus | string | null;

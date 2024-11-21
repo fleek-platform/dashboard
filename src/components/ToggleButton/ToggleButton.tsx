@@ -1,7 +1,7 @@
-import { forwardRef, MouseEventHandler } from 'react';
+import { type MouseEventHandler, forwardRef } from 'react';
 
-import { DisabledProps, LoadingProps } from '@/types/Props';
-import { Button, ButtonProps, IconName } from '@/ui';
+import type { DisabledProps, LoadingProps } from '@/types/Props';
+import { Button, type ButtonProps, type IconName } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { ToggleButtonStyles as S } from './ToggleButton.styles';

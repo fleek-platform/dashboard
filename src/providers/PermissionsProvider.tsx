@@ -1,4 +1,4 @@
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 import { useProjectContext } from './ProjectProvider';

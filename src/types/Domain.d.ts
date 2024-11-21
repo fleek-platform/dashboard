@@ -1,4 +1,7 @@
-import { Domain as GraphDomain, DomainQuery } from '@/generated/graphqlClient';
+import type {
+  DomainQuery,
+  Domain as GraphDomain,
+} from '@/generated/graphqlClient';
 
 export type Domain = Pick<
   GraphDomain,

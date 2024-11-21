@@ -1,6 +1,6 @@
 import { LearnMoreMessage } from '@/components';
 import { constants } from '@/constants';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Stepper, Text } from '@/ui';
 
 import { InstructionsStyles as S } from './Instructions.styles';

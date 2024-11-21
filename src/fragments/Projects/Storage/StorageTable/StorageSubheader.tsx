@@ -60,7 +60,7 @@ export const StorageSubheader: React.FC = () => {
         </Box>
       </S.Table.HeaderCell>
 
-      <S.Table.HeaderCell></S.Table.HeaderCell>
+      <S.Table.HeaderCell />
     </S.Table.Row>
   );
 };

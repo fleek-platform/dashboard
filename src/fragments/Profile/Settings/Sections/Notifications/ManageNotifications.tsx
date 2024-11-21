@@ -1,5 +1,6 @@
 import { groupBy, mapValues } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import { SettingsBox } from '@/components';
 import {
@@ -8,11 +9,11 @@ import {
 } from '@/generated/graphqlClient';
 
 import { ManageNotificationsStyles as S } from './ManageNotifications.style';
-import {
-  type NotificationsState,
-  NotificationsContext,
-} from './NotificationsContext';
 import { NotificationToggle } from './NotificationToggle';
+import {
+  NotificationsContext,
+  type NotificationsState,
+} from './NotificationsContext';
 
 export const ManageNotifications: React.FC = () => {
   const [notificationsQuery] = useNotificationsQuery();

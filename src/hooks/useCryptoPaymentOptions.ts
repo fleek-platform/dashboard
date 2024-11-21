@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { GetCryptoPaymentOptionsResponse } from '@/pages/api/get-crypto-payment-options';
+import type { GetCryptoPaymentOptionsResponse } from '@/pages/api/get-crypto-payment-options';
 
 export const useCryptoPaymentOptions = () => {
   return useQuery({

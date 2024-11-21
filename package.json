@@ -15,6 +15,7 @@
     "format:unsafe": "pnpm exec biome check --write --unsafe ./src",
     "lint": "pnpm exec biome lint --write --changed --no-errors-on-unmatched ./src",
     "lint:check": "pnpm exec biome lint ./src",
+    "lint:unsafe": "pnpm exec biome lint --write --unsafe --changed --no-errors-on-unmatched ./src",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",

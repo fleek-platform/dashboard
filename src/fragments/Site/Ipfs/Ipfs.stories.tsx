@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { Ipfs, IpfsProps } from './Ipfs';
+import { Ipfs, type IpfsProps } from './Ipfs';
 
 const meta: Meta = {
   title: 'Library/Fragments/Site/Ipfs',

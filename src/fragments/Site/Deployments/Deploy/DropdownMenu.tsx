@@ -10,7 +10,7 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteLink } from '@/hooks/useSiteLink';
 import { useToast } from '@/hooks/useToast';
-import { Deployment } from '@/types/Deployment';
+import type { Deployment } from '@/types/Deployment';
 import { Menu } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDeploymentLinkForRepository } from '@/utils/deployUtils';

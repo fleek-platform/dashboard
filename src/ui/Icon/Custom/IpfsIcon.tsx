@@ -1,4 +1,5 @@
-import React, { SVGProps } from 'react';
+import type React from 'react';
+import type { SVGProps } from 'react';
 
 export const IpfsIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (

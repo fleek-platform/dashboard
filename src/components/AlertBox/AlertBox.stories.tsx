@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { AlertBox, AlertBoxProps } from './AlertBox';
+import { AlertBox, type AlertBoxProps } from './AlertBox';
 
 const meta: Meta = {
   title: 'Library/Components/Alert Box',

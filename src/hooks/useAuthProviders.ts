@@ -40,7 +40,7 @@ const useAuthWithDynamic = (): AuthWith => {
       data: { authToken: dynamic.authToken, projectId },
     });
 
-    if (data && data.loginWithDynamic) {
+    if (data?.loginWithDynamic) {
       return data.loginWithDynamic;
     }
 

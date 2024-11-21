@@ -6,8 +6,8 @@ import * as zod from 'zod';
 import { Form, SettingsBox } from '@/components';
 import {
   CreateGithubAppInstallationUrlDocument,
-  CreateGithubAppInstallationUrlMutation,
-  CreateGithubAppInstallationUrlMutationVariables,
+  type CreateGithubAppInstallationUrlMutation,
+  type CreateGithubAppInstallationUrlMutationVariables,
   useCountSitesWithSourceProviderQuery,
   useCreateRepositoryFromTemplateMutation,
   useGitIntegrationQuery,
@@ -19,8 +19,8 @@ import { useGitUserAndOrganizations } from '@/hooks/useGitUserAndOrganizations';
 import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
-import { GitProvider } from '@/integrations/git';
-import { LoadingProps } from '@/types/Props';
+import type { GitProvider } from '@/integrations/git';
+import type { LoadingProps } from '@/types/Props';
 import {
   Avatar,
   Box,

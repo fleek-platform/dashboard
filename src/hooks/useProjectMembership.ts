@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useClient } from 'urql';
 
 import {
-  Membership,
+  type Membership,
   ProjectMembersDocument,
-  ProjectMembersQuery,
+  type ProjectMembersQuery,
   useMeQuery,
 } from '@/generated/graphqlClient';
 

@@ -1,6 +1,6 @@
-import { StyledComponent } from '@stitches/react/types/styled-component';
+import type { StyledComponent } from '@stitches/react/types/styled-component';
 import { forwardRef } from 'react';
-import { ForwardRefRenderFunction } from 'react';
+import type { ForwardRefRenderFunction } from 'react';
 
 import { styled } from '../themes';
 

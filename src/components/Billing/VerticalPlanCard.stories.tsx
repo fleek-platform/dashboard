@@ -1,8 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '@/ui';
 
-import { VerticalPlanCard, VerticalPlanCardProps } from './VerticalPlanCard';
+import {
+  VerticalPlanCard,
+  type VerticalPlanCardProps,
+} from './VerticalPlanCard';
 
 const meta: Meta = {
   title: 'Library/Components/Billing/Vertical Plan Card',

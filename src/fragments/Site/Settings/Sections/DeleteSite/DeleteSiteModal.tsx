@@ -1,5 +1,5 @@
 import { Form, SettingsDeleteModal } from '@/components';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 export type DeleteSiteModalProps = ChildrenProps<{

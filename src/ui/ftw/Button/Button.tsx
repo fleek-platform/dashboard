@@ -1,7 +1,7 @@
-import { cva, VariantProps } from 'class-variance-authority';
+import { type VariantProps, cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
-import { Icon, IconProps } from '@/ui';
+import { Icon, type IconProps } from '@/ui';
 import { cn } from '@/utils/cn';
 
 export const buttonIntent = {

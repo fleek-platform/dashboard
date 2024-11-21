@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/useToast';
-import { Folder, Pin } from '@/types/StorageProviders';
+import type { Folder, Pin } from '@/types/StorageProviders';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { bytesToSize } from '@/utils/fileSizeFormt';
 import {
@@ -84,7 +84,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
     if ('pin' in args) {
       try {
         copyToClipboard(args.pin.cid);
-        toast.success({ message: `Copied IPFS Hash to clipboard` });
+        toast.success({ message: 'Copied IPFS Hash to clipboard' });
       } catch (error) {
         toast.error({ message: 'Failed to copy IPFS Hash to clipboard' });
       }
@@ -99,7 +99,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
     if ('pin' in args && args.pin.filecoinPin?.deals[0]?.dealId) {
       try {
         copyToClipboard(`${args.pin.filecoinPin.deals[0].dealId}`);
-        toast.success({ message: `Copied Filecoin ID to clipboard` });
+        toast.success({ message: 'Copied Filecoin ID to clipboard' });
       } catch (error) {
         toast.error({ message: 'Failed to copy Filecoin ID to clipboard' });
       }
@@ -114,7 +114,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
     if ('pin' in args && args.pin.arweavePin?.bundlrId) {
       try {
         copyToClipboard(args.pin.arweavePin.bundlrId);
-        toast.success({ message: `Copied Arweave ID to clipboard` });
+        toast.success({ message: 'Copied Arweave ID to clipboard' });
       } catch (error) {
         toast.error({ message: 'Failed to copy Arweave ID to clipboard' });
       }

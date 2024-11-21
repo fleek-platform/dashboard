@@ -21,7 +21,7 @@ export const checkPeriodicallyUntil = async <T>({
     throw new CheckPeriodicallyUntilError();
   }
 
-  if (abortSignal && abortSignal.aborted) {
+  if (abortSignal?.aborted) {
     return null; // or throw new Error("Aborted");
   }
 
@@ -34,7 +34,7 @@ export const checkPeriodicallyUntil = async <T>({
   return new Promise<T | null>((resolve, reject) => {
     const timeoutId = setTimeout(async () => {
       // If it's aborted, we stop the recursion and resolve with null
-      if (abortSignal && abortSignal.aborted) {
+      if (abortSignal?.aborted) {
         resolve(null);
 
         return;

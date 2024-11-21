@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { CryptoPaymentNetwork, CryptoPaymentOption } from '@/types/Billing';
+import type {
+  CryptoPaymentNetwork,
+  CryptoPaymentOption,
+} from '@/types/Billing';
 
 /**
  * Warning: This is a POC for getting payment token options for Cryptomus.

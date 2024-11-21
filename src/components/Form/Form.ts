@@ -1,4 +1,3 @@
-import { createExtraValidation } from './createExtraValidation';
 import {
   FormProvider,
   useForm,
@@ -7,6 +6,7 @@ import {
 } from './FormProvider';
 import { InputField } from './InputField/InputField';
 import { SubmitButton } from './SubmitButton/SubmitButton';
+import { createExtraValidation } from './createExtraValidation';
 
 export const Form = {
   useForm: useForm,

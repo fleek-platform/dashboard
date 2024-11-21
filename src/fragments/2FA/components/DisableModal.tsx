@@ -1,5 +1,5 @@
 import { Modal } from '@/components';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button, Dialog, Text } from '@/ui';
 
 export type DisableModalProps = {

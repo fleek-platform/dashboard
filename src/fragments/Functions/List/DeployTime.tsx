@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 import { Text } from '@/ui';
 

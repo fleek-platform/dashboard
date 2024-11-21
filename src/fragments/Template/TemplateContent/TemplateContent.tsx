@@ -1,11 +1,11 @@
-import React from 'react';
+import type React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import { ComingSoon } from '@/components';
 import { TemplateNotFoundError, useReadme } from '@/hooks/useReadme';
-import { LoadingProps } from '@/types/Props';
-import { Template } from '@/types/Template';
+import type { LoadingProps } from '@/types/Props';
+import type { Template } from '@/types/Template';
 import { Icon, Image, Skeleton, Text } from '@/ui';
 
 import { TemplateContentStyles as S } from './TemplateContent.styles';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import zod from 'zod';
 
 import { Form, SettingsDeleteModal } from '@/components';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { useDeleteFunction } from './Context';

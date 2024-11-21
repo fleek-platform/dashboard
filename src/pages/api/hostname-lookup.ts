@@ -1,4 +1,4 @@
-import { lookup as domainLookup } from 'dns/promises';
+import { lookup as domainLookup } from 'node:dns/promises';
 import { lookup } from 'ipfs-geoip';
 import type { NextApiRequest, NextApiResponse } from 'next';
 

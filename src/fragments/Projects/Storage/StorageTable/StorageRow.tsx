@@ -2,8 +2,8 @@ import { DateTime } from 'luxon';
 
 import { BadgeText, ExternalLink } from '@/components';
 import { useUploadContext } from '@/providers/UploadProvider';
-import { LoadingProps } from '@/types/Props';
-import { Folder, Pin } from '@/types/StorageProviders';
+import type { LoadingProps } from '@/types/Props';
+import type { Folder, Pin } from '@/types/StorageProviders';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 import { shortStringFormat } from '@/utils/stringFormat';
@@ -116,7 +116,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
       </S.Table.Cell>
       <S.Table.Cell>
         <RS.StorageProviders.Container>
-          {pin && pin.storedOnArweave && (
+          {pin?.storedOnArweave && (
             <RS.BadgeText
               colorScheme="slate"
               onClick={handleCopyArweaveId}
@@ -131,7 +131,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
             </RS.BadgeText>
           )}
 
-          {pin && pin.storedOnFilecoin && (
+          {pin?.storedOnFilecoin && (
             <RS.BadgeText
               colorScheme="slate"
               onClick={handleCopyFilecoinDealId}

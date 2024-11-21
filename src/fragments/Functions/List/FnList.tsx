@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { AlertBox } from '@/components';
 import { Functions as F } from '@/fragments';
 import {
+  type UseFunctionsListArgs,
   useFunctionsList,
-  UseFunctionsListArgs,
 } from '@/hooks/useFunctionsList';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';

@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { BadgeText, SettingsListItem } from '@/components';
 import {
-  GitProvidersQuery,
   GitProviderTags,
-  SiteDeploymentRequirements,
+  type GitProvidersQuery,
+  type SiteDeploymentRequirements,
   useSiteDeploymentRequirementsMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
@@ -51,15 +51,14 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
           result.error ||
           new Error('Unexpected error getting provider requirements')
         );
-      } else {
-        setStatus((prevStatus) => {
-          if (prevStatus !== result.data?.siteDeploymentRequirements) {
-            return result.data?.siteDeploymentRequirements;
-          }
-
-          return prevStatus;
-        });
       }
+      setStatus((prevStatus) => {
+        if (prevStatus !== result.data?.siteDeploymentRequirements) {
+          return result.data?.siteDeploymentRequirements;
+        }
+
+        return prevStatus;
+      });
     } catch (error) {
       setErrorFetching(true);
 

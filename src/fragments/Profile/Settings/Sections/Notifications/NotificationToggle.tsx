@@ -1,8 +1,8 @@
 import React, { type MouseEventHandler, useCallback } from 'react';
 
 import {
-  type NotificationType,
   NotificationChannel,
+  type NotificationType,
   useUpdateNotificationSettingsMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';

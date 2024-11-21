@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { Link } from '@/components/Link/Link';
 import {
@@ -6,7 +6,7 @@ import {
   AvatarMarble,
   Box,
   Icon,
-  IconName,
+  type IconName,
   Skeleton,
   Text,
 } from '@/ui';
@@ -30,23 +30,20 @@ const Breadcrumb: React.FC<BreadcrumbItem> = (breadcrumb) => {
         </Box>
       )}
 
-      {'avatar' in breadcrumb && (
-        <>
-          {breadcrumb.avatar ? (
-            <Avatar
-              src={breadcrumb.avatar}
-              enableIcon
-              icon="image"
-              className="shrink-0 rounded-sm size-4"
-            />
-          ) : (
-            <AvatarMarble
-              name={breadcrumb.id}
-              className="shrink-0 rounded-sm size-4"
-            />
-          )}
-        </>
-      )}
+      {'avatar' in breadcrumb &&
+        (breadcrumb.avatar ? (
+          <Avatar
+            src={breadcrumb.avatar}
+            enableIcon
+            icon="image"
+            className="shrink-0 rounded-sm size-4"
+          />
+        ) : (
+          <AvatarMarble
+            name={breadcrumb.id}
+            className="shrink-0 rounded-sm size-4"
+          />
+        ))}
 
       <Text
         variant="primary"

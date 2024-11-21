@@ -1,7 +1,7 @@
-import { ChildrenProps } from '@/types/Props';
-import { IconName, Tooltip } from '@/ui';
+import type { ChildrenProps } from '@/types/Props';
+import { type IconName, Tooltip } from '@/ui';
 
-import { colorScheme, IconTooltipStyles as S } from './IconTooltip.styles';
+import { IconTooltipStyles as S, type colorScheme } from './IconTooltip.styles';
 
 export type IconTooltipProps = ChildrenProps<{
   side: Tooltip.Content['side'];

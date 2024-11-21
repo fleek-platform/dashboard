@@ -1,5 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import { VersionTags } from '@/components/Version/VersionTags';
 import { constants } from '@/constants';
@@ -12,12 +13,12 @@ import { useUserHasScrolled } from '@/hooks/useUserHasScrolled';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import {
   Box,
   Button,
   Icon,
-  IconName,
+  type IconName,
   Scrollable,
   SidebarSidepanel,
   Skeleton,
@@ -33,7 +34,7 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { Link } from '../../Link/Link';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
-import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { type BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
 
 export type NavigationItem = {
   icon: IconName;
@@ -172,7 +173,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [flags]);
 
   return (
-    <Box className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full" role="menu" aria-label="main menu">
+    <Box
+      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
+      role="menu"
+      aria-label="main menu"
+    >
       <Box className="gap-3">
         <Box className="gap-4">
           <Box className="flex-row justify-between">

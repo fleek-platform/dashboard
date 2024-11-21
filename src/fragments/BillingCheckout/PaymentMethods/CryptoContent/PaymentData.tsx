@@ -2,7 +2,7 @@ import { DateTime, Duration } from 'luxon';
 import { useEffect, useState } from 'react';
 
 import { useToast } from '@/hooks/useToast';
-import { CryptoPayment } from '@/types/Billing';
+import type { CryptoPayment } from '@/types/Billing';
 import { Button, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 
-import { GitProvider } from '@/integrations/git/interfaces/GitProvider';
+import type { GitProvider } from '@/integrations/git/interfaces/GitProvider';
 
 import { useGitProvider } from './useGitProvider';
 import { useSiteFrameworks } from './useSiteFrameworks';

@@ -36,7 +36,7 @@ export const useQueryPagination = ({
       return;
     }
 
-    if (!queryPage || !isNumeric(queryPage) || parseInt(queryPage) < 1) {
+    if (!queryPage || !isNumeric(queryPage) || Number.parseInt(queryPage) < 1) {
       setPage(() => 1);
       router.replace({ pathname, query: getQueryParam(1) }, undefined, {
         shallow: true,
@@ -45,8 +45,8 @@ export const useQueryPagination = ({
       return;
     }
 
-    setPage(parseInt(queryPage));
-  }, [page, , queryPage, router, pathname]);
+    setPage(Number.parseInt(queryPage));
+  }, [page, undefined, queryPage, router, pathname]);
 
   const handlePageChange = (page: number) => {
     router.push({ pathname, query: getQueryParam(page) }, undefined, {

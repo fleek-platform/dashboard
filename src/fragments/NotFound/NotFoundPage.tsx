@@ -2,7 +2,7 @@ import { FleekLogoDotted, LayoutHead } from '@/components';
 import { QueryClientProvider } from '@/providers/QueryClientProvider';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import { forwardStyledRef } from '@/theme';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { App } from '../App/App';

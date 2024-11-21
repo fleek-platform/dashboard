@@ -1,62 +1,62 @@
-import { Client } from 'urql';
-import { createPublicClient, http } from 'viem';
+import type { Client } from 'urql';
+import { http, createPublicClient } from 'viem';
 import { mainnet } from 'viem/chains';
 import { normalize } from 'viem/ens';
 
 import { constants } from '@/constants';
 import {
   ApplicationNameAvailabilityDocument,
-  ApplicationNameAvailabilityQuery,
-  ApplicationNameAvailabilityQueryVariables,
+  type ApplicationNameAvailabilityQuery,
+  type ApplicationNameAvailabilityQueryVariables,
   DomainAvailabilityDocument,
-  DomainAvailabilityQuery,
-  DomainAvailabilityQueryVariables,
+  type DomainAvailabilityQuery,
+  type DomainAvailabilityQueryVariables,
   EmailAvailabilityDocument,
-  EmailAvailabilityQuery,
-  EmailAvailabilityQueryVariables,
+  type EmailAvailabilityQuery,
+  type EmailAvailabilityQueryVariables,
   EnsNameAvailabilityDocument,
-  EnsNameAvailabilityQuery,
-  EnsNameAvailabilityQueryVariables,
+  type EnsNameAvailabilityQuery,
+  type EnsNameAvailabilityQueryVariables,
   FleekFunctionDetailDocument,
-  FleekFunctionDetailQuery,
-  FleekFunctionDetailQueryVariables,
+  type FleekFunctionDetailQuery,
+  type FleekFunctionDetailQueryVariables,
   FolderNameAvailabilityInParentFolderDocument,
-  FolderNameAvailabilityInParentFolderQuery,
-  FolderNameAvailabilityInParentFolderQueryVariables,
+  type FolderNameAvailabilityInParentFolderQuery,
+  type FolderNameAvailabilityInParentFolderQueryVariables,
   PersonalAccessTokensDocument,
-  PersonalAccessTokensQuery,
-  PersonalAccessTokensQueryVariables,
+  type PersonalAccessTokensQuery,
+  type PersonalAccessTokensQueryVariables,
   PinNameAvailabilityInParentFolderDocument,
-  PinNameAvailabilityInParentFolderQuery,
-  PinNameAvailabilityInParentFolderQueryVariables,
+  type PinNameAvailabilityInParentFolderQuery,
+  type PinNameAvailabilityInParentFolderQueryVariables,
   PrivateGatewayNameAvailabilityDocument,
-  PrivateGatewayNameAvailabilityQuery,
-  PrivateGatewayNameAvailabilityQueryVariables,
+  type PrivateGatewayNameAvailabilityQuery,
+  type PrivateGatewayNameAvailabilityQueryVariables,
   ProjectsDocument,
-  ProjectsQuery,
-  ProjectsQueryVariables,
+  type ProjectsQuery,
+  type ProjectsQueryVariables,
   SecretAvailabilityDocument,
-  SecretAvailabilityQuery,
-  SecretAvailabilityQueryVariables,
+  type SecretAvailabilityQuery,
+  type SecretAvailabilityQueryVariables,
   SiteNameAvailabilityDocument,
-  SiteNameAvailabilityQuery,
-  SiteNameAvailabilityQueryVariables,
+  type SiteNameAvailabilityQuery,
+  type SiteNameAvailabilityQueryVariables,
   SlugAvailabilityDocument,
-  SlugAvailabilityQuery,
-  SlugAvailabilityQueryVariables,
+  type SlugAvailabilityQuery,
+  type SlugAvailabilityQueryVariables,
   TemplateNameAvailabilityDocument,
-  TemplateNameAvailabilityQuery,
-  TemplateNameAvailabilityQueryVariables,
+  type TemplateNameAvailabilityQuery,
+  type TemplateNameAvailabilityQueryVariables,
   UsernameAvailabilityDocument,
-  UsernameAvailabilityQuery,
-  UsernameAvailabilityQueryVariables,
+  type UsernameAvailabilityQuery,
+  type UsernameAvailabilityQueryVariables,
 } from '@/generated/graphqlClient';
-import { GitProvider } from '@/integrations/git';
+import type { GitProvider } from '@/integrations/git';
 import { Icon } from '@/ui';
 import { isUniqueName } from '@/utils/isUniqueName';
 
 import { ExternalLink } from '../ExternalLink/ExternalLink';
-import { FormController } from './FormController';
+import type { FormController } from './FormController';
 
 export const createExtraValidation = {
   username: (client: Client) => async (username: string) => {
@@ -454,7 +454,7 @@ export const createExtraValidation = {
   },
 
   siteSecret:
-    (client: Client, siteId: string = '') =>
+    (client: Client, siteId = '') =>
     async (key: string) => {
       try {
         const result = await client

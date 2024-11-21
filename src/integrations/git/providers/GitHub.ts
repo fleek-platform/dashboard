@@ -2,7 +2,7 @@ import { SiteBuildSettings } from '@fleek-platform/utils-sites';
 import { DateTime } from 'luxon';
 import { Octokit } from 'octokit';
 
-import { GitProvider } from '../interfaces/GitProvider';
+import type { GitProvider } from '../interfaces/GitProvider';
 
 export class GitHub implements GitProvider {
   private octokit: Octokit;
@@ -247,9 +247,8 @@ export class GitHub implements GitProvider {
           throw new GitHubError(
             `Repository "${repositoryName}" already exists in your GitHub account.`,
           );
-        } else {
-          throw error;
         }
+        throw error;
       }
     };
 
@@ -361,8 +360,4 @@ export class GitHub implements GitProvider {
 type GitFileMeta = { path: string; sha: string };
 type GitFileContent = { path: string; content: string };
 
-class GitHubError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
+class GitHubError extends Error {}

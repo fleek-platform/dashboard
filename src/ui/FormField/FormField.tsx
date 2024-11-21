@@ -1,10 +1,15 @@
-import React, { createContext, forwardRef, useContext } from 'react';
+import type React from 'react';
+import { createContext, forwardRef, useContext } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
 import { Box } from '../Box/Box';
-import { Input, InputHintProps, InputLabelProps } from '../ftw/Input/Input';
+import {
+  Input,
+  type InputHintProps,
+  type InputLabelProps,
+} from '../ftw/Input/Input';
 
 const FormFieldContext = createContext({
   error: false,

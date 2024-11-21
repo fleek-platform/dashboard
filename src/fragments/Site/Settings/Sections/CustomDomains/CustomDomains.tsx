@@ -15,7 +15,7 @@ import { Button } from '@/ui';
 import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 
 import {
-  SettingsItemContext,
+  type SettingsItemContext,
   SettingsItemProvider,
   useSettingsItemContext,
 } from '../../Elements/SettingsItem.context';

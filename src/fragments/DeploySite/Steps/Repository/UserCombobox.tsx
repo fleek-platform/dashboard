@@ -2,14 +2,14 @@ import { useClient } from 'urql';
 
 import {
   CreateGithubAppInstallationUrlDocument,
-  CreateGithubAppInstallationUrlMutation,
-  CreateGithubAppInstallationUrlMutationVariables,
+  type CreateGithubAppInstallationUrlMutation,
+  type CreateGithubAppInstallationUrlMutationVariables,
   useCountSitesWithSourceProviderQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { GitProvider } from '@/integrations/git';
-import { LoadingProps } from '@/types/Props';
+import type { GitProvider } from '@/integrations/git';
+import type { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, Icon } from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 

@@ -1,11 +1,11 @@
-import React, { ComponentPropsWithRef, useMemo } from 'react';
+import React, { type ComponentPropsWithRef, useMemo } from 'react';
 
 import { forwardStyledRef } from '@/theme';
 
-import { Text } from '../ftw/Text/Text';
 import { Icon } from '../Icon/Icon';
-import { IconName } from '../Icon/IconLibrary';
-import { ImageProps } from '../Image/Image';
+import type { IconName } from '../Icon/IconLibrary';
+import type { ImageProps } from '../Image/Image';
+import { Text } from '../ftw/Text/Text';
 import { AvatarStyles as S } from './Avatar.styles';
 
 export type AvatarProps = {

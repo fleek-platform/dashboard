@@ -1,4 +1,4 @@
-import { GitProvider } from '@/integrations/git';
+import type { GitProvider } from '@/integrations/git';
 
 type GetLinkForRepositoryArgs = {
   provider: GitProvider.Name;

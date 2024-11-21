@@ -29,9 +29,9 @@ export const typography = {
   },
 
   fonts: {
-    heading: `var(--font-atyp)`,
-    body: `var(--font-plex)`,
-    mono: `var(--font-plex)`,
+    heading: 'var(--font-atyp)',
+    body: 'var(--font-plex)',
+    mono: 'var(--font-plex)',
   },
 
   fontSizes: {

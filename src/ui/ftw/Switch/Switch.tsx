@@ -1,5 +1,5 @@
 import * as RadixSwitch from '@radix-ui/react-switch';
-import { cva, VariantProps } from 'class-variance-authority';
+import { type VariantProps, cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
 import { cn } from '@/utils/cn';

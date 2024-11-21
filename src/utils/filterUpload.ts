@@ -1,7 +1,7 @@
 import { uuid } from 'uuidv4';
 
 import { constants } from '@/constants';
-import { Upload } from '@/types/Upload';
+import type { Upload } from '@/types/Upload';
 
 import { bytesToSize } from './fileSizeFormt';
 

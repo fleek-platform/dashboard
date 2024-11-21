@@ -1,6 +1,6 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { type UseMutationOptions, useMutation } from '@tanstack/react-query';
 
-import { CryptoPayment } from '@/types/Billing';
+import type { CryptoPayment } from '@/types/Billing';
 
 export const useCryptoPaymentCheckout = (
   args: CryptoPaymentCheckoutArgs = {},

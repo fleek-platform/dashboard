@@ -17,7 +17,7 @@ const getRandomColor = (number: number, colors: string[], range: number) => {
 };
 
 const getDigit = (number: number, ntn: number) => {
-  return Math.floor((number / Math.pow(10, ntn)) % 10);
+  return Math.floor((number / 10 ** ntn) % 10);
 };
 
 const getUnit = (number: number, range: number, index?: number) => {
@@ -25,9 +25,8 @@ const getUnit = (number: number, range: number, index?: number) => {
 
   if (index && getDigit(number, index) % 2 === 0) {
     return -value;
-  } else {
-    return value;
   }
+  return value;
 };
 
 const ELEMENTS = 4;
@@ -39,7 +38,7 @@ type GenerateColorsArgs = {
 
 export const generateColors = ({ name, colors }: GenerateColorsArgs) => {
   const numFromName = hashCode(name);
-  const range = colors && colors.length;
+  const range = colors?.length;
 
   const elementsProperties = Array.from({ length: ELEMENTS }, (_, i) => ({
     color: getRandomColor(numFromName + i, colors, range),

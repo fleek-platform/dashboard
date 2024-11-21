@@ -1,6 +1,6 @@
-import { SubNavigationItem, SubNavigationLayout } from '@/components';
+import { type SubNavigationItem, SubNavigationLayout } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 
 import { SiteLayout } from '../Layout';
 

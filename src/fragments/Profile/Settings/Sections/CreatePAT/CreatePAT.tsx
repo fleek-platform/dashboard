@@ -1,6 +1,6 @@
 import { Form, LearnMoreMessage, SettingsBox } from '@/components';
 import { constants } from '@/constants';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Dialog } from '@/ui';
 
 import { CreatePATModal } from './CreatePATModal';

@@ -1,6 +1,6 @@
 import { constants } from '@/constants';
 import { useBlogArticles } from '@/hooks/useBlogArticles';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Skeleton, Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';

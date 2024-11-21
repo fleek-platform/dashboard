@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { useClient } from 'urql';
 
 import { useVersionQuery } from '@/generated/graphqlClient';
@@ -11,7 +11,7 @@ const InternalComponent: React.FC = () => {
 
   const version = `${secrets?.COMMIT_HASH?.slice(0, 7) ?? '...'} / ${versionQuery.data?.version.commitHash?.slice(0, 7) ?? '...'}`;
 
-  return <VersionTagsStyles.Text role="show-version-tags">{version}</VersionTagsStyles.Text>;
+  return <VersionTagsStyles.Text>{version}</VersionTagsStyles.Text>;
 };
 
 export const VersionTags: React.FC = () => {

@@ -36,7 +36,7 @@ export const SelfManagedSetupStyles = {
     flexDirection: 'row',
     alignItems: 'center',
 
-    [`> span`]: {
+    '> span': {
       textSize: '$sm',
       textCategory: '$tertiary',
       color: '$text-secondary',

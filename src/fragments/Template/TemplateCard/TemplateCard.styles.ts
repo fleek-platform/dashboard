@@ -91,7 +91,7 @@ export const TemplateCardStyles = {
             backgroundColor: '$surface-logo !important',
             fontSize: '$2xs',
 
-            [`> span`]: {
+            '> span': {
               color: '$surface-monochrome !important',
             },
           },

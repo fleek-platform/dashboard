@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { GitProvider } from '@/integrations/git/interfaces/GitProvider';
+import type { GitProvider } from '@/integrations/git/interfaces/GitProvider';
 import { GitHub } from '@/integrations/git/providers/GitHub';
 import { MockedGitProvider } from '@/integrations/git/providers/MockedGitProvider';
 
@@ -15,8 +15,6 @@ export const useGitProvider = ({
     switch (provider) {
       case 'github':
         return useGithub;
-      case 'gitlab':
-      case 'bitbucket':
       default:
         return useMockedGitProvider; // TODO: remove mocked provider
     }

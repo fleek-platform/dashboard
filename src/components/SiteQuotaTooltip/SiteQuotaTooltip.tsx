@@ -1,8 +1,8 @@
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 
 import {
   CustomTooltip,
-  CustomTooltipProps,
+  type CustomTooltipProps,
 } from '../CustomTooltip/CustomTooltip';
 
 export type SiteQuotaTooltipProps = ChildrenProps<
@@ -26,7 +26,9 @@ export const SiteQuotaTooltip: React.FC<SiteQuotaTooltipProps> = ({
 
   return (
     <CustomTooltip
-      content={`Maximum deployment queue reached, re-deployment is disabled. Please try again later`}
+      content={
+        'Maximum deployment queue reached, re-deployment is disabled. Please try again later'
+      }
       side={side}
       {...props}
     >

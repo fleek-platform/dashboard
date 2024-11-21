@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const BillingPage: Page = () => {
@@ -78,15 +78,11 @@ const ComingSoonPage: React.FC = () => {
   return (
     <ComingSoon.Modal
       imgSrc={`/assets/static/${resolvedTheme}/billing-coming-soon.png`}
-      modalContent={
-        <>
-          <ComingSoon.Modal.Description>
-            Soon we will introduce a credit-based billing system to Fleek, with
-            a usage-based model. Pay storage, hosting, and other Fleek services
-            granularly and only by usage with crypto or credit-card.
-          </ComingSoon.Modal.Description>
-        </>
-      }
+      modalContent=<ComingSoon.Modal.Description>
+        Soon we will introduce a credit-based billing system to Fleek, with a
+        usage-based model. Pay storage, hosting, and other Fleek services
+        granularly and only by usage with crypto or credit-card.
+      </ComingSoon.Modal.Description>
     >
       <ComingSoon.Skeleton.Container>
         <ComingSoon.Skeleton.Box>

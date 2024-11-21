@@ -1,9 +1,12 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '@/ui';
 
 import { BadgeText } from '../BadgeText/BadgeText';
-import { SettingsListItem, SettingsListItemProps } from './SettingsListItem';
+import {
+  SettingsListItem,
+  type SettingsListItemProps,
+} from './SettingsListItem';
 
 const meta: Meta = {
   title: 'Library/Components/Settings List Item',

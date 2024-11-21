@@ -1,8 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '@/ui';
 
-import { UpgradePlanModal, UpgradePlanModalProps } from './UpgradePlanModal';
+import {
+  UpgradePlanModal,
+  type UpgradePlanModalProps,
+} from './UpgradePlanModal';
 
 const meta: Meta = {
   title: 'Library/Fragments/Billing/Upgrade Plan Modal',

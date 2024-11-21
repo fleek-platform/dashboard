@@ -1,7 +1,7 @@
 import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import {
   DynamicContextProvider,
-  WalletConnector,
+  type WalletConnector,
 } from '@dynamic-labs/sdk-react-core';
 import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
 
@@ -56,9 +56,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         },
       }}
     >
-      <DynamicWagmiConnector>
-        <>{children}</>
-      </DynamicWagmiConnector>
+      <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
     </DynamicContextProvider>
   );
 };

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { constants } from '@/constants';
-import { ChildrenProps } from '@/types/Props';
-import { StorageProvider as StorageProviderType } from '@/types/StorageProviders';
+import type { ChildrenProps } from '@/types/Props';
+import type { StorageProvider as StorageProviderType } from '@/types/StorageProviders';
 import { createContext } from '@/utils/createContext';
 
 export const modalType = {

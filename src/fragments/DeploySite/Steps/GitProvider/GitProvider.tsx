@@ -4,21 +4,21 @@ import { useClient } from 'urql';
 
 import { BadgeText, Form, Link } from '@/components';
 import {
-  GitAccessTokenQuery,
+  type GitAccessTokenQuery,
   GitProviderDocument,
-  GitProviderQuery,
-  GitProviderQueryVariables,
+  type GitProviderQuery,
+  type GitProviderQueryVariables,
   GitProviderTags,
   useCreateGithubAppAuthorizationUrlMutation,
 } from '@/generated/graphqlClient';
-import { GitAccessTokenQueryVariables } from '@/generated/graphqlClient';
+import type { GitAccessTokenQueryVariables } from '@/generated/graphqlClient';
 import { GitAccessTokenDocument } from '@/generated/graphqlClient';
 import { usePollAccessTokens } from '@/hooks/usePollAccessTokens';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { GitHub, GitProvider } from '@/integrations/git';
+import { GitHub, type GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button, Icon, Stepper, Text } from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 

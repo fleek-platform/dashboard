@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { UseQueryState } from 'urql';
+import type { UseQueryState } from 'urql';
 
 import { BadgeText, PreviewImage, SiteOverviewBox } from '@/components';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteLink } from '@/hooks/useSiteLink';
-import { DeploymentStatus } from '@/types/Deployment';
-import { Site } from '@/types/Site';
+import type { DeploymentStatus } from '@/types/Deployment';
+import type { Site } from '@/types/Site';
 import { Icon, Text } from '@/ui';
 import { statusDataMap } from '@/utils/deployUtils';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -121,7 +121,7 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
           projectId={projectId}
           siteId={siteId}
           siteLink={siteLink}
-          isDisabled={!Boolean(currentDeployment)}
+          isDisabled={!currentDeployment}
         />
 
         {/* IPFS View */}

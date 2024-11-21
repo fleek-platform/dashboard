@@ -1,12 +1,12 @@
-import { Domain } from '@/types/Domain';
-import { LoadingProps } from '@/types/Props';
-import { SiteENSRecord } from '@/types/Site';
+import type { Domain } from '@/types/Domain';
+import type { LoadingProps } from '@/types/Props';
+import type { SiteENSRecord } from '@/types/Site';
 import { Button, Skeleton, Text } from '@/ui';
 
 import { BadgeText, Link, PermissionsTooltip } from '..';
 import {
   BoxWithFooter,
-  BoxWithFooterProps,
+  type BoxWithFooterProps,
 } from '../BoxWithFooter/BoxWithFooter';
 import { CustomDomainBoxStyles as S } from './CustomDomainBox.styles';
 

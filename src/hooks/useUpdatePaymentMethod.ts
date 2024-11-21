@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
 import { useCookies } from '@/providers/CookiesProvider';
-import { CheckoutResponse } from '@/types/Billing';
+import type { CheckoutResponse } from '@/types/Billing';
 import { Log } from '@/utils/log';
 
 import { useRouter } from './useRouter';
@@ -20,7 +20,7 @@ export const useUpdatePaymentMethod = () => {
   const updatePaymentMethod = useCallback(async () => {
     try {
       const response = await backendApi.fetch({
-        url: `/api/v1/payment-methods/manage`,
+        url: '/api/v1/payment-methods/manage',
         method: 'PUT',
         body: JSON.stringify({ projectId }),
       });

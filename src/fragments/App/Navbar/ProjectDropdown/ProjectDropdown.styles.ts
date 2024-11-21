@@ -46,7 +46,7 @@ export const ProjectDropdownStyles = {
     borderRadius: '$sm',
 
     '&:hover': {
-      backgroundColor: `$surface-actionable`,
+      backgroundColor: '$surface-actionable',
     },
 
     [`${Avatar}`]: {

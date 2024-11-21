@@ -1,14 +1,14 @@
 import { constants } from '@fleek-platform/utils-permissions';
 import { useCallback, useMemo } from 'react';
-import { AnyVariables, OperationResult, UseMutationResponse } from 'urql';
+import type { AnyVariables, OperationResult, UseMutationResponse } from 'urql';
 
-import { FormController } from '@/components/Form/FormController';
+import type { FormController } from '@/components/Form/FormController';
 import {
-  TwoFactorProtectedActionType,
+  type TwoFactorProtectedActionType,
   useGetSecretKeysQuery,
   useProtectedActionsQuery,
 } from '@/generated/graphqlClient';
-import { TokenSubmitArgs } from '@/types/2FA';
+import type { TokenSubmitArgs } from '@/types/2FA';
 
 import { useTwoFactorModal } from './ModalProvider';
 

@@ -1,4 +1,4 @@
-import { UpdateSecretMutationVariables } from '@/generated/graphqlClient';
+import type { UpdateSecretMutationVariables } from '@/generated/graphqlClient';
 import { createContext } from '@/utils/createContext';
 
 export type ManageEnvironmentVariablesContext = {

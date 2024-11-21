@@ -2,7 +2,8 @@ import {
   createTemplateSchema,
   updateTemplateSchema,
 } from '@fleek-platform/utils-validation';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { useClient } from 'urql';
 
 import { BannerField, Form, SettingsModal } from '@/components';
@@ -11,7 +12,7 @@ import {
   useUpdateTemplateMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Text } from '@/ui';
 
 export type TemplateUpdateModalProps = ChildrenProps<{ templateId: string }> &

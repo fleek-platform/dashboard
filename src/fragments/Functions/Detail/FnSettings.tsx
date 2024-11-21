@@ -1,11 +1,12 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { isEmpty } from 'lodash';
-import React, { type PropsWithChildren, useCallback, useState } from 'react';
+import type React from 'react';
+import { type PropsWithChildren, useCallback, useState } from 'react';
 
 import { AlertBox, LearnMoreMessage, SettingsBox } from '@/components';
 import {
   FleekFunctionStatus,
-  UpdateFleekFunctionDataInput,
+  type UpdateFleekFunctionDataInput,
   useUpdateFleekFunctionMutation,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';

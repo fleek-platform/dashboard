@@ -19,10 +19,9 @@ export const extractGitHubDetailsFromURL = (url: string): GitHubDetails => {
       username: match[1],
       repoName: match[2],
     };
-  } else {
-    return {
-      username: undefined,
-      repoName: undefined,
-    };
   }
+  return {
+    username: undefined,
+    repoName: undefined,
+  };
 };

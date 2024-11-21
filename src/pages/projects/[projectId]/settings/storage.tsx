@@ -1,9 +1,9 @@
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
-import { UpdateProjectDataInput } from '@/generated/graphqlClient';
+import type { UpdateProjectDataInput } from '@/generated/graphqlClient';
 import { useUpdateProject } from '@/hooks/useUpdateProject';
-import { Page } from '@/types/App';
-import { StorageProviderValue } from '@/types/StorageProviders';
+import type { Page } from '@/types/App';
+import type { StorageProviderValue } from '@/types/StorageProviders';
 import { withAccess } from '@/utils/withAccess';
 
 const StoragePage: Page = () => {

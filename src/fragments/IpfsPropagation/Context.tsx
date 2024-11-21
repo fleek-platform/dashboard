@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from '@/hooks/useRouter';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type IpfsPropagationContext = {
@@ -185,7 +185,7 @@ const reduceToInitialState = (hostnameList: string[]) => {
 };
 
 const GATEWAY_STATE = {
-  PENDING: Infinity,
+  PENDING: Number.POSITIVE_INFINITY,
   ERROR: 0,
   CANCELLED: -1,
 } as const;

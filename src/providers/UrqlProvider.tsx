@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { createUrqlClient, UrqlProviderComponent } from '@/integrations';
+import { UrqlProviderComponent, createUrqlClient } from '@/integrations';
 
 import { useCookies } from './CookiesProvider';
 

@@ -1,4 +1,4 @@
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Menu, Skeleton, Text } from '@/ui';
 
 export type FolderNavigationProps = {

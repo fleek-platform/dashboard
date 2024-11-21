@@ -1,9 +1,9 @@
 import { LearnMoreMessage, SettingsBox } from '@/components';
 import { constants } from '@/constants';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 
-import { DeleteSiteModal, DeleteSiteModalProps } from './DeleteUserModal';
+import { DeleteSiteModal, type DeleteSiteModalProps } from './DeleteUserModal';
 
 export type DeleteUserProps = LoadingProps<
   Pick<DeleteSiteModalProps, 'username'>

@@ -3,15 +3,15 @@ import { useState } from 'react';
 
 import { BannerField, ExternalLink, Form, SettingsModal } from '@/components';
 import {
-  TemplateCategoriesQuery,
+  type TemplateCategoriesQuery,
   useProjectsQuery,
   useSitesQuery,
   useTemplateCategoriesQuery,
 } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Project } from '@/types/Project';
-import { ChildrenProps } from '@/types/Props';
-import { SiteListItem } from '@/types/Site';
+import type { Project } from '@/types/Project';
+import type { ChildrenProps } from '@/types/Props';
+import type { SiteListItem } from '@/types/Site';
 import { Avatar, Box, Button, Combobox, FormField, Stepper, Text } from '@/ui';
 
 export type CreateTemplateModalProps = ChildrenProps;

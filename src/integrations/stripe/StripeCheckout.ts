@@ -1,16 +1,19 @@
 import {
+  type Stripe,
+  type StripeElements,
+  type StripeElementsOptionsMode,
   loadStripe,
-  Stripe,
-  StripeElements,
-  StripeElementsOptionsMode,
 } from '@stripe/stripe-js';
 
-import { ThemeHook } from '@/providers/ThemeProvider';
+import type { ThemeHook } from '@/providers/ThemeProvider';
 import { secrets } from '@/secrets';
-import { BillingPlan } from '@/types/Billing';
+import type { BillingPlan } from '@/types/Billing';
 import { Log } from '@/utils/log';
 
-import { createElementsAppearance, ThemeArgs } from './createElementsArguments';
+import {
+  type ThemeArgs,
+  createElementsAppearance,
+} from './createElementsArguments';
 
 export class StripeCheckout {
   private stripe: Stripe | null = null;

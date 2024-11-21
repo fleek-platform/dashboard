@@ -136,14 +136,17 @@ describe('On Project settings page', () => {
       });
 
       it('Should have Delete Project text', async ({ page }) => {
-        await expect(page.getByRole('button', { name: 'Delete project' })).toBeVisible();
+        await expect(
+          page.getByRole('button', { name: 'Delete project' }),
+        ).toBeVisible();
       });
 
       describe('On Settings navigation to Storage', () => {
         beforeEach(async ({ page }) => {
           page
             .getByRole('navigation')
-            .getByRole('menuitem', { name: 'storage' }).click();
+            .getByRole('menuitem', { name: 'storage' })
+            .click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`;
           await page.waitForURL(url, {
             waitUntil: 'domcontentloaded',
@@ -161,7 +164,9 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Save changes button', async ({ page }) => {
-          await expect(page.getByRole('button', { name: 'Save storage layer changes' })).toBeVisible();
+          await expect(
+            page.getByRole('button', { name: 'Save storage layer changes' }),
+          ).toBeVisible();
         });
       });
 
@@ -190,7 +195,9 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Create Private Gateway button', async ({ page }) => {
-          await expect(page.getByRole('button', { name: 'Create private gateway' })).toBeDisabled();
+          await expect(
+            page.getByRole('button', { name: 'Create private gateway' }),
+          ).toBeDisabled();
         });
 
         describe('On Private Gateway user input', async () => {
@@ -235,15 +242,24 @@ describe('On Project settings page', () => {
         beforeEach(async ({ page }) => {
           page
             .getByRole('navigation')
-            .getByRole('menuitem', { name: 'application credentials' }).click();
+            .getByRole('menuitem', { name: 'application credentials' })
+            .click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
           // To help assert correct page
-          await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
+          await expect(
+            page.getByText(
+              'Create an application token to authenticate with the Fleek SDK.',
+            ),
+          ).toBeVisible();
         });
 
-        it('Should have Application Credentials table items', async ({ page }) => {
-          const table = page.getByRole('table', { name: 'application credential list' });
+        it('Should have Application Credentials table items', async ({
+          page,
+        }) => {
+          const table = page.getByRole('table', {
+            name: 'application credential list',
+          });
           const rowCount = await table.getByRole('row').count();
           expect(rowCount > 1).toBeTruthy();
         });
@@ -268,7 +284,7 @@ describe('On Project settings page', () => {
         beforeEach(async ({ page }) => {
           await page.route('**/graphql', async (route) => {
             if (!shouldOverrideApplications) route.continue();
-            
+
             const request = route.request();
             const postData = request.postDataJSON();
 
@@ -284,18 +300,27 @@ describe('On Project settings page', () => {
               await route.continue();
             }
           });
-         
+
           page
             .getByRole('navigation')
-            .getByRole('menuitem', { name: 'application credentials' }).click();
+            .getByRole('menuitem', { name: 'application credentials' })
+            .click();
           const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
           // To help assert correct page
-          await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
+          await expect(
+            page.getByText(
+              'Create an application token to authenticate with the Fleek SDK.',
+            ),
+          ).toBeVisible();
         });
 
         it('Should have Application Credentials text', async ({ page }) => {
-          await expect(page.getByText('Create an application token to authenticate with the Fleek SDK.')).toBeVisible();
+          await expect(
+            page.getByText(
+              'Create an application token to authenticate with the Fleek SDK.',
+            ),
+          ).toBeVisible();
         });
 
         it('Should have Manage Credentials text', async ({ page }) => {
@@ -303,7 +328,9 @@ describe('On Project settings page', () => {
         });
 
         it('Should have Save changes button', async ({ page }) => {
-          await expect(page.getByRole('button', { name: 'Create application credential' })).toBeVisible();
+          await expect(
+            page.getByRole('button', { name: 'Create application credential' }),
+          ).toBeVisible();
         });
 
         it('Should have credentials empty text', async ({ page }) => {

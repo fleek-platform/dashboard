@@ -1,5 +1,5 @@
 import { SettingsBox, SettingsListItem } from '@/components';
-import { SiteENSRecord } from '@/types/Site';
+import type { SiteENSRecord } from '@/types/Site';
 
 import { EnsRecordsListItem } from './EnsRecordsListItem';
 

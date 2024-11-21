@@ -1,4 +1,4 @@
-import { Icon, IconName, Menu } from '@/ui';
+import { Icon, type IconName, Menu } from '@/ui';
 
 import { Link } from '../Link/Link';
 

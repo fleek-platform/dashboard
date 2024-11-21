@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { AlertBox, Modal } from '@/components';
 import { Button, Dialog, Text } from '@/ui';
 
-import { RecoveryCodes, RecoveryCodesProps } from './RecoveryCodes';
+import { RecoveryCodes, type RecoveryCodesProps } from './RecoveryCodes';
 
 export type RecoveryCodesModalProps = Omit<
   RecoveryCodesProps,

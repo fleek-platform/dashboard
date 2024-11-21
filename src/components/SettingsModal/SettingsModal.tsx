@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 

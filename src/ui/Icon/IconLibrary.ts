@@ -27,12 +27,12 @@ import {
   HamburgerMenuIcon,
   ImageIcon,
   InfoCircledIcon,
-  Link2Icon as SecondaryLinkIcon,
   MagnifyingGlassIcon,
   MoonIcon,
   PlusCircledIcon,
   PlusIcon,
   RocketIcon,
+  Link2Icon as SecondaryLinkIcon,
   SunIcon,
 } from '@radix-ui/react-icons';
 
@@ -60,9 +60,9 @@ import { DialogIcon } from './Custom/DialogIcon';
 import { DiscordIcon } from './Custom/DiscordIcon';
 import { DocumentLockIcon } from './Custom/DocumentLockIcon';
 import { DownloadIcon } from './Custom/DownloadIcon';
+import { EnsColoredIcon } from './Custom/ENSColoredIcon';
 import { EllipsisCircleIcon } from './Custom/EllipsisCircleIcon';
 import { EmailIcon } from './Custom/EmailIcon';
-import { EnsColoredIcon } from './Custom/ENSColoredIcon';
 import { EthereumIcon } from './Custom/EthereumIcon';
 import { ExpandIcon } from './Custom/ExpandIcon';
 import { FilecoinColoredIcon } from './Custom/FilecoinColoredIcon';
@@ -71,8 +71,8 @@ import { FleekName } from './Custom/FleekName';
 import { GearIcon } from './Custom/GearIcon';
 import { GitBranchIcon } from './Custom/GitBranchIcon';
 import { GitCommitIcon } from './Custom/GitCommitIcon';
-import { GitLabIcon } from './Custom/GitlabIcon';
 import { GitPullRequest } from './Custom/GitPullRequest';
+import { GitLabIcon } from './Custom/GitlabIcon';
 import { GlobeFilledIcon } from './Custom/GlobeFilledIcon';
 import { GridIcon } from './Custom/GridIcon';
 import { HomeIcon } from './Custom/HomeIcon';

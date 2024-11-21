@@ -1,9 +1,9 @@
 import {
-  QueryClient,
   QueryClientProvider as Provider,
+  QueryClient,
 } from '@tanstack/react-query';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 
 const queryClient = new QueryClient({
   defaultOptions: {

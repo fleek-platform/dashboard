@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { useClient } from 'urql';
 
-import { MigrationRequest } from '@/fragments';
+import type { MigrationRequest } from '@/fragments';
 import {
   MigrationRequestsDocument,
-  MigrationRequestsQuery,
-  MigrationRequestsQueryVariables,
+  type MigrationRequestsQuery,
+  type MigrationRequestsQueryVariables,
 } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';

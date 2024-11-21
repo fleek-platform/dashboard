@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useGitUserAndOrganizations } from '@/hooks/useGitUserAndOrganizations';
 import { useGitUserRepositories } from '@/hooks/useGitUserRepositories';
 import { useToast } from '@/hooks/useToast';
-import { GitProvider } from '@/integrations/git/interfaces/GitProvider';
+import type { GitProvider } from '@/integrations/git/interfaces/GitProvider';
 import { Input, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';

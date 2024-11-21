@@ -9,7 +9,7 @@ import {
   useEnsRecordStatusQuery,
 } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
-import { EnsRecord } from '@/types/EnsRecord';
+import type { EnsRecord } from '@/types/EnsRecord';
 import { Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
@@ -203,14 +203,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           return (
             <>
               {hasVerifyENSPermission && (
-                <>
-                  <SettingsListItem.DropdownMenuItem
-                    icon="check"
-                    onClick={handleOpenEnsModal}
-                  >
-                    Verify
-                  </SettingsListItem.DropdownMenuItem>
-                </>
+                <SettingsListItem.DropdownMenuItem
+                  icon="check"
+                  onClick={handleOpenEnsModal}
+                >
+                  Verify
+                </SettingsListItem.DropdownMenuItem>
               )}
             </>
           );
@@ -218,14 +216,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         .with(EnsRecordStatus.VERIFYING_FAILED, () => (
           <>
             {hasVerifyENSPermission && (
-              <>
-                <SettingsListItem.DropdownMenuItem
-                  icon="refresh"
-                  onClick={handleOpenEnsModal}
-                >
-                  Retry Verification
-                </SettingsListItem.DropdownMenuItem>
-              </>
+              <SettingsListItem.DropdownMenuItem
+                icon="refresh"
+                onClick={handleOpenEnsModal}
+              >
+                Retry Verification
+              </SettingsListItem.DropdownMenuItem>
             )}
           </>
         ))

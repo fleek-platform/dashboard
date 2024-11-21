@@ -4,7 +4,7 @@ import { BadgeText, CustomTooltip, ExternalLink } from '@/components';
 import { useGatewayTest } from '@/hooks/useGatewayTest';
 import { useHostnameLookup } from '@/hooks/useHostnameLookup';
 import { useToast } from '@/hooks/useToast';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Box, Button, Icon, Image, Skeleton, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getLinkForIPFSCountryFlag } from '@/utils/getLinkForIPFSCountryFlag';
@@ -72,7 +72,7 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
           <Text variant="tertiary">-</Text>
         ) : (
           <CustomTooltip content={responseTimesString} side="top">
-            <Box className={`flex flex-row`}>
+            <Box className={'flex flex-row'}>
               {(gatewayTest.data?.responseTime && (
                 <Box className="flex flex-row items-start group-hover:underline">
                   <Text
@@ -93,7 +93,7 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
       </CellWithSkeleton>
 
       <CellWithSkeleton isLoading={domainCountry.isLoading}>
-        <Box className={`flex flex-row`}>
+        <Box className={'flex flex-row'}>
           {domainCountry.data ? (
             <BadgeText colorScheme="slate">
               <Image

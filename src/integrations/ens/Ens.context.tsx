@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Address } from 'viem';
+import type { Address } from 'viem';
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 import { abi } from './contracts/EnsPublicRegistryAbi';

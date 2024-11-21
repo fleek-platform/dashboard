@@ -10,16 +10,16 @@ import {
   useVerifySecretKeyMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { RecoveryCodes as Codes, SecretKey } from '@/types/2FA';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { RecoveryCodes as Codes, SecretKey } from '@/types/2FA';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Icon, Text } from '@/ui';
-import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getManualSecret, getURI } from '@/utils/TOTP';
+import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import { Styles } from './2FAStyles.styles';
+import { TwoFactorAuthentication } from './TwoFactorAuthentication';
 import { EditModal } from './components/EditModal';
 import { RecoveryCodesModal } from './components/RecoveryCodesModal';
-import { TwoFactorAuthentication } from './TwoFactorAuthentication';
 
 type ManageProps = LoadingProps<{ secretKey: SecretKey }> & {
   updateSecretKey: () => Promise<SecretKey | undefined>;

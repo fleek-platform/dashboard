@@ -15,8 +15,8 @@ import { constants } from '@/constants';
 import { TwoFactorAuthentication } from '@/fragments';
 import {
   ProjectsDocument,
-  ProjectsQuery,
-  ProjectsQueryVariables,
+  type ProjectsQuery,
+  type ProjectsQueryVariables,
   TwoFactorProtectedActionType,
   useCreateProjectMutation,
   useDeleteProjectMutation,
@@ -27,12 +27,12 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useCookies } from '@/providers/CookiesProvider';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 
 import {
   DeleteProjectModal,
-  DeleteProjectModalProps,
+  type DeleteProjectModalProps,
 } from './DeleteProjectModal';
 
 export type DeleteProjectProps = LoadingProps<
