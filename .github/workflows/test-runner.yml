@@ -20,6 +20,9 @@ jobs:
     timeout-minutes: 5
     outputs:
       should_run_tests: ${{ steps.check_if_test_run_required.outputs.should_run_tests }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,7 +47,6 @@ jobs:
       # executing test runs for unchanged source
       - name: Check for test run hash
         id: has_test_run_hash
-        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -74,7 +76,6 @@ jobs:
       # for the current source state
       - name: Check if test run required
         id: check_if_test_run_required
-        shell: bash
         run: |
           if [[ ! -f test_run_hash ]]; then
             echo "should_run_tests=true" >> "$GITHUB_OUTPUT"
@@ -145,7 +146,6 @@ jobs:
           run_install: false
 
       - name: Get pnpm store directory
-        shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
