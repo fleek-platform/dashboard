@@ -3,7 +3,6 @@ import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
 
-// TODO: Remove this TIAS. Used for triggering test trigger 
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
     const projectId = 'cls4v91mt0001l708wu51eozd';
