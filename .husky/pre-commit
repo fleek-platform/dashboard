@@ -1,21 +1,48 @@
 #!/bin/bash
 
+show_user_test_prompt() {
+  # Redirect user input
+  exec < /dev/tty
+  local answer
+
+  while read -rp "💍 Do you want to run tests now? (yes/no) " ans; do
+    if [[ "$ans" == [nN] || "$ans" == [nN][oO] ]]; then
+      echo "🙄 Skipped! But remember to run tests often, please!"
+
+      break;
+    elif [[ "$ans" == [yY] || "$ans" == [yY][eE][sS] ]]; then    
+      if ! pnpm test; then
+        echo "🦖 Failed to commit due to unhealthy tests. Fix it and try again!"
+        exit 1
+      fi
+
+      break;
+    fi
+
+    echo "💩 Uh-oh! We expect a yes or no answer. Try again..."
+  done
+}
+
 echo "🚑 Health check, please be patient..."
 echo
 
-while read -rp "💍 Do you want to run tests now? (yes/no) " ans; do
-  if [[ "$ans" == [nN] || "$ans" == [nN][oO] ]]; then
-    echo "🙄 Skipped! But remember to run tests often, please!"
+show_user_test_prompt
 
-    break;
-  elif [[ "$ans" == [yY] || "$ans" == [yY][eE][sS] ]]; then    
-    if ! pnpm test; then
-      echo "🦖 Failed to commit due to unhealthy tests. Fix it and try again!"
-      exit 1
-    fi
+if pnpm run format:check; then
+  echo "✅ Code format checked!"
+else
+  echo "⚠️ WARNING: Incorrect code format, fix it before committing, please!"
+  echo "💡 Use the command pnpm format"
+  exit 1
+fi
 
-    break;
-  fi
+if pnpm run lint:check; then
+  echo "✅ Linter check is good!"
+else
+  echo "⚠️ WARNING: Linter found issues, fix them before committing, please!"
+  echo "💡 Use the command pnpm lint"
+  exit 1
+fi
 
-  echo "💩 Uh-oh! We expect a yes or no answer. Try again..."
-done
+echo "👍 Health check completed."
+echo
