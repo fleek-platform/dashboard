@@ -33,37 +33,41 @@ jobs:
 
           echo "✅ Local tests were run!"
 
+      # A test run hash is an artifact
+      # generated after a succesful test
+      # We can use this information to prevent
+      # executing test runs for unchanged source
       - name: Check for test run hash
         id: has_test_run_hash
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          name="test_run_hash"
-          has_test_run_hash=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${name} | jq -r '.exists')
+          ghToken="$GITHUB_TOKEN"
+          orgRepo="${{ github.repository }}"
+          targetArtifactFilename="test_run_hash"
 
-          echo "[DEBUG] curl artifacts"
-          curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${name}
+          if ! .scripts/download_artifact "$ghToken" "$orgRepo" "$targetArtifactFilename"; then
+            echo "👹 Oops! Failed to download artifact $targetArtifactFilename"
+            exit 1
+          fi
 
-          echo "[DEBUG] gh run view"
-          gh run view --json artifacts --jq '.artifacts[].name'
+          source .scripts/test_runner_vars
+          current_hash=$(.scripts/hash_dir "$csv_paths")
+          expected="[TEST_RUN] $current_hash"
+          artifact_content=$(cat "$targetArtifactFilename")
 
-          echo "[DEBUG] gh api"
-          gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[].name'
-    
-          if [[ "$has_test_run_hash" = "true" ]]; then
-            echo "has_test_run_hash=true" >> "$GITHUB_OUTPUT"
+          if [[ "$artifact_content" = "$expected" ]]; then
+            echo "match=true" >> "$GITHUB_OUTPUT"
             echo "✅ Found a test run hash"
           else
-            echo "has_test_run_hash=false" >> "$GITHUB_OUTPUT"
+            echo "match=false" >> "$GITHUB_OUTPUT"
             echo "⚠️A test run hash wasn't found"
           fi
 
       - name: Download test run hash artifact
         uses: actions/download-artifact@v4
-        if: ${{ steps.has_test_run_hash.output.has_test_run_hash == 'true'}}
+        if: ${{ steps.has_test_run_hash.output.match == 'true'}}
         with:
           name: test_run_hash
           path: test_run_hash          
