@@ -82,9 +82,8 @@ jobs:
             source .scripts/test_runner_vars
 
             latest_test_run_hash=$(cat test_run_hash)
-            expected_hash=$(.scripts/hash_dir "$csv_paths")
-
-            echo "[debug] latest_test_run_hash = $latest_test_run_hash, expected_hash = $expected_hash"
+            current_hash=$(.scripts/hash_dir "$csv_paths")
+            expected_hash="[TEST_RUN] $current_hash"
 
             if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
               echo "⚠️ Tests already ran successfully!"
