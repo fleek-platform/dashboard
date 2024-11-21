@@ -26,7 +26,11 @@ show_user_test_prompt() {
 echo "🚑 Health check, please be patient..."
 echo
 
-show_user_test_prompt
+if [[ -z "$CI" ]]; then
+  show_user_test_prompt
+else
+  echo "🦖 Automated CI run detected - skipping test prompt"
+fi
 
 # TODO: There are several linter warnings
 # Can't auto-fix, have to be revised manually
