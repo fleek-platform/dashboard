@@ -49,6 +49,9 @@ jobs:
 
           echo "[DEBUG] gh run view"
           gh run view --json artifacts --jq '.artifacts[].name'
+
+          echo "[DEBUG] gh api"
+          gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[].name'
     
           if [[ "$has_test_run_hash" = "true" ]]; then
             echo "has_test_run_hash=true" >> "$GITHUB_OUTPUT"
