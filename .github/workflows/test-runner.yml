@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   push:
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   checkups:
     runs-on: ubuntu-latest
