@@ -33,22 +33,22 @@ jobs:
 
           echo "✅ Local tests were run!"
 
-      # TODO: Cache should be cleared on failure
-      # alternavely, use artifacts to create file
-      # with job run success status
-      - uses: actions/cache@v4
-        id: cache_test_run_hash_state
+      - name: Download test run hash artifact
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            .tests/hash
-          key: ${{ runner.os }}-test-runner-${{ hashFiles('.tests/hash') }}
+          name: test-run-hash
+          path: test-run-hash          
 
       - name: Check if test run required
         id: check_if_test_run_required
+        shell: bash
         run: |
-          cache_hit="${{ steps.cache_test_run_hash_state.outputs.cache-hit }}"
+          source .scripts/test_runner_vars
 
-          if [[ "$cache_hit" = "true" ]]; then
+          latest_test_run_hash=$(cat test-run-hash)
+          expected_hash=$(.scripts/hash_dir "$csv_paths")
+
+          if [[ "$latest_test_run_hash" = "$expected_hash" ]]; then
             echo "⚠️ Tests already ran successfully!"
             echo "should_run_tests=false" >> "$GITHUB_OUTPUT"
           else
@@ -132,4 +132,18 @@ jobs:
         env:
           PLAYWRIGHT_WORKERS: 2
         run: |
-          pnpm test
+          if ! pnpm test; then
+            echo "👹 Oops! Test run failed"
+            exit 1
+          fi
+
+          if ! cp .tests/hash test-run-hash; then
+            echo "👹 Oops! Failed to save test hash artifact"
+            exit 1
+          fi
+
+      - name: Upload test run hash artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-run-hash
+          path: test-run-hash
