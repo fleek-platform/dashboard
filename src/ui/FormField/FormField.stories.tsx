@@ -1,4 +1,3 @@
-// TODO: Fix type, remove any
 import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
@@ -53,7 +52,8 @@ export const WithCombobox: Story = {
   render: () => {
     const ComboboxExample = () => {
       const selected = useState<string>();
-
+      // TODO: Investigate why inferred type fails
+      // using any temporaly
       return (
         <Combobox
           items={['Option 1', 'Option 2', 'Option 3']}
@@ -62,9 +62,9 @@ export const WithCombobox: Story = {
           {({ Field, Options }) => (
             <>
               <Field placeholder="Select an option">
-                {(selected) => selected}
+                {(selected: any) => selected}
               </Field>
-              <Options>{(item) => item}</Options>
+              <Options>{(item: any) => item}</Options>
             </>
           )}
         </Combobox>

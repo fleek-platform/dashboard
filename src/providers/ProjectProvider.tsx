@@ -37,6 +37,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const cookies = useCookies();
   const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
     pause: !auth.token,
+    variables: {},
   });
   const [, createProject] = useCreateProjectMutation();
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =

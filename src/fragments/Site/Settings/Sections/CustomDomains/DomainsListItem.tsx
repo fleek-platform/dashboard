@@ -17,7 +17,6 @@ import {
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { TEST_ID } from '@/test/testId';
 import { SiteDomain } from '@/types/Site';
 import { Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -119,7 +118,6 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
       subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
       title={hostname}
       titleSuffix={hostnameSuffix}
-      testId={TEST_ID.DOMAINS_LIST_ITEM}
     >
       {flags.enableDnsLink && dnslinkStatus && (
         <DnsLinkBadge
