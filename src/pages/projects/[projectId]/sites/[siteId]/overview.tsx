@@ -173,7 +173,7 @@ const PageNavContent: React.FC = () => {
   const site = siteQuery.data?.site;
 
   const isSelfManaged = isSiteSelfManaged(site);
-  const siteLink = useSiteLink({ siteId });
+  const siteLink = useSiteLink({ siteId }) || '#';
 
   const handleRedeploy = async () => {
     await triggerDeploy.mutateAsync({ siteId });

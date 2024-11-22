@@ -114,7 +114,7 @@ const Step2: React.FC = () => {
         the from the{' '}
         <ExternalLink
           className="inline-flex"
-          colorScheme="yellow"
+          variant="accent"
           href="https://app.fleek.xyz/templates"
         >
           Templates

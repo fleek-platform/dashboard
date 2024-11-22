@@ -45,8 +45,7 @@ export const useMainNavigationItems = () => {
     hasStorageSettingsPermission ||
     hasPrivateGatewaysPermission ||
     hasApplicationCredentialsPermission ||
-    hasTeamMembersPermission ||
-    hasBillingPermission;
+    hasTeamMembersPermission;
 
   const projectId = session.project?.id;
 
@@ -69,10 +68,6 @@ export const useMainNavigationItems = () => {
 
     if (hasTeamMembersPermission) {
       return routes.project.settings.team({ projectId });
-    }
-
-    if (hasBillingPermission) {
-      return routes.project.settings.billing({ projectId });
     }
 
     return '';
@@ -106,6 +101,13 @@ export const useMainNavigationItems = () => {
       label: 'Functions',
       path: routes.project.function.list({ projectId }),
       hasAccess: true,
+    },
+    {
+      icon: 'credit-card',
+      label: 'Billing',
+      path: routes.project.billing({ projectId }),
+      hasAccess: hasBillingPermission,
+      showNewTag: true,
     },
     {
       icon: 'gear',

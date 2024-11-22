@@ -42,7 +42,7 @@ export const CancelDeploymentModal: React.FC<CancelDeploymentModalProps> = ({
 
         <Modal.CTARow>
           <Dialog.Close asChild>
-            <Button intent="neutral" className="flex-1">
+            <Button intent="ghost" className="flex-1">
               Never mind
             </Button>
           </Dialog.Close>

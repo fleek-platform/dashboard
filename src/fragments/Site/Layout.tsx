@@ -144,7 +144,9 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
       icon: 'globe-filled',
       label: 'Functions',
       path: routes.project.site.functions.list({ projectId, siteId }),
-      hasAccess: hasSiteFunctions,
+      hasAccess:
+        usePermissions({ action: [constants.PERMISSION.FUNCTIONS.VIEW] }) &&
+        hasSiteFunctions,
     },
     {
       icon: 'gear',

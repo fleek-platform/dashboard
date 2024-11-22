@@ -3,9 +3,11 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
+import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Icon, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { shortStringFormat } from '@/utils/stringFormat';
 
@@ -49,12 +51,16 @@ export const Deploy: React.FC<DeployProps> = ({
   const environment = deployment?.previewOnly ? 'Preview' : 'Production';
 
   return (
-    <S.ItemRow isSelfManaged={isSelfManaged} className={className}>
+    <S.ItemRow data-testid={TEST_ID.DEPLOYMENT_CONTAINER} className={className}>
       <Link
         href={routes.project.site.deployments.detail({
           projectId,
           siteId,
           deploymentId: deployment.id,
+        })}
+        className={cn('grid gap-4 sm:gap-8 justify-between w-full', {
+          'sm:[grid-template-columns:2fr_2.5fr_0.5fr]': isSelfManaged,
+          'sm:[grid-template-columns:1.5fr_1.5fr_2.5fr_1fr]': !isSelfManaged,
         })}
       >
         <S.ItemContainer>

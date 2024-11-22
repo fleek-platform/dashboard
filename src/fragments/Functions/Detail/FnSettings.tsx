@@ -2,12 +2,19 @@ import { routes } from '@fleek-platform/utils-routes';
 import { isEmpty } from 'lodash';
 import React, { type PropsWithChildren, useCallback, useState } from 'react';
 
-import { AlertBox, LearnMoreMessage, SettingsBox } from '@/components';
+import {
+  AlertBox,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+} from '@/components';
+import { constants } from '@/constants';
 import {
   FleekFunctionStatus,
   UpdateFleekFunctionDataInput,
   useUpdateFleekFunctionMutation,
 } from '@/generated/graphqlClient';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -21,7 +28,6 @@ import {
 import { FnDeleteModal } from './FnDeleteModal';
 import { UpdateForm } from './UpdateForm';
 
-const helpHref = 'https://fleek.xyz/docs/platform/fleek-functions/';
 const { ACTIVE, INACTIVE } = FleekFunctionStatus;
 
 export const FnSettings = () => {
@@ -74,10 +80,15 @@ type FnSettingsContentProps = NonNullable<FunctionDetailContext>;
 
 export const FnSettingsContent = (fn: FnSettingsContentProps) => {
   const { id, name, status, slug } = fn;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [deleteFleekFunctionMutation] = useDeleteFunction(fn);
   const [updateFleekFunctionMutation, updateFleekFunction] =
     useUpdateFleekFunctionMutation();
+
+  const hasDeleteFunctionPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.DELETE],
+  });
 
   const toast = useToast();
   const router = useRouter();
@@ -143,7 +154,11 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
           onSubmit={handleUpdate}
           isLoading={isLoading}
         >
-          <LearnMoreMessage href={helpHref}>function names</LearnMoreMessage>
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
+            function names
+          </LearnMoreMessage>
         </UpdateForm>
       </SettingCard>
 
@@ -157,7 +172,11 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
           onSubmit={handleUpdate}
           isLoading={isLoading}
         >
-          <LearnMoreMessage href={helpHref}>function slugs</LearnMoreMessage>
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
+            function slugs
+          </LearnMoreMessage>
         </UpdateForm>
       </SettingCard>
 
@@ -166,17 +185,30 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
         subtitle="Deleting a function is an irreversible action, so proceed with caution."
       >
         <Box className="flex-row items-center justify-between gap-4">
-          <LearnMoreMessage href={helpHref}>
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
             deleting a function
           </LearnMoreMessage>
-          <FnDeleteModal fnId={id} fnName={name}>
+          <FnDeleteModal
+            fnId={id}
+            fnName={name}
+            isOpen={isModalOpen}
+            onOpenChange={setIsModalOpen}
+          />
+          <PermissionsTooltip
+            hasAccess={hasDeleteFunctionPermission}
+            isLoading={isLoading}
+          >
             <Button
               intent="danger"
               loading={deleteFleekFunctionMutation.fetching}
+              disabled={!hasDeleteFunctionPermission}
+              onClick={() => setIsModalOpen(true)}
             >
               Delete Function
             </Button>
-          </FnDeleteModal>
+          </PermissionsTooltip>
         </Box>
       </SettingCard>
     </>

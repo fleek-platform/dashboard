@@ -1,4 +1,3 @@
-import { BadgeText, Link } from '@/components';
 import { styled } from '@/theme';
 import { Avatar, AvatarMarble, Box, Icon, Menu, Scrollable } from '@/ui';
 
@@ -58,13 +57,6 @@ export const ProjectDropdownStyles = {
       height: '1.5rem',
     },
 
-    [`${Link}`]: {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'row',
-      gap: '$spacing-2-5',
-    },
-
     [`${Menu.Trigger}`]: {
       padding: '$spacing-1 0',
       borderRadius: '$full',
@@ -75,18 +67,6 @@ export const ProjectDropdownStyles = {
         backgroundColor: '$button-slate-secondary-hover',
       },
     },
-  }),
-
-  ProjectRenameBadge: styled(Link, BadgeText, {
-    paddingTop: 0,
-    paddingBottom: 0,
-
-    variants: {
-      colorScheme: { slate: {} },
-      isSecondary: { true: {} },
-    },
-
-    defaultVariants: { colorScheme: 'slate', isSecondary: true },
   }),
 
   Scrollable: {

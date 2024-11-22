@@ -1,4 +1,4 @@
-import { BadgeText, ExternalLink } from '@/components';
+import { BadgeText } from '@/components';
 import { KeyFrames, styled } from '@/theme';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
 
@@ -57,8 +57,6 @@ export const StorageTableStyles = {
       [`${Skeleton}`]: {
         skeletonTextHeight: '$md',
       },
-
-      [`${ExternalLink}`]: {},
     }),
     HeaderCell: styled('th', {
       padding: '0 $spacing-6',
@@ -121,23 +119,6 @@ export const StorageRowStyles = {
       flexDirection: 'row',
       maxWidth: 'calc($sm / 2)',
       gap: 0,
-
-      [`${ExternalLink}`]: {
-        width: '$full',
-        height: '$full',
-        gap: 0,
-        textSize: '$sm',
-
-        '&:hover': {
-          [`${Text}`]: {
-            color: '$text-yellow',
-          },
-        },
-
-        [`${Text}`]: {
-          color: '$text-primary',
-        },
-      },
     },
 
     [`${Image}`]: {

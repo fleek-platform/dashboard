@@ -1,7 +1,7 @@
+import { ExternalLink } from '@/components';
 import { ChildrenProps } from '@/types/Props';
 import { Button, Text } from '@/ui';
 
-import { ExternalLink } from '../ExternalLink/ExternalLink';
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';
 import { ComingSoonStyles as S } from './ComingSoon.styles';
 
@@ -47,7 +47,7 @@ ComingSoonModal.CTA = ({
   href,
   children,
 }: ComingSoonModalNamespace.CTAProps) => {
-  if (href) {
+  if (!href) {
     return null;
   }
 

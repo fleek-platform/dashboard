@@ -39,7 +39,7 @@ export const NavButtons: React.FC = () => {
 
   const deployment = deploymentQuery.data?.deployment;
 
-  const siteLink = useSiteLink({ siteId });
+  const siteLink = useSiteLink({ siteId }) || '#';
 
   const deploymentURL = deployment?.previewUrlSlug
     ? getLinkForSiteSlug(deployment.previewUrlSlug)

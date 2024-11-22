@@ -32,16 +32,21 @@ type DomainLookupResponse = {
 
 const domainLookup = async (domain: string): Promise<DomainLookupResponse> => {
   try {
-    const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {
-      headers: {
-        'Accept': 'application/dns-json',
+    const response = await fetch(
+      `https://cloudflare-dns.com/dns-query?name=${domain}&type=A`,
+      {
+        headers: {
+          Accept: 'application/dns-json',
+        },
       },
-    });
+    );
     if (!response.ok) {
       throw new Error(`DNS lookup failed: ${response.statusText}`);
     }
-    const res = await response.json() as unknown as DNSResponse;
-    const { data: address, name } = res.Answer?.find(record => record.type === 1);
+    const res = (await response.json()) as unknown as DNSResponse;
+    const { data: address, name } = res.Answer?.find(
+      (record) => record.type === 1,
+    );
 
     return { address, name };
   } catch (err) {
@@ -50,7 +55,7 @@ const domainLookup = async (domain: string): Promise<DomainLookupResponse> => {
 };
 
 type GeoData = {
-   country_code: string;
+  country_code: string;
 };
 
 type HostnameLookupResponse =
@@ -65,7 +70,9 @@ type HostnameLookupResponse =
       error: string;
     };
 
-export const hostnameLookup = async (hostname: string): Promise<HostnameLookupResponse> => {
+export const hostnameLookup = async (
+  hostname: string,
+): Promise<HostnameLookupResponse> => {
   try {
     const { address } = await domainLookup(hostname);
 
@@ -94,7 +101,6 @@ export const hostnameLookup = async (hostname: string): Promise<HostnameLookupRe
       }
     };
 
-
     let geoData: GeoData;
     try {
       geoData = await lookup(getBlock, address);
@@ -117,6 +123,8 @@ export const hostnameLookup = async (hostname: string): Promise<HostnameLookupRe
     if (error instanceof Error) {
       Log.error(`Error looking up hostname ${hostname}: ${error.message}`);
     }
-    throw new Error(error instanceof Error ? error.message : 'Internal Server Error');
+    throw new Error(
+      error instanceof Error ? error.message : 'Internal Server Error',
+    );
   }
-}
+};

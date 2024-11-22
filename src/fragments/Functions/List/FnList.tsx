@@ -8,7 +8,7 @@ import {
 } from '@/hooks/useFunctionsList';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Box, Button, Input, Pagination, Text } from '@/ui';
+import { Box, Button, CodeBlock, Input, Pagination, Text } from '@/ui';
 
 import { FnItem, FnItemSkeleton } from './FnItem';
 
@@ -37,8 +37,8 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
   if (fetching || session.loading) {
     return (
       <Box className="gap-4 pt-[1px]">
-        <Input.Root isLoading />
-        <Box className="bg-neutral-2 rounded-xl border border-neutral-6 overflow-hidden">
+        <F.Sections.ExternalLinks />
+        <Box className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
           <FnItemSkeleton />
           <FnItemSkeleton />
           <FnItemSkeleton />
@@ -61,10 +61,11 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
         <F.Sections.ExternalLinks />
         <Box variant="container" className="items-center justify-center py-10">
           <Text as="h2" variant="primary" size="2xl" weight={700}>
-            No functions yet :(
+            No functions yet
           </Text>
           <Text size="md">
-            Use the CLI or click the button above to create one.
+            Use the CLI or click the <CodeBlock>Add new function</CodeBlock>{' '}
+            button above to create one.
           </Text>
         </Box>
       </>
@@ -91,7 +92,7 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
         />
       </Input.Root>
 
-      <Box className="bg-neutral-2 rounded-xl border border-neutral-6 overflow-hidden">
+      <Box className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
         {filteredData.length > 0 ? (
           filteredData.map((fn) => (
             <FnItem key={fn.id} fn={fn} projectId={projectId} source={source} />

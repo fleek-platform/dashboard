@@ -1,9 +1,9 @@
+import { Link } from '@/components';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
 import { forwardStyledRef } from '@/theme';
 import { LoadingProps } from '@/types/Props';
 import { Button, IconName, Skeleton } from '@/ui';
 
-import { Link } from '../Link/Link';
 import { PageNavStyles as S } from './PageNavigation.styles';
 
 type NavigationButtonProps = {

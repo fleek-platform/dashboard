@@ -38,7 +38,8 @@ export const ProviderInstallationMessage: React.FC<
       <S.Message>
         Missing Git repository?&nbsp;
         <ExternalLink
-          colorScheme="yellow"
+          href="#"
+          variant="accent"
           onClick={handleOpenGithubAppInstallationUrl}
         >
           Adjust GitHub permissions

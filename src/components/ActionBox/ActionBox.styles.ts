@@ -1,7 +1,7 @@
 import { styled } from '@/theme';
 import { Box, Icon } from '@/ui';
 
-import { Link } from '../Link/Link';
+import { Link } from '../ftw/Link/Link';
 
 export const ActionBoxStyles = {
   Root: styled(Link, Box, {

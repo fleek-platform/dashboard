@@ -71,7 +71,10 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
     <Menu.Root>
       <Menu.Trigger>
         <S.ProjectSelected>
-          <Link href={routes.project.home({ projectId })}>
+          <Link
+            href={routes.project.home({ projectId })}
+            className="flex gap-2.5 items-center text-neutral-12"
+          >
             {selectedProject?.avatar ? (
               <Avatar
                 enableIcon

@@ -20,14 +20,14 @@ export const MaintenancePage: React.FC = () => {
           We&apos;ll be back up shortly. Check our&nbsp;
           <ExternalLink
             href={constants.EXTERNAL_LINK.FLEEK_DISCORD}
-            colorScheme="yellow"
+            variant="accent"
           >
             Discord
           </ExternalLink>
           &nbsp;or&nbsp;
           <ExternalLink
             href={constants.EXTERNAL_LINK.FLEEK_TWITTER}
-            colorScheme="yellow"
+            variant="accent"
           >
             X
           </ExternalLink>

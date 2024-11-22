@@ -47,7 +47,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const siteLink = useSiteLink({ siteId });
+  const siteLink = useSiteLink({ siteId }) || '#';
   const deploymentURL = deployment.previewUrlSlug
     ? getLinkForSiteSlug(deployment.previewUrlSlug)
     : siteLink;

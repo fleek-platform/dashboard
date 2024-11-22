@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ExternalLink } from '@/components/ExternalLink/ExternalLink';
+import { ExternalLink } from '@/components';
 import { constants } from '@/constants';
 import { Box, Icon, Text } from '@/ui';
 
@@ -32,10 +32,10 @@ export const Announcement: React.FC = () => {
   return (
     <ExternalLink
       href={constants.ANNOUNCEMENT_BANNER.HREF}
-      className="flex gap-1 flex-col border border-neutral-6 py-2.5 px-3 rounded-xl bg-neutral-2 hover:bg-neutral-3 transition-colors"
+      className="flex gap-1 flex-col border border-neutral-6 py-2.5 px-3 rounded-lg bg-neutral-2 hover:bg-neutral-3 transition-colors"
     >
       <Box className="flex-row justify-between">
-        <Text className="text-accent-9 text-[0.625rem]">✨ NEW</Text>
+        <Text className="text-accent-11 text-[0.625rem]">✨ NEW</Text>
         <Box className="p-[1.5px]" onClick={onDismissAnnouncementClick}>
           <Icon
             name="close"

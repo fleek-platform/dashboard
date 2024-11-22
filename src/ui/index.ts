@@ -24,6 +24,9 @@ export * from './AvatarMarble/AvatarMarble';
 export * from './ftw/Button/Button';
 export * from './ftw/Input/Input';
 export * from './ftw/Text/Text';
+export * from './ftw/CodeBlock/CodeBlock';
 export * from './ftw/Switch/Switch';
 export * from './ftw/SidebarDropdown/SidebarDropdown';
 export * from './ftw/SidebarSidepanel/SidebarSidepanel';
+
+// EOF

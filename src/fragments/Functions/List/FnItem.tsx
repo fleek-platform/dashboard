@@ -1,11 +1,13 @@
 import { routes } from '@fleek-platform/utils-routes';
 import React, { useCallback } from 'react';
 
-import { Link } from '@/components';
+import { Link, SettingsListItem } from '@/components';
+import { constants } from '@/constants';
 import { type FleekFunctionsQuery } from '@/generated/graphqlClient';
 import { UseFunctionsListArgs } from '@/hooks/useFunctionsList';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
-import { Box, Button, Icon, Menu, Skeleton, Text } from '@/ui';
+import { Box, Skeleton, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { useDeleteFunction } from '../Detail/Context';
@@ -21,7 +23,7 @@ type FnItemProps = {
 
 export const FnItemSkeleton = () => {
   return (
-    <Box className="p-4 cursor-pointer grid grid-cols-10 items-center border-b border-neutral-6 last:border-none h-[73px]">
+    <Box className="p-4 grid grid-cols-10 items-center border-b border-neutral-6 last:border-none h-[73px]">
       <Box className="col-span-4 gap-1">
         <Skeleton variant="text" className="w-1/4" />
         <Skeleton variant="text" className="w-1/2" />
@@ -44,18 +46,25 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
   });
   const router = useRouter();
   const navTo = useCallback((url: string) => () => router.push(url), [router]);
+  const hasFunctionOverviewPermissions = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.VIEW],
+  });
+  const hasFunctionsSettingsPermissions = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS],
+  });
 
   const [{ fetching: deleting }] = useDeleteFunction(fn);
 
   return (
     <Link
       className={cn(
-        'p-4 cursor-pointer grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50',
+        'p-4 grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50',
         {
           'pointer-events-none opacity-50': deleting,
+          'cursor-default': !hasFunctionOverviewPermissions,
         },
       )}
-      href={href}
+      href={hasFunctionOverviewPermissions ? href : '#'}
     >
       <Box className="col-span-6">
         <Text variant="primary" weight={500} className="truncate">
@@ -91,30 +100,28 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
             <StatusBadge status={deleting ? 'DELETING' : null} />
           )}
         </Box>
-        <Menu.Root>
-          <Menu.Trigger asChild>
-            <Button intent="ghost">
-              <Icon name="ellipsis-vertical" />
-            </Button>
-          </Menu.Trigger>
-          <Menu.Portal>
-            <Menu.Content align="end">
-              {fn.currentDeployment && (
-                <Menu.Item onClick={navTo(href)}>
-                  View deployment
-                  <Icon name="expand" />
-                </Menu.Item>
-              )}
-              <Menu.Item
-                onClick={(e) => e.preventDefault()}
-                onMouseDown={navTo(settingsHref)}
-              >
-                Settings
-                <Icon name="gear" />
-              </Menu.Item>
-            </Menu.Content>
-          </Menu.Portal>
-        </Menu.Root>
+
+        <SettingsListItem.DropdownMenu
+          isLoading={deleting}
+          isDisabled={!hasFunctionsSettingsPermissions}
+          hasAccess={hasFunctionsSettingsPermissions}
+        >
+          {fn.currentDeployment && hasFunctionOverviewPermissions && (
+            <SettingsListItem.DropdownMenuItem
+              icon="expand"
+              onClick={navTo(href)}
+            >
+              View deployment
+            </SettingsListItem.DropdownMenuItem>
+          )}
+          <SettingsListItem.DropdownMenuItem
+            icon="gear"
+            onClick={(e) => e.preventDefault()}
+            onMouseDown={navTo(settingsHref)}
+          >
+            Settings
+          </SettingsListItem.DropdownMenuItem>
+        </SettingsListItem.DropdownMenu>
       </Box>
     </Link>
   );

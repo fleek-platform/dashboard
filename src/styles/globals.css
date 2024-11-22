@@ -15,8 +15,9 @@
     --color-ftw-monochrome-normal: 255 255 255;
     --color-ftw-monochrome-reverse: 0 0 0;
 
-    /* Light - App BG */
-    --color-ftw-app-bg: 249 249 249;
+    /* Light - Surfaces */
+    --color-ftw-surface-1: 249 249 249;
+    --color-ftw-surface-2: 255 255 255;
 
     /* Light - Neutral */
     --color-ftw-neutral-1: 252 252 252;
@@ -95,8 +96,9 @@
     --color-ftw-monochrome-normal: 0 0 0;
     --color-ftw-monochrome-reverse: 255 255 255;
 
-    /* Dark - App BG */
-    --color-ftw-app-bg: 0 0 0;
+    /* Dark - Surfaces */
+    --color-ftw-surface-1: 0 0 0;
+    --color-ftw-surface-2: 25 25 25;
 
     /* Dark - Neutral */
     --color-ftw-neutral-0: 0 0 0;

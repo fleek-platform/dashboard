@@ -44,7 +44,7 @@ export const VerifyEnsRecordManuallyModal: React.FC = () => {
           Head to&nbsp;
           <ExternalLink
             href={constants.EXTERNAL_LINK.ENS_DOMAIN}
-            colorScheme="yellow"
+            variant="accent"
           >
             ens.domains
           </ExternalLink>

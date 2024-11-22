@@ -10,6 +10,7 @@ import { Icon, Text } from '@/ui';
 import { statusDataMap } from '@/utils/deployUtils';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
+import { getSiteCurrentDeployment } from '@/utils/getSiteCurrentDeployment';
 import { isSiteSelfManaged } from '@/utils/isSiteSelfManaged';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
@@ -29,7 +30,7 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
 
   // Determine if the site is self-managed
   const isSelfManaged = isSiteSelfManaged(site);
-  const currentDeployment = site?.currentDeployment;
+  const currentDeployment = getSiteCurrentDeployment(site);
 
   const parsedStatus = useMemo<DeploymentStatus>(() => {
     if (!isSelfManaged && !currentDeployment) {

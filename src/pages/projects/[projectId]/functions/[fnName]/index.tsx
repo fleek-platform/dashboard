@@ -1,5 +1,7 @@
+import { constants } from '@/constants';
 import { Functions as F } from '@/fragments';
 import { Page } from '@/types/App';
+import { withAccess } from '@/utils/withAccess';
 
 const FunctionDetail: Page = () => {
   return <F.Sections.Detail />;
@@ -7,4 +9,7 @@ const FunctionDetail: Page = () => {
 
 FunctionDetail.getLayout = (page) => <F.DetailLayout>{page}</F.DetailLayout>;
 
-export default FunctionDetail;
+export default withAccess({
+  Component: FunctionDetail,
+  requiredPermissions: [constants.PERMISSION.FUNCTIONS.VIEW],
+});

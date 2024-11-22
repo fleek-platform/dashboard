@@ -14,7 +14,7 @@ export const SettingsDeleteModal = ({
 }: SettingsDeleteModal.Props) => {
   return (
     <Dialog.Root {...props}>
-      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+      {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Overlay />
 
       <S.Modal.Content>{children}</S.Modal.Content>
@@ -131,7 +131,7 @@ SettingsDeleteModal.Warning = ({
 
 SettingsDeleteModal.CancelButton = () => (
   <Dialog.Close asChild>
-    <Button intent="neutral" className="flex-1">
+    <Button intent="ghost" className="flex-1">
       Cancel
     </Button>
   </Dialog.Close>
@@ -139,10 +139,11 @@ SettingsDeleteModal.CancelButton = () => (
 
 SettingsDeleteModal.ConfirmButton = Button;
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace SettingsDeleteModal {
   // eslint-disable-next-line fleek-custom/valid-argument-types
   export type Props = {
-    trigger: React.ReactNode;
+    trigger?: React.ReactNode;
   } & React.ComponentProps<typeof Dialog.Root>;
 
   export type TableHeader = ChildrenProps<{

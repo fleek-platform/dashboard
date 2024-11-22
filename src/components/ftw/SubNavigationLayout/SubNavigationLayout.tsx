@@ -1,8 +1,8 @@
-import { Link } from '@/components/Link/Link';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
 import { ChildrenProps } from '@/types/Props';
-import { Box, Scrollable, Skeleton, Text } from '@/ui';
-import { cn } from '@/utils/cn';
+import { Box, Scrollable, Skeleton } from '@/ui';
+
+import { LinkButton } from '../LinkButton/LinkButton';
 
 export type SubNavigationItem = {
   label: string;
@@ -20,28 +20,20 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem }) => {
 
   if (navItem.isDisabled) {
     return (
-      <Text className="cursor-not-allowed opacity-50 py-2 px-3" weight={500}>
+      <LinkButton href="#" className="px-3" disabled>
         {navItem.label}
-      </Text>
+      </LinkButton>
     );
   }
 
   return (
-    <Link
-      key={navItem.path}
+    <LinkButton
       href={navItem.path}
-      className={cn(
-        'flex text-neutral-11 hover:bg-neutral-4 active:bg-neutral-5 items-center gap-3 py-2 px-3 text-sm font-medium rounded-lg select-none ring-0 outline-0 focus-visible:ring-2 ring-neutral-8 whitespace-nowrap',
-        {
-          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11':
-            isActivePage,
-        },
-      )}
-      role="menuitem"
-      aria-label={navItem.label}
+      intent={isActivePage ? 'accent' : 'ghost'}
+      className="px-3"
     >
       {navItem.label}
-    </Link>
+    </LinkButton>
   );
 };
 
@@ -58,7 +50,6 @@ export const SubNavigationLayout: React.FC<
       <Scrollable.Root
         type="auto"
         className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden"
-        role="navigation"
       >
         <Scrollable.HorizontalBar className="peer" />
         <Scrollable.Viewport className="w-full h-full peer-data-[state=visible]:pb-4">

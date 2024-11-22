@@ -111,14 +111,12 @@ export const AddTeamMember: React.FC<AddTeamMemberProps> = ({
           try {
             copyToClipboard(data.createInvitation);
             toast.success({
-              message: `Invite sent to ${values.email}. Invitation link copied to clipboard ${data.createInvitation}`,
+              message: `Invite sent to ${values.email}. Invitation link copied to clipboard.`,
             });
           } catch (error) {
             // we don't want to throw an error here, just log it
             Log.error({ message: 'Failed to copy to clipboard' });
-            toast.success({
-              message: `Invite sent to ${values.email}. Invitation link: ${data.createInvitation}`,
-            });
+            toast.success({ message: `Invite sent to ${values.email}.` });
           }
 
           refetchInvitationsQuery({ requestPolicy: 'network-only' });

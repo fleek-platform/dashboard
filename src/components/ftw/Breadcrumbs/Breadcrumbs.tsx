@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link } from '@/components/Link/Link';
+import { Link } from '@/components';
 import {
   Avatar,
   AvatarMarble,
@@ -22,7 +22,7 @@ const Breadcrumb: React.FC<BreadcrumbItem> = (breadcrumb) => {
       className="group flex gap-2 items-center h-[2rem]"
     >
       {'icon' in breadcrumb && (
-        <Box className="bg-neutral-5 rounded justify-center items-center size-4">
+        <Box className="bg-neutral-5 rounded-sm justify-center items-center size-4">
           <Icon
             name={breadcrumb.icon}
             className="size-[0.625rem] text-neutral-11"
@@ -69,7 +69,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
   if (isBreadcrumbsLoading) {
     return (
       <Box className="flex-row gap-2 items-center h-[2rem] w-1/6">
-        <Skeleton className="size-4 rounded shrink-0" />
+        <Skeleton className="size-4 rounded-sm shrink-0" />
         <Skeleton variant="text" className="shrink-0" />
       </Box>
     );

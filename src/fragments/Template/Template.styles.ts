@@ -76,37 +76,6 @@ export const TemplateStyles = {
       img: {
         width: '$full',
       },
-      pre: {
-        background: '$surface-tertiary',
-        borderRadius: '$sm',
-        padding: '$spacing-3',
-        overflow: 'auto',
-        maxWidth: '$full',
-      },
-      code: {
-        color: '$text-primary',
-        background: '$surface-tertiary',
-        padding: '0 $spacing-2',
-        borderRadius: '$sm',
-      },
-      ['p, td']: {
-        color: '$text-secondary',
-      },
-      ['h1, h2']: {
-        paddingBottom: '$spacing-2',
-        baseBorder: '$border-slate',
-        borderTop: '0',
-        borderLeft: '0',
-        borderRight: '0',
-      },
-      a: {
-        color: '$text-yellow',
-      },
-      ['table, td, th']: {
-        padding: '$spacing-2',
-        baseBorder: '$border-slate',
-        borderCollapse: 'collapse',
-      },
     }),
     Layout: styled('main', {
       display: 'grid',

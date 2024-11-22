@@ -50,8 +50,6 @@ export const PrivateGateways: React.FC = () => {
             label="Name"
             isLoading={isLoading}
             isDisabled={!hasCreatePermission}
-            role="textbox"
-            aria-label="User Input Gateway"
           />
         </PermissionsTooltip>
 
@@ -105,8 +103,6 @@ const SubmitButton: React.FC<DisabledProps> = ({ isDisabled }) => {
       loading={isSubmitting}
       disabled={shouldDisableSubmit || isDisabled}
       onClick={handleSubmit}
-      role="button"
-      aria-label="Create private gateway"
     >
       Create private gateway
     </Button>

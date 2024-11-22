@@ -1,32 +1,7 @@
-import { css, styled } from '@/theme';
+import { styled } from '@/theme';
 import { Box, Icon, Skeleton } from '@/ui';
 
 import { BadgeText } from '../BadgeText/BadgeText';
-import { ExternalLink } from '../ExternalLink/ExternalLink';
-import { Link } from '../Link/Link';
-
-const containerBaseProps = css({
-  flexDirection: 'row',
-  alignItems: 'center',
-  gap: '$xs',
-  color: '$text-primary',
-
-  '&:hover': {
-    textDecoration: 'none !important',
-  },
-  [`> ${Skeleton}`]: {
-    skeletonTextHeight: '$md',
-    width: '30%',
-  },
-
-  variants: {
-    disabled: {
-      true: {
-        cursor: 'not-allowed',
-      },
-    },
-  },
-});
 
 export const SiteOverviewBoxStyles = {
   Container: styled(Box, {
@@ -75,11 +50,6 @@ export const SiteOverviewBoxStyles = {
     },
   }),
   SiteDetail: {
-    Container: styled(ExternalLink, Box, containerBaseProps),
-    LocalContainer: styled(Link, Box, containerBaseProps, {
-      color: '$text-yellow',
-    }),
-
     IconContainer: styled(Box, {
       padding: '$spacing-1',
       width: 'auto',

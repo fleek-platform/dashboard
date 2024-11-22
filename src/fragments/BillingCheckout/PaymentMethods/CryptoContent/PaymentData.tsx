@@ -2,6 +2,7 @@ import { DateTime, Duration } from 'luxon';
 import { useEffect, useState } from 'react';
 
 import { useToast } from '@/hooks/useToast';
+import { TEST_ID } from '@/test/testId';
 import { CryptoPayment } from '@/types/Billing';
 import { Button, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
@@ -89,7 +90,7 @@ const Timer: React.FC<TimerProps> = ({ expireAt }) => {
 
   return (
     <S.PaymentData.Timer.Wrapper>
-      <S.PaymentData.Timer.Counter>
+      <S.PaymentData.Timer.Counter data-testid={TEST_ID.BILLING_CHECKOUT_TIMER}>
         <Icon name="spinner" />
         {Duration.fromMillis(Math.max(0, timeLeft.toMillis())).toFormat(
           'hh:mm:ss',

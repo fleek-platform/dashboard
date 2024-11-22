@@ -1,5 +1,6 @@
 import { AlertBox, CodeSnippet, ExternalLink } from '@/components';
 import { constants } from '@/constants';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Divider, Stepper, Text } from '@/ui';
 
@@ -21,26 +22,34 @@ export const Instructions = ({
   initialStep,
   functionName = '<fleek_function_name>',
 }: InstructionsProps) => {
-  return (
-    <S.MainContainer variant="container">
-      <Stepper.Root initialStep={initialStep}>
-        <Stepper.Container>
-          <Stepper.Step>
-            <Step1 />
-          </Stepper.Step>
-          <Stepper.Step>
-            <Step2 />
-          </Stepper.Step>
-          <Stepper.Step>
-            <Step3 functionName={functionName} />
-          </Stepper.Step>
-          <Stepper.Step>
-            <Step4 functionName={functionName} />
-          </Stepper.Step>
-        </Stepper.Container>
-      </Stepper.Root>
-    </S.MainContainer>
-  );
+  const hasDeployFunctionPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.DEPLOY],
+  });
+
+  if (hasDeployFunctionPermission) {
+    return (
+      <S.MainContainer variant="container">
+        <Stepper.Root initialStep={initialStep}>
+          <Stepper.Container>
+            <Stepper.Step>
+              <Step1 />
+            </Stepper.Step>
+            <Stepper.Step>
+              <Step2 />
+            </Stepper.Step>
+            <Stepper.Step>
+              <Step3 functionName={functionName} />
+            </Stepper.Step>
+            <Stepper.Step>
+              <Step4 functionName={functionName} />
+            </Stepper.Step>
+          </Stepper.Container>
+        </Stepper.Root>
+      </S.MainContainer>
+    );
+  }
+
+  return null;
 };
 
 const DividerContainer = ({ divider = 'OR' }: { divider?: string }) => (

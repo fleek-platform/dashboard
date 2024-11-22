@@ -1,16 +1,19 @@
 import { functionName, slug } from '@fleek-platform/utils-validation';
-import { type PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 import { useClient } from 'urql';
 import zod from 'zod';
 
-import { SettingsBox } from '@/components';
+import { PermissionsTooltip, SettingsBox } from '@/components';
 import { Form } from '@/components/Form/Form';
+import { constants } from '@/constants';
+import { usePermissions } from '@/hooks/usePermissions';
+import { ChildrenProps } from '@/types/Props';
 import { Box } from '@/ui';
 
 import { SlugField } from './SlugField';
 
 type UpdateFormType = 'slug' | 'name';
-type UpdateFormProps = PropsWithChildren<{
+type UpdateFormProps = ChildrenProps<{
   type: UpdateFormType;
   value: string;
   isLoading?: boolean;
@@ -26,6 +29,11 @@ export const UpdateForm = ({
 }: UpdateFormProps) => {
   const client = useClient();
   const [saving, setSaving] = useState(false);
+
+  const hasEditFunctionSettingsPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS],
+  });
+
   const form = Form.useForm({
     values: { [type]: value },
     schema: zod.object({ [type]: type === 'name' ? functionName : slug }),
@@ -45,16 +53,21 @@ export const UpdateForm = ({
   return (
     <Form.Provider value={form}>
       <Box className="gap-4">
-        <FieldComponent
-          name={type}
-          disabled={saving}
-          onKeyDown={({ key }) => {
-            if (key === 'Enter' && form.isValid) {
-              form.submit();
-            }
-          }}
+        <PermissionsTooltip
+          hasAccess={hasEditFunctionSettingsPermission}
           isLoading={isLoading}
-        />
+        >
+          <FieldComponent
+            name={type}
+            disabled={saving || !hasEditFunctionSettingsPermission}
+            onKeyDown={({ key }) => {
+              if (key === 'Enter' && form.isValid) {
+                form.submit();
+              }
+            }}
+            isLoading={isLoading}
+          />
+        </PermissionsTooltip>
 
         <Box className="flex-row items-center justify-between">
           {children}

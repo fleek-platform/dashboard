@@ -146,7 +146,9 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       icon: 'globe-filled',
       label: 'Functions',
       path: routes.project.site.functions.list({ projectId, siteId }),
-      hasAccess: hasSiteFunctions,
+      hasAccess:
+        usePermissions({ action: [constants.PERMISSION.FUNCTIONS.VIEW] }) &&
+        hasSiteFunctions,
     },
     {
       icon: 'gear',

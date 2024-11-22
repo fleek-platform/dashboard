@@ -1,10 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
 
+import { Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Box, Button, Icon, IconName, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 
-import { Link } from '../Link/Link';
 import { SettingsBoxStyles as S } from './SettingsBox.styles';
 
 const Title = withProps(Text, {
@@ -39,7 +39,7 @@ export const Container: React.FC<SettingsBox.ContainerProps> = ({
     return (
       <S.Container className="relative">
         {children}
-        <Box className="text-center gap-3 justify-center items-center absolute top-0 left-0 h-full w-full z-[2] bg-[#191919] rounded-xl p-9">
+        <Box className="text-center gap-3 justify-center items-center absolute top-0 left-0 h-full w-full z-[2] bg-[#191919] rounded-lg p-9">
           <Box className="gap-1">
             <Text variant="primary" weight={700}>
               Upgrade plan
@@ -47,9 +47,7 @@ export const Container: React.FC<SettingsBox.ContainerProps> = ({
             <Text>{disabledText}</Text>
           </Box>
           <Link
-            href={routes.project.settings.billing({
-              projectId: session.project.id,
-            })}
+            href={routes.project.billing({ projectId: session.project.id })}
           >
             <Button size="sm" className="py-0 px-2-5 text-sm h-[2rem]">
               Upgrade plan
@@ -76,9 +74,10 @@ export const SettingsBox = {
 };
 
 export namespace SettingsBox {
-  export type ContainerProps = React.ComponentPropsWithRef<
-    typeof S.Container
-  > & { disabledText?: string; isBillingDisabled?: boolean };
+  export type ContainerProps = React.ComponentPropsWithRef<typeof Box> & {
+    disabledText?: string;
+    isBillingDisabled?: boolean;
+  };
   export type ColumnProps = React.ComponentPropsWithRef<typeof S.Column>;
   export type TitleProps = React.ComponentPropsWithRef<typeof Title>;
   export type TextProps = React.ComponentPropsWithRef<typeof Text>;

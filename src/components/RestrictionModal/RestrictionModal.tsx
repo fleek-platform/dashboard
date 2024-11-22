@@ -1,10 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
 
+import { Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps } from '@/types/Props';
 import { Box, Button, Dialog, Divider, Icon, Text } from '@/ui';
 
-import { Link } from '../Link/Link';
 import { Modal } from '../Modal/Modal';
 
 export type RestrictionModalProps = {
@@ -70,24 +70,17 @@ export const RestrictionModal: React.FC<RestrictionModalProps> = ({
           <Divider />
           <Modal.CTARow>
             <Dialog.Close asChild>
-              {/* TODO remove py-0 px-2-5 text-sm h-[2rem] once new designs for button are done */}
-              <Button
-                intent="ghost"
-                className="flex-1 py-0 px-2-5 text-sm h-[2rem] rounded-lg"
-              >
+              <Button className="flex-1 w-full" intent="ghost">
                 No thanks
               </Button>
             </Dialog.Close>
 
             {shouldShowUpgradePlan && (
-              // TODO remove py-0 px-2-5 text-sm h-[2rem] once new designs for button are done
               <Link
-                href={routes.project.settings.billing({ projectId })}
+                href={routes.project.billing({ projectId })}
                 className="flex-1"
               >
-                <Button className="w-full py-0 px-2-5 text-sm h-[2rem] rounded-lg">
-                  Upgrade plan
-                </Button>
+                <Button className="w-full">Upgrade plan</Button>
               </Link>
             )}
           </Modal.CTARow>

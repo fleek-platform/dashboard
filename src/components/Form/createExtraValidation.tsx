@@ -3,6 +3,7 @@ import { createPublicClient, http } from 'viem';
 import { mainnet } from 'viem/chains';
 import { normalize } from 'viem/ens';
 
+import { ExternalLink } from '@/components';
 import { constants } from '@/constants';
 import {
   ApplicationNameAvailabilityDocument,
@@ -55,7 +56,6 @@ import { GitProvider } from '@/integrations/git';
 import { Icon } from '@/ui';
 import { isUniqueName } from '@/utils/isUniqueName';
 
-import { ExternalLink } from '../ExternalLink/ExternalLink';
 import { FormController } from './FormController';
 
 export const createExtraValidation = {
@@ -139,7 +139,7 @@ export const createExtraValidation = {
               {`${name} is available for sale,`}
               <ExternalLink
                 href={`${constants.EXTERNAL_LINK.ENS_DOMAIN}/${name}/register`}
-                colorScheme="yellow"
+                variant="accent"
               >
                 purchase it from ENS here.
               </ExternalLink>

@@ -6,20 +6,20 @@ import { cn } from '@/utils/cn';
 
 export const buttonIntent = {
   neutral:
-    'text-neutral-11 bg-neutral-3 enabled:hover:bg-neutral-4 active:bg-neutral-5 focus-visible:ring-neutral-8',
+    'text-neutral-11 bg-neutral-3 hover:bg-neutral-4 active:bg-neutral-5 focus-visible:ring-neutral-8',
   accent:
-    'text-accent-11 bg-accent-3 enabled:hover:bg-accent-4 active:bg-accent-5 focus-visible:ring-accent-8',
+    'text-accent-11 bg-accent-3 hover:bg-accent-4 active:bg-accent-5 focus-visible:ring-accent-8',
   success:
-    'text-success-11 bg-success-3 enabled:hover:bg-success-4 active:bg-success-5 focus-visible:ring-success-8',
+    'text-success-11 bg-success-3 hover:bg-success-4 active:bg-success-5 focus-visible:ring-success-8',
   warning:
-    'text-warning-11 bg-warning-3 enabled:hover:bg-warning-4 active:bg-warning-5 focus-visible:ring-warning-8',
+    'text-warning-11 bg-warning-3 hover:bg-warning-4 active:bg-warning-5 focus-visible:ring-warning-8',
   danger:
-    'text-danger-11 bg-danger-3 enabled:hover:bg-danger-4 active:bg-danger-5 focus-visible:ring-danger-8',
+    'text-danger-11 bg-danger-3 hover:bg-danger-4 active:bg-danger-5 focus-visible:ring-danger-8',
   ghost:
-    'text-neutral-11 bg-transparent enabled:hover:bg-neutral-4 active:bg-neutral-5 disabled:bg-transparent  focus-visible:ring-neutral-8',
+    'text-neutral-11 bg-transparent hover:bg-neutral-4 active:bg-neutral-5 disabled:bg-transparent  focus-visible:ring-neutral-8',
 } as const;
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   'flex relative items-center w-fit justify-center focus-visible:ring-2 select-none font-medium transition-all disabled:cursor-not-allowed',
   {
     variants: {
@@ -31,9 +31,9 @@ const buttonVariants = cva(
       intent: buttonIntent,
       size: {
         xs: 'px-2.5 h-6',
-        sm: 'h-[2rem] px-2.5 text-sm rounded-lg gap-1',
-        md: 'h-[2.5rem] px-3 text-sm rounded-xl gap-3',
-        lg: 'h-8 px-4 text-md rounded-2xl gap-3',
+        sm: 'h-[2rem] px-2.5 text-sm rounded-md gap-1',
+        md: 'h-[2.5rem] px-3 text-sm rounded-lg gap-3',
+        lg: 'h-8 px-4 text-md rounded-xl gap-3',
       },
     },
     compoundVariants: [

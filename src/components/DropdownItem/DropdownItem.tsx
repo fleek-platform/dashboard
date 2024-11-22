@@ -1,6 +1,6 @@
 import { Icon, IconName, Menu } from '@/ui';
 
-import { Link } from '../Link/Link';
+import { Link } from '../ftw/Link/Link';
 
 type DropdownItemProps = React.ComponentProps<typeof Menu.Item> & {
   isBillingRestricted?: boolean;

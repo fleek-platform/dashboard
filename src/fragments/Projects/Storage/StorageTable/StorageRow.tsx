@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 
 import { BadgeText, ExternalLink } from '@/components';
 import { useUploadContext } from '@/providers/UploadProvider';
+import { TEST_ID } from '@/test/testId';
 import { LoadingProps } from '@/types/Props';
 import { Folder, Pin } from '@/types/StorageProviders';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
@@ -51,10 +52,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
   const publicUrl = getLink();
 
   return (
-    <S.Table.Row>
-      {/* <S.Table.Cell>
-        <Checkbox disabled />
-      </S.Table.Cell> */}
+    <S.Table.Row data-testid={TEST_ID.TABLE_ROW_STORAGE}>
       <S.Table.Cell>
         <RS.NameRow>
           {folder || isIpfsFolder ? (
@@ -72,7 +70,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
                 {folder.name}
               </Text>
             ) : publicUrl ? (
-              <ExternalLink href={publicUrl}>
+              <ExternalLink href={publicUrl} className="flex max-w-full">
                 <Text variant="primary" className="truncate">
                   {pin?.filename}
                 </Text>
@@ -156,9 +154,6 @@ export const StorageRow: React.FC<StorageRowProps> = ({
 
 const SkeletonRow: React.FC = () => (
   <S.Table.Row>
-    {/* <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell> */}
     <S.Table.Cell>
       <Skeleton />
     </S.Table.Cell>

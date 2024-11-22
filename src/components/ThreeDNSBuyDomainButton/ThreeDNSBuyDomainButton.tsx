@@ -1,12 +1,18 @@
 import { constants } from '@/constants';
+import { Icon } from '@/ui';
 
-import { ThreeDNSBuyDomainButtonStyles as S } from './ThreeDNSBuyDomainButton.styles';
+import { LinkButton } from '../ftw/LinkButton/LinkButton';
 
 export const ThreeDNSBuyDomainButton: React.FC = () => {
   return (
-    <S.Container href={constants.EXTERNAL_LINK.THREE_DNS_BUY_DOMAIN}>
-      Buy Domain <S.Icon name="3dns" is3DNS />
-      <S.Icon name="arrow-up-right" />
-    </S.Container>
+    <LinkButton
+      variant="outline"
+      intent="neutral"
+      href={constants.EXTERNAL_LINK.THREE_DNS_BUY_DOMAIN}
+      isExternalLink
+    >
+      Buy Domain <Icon name="3dns" className="text-[3.25em]" />
+      <Icon name="arrow-up-right" />
+    </LinkButton>
   );
 };

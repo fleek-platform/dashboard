@@ -61,8 +61,8 @@ export const ProjectDropdown: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Box className="p-2.5 flex-row items-center h-[3.375rem] gap-3 bg-neutral-1 border border-neutral-6 rounded-xl">
-        <Skeleton className="size-[2rem] rounded-lg" />
+      <Box className="p-2.5 flex-row items-center h-[3.375rem] gap-3 bg-neutral-1 border border-neutral-6 rounded-lg">
+        <Skeleton className="size-[2rem] rounded" />
         <Box className="w-1/2 gap-2">
           <Skeleton variant="text" className="h-2.5 w-1/2" />
           <Skeleton variant="text" className="h-2.5" />
@@ -74,12 +74,12 @@ export const ProjectDropdown: React.FC = () => {
   return (
     <>
       <SidebarDropdown.Root>
-        <SidebarDropdown.Trigger className="group rounded-xl focus-visible:ring-2 focus-visible:ring-neutral-8">
-          <Box className="p-2.5 flex-row items-center justify-between bg-neutral-1 hover:bg-neutral-2 border border-neutral-6 rounded-xl transition-colors group-data-[state=open]:rounded-b-none group-data-[state=open]:border-b-transparent">
+        <SidebarDropdown.Trigger className="group rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-8">
+          <Box className="p-2.5 flex-row items-center justify-between bg-neutral-1 hover:bg-neutral-2 border border-neutral-6 rounded-lg transition-colors group-data-[state=open]:rounded-b-none group-data-[state=open]:border-b-transparent">
             <Box className="flex-row gap-3 items-center">
               <ProjectDropdownAvatar
                 project={selectedProject}
-                className="rounded-lg size-7"
+                className="rounded size-7"
               />
               <Box className="select-none">
                 <Text size="xs">Project</Text>
@@ -93,7 +93,7 @@ export const ProjectDropdown: React.FC = () => {
                 </Text>
               </Box>
             </Box>
-            <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg transition-colors shrink-0">
+            <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded transition-colors shrink-0">
               <Icon
                 name="chevron-down"
                 className="group-data-[state=open]:rotate-180 transition-all"
@@ -101,7 +101,7 @@ export const ProjectDropdown: React.FC = () => {
             </Box>
           </Box>
         </SidebarDropdown.Trigger>
-        <SidebarDropdown.Content className="data-[state=open]:animate-fade-in-top -mt-[1px] w-[14.438rem] flex flex-col gap-2.5 p-2.5 pt-1 bg-neutral-1 border border-t-0 rounded-b-xl border-neutral-6 shadow-xl z-20">
+        <SidebarDropdown.Content className="data-[state=open]:animate-fade-in-top -mt-[1px] w-[14.438rem] flex flex-col gap-2.5 p-2.5 pt-1 bg-neutral-1 border border-t-0 rounded-b-lg border-neutral-6 shadow-xl z-20">
           {!!projects.length && (
             <>
               <SidebarDropdown.Separator />
@@ -116,7 +116,7 @@ export const ProjectDropdown: React.FC = () => {
                       >
                         <ProjectDropdownAvatar
                           project={project}
-                          className="rounded size-4"
+                          className="rounded-sm size-4"
                         />
                         <Text className="line-clamp-1">{project.name}</Text>
                       </SidebarDropdown.Item>

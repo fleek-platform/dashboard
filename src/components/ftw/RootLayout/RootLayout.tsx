@@ -1,6 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 import React, { useEffect, useState } from 'react';
 
+import { ExternalLink, Link, LinkButton } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';
 import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
@@ -12,6 +13,7 @@ import { useUserHasScrolled } from '@/hooks/useUserHasScrolled';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { TEST_ID } from '@/test/testId';
 import { ChildrenProps } from '@/types/Props';
 import {
   Box,
@@ -27,10 +29,8 @@ import { cn } from '@/utils/cn';
 import { isServerSide } from '@/utils/isServerSide';
 
 import { BadgeText } from '../../BadgeText/BadgeText';
-import { ExternalLink } from '../../ExternalLink/ExternalLink';
 import { FleekLogo } from '../../FleekLogo/FleekLogo';
 import { LayoutHead } from '../../LayoutHead/LayoutHead';
-import { Link } from '../../Link/Link';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
@@ -41,6 +41,7 @@ export type NavigationItem = {
   path: string;
   hasAccess: boolean;
   isExact?: boolean;
+  showNewTag?: boolean;
 };
 
 const Container: React.FC<ChildrenProps> = ({ children }) => {
@@ -54,7 +55,7 @@ const Container: React.FC<ChildrenProps> = ({ children }) => {
     !subscription.data?.endDate;
 
   return (
-    <Box className="bg-app-bg min-h-dvh">
+    <Box className="bg-surface-app min-h-dvh">
       {shouldShowBanner && (
         <Box className="bg-danger-3 py-1 flex items-center">
           <Text className="text-danger-11">
@@ -63,9 +64,7 @@ const Container: React.FC<ChildrenProps> = ({ children }) => {
             {paymentMethodExpired.hasExpired && 'has expired.'} You can update
             it&nbsp;
             <Link
-              href={routes.project.settings.billing({
-                projectId: session.project.id,
-              })}
+              href={routes.project.billing({ projectId: session.project.id })}
             >
               <u>here.</u>
             </Link>
@@ -88,23 +87,25 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 }) => {
   const isActivePage = useIsActivePage({ path: navItem.path, isExact });
 
+  const colorScheme = isActivePage ? 'yellow' : 'slate';
+
   return (
-    <Link
+    <LinkButton
       key={navItem.path}
       href={navItem.path}
-      className={cn(
-        'flex text-neutral-11 hover:bg-neutral-4 active:bg-neutral-5 items-center gap-3 py-2 px-3 text-sm font-medium rounded-lg select-none ring-0 outline-0 focus-visible:ring-2 ring-neutral-8',
-        {
-          'bg-accent-3 hover:bg-accent-3 active:bg-accent-3 text-accent-11':
-            isActivePage,
-        },
-      )}
-      role="menuitem"
-      aria-label={navItem.label}
+      intent={isActivePage ? 'accent' : 'ghost'}
+      className="w-full justify-between px-3"
     >
-      <Icon name={navItem.icon} className="size-4" />
-      {navItem.label}
-    </Link>
+      <Box className="flex flex-row gap-3 items-center">
+        <Icon name={navItem.icon} className="size-4" />
+        {navItem.label}
+      </Box>
+      {navItem.showNewTag && (
+        <BadgeText colorScheme={colorScheme} className="pointer-events-none">
+          ✨ New
+        </BadgeText>
+      )}
+    </LinkButton>
   );
 };
 
@@ -115,10 +116,10 @@ const ExternalLinkWrapper: React.FC<
     return (
       <ExternalLink
         href={href}
-        className="group flex px-3 justify-between items-center rounded ring-0 outline-0 focus-visible:ring-2 ring-neutral-8"
+        className="group flex px-3 justify-between items-center rounded-sm ring-0 outline-0 focus-visible:ring-2 ring-neutral-8"
       >
         <Text className="group-hover:text-neutral-12">{children}</Text>
-        <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg shrink-0">
+        <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded shrink-0">
           <Icon
             name="arrow-up-right"
             className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]"
@@ -131,10 +132,10 @@ const ExternalLinkWrapper: React.FC<
   return (
     <button
       onClick={onClick}
-      className="group px-3 flex justify-between items-center rounded ring-0 outline-0 focus-visible:ring-2 ring-neutral-8"
+      className="group px-3 flex justify-between items-center rounded-sm ring-0 outline-0 focus-visible:ring-2 ring-neutral-8"
     >
       <Text className="group-hover:text-neutral-12">{children}</Text>
-      <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg shrink-0">
+      <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded shrink-0">
         <Icon
           name="arrow-up-right"
           className="text-neutral-8 group-hover:text-neutral-11 size-[0.875rem]"
@@ -172,7 +173,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [flags]);
 
   return (
-    <Box className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full" role="menu" aria-label="main menu">
+    <Box
+      data-testid={TEST_ID.NAV_LINK_PROJECT}
+      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
+    >
       <Box className="gap-3">
         <Box className="gap-4">
           <Box className="flex-row justify-between">
@@ -217,7 +221,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Box className="gap-2.5">
         {showVersions && <VersionTags />}
         <Announcement />
-        <Box className="border border-neutral-6 py-2 pt-2.5 rounded-xl">
+        <Box className="border border-neutral-6 py-2 pt-2.5 rounded-lg">
           <ExternalLinkWrapper onClick={() => openModalWithTab('FEEDBACK')}>
             Help & Feedback
           </ExternalLinkWrapper>
@@ -297,7 +301,7 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
 const HeaderSkeleton: React.FC = () => (
   <Box className="flex-row items-center justify-between px-4 md:p-4 h-10 max-w-[82rem] w-full self-center">
     <Box className="flex-row gap-2 items-center h-[2rem] w-1/6">
-      <Skeleton className="size-4 rounded shrink-0" />
+      <Skeleton className="size-4 rounded-sm shrink-0" />
       <Skeleton variant="text" className="shrink-0" />
     </Box>
     <Skeleton variant="button" className="w-1/6 h-[2rem] shrink-0" />
@@ -364,7 +368,7 @@ const Page: React.FC<PageProps> = ({
       isNavigationLoading={isNavigationLoading}
     />
     <Box className="flex-1 p-2.5 pl-0">
-      <Box className="lg:rounded-xl lg:bg-neutral-1 lg:border lg:border-neutral-6">
+      <Box className="lg:rounded-lg lg:bg-neutral-1 lg:border lg:border-neutral-6">
         <Header
           navigation={navigation}
           isNavigationLoading={isNavigationLoading}

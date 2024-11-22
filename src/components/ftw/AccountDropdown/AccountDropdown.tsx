@@ -98,13 +98,13 @@ export const AccountDropdown: React.FC = () => {
           <AccountDropdownAvatar
             userId={meQuery.data?.user.id}
             avatarSrc={meQuery.data?.user.avatar || avatar}
-            className="rounded size-6"
+            className="rounded-sm size-6"
           />
           <Text variant="primary" weight={500}>
             {meQuery.data?.user.username}
           </Text>
         </Box>
-        <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded-lg transition-colors shrink-0">
+        <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded transition-colors shrink-0">
           <Icon
             name={isMobile ? 'chevron-up' : 'chevron-right'}
             className="group-data-[state=open]:rotate-180 transition-all size-4"
@@ -115,7 +115,7 @@ export const AccountDropdown: React.FC = () => {
         side={isMobile ? 'top' : 'right'}
         align={isMobile ? 'center' : 'end'}
         sideOffset={isMobile ? 6 : -6}
-        className="data-[state=open]:animate-fade-in-top rounded-lg w-[14.438rem] flex flex-col gap-2.5 p-2.5 bg-neutral-1 border border-neutral-6 shadow-xl z-20"
+        className="data-[state=open]:animate-fade-in-top rounded w-[14.438rem] flex flex-col gap-2.5 p-2.5 bg-neutral-1 border border-neutral-6 shadow-xl z-20"
       >
         <Box className="gap-2">
           <SidebarDropdown.Item

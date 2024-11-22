@@ -344,8 +344,9 @@ export const constants = {
 
   ANNOUNCEMENT_BANNER: {
     LOCAL_STORAGE_KEY: 'announcementDismissed',
-    ID: 'next-js-release',
-    MESSAGE: 'Deploy fullstack Next.JS apps with SSR, app routing and more',
-    HREF: 'https://fleek.xyz/blog/announcements/nextjs-support-release/',
+    ID: 'fleek-machines-early-access',
+    MESSAGE:
+      'Introducing Fleek Machines (Early access): One-click verified and private compute',
+    HREF: 'https://fleek.xyz/blog/announcements/fleek-machines-fleek-functions/',
   },
 };

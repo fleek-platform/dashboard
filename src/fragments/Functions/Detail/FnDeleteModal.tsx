@@ -1,23 +1,23 @@
-import { useState } from 'react';
 import zod from 'zod';
 
 import { Form, SettingsDeleteModal } from '@/components';
-import { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { useDeleteFunction } from './Context';
 
-export type FnDeleteModalProps = ChildrenProps<{
+export type FnDeleteModalProps = {
   fnName: string;
   fnId: string;
-}>;
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
 export const FnDeleteModal: React.FC<FnDeleteModalProps> = ({
-  children,
   fnName,
   fnId,
+  isOpen,
+  onOpenChange,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [, handleDelete] = useDeleteFunction({ id: fnId });
   const form = Form.useForm({
     values: { name: '' },
@@ -29,20 +29,21 @@ export const FnDeleteModal: React.FC<FnDeleteModalProps> = ({
     onSubmit: handleDelete,
   });
 
+  const handleOpenChange = (open: boolean) => {
+    form.resetForm();
+    onOpenChange(open);
+  };
+
   return (
     <Form.Provider value={form}>
-      <SettingsDeleteModal
-        trigger={children}
-        open={isOpen}
-        onOpenChange={setIsOpen}
-      >
+      <SettingsDeleteModal open={isOpen} onOpenChange={handleOpenChange}>
         <SettingsDeleteModal.Heading>
           Confirm Function Deletion
         </SettingsDeleteModal.Heading>
 
         <Text>
-          If you are positive you want to delete your Function, use the field
-          below to confirm and click delete.
+          If you are positive you want to delete your function, use the field
+          below to confirm and click &quot;Delete function&quot;.
         </Text>
 
         <Form.InputField

@@ -1,4 +1,4 @@
-import { Text } from '@/ui';
+import { CodeBlock, Text } from '@/ui';
 
 import { StorageTableStyles as S } from './StorageTable.styles';
 
@@ -7,10 +7,11 @@ export const EmptyFiles: React.FC = () => {
     <S.EmptyFiles.Container>
       <>
         <Text as="h2" variant="primary" size="2xl" weight={700}>
-          No files yet :(
+          No files yet
         </Text>
         <Text size="md">
-          Use the Upload button to store your first file/folder on Fleek.
+          Click the <CodeBlock>Upload</CodeBlock> button to store your first
+          file or folder on Fleek
         </Text>
       </>
     </S.EmptyFiles.Container>

@@ -138,12 +138,14 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
         isDisabled={!hasEditPermission}
         hasAccess={hasEditPermission}
       >
-        <SettingsListItem.DropdownMenuItem
-          icon="pencil"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit
-        </SettingsListItem.DropdownMenuItem>
+        {secret.visibility === SecretVisibility.PUBLIC && (
+          <SettingsListItem.DropdownMenuItem
+            icon="pencil"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit
+          </SettingsListItem.DropdownMenuItem>
+        )}
         <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDelete}>
           Delete
         </SettingsListItem.DropdownMenuItem>

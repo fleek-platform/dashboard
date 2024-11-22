@@ -13,8 +13,6 @@ import { Log } from '@/utils/log';
 import { useFleekSdk } from './useFleekSdk';
 import { useRouter } from './useRouter';
 
-import type { UploadPinResponse } from '@fleek-platform/sdk';
-
 type MutateAsyncProps = {
   upload: Upload;
   updateUpload: (upload: Upload) => void;
@@ -53,7 +51,7 @@ export const useUpload = () => {
         }
       };
 
-      let uploadResult: UploadPinResponse | undefined;
+      let uploadResult;
 
       if (upload.type === 'file') {
         uploadResult = await fleekSdk

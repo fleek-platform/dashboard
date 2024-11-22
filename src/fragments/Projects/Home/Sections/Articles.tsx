@@ -15,13 +15,13 @@ export type ArticleItemProps = {
 const ArticleItem: React.FC<LoadingProps<ArticleItemProps>> = ({
   title,
   description,
-  href,
+  href = '#',
   imgSrc,
   isLoading,
 }) => {
   if (isLoading) {
     return (
-      <S.ArticleItem.Wrapper key="title">
+      <S.ArticleItem.Wrapper key="title" href={href}>
         <S.ArticleItem.Preview />
         <S.ArticleItem.TextContainer>
           <S.ArticleItem.Title>

@@ -55,7 +55,7 @@ export const TemplateDetails: React.FC<TemplateDetailsProps> = ({
         />
         <S.Item.Divider />
         <ExternalLink
-          colorScheme="red"
+          variant="danger"
           href={getLinkForTemplateReport({
             templateId: template.id,
             name: template.name,

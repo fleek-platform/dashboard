@@ -40,7 +40,7 @@ const DropdownItem = ({
   ...props
 }: DropdownItemProps) => {
   const classNames = cn(
-    'flex items-center gap-2.5 p-2 ring-0 outline-none focus-visible:bg-neutral-3 hover:bg-neutral-3 cursor-pointer rounded-lg active:bg-neutral-4 outline-0 text-sm text-neutral-11 font-medium',
+    'flex items-center gap-2.5 p-2 ring-0 outline-none focus-visible:bg-neutral-3 hover:bg-neutral-3 cursor-pointer rounded active:bg-neutral-4 outline-0 text-sm text-neutral-11 font-medium',
     { 'justify-between': iconRight },
     className,
   );

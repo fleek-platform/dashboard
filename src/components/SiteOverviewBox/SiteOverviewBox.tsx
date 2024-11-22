@@ -1,8 +1,9 @@
 import { routes } from '@fleek-platform/utils-routes';
 
+import { ExternalLink, Link } from '@/components';
 import { constants } from '@/constants';
 import { DisabledProps, LoadingProps } from '@/types/Props';
-import { Icon, IconName, Menu, Skeleton, Text } from '@/ui';
+import { Box, Icon, IconName, Menu, Skeleton, Text } from '@/ui';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 import {
   getLinkForIPFSGateway,
@@ -15,7 +16,6 @@ import {
 } from '@/utils/siteSlugLinks';
 
 import { BadgeText } from '../BadgeText/BadgeText';
-import { ExternalLink } from '../ExternalLink/ExternalLink';
 import { PreviewImage } from '../PreviewImage/PreviewImage';
 import { SiteOverviewBoxStyles as S } from './SiteOverviewBox.styles';
 
@@ -26,7 +26,7 @@ const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
   subtitle,
   badgeText,
   iconVariant,
-  href,
+  href = '#',
   localLink,
   isDisabled = false,
   ...props
@@ -35,15 +35,15 @@ const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
     return <SiteDetailSkeleton />;
   }
 
-  const Container: React.ElementType = localLink
-    ? S.SiteDetail.LocalContainer
-    : S.SiteDetail.Container;
+  const Container: React.ElementType = localLink ? Link : ExternalLink;
 
   return (
     <Container
-      href={!isDisabled && href ? href : ''}
-      {...props}
+      variant="neutral"
+      href={!isDisabled && href ? href : '#'}
       disabled={isDisabled}
+      className="flex gap-2.5"
+      {...props}
     >
       <S.SiteDetail.IconContainer variant={iconVariant}>
         <Icon name={avatarName} />
@@ -66,20 +66,18 @@ const SkeletonOverview: React.FC = () => (
         </BadgeText>
       </S.StatusRow>
       <Skeleton />
-      <SiteDetail isLoading />
-      <SiteDetail isLoading />
-      <SiteDetail isLoading />
+      <SiteDetail href="#" isLoading />
+      <SiteDetail href="#" isLoading />
+      <SiteDetail href="#" isLoading />
     </S.DetailsContainer>
   </S.Container>
 );
 
 const SiteDetailSkeleton: React.FC = () => (
-  <S.SiteDetail.Container>
-    <S.SiteDetail.IconContainer variant="loading">
-      <Skeleton />
-    </S.SiteDetail.IconContainer>
-    <Skeleton />
-  </S.SiteDetail.Container>
+  <Box className="flex-row gap-2.5 items-center">
+    <Skeleton variant="avatar" className="size-[23px]" />
+    <Skeleton className="w-1/2 h-4" />
+  </Box>
 );
 
 const Domain: React.FC<SiteOverviewBox.DomainProps> = ({
@@ -132,14 +130,19 @@ const Domain: React.FC<SiteOverviewBox.DomainProps> = ({
 };
 
 const GitCommit: React.FC<SiteOverviewBox.GitCommitProps> = ({ message }) => (
-  <SiteDetail avatarName="git-commit" iconVariant="web" title={message} />
+  <SiteDetail
+    href="#"
+    avatarName="git-commit"
+    iconVariant="web"
+    title={message}
+  />
 );
 
 const SiteSourceDetail: React.FC<SiteOverviewBox.SiteSourceDetail> = ({
   repositoryName,
   repositoryOwner,
   isSelfManaged,
-  visitRepoSource,
+  visitRepoSource = '#',
   siteName,
 }) => {
   if (repositoryName && repositoryOwner && !isSelfManaged) {
@@ -174,6 +177,7 @@ const ViewOnIPFS: React.FC<SiteOverviewBox.ViewOnIPFSProps> = ({
         avatarName="ipfs-colored"
         iconVariant="ipfs"
         title="IPFS Hash Pending"
+        href="#"
         isDisabled
       />
     );
@@ -183,6 +187,7 @@ const ViewOnIPFS: React.FC<SiteOverviewBox.ViewOnIPFSProps> = ({
     <Menu.Root>
       <Menu.Trigger>
         <SiteOverviewBox.SiteDetail
+          href="#"
           avatarName="ipfs-colored"
           iconVariant="ipfs"
           title="View on IPFS"
@@ -239,9 +244,7 @@ export namespace SiteOverviewBox {
     }>
   > &
     Omit<
-      React.ComponentPropsWithRef<
-        typeof S.SiteDetail.Container | typeof S.SiteDetail.LocalContainer
-      >,
+      React.ComponentPropsWithRef<typeof ExternalLink | typeof Link>,
       'disabled'
     >;
   export type DomainProps = DisabledProps<{

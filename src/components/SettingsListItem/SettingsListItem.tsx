@@ -1,7 +1,7 @@
+import { ExternalLink } from '@/components';
 import { ChildrenProps, DisabledProps, LoadingProps } from '@/types/Props';
 import { AvatarMarble, Button, Icon, IconName, Menu, Text } from '@/ui';
 
-import { ExternalLink } from '../ExternalLink/ExternalLink';
 import { PermissionsTooltip } from '../PermissionsTooltip/PermissionsTooltip';
 import { SettingsListItemStyles as S } from './SettingsListItem.styles';
 
@@ -25,7 +25,7 @@ export const SettingsListItem = ({
   marbleSrc,
 }: SettingsListItemProps) => {
   return (
-    <S.Container variant="container">
+    <S.Container variant="container" data-testid={testId}>
       {avatarSrc || avatarIcon ? (
         <S.Avatar src={avatarSrc} icon={avatarIcon} enableIcon={true} />
       ) : (

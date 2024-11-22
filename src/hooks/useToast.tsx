@@ -40,17 +40,15 @@ export const useToast = () => {
         type: 'error',
       });
 
-      // TODO: Check why the inferred type failed?
-      Log.error((toast as any).log, toast.error);
+      Log.error(toast.log, toast.error);
 
       return;
     }
 
-    // TODO: Check why the inferred type failed?
     pushToast({
       ...toast,
       type: 'error',
-    } as any);
+    });
     Log.error(toast.message);
   };
 

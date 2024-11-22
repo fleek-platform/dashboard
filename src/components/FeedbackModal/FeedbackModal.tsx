@@ -325,7 +325,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           onClick={() => setSelectedTab('PROBLEM')}
           size="sm"
           className={cn(
-            'p-2 rounded-md',
+            'p-2 rounded-sm',
             selectedTab === 'PROBLEM' && 'shadow-lg',
           )}
         >
@@ -338,7 +338,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           onClick={() => setSelectedTab('QUESTION')}
           size="sm"
           className={cn(
-            'p-2 rounded-md',
+            'p-2 rounded-sm',
             selectedTab === 'QUESTION' && 'shadow-lg',
           )}
         >
@@ -351,7 +351,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           onClick={() => setSelectedTab('FEEDBACK')}
           size="sm"
           className={cn(
-            'p-2 rounded-md',
+            'p-2 rounded-sm',
             selectedTab === 'FEEDBACK' && 'shadow-lg',
           )}
         >

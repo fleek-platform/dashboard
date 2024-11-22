@@ -1,4 +1,3 @@
-import { Link } from '@/components';
 import { styled } from '@/theme';
 import { Box, Icon, Skeleton } from '@/ui';
 
@@ -7,29 +6,6 @@ export const DeployStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: '$spacing-3',
-
-    variants: {
-      isSelfManaged: {
-        true: {
-          [`${Link}`]: {
-            gridTemplateColumns: '2fr 2.5fr 0.5fr ',
-          },
-        },
-      },
-    },
-
-    [`${Link}`]: {
-      width: '$full',
-      display: 'grid',
-      gridTemplateColumns: '1.5fr 1.5fr 2.5fr 1fr',
-      gap: '$spacing-8',
-      justifyContent: 'space-between',
-
-      '@sm!': {
-        gridTemplateColumns: '1fr',
-        gap: '$spacing-4',
-      },
-    },
   }),
   ItemContainer: styled(Box, {
     justifyContent: 'space-between',

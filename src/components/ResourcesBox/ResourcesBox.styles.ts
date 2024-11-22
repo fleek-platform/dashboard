@@ -1,8 +1,6 @@
 import { styled } from '@/theme';
 import { Box } from '@/ui';
 
-import { ExternalLink } from '../ExternalLink/ExternalLink';
-
 export const BoxStyles = {
   Container: styled(Box, {
     variants: {
@@ -22,10 +20,6 @@ export const BoxStyles = {
       gridTemplateColumns: 'repeat(3, 1fr)',
       gridTemplateRows: 'repeat(2, auto)',
       gridRowGap: '$spacing-4',
-
-      [`${ExternalLink}`]: {
-        textCategory: '$sm',
-      },
     }),
   },
 };

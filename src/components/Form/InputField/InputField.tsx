@@ -82,7 +82,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       <Input.Root
         variant={variant}
         size={inputSize}
-        disabled={isDisabled}
+        disabled={isDisabled || htmlAttributes.disabled}
         className={inputRootClassName}
         isLoading={isLoading}
         error={field.status === 'invalid'}
@@ -114,7 +114,7 @@ export const InputField: React.FC<InputFieldProps> = ({
             name={name}
             disabled={isDisabled}
             className={inputFieldClassName}
-            {...(htmlAttributes as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            {...(htmlAttributes as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         )}
 

@@ -60,16 +60,6 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
       path: routes.project.settings.team({ projectId }),
       hasAccess: usePermissions({ action: [constants.PERMISSION.TEAM.VIEW] }),
     },
-    {
-      label: 'Billing',
-      path: routes.project.settings.billing({ projectId }),
-      hasAccess: usePermissions({
-        action: [
-          constants.PERMISSION.BILLING.MANAGE,
-          constants.PERMISSION.BILLING.VIEW,
-        ],
-      }),
-    },
   ];
 
   return (

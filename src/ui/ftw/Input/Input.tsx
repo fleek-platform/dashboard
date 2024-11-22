@@ -16,10 +16,10 @@ const inputVariants = cva(
   {
     variants: {
       size: {
-        xs: 'min-h-6 px-2.5 text-xs gap-2 rounded-md',
-        sm: 'min-h-[2rem] px-2.5 text-sm gap-2 rounded-lg',
-        md: 'min-h-[2.5rem] px-3 gap-2 rounded-lg',
-        lg: 'min-h-8 text-lg px-4 gap-3 rounded-xl',
+        xs: 'min-h-6 px-2.5 text-xs gap-2 rounded-sm',
+        sm: 'min-h-[2rem] px-2.5 text-sm gap-2 rounded-md',
+        md: 'min-h-[2.5rem] px-3 gap-2 rounded-md',
+        lg: 'min-h-8 text-lg px-4 gap-3 rounded-lg',
       },
       variant: {
         outline:

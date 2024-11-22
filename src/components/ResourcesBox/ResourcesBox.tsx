@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { ExternalLinkProps } from '@/components';
 import { Text } from '@/ui';
 
-import { ExternalLinkProps } from '../ExternalLink/ExternalLink';
 import { BoxStyles as S } from './ResourcesBox.styles';
 
 export type ResourcesBoxProps = {

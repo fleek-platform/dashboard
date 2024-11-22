@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ExternalLink } from '../ExternalLink/ExternalLink';
+import { ExternalLink } from '../ftw/ExternalLink/ExternalLink';
 import { ResourcesBox, ResourcesBoxProps } from './ResourcesBox';
 
 const meta: Meta = {
@@ -20,13 +20,13 @@ export const ResourcesBoxStory: Story = {
       <ExternalLink key="link-1" href="https://example.com">
         Read the CLI docs
       </ExternalLink>,
-      <ExternalLink key="link-2" href="https://example.com" iconName="sun">
+      <ExternalLink key="link-2" href="https://example.com">
         Custom icon
       </ExternalLink>,
-      <ExternalLink key="link-3" href="https://example.com" iconOrder="start">
+      <ExternalLink key="link-3" href="https://example.com">
         Custom Icon order
       </ExternalLink>,
-      <ExternalLink key="link-4" href="https://example.com" colorScheme="slate">
+      <ExternalLink key="link-4" href="https://example.com" variant="accent">
         Custom color scheme
       </ExternalLink>,
       <ExternalLink key="link-5" href="https://example.com">
@@ -36,9 +36,5 @@ export const ResourcesBoxStory: Story = {
         Default Styles
       </ExternalLink>,
     ],
-    externalLinkProps: {
-      colorScheme: 'yellow',
-      withIcon: true,
-    },
   },
 };

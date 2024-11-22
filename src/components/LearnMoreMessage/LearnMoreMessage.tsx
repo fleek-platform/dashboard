@@ -1,9 +1,8 @@
 import { forwardRef } from 'react';
 
+import { ExternalLink } from '@/components';
 import { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
-
-import { LearnMoreMessageStyles as S } from './LearnMoreMessage.styles';
 
 export type LearnMoreMessageProps = ChildrenProps<
   {
@@ -19,7 +18,10 @@ export const LearnMoreMessage = forwardRef<
   return (
     <Text ref={ref} {...props} className="flex items-center">
       {prefix}&nbsp;
-      <S.ExternalLink href={href}>{children}</S.ExternalLink>.
+      <ExternalLink href={href} variant="accent" className="hover:underline">
+        {children}
+      </ExternalLink>
+      .
     </Text>
   );
 });

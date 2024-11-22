@@ -52,8 +52,7 @@ export const WithCombobox: Story = {
   render: () => {
     const ComboboxExample = () => {
       const selected = useState<string>();
-      // TODO: Investigate why inferred type fails
-      // using any temporaly
+
       return (
         <Combobox
           items={['Option 1', 'Option 2', 'Option 3']}
@@ -62,9 +61,9 @@ export const WithCombobox: Story = {
           {({ Field, Options }) => (
             <>
               <Field placeholder="Select an option">
-                {(selected: any) => selected}
+                {(selected) => selected}
               </Field>
-              <Options>{(item: any) => item}</Options>
+              <Options>{(item) => item}</Options>
             </>
           )}
         </Combobox>

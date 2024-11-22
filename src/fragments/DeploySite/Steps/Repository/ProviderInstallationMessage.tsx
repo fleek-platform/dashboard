@@ -74,7 +74,8 @@ export const ProviderInstallationMessage: React.FC<
         <Text variant="primary" size="md">
           Missing Git repository?&nbsp;
           <ExternalLink
-            colorScheme="yellow"
+            href="#"
+            variant="accent"
             onClick={handleOpenGithubAppInstallationUrl}
             className="hover:underline"
           >

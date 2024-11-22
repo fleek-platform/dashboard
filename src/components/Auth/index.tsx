@@ -21,12 +21,13 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     const checkAuth = () => {
       const authToken = document.cookie
         .split('; ')
-        .find(row => row.startsWith('authProviderToken='))
+        .find((row) => row.startsWith('authProviderToken='))
         ?.split('=')[1];
-      const projectId = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('projectId='))
-        ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
+      const projectId =
+        document.cookie
+          .split('; ')
+          .find((row) => row.startsWith('projectId='))
+          ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
       const hasAuthentication = Boolean(authToken);
       const currentPath = window.location.pathname;
 
@@ -38,9 +39,9 @@ export const Auth: FC<AuthProps> = ({ children }) => {
       }
 
       const isPublicRoute = Boolean(
-        constants.PUBLIC_ROUTES.find(route => 
-          matchesPathname(route, currentPath)
-        )
+        constants.PUBLIC_ROUTES.find((route) =>
+          matchesPathname(route, currentPath),
+        ),
       );
 
       if (!hasAuthentication && !isPublicRoute) {
@@ -59,4 +60,4 @@ export const Auth: FC<AuthProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-}
+};
