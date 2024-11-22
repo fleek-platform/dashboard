@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-
+  // TODO: replace instances of next/image'
+  // or do image optimization on build
+  // by utilizing a different method
+  images: {
+    unoptimized: true
+  },
   reactStrictMode: true,
   swcMinify: false,
   trailingSlash: true,

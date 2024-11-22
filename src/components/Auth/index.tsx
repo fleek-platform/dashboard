@@ -23,17 +23,17 @@ export const Auth: FC<AuthProps> = ({ children }) => {
         .split('; ')
         .find(row => row.startsWith('authProviderToken='))
         ?.split('=')[1];
-
       const projectId = document.cookie
         .split('; ')
         .find(row => row.startsWith('projectId='))
         ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
-
       const hasAuthentication = Boolean(authToken);
       const currentPath = window.location.pathname;
 
       if (hasAuthentication && currentPath === routes.home()) {
         router.push(routes.project.home({ projectId }));
+
+        setIsChecking(false);
         return;
       }
 
