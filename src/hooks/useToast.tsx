@@ -40,7 +40,7 @@ export const useToast = () => {
         type: 'error',
       });
 
-      Log.error(toast.log, toast.error);
+      Log.error((toast as any).log, toast.error);
 
       return;
     }
@@ -48,7 +48,7 @@ export const useToast = () => {
     pushToast({
       ...toast,
       type: 'error',
-    });
+    } as any); // TODO: fix type
     Log.error(toast.message);
   };
 
