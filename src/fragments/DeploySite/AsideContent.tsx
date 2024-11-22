@@ -59,6 +59,9 @@ const StatusBox: React.FC = () => {
     [siteFrameworks, field.value],
   );
 
+  // TODO: What to do when typeIcon is undefined?
+  if (!typeIcon) return;
+
   return (
     <S.StatusBox.Container wrapped={mode === 'template'}>
       <StatusItem

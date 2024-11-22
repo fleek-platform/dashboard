@@ -1,3 +1,6 @@
+// TODO: Believe this file can be deleted
+// removed crypto related source
+// as the dependency is now missing (deleted)
 import { useEffect } from 'react';
 
 import { constants } from '@/constants';
@@ -23,35 +26,6 @@ export const PaymentTrigger: React.FC<PaymentTriggerProps> = ({
 
   return (
     <>
-      <S.GapWrapper>
-        <S.Title>Pay with Crypto</S.Title>
-        <S.Text>
-          Select the network and currency to send payment to the recipient
-          address provided below.
-        </S.Text>
-
-        <CurrencyOptions
-          isLoading={cryptoPaymentOptions.isLoading}
-          options={
-            cryptoPaymentOptions.data && 'options' in cryptoPaymentOptions.data
-              ? cryptoPaymentOptions.data.options
-              : []
-          }
-        />
-      </S.GapWrapper>
-
-      <S.PaymentTrigger.CTAContainer>
-        <S.Title>Are you ready to pay?</S.Title>
-        <S.Text>Click the button below to begin the payment process.</S.Text>
-
-        <Button
-          onClick={onPaymentBegin}
-          loading={isPaymentBeginning}
-          disabled={isDisabled}
-        >
-          Begin payment
-        </Button>
-      </S.PaymentTrigger.CTAContainer>
     </>
   );
 };

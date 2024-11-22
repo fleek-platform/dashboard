@@ -44,10 +44,10 @@ export const BranchField: React.FC = () => {
               placeholder="Select a branch"
               css={{ minHeight: '2rem', borderRadius: '0.5rem' }}
             >
-              {(selected) => selected}
+              {(selected: string) => selected}
             </Field>
 
-            <Options viewportHeight="$3xs">{(item) => item}</Options>
+            <Options viewportHeight="$3xs">{(item: string) => item}</Options>
           </>
         )}
       </Combobox>
