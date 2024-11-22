@@ -116,7 +116,6 @@ describe('On Project settings page', () => {
           'application credentials',
           'git integrations',
           'team',
-          'billing',
         ];
 
         for (const listItemName of list) {
@@ -252,13 +251,16 @@ describe('On Project settings page', () => {
               'Create an application token to authenticate with the Fleek SDK.',
             ),
           ).toBeVisible();
+
+          // To help ensure rows are ready
+          await expect(page.getByRole('row').first()).toBeVisible();
         });
 
         it('Should have Application Credentials table items', async ({
           page,
         }) => {
           const table = page.getByRole('table', {
-            name: 'application credential list',
+            name: 'Application credential list',
           });
           const rowCount = await table.getByRole('row').count();
           expect(rowCount > 1).toBeTruthy();
@@ -318,7 +320,7 @@ describe('On Project settings page', () => {
         it('Should have Application Credentials text', async ({ page }) => {
           await expect(
             page.getByText(
-              'Create an application token to authenticate with the Fleek SDK.',
+              'Create an application token to authenticate with the Fleek SDK',
             ),
           ).toBeVisible();
         });

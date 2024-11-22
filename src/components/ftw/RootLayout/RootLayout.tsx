@@ -94,6 +94,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       href={navItem.path}
       intent={isActivePage ? 'accent' : 'ghost'}
       className="w-full justify-between px-3"
+      role="menuitem"
+      aria-label={navItem.label}
     >
       <Box className="flex flex-row gap-3 items-center">
         <Icon name={navItem.icon} className="size-4" />
@@ -173,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <Box
-      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
+      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full" role="menu" aria-label="main menu"
     >
       <Box className="gap-3">
         <Box className="gap-4">
