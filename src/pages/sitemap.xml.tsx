@@ -37,7 +37,7 @@ const buildSitemap = (templates: Template[], baseUrl: string) => {
     </urlset>`;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getStaticProps: GetServerSideProps = async (ctx) => {
   const { res, req } = ctx;
   const protocol = req.headers['x-forwarded-proto'] || 'http';
   const host = req.headers.host;
