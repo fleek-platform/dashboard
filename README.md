@@ -19,6 +19,8 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [CI/CD Runner](#cicd-runner)
+* [🛠️Generators](#Generators)
+  - [Sitemap](#sitemapxml)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -216,6 +218,16 @@ WIP
 On CI/CD runners, low specs cause inconsistent runs to mitigate any inconsistency playwright's team recommends running in a single worker [CI/Workers](https:playwright.dev/docs/ciworkers).
 
 Note that launching a [large](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners/about-larger-runners), e.g. `macos-latest-xlarge` runner is more efficient but increases cost dramatically.
+
+## Generators
+
+### Sitemap.xml
+
+Generate a sitemap by executing the command:
+
+```sh
+pnpm run generate:sitemap
+```
 
 ## Contributing
 
