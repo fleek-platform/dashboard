@@ -15,6 +15,7 @@ jobs:
     env:
       FLEEK_TOKEN: ${{ secrets.FLEEK_TOKEN }}
       FLEEK_PROJECT_ID: ${{ secrets.FLEEK_PROJECT_ID }}
+      FLEEK_SLUG: ${{ secrets.FLEEK_SLUG }}
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
     steps:
       - name: Checkout
@@ -53,6 +54,16 @@ jobs:
 
       - name: Install Packages
         run: pnpm install
+
+      - name: Setup fleek.config.json
+        run: |
+          DIST="out"
+          BUILD="pnpm run build"
+          
+          .scripts/setup-fleek-config \
+            "$FLEEK_SLUG" \
+            "$DIST" \
+            "$BUILD"
 
       - name: Build & deploy
         run: |
