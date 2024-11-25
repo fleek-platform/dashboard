@@ -11,7 +11,7 @@ on:
 jobs:
   deploy-to-fleek:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: ${{ inputs.environment }}
     env:
       FLEEK_TOKEN: ${{ secrets.FLEEK_TOKEN }}
       FLEEK_PROJECT_ID: ${{ secrets.FLEEK_PROJECT_ID }}
