@@ -13,23 +13,9 @@ on:
 jobs:
   build-dry-run:
     runs-on: ubuntu-latest
+    environment: staging
     env:
-      NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://dry.run"
-      NEXT_PUBLIC_UI_FLEEK_REST_API_URL: "https://dry.run"
-      NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID: "dry.run"
-      NEXT_PUBLIC_UI__FEEDBACK_FISH_PROJECT_ID: "dry.run"
-      NEXT_PUBLIC_UI__GTM_ID: "dry.run"
-      NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID: "dry.run"
-      NEXT_PUBLIC_UI__LOG_ROCKET_ID: "dry.run"
-      NEXT_PUBLIC_UI__POSTHOG_HOST: "https://dry.run"
-      NEXT_PUBLIC_UI__POSTHOG_KEY: "dry.run"
-      NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN: "dry.run"
-      NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY: "dry.run"
-      NEXT_PUBLIC_UI__WEB3AUTH_CLIENT_ID: "dry.run"
-      NEXT_PUBLIC_UI__ZENDESK_PROXY_API: "https://dry.run"
-      NEXT_PUBLIC_ZENDESK_PROXY_HOSTNAME: "dry.run"
-      NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL: "https://dry.run"
-      NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME: "dry.run"
+      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,6 +28,28 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Setup Doppler
+        run: |
+          doppler configure set token ${{ secrets.DOPPLER_TOKEN }}
+          doppler configure set project ${{ secrets.DOPPLER_PROJECT }}
+          doppler configure set config ${{ secrets.DOPPLER_CONFIG }}
+
+      - name: Setup Environment vars
+        run: |
+          doppler secrets download --no-file --format env > .env
+
+      - name: Env vars health check
+        run: |
+          if ! doppler run -- printenv | grep -q 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL'; then
+            echo "👹 Oops! Missing required environment variable during health check..."
+            exit 1           
+          fi
+
+          echo "🚑 Doppler envVars seem healthy!"
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -52,3 +60,7 @@ jobs:
 
       - name: Build site
         run: pnpm run build
+
+      - name: Clear
+        run: |
+          rm .env

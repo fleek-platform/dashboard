@@ -42,6 +42,13 @@ const buildSitemap = (templates: Template[]) => {
 
 const generateSitemap = async () => {
   try {
+    await fetch(process.env.NEXT_PUBLIC_SDK__AUTHENTICATION_URL || '');
+    console.log('✅ DNS resolved successfully');
+  } catch (error) {
+    console.error('❌ DNS resolution failed:', error.message);
+  }
+
+  try {
     const client = createUrqlClient({ logout: () => {} });
     const result = await client
       .query(TemplatesDocument, {
