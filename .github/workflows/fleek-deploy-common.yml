@@ -35,8 +35,10 @@ jobs:
         run: |
           if ! doppler run -- printenv | grep -q 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL'; then
             echo "👹 Oops! Missing required environment variable during health check..."
-            exit 1
+            exit 1           
           fi
+
+          echo "🚑 Doppler envVars seem healthy!"
 
       - name: Install Fleek CLI
         run: pnpm i -g @fleek-platform/cli
@@ -46,4 +48,6 @@ jobs:
 
       - name: Build & deploy
         run: |
-          doppler run --command='fleek sites deploy'          
+          doppler run \
+            --preserve-env=FLEEK_TOKEN,FLEEK_PROJECT_ID \
+            --command='fleek sites deploy'          
