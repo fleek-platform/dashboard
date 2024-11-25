@@ -25,6 +25,12 @@ jobs:
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v3
 
+      - name: Setup Doppler
+        run: |
+          doppler configure set token ${{ secrets.DOPPLER_TOKEN }}
+          doppler configure set project ${{ secrets.DOPPLER_PROJECT }}
+          doppler configure set config ${{ secrets.DOPPLER_CONFIG }}
+
       - name: Setup .env
         run: |
           doppler secrets download --no-file --format env > .env
@@ -35,5 +41,5 @@ jobs:
       - name: Install Packages
         run: pnpm install
 
-      - name: Build & deploy sites
+      - name: Build & deploy
         run: fleek sites deploy
