@@ -126,6 +126,7 @@
     "@types/react-table": "^7.7.12",
     "@urql/core": "5.0.3",
     "autoprefixer": "^10.4.19",
+    "bun": "^1.1.36",
     "concurrently": "^7.6.0",
     "dotenv": "^16.4.5",
     "graphql-tag": "^2.12.6",
