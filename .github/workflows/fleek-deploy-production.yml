@@ -10,5 +10,5 @@ jobs:
   deploy-to-staging:
     uses: ./.github/workflows/fleek-deploy-common.yml
     with:
-      environment: prd
+      environment: production
     secrets: inherit
