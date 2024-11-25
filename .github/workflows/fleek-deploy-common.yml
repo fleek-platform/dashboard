@@ -31,9 +31,12 @@ jobs:
           doppler configure set project ${{ secrets.DOPPLER_PROJECT }}
           doppler configure set config ${{ secrets.DOPPLER_CONFIG }}
 
-      - name: Setup .env
+      - name: Env vars health check
         run: |
-          doppler secrets download --no-file --format env > .env
+          if ! doppler run -- printenv | grep -q 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL'; then
+            echo "👹 Oops! Missing required environment variable during health check..."
+            exit 1
+          fi
 
       - name: Install Fleek CLI
         run: pnpm i -g @fleek-platform/cli
@@ -42,4 +45,5 @@ jobs:
         run: pnpm install
 
       - name: Build & deploy
-        run: fleek sites deploy
+        run: |
+          doppler run --command='fleek sites deploy'          
