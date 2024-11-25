@@ -1,0 +1,39 @@
+name: ⚡️ Deploy site (Common)
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy-to-fleek:
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+      FLEEK_TOKEN: ${{ secrets.FLEEK_TOKEN }}
+      FLEEK_PROJECT_ID: ${{ secrets.FLEEK_PROJECT_ID }}
+      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-nodejs
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Setup .env
+        run: |
+          doppler secrets download --no-file --format env > .env
+
+      - name: Install Fleek CLI
+        run: pnpm i -g @fleek-platform/cli
+
+      - name: Install Packages
+        run: pnpm install
+
+      - name: Build & deploy sites
+        run: fleek sites deploy
