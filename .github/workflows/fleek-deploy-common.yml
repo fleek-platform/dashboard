@@ -40,6 +40,13 @@ jobs:
 
           echo "🚑 Doppler envVars seem healthy!"
 
+      - name: Setup dotenv
+        run: |
+          # Using dotenv due to `fleek sites deploy`
+          # failing to authenticate via the host or declared
+          # fleek env vars for some reason
+          doppler secrets download --no-file --format env > .env
+
       - name: Install Fleek CLI
         run: pnpm i -g @fleek-platform/cli
 
@@ -48,6 +55,8 @@ jobs:
 
       - name: Build & deploy
         run: |
-          doppler run \
-            --preserve-env=FLEEK_TOKEN,FLEEK_PROJECT_ID \
-            --command='fleek sites deploy'          
+          fleek sites deploy
+
+      - name: Clear
+        run: |
+          rm .env
