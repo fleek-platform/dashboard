@@ -42,31 +42,7 @@ jobs:
 
       - name: Setup dotenv
         run: |
-          targetEnvPath=".env"
-          # Using dotenv due to `fleek sites deploy`
-          # failing to authenticate via the host or declared
-          # fleek env vars for some reason
-          doppler secrets download \
-            --no-file \
-            --format env > "$targetEnvPath"
-
-          # The Fleek CLI supports envVars overrides
-          # for this reason, we should exclude some vars
-          # originated from doppler
-          EXCLUDE_CSV="UI__APP_URL,SDK__GRAPHQL_API_URL,SDK__AUTH_APPS_URL,SDK__IPFS__STORAGE_API_URL,SDK__UPLOAD_PROXY_API_URL"
-
-          for item in "${EXCLUDE_ARRAY[@]}"; do
-            sed -i "/$item/d" "$targetEnvPath"
-          done
-
-          for item in "${EXCLUDE_ARRAY[@]}"; do
-            if grep -q "$item" "$targetEnvPath"; then
-              echo "👹 Oops! Failed to exclude variables from $targetEnvPath for some reason..."
-              exit 1
-            fi
-          done
-
-          echo "✅ Completed dot env setup!"
+          .scripts/setup-ci-dotenv
 
       - name: Install Fleek CLI
         run: pnpm i -g @fleek-platform/cli
