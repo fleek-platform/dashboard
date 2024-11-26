@@ -105,6 +105,7 @@ jobs:
     env:
       # TODO: For testing CI/CD only
       # use dashboard settings instead
+      # TODO: Use doppler, see deploy and possibly make reusable
       NEXT_PUBLIC_SDK__AUTHENTICATION_URL: "https://graphql.service.staging.fleeksandbox.xyz/graphql"
       NEXT_PUBLIC_UI_FLEEK_REST_API_URL: "https://api.staging.fleeksandbox.xyz"
       NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID: "c4d4ccad-9460-419c-9ca3-494488f8c892"

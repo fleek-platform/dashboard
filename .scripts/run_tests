@@ -15,6 +15,11 @@ if ! pnpm run test:e2e; then
   onFailure
 fi
 
+echo "🤖 Should start the unit tests..."
+if ! pnpm run test:unit; then
+  onFailure
+fi
+
 # Required vars (shared)
 source .scripts/test_runner_vars
 
