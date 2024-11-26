@@ -30,6 +30,8 @@ export const secrets = {
     process.env.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,
 };
 
+// TODO: This should be deprecated
+// was used in the previous test suite
 export const getMutableSecrets = () => {
   if (!secrets.TEST_MODE) {
     return;
