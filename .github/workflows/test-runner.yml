@@ -169,15 +169,24 @@ jobs:
           pnpm dev &
           .scripts/await_dev_server "$NEXT_DEV_SERVER_PORT"
 
-      - name: Run tests
+      - name: Run E2E tests
         env:
           PLAYWRIGHT_WORKERS: 2
         run: |
-          if ! pnpm test; then
-            echo "👹 Oops! Test run failed"
+          if ! pnpm test:e2e; then
+            echo "👹 Oops! E2E test run failed"
             exit 1
           fi
 
+      - name: Run Unit tests
+        run: |
+          if ! pnpm test:unit; then
+            echo "👹 Oops! Unit Test run failed"
+            exit 1
+          fi
+
+      - name: Update test hash
+        run: |
           if ! cp .tests/hash test_run_hash; then
             echo "👹 Oops! Failed to save test hash artifact"
             exit 1
