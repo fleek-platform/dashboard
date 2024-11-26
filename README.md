@@ -18,6 +18,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Regression Suite](#regression-suite)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
+  - [Unit tests](#unit-tests)
   - [CI/CD Runner](#cicd-runner)
 * [🛠️Generators](#Generators)
   - [Sitemap](#sitemapxml)
@@ -189,6 +190,18 @@ For example, you can launch end-to-end tests, on a chrome browser:
 pnpm run test:ui
 ```
 
+Run the E2E test suite
+
+```sh
+pnpm run test:e2e
+```
+
+Run the unit tests
+
+```sh
+pnpm run test:unit
+```
+
 ### Good practices
 
 Here are some recommendations when writing tests.
@@ -209,9 +222,16 @@ Here are some recommendations when writing tests.
 - Avoid writing tests for static elements that's useless to the end-user
 - Avoid placing timeouts in the test
 
-#### Unit-tests
+#### Unit tests
 
-WIP
+Unit tests should be small tests that check individual parts of code for correctness. Ideally, functions tested with unit tests should be:
+
+- Pure, meaning their output depends only on their inputs, with no side effects. This makes them predictable and easier to test
+- Each test should run independently, without relying on other tests
+- Test One Thing Per Test: Focus each test on verifying a single behavior or functionality
+- Replace external dependencies (e.g., databases) with mock objects
+- Write simple, concise tests for easier debugging and maintenance, e.g. prefere storytelling
+
 
 #### CI/CD Runner
 
