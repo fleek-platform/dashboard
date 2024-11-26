@@ -343,7 +343,7 @@ importers:
         specifier: ^4.3.1
         version: 4.3.2(typescript@5.3.3)(vite@5.4.11(@types/node@17.0.35)(less@4.2.0)(sass@1.81.0)(terser@5.36.0))
       vitest:
-        specifier: 2.1.5
+        specifier: ^2.1.5
         version: 2.1.5(@types/node@17.0.35)(less@4.2.0)(sass@1.81.0)(terser@5.36.0)
       vitest-launchdarkly-mock:
         specifier: ^1.1.0
@@ -5289,6 +5289,7 @@ packages:
 
   bun@1.1.36:
     resolution: {integrity: sha512-PTpHkW0N9Wy0ck6AY20ksDGfg+Vs+7HApiWnC4FrOuCFKQZ+APqa/WPvkK14Sg3HZZ/r/uEY2F0gguoUkZE8XA==}
+    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
