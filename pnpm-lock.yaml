@@ -309,6 +309,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      filesize:
+        specifier: ^10.1.6
+        version: 10.1.6
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@15.9.0)
@@ -6498,6 +6501,10 @@ packages:
   files-from-path@1.1.1:
     resolution: {integrity: sha512-M2JDH/0gHqIsdwTnp8IBMWEYUUiHe9ei0ZMTXLxqKFcGxJF4Ki+nicw2k8HP5KGEzPLTyJ81XwLmP8l8rKa6qg==}
     engines: {node: '>=18'}
+
+  filesize@10.1.6:
+    resolution: {integrity: sha512-sJslQKU2uM33qH5nqewAwVB2QgR6w1aMNsYUp3aN5rMRyXEwJGmZvaWzeJFNTOXWlHQyBFCWrdj3fV/fsTOX8w==}
+    engines: {node: '>= 10.4.0'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -19829,6 +19836,8 @@ snapshots:
   files-from-path@1.1.1:
     dependencies:
       graceful-fs: 4.2.11
+
+  filesize@10.1.6: {}
 
   fill-range@7.1.1:
     dependencies:

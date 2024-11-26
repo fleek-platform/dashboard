@@ -130,6 +130,7 @@
     "bun": "^1.1.36",
     "concurrently": "^7.6.0",
     "dotenv": "^16.4.5",
+    "filesize": "^10.1.6",
     "graphql-tag": "^2.12.6",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
