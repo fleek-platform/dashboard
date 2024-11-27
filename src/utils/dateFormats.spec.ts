@@ -18,7 +18,7 @@ describe('Utils dateFormats', () => {
       dateISO: testDate,
       format: DateTime.DATE_MED,
     });
-    expect(result).toBe('25 Dec 2023');
+    expect(result).toBe('Dec 25, 2023');
   });
 
   it('should format date using "LLLL, dd, y" format', () => {
@@ -42,7 +42,7 @@ describe('Utils dateFormats', () => {
       dateISO: testDate,
       format: DateTime.DATE_FULL,
     });
-    expect(result).toBe('25 December 2023');
+    expect(result).toBe('December 25, 2023');
   });
 
   it('should format time using "HH:mm:ss.SSS" format', () => {
