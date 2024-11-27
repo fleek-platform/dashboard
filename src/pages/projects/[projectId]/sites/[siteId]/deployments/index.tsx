@@ -18,17 +18,12 @@ const DeploymentsPage: Page = () => {
 const PageNavContent: React.FC = () => {
   const router = useRouter();
   const siteId = router.query.siteId!;
-  const hasDeployPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.DEPLOY],
-  });
+  const hasDeployPermission = usePermissions({ action: [constants.PERMISSION.SITE.DEPLOY] });
   const siteQuota = useCanDeploySite({ siteId });
 
   const triggerDeploy = useTriggerSiteDeployment();
 
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: siteId } },
-    requestPolicy: 'cache-and-network',
-  });
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } }, requestPolicy: 'cache-and-network' });
 
   const site = siteQuery.data?.site;
   const isSelfManaged = isSiteSelfManaged(site);
@@ -39,10 +34,7 @@ const PageNavContent: React.FC = () => {
 
   if (!isSelfManaged && hasDeployPermission) {
     return (
-      <SiteQuotaTooltip
-        canDeploy={siteQuota.canDeploy}
-        isLoading={siteQuota.isFetching}
-      >
+      <SiteQuotaTooltip canDeploy={siteQuota.canDeploy} isLoading={siteQuota.isFetching}>
         <Button
           intent="neutral"
           onClick={handleRedeploy}
@@ -58,11 +50,6 @@ const PageNavContent: React.FC = () => {
   return null;
 };
 
-DeploymentsPage.getLayout = (page) => (
-  <Site.Layout nav={<PageNavContent />}>{page}</Site.Layout>
-);
+DeploymentsPage.getLayout = (page) => <Site.Layout nav={<PageNavContent />}>{page}</Site.Layout>;
 
-export default withAccess({
-  Component: DeploymentsPage,
-  requiredPermissions: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS],
-});
+export default withAccess({ Component: DeploymentsPage, requiredPermissions: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS] });

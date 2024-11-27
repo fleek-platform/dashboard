@@ -1,58 +1,30 @@
 import React from 'react';
 
 import { Link } from '@/components';
-import {
-  Avatar,
-  AvatarMarble,
-  Box,
-  Icon,
-  IconName,
-  Skeleton,
-  Text,
-} from '@/ui';
+import { Avatar, AvatarMarble, Box, Icon, IconName, Skeleton, Text } from '@/ui';
 
-export type BreadcrumbItem =
-  | { id: string; name: string; avatar: string; url: string }
-  | { name: string; icon: IconName; url: string };
+export type BreadcrumbItem = { id: string; name: string; avatar: string; url: string } | { name: string; icon: IconName; url: string };
 
 const Breadcrumb: React.FC<BreadcrumbItem> = (breadcrumb) => {
   return (
-    <Link
-      href={breadcrumb.url}
-      className="group flex gap-2 items-center h-[2rem]"
-    >
+    <Link href={breadcrumb.url} className="group flex gap-2 items-center h-[2rem]">
       {'icon' in breadcrumb && (
         <Box className="bg-neutral-5 rounded-sm justify-center items-center size-4">
-          <Icon
-            name={breadcrumb.icon}
-            className="size-[0.625rem] text-neutral-11"
-          />
+          <Icon name={breadcrumb.icon} className="size-[0.625rem] text-neutral-11" />
         </Box>
       )}
 
       {'avatar' in breadcrumb && (
         <>
           {breadcrumb.avatar ? (
-            <Avatar
-              src={breadcrumb.avatar}
-              enableIcon
-              icon="image"
-              className="shrink-0 rounded-sm size-4"
-            />
+            <Avatar src={breadcrumb.avatar} enableIcon icon="image" className="shrink-0 rounded-sm size-4" />
           ) : (
-            <AvatarMarble
-              name={breadcrumb.id}
-              className="shrink-0 rounded-sm size-4"
-            />
+            <AvatarMarble name={breadcrumb.id} className="shrink-0 rounded-sm size-4" />
           )}
         </>
       )}
 
-      <Text
-        variant="primary"
-        weight={500}
-        className="group-hover:text-neutral-11 transition-colors line-clamp-1"
-      >
+      <Text variant="primary" weight={500} className="group-hover:text-neutral-11 transition-colors line-clamp-1">
         {breadcrumb.name}
       </Text>
     </Link>
@@ -83,29 +55,16 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
         if ('icon' in breadcrumb) {
           return (
             <Box key={breadcrumb.name} className="flex-row items-center gap-2">
-              <Breadcrumb
-                name={breadcrumb.name}
-                url={breadcrumb.url}
-                icon={breadcrumb.icon}
-              />
-              {!isLastBreadcrumb && (
-                <Icon name="chevron-right" className="size-3" />
-              )}
+              <Breadcrumb name={breadcrumb.name} url={breadcrumb.url} icon={breadcrumb.icon} />
+              {!isLastBreadcrumb && <Icon name="chevron-right" className="size-3" />}
             </Box>
           );
         }
 
         return (
           <Box key={breadcrumb.name} className="flex-row items-center gap-2">
-            <Breadcrumb
-              id={breadcrumb.id}
-              name={breadcrumb.name}
-              url={breadcrumb.url}
-              avatar={breadcrumb.avatar}
-            />
-            {!isLastBreadcrumb && (
-              <Icon name="chevron-right" className="size-3" />
-            )}
+            <Breadcrumb id={breadcrumb.id} name={breadcrumb.name} url={breadcrumb.url} avatar={breadcrumb.avatar} />
+            {!isLastBreadcrumb && <Icon name="chevron-right" className="size-3" />}
           </Box>
         );
       })}

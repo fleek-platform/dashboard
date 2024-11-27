@@ -13,15 +13,8 @@ type UseSiteLinkArgs = {
   noHttps?: boolean;
 };
 
-export const useSiteLink = ({
-  siteId,
-  site,
-  noHttps,
-}: UseSiteLinkArgs): string | undefined => {
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: siteId! } },
-    pause: Boolean(site),
-  });
+export const useSiteLink = ({ siteId, site, noHttps }: UseSiteLinkArgs): string | undefined => {
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId! } }, pause: Boolean(site) });
 
   const siteData = site || siteQuery.data?.site;
 
@@ -41,9 +34,7 @@ export const useSiteLink = ({
       }
 
       // keep this for backwards compatibility
-      const domain = siteData?.domains?.find(
-        (domain) => domain.isVerified && domain.status === DomainStatus.ACTIVE,
-      );
+      const domain = siteData?.domains?.find((domain) => domain.isVerified && domain.status === DomainStatus.ACTIVE);
 
       if (domain) {
         return getLinkForDomain(domain.hostname);
@@ -73,5 +64,4 @@ export const useSiteLink = ({
   }, [siteData, siteQuery, noHttps]);
 };
 
-const removeHttps = (url: string) =>
-  url.replace(/^https?:\/\//, '').replace(/\.limo/, '');
+const removeHttps = (url: string) => url.replace(/^https?:\/\//, '').replace(/\.limo/, '');

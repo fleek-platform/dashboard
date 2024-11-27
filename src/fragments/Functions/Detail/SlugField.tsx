@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-import {
-  InputField,
-  InputFieldProps,
-} from '@/components/Form/InputField/InputField';
+import { InputField, InputFieldProps } from '@/components/Form/InputField/InputField';
 import { Text } from '@/ui';
 
 import { useFunctionDetailContext } from './Context';
@@ -24,16 +21,8 @@ export const SlugField = (props: SlugFieldProps) => {
     <InputField
       {...props}
       inputRootClassName="overflow-hidden"
-      beforeContent={
-        <Text className="shrink-0 text-neutral-9 pointer-events-none">
-          https://
-        </Text>
-      }
-      afterContent={
-        <Text className="shrink-0 text-neutral-9 pointer-events-none">
-          {suffix}
-        </Text>
-      }
+      beforeContent={<Text className="shrink-0 text-neutral-9 pointer-events-none">https://</Text>}
+      afterContent={<Text className="shrink-0 text-neutral-9 pointer-events-none">{suffix}</Text>}
     />
   );
 };

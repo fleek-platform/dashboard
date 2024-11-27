@@ -9,15 +9,10 @@ export type BannerFieldProps = {
   name: string;
 };
 
-export const BannerField: React.FC<BannerFieldProps> = ({
-  initialImage,
-  name,
-}) => {
+export const BannerField: React.FC<BannerFieldProps> = ({ initialImage, name }) => {
   const field = Form.useField<File>(name);
 
-  const handleUpload: (args: HandleLogoUploadProps) => Promise<void> = async ({
-    image,
-  }) => {
+  const handleUpload: (args: HandleLogoUploadProps) => Promise<void> = async ({ image }) => {
     field.setValue(image, true);
   };
 
@@ -25,9 +20,7 @@ export const BannerField: React.FC<BannerFieldProps> = ({
     <FormField.Root>
       <FormField.Label>Banner</FormField.Label>
       <S.Container onSubmit={handleUpload} initialImage={initialImage} />
-      <S.FormFieldUnderline>
-        Recommended image size of 1920x1080px. Maximum file size of 5MB.
-      </S.FormFieldUnderline>
+      <S.FormFieldUnderline>Recommended image size of 1920x1080px. Maximum file size of 5MB.</S.FormFieldUnderline>
     </FormField.Root>
   );
 };

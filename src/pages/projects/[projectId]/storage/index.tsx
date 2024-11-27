@@ -17,11 +17,6 @@ const PageNavContent: React.FC = () => {
   return <Projects.Storage.StorageUploadDropdown />;
 };
 
-Storage.getLayout = (page) => (
-  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
-);
+Storage.getLayout = (page) => <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>;
 
-export default withAccess({
-  Component: Storage,
-  requiredPermissions: [constants.PERMISSION.STORAGE.VIEW_LIST],
-});
+export default withAccess({ Component: Storage, requiredPermissions: [constants.PERMISSION.STORAGE.VIEW_LIST] });

@@ -26,20 +26,17 @@ const [Provider, useContext] = createContext<CookiesContext>({
   providerName: 'CookiesProvider',
 });
 
-export const CookiesProvider: React.FC<
-  React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>
-> = ({ requestCookies = {}, children }) => {
+export const CookiesProvider: React.FC<React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>> = ({
+  requestCookies = {},
+  children,
+}) => {
   const [cookies, setCookies] = useState<CookiesContext['values']>(
-    isServerSide()
-      ? requestCookies
-      : (getCookies() as CookiesContext['values']),
+    isServerSide() ? requestCookies : (getCookies() as CookiesContext['values'])
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const documentCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('authProviderToken'));
+      const documentCookie = document.cookie.split('; ').find((row) => row.startsWith('authProviderToken'));
 
       if (!documentCookie && cookies.authProviderToken) {
         // update app state
@@ -70,9 +67,7 @@ export const CookiesProvider: React.FC<
     deleteCookie(key);
   };
 
-  return (
-    <Provider value={{ values: cookies, set, remove }}>{children}</Provider>
-  );
+  return <Provider value={{ values: cookies, set, remove }}>{children}</Provider>;
 };
 
 export const useCookies = useContext;

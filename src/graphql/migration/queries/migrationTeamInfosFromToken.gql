@@ -1,6 +1,4 @@
-query migrationTeamInfosFromToken(
-  $where: MigrationTeamInfosFromTokenWhereInput!
-) {
+query migrationTeamInfosFromToken($where: MigrationTeamInfosFromTokenWhereInput!) {
   migrationTeamInfosFromToken(where: $where) {
     id
     name

@@ -4,9 +4,7 @@ import { createUrqlClient, UrqlProviderComponent } from '@/integrations';
 
 import { useCookies } from './CookiesProvider';
 
-export const UrqlProvider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
+export const UrqlProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const cookies = useCookies();
 
   const urqlClient = useMemo(
@@ -19,10 +17,8 @@ export const UrqlProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }),
     // Shouldn't update the urql client on cookie change, project is stored in cookies as well
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cookies.values.accessToken],
+    [cookies.values.accessToken]
   );
 
-  return (
-    <UrqlProviderComponent value={urqlClient}>{children}</UrqlProviderComponent>
-  );
+  return <UrqlProviderComponent value={urqlClient}>{children}</UrqlProviderComponent>;
 };

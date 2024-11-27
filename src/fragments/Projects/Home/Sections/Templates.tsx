@@ -12,10 +12,7 @@ export const HomeTemplates: React.FC = () => {
         <Text as="h3" variant="secondary" size="xl" weight={500}>
           Use a template
         </Text>
-        <Link
-          href={routes.template.list()}
-          className="flex flex-row gap-1 text-neutral-11"
-        >
+        <Link href={routes.template.list()} className="flex flex-row gap-1 text-neutral-11">
           View all templates
           <Icon name="arrow-right" />
         </Link>

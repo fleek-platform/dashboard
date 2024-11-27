@@ -5,10 +5,7 @@ type GetDomainOrSubdomainArgs = {
   withDnsLink?: boolean;
 };
 
-export const getDomainOrSubdomain = ({
-  hostname,
-  withDnsLink = false,
-}: GetDomainOrSubdomainArgs) => {
+export const getDomainOrSubdomain = ({ hostname, withDnsLink = false }: GetDomainOrSubdomainArgs) => {
   const domainSplitted = hostname.split('.');
   const isSubdomain = domainSplitted.length > 2;
 

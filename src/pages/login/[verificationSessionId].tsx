@@ -15,26 +15,19 @@ const LoginWithSessionPage: Page = () => {
   const router = useRouter();
   const session = useSessionContext();
 
-  const [
-    createLoginVerificationSessionMutation,
-    createLoginVerificationSession,
-  ] = useCreateLoginVerificationSessionMutation();
+  const [createLoginVerificationSessionMutation, createLoginVerificationSession] = useCreateLoginVerificationSessionMutation();
 
   const handleCliLoginReset = async () => {
     window.location.reload();
   };
 
   const handleRedirect = useCallback(() => {
-    return router.replace(
-      routes.project.home({ projectId: session.project.id }),
-    );
+    return router.replace(routes.project.home({ projectId: session.project.id }));
   }, [router, session.project.id]);
 
   const handleCreateVerificationSession = useCallback(async () => {
     try {
-      const result = await createLoginVerificationSession({
-        where: { id: router.query.verificationSessionId! },
-      });
+      const result = await createLoginVerificationSession({ where: { id: router.query.verificationSessionId! } });
 
       if (result.error) {
         throw result.error;
@@ -44,9 +37,7 @@ const LoginWithSessionPage: Page = () => {
     }
   }, [createLoginVerificationSession, router.query.verificationSessionId]);
 
-  if (
-    createLoginVerificationSessionMutation?.data?.createLoginVerificationSession
-  ) {
+  if (createLoginVerificationSessionMutation?.data?.createLoginVerificationSession) {
     return (
       <Login.Dialog
         heading="Sign in Successful"
@@ -75,21 +66,10 @@ const LoginWithSessionPage: Page = () => {
     );
   }
 
-  if (
-    session.auth.token &&
-    !createLoginVerificationSessionMutation?.data
-      ?.createLoginVerificationSession
-  ) {
+  if (session.auth.token && !createLoginVerificationSessionMutation?.data?.createLoginVerificationSession) {
     return (
-      <Login.Dialog
-        heading="Confirm sign in to CLI"
-        description="Confirm the authentication with the Fleek CLI"
-      >
-        <Button
-          onClick={handleCreateVerificationSession}
-          loading={createLoginVerificationSessionMutation?.fetching}
-          className="w-full"
-        >
+      <Login.Dialog heading="Confirm sign in to CLI" description="Confirm the authentication with the Fleek CLI">
+        <Button onClick={handleCreateVerificationSession} loading={createLoginVerificationSessionMutation?.fetching} className="w-full">
           Confirm
         </Button>
         <Button onClick={handleRedirect} intent="neutral" className="w-full">
@@ -105,11 +85,7 @@ const LoginWithSessionPage: Page = () => {
       description="Using the CLI we will need you to auth into the platform, use the button below to get started."
       withExternalLink
     >
-      <Button
-        onClick={() => session.auth.login('dynamic')}
-        loading={session.loading}
-        className="w-full"
-      >
+      <Button onClick={() => session.auth.login('dynamic')} loading={session.loading} className="w-full">
         Sign in
       </Button>
     </Login.Dialog>

@@ -28,25 +28,14 @@ import { GitProviderStyles as S } from './GitProvider.styles';
 
 export const GitProviderStep: React.FC = () => {
   const { nextStep } = Stepper.useContext();
-  const {
-    setSourceProvider,
-    mode,
-    sourceProvider,
-    setGitUser,
-    setGitRepository,
-    setGitBranch,
-    setGitProviderId,
-  } = useDeploySiteContext();
+  const { setSourceProvider, mode, sourceProvider, setGitUser, setGitRepository, setGitBranch, setGitProviderId } = useDeploySiteContext();
   const session = useSessionContext();
   const router = useRouter();
   const form = Form.useContext();
 
   useStepSetup({
     title: 'Connect the Git Provider you want to use.',
-    handleBackClick: () =>
-      router.replace(
-        routes.project.site.list({ projectId: session.project.id }),
-      ),
+    handleBackClick: () => router.replace(routes.project.site.list({ projectId: session.project.id })),
   });
 
   useEffect(() => {
@@ -74,13 +63,7 @@ export const GitProviderStep: React.FC = () => {
   return (
     <>
       <S.Container>
-        <Text
-          as="h2"
-          variant="primary"
-          size="xl"
-          weight={700}
-          className="self-start"
-        >
+        <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
           Select Code Location
         </Text>
         <GitHubButton />
@@ -89,16 +72,10 @@ export const GitProviderStep: React.FC = () => {
       </S.Container>
       <S.Message>
         <Text variant="primary" size="md">
-          Do you want to manage your own site deployment using the Fleek
-          CLI?&nbsp;
+          Do you want to manage your own site deployment using the Fleek CLI?&nbsp;
           <Link
             className="text-accent-11 hover:underline"
-            href={{
-              pathname: routes.project.site.new({
-                projectId: session.project.id,
-              }),
-              query: { mode: 'self' },
-            }}
+            href={{ pathname: routes.project.site.new({ projectId: session.project.id }), query: { mode: 'self' } }}
             replace
           >
             Click here
@@ -112,17 +89,9 @@ export const GitProviderStep: React.FC = () => {
 
 const GitHubButton: React.FC = () => {
   const client = useClient();
-  const {
-    mode,
-    setSourceProvider,
-    setGitProviderId,
-    gitProviderId,
-    setAccessToken,
-  } = useDeploySiteContext();
-  const [, createGithubAppAuthorizationUrl] =
-    useCreateGithubAppAuthorizationUrlMutation();
-  const [shouldPollAccessTokens, setShouldPollAccessTokens] =
-    useState<boolean>(false);
+  const { mode, setSourceProvider, setGitProviderId, gitProviderId, setAccessToken } = useDeploySiteContext();
+  const [, createGithubAppAuthorizationUrl] = useCreateGithubAppAuthorizationUrlMutation();
+  const [shouldPollAccessTokens, setShouldPollAccessTokens] = useState<boolean>(false);
   usePollAccessTokens({
     gitProviderId,
     pause: !shouldPollAccessTokens || !gitProviderId,
@@ -140,31 +109,24 @@ const GitHubButton: React.FC = () => {
 
   const fetchRequiredData = async () => {
     try {
-      const gitAccessTokensResult = await client.query<
-        GitAccessTokenQuery,
-        GitAccessTokenQueryVariables
-      >(GitAccessTokenDocument, {}, { requestPolicy: 'network-only' });
+      const gitAccessTokensResult = await client.query<GitAccessTokenQuery, GitAccessTokenQueryVariables>(
+        GitAccessTokenDocument,
+        {},
+        { requestPolicy: 'network-only' }
+      );
 
-      const gitUserAccessTokens =
-        gitAccessTokensResult.data?.user.gitUserAccessTokens;
+      const gitUserAccessTokens = gitAccessTokensResult.data?.user.gitUserAccessTokens;
 
       if (gitAccessTokensResult.error || !gitUserAccessTokens) {
-        throw (
-          gitAccessTokensResult.error ||
-          new Error('Failed to get Git Access tokens')
-        );
+        throw gitAccessTokensResult.error || new Error('Failed to get Git Access tokens');
       }
 
-      const tag =
-        mode === 'template' ? GitProviderTags.templates : GitProviderTags.sites;
+      const tag = mode === 'template' ? GitProviderTags.templates : GitProviderTags.sites;
 
-      const gitProviderQueryResult = await client.query<
-        GitProviderQuery,
-        GitProviderQueryVariables
-      >(
+      const gitProviderQueryResult = await client.query<GitProviderQuery, GitProviderQueryVariables>(
         GitProviderDocument,
         { where: { tag } },
-        { requestPolicy: 'network-only' },
+        { requestPolicy: 'network-only' }
       );
 
       const gitProvider = gitProviderQueryResult.data?.gitProvider;
@@ -178,26 +140,19 @@ const GitHubButton: React.FC = () => {
         accessTokens: gitUserAccessTokens,
       };
     } catch (error) {
-      toast.error({
-        error,
-        log: 'Unexpected error checking if should authenticate',
-      });
+      toast.error({ error, log: 'Unexpected error checking if should authenticate' });
       setIsSelected(false);
     }
   };
 
-  const handleGithubAuth = async ({
-    authorizationGitProviderId,
-  }: { authorizationGitProviderId: string }) => {
+  const handleGithubAuth = async ({ authorizationGitProviderId }: { authorizationGitProviderId: string }) => {
     try {
       if (!authorizationGitProviderId) {
         // eslint-disable-next-line fleek-custom/no-default-error
         throw new Error('Unexpected auth without authenticationGitProviderId');
       }
 
-      const result = await createGithubAppAuthorizationUrl({
-        where: { gitProviderId: authorizationGitProviderId },
-      });
+      const result = await createGithubAppAuthorizationUrl({ where: { gitProviderId: authorizationGitProviderId } });
 
       if (result.error || !result.data?.createGithubAppAuthorizationUrl) {
         setIsSelected(false);
@@ -205,18 +160,13 @@ const GitHubButton: React.FC = () => {
         throw result.error || new Error('Failed to create authorization url');
       }
 
-      return openPopUpWindow({
-        url: result.data.createGithubAppAuthorizationUrl,
-        onClose: onPopUpClose,
-      });
+      return openPopUpWindow({ url: result.data.createGithubAppAuthorizationUrl, onClose: onPopUpClose });
     } catch (error) {
       return toast.error({ error, log: 'Failed to create authorization url' });
     }
   };
 
-  const checkIfShouldAuthenticate = async ({
-    accessToken,
-  }: { accessToken?: string }) => {
+  const checkIfShouldAuthenticate = async ({ accessToken }: { accessToken?: string }) => {
     if (!accessToken) {
       return true;
     }
@@ -258,38 +208,23 @@ const GitHubButton: React.FC = () => {
 
     setGitProviderId(data.gitProviderId);
 
-    const authorizationAccessToken = data.accessTokens.find(
-      (gitAccessToken) => gitAccessToken.gitProviderId === data.gitProviderId,
-    )?.token;
+    const authorizationAccessToken = data.accessTokens.find((gitAccessToken) => gitAccessToken.gitProviderId === data.gitProviderId)?.token;
 
     if (!authorizationAccessToken) {
-      return handleGithubAuth({
-        authorizationGitProviderId: data.gitProviderId,
-      });
+      return handleGithubAuth({ authorizationGitProviderId: data.gitProviderId });
     }
 
-    const shouldAuthenticate = await checkIfShouldAuthenticate({
-      accessToken: authorizationAccessToken,
-    });
+    const shouldAuthenticate = await checkIfShouldAuthenticate({ accessToken: authorizationAccessToken });
 
     if (shouldAuthenticate) {
-      return handleGithubAuth({
-        authorizationGitProviderId: data.gitProviderId,
-      });
+      return handleGithubAuth({ authorizationGitProviderId: data.gitProviderId });
     }
 
     setAccessToken(authorizationAccessToken);
     setSourceProvider('github');
   };
 
-  return (
-    <ProviderButton
-      text="GitHub"
-      provider="github"
-      isLoading={isSelected}
-      onClick={handleSelect}
-    />
-  );
+  return <ProviderButton text="GitHub" provider="github" isLoading={isSelected} onClick={handleSelect} />;
 };
 
 type ProviderButtonProps = {
@@ -298,12 +233,7 @@ type ProviderButtonProps = {
 } & Omit<React.ComponentProps<typeof Button>, 'children'> &
   LoadingProps;
 
-const ProviderButton: React.FC<ProviderButtonProps> = ({
-  provider,
-  text,
-  isLoading,
-  ...props
-}) => {
+const ProviderButton: React.FC<ProviderButtonProps> = ({ provider, text, isLoading, ...props }) => {
   return (
     <Button
       {...props}

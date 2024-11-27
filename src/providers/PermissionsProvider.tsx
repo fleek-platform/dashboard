@@ -18,15 +18,7 @@ export const PermissionsProvider: React.FC<ChildrenProps> = ({ children }) => {
   const { project: data, loading } = useProjectContext();
 
   return (
-    <Provider
-      value={{
-        loading,
-        permissions:
-          data.currentUserMembership.permissionGroup.permissions.slice() ?? [],
-      }}
-    >
-      {children}
-    </Provider>
+    <Provider value={{ loading, permissions: data.currentUserMembership.permissionGroup.permissions.slice() ?? [] }}>{children}</Provider>
   );
 };
 

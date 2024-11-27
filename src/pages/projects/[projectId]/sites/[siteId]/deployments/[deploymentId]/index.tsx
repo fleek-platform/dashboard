@@ -11,13 +11,6 @@ const PageNavContent: React.FC = () => {
   return <DeploymentDetail.NavButtons />;
 };
 
-DeploymentDetailPage.getLayout = (page) => (
-  <DeploymentDetail.Layout nav={<PageNavContent />}>
-    {page}
-  </DeploymentDetail.Layout>
-);
+DeploymentDetailPage.getLayout = (page) => <DeploymentDetail.Layout nav={<PageNavContent />}>{page}</DeploymentDetail.Layout>;
 
-export default withAccess({
-  Component: DeploymentDetailPage,
-  requiredPermissions: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS],
-});
+export default withAccess({ Component: DeploymentDetailPage, requiredPermissions: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS] });

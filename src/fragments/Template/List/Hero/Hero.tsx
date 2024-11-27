@@ -21,8 +21,8 @@ export const Hero: React.FC = () => {
         Begin with a template
       </Text>
       <Text size="lg" className="max-w-[40rem] text-center">
-        Use a template to kick start your application. Pick from just a
-        framework or a full web3 starter kit, the possibilities are limitless.
+        Use a template to kick start your application. Pick from just a framework or a full web3 starter kit, the possibilities are
+        limitless.
       </Text>
       <S.List.Hero.ButtonContainer>
         <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS_TEMPLATES}>

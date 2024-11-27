@@ -13,9 +13,7 @@ export default meta;
 
 type Story = StoryObj<Scrollable.RootProps>;
 
-const Tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`,
-);
+const Tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
 
 export const Customizable: Story = {
   render: (args) => (
@@ -36,18 +34,9 @@ export const Customizable: Story = {
     </Scrollable.Root>
   ),
   args: {
-    css: {
-      width: '400px',
-      height: '200px',
-      borderRadius: '$spacing-8',
-      border: '1px solid $slate6',
-      backgroundColor: '$foreground',
-    },
+    css: { width: '400px', height: '200px', borderRadius: '$spacing-8', border: '1px solid $slate6', backgroundColor: '$foreground' },
   },
   argTypes: {
-    type: {
-      type: { name: 'enum', value: ['hover', 'always', 'auto', 'scroll'] },
-      defaultValue: 'hover',
-    },
+    type: { type: { name: 'enum', value: ['hover', 'always', 'auto', 'scroll'] }, defaultValue: 'hover' },
   },
 };

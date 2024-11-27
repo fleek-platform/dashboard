@@ -13,11 +13,7 @@ export const UploadFile: React.FC<UploadFileProps> = ({ upload }) => {
   return (
     <S.Container>
       <S.NameContainer>
-        {upload.type === 'folder' ? (
-          <Icon name="archive" />
-        ) : (
-          <Image src={upload.thumbnail} alt="preview" />
-        )}
+        {upload.type === 'folder' ? <Icon name="archive" /> : <Image src={upload.thumbnail} alt="preview" />}
         <Text className="truncate">{upload.name}</Text>
       </S.NameContainer>
       <S.DetailsContainer withErrorTooltip={Boolean(upload.errorMessage)}>
@@ -46,10 +42,7 @@ const Status: React.FC<StatusProps> = ({ status, errorMessage }) => {
   return Status;
 };
 
-const StatusMap: Record<
-  UploadStatus,
-  JSX.Element | ((errorMessage?: string) => JSX.Element)
-> = {
+const StatusMap: Record<UploadStatus, JSX.Element | ((errorMessage?: string) => JSX.Element)> = {
   canceled: <Text>Canceled</Text>,
   uploading: <Icon name="spinner" />,
   error: (errorMessage?: string) => {

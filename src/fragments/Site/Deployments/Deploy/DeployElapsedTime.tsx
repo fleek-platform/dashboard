@@ -9,9 +9,7 @@ type DeployElapsedTimeProps = {
   deployment?: Deployment;
 };
 
-export const DeployElapsedTime: React.FC<DeployElapsedTimeProps> = ({
-  deployment,
-}) => {
+export const DeployElapsedTime: React.FC<DeployElapsedTimeProps> = ({ deployment }) => {
   const parsedStatus = parseAPIDeploymentStatus(deployment?.status);
 
   const isLoading = parsedStatus === 'loading' || parsedStatus === 'cancelling';
@@ -30,9 +28,7 @@ export const DeployElapsedTime: React.FC<DeployElapsedTimeProps> = ({
 
   return match(parsedStatus)
     .with('created', () => <i>Pending...</i>)
-    .with('loading', () => (
-      <>{elapsedTimer(deployment?.startedAt ?? deployment?.createdAt)}</>
-    ))
+    .with('loading', () => <>{elapsedTimer(deployment?.startedAt ?? deployment?.createdAt)}</>)
     .with('cancelling', () => {
       if (deployment?.startedAt) {
         return <>{elapsedTimer(deployment?.startedAt)}</>;

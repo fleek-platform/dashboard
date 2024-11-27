@@ -5,11 +5,7 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Button, Icon, Text } from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 
-import {
-  useDeploySiteContext,
-  useGitInstallationStep,
-  useStepSetup,
-} from '../../DeploySite.context';
+import { useDeploySiteContext, useGitInstallationStep, useStepSetup } from '../../DeploySite.context';
 import { GitProviderStyles as S } from './GitProvider.styles';
 
 export const GitHubAuthentication: React.FC = () => {
@@ -17,42 +13,24 @@ export const GitHubAuthentication: React.FC = () => {
   const projectId = session.project.id;
 
   const { setSourceProvider, gitProviderId, mode } = useDeploySiteContext();
-  const { isCheckingForInstallation, handleCheckInstallation, shouldInstall } =
-    useGitInstallationStep();
-  const [
-    createGithubAppInstallationUrlMutation,
-    createGithubAppInstallationUrl,
-  ] = useCreateGithubAppInstallationUrlMutation();
+  const { isCheckingForInstallation, handleCheckInstallation, shouldInstall } = useGitInstallationStep();
+  const [createGithubAppInstallationUrlMutation, createGithubAppInstallationUrl] = useCreateGithubAppInstallationUrlMutation();
 
   useStepSetup({
     handleBackClick: () => setSourceProvider(undefined),
   });
 
   useEffect(() => {
-    if (
-      shouldInstall &&
-      !createGithubAppInstallationUrlMutation.data &&
-      !createGithubAppInstallationUrlMutation.fetching
-    ) {
+    if (shouldInstall && !createGithubAppInstallationUrlMutation.data && !createGithubAppInstallationUrlMutation.fetching) {
       createGithubAppInstallationUrl({ where: { gitProviderId, projectId } });
     }
-  }, [
-    createGithubAppInstallationUrl,
-    createGithubAppInstallationUrlMutation,
-    gitProviderId,
-    projectId,
-    shouldInstall,
-  ]);
+  }, [createGithubAppInstallationUrl, createGithubAppInstallationUrlMutation, gitProviderId, projectId, shouldInstall]);
 
   const handleContinue = async () => {
-    if (
-      createGithubAppInstallationUrlMutation.data
-        ?.createGithubAppInstallationUrl
-    ) {
+    if (createGithubAppInstallationUrlMutation.data?.createGithubAppInstallationUrl) {
       openPopUpWindow({
         width: 1200,
-        url: createGithubAppInstallationUrlMutation.data
-          .createGithubAppInstallationUrl,
+        url: createGithubAppInstallationUrlMutation.data.createGithubAppInstallationUrl,
         onClose: handleCheckInstallation,
       });
     }
@@ -65,13 +43,7 @@ export const GitHubAuthentication: React.FC = () => {
 
   return (
     <S.Container>
-      <Text
-        as="h2"
-        variant="primary"
-        size="xl"
-        weight={700}
-        className="self-start"
-      >
+      <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
         GitHub Installation
       </Text>
 
@@ -85,10 +57,7 @@ export const GitHubAuthentication: React.FC = () => {
 
       <Button
         disabled={isCheckingForInstallation}
-        loading={
-          isCheckingForInstallation ||
-          createGithubAppInstallationUrlMutation.fetching
-        }
+        loading={isCheckingForInstallation || createGithubAppInstallationUrlMutation.fetching}
         onClick={handleContinue}
       >
         Install Fleek {mode === 'template' ? 'Templates' : ''} app on GitHub

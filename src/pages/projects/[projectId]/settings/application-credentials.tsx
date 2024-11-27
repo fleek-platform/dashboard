@@ -5,11 +5,7 @@ import { useClient } from 'urql';
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
-import {
-  useApplicationsQuery,
-  useCreateApplicationMutation,
-  useDeleteApplicationMutation,
-} from '@/generated/graphqlClient';
+import { useApplicationsQuery, useCreateApplicationMutation, useDeleteApplicationMutation } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
@@ -50,18 +46,12 @@ const ApplicationCredentials: Page = () => {
         });
 
         if (!createApplicationResult.data) {
-          throw (
-            createApplicationResult.error ||
-            Error('Error trying to create application credentials')
-          );
+          throw createApplicationResult.error || Error('Error trying to create application credentials');
         }
 
         return createApplicationResult.data.createApplication.clientId;
       } catch (error) {
-        toast.error({
-          error,
-          log: 'Error trying to create application credentials',
-        });
+        toast.error({ error, log: 'Error trying to create application credentials' });
       }
     },
   });
@@ -71,10 +61,7 @@ const ApplicationCredentials: Page = () => {
       const result = await deleteApplication({ where: { id } });
 
       if (!result.data) {
-        throw (
-          result.error ||
-          new Error('Error trying to delete application credential')
-        );
+        throw result.error || new Error('Error trying to delete application credential');
       }
 
       toast.success({ message: 'Application credential deleted.' });
@@ -90,9 +77,7 @@ const ApplicationCredentials: Page = () => {
   return (
     <>
       <Form.Provider value={applicationCredentialForm}>
-        <Projects.Settings.Sections.ApplicationCredentials.Add
-          isLoading={isLoading}
-        />
+        <Projects.Settings.Sections.ApplicationCredentials.Add isLoading={isLoading} />
       </Form.Provider>
       <Projects.Settings.Sections.ApplicationCredentials.Manage
         isLoading={isLoading}
@@ -103,11 +88,6 @@ const ApplicationCredentials: Page = () => {
   );
 };
 
-ApplicationCredentials.getLayout = (page) => (
-  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
-);
+ApplicationCredentials.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
 
-export default withAccess({
-  Component: ApplicationCredentials,
-  requiredPermissions: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW],
-});
+export default withAccess({ Component: ApplicationCredentials, requiredPermissions: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW] });

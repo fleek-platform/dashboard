@@ -1,6 +1,4 @@
-mutation deletePersonalAccessToken(
-  $where: DeletePersonalAccessTokenWhereInput!
-) {
+mutation deletePersonalAccessToken($where: DeletePersonalAccessTokenWhereInput!) {
   deletePersonalAccessToken(where: $where) {
     id
   }

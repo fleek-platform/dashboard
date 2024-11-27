@@ -17,13 +17,8 @@ export type GatewayRowProps = {
 };
 
 export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
-  const { setPublicGateway, testingHash, shouldRefresh, hasCancelled } =
-    useIpfsPropagationContext();
-  const gatewayTest = useGatewayTest({
-    hostname,
-    hash: testingHash,
-    singleAttempt: false,
-  });
+  const { setPublicGateway, testingHash, shouldRefresh, hasCancelled } = useIpfsPropagationContext();
+  const gatewayTest = useGatewayTest({ hostname, hash: testingHash, singleAttempt: false });
   const domainCountry = useHostnameLookup({ hostname });
   const [isCancelled, setIsCancelled] = useState(false);
 
@@ -60,11 +55,7 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
   return (
     <tr>
       <TableData>
-        <StatusBadge
-          isCancelled={isCancelled}
-          isFetching={gatewayTest.isFetching}
-          status={gatewayTest.data?.status}
-        />
+        <StatusBadge isCancelled={isCancelled} isFetching={gatewayTest.isFetching} status={gatewayTest.data?.status} />
       </TableData>
 
       <CellWithSkeleton isLoading={gatewayTest.isFetching && !isCancelled}>
@@ -75,11 +66,7 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
             <Box className={`flex flex-row`}>
               {(gatewayTest.data?.responseTime && (
                 <Box className="flex flex-row items-start group-hover:underline">
-                  <Text
-                    variant="primary"
-                    weight={500}
-                    className="group-hover:underline"
-                  >
+                  <Text variant="primary" weight={500} className="group-hover:underline">
                     {gatewayTest.data.responseTime.toFixed(0)}
                   </Text>
                   <Text variant="tertiary" className="group-hover:underline">
@@ -97,9 +84,7 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
           {domainCountry.data ? (
             <BadgeText colorScheme="slate">
               <Image
-                src={getLinkForIPFSCountryFlag({
-                  country: domainCountry.data.country,
-                })}
+                src={getLinkForIPFSCountryFlag({ country: domainCountry.data.country })}
                 className="w-[0.75rem] h-[0.75rem] rounded-full"
               />
               {domainCountry.data.country.toUpperCase()}
@@ -113,22 +98,12 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
       </CellWithSkeleton>
 
       <CellWithSkeleton>
-        <ExternalLink
-          href={getLinkForIPFSGateway({ baseURL: hostname, cid: testingHash })}
-          className="group"
-        >
+        <ExternalLink href={getLinkForIPFSGateway({ baseURL: hostname, cid: testingHash })} className="group">
           <Box className="flex flex-row items-start group-hover:underline">
-            <Text
-              variant="primary"
-              weight={500}
-              className="group-hover:underline"
-            >
+            <Text variant="primary" weight={500} className="group-hover:underline">
               {hostname}/ipfs/
             </Text>
-            <Text
-              variant="tertiary"
-              className="group-hover:underline"
-            >{`${testingHash.slice(0, 10)}...`}</Text>
+            <Text variant="tertiary" className="group-hover:underline">{`${testingHash.slice(0, 10)}...`}</Text>
           </Box>
         </ExternalLink>
       </CellWithSkeleton>
@@ -142,13 +117,8 @@ export const GatewayRow: React.FC<GatewayRowProps> = ({ hostname }) => {
 
 type CellWithSkeletonProps = LoadingProps<ChildrenProps>;
 
-const CellWithSkeleton: React.FC<CellWithSkeletonProps> = ({
-  children,
-  isLoading,
-}) => {
-  return (
-    <TableData>{isLoading ? <Skeleton variant="text" /> : children}</TableData>
-  );
+const CellWithSkeleton: React.FC<CellWithSkeletonProps> = ({ children, isLoading }) => {
+  return <TableData>{isLoading ? <Skeleton variant="text" /> : children}</TableData>;
 };
 
 type ActionsProps = Pick<GatewayRowProps, 'hostname'> & {
@@ -173,18 +143,11 @@ const Actions: React.FC<ActionsProps> = ({ hostname, status }) => {
   return (
     <Box className="flex flex-row items-center gap-2 justify-end">
       <CustomTooltip content="Copy link" side="bottom">
-        <Button
-          disabled={status !== 'active'}
-          size="sm"
-          intent="neutral"
-          onClick={handleCopy}
-        >
+        <Button disabled={status !== 'active'} size="sm" intent="neutral" onClick={handleCopy}>
           <Icon name="copy" />
         </Button>
       </CustomTooltip>
-      <ExternalLink
-        href={getLinkForIPFSGateway({ baseURL: hostname, cid: testingHash })}
-      >
+      <ExternalLink href={getLinkForIPFSGateway({ baseURL: hostname, cid: testingHash })}>
         <Button disabled={status !== 'active'} size="sm" intent="accent">
           Visit
           <Icon name="arrow-up-right" />
@@ -195,11 +158,7 @@ const Actions: React.FC<ActionsProps> = ({ hostname, status }) => {
 };
 
 const TableData = ({ children }: { children: any }) => {
-  return (
-    <td className="text-left p-4 text-neutral-1 text-sm overflow-hidden whitespace-nowrap border-t-neutral-6 border-t">
-      {children}
-    </td>
-  );
+  return <td className="text-left p-4 text-neutral-1 text-sm overflow-hidden whitespace-nowrap border-t-neutral-6 border-t">{children}</td>;
 };
 
 const StatusBadge: React.FC<{
@@ -227,10 +186,7 @@ const StatusBadge: React.FC<{
 
   if (status === 'error') {
     return (
-      <CustomTooltip
-        content="Unable to retrieve content from this gateway"
-        side="bottom"
-      >
+      <CustomTooltip content="Unable to retrieve content from this gateway" side="bottom">
         <BadgeText colorScheme="red">
           <Icon name="close" />
           Error

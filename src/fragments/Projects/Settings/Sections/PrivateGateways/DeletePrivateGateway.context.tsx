@@ -12,10 +12,7 @@ export type DeletePrivateGatewayContext = {
   setNewPrimaryDomain: (domian: PrimaryDomainItem | undefined) => void;
   privateGatewayId?: string;
   privateGatewayName?: string;
-  onSubmitDelete: (
-    privateGatewayId: string,
-    domainId?: string,
-  ) => Promise<true | undefined>;
+  onSubmitDelete: (privateGatewayId: string, domainId?: string) => Promise<true | undefined>;
 };
 
 type OpenModalProps = {
@@ -23,9 +20,7 @@ type OpenModalProps = {
   name: string;
 };
 
-export type DeletePrivateGatewayProviderProps = ChildrenProps<
-  Pick<DeletePrivateGatewayContext, 'onSubmitDelete'>
->;
+export type DeletePrivateGatewayProviderProps = ChildrenProps<Pick<DeletePrivateGatewayContext, 'onSubmitDelete'>>;
 
 const [Provider, useContext] = createContext<DeletePrivateGatewayContext>({
   hookName: 'useDeletePrivateGatewayContext',
@@ -33,13 +28,9 @@ const [Provider, useContext] = createContext<DeletePrivateGatewayContext>({
   providerName: 'DeletePrivateGatewayProvider',
 });
 
-export const DeletePrivateGatewayProvider: React.FC<
-  DeletePrivateGatewayProviderProps
-> = ({ children, onSubmitDelete }) => {
+export const DeletePrivateGatewayProvider: React.FC<DeletePrivateGatewayProviderProps> = ({ children, onSubmitDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [newPrimaryDomain, setNewPrimaryDomain] = useState<
-    PrimaryDomainItem | undefined
-  >();
+  const [newPrimaryDomain, setNewPrimaryDomain] = useState<PrimaryDomainItem | undefined>();
   const [privateGatewayId, setPrivateGatewayId] = useState<string>();
   const [privateGatewayName, setPrivateGatewayName] = useState<string>();
 

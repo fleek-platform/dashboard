@@ -10,9 +10,7 @@ type UploadFolderItemProps = {
   inputFolderRef: MutableRefObject<HTMLInputElement | null>;
 };
 
-export const UploadFolderItem: React.FC<UploadFolderItemProps> = ({
-  inputFolderRef,
-}) => {
+export const UploadFolderItem: React.FC<UploadFolderItemProps> = ({ inputFolderRef }) => {
   const { setUploads, updateUpload } = useUploadContext();
   const upload = useUpload();
   const uploadSizeLimit = useUploadSizeLimit();
@@ -22,15 +20,9 @@ export const UploadFolderItem: React.FC<UploadFolderItemProps> = ({
       return;
     }
 
-    const folderToUpload = filterFolder(
-      event.target.files as FileList,
-      uploadSizeLimit,
-    );
+    const folderToUpload = filterFolder(event.target.files as FileList, uploadSizeLimit);
 
-    upload.mutateAsync({
-      upload: folderToUpload,
-      updateUpload: (folderToUpload) => updateUpload(folderToUpload),
-    });
+    upload.mutateAsync({ upload: folderToUpload, updateUpload: (folderToUpload) => updateUpload(folderToUpload) });
 
     setUploads((prevUploads) => {
       return [folderToUpload, ...prevUploads];

@@ -23,16 +23,8 @@ type MethodSelectorProps = ChildrenProps<{
   icon: IconName;
 }>;
 
-const MethodSelectorButton: React.FC<MethodSelectorProps> = ({
-  method,
-  icon,
-  children,
-}) => {
-  const {
-    method: selectedMethod,
-    setMethod,
-    stage,
-  } = useBillingCheckoutContext();
+const MethodSelectorButton: React.FC<MethodSelectorProps> = ({ method, icon, children }) => {
+  const { method: selectedMethod, setMethod, stage } = useBillingCheckoutContext();
   const isSelected = selectedMethod === method;
 
   const handleSelect = () => {
@@ -40,12 +32,7 @@ const MethodSelectorButton: React.FC<MethodSelectorProps> = ({
   };
 
   return (
-    <Button
-      intent={isSelected ? 'accent' : 'ghost'}
-      disabled={stage !== 'initial'}
-      onClick={handleSelect}
-      iconLeft={icon}
-    >
+    <Button intent={isSelected ? 'accent' : 'ghost'} disabled={stage !== 'initial'} onClick={handleSelect} iconLeft={icon}>
       {children}
     </Button>
   );

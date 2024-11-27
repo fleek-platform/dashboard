@@ -8,10 +8,7 @@ export type PaymentConfirmingProps = {
   network?: string;
 };
 
-export const PaymentConfirming: React.FC<PaymentConfirmingProps> = ({
-  transactionId,
-  network,
-}) => {
+export const PaymentConfirming: React.FC<PaymentConfirmingProps> = ({ transactionId, network }) => {
   return (
     <>
       <S.PaymentStatus.Wrapper>
@@ -21,9 +18,7 @@ export const PaymentConfirming: React.FC<PaymentConfirmingProps> = ({
       </S.PaymentStatus.Wrapper>
 
       {transactionId && network && (
-        <S.PaymentStatus.ViewTransactionButton
-          href={getLinkForBlockchainTransaction({ transactionId, network })}
-        >
+        <S.PaymentStatus.ViewTransactionButton href={getLinkForBlockchainTransaction({ transactionId, network })}>
           View my Transaction <Icon name="arrow-up-right" />
         </S.PaymentStatus.ViewTransactionButton>
       )}

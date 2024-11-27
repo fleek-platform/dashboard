@@ -1,8 +1,4 @@
-import {
-  UpdateProjectDataInput,
-  UpdateProjectMutationVariables,
-  useUpdateProjectMutation,
-} from '@/generated/graphqlClient';
+import { UpdateProjectDataInput, UpdateProjectMutationVariables, useUpdateProjectMutation } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { useToast } from './useToast';
@@ -27,9 +23,7 @@ export const useUpdateProject = () => {
       const updateProjectResult = await updateProject(updateProjectVars);
 
       if (!updateProjectResult.data) {
-        throw (
-          updateProjectResult.error || new Error('Unable to update project ')
-        );
+        throw updateProjectResult.error || new Error('Unable to update project ');
       }
 
       toast.success({ message: successMessage });

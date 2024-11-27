@@ -17,10 +17,7 @@ fragment FleekFunctionFragment on FleekFunction {
   updatedAt
 }
 
-query fleekFunctions(
-  $filter: FleekFunctionsPaginationInput
-  $where: FleekFunctionsWhereInput
-) {
+query fleekFunctions($filter: FleekFunctionsPaginationInput, $where: FleekFunctionsWhereInput) {
   fleekFunctions(filter: $filter, where: $where) {
     data {
       ...FleekFunctionFragment
@@ -37,10 +34,7 @@ query fleekFunctionDetail($where: FleekFunctionByNameWhereInput!) {
 }
 
 query fleekFunctionDeployments($fleekFunctionId: ID!, $page: Int) {
-  fleekFunctionDeployments(
-    where: { fleekFunctionId: $fleekFunctionId }
-    filter: { page: $page }
-  ) {
+  fleekFunctionDeployments(where: { fleekFunctionId: $fleekFunctionId }, filter: { page: $page }) {
     data {
       id
       cid

@@ -26,9 +26,7 @@ export const DeploymentOverview: React.FC = () => {
   const siteId = router.query.siteId!;
   const projectId = router.query.projectId!;
 
-  const [deploymentQuery] = useDeploymentQuery({
-    variables: { where: { id: deploymentId } },
-  });
+  const [deploymentQuery] = useDeploymentQuery({ variables: { where: { id: deploymentId } } });
   const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
 
   const currentDeployment = getSiteCurrentDeployment(siteQuery.data?.site);
@@ -45,9 +43,7 @@ export const DeploymentOverview: React.FC = () => {
     deployment = deploymentPoll.data;
   }
 
-  const parsedStatus = parseAPIDeploymentStatus(
-    deploymentQuery.data?.deployment.status,
-  );
+  const parsedStatus = parseAPIDeploymentStatus(deploymentQuery.data?.deployment.status);
 
   const repositoryOwner = deployment?.sourceRepositoryOwner;
   const provider = parseAPISourceProvider(deployment?.sourceProvider);
@@ -93,25 +89,16 @@ export const DeploymentOverview: React.FC = () => {
   return (
     <>
       <SiteOverviewBox.Container>
-        <PreviewImage
-          status={statusData.imageStatus}
-          text={statusData.imageText}
-          src={deployment?.previewImageUrl || ''}
-        />
+        <PreviewImage status={statusData.imageStatus} text={statusData.imageText} src={deployment?.previewImageUrl || ''} />
         <SiteOverviewBox.DetailsContainer>
           <SiteOverviewBox.StatusRow>
-            <DeployStatus
-              deployment={deployment}
-              isMostRecentDeployment={isMostRecentDeployment}
-            />
+            <DeployStatus deployment={deployment} isMostRecentDeployment={isMostRecentDeployment} />
           </SiteOverviewBox.StatusRow>
           <Box>
             <Text as="h2" variant="primary" size="2xl" weight={700}>
               {shortStringFormat({ str: deployment.id, index: 6 })}
             </Text>
-            <Text size="sm">
-              {isSelfManaged ? 'Deployed from CLI' : environment}
-            </Text>
+            <Text size="sm">{isSelfManaged ? 'Deployed from CLI' : environment}</Text>
           </Box>
 
           <S.ProviderWrapper>
@@ -122,9 +109,7 @@ export const DeploymentOverview: React.FC = () => {
               repositoryName={repositoryName || undefined}
               repositoryOwner={repositoryOwner || undefined}
             />
-            {!isSelfManaged && (
-              <BadgeText colorScheme="slate">{`branch: ${deployment.sourceBranch || 'Not found'}`}</BadgeText>
-            )}
+            {!isSelfManaged && <BadgeText colorScheme="slate">{`branch: ${deployment.sourceBranch || 'Not found'}`}</BadgeText>}
           </S.ProviderWrapper>
 
           <SiteOverviewBox.Domain
@@ -136,10 +121,7 @@ export const DeploymentOverview: React.FC = () => {
             previewURL={deployment.previewUrlSlug ?? undefined}
           />
 
-          <SiteOverviewBox.ViewOnIPFS
-            cid={deployment?.cid}
-            isDisabled={parsedStatus !== 'success'}
-          />
+          <SiteOverviewBox.ViewOnIPFS cid={deployment?.cid} isDisabled={parsedStatus !== 'success'} />
         </SiteOverviewBox.DetailsContainer>
       </SiteOverviewBox.Container>
 

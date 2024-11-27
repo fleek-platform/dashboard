@@ -16,16 +16,11 @@ const TemplatesPage: Page = () => {
         setFrameworkId={setFrameworkId}
         frameworkId={frameworkId}
       />
-      <Template.List.Elements.Explorer
-        frameworkId={frameworkId}
-        categoryId={categoryId}
-      />
+      <Template.List.Elements.Explorer frameworkId={frameworkId} categoryId={categoryId} />
     </>
   );
 };
 
-TemplatesPage.getLayout = (page) => (
-  <Template.List.Layout>{page}</Template.List.Layout>
-);
+TemplatesPage.getLayout = (page) => <Template.List.Layout>{page}</Template.List.Layout>;
 
 export default TemplatesPage;

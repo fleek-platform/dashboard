@@ -23,11 +23,6 @@ export const Error: Story = {
   render: (args) => <Image {...args} alt="storybook image" />,
   args: {
     src: 'https://broken.photos/200/300',
-    css: {
-      width: '300px',
-      height: '300px',
-      borderRadius: '50px',
-      fontSize: '28px',
-    },
+    css: { width: '300px', height: '300px', borderRadius: '50px', fontSize: '28px' },
   },
 };

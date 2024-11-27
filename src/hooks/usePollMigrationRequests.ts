@@ -2,11 +2,7 @@ import { useCallback } from 'react';
 import { useClient } from 'urql';
 
 import { MigrationRequest } from '@/fragments';
-import {
-  MigrationRequestsDocument,
-  MigrationRequestsQuery,
-  MigrationRequestsQueryVariables,
-} from '@/generated/graphqlClient';
+import { MigrationRequestsDocument, MigrationRequestsQuery, MigrationRequestsQueryVariables } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';
 
@@ -16,11 +12,7 @@ export type UsePollMigrationRequestsArgs = {
   pause?: boolean;
 };
 
-export const usePollMigrationRequests = ({
-  pause,
-  migrationRequestIds,
-  onFinishedCallback,
-}: UsePollMigrationRequestsArgs) => {
+export const usePollMigrationRequests = ({ pause, migrationRequestIds, onFinishedCallback }: UsePollMigrationRequestsArgs) => {
   const client = useClient();
 
   const queryFn = useCallback(async () => {
@@ -28,26 +20,19 @@ export const usePollMigrationRequests = ({
       return null;
     }
 
-    const result = await client.query<
-      MigrationRequestsQuery,
-      MigrationRequestsQueryVariables
-    >(MigrationRequestsDocument, {}, { requestPolicy: 'cache-and-network' });
+    const result = await client.query<MigrationRequestsQuery, MigrationRequestsQueryVariables>(
+      MigrationRequestsDocument,
+      {},
+      { requestPolicy: 'cache-and-network' }
+    );
     const migrationRequests = result.data?.migrationRequests.data;
 
     const filteredMigrationRequests =
-      migrationRequests?.filter(
-        (migrationRequest) =>
-          migrationRequest && migrationRequestIds.includes(migrationRequest.id),
-      ) || [];
-    const reducedMigrationRequest = filteredMigrationRequests.reduce<
-      Record<string, MigrationRequest>
-    >((acc, current) => {
+      migrationRequests?.filter((migrationRequest) => migrationRequest && migrationRequestIds.includes(migrationRequest.id)) || [];
+    const reducedMigrationRequest = filteredMigrationRequests.reduce<Record<string, MigrationRequest>>((acc, current) => {
       const { teamId } = current;
 
-      if (
-        !acc[teamId] ||
-        Date.parse(acc[teamId].createdAt) < Date.parse(current.createdAt)
-      ) {
+      if (!acc[teamId] || Date.parse(acc[teamId].createdAt) < Date.parse(current.createdAt)) {
         acc[teamId] = current;
       }
 
@@ -62,11 +47,7 @@ export const usePollMigrationRequests = ({
     queryKey: ['pollSiteForDeployment', { migrationRequestIds, pause }],
     queryFn,
     stopCondition: (data) => {
-      if (
-        data?.some(
-          (migrationRequest) => migrationRequest.status === 'IN_PROGRESS',
-        )
-      ) {
+      if (data?.some((migrationRequest) => migrationRequest.status === 'IN_PROGRESS')) {
         return false;
       }
 

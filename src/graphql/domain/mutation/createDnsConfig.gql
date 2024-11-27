@@ -1,7 +1,4 @@
-mutation createDnsConfig(
-  $data: CreateDnsConfigDataInput!
-  $where: CreateDnsConfigWhereInput!
-) {
+mutation createDnsConfig($data: CreateDnsConfigDataInput!, $where: CreateDnsConfigWhereInput!) {
   createDnsConfig(data: $data, where: $where) {
     __typename
     id

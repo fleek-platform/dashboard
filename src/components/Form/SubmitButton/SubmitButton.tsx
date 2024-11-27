@@ -9,27 +9,18 @@ type SubmitButtonProps = Omit<ButtonProps, 'type' | 'onChange' | 'onSubmit'> & {
   onSubmit?: () => void;
 };
 
-export const SubmitButton = forwardRef<HTMLButtonElement, SubmitButtonProps>(
-  (props, ref) => {
-    const form = useFormContext();
+export const SubmitButton = forwardRef<HTMLButtonElement, SubmitButtonProps>((props, ref) => {
+  const form = useFormContext();
 
-    const handleOnSubmit = async () => {
-      await form.submit();
+  const handleOnSubmit = async () => {
+    await form.submit();
 
-      if (props.onSubmit) {
-        props.onSubmit();
-      }
-    };
+    if (props.onSubmit) {
+      props.onSubmit();
+    }
+  };
 
-    return (
-      <Button
-        ref={ref}
-        type="submit"
-        loading={form.isSubmitting}
-        disabled={form.shouldDisableSubmit}
-        onClick={handleOnSubmit}
-        {...props}
-      />
-    );
-  },
-);
+  return (
+    <Button ref={ref} type="submit" loading={form.isSubmitting} disabled={form.shouldDisableSubmit} onClick={handleOnSubmit} {...props} />
+  );
+});

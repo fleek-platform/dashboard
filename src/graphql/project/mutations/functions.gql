@@ -10,10 +10,7 @@ mutation deleteFleekFunction($where: DeleteFleekFunctionWhereInput!) {
   }
 }
 
-mutation updateFleekFunction(
-  $where: UpdateFleekFunctionWhereInput!
-  $data: UpdateFleekFunctionDataInput!
-) {
+mutation updateFleekFunction($where: UpdateFleekFunctionWhereInput!, $data: UpdateFleekFunctionDataInput!) {
   updateFleekFunction(where: $where, data: $data) {
     ...FleekFunctionFragment
   }

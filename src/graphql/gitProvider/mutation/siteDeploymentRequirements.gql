@@ -1,6 +1,4 @@
-mutation siteDeploymentRequirements(
-  $where: SiteDeploymentRequirementsWhereInput!
-) {
+mutation siteDeploymentRequirements($where: SiteDeploymentRequirementsWhereInput!) {
   siteDeploymentRequirements(where: $where) {
     authorizationUrl
     installationUrl

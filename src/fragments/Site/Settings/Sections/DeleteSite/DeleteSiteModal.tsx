@@ -8,26 +8,12 @@ export type DeleteSiteModalProps = ChildrenProps<{
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>;
 
-export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({
-  children,
-  siteName,
-  setIsOpen,
-  isOpen,
-}) => {
+export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({ children, siteName, setIsOpen, isOpen }) => {
   return (
-    <SettingsDeleteModal
-      trigger={children}
-      open={isOpen}
-      onOpenChange={setIsOpen}
-    >
-      <SettingsDeleteModal.Heading>
-        Confirm Site Deletion
-      </SettingsDeleteModal.Heading>
+    <SettingsDeleteModal trigger={children} open={isOpen} onOpenChange={setIsOpen}>
+      <SettingsDeleteModal.Heading>Confirm Site Deletion</SettingsDeleteModal.Heading>
 
-      <Text>
-        If you are positive you want to delete your Site, use the field below to
-        confirm and click delete site.
-      </Text>
+      <Text>If you are positive you want to delete your Site, use the field below to confirm and click delete site.</Text>
 
       <Form.InputField
         name="name"

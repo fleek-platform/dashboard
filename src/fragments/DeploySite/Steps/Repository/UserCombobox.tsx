@@ -21,31 +21,22 @@ type UserComboboxProps = LoadingProps<{
   onRefetch?: () => void;
 }>;
 
-export const UserCombobox: React.FC<UserComboboxProps> = ({
-  users = [],
-  isLoading,
-  onRefetch,
-}) => {
+export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoading, onRefetch }) => {
   const router = useRouter();
   const client = useClient();
   const toast = useToast();
 
-  const { sourceProvider, gitUser, setGitUser, gitProviderId } =
-    useDeploySiteContext();
-  const [countSitesWithSourceProviderQuery] =
-    useCountSitesWithSourceProviderQuery();
+  const { sourceProvider, gitUser, setGitUser, gitProviderId } = useDeploySiteContext();
+  const [countSitesWithSourceProviderQuery] = useCountSitesWithSourceProviderQuery();
 
   const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching ||
-    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+    countSitesWithSourceProviderQuery.fetching || (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const handleAddGHAccount = async () => {
     const projectId = router.query.projectId!;
 
     if (!projectId || !gitProviderId) {
-      toast.error({
-        message: 'Unexpected error when generating url, please try again',
-      });
+      toast.error({ message: 'Unexpected error when generating url, please try again' });
 
       return null;
     }
@@ -54,18 +45,10 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
       const createInstallationUrlResult = await client.mutation<
         CreateGithubAppInstallationUrlMutation,
         CreateGithubAppInstallationUrlMutationVariables
-      >(CreateGithubAppInstallationUrlDocument, {
-        where: { projectId, gitProviderId: gitProviderId },
-      });
+      >(CreateGithubAppInstallationUrlDocument, { where: { projectId, gitProviderId: gitProviderId } });
 
-      if (
-        createInstallationUrlResult.error ||
-        !createInstallationUrlResult.data?.createGithubAppInstallationUrl
-      ) {
-        throw (
-          createInstallationUrlResult.error ||
-          new Error('Failed to create GithubApp Installation Url')
-        );
+      if (createInstallationUrlResult.error || !createInstallationUrlResult.data?.createGithubAppInstallationUrl) {
+        throw createInstallationUrlResult.error || new Error('Failed to create GithubApp Installation Url');
       }
 
       openPopUpWindow({
@@ -74,10 +57,7 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
         onClose: onRefetch,
       });
     } catch (error) {
-      toast.error({
-        error,
-        log: 'Failed to create GithubApp Installation Url',
-      });
+      toast.error({ error, log: 'Failed to create GithubApp Installation Url' });
     }
   };
 
@@ -101,8 +81,7 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
           disabled: shouldDisableAddOrganization,
           tooltip: shouldDisableAddOrganization
             ? {
-                content:
-                  'You already have sites that depend on the current GitHub installation.',
+                content: 'You already have sites that depend on the current GitHub installation.',
                 side: 'left',
               }
             : undefined,
@@ -111,13 +90,7 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
     >
       {({ Field, Options }) => (
         <>
-          <Field
-            placeholder={
-              <>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>
-            }
-          >
-            {UserItem}
-          </Field>
+          <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
 
           <Options align="start">{UserItem}</Options>
         </>

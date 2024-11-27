@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 
-import {
-  DeploymentStatus,
-  StorageType,
-  useSiteQuery,
-} from '@/generated/graphqlClient';
+import { DeploymentStatus, StorageType, useSiteQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { forwardStyledRef } from '@/theme';
 import { Deployment } from '@/types/Deployment';
@@ -13,55 +9,44 @@ import { Skeleton, Text } from '@/ui';
 import { canRedeploySite } from '@/utils/canRedeploySite';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 
-import {
-  Deploy,
-  DeployAuthorSkeleton,
-  DeployItemSkeleton,
-  DeployProps,
-  DeploySkeleton,
-} from '../Deployments/Deploy/Deploy';
+import { Deploy, DeployAuthorSkeleton, DeployItemSkeleton, DeployProps, DeploySkeleton } from '../Deployments/Deploy/Deploy';
 import { RecentDeployStyles as S } from './RecentDeploy.styles';
 
-export type RecentDeployProps = Pick<DeployProps, 'onRedeploy'> & {
-  isSelfManaged: boolean;
-};
+export type RecentDeployProps = Pick<DeployProps, 'onRedeploy'> & { isSelfManaged: boolean };
 
-export const RecentDeploy = forwardStyledRef<HTMLDivElement, RecentDeployProps>(
-  S.Container,
-  ({ isSelfManaged, onRedeploy }, ref) => {
-    const router = useRouter();
-    const siteId = router.query.siteId!;
-    const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
+export const RecentDeploy = forwardStyledRef<HTMLDivElement, RecentDeployProps>(S.Container, ({ isSelfManaged, onRedeploy }, ref) => {
+  const router = useRouter();
+  const siteId = router.query.siteId!;
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
 
-    const mockedDeployment = useMockedDeployment(siteQuery.data?.site);
+  const mockedDeployment = useMockedDeployment(siteQuery.data?.site);
 
-    const recentDeploy = siteQuery.data?.site.lastDeployment;
-    const parsedStatus = parseAPIDeploymentStatus(recentDeploy?.status);
+  const recentDeploy = siteQuery.data?.site.lastDeployment;
+  const parsedStatus = parseAPIDeploymentStatus(recentDeploy?.status);
 
-    const handleRedeploy = async (deploymentId: string) => {
-      await onRedeploy(deploymentId);
-    };
+  const handleRedeploy = async (deploymentId: string) => {
+    await onRedeploy(deploymentId);
+  };
 
-    if (siteQuery.fetching) {
-      return <RecentDeploySkeleton />;
-    }
+  if (siteQuery.fetching) {
+    return <RecentDeploySkeleton />;
+  }
 
-    return (
-      <S.Container ref={ref}>
-        <Text as="h3" variant="primary" size="lg" weight={700}>
-          Recent Deploy
-        </Text>
-        <Deploy
-          deployment={recentDeploy || mockedDeployment}
-          onRedeploy={handleRedeploy}
-          isSelfManaged={isSelfManaged}
-          canRedeploy={canRedeploySite({ status: parsedStatus })}
-          isMostRecentDeployment
-        />
-      </S.Container>
-    );
-  },
-);
+  return (
+    <S.Container ref={ref}>
+      <Text as="h3" variant="primary" size="lg" weight={700}>
+        Recent Deploy
+      </Text>
+      <Deploy
+        deployment={recentDeploy || mockedDeployment}
+        onRedeploy={handleRedeploy}
+        isSelfManaged={isSelfManaged}
+        canRedeploy={canRedeploySite({ status: parsedStatus })}
+        isMostRecentDeployment
+      />
+    </S.Container>
+  );
+});
 
 const RecentDeploySkeleton: React.FC = () => (
   <S.Container>
@@ -96,5 +81,5 @@ const useMockedDeployment = (site?: UseMockedDeploymentProps): Deployment =>
       sourceRef: '-',
       previewOnly: false,
     }),
-    [site],
+    [site]
   );

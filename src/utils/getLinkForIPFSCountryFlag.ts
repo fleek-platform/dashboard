@@ -6,9 +6,7 @@ type GetLinkForIPFSCountryFlagArgs = {
   country: string;
 };
 
-export const getLinkForIPFSCountryFlag = (
-  args: GetLinkForIPFSCountryFlagArgs,
-) => {
+export const getLinkForIPFSCountryFlag = (args: GetLinkForIPFSCountryFlagArgs) => {
   const country = args.country.toLowerCase();
 
   return getLinkForIPFSGateway({

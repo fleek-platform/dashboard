@@ -12,19 +12,11 @@ export type UseGitRepositoryBuildSettingsArgs = {
   pause?: boolean;
 } & Partial<GitProvider.GetRepositoryBuildSettingsArgs>;
 
-export const useGitRepositoryBuildSettings = ({
-  provider,
-  accessToken,
-  pause,
-  ...args
-}: UseGitRepositoryBuildSettingsArgs) => {
+export const useGitRepositoryBuildSettings = ({ provider, accessToken, pause, ...args }: UseGitRepositoryBuildSettingsArgs) => {
   const gitProvider = useGitProvider({ provider, accessToken });
   const siteFrameworks = useSiteFrameworks();
 
-  const frameworks = useMemo(
-    () => siteFrameworks.data || [],
-    [siteFrameworks.data],
-  );
+  const frameworks = useMemo(() => siteFrameworks.data || [], [siteFrameworks.data]);
 
   const queryFn = useCallback(async () => {
     if (!gitProvider || !args.slug || !args.repository) {

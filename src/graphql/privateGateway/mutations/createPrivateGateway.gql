@@ -1,7 +1,4 @@
-mutation createPrivateGateway(
-  $where: CreatePrivateGatewayWhereInput!
-  $data: CreatePrivateGatewayDataInput!
-) {
+mutation createPrivateGateway($where: CreatePrivateGatewayWhereInput!, $data: CreatePrivateGatewayDataInput!) {
   createPrivateGateway(where: $where, data: $data) {
     id
     name

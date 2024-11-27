@@ -33,10 +33,7 @@ const NoRepositories: React.FC = () => (
     <Text variant="primary" weight={500}>
       No Repositories
     </Text>
-    <Text>
-      We were unable to find any repositories, make sure you are on the correct
-      account.
-    </Text>
+    <Text>We were unable to find any repositories, make sure you are on the correct account.</Text>
   </S.NoRepositories.Container>
 );
 
@@ -45,10 +42,7 @@ type RepositoryListContentProps = {
   repos: GitProvider.Repository[];
 };
 
-export const RepositoryListContent: React.FC<RepositoryListContentProps> = ({
-  loading,
-  repos,
-}) => {
+export const RepositoryListContent: React.FC<RepositoryListContentProps> = ({ loading, repos }) => {
   if (loading) {
     return <S.List.Spinner name="spinner" />;
   }

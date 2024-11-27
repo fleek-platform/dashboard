@@ -12,9 +12,7 @@ export const Step2: React.FC = () => {
     <MigrationCard
       status={overallStatus}
       migrationRequests={migrationRequests}
-      startDate={dateFormat({
-        dateISO: migrationRequests[0]?.createdAt || DateTime.now().toISO(),
-      })}
+      startDate={dateFormat({ dateISO: migrationRequests[0]?.createdAt || DateTime.now().toISO() })}
     />
   );
 };

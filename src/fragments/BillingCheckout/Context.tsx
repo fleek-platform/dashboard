@@ -32,19 +32,12 @@ export type BillingCheckoutProviderProps = ChildrenProps &
     initialMethod: BillingCheckoutContext['method'];
   };
 
-export const BillingCheckoutProvider: React.FC<
-  BillingCheckoutProviderProps
-> = ({ children, initialMethod, plan }) => {
-  const [stage, setStage] =
-    useState<BillingCheckoutContext['stage']>('initial');
-  const [method, setMethod] =
-    useState<BillingCheckoutContext['method']>(initialMethod);
-  const [selectedToken, setSelectedToken] =
-    useState<BillingCheckoutContext['selectedToken']>();
-  const [selectedPlatform, setSelectedPlatform] =
-    useState<BillingCheckoutContext['selectedPlatform']>();
-  const [tokenAmount, setTokenAmount] =
-    useState<BillingCheckoutContext['tokenAmount']>();
+export const BillingCheckoutProvider: React.FC<BillingCheckoutProviderProps> = ({ children, initialMethod, plan }) => {
+  const [stage, setStage] = useState<BillingCheckoutContext['stage']>('initial');
+  const [method, setMethod] = useState<BillingCheckoutContext['method']>(initialMethod);
+  const [selectedToken, setSelectedToken] = useState<BillingCheckoutContext['selectedToken']>();
+  const [selectedPlatform, setSelectedPlatform] = useState<BillingCheckoutContext['selectedPlatform']>();
+  const [tokenAmount, setTokenAmount] = useState<BillingCheckoutContext['tokenAmount']>();
 
   return (
     <Provider

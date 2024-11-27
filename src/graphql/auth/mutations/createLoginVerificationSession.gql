@@ -1,5 +1,3 @@
-mutation createLoginVerificationSession(
-  $where: CreateLoginVerificationSessionWhereInput!
-) {
+mutation createLoginVerificationSession($where: CreateLoginVerificationSessionWhereInput!) {
   createLoginVerificationSession(where: $where)
 }

@@ -11,63 +11,51 @@ import { cn } from '@/utils/cn';
 
 import { Text } from '../Text/Text';
 
-const inputVariants = cva(
-  'w-full border border-transparent overflow-hidden bg-transparent flex items-center text-neutral-12',
-  {
-    variants: {
-      size: {
-        xs: 'min-h-6 px-2.5 text-xs gap-2 rounded-sm',
-        sm: 'min-h-[2rem] px-2.5 text-sm gap-2 rounded-md',
-        md: 'min-h-[2.5rem] px-3 gap-2 rounded-md',
-        lg: 'min-h-8 text-lg px-4 gap-3 rounded-lg',
-      },
-      variant: {
-        outline:
-          'border-neutral-7 focus-within:outline outline-1 outline-offset-0 focus-within:outline-neutral-8 focus-within:border-neutral-8',
-        ghost: 'px-0 rounded-none',
-      },
-      status: {
-        isLoading: 'border-neutral-4 animate-pulse bg-neutral-4',
-        error:
-          'border-danger-8 focus-within:border-danger-8 focus-within:outline-danger-8',
-        disabled: 'cursor-not-allowed bg-neutral-3 border-neutral-7',
-      },
+const inputVariants = cva('w-full border border-transparent overflow-hidden bg-transparent flex items-center text-neutral-12', {
+  variants: {
+    size: {
+      xs: 'min-h-6 px-2.5 text-xs gap-2 rounded-sm',
+      sm: 'min-h-[2rem] px-2.5 text-sm gap-2 rounded-md',
+      md: 'min-h-[2.5rem] px-3 gap-2 rounded-md',
+      lg: 'min-h-8 text-lg px-4 gap-3 rounded-lg',
     },
-    compoundVariants: [
-      {
-        variant: 'ghost',
-        status: 'isLoading',
-        className:
-          'border border-neutral-4 animate-pulse bg-neutral-4 rounded-lg',
-      },
-      {
-        variant: 'ghost',
-        status: 'error',
-        className:
-          'border-0 rounded-none border-b border-danger-8 focus-within:border-danger-8',
-      },
-      {
-        variant: 'ghost',
-        status: 'disabled',
-        className: 'bg-transparent border-none cursor-not-allowed',
-      },
-    ],
-    defaultVariants: {
-      variant: 'outline',
-      size: 'sm',
+    variant: {
+      outline:
+        'border-neutral-7 focus-within:outline outline-1 outline-offset-0 focus-within:outline-neutral-8 focus-within:border-neutral-8',
+      ghost: 'px-0 rounded-none',
+    },
+    status: {
+      isLoading: 'border-neutral-4 animate-pulse bg-neutral-4',
+      error: 'border-danger-8 focus-within:border-danger-8 focus-within:outline-danger-8',
+      disabled: 'cursor-not-allowed bg-neutral-3 border-neutral-7',
     },
   },
-);
+  compoundVariants: [
+    {
+      variant: 'ghost',
+      status: 'isLoading',
+      className: 'border border-neutral-4 animate-pulse bg-neutral-4 rounded-lg',
+    },
+    {
+      variant: 'ghost',
+      status: 'error',
+      className: 'border-0 rounded-none border-b border-danger-8 focus-within:border-danger-8',
+    },
+    {
+      variant: 'ghost',
+      status: 'disabled',
+      className: 'bg-transparent border-none cursor-not-allowed',
+    },
+  ],
+  defaultVariants: {
+    variant: 'outline',
+    size: 'sm',
+  },
+});
 
 export type InputVariants = VariantProps<typeof inputVariants>;
 
-export type InputStatus =
-  | 'validating'
-  | 'invalid'
-  | 'valid'
-  | 'pending'
-  | 'debouncing'
-  | 'other';
+export type InputStatus = 'validating' | 'invalid' | 'valid' | 'pending' | 'debouncing' | 'other';
 
 export type InputRootProps = React.HTMLAttributes<HTMLDivElement> &
   InputVariants &
@@ -79,84 +67,49 @@ export type InputRootProps = React.HTMLAttributes<HTMLDivElement> &
   };
 
 const Root = forwardRef<HTMLDivElement, InputRootProps>(
-  (
-    {
-      variant,
-      size,
-      isLoading,
-      children,
-      className,
-      error,
-      hidden,
-      disabled,
-      ...props
-    },
-    ref,
-  ) => {
-    const status = isLoading
-      ? 'isLoading'
-      : disabled
-        ? 'disabled'
-        : error
-          ? 'error'
-          : undefined;
+  ({ variant, size, isLoading, children, className, error, hidden, disabled, ...props }, ref) => {
+    const status = isLoading ? 'isLoading' : disabled ? 'disabled' : error ? 'error' : undefined;
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          inputVariants({ variant, size, status }),
-          { hidden },
-          className,
-        )}
-        {...props}
-      >
+      <div ref={ref} className={cn(inputVariants({ variant, size, status }), { hidden }, className)} {...props}>
         {!isLoading && children}
       </div>
     );
-  },
+  }
 );
 
 export type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const Field = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <input
-        ref={ref}
-        autoComplete="off"
-        className={cn(
-          'outline-none bg-transparent h-full w-full disabled:cursor-not-allowed placeholder-neutral-8',
-          className,
-        )}
-        {...props}
-      />
-    );
-  },
-);
+const Field = forwardRef<HTMLInputElement, InputFieldProps>(({ className, ...props }, ref) => {
+  return (
+    <input
+      ref={ref}
+      autoComplete="off"
+      className={cn('outline-none bg-transparent h-full w-full disabled:cursor-not-allowed placeholder-neutral-8', className)}
+      {...props}
+    />
+  );
+});
 
-export type InputTextareaProps =
-  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    minHeight?: number;
-    maxHeight?: number;
-  };
+export type InputTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  minHeight?: number;
+  maxHeight?: number;
+};
 
-const Textarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(
-  ({ minHeight = 100, maxHeight = 300, className, ...props }, ref) => {
-    return (
-      <textarea
-        ref={ref}
-        autoComplete="off"
-        style={{ minHeight, maxHeight }}
-        className={cn(
-          'outline-none bg-transparent h-full w-full resize-none disabled:cursor-not-allowed [field-sizing:content] py-2.5 placeholder-neutral-8',
-          className,
-        )}
-        {...props}
-      />
-    );
-  },
-);
+const Textarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(({ minHeight = 100, maxHeight = 300, className, ...props }, ref) => {
+  return (
+    <textarea
+      ref={ref}
+      autoComplete="off"
+      style={{ minHeight, maxHeight }}
+      className={cn(
+        'outline-none bg-transparent h-full w-full resize-none disabled:cursor-not-allowed [field-sizing:content] py-2.5 placeholder-neutral-8',
+        className
+      )}
+      {...props}
+    />
+  );
+});
 
 export type InputLabelProps = React.LabelHTMLAttributes<HTMLLabelElement> &
   ChildrenProps & {
@@ -164,29 +117,12 @@ export type InputLabelProps = React.LabelHTMLAttributes<HTMLLabelElement> &
     tooltip?: React.ReactNode;
   };
 
-const Label: React.FC<InputLabelProps> = ({
-  error,
-  tooltip,
-  children,
-  className,
-  ...props
-}) => {
+const Label: React.FC<InputLabelProps> = ({ error, tooltip, children, className, ...props }) => {
   return (
-    <label
-      className={cn(
-        'text-xs flex items-center gap-1 text-neutral-11',
-        { 'text-danger-11': error },
-        className,
-      )}
-      {...props}
-    >
+    <label className={cn('text-xs flex items-center gap-1 text-neutral-11', { 'text-danger-11': error }, className)} {...props}>
       {children}
       {tooltip && (
-        <IconTooltip
-          iconName="information-circle"
-          side="top"
-          className="text-xs text-neutral-11"
-        >
+        <IconTooltip iconName="information-circle" side="top" className="text-xs text-neutral-11">
           {tooltip}
         </IconTooltip>
       )}
@@ -200,13 +136,7 @@ export type InputIconProps = Partial<typeof IconComponent> & {
   tooltip?: React.ReactNode;
 };
 
-const Icon: React.FC<InputIconProps> = ({
-  status,
-  name,
-  tooltip,
-  className,
-  ...props
-}) => {
+const Icon: React.FC<InputIconProps> = ({ status, name, tooltip, className, ...props }) => {
   const classNames = cn(
     'text-neutral-8',
     {
@@ -214,7 +144,7 @@ const Icon: React.FC<InputIconProps> = ({
       'text-neutral-11': status === 'validating',
       'text-success-11': status === 'valid',
     },
-    className,
+    className
   );
 
   if (tooltip) {
@@ -242,22 +172,9 @@ export type InputHintProps = React.HTMLAttributes<HTMLParagraphElement> &
     icon?: IconName;
   };
 
-const Hint: React.FC<InputHintProps> = ({
-  error,
-  icon,
-  children,
-  className,
-  ...props
-}) => {
+const Hint: React.FC<InputHintProps> = ({ error, icon, children, className, ...props }) => {
   return (
-    <Text
-      className={cn(
-        'text-xs flex items-center gap-1 text-neutral-11',
-        { 'text-danger-11': error },
-        className,
-      )}
-      {...props}
-    >
+    <Text className={cn('text-xs flex items-center gap-1 text-neutral-11', { 'text-danger-11': error }, className)} {...props}>
       {icon && <IconComponent name={icon} className="text-[0.625rem]" />}
       {children}
     </Text>

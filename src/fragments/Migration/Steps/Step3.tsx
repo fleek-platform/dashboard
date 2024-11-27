@@ -18,18 +18,14 @@ export const Step3: React.FC = () => {
     <MigrationCard
       status={overallStatus}
       migrationRequests={migrationRequests}
-      startDate={dateFormat({
-        dateISO: migrationRequests[0]?.createdAt || DateTime.now().toISO(),
-      })}
+      startDate={dateFormat({ dateISO: migrationRequests[0]?.createdAt || DateTime.now().toISO() })}
     >
       <Buttons overallStatus={overallStatus} />
     </MigrationCard>
   );
 };
 
-const Buttons: React.FC<{ overallStatus: OverallMigrationStatus }> = ({
-  overallStatus,
-}) => {
+const Buttons: React.FC<{ overallStatus: OverallMigrationStatus }> = ({ overallStatus }) => {
   const router = useRouter();
   const session = useSessionContext();
   const projectId = session.project.id;

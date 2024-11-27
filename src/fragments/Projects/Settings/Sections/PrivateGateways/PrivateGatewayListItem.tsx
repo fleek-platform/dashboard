@@ -15,22 +15,12 @@ type PrivateGatewayListItemProps = {
   privateGateway: PrivateGateway;
 };
 
-export const PrivateGatewayListItem: React.FC<PrivateGatewayListItemProps> = ({
-  privateGateway,
-}) => {
+export const PrivateGatewayListItem: React.FC<PrivateGatewayListItemProps> = ({ privateGateway }) => {
   const { openModal } = usePrivateGatewayContext();
-  const hasAddAndVerifyDomainPermission = usePermissions({
-    action: [constants.PERMISSION.PRIVATE_GATEWAY.ADD_AND_VERIFY_DOMAIN],
-  });
-  const hasDeletePGWPermission = usePermissions({
-    action: [constants.PERMISSION.PRIVATE_GATEWAY.DELETE],
-  });
-  const hasRemoveDomainPermission = usePermissions({
-    action: [constants.PERMISSION.PRIVATE_GATEWAY.REMOVE_DOMAIN],
-  });
-  const hasChangePrimaryDomainPermission = usePermissions({
-    action: [constants.PERMISSION.PRIVATE_GATEWAY.CHANGE_PRIMARY_DOMAIN],
-  });
+  const hasAddAndVerifyDomainPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.ADD_AND_VERIFY_DOMAIN] });
+  const hasDeletePGWPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.DELETE] });
+  const hasRemoveDomainPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.REMOVE_DOMAIN] });
+  const hasChangePrimaryDomainPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.CHANGE_PRIMARY_DOMAIN] });
 
   const domains = filterDeletedDomains(privateGateway.domains || []);
 
@@ -47,12 +37,8 @@ export const PrivateGatewayListItem: React.FC<PrivateGatewayListItemProps> = ({
         </S.PrivateGatewayListItem.TitleWrapper>
 
         <S.PrivateGatewayListItem.ButtonsContainer>
-          {hasAddAndVerifyDomainPermission && (
-            <Button onClick={handleAddDomain}>Add domain</Button>
-          )}
-          {hasDeletePGWPermission && (
-            <DropdownMenu id={privateGateway.id} name={privateGateway.name} />
-          )}
+          {hasAddAndVerifyDomainPermission && <Button onClick={handleAddDomain}>Add domain</Button>}
+          {hasDeletePGWPermission && <DropdownMenu id={privateGateway.id} name={privateGateway.name} />}
         </S.PrivateGatewayListItem.ButtonsContainer>
       </S.PrivateGatewayListItem.Header>
 
@@ -73,10 +59,7 @@ export const PrivateGatewayListItem: React.FC<PrivateGatewayListItemProps> = ({
         />
       ))}
       {domains.length === 0 && (
-        <SettingsBox.EmptyContent
-          title="No Domains Added"
-          description="Once you add a domain, they will appear here."
-        />
+        <SettingsBox.EmptyContent title="No Domains Added" description="Once you add a domain, they will appear here." />
       )}
     </SettingsBox.Container>
   );
@@ -88,11 +71,7 @@ type DropdownMenuProps = {
   isDeleteDisabled?: boolean;
 };
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({
-  id,
-  name,
-  isDeleteDisabled = false,
-}) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ id, name, isDeleteDisabled = false }) => {
   const { openModal } = useDeletePrivateGatewayContext();
 
   const handleDeletePrivateGateway = () => {

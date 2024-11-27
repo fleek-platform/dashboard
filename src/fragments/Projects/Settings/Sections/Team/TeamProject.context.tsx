@@ -3,17 +3,11 @@ import { HandleUpdateRoleProps } from '@/types/TeamProject';
 import { createContext } from '@/utils/createContext';
 
 export type TeamProjectContext = {
-  onUpdateRole?: ({
-    membershipId,
-    user,
-    permissionGroup,
-  }: HandleUpdateRoleProps) => Promise<boolean | undefined>;
+  onUpdateRole?: ({ membershipId, user, permissionGroup }: HandleUpdateRoleProps) => Promise<boolean | undefined>;
   onSubmitDelete: (id: string) => Promise<boolean | undefined>;
 };
 
-export type TeamProjectProviderProps = ChildrenProps<
-  Pick<TeamProjectContext, 'onUpdateRole' | 'onSubmitDelete'>
->;
+export type TeamProjectProviderProps = ChildrenProps<Pick<TeamProjectContext, 'onUpdateRole' | 'onSubmitDelete'>>;
 
 const [Provider, useContext] = createContext<TeamProjectContext>({
   hookName: 'useTeamProjectContext',
@@ -21,11 +15,7 @@ const [Provider, useContext] = createContext<TeamProjectContext>({
   providerName: 'TeamProjectProvider',
 });
 
-export const TeamProjectProvider: React.FC<TeamProjectProviderProps> = ({
-  children,
-  onUpdateRole,
-  onSubmitDelete,
-}) => {
+export const TeamProjectProvider: React.FC<TeamProjectProviderProps> = ({ children, onUpdateRole, onSubmitDelete }) => {
   return (
     <Provider
       value={{

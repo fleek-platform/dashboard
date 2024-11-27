@@ -51,9 +51,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
   const field = useFormField<string>(name);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { maxLength } = htmlAttributes;
 
     if (maxLength && event.target.value.length > maxLength) {
@@ -70,11 +68,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   return (
     <FormField.Root className={cn('flex-1', formFieldRootClassName)}>
       {label && (
-        <Input.Label
-          htmlFor={name}
-          tooltip={labelTooltip}
-          error={field.status === 'invalid'}
-        >
+        <Input.Label htmlFor={name} tooltip={labelTooltip} error={field.status === 'invalid'}>
           {label}
         </Input.Label>
       )}
@@ -114,7 +108,7 @@ export const InputField: React.FC<InputFieldProps> = ({
             name={name}
             disabled={isDisabled}
             className={inputFieldClassName}
-            {...(htmlAttributes as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            {...(htmlAttributes as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         )}
 
@@ -123,20 +117,12 @@ export const InputField: React.FC<InputFieldProps> = ({
         {field.dirty &&
           match(field.status)
             .with('validating', () => (
-              <Input.Icon
-                status={field.status}
-                name="spinner"
-                tooltip={field.message || 'Checking availability...'}
-              />
+              <Input.Icon status={field.status} name="spinner" tooltip={field.message || 'Checking availability...'} />
             ))
             .with('valid', () =>
               disableValidMessage ? null : (
-                <Input.Icon
-                  status={field.status}
-                  name="check-circled"
-                  tooltip={field.message || `${field.value} is available`}
-                />
-              ),
+                <Input.Icon status={field.status} name="check-circled" tooltip={field.message || `${field.value} is available`} />
+              )
             )
             .otherwise(() => undefined)}
       </Input.Root>

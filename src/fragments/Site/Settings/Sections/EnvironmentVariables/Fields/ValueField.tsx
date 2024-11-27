@@ -7,11 +7,7 @@ type ValueFieldProps = LoadingProps<
   }>
 >;
 
-export const ValueField: React.FC<ValueFieldProps> = ({
-  isLoading,
-  isDisabled,
-  disableLabel = false,
-}) => {
+export const ValueField: React.FC<ValueFieldProps> = ({ isLoading, isDisabled, disableLabel = false }) => {
   const field = Form.useField<boolean>('encrypted');
 
   return (

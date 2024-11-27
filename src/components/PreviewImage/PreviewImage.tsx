@@ -9,12 +9,7 @@ export type PreviewImageProps = LoadingProps<{
   text?: string;
 }>;
 
-export const PreviewImage: React.FC<PreviewImageProps> = ({
-  isLoading,
-  status,
-  text,
-  src,
-}) => {
+export const PreviewImage: React.FC<PreviewImageProps> = ({ isLoading, status, text, src }) => {
   if (isLoading) {
     return <PreviewImageSkeleton />;
   }
@@ -24,11 +19,7 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
   }
 
   return (
-    <S.Container
-      alt="Preview Image"
-      src={status === 'success' ? src : ''}
-      status={status}
-    >
+    <S.Container alt="Preview Image" src={status === 'success' ? src : ''} status={status}>
       {text}
     </S.Container>
   );

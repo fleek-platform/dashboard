@@ -32,22 +32,14 @@ export const PlansTable: React.FC<PlansTableProps> = ({ plans, sections }) => {
         <colgroup>
           <col span={1} style={{ width: '25%' }} />
           {plans.map((_, index) => (
-            <col
-              span={1}
-              style={{ width: `${75 / plans.length}%` }}
-              key={index}
-            />
+            <col span={1} style={{ width: `${75 / plans.length}%` }} key={index} />
           ))}
         </colgroup>
 
         <Header plans={plans} />
 
         {sections.map((section, sectionIndex) => (
-          <Section
-            key={section.name}
-            section={section}
-            planValues={plans.map((plan) => plan.values[sectionIndex])}
-          />
+          <Section key={section.name} section={section} planValues={plans.map((plan) => plan.values[sectionIndex])} />
         ))}
       </S.Root>
     </S.Container>

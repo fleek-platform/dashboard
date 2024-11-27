@@ -11,9 +11,7 @@ type OutsideLink = {
   onClick?: () => void; // onClick handler takes in an optional callback, for example passing a hook
 };
 
-const generateOutsideLinks = (
-  openModalWithTab: (tab: TAB) => void,
-): OutsideLink[] => [
+const generateOutsideLinks = (openModalWithTab: (tab: TAB) => void): OutsideLink[] => [
   {
     title: 'Read the docs',
     description: 'Explore our guides, API references and code examples.',
@@ -45,15 +43,9 @@ type ConditionalLinkProps = {
 };
 
 // Support for Non-Link components - ie triggering a modal
-export const BoxOrLink: React.FC<ConditionalLinkProps> = ({
-  href,
-  onClick,
-  children,
-}) => {
+export const BoxOrLink: React.FC<ConditionalLinkProps> = ({ href, onClick, children }) => {
   if (href) {
-    return (
-      <S.OutsideLinks.BoxLink href={href}>{children}</S.OutsideLinks.BoxLink>
-    );
+    return <S.OutsideLinks.BoxLink href={href}>{children}</S.OutsideLinks.BoxLink>;
   }
 
   return <S.OutsideLinks.Box onClick={onClick}>{children}</S.OutsideLinks.Box>;
@@ -68,19 +60,17 @@ export const OutsideLinks: React.FC = () => {
         Become a Fleek power user
       </Text>
       <S.OutsideLinks.Grid>
-        {generateOutsideLinks(openModalWithTab).map(
-          ({ title, href, description, onClick }) => (
-            <BoxOrLink key={title} href={href} onClick={onClick}>
-              <S.OutsideLinks.Header>
-                <Text as="h3" size="lg" variant="primary" weight={700}>
-                  {title}
-                </Text>
-                <S.RightArrow name="arrow-right" />
-              </S.OutsideLinks.Header>
-              <Text>{description}</Text>
-            </BoxOrLink>
-          ),
-        )}
+        {generateOutsideLinks(openModalWithTab).map(({ title, href, description, onClick }) => (
+          <BoxOrLink key={title} href={href} onClick={onClick}>
+            <S.OutsideLinks.Header>
+              <Text as="h3" size="lg" variant="primary" weight={700}>
+                {title}
+              </Text>
+              <S.RightArrow name="arrow-right" />
+            </S.OutsideLinks.Header>
+            <Text>{description}</Text>
+          </BoxOrLink>
+        ))}
       </S.OutsideLinks.Grid>
     </S.OutsideLinks.GridArea>
   );

@@ -33,9 +33,7 @@ export type IpfsPropagationProviderProps = ChildrenProps<{
   initialTestingHash?: string;
 }>;
 
-export const IpfsPropagationProvider: React.FC<
-  IpfsPropagationProviderProps
-> = ({
+export const IpfsPropagationProvider: React.FC<IpfsPropagationProviderProps> = ({
   children,
   publicGateways: initialPublicGateways,
   initialTestingHash = '',
@@ -52,14 +50,13 @@ export const IpfsPropagationProvider: React.FC<
         query: { ...router.query, hash },
       },
       undefined,
-      { shallow: true },
+      { shallow: true }
     );
   };
 
-  const [publicGatewaysRecords, setPublicGatewaysRecords] =
-    useState<GatewayListRecord>(() => {
-      return reduceToInitialState(initialPublicGateways);
-    });
+  const [publicGatewaysRecords, setPublicGatewaysRecords] = useState<GatewayListRecord>(() => {
+    return reduceToInitialState(initialPublicGateways);
+  });
 
   const publicGateways = useSortedGatewayList(publicGatewaysRecords);
   const gatewayCounters = useGatewayCounters(publicGatewaysRecords);
@@ -72,9 +69,7 @@ export const IpfsPropagationProvider: React.FC<
 
   const setShouldRefresh = (shouldRefresh: boolean) => {
     if (shouldRefresh) {
-      setPublicGatewaysRecords((prev) =>
-        reduceToInitialState(Object.keys(prev)),
-      );
+      setPublicGatewaysRecords((prev) => reduceToInitialState(Object.keys(prev)));
       setHasCancelled(false); // Reset cancellation state
     }
 

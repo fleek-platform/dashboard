@@ -2,18 +2,10 @@ import { routes } from '@fleek-platform/utils-routes';
 import { forwardRef, useState } from 'react';
 import * as zod from 'zod';
 
-import {
-  Form,
-  LearnMoreMessage,
-  PermissionsTooltip,
-  SettingsBox,
-} from '@/components';
+import { Form, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { TwoFactorAuthentication } from '@/fragments';
-import {
-  TwoFactorProtectedActionType,
-  useDeleteSiteMutation,
-} from '@/generated/graphqlClient';
+import { TwoFactorProtectedActionType, useDeleteSiteMutation } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
@@ -22,14 +14,9 @@ import { Button, ButtonProps } from '@/ui';
 
 import { DeleteSiteModal, DeleteSiteModalProps } from './DeleteSiteModal';
 
-export type DeleteSiteProps = LoadingProps<
-  Pick<DeleteSiteModalProps, 'siteName'>
->;
+export type DeleteSiteProps = LoadingProps<Pick<DeleteSiteModalProps, 'siteName'>>;
 
-export const DeleteSite: React.FC<DeleteSiteProps> = ({
-  isLoading,
-  siteName,
-}) => {
+export const DeleteSite: React.FC<DeleteSiteProps> = ({ isLoading, siteName }) => {
   const toast = useToast();
   const router = useRouter();
 
@@ -44,11 +31,7 @@ export const DeleteSite: React.FC<DeleteSiteProps> = ({
     values: {
       name: '',
     },
-    schema: zod.object({
-      name: zod.literal(siteName, {
-        errorMap: () => ({ message: 'Invalid site name' }),
-      }),
-    }),
+    schema: zod.object({ name: zod.literal(siteName, { errorMap: () => ({ message: 'Invalid site name' }) }) }),
     onSubmit: async () => {
       try {
         const result = await deleteSite({ where: { id: siteId } });
@@ -77,27 +60,13 @@ export const DeleteSite: React.FC<DeleteSiteProps> = ({
     <Form.Provider value={deleteForm}>
       <SettingsBox.Container>
         <SettingsBox.Title>Delete Site</SettingsBox.Title>
-        <SettingsBox.Text>
-          Deleting a site is an irreversible action so proceed with caution.
-        </SettingsBox.Text>
+        <SettingsBox.Text>Deleting a site is an irreversible action so proceed with caution.</SettingsBox.Text>
 
         <SettingsBox.ActionRow>
-          <LearnMoreMessage
-            href={constants.EXTERNAL_LINK.FLEEK_DOCS_DELETE_SITE}
-          >
-            deleting a site
-          </LearnMoreMessage>
+          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_DELETE_SITE}>deleting a site</LearnMoreMessage>
 
-          <DeleteSiteModal
-            siteName={siteName}
-            isOpen={isVisible ? false : isOpen}
-            setIsOpen={setIsOpen}
-          >
-            {isLoading ? (
-              <SettingsBox.Skeleton variant="button" />
-            ) : (
-              <DeleteSiteButton />
-            )}
+          <DeleteSiteModal siteName={siteName} isOpen={isVisible ? false : isOpen} setIsOpen={setIsOpen}>
+            {isLoading ? <SettingsBox.Skeleton variant="button" /> : <DeleteSiteButton />}
           </DeleteSiteModal>
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
@@ -105,31 +74,22 @@ export const DeleteSite: React.FC<DeleteSiteProps> = ({
   );
 };
 
-const DeleteSiteButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
-    const hasDeleteSitePermission = usePermissions({
-      action: [constants.PERMISSION.SITE.DELETE],
-    });
+const DeleteSiteButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  const hasDeleteSitePermission = usePermissions({ action: [constants.PERMISSION.SITE.DELETE] });
 
-    const children = (
-      <Button
-        intent="danger"
-        disabled={!hasDeleteSitePermission}
-        {...props}
-        ref={ref}
-      >
-        Delete site
-      </Button>
+  const children = (
+    <Button intent="danger" disabled={!hasDeleteSitePermission} {...props} ref={ref}>
+      Delete site
+    </Button>
+  );
+
+  if (!hasDeleteSitePermission) {
+    return (
+      <PermissionsTooltip hasAccess={hasDeleteSitePermission} asChild>
+        {children}
+      </PermissionsTooltip>
     );
+  }
 
-    if (!hasDeleteSitePermission) {
-      return (
-        <PermissionsTooltip hasAccess={hasDeleteSitePermission} asChild>
-          {children}
-        </PermissionsTooltip>
-      );
-    }
-
-    return children;
-  },
-);
+  return children;
+});

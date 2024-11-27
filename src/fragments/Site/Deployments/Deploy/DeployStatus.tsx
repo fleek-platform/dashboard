@@ -11,16 +11,12 @@ type DeploymentProps = {
   isMostRecentDeployment?: boolean;
 };
 
-export const DeployStatus: React.FC<DeploymentProps> = ({
-  deployment,
-  isMostRecentDeployment,
-}) => {
+export const DeployStatus: React.FC<DeploymentProps> = ({ deployment, isMostRecentDeployment }) => {
   const parsedStatus = parseAPIDeploymentStatus(deployment?.status);
 
   const statusData = statusDataMap[parsedStatus];
 
-  const isCurrentDeploymentProd =
-    parsedStatus === 'success' && isMostRecentDeployment;
+  const isCurrentDeploymentProd = parsedStatus === 'success' && isMostRecentDeployment;
 
   return (
     <>

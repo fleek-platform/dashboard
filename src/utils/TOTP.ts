@@ -11,14 +11,7 @@ type GetURIArgs = {
   period?: number;
 };
 
-export const getURI = ({
-  label,
-  secret,
-  issuer,
-  digits = 6,
-  algorithm = SecretKeyAlgorithm.SHA256,
-  period = 30,
-}: GetURIArgs) => {
+export const getURI = ({ label, secret, issuer, digits = 6, algorithm = SecretKeyAlgorithm.SHA256, period = 30 }: GetURIArgs) => {
   const totp = new OTPAuth.TOTP({
     issuer,
     label,

@@ -31,10 +31,7 @@ const TeamPage: Page = () => {
   const [, refetchInvitationsQuery] = useInvitationsQuery();
 
   const [meQuery] = useMeQuery();
-  const [projectMembersQuery] = useProjectMembersQuery({
-    variables: { where: { id: session.project.id } },
-    pause: !session.project.id,
-  });
+  const [projectMembersQuery] = useProjectMembersQuery({ variables: { where: { id: session.project.id } }, pause: !session.project.id });
   const [permissionGroupsQuery] = usePermissionGroupsQuery();
   const [, updateMembership] = useUpdateMembershipMutation();
 
@@ -51,30 +48,15 @@ const TeamPage: Page = () => {
   });
 
   const isLoading = useMemo(() => {
-    return (
-      projectMembersQuery.fetching ||
-      meQuery.fetching ||
-      session.loading ||
-      permissionGroupsQuery.fetching
-    );
-  }, [
-    meQuery.fetching,
-    permissionGroupsQuery.fetching,
-    projectMembersQuery.fetching,
-    session.loading,
-  ]);
+    return projectMembersQuery.fetching || meQuery.fetching || session.loading || permissionGroupsQuery.fetching;
+  }, [meQuery.fetching, permissionGroupsQuery.fetching, projectMembersQuery.fetching, session.loading]);
 
   const handleDeleteMember = async (userId: string) => {
     try {
-      const result = await deleteMembership({
-        where: { projectId: session.project.id, userId },
-      });
+      const result = await deleteMembership({ where: { projectId: session.project.id, userId } });
 
       if (!result.data) {
-        throw (
-          result.error ||
-          new Error('Error trying to delete member from project')
-        );
+        throw result.error || new Error('Error trying to delete member from project');
       }
 
       refetchProjectMembersQuery({ requestPolicy: 'cache-and-network' });
@@ -90,10 +72,7 @@ const TeamPage: Page = () => {
       const deleteInvitationResult = await deleteInvitation({ where: { id } });
 
       if (!deleteInvitationResult.data) {
-        throw (
-          deleteInvitationResult.error ||
-          new Error('Error trying to delete invitation')
-        );
+        throw deleteInvitationResult.error || new Error('Error trying to delete invitation');
       }
 
       refetchInvitationsQuery({ requestPolicy: 'cache-and-network' });
@@ -104,15 +83,9 @@ const TeamPage: Page = () => {
     }
   };
 
-  const handleUpdateRole = async ({
-    user,
-    permissionGroup,
-  }: HandleUpdateRoleProps) => {
+  const handleUpdateRole = async ({ user, permissionGroup }: HandleUpdateRoleProps) => {
     try {
-      const result = await updateMembership({
-        where: { userId: user.id },
-        data: { permissionGroupId: permissionGroup.id },
-      });
+      const result = await updateMembership({ where: { userId: user.id }, data: { permissionGroupId: permissionGroup.id } });
 
       if (!result.data?.updateMembership) {
         throw result.error || new Error('Error trying to update role');
@@ -120,9 +93,7 @@ const TeamPage: Page = () => {
 
       refetchProjectMembersQuery({ requestPolicy: 'network-only' });
 
-      toast.success({
-        message: `Set ${permissionGroup.name} role for user ${user.username || user.email || user.id}`,
-      });
+      toast.success({ message: `Set ${permissionGroup.name} role for user ${user.username || user.email || user.id}` });
 
       return true;
     } catch (error) {
@@ -136,16 +107,10 @@ const TeamPage: Page = () => {
     <>
       {canInvite && (
         <TwoFactorAuthentication.Provider>
-          <Projects.Settings.Sections.Team.AddTeamMember
-            isLoading={isLoading}
-          />
+          <Projects.Settings.Sections.Team.AddTeamMember isLoading={isLoading} />
         </TwoFactorAuthentication.Provider>
       )}
-      {canMutate && (
-        <Projects.Settings.Sections.Team.TeamInvitationsList
-          onSubmitDelete={handleDeleteInvitation}
-        />
-      )}
+      {canMutate && <Projects.Settings.Sections.Team.TeamInvitationsList onSubmitDelete={handleDeleteInvitation} />}
 
       <Projects.Settings.Sections.Team.TeamProjectList
         isLoading={isLoading}
@@ -158,9 +123,7 @@ const TeamPage: Page = () => {
   );
 };
 
-TeamPage.getLayout = (page) => (
-  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
-);
+TeamPage.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
 
 export default withAccess({
   Component: TeamPage,

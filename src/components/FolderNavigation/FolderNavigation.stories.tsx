@@ -24,61 +24,28 @@ export const Default: StoryFn<FolderNavigationProps> = (args) => {
 
     return (
       <Box>
-        <FolderNavigation
-          {...args}
-          absolutePath={absolutePath}
-          onFolderClick={handleFolderClick}
-        />
+        <FolderNavigation {...args} absolutePath={absolutePath} onFolderClick={handleFolderClick} />
         <Box className="flex-row gap-1">
           <Button onClick={() => setAbsolutePath('')}>Storage</Button>
-          <Button
-            onClick={() => setAbsolutePath('fleek-xyz')}
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz')} iconLeft="archive">
             fleek-xyz
           </Button>
-          <Button
-            onClick={() => setAbsolutePath('fleek-xyz/Testing')}
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing')} iconLeft="archive">
             Testing
           </Button>
-          <Button
-            onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets')}
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets')} iconLeft="archive">
             Assets
           </Button>
-          <Button
-            onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets/Images')}
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets/Images')} iconLeft="archive">
             Images
           </Button>
-          <Button
-            onClick={() =>
-              setAbsolutePath('fleek-xyz/Testing/Assets/Images/Canvas')
-            }
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets/Images/Canvas')} iconLeft="archive">
             Canvas
           </Button>
-          <Button
-            onClick={() =>
-              setAbsolutePath('fleek-xyz/Testing/Assets/Images/Canvas/Cami')
-            }
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets/Images/Canvas/Cami')} iconLeft="archive">
             Cami
           </Button>
-          <Button
-            onClick={() =>
-              setAbsolutePath(
-                'fleek-xyz/Testing/Assets/Images/Canvas/Cami/fleek-xyz',
-              )
-            }
-            iconLeft="archive"
-          >
+          <Button onClick={() => setAbsolutePath('fleek-xyz/Testing/Assets/Images/Canvas/Cami/fleek-xyz')} iconLeft="archive">
             fleek-xyz
           </Button>
         </Box>

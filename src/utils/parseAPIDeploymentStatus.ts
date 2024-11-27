@@ -3,9 +3,7 @@ import { DeploymentStatus } from '@/types/Deployment';
 
 type ParseAPIDeploymentStatusArgs = APIDeploymentStatus;
 
-export const parseAPIDeploymentStatus = (
-  status?: ParseAPIDeploymentStatusArgs,
-): DeploymentStatus => {
+export const parseAPIDeploymentStatus = (status?: ParseAPIDeploymentStatusArgs): DeploymentStatus => {
   switch (status) {
     case APIDeploymentStatus.SOURCE_CLONE_FAILED:
     case APIDeploymentStatus.CHECK_RUN_CREATING_FAILED:

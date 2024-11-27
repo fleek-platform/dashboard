@@ -25,13 +25,7 @@ export const BaseDirectoryFieldStyles = {
       cursor: 'pointer',
 
       variants: {
-        root: {
-          true: {
-            baseBorderBottom: '$border-slate',
-            baseBorderTop: '$border-slate',
-            padding: '$spacing-3 0',
-          },
-        },
+        root: { true: { baseBorderBottom: '$border-slate', baseBorderTop: '$border-slate', padding: '$spacing-3 0' } },
       },
     }),
 

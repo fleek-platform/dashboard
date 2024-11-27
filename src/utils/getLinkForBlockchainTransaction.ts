@@ -1,7 +1,4 @@
-export const getLinkForBlockchainTransaction = ({
-  transactionId,
-  network,
-}: GetLinkForBlockchainTransactionArgs): string => {
+export const getLinkForBlockchainTransaction = ({ transactionId, network }: GetLinkForBlockchainTransactionArgs): string => {
   switch (network.toLocaleLowerCase()) {
     case 'eth':
       return `https://etherscan.io/tx/${transactionId}`;

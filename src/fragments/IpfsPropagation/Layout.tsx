@@ -1,20 +1,13 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import {
-  BreadcrumbItem,
-  LayoutHead,
-  ProjectDropdown,
-  RootLayout,
-} from '@/components';
+import { BreadcrumbItem, LayoutHead, ProjectDropdown, RootLayout } from '@/components';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps } from '@/types/Props';
 
 import { App } from '../App/App';
 
-export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
-  children,
-}) => {
+export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({ children }) => {
   const session = useSessionContext();
   const navItems = useMainNavigationItems();
 

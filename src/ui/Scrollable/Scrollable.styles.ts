@@ -22,13 +22,8 @@ const Scrollbar = styled(ScrollArea.Scrollbar, {
   background: '$button-slate-secondary',
   transition: 'background 160ms ease-out',
   '&:hover': { background: '$button-slate-secondary-hover' },
-  '&[data-orientation="vertical"]': {
-    width: 'calc($space$spacing-2-5 + $space$spacing-1 * 0.5)',
-  },
-  '&[data-orientation="horizontal"]': {
-    flexDirection: 'column',
-    height: 'calc($space$spacing-2-5 + $space$spacing-1 * 0.5)',
-  },
+  '&[data-orientation="vertical"]': { width: 'calc($space$spacing-2-5 + $space$spacing-1 * 0.5)' },
+  '&[data-orientation="horizontal"]': { flexDirection: 'column', height: 'calc($space$spacing-2-5 + $space$spacing-1 * 0.5)' },
 });
 
 const Thumb = styled(ScrollArea.Thumb, {

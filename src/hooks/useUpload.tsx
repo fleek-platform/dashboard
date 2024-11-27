@@ -2,18 +2,12 @@ import { DateTime } from 'luxon';
 import { useClient } from 'urql';
 
 import { constants } from '@/constants';
-import {
-  ListFolderDocument,
-  ListFolderQuery,
-  ListFolderQueryVariables,
-} from '@/generated/graphqlClient';
+import { ListFolderDocument, ListFolderQuery, ListFolderQueryVariables } from '@/generated/graphqlClient';
 import { Upload, UploadProgress, UploadStatus } from '@/types/Upload';
 import { Log } from '@/utils/log';
 
 import { useFleekSdk } from './useFleekSdk';
 import { useRouter } from './useRouter';
-
-import type { UploadPinResponse } from '@fleek-platform/sdk';
 
 type MutateAsyncProps = {
   upload: Upload;
@@ -41,9 +35,7 @@ export const useUpload = () => {
       const onUploadProgress = ({ loadedSize, totalSize }: UploadProgress) => {
         if (loadedSize > 0) {
           const currentTime = DateTime.now();
-          const elapsedMillis = currentTime
-            .diff(startedTime)
-            .as('milliseconds');
+          const elapsedMillis = currentTime.diff(startedTime).as('milliseconds');
 
           const bytesPerSecond = loadedSize / (elapsedMillis / 1000);
           const remainingBytes = (totalSize ?? loadedSize) - loadedSize;
@@ -53,33 +45,20 @@ export const useUpload = () => {
         }
       };
 
-      let uploadResult: UploadPinResponse | undefined;
+      let uploadResult;
 
       if (upload.type === 'file') {
-        uploadResult = await fleekSdk
-          .storage()
-          .uploadFile({
-            file: upload.file as File,
-            parentFolderId,
-            onUploadProgress,
-          });
+        uploadResult = await fleekSdk.storage().uploadFile({ file: upload.file as File, parentFolderId, onUploadProgress });
       } else {
         uploadResult = await fleekSdk
           .storage()
-          .uploadVirtualDirectory({
-            files: upload.files as File[],
-            directoryName: upload.name,
-            parentFolderId,
-            onUploadProgress,
-          });
+          .uploadVirtualDirectory({ files: upload.files as File[], directoryName: upload.name, parentFolderId, onUploadProgress });
       }
 
       if (uploadResult) {
         status = uploadResult.duplicate ? 'duplicate' : 'success';
       } else {
-        throw new UploadToIPFSError(
-          `Error uploading ${upload.type} ${upload.name}`,
-        );
+        throw new UploadToIPFSError(`Error uploading ${upload.type} ${upload.name}`);
       }
     } catch (error) {
       Log.error(`Failed to upload ${upload.type}`, error);
@@ -90,11 +69,8 @@ export const useUpload = () => {
         await client
           .query<ListFolderQuery, ListFolderQueryVariables>(
             ListFolderDocument,
-            {
-              where: { id: parentFolderId },
-              filter: { take: constants.FILES_PAGE_SIZE, page: 1 },
-            },
-            { requestPolicy: 'network-only' },
+            { where: { id: parentFolderId }, filter: { take: constants.FILES_PAGE_SIZE, page: 1 } },
+            { requestPolicy: 'network-only' }
           )
           .toPromise();
       }

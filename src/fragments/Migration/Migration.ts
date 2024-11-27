@@ -8,17 +8,9 @@ import { Step1 } from './Steps/Step1';
 import { Step2 } from './Steps/Step2';
 import { Step3 } from './Steps/Step3';
 
-export type OverallMigrationStatus =
-  | 'FETCHING_DATA'
-  | 'IN_PROGRESS'
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'PARTIALLY_COMPLETE';
+export type OverallMigrationStatus = 'FETCHING_DATA' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED' | 'PARTIALLY_COMPLETE';
 
-export type MigrationRequest = Pick<
-  MigrationRequestType,
-  'id' | 'createdAt' | 'status' | 'teamInfo' | 'teamId'
->;
+export type MigrationRequest = Pick<MigrationRequestType, 'id' | 'createdAt' | 'status' | 'teamInfo' | 'teamId'>;
 
 export const Migration = {
   Grid: S.Grid,

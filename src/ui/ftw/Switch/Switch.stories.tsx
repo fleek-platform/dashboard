@@ -32,13 +32,7 @@ export const Primary: Story = {
   render: function StatefulSwitch(props) {
     const [, updateArgs] = useArgs();
 
-    return (
-      <Switch
-        className="min-w-10"
-        onCheckedChange={(checked) => updateArgs({ checked })}
-        {...props}
-      />
-    );
+    return <Switch className="min-w-10" onCheckedChange={(checked) => updateArgs({ checked })} {...props} />;
   },
 };
 

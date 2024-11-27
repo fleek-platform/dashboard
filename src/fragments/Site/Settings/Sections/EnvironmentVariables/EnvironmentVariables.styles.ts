@@ -1,8 +1,4 @@
-import {
-  ExternalLink,
-  PermissionsTooltip,
-  SettingsListItem,
-} from '@/components';
+import { ExternalLink, PermissionsTooltip, SettingsListItem } from '@/components';
 import { styled } from '@/theme';
 import { Box, FormField, Text } from '@/ui';
 

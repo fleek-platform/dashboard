@@ -11,11 +11,7 @@ export type FleekLogoProps = {
   size?: keyof typeof typography.fontSizes;
 };
 
-export const FleekLogo: React.FC<FleekLogoProps> = ({
-  showBolt = true,
-  showTypography = true,
-  size = 'md',
-}) => {
+export const FleekLogo: React.FC<FleekLogoProps> = ({ showBolt = true, showTypography = true, size = 'md' }) => {
   const { theme } = useTheme();
   const logoSrc = theme === 'light' ? lightBolt : darkBolt;
 

@@ -2,10 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Input } from '@/ui';
 
-import {
-  PermissionsTooltip,
-  PermissionsTooltipProps,
-} from './PermissionsTooltip';
+import { PermissionsTooltip, PermissionsTooltipProps } from './PermissionsTooltip';
 
 const meta: Meta = {
   title: 'Library/Components/Permissions Tooltip',

@@ -1,6 +1,3 @@
-// TODO: Believe this file can be deleted
-// removed crypto related source
-// as the dependency is now missing (deleted)
 import { useEffect } from 'react';
 
 import { constants } from '@/constants';
@@ -17,15 +14,29 @@ export type PaymentTriggerProps = {
   isPaymentBeginning: boolean;
 } & DisabledProps;
 
-export const PaymentTrigger: React.FC<PaymentTriggerProps> = ({
-  onPaymentBegin,
-  isPaymentBeginning,
-  isDisabled,
-}) => {
+export const PaymentTrigger: React.FC<PaymentTriggerProps> = ({ onPaymentBegin, isPaymentBeginning, isDisabled }) => {
   const cryptoPaymentOptions = useCryptoPaymentOptions();
 
   return (
     <>
+      <S.GapWrapper>
+        <S.Title>Pay with Crypto</S.Title>
+        <S.Text>Select the network and currency to send payment to the recipient address provided below.</S.Text>
+
+        <CurrencyOptions
+          isLoading={cryptoPaymentOptions.isLoading}
+          options={cryptoPaymentOptions.data && 'options' in cryptoPaymentOptions.data ? cryptoPaymentOptions.data.options : []}
+        />
+      </S.GapWrapper>
+
+      <S.PaymentTrigger.CTAContainer>
+        <S.Title>Are you ready to pay?</S.Title>
+        <S.Text>Click the button below to begin the payment process.</S.Text>
+
+        <Button onClick={onPaymentBegin} loading={isPaymentBeginning} disabled={isDisabled}>
+          Begin payment
+        </Button>
+      </S.PaymentTrigger.CTAContainer>
     </>
   );
 };
@@ -34,16 +45,8 @@ type CurrencyOptionsProps = LoadingProps<{
   options: CryptoPaymentOption[];
 }>;
 
-const CurrencyOptions: React.FC<CurrencyOptionsProps> = ({
-  options,
-  isLoading,
-}) => {
-  const {
-    selectedToken,
-    setSelectedToken,
-    selectedPlatform,
-    setSelectedPlatform,
-  } = useBillingCheckoutContext();
+const CurrencyOptions: React.FC<CurrencyOptionsProps> = ({ options, isLoading }) => {
+  const { selectedToken, setSelectedToken, selectedPlatform, setSelectedPlatform } = useBillingCheckoutContext();
 
   useEffect(() => {
     if (selectedToken) {
@@ -53,10 +56,7 @@ const CurrencyOptions: React.FC<CurrencyOptionsProps> = ({
 
   useEffect(() => {
     if (options) {
-      const defaultToken =
-        options.find(
-          (option) => option.symbol === constants.BILLING.DEFAULT_CRYPTO_TOKEN,
-        ) || options[0];
+      const defaultToken = options.find((option) => option.symbol === constants.BILLING.DEFAULT_CRYPTO_TOKEN) || options[0];
       setSelectedToken(defaultToken);
     }
   }, [options, setSelectedToken]);
@@ -65,19 +65,13 @@ const CurrencyOptions: React.FC<CurrencyOptionsProps> = ({
     <S.PaymentTrigger.OptionsWrapper>
       <FormField.Root>
         <FormField.Label>Currency</FormField.Label>
-        <Combobox
-          selected={[selectedToken, setSelectedToken]}
-          items={options || []}
-          queryKey="symbol"
-          isLoading={isLoading}
-        >
+        <Combobox selected={[selectedToken, setSelectedToken]} items={options || []} queryKey="symbol" isLoading={isLoading}>
           {({ Field, Options }) => (
             <>
               <Field>
                 {(selected) => (
                   <>
-                    <Image src={selected.iconSrc} alt={selected.symbol} />{' '}
-                    {selected.symbol}
+                    <Image src={selected.iconSrc} alt={selected.symbol} /> {selected.symbol}
                   </>
                 )}
               </Field>
@@ -107,8 +101,7 @@ const CurrencyOptions: React.FC<CurrencyOptionsProps> = ({
               <Field>
                 {(selected) => (
                   <>
-                    <Image src={selected.iconSrc} alt={selected.title} />{' '}
-                    {selected.title}
+                    <Image src={selected.iconSrc} alt={selected.title} /> {selected.title}
                   </>
                 )}
               </Field>

@@ -7,16 +7,11 @@ import { AppImage } from '../AppImage/AppImage';
 type FontSizeKeys = keyof typeof typography.fontSizes;
 type SizeVariantsType = Record<FontSizeKeys, { fontSize: string }>;
 
-const sizeVariants: SizeVariantsType = Object.keys(typography.fontSizes).reduce(
-  (acc, key) => {
-    acc[key as FontSizeKeys] = {
-      fontSize: typography.fontSizes[key as FontSizeKeys],
-    };
+const sizeVariants: SizeVariantsType = Object.keys(typography.fontSizes).reduce((acc, key) => {
+  acc[key as FontSizeKeys] = { fontSize: typography.fontSizes[key as FontSizeKeys] };
 
-    return acc;
-  },
-  {} as SizeVariantsType,
-);
+  return acc;
+}, {} as SizeVariantsType);
 
 export const FleekLogoStyles = {
   Container: styled(Box, {

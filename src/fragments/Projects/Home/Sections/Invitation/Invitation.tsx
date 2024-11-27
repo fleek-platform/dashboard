@@ -53,11 +53,7 @@ export const Invitation: React.FC<InvitationProps> = ({
 
   return (
     <S.Container>
-      {avatarSrc ? (
-        <S.Avatar src={avatarSrc} icon="image" enableIcon />
-      ) : (
-        <AvatarMarble name={projectId} rounded />
-      )}
+      {avatarSrc ? <S.Avatar src={avatarSrc} icon="image" enableIcon /> : <AvatarMarble name={projectId} rounded />}
       <S.DataWrapper>
         <Text as="h3" variant="primary" weight={700}>
           Join the {projectName} project
@@ -65,17 +61,10 @@ export const Invitation: React.FC<InvitationProps> = ({
         <Text>You’ve been invited to join an existing project.</Text>
       </S.DataWrapper>
       <S.Buttons.Container>
-        <Button
-          onClick={handleAcceptInvitation}
-          loading={isAcceptingInvitation}
-        >
+        <Button onClick={handleAcceptInvitation} loading={isAcceptingInvitation}>
           Accept
         </Button>
-        <Button
-          intent="neutral"
-          onClick={handleDeclineInvitation}
-          loading={isDecliningInvitation}
-        >
+        <Button intent="neutral" onClick={handleDeclineInvitation} loading={isDecliningInvitation}>
           Decline
         </Button>
       </S.Buttons.Container>

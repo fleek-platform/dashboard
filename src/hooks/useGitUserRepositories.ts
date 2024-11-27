@@ -10,11 +10,7 @@ export type UseGitUserRepositoriesArgs = {
   accessToken: string;
 } & Partial<GitProvider.GetUserRepositoriesArgs>;
 
-export const useGitUserRepositories = ({
-  provider,
-  installationId,
-  accessToken,
-}: UseGitUserRepositoriesArgs) => {
+export const useGitUserRepositories = ({ provider, installationId, accessToken }: UseGitUserRepositoriesArgs) => {
   const gitProvider = useGitProvider({ provider, accessToken });
 
   const queryFn = useCallback(async () => {
@@ -29,11 +25,5 @@ export const useGitUserRepositories = ({
     return gitProvider.getUserRepositories({ installationId });
   }, [gitProvider, installationId]);
 
-  return useQuery({
-    queryKey: [
-      'gitUserRepositories',
-      { provider, installationId, accessToken },
-    ],
-    queryFn,
-  });
+  return useQuery({ queryKey: ['gitUserRepositories', { provider, installationId, accessToken }], queryFn });
 };

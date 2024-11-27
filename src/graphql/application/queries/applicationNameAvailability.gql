@@ -1,5 +1,3 @@
-query applicationNameAvailability(
-  $where: ApplicationNameAvailabilityWhereInput!
-) {
+query applicationNameAvailability($where: ApplicationNameAvailabilityWhereInput!) {
   applicationNameAvailability(where: $where)
 }

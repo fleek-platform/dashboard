@@ -22,12 +22,7 @@ export type SettingsItemContext = {
   resourceName: string;
   isDeleteDomainModalOpen: boolean;
   isDeletePrimaryDomainModalOpen: boolean;
-  openDeleteModal: ({
-    itemId,
-    hostname,
-    resourceName,
-    modal,
-  }: OpenDeleteModalProps) => void;
+  openDeleteModal: ({ itemId, hostname, resourceName, modal }: OpenDeleteModalProps) => void;
   closeDeleteModal: (modal: string) => void;
   activeDomains: PrimaryDomainItem[];
   setActiveDomains: (domains: PrimaryDomainItem[]) => void;
@@ -37,14 +32,8 @@ export type SettingsItemContext = {
   shouldOpenModalOnCreated: boolean;
   setShouldOpenModalOnCreated: (value: boolean) => void;
 
-  onSubmitVerification: (
-    itemId: string,
-    withDnsLink?: boolean,
-  ) => Promise<boolean | undefined>;
-  onSubmitDelete: (
-    itemId: string,
-    newPrimaryDomain?: string,
-  ) => Promise<boolean | undefined>;
+  onSubmitVerification: (itemId: string, withDnsLink?: boolean) => Promise<boolean | undefined>;
+  onSubmitDelete: (itemId: string, newPrimaryDomain?: string) => Promise<boolean | undefined>;
   onSubmitPrimaryDomain?: (domainId: string) => Promise<boolean | undefined>;
   refetchQuery?: UseQueryExecute;
 
@@ -53,13 +42,7 @@ export type SettingsItemContext = {
 };
 
 export type SettingsItemProviderProps = ChildrenProps<
-  Pick<
-    SettingsItemContext,
-    | 'onSubmitVerification'
-    | 'onSubmitDelete'
-    | 'onSubmitPrimaryDomain'
-    | 'refetchQuery'
-  >
+  Pick<SettingsItemContext, 'onSubmitVerification' | 'onSubmitDelete' | 'onSubmitPrimaryDomain' | 'refetchQuery'>
 >;
 
 const [Provider, useContext] = createContext<SettingsItemContext>({
@@ -77,26 +60,17 @@ export const SettingsItemProvider: React.FC<SettingsItemProviderProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState('');
-  const [shouldOpenModalOnCreated, setShouldOpenModalOnCreated] =
-    useState(false);
+  const [shouldOpenModalOnCreated, setShouldOpenModalOnCreated] = useState(false);
 
   const [isDeleteDomainModalOpen, setIsDeleteDomainModalOpen] = useState(false);
-  const [isDeletePrimaryDomainModalOpen, setIsDeletePrimaryDomainModalOpen] =
-    useState(false);
+  const [isDeletePrimaryDomainModalOpen, setIsDeletePrimaryDomainModalOpen] = useState(false);
   const [hostname, setHostname] = useState('');
   const [resourceName, setResourceName] = useState('');
   const [activeDomains, setActiveDomains] = useState<PrimaryDomainItem[]>([]);
-  const [newPrimaryDomain, setNewPrimaryDomain] = useState<
-    PrimaryDomainItem | undefined
-  >();
+  const [newPrimaryDomain, setNewPrimaryDomain] = useState<PrimaryDomainItem | undefined>();
   const [withDnsLink, setWithDnsLink] = useState(false);
 
-  const openDeleteModal = ({
-    itemId,
-    hostname,
-    resourceName,
-    modal,
-  }: OpenDeleteModalProps) => {
+  const openDeleteModal = ({ itemId, hostname, resourceName, modal }: OpenDeleteModalProps) => {
     setHostname(hostname);
     setSelectedId(itemId);
     setResourceName(resourceName);

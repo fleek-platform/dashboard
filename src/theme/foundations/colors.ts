@@ -1,17 +1,4 @@
-import {
-  amber,
-  amberDark,
-  gray,
-  grayDark,
-  green,
-  greenDark,
-  red,
-  redDark,
-  slate,
-  slateDark,
-  yellow,
-  yellowDark,
-} from '@radix-ui/colors';
+import { amber, amberDark, gray, grayDark, green, greenDark, red, redDark, slate, slateDark, yellow, yellowDark } from '@radix-ui/colors';
 
 import { border } from './colors/border';
 import { button } from './colors/button';

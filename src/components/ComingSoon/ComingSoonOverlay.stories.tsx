@@ -14,30 +14,16 @@ export default meta;
 type Story = StoryObj<ComingSoon.OverlayProps>;
 
 const DisabledComponent: React.FC = () => (
-  <Box
-    css={{ width: '200px', height: '200px', alignItems: 'center', gap: '10px' }}
-  >
+  <Box css={{ width: '200px', height: '200px', alignItems: 'center', gap: '10px' }}>
     <Text>Text Content</Text>
-    <Button onClick={() => console.log("Can't click me")}>
-      Can&apos;t click me
-    </Button>
+    <Button onClick={() => console.log("Can't click me")}>Can&apos;t click me</Button>
   </Box>
 );
 
 const BorderRadiusDisabledComponent: React.FC = () => (
-  <Box
-    css={{
-      width: '200px',
-      height: '200px',
-      alignItems: 'center',
-      gap: '10px',
-      borderRadius: '15px',
-    }}
-  >
+  <Box css={{ width: '200px', height: '200px', alignItems: 'center', gap: '10px', borderRadius: '15px' }}>
     <Text>Text Content</Text>
-    <Button onClick={() => console.log("Can't click me")}>
-      Can&apos;t click me
-    </Button>
+    <Button onClick={() => console.log("Can't click me")}>Can&apos;t click me</Button>
   </Box>
 );
 

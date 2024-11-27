@@ -4,8 +4,7 @@ import { useStorageContext } from '../Storage.context';
 import { StorageHeaderStyles as S } from './StorageTable.styles';
 
 export const StorageHeader: React.FC = () => {
-  const { storageProviders, setSelectedStorage, selectedStorage } =
-    useStorageContext();
+  const { storageProviders, setSelectedStorage, selectedStorage } = useStorageContext();
 
   return (
     <S.Container>

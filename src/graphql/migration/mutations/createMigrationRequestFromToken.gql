@@ -1,6 +1,4 @@
-mutation createMigrationRequestsFromToken(
-  $data: CreateMigrationRequestsFromTokenDataInput!
-) {
+mutation createMigrationRequestsFromToken($data: CreateMigrationRequestsFromTokenDataInput!) {
   createMigrationRequestsFromToken(data: $data) {
     id
     status

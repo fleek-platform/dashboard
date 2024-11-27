@@ -1,8 +1,4 @@
-import {
-  UpdateSiteDataInput,
-  UpdateSiteMutationVariables,
-  useUpdateSiteMutation,
-} from '@/generated/graphqlClient';
+import { UpdateSiteDataInput, UpdateSiteMutationVariables, useUpdateSiteMutation } from '@/generated/graphqlClient';
 
 import { useRouter } from './useRouter';
 import { useToast } from './useToast';

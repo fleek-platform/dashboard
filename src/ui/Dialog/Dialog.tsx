@@ -15,7 +15,5 @@ export const Dialog = {
 
 export namespace Dialog {
   export type RootProps = React.ComponentPropsWithRef<typeof DialogRadix.Root>;
-  export type TriggerProps = React.ComponentPropsWithRef<
-    typeof DialogRadix.Trigger
-  >;
+  export type TriggerProps = React.ComponentPropsWithRef<typeof DialogRadix.Trigger>;
 }

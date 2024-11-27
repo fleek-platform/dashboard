@@ -8,10 +8,7 @@ type EnsRecordsListProps = {
   ensRecords?: SiteENSRecord[];
 };
 
-export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({
-  isLoading,
-  ensRecords = [],
-}) => {
+export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({ isLoading, ensRecords = [] }) => {
   if (isLoading) {
     return <SettingsListItem.Skeleton />;
   }
@@ -19,10 +16,7 @@ export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({
   if (ensRecords.length === 0) {
     return (
       <SettingsBox.Container>
-        <SettingsBox.EmptyContent
-          title="No ENS"
-          description="Once you add domains, they will appear here."
-        />
+        <SettingsBox.EmptyContent title="No ENS" description="Once you add domains, they will appear here." />
       </SettingsBox.Container>
     );
   }
@@ -30,9 +24,7 @@ export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({
   return (
     <>
       <SettingsBox.Title>Manage ENS</SettingsBox.Title>
-      <SettingsBox.Text>
-        Below are a list of ENS used for this site.
-      </SettingsBox.Text>
+      <SettingsBox.Text>Below are a list of ENS used for this site.</SettingsBox.Text>
       {ensRecords.map((ens) => (
         <EnsRecordsListItem key={ens.id} {...ens} />
       ))}

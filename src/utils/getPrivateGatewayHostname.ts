@@ -1,2 +1,1 @@
-export const getPrivateGatewayHostname = (hostname: string) =>
-  `${hostname}/ipfs/`;
+export const getPrivateGatewayHostname = (hostname: string) => `${hostname}/ipfs/`;

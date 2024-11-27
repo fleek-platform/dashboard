@@ -8,11 +8,7 @@ export type DomainFieldProps = LoadingProps<
   }>
 >;
 
-export const DomainField: React.FC<DomainFieldProps> = ({
-  isLoading,
-  isDisabled,
-  withLabel = false,
-}) => {
+export const DomainField: React.FC<DomainFieldProps> = ({ isLoading, isDisabled, withLabel = false }) => {
   return (
     <Form.InputField
       name="hostname"

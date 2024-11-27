@@ -1,7 +1,4 @@
-mutation updateTemplate(
-  $data: UpdateTemplateDataInput!
-  $where: UpdateTemplateWhereInput!
-) {
+mutation updateTemplate($data: UpdateTemplateDataInput!, $where: UpdateTemplateWhereInput!) {
   updateTemplate(data: $data, where: $where) {
     id
     name

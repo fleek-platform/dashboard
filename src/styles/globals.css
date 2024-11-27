@@ -9,8 +9,8 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  :root[style*="color-scheme: light"],
-  :root[data-theme="light"] {
+  :root[style*='color-scheme: light'],
+  :root[data-theme='light'] {
     /* Light - Monochrome */
     --color-ftw-monochrome-normal: 255 255 255;
     --color-ftw-monochrome-reverse: 0 0 0;
@@ -90,8 +90,8 @@
     --color-ftw-danger-12: 56 19 22;
   }
 
-  :root[style*="color-scheme: dark"],
-  :root[data-theme="dark"] {
+  :root[style*='color-scheme: dark'],
+  :root[data-theme='dark'] {
     /* Dark - Monochrome */
     --color-ftw-monochrome-normal: 0 0 0;
     --color-ftw-monochrome-reverse: 255 255 255;

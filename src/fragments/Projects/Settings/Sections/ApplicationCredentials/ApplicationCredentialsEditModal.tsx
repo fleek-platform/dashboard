@@ -3,10 +3,7 @@ import { useEffect, useMemo } from 'react';
 
 import { Form, Modal, SettingsBox } from '@/components';
 import { SettingsItemModal } from '@/fragments/Site/Settings/Elements/SettingsItemModal';
-import {
-  useApplicationQuery,
-  useUpdateApplicationMutation,
-} from '@/generated/graphqlClient';
+import { useApplicationQuery, useUpdateApplicationMutation } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { Dialog, Text } from '@/ui';
 import { parseWhitelistDomains } from '@/utils/whitelistDomains';
@@ -17,13 +14,9 @@ import { WhitelistDomains } from './WhitelistDomains';
 
 export const ApplicationCredentialsEditModal: React.FC = () => {
   const toast = useToast();
-  const { isModalOpen, selectedId, closeModal } =
-    useApplicationCredentialsContext();
+  const { isModalOpen, selectedId, closeModal } = useApplicationCredentialsContext();
 
-  const [applicationQuery] = useApplicationQuery({
-    variables: { where: { id: selectedId } },
-    requestPolicy: 'network-only',
-  });
+  const [applicationQuery] = useApplicationQuery({ variables: { where: { id: selectedId } }, requestPolicy: 'network-only' });
   const [, updateApplication] = useUpdateApplicationMutation();
 
   const whiteListedDomains = useMemo(() => {
@@ -71,19 +64,13 @@ export const ApplicationCredentialsEditModal: React.FC = () => {
         });
 
         if (!updateApplicationResult.data) {
-          throw (
-            updateApplicationResult.error ||
-            new Error('Error trying to update application credentials')
-          );
+          throw updateApplicationResult.error || new Error('Error trying to update application credentials');
         }
 
         toast.success({ message: 'Application credentials updated' });
         handleOpenChange(false);
       } catch (error) {
-        toast.error({
-          error,
-          log: 'Error trying to update application credentials',
-        });
+        toast.error({ error, log: 'Error trying to update application credentials' });
       }
     },
   });
@@ -121,10 +108,7 @@ export const ApplicationCredentialsEditModal: React.FC = () => {
 
           <Modal.CTARow>
             <SettingsItemModal.CloseButton />
-            <Form.SubmitButton
-              loading={applicationQuery.fetching}
-              className="flex-1"
-            >
+            <Form.SubmitButton loading={applicationQuery.fetching} className="flex-1">
               Save
             </Form.SubmitButton>
           </Modal.CTARow>

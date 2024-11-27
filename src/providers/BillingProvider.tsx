@@ -5,13 +5,7 @@ import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useGetPaymentMethod } from '@/hooks/useGetPaymentMethod';
 import { useGetSubscription } from '@/hooks/useGetSubscription';
 import { useGetTeam } from '@/hooks/useGetTeam';
-import {
-  PaymentMethodResponse,
-  Plan,
-  PlanRestriction,
-  SubscriptionResponse,
-  TeamResponse,
-} from '@/types/Billing';
+import { PaymentMethodResponse, Plan, PlanRestriction, SubscriptionResponse, TeamResponse } from '@/types/Billing';
 import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
@@ -25,7 +19,7 @@ export type BillingContext = {
 
   hasReachedLimit: (
     resource: keyof PlanRestriction,
-    currentResourceCount: number,
+    currentResourceCount: number
   ) => { hasReachedLimit: boolean; restrictionMessage: string | undefined };
 };
 
@@ -37,12 +31,8 @@ const [Provider, useContext] = createContext<BillingContext>({
 
 export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
   const team = useGetTeam({});
-  const paymentMethod = useGetPaymentMethod({
-    paymentMethodId: team.data?.paymentMethodId ?? undefined,
-  });
-  const subscription = useGetSubscription({
-    subscriptionId: team.data?.subscriptionId ?? undefined,
-  });
+  const paymentMethod = useGetPaymentMethod({ paymentMethodId: team.data?.paymentMethodId ?? undefined });
+  const subscription = useGetSubscription({ subscriptionId: team.data?.subscriptionId ?? undefined });
 
   const { enableBilling } = useFeatureFlags();
 
@@ -56,19 +46,14 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
     }
   }, [team.data, team.isLoading]);
 
-  const hasReachedLimit = (
-    resource: keyof PlanRestriction,
-    currentResourceCount: number,
-  ) => {
+  const hasReachedLimit = (resource: keyof PlanRestriction, currentResourceCount: number) => {
     if (enableBilling && plan) {
       const restrictions = PlanRestrictions[plan];
 
       return {
         hasReachedLimit: currentResourceCount >= restrictions[resource].limit,
         restrictionMessage:
-          currentResourceCount >= restrictions[resource].limit
-            ? restrictionMessage(restrictions[resource].resource)
-            : undefined,
+          currentResourceCount >= restrictions[resource].limit ? restrictionMessage(restrictions[resource].resource) : undefined,
       };
     }
 
@@ -83,25 +68,13 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
   }, [paymentMethod.isLoading, subscription.isLoading, team.isLoading]);
 
   return (
-    <Provider
-      value={{
-        loading: isLoading,
-        billingPlan: plan,
-        team,
-        subscription,
-        paymentMethod,
-        hasReachedLimit,
-      }}
-    >
-      {children}
-    </Provider>
+    <Provider value={{ loading: isLoading, billingPlan: plan, team, subscription, paymentMethod, hasReachedLimit }}>{children}</Provider>
   );
 };
 
 export const useBillingContext = useContext;
 
-const restrictionMessage = (resource: string) =>
-  `To add additional ${resource}, you need to upgrade your plan.`;
+const restrictionMessage = (resource: string) => `To add additional ${resource}, you need to upgrade your plan.`;
 
 const PlanRestrictions: Record<Plan, PlanRestriction> = {
   pro: {

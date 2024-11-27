@@ -11,15 +11,10 @@ type UseGetPaymentMethodArgs = {
   pause?: boolean;
 };
 
-export const useGetPaymentMethod = ({
-  paymentMethodId,
-  pause = false,
-}: UseGetPaymentMethodArgs) => {
+export const useGetPaymentMethod = ({ paymentMethodId, pause = false }: UseGetPaymentMethodArgs) => {
   const cookies = useCookies();
 
-  const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
-  });
+  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
 
   const getPaymentMethod = useCallback(async () => {
     if (!paymentMethodId || pause) {
@@ -27,9 +22,7 @@ export const useGetPaymentMethod = ({
     }
 
     try {
-      const response = await backendApi.fetch({
-        url: `/api/v1/payment-methods/${paymentMethodId}`,
-      });
+      const response = await backendApi.fetch({ url: `/api/v1/payment-methods/${paymentMethodId}` });
 
       if (!response.ok) {
         throw response.statusText;

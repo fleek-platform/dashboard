@@ -20,19 +20,11 @@ type UpdateFormProps = ChildrenProps<{
   onSubmit: (v: Record<string, string>) => Promise<void>;
 }>;
 
-export const UpdateForm = ({
-  children,
-  type,
-  value,
-  isLoading,
-  onSubmit,
-}: UpdateFormProps) => {
+export const UpdateForm = ({ children, type, value, isLoading, onSubmit }: UpdateFormProps) => {
   const client = useClient();
   const [saving, setSaving] = useState(false);
 
-  const hasEditFunctionSettingsPermission = usePermissions({
-    action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS],
-  });
+  const hasEditFunctionSettingsPermission = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS] });
 
   const form = Form.useForm({
     values: { [type]: value },
@@ -53,10 +45,7 @@ export const UpdateForm = ({
   return (
     <Form.Provider value={form}>
       <Box className="gap-4">
-        <PermissionsTooltip
-          hasAccess={hasEditFunctionSettingsPermission}
-          isLoading={isLoading}
-        >
+        <PermissionsTooltip hasAccess={hasEditFunctionSettingsPermission} isLoading={isLoading}>
           <FieldComponent
             name={type}
             disabled={saving || !hasEditFunctionSettingsPermission}
@@ -71,11 +60,7 @@ export const UpdateForm = ({
 
         <Box className="flex-row items-center justify-between">
           {children}
-          {isLoading ? (
-            <SettingsBox.Skeleton variant="button" />
-          ) : (
-            <Form.SubmitButton loading={saving}>Save Changes</Form.SubmitButton>
-          )}
+          {isLoading ? <SettingsBox.Skeleton variant="button" /> : <Form.SubmitButton loading={saving}>Save Changes</Form.SubmitButton>}
         </Box>
       </Box>
     </Form.Provider>

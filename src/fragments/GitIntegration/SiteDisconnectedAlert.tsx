@@ -9,11 +9,7 @@ import { Button } from '@/ui';
 
 import { GitIntegrationStyles as S } from './GitIntegrationStyles.styles';
 
-export const SiteDisconnectedAlert = ({
-  siteQuery,
-}: {
-  siteQuery?: UseQueryState<{ site: Site }, { where: { id: string } }>;
-}) => {
+export const SiteDisconnectedAlert = ({ siteQuery }: { siteQuery?: UseQueryState<{ site: Site }, { where: { id: string } }> }) => {
   const router = useRouter();
   const { project } = useSessionContext();
 
@@ -28,20 +24,13 @@ export const SiteDisconnectedAlert = ({
     return (
       <AlertBox size="xs" variant="danger" outline>
         <S.Alert.Wrapper>
-          The Fleek App GitHub integration was disconnected. Reconnect this Git
-          integration to continue using it on Fleek.
+          The Fleek App GitHub integration was disconnected. Reconnect this Git integration to continue using it on Fleek.
           <Button
             size="sm"
             variant="outline"
             intent="danger"
             className="min-w-fit"
-            onClick={() =>
-              router.push(
-                routes.project.settings.gitIntegrations({
-                  projectId: project.id,
-                }),
-              )
-            }
+            onClick={() => router.push(routes.project.settings.gitIntegrations({ projectId: project.id }))}
           >
             Manage Git Integrations
           </Button>

@@ -32,11 +32,7 @@ export const SearchForm: React.FC = () => {
       hash: testingHash,
     },
     schema: zod.object({
-      hash: zod
-        .string()
-        .refine((value) => value.trim() === '' || validateCID(value), {
-          message: 'Invalid CID',
-        }),
+      hash: zod.string().refine((value) => value.trim() === '' || validateCID(value), { message: 'Invalid CID' }),
     }),
     onSubmit: async () => await handleFormSubmit(),
   });

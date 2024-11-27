@@ -7,19 +7,13 @@ import { Log } from '@/utils/log';
 const MAX_CACHED_TIME = 24 * 60 * 60 * 1000;
 
 export const useBlogArticles = (sliceCount = 4) => {
-  return useQuery(
-    ['blogArticles', sliceCount],
-    () => fetchBlogArticles(sliceCount),
-    {
-      staleTime: MAX_CACHED_TIME,
-      cacheTime: MAX_CACHED_TIME,
-    },
-  );
+  return useQuery(['blogArticles', sliceCount], () => fetchBlogArticles(sliceCount), {
+    staleTime: MAX_CACHED_TIME,
+    cacheTime: MAX_CACHED_TIME,
+  });
 };
 
-const fetchBlogArticles = async (
-  sliceCount: number,
-): Promise<ArticleItemProps[]> => {
+const fetchBlogArticles = async (sliceCount: number): Promise<ArticleItemProps[]> => {
   try {
     const response = await fetch(constants.FLEEK_BLOG_API.postsAPI);
     const jsonData: RawArticleItem[] = await response.json();

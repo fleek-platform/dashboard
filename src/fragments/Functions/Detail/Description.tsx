@@ -13,9 +13,7 @@ const Datum = ({ label, children }: DatumProps) => {
   return (
     <>
       <dt className="inline-flex basis-1/4 text-neutral-11 text-sm">{label}</dt>
-      <dd className="inline-flex basis-3/4 justify-end text-right text-sm">
-        {children}
-      </dd>
+      <dd className="inline-flex basis-3/4 justify-end text-right text-sm">{children}</dd>
     </>
   );
 };
@@ -48,19 +46,9 @@ export const Description = ({ pin }: DescriptionProps) => {
         </Datum>
       </dl>
       <dl className="flex-1">
-        <Datum label="Updated">
-          {currentDeployment ? (
-            <DeployTime at={currentDeployment.createdAt} />
-          ) : (
-            <Pending />
-          )}
-        </Datum>
-        <Datum label="Size">
-          {pin?.size ? bytesToSize(pin.size) : <Pending />}
-        </Datum>
-        <Datum label="Function Access">
-          {currentDeployment ? 'Public' : <Pending />}
-        </Datum>
+        <Datum label="Updated">{currentDeployment ? <DeployTime at={currentDeployment.createdAt} /> : <Pending />}</Datum>
+        <Datum label="Size">{pin?.size ? bytesToSize(pin.size) : <Pending />}</Datum>
+        <Datum label="Function Access">{currentDeployment ? 'Public' : <Pending />}</Datum>
       </dl>
     </section>
   );

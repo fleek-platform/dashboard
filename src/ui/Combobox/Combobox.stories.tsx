@@ -17,31 +17,19 @@ type Item = { id: number; label: string; icon: IconName };
 const icons = Object.keys(IconLibrary) as IconName[];
 const Items: Item[] = new Array(30)
   .fill(null)
-  .map((_, index) => ({
-    id: index,
-    label: `Option ${index}`,
-    icon: icons[Math.floor(Math.random() * icons.length)],
-  }));
+  .map((_, index) => ({ id: index, label: `Option ${index}`, icon: icons[Math.floor(Math.random() * icons.length)] }));
 
 export const Default: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigate why inferred type fails
-    // using any temporaly
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options>{(item: any) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -55,22 +43,13 @@ export const WithLoading: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-        isLoading
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isLoading>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options>{(item: any) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -83,22 +62,14 @@ export const WithLoading: StoryFn = () => {
 export const WithSearching: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
+
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-        isSearching
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isSearching>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options>{(item: any) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -112,18 +83,12 @@ export const WithIcon: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: any) => (
+              {(selected) => (
                 <>
                   <Icon name={selected.icon} /> {selected.label}
                 </>
@@ -131,7 +96,7 @@ export const WithIcon: StoryFn = () => {
             </Field>
 
             <Options>
-              {(item: any) => (
+              {(item) => (
                 <>
                   <Icon name={item.icon} /> {item.label}
                 </>
@@ -150,21 +115,13 @@ export const WithoutSearch: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options disableSearch>{(item: any) => item.label}</Options>
+            <Options disableSearch>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -178,22 +135,13 @@ export const WithDisable: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-        isDisabled={true}
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isDisabled={true}>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options disableSearch>{(item: any) => item.label}</Options>
+            <Options disableSearch>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -207,22 +155,13 @@ export const WithSize: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-        css={{ fontSize: '10px' }}
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" css={{ fontSize: '10px' }}>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options>{(item: any) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -236,28 +175,13 @@ export const WithCompoundOptions: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
-    // TODO: Investigage why the inferred type
-    // fail. Using `any` temporary
     return (
-      <Combobox
-        items={Items}
-        selected={[selected, setSelected]}
-        queryKey="label"
-      >
+      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
         {({ Field, Options, CompoundOption }) => (
           <>
-            <Field placeholder="Select an option">
-              {(selected: any) => selected.label}
-            </Field>
+            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
 
-            <Options>
-              {(item: any) => (
-                <CompoundOption
-                  header={item.label}
-                  content="Description for compound option"
-                />
-              )}
-            </Options>
+            <Options>{(item) => <CompoundOption header={item.label} content="Description for compound option" />}</Options>
           </>
         )}
       </Combobox>

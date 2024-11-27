@@ -36,9 +36,7 @@ export type EnsSettingsContext = {
   onSubmitDelete: (itemId: string) => Promise<boolean | undefined>;
 };
 
-export type EnsSettingsProviderProps = ChildrenProps<
-  Pick<EnsSettingsContext, 'onSubmitVerification' | 'onSubmitDelete'>
->;
+export type EnsSettingsProviderProps = ChildrenProps<Pick<EnsSettingsContext, 'onSubmitVerification' | 'onSubmitDelete'>>;
 
 const [Provider, useContext] = createContext<EnsSettingsContext>({
   hookName: 'useEnsSettingsContext',
@@ -46,24 +44,14 @@ const [Provider, useContext] = createContext<EnsSettingsContext>({
   providerName: 'EnsSettingsProvider',
 });
 
-export const EnsSettingsProvider: React.FC<EnsSettingsProviderProps> = ({
-  children,
-  onSubmitVerification,
-  onSubmitDelete,
-}) => {
+export const EnsSettingsProvider: React.FC<EnsSettingsProviderProps> = ({ children, onSubmitVerification, onSubmitDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState('');
-  const [ensSetupMethodSelected, setEnsSetupMethodSelected] = useState<
-    'manual' | 'automatic'
-  >('automatic');
-  const [shouldOpenModalOnCreated, setShouldOpenModalOnCreated] =
-    useState(false);
+  const [ensSetupMethodSelected, setEnsSetupMethodSelected] = useState<'manual' | 'automatic'>('automatic');
+  const [shouldOpenModalOnCreated, setShouldOpenModalOnCreated] = useState(false);
   const [isManualSetupModalOpen, setIsManualSetupModalOpen] = useState(false);
-  const [isAutomaticSetupModalOpen, setIsAutomaticSetupModalOpen] =
-    useState(false);
-  const [automaticSetupMethod, setAutomaticSetupMethod] = useState<
-    'ipns' | 'ipfs'
-  >('ipns');
+  const [isAutomaticSetupModalOpen, setIsAutomaticSetupModalOpen] = useState(false);
+  const [automaticSetupMethod, setAutomaticSetupMethod] = useState<'ipns' | 'ipfs'>('ipns');
   const [ensName, setEnsName] = useState('');
   const [ipfsContentHash, setIpfsContentHash] = useState('');
   const [ipnsContentHash, setIpnsContentHash] = useState('');

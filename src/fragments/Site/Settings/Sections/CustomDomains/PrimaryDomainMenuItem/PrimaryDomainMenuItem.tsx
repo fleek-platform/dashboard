@@ -22,11 +22,7 @@ export const PrimaryDomainMenuItem: React.FC<PrimaryDomainMenuItemProps> = ({
       {showSeparator && <Menu.Separator />}
       <S.MenuItem isPrimaryDomain={isPrimaryDomain} onClick={onClick}>
         <Box>
-          {isPrimaryDomain ? (
-            <S.PrimaryTitle>{title}</S.PrimaryTitle>
-          ) : (
-            <>{title}</>
-          )}
+          {isPrimaryDomain ? <S.PrimaryTitle>{title}</S.PrimaryTitle> : <>{title}</>}
           <S.Subtitle>{subtitle}</S.Subtitle>
         </Box>
         <Icon name="check" />

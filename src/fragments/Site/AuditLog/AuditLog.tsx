@@ -8,12 +8,7 @@ export type AuditLogProps = LoadingProps<{
   items: AuditItemProps[];
 }>;
 
-type AuditItemCategory =
-  | 'site-healthy'
-  | 'site-unhealthy'
-  | 'deploy-live'
-  | 'deploy-started'
-  | 'deploy-failed';
+type AuditItemCategory = 'site-healthy' | 'site-unhealthy' | 'deploy-live' | 'deploy-started' | 'deploy-failed';
 
 type AuditItemProps = LoadingProps<{
   category: AuditItemCategory;
@@ -22,9 +17,7 @@ type AuditItemProps = LoadingProps<{
   label: string;
 }>;
 
-type AuditIconColorVariantType = React.ComponentProps<
-  typeof S.Item.Container
->['iconColor'];
+type AuditIconColorVariantType = React.ComponentProps<typeof S.Item.Container>['iconColor'];
 
 const auditItemIcon: Record<AuditItemCategory, IconName> = {
   'site-healthy': 'arrow-up-circled',
@@ -50,13 +43,7 @@ const auditIconVariant: Record<AuditItemCategory, AuditIconColorVariantType> = {
   'site-unhealthy': 'failed',
 };
 
-const AuditItem: React.FC<AuditItemProps> = ({
-  category,
-  label,
-  url,
-  urlTitle,
-  isLoading,
-}) => {
+const AuditItem: React.FC<AuditItemProps> = ({ category, label, url, urlTitle, isLoading }) => {
   if (isLoading) {
     return (
       <S.Item.Container>
@@ -79,9 +66,7 @@ const AuditItem: React.FC<AuditItemProps> = ({
       <Box>
         <Text variant="primary" size="xs" weight={700} className="flex gap-1">
           {auditItemText[category]}
-          {url && urlTitle && (
-            <ExternalLink href={url}>{urlTitle}</ExternalLink>
-          )}
+          {url && urlTitle && <ExternalLink href={url}>{urlTitle}</ExternalLink>}
         </Text>
         <Text size="xs">{label}</Text>
       </Box>

@@ -1,33 +1,14 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const FilecoinColoredIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 40 40"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <style>{'.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}'}</style>
     <defs>
-      <filter
-        id="Adobe_OpacityMaskFilter"
-        width={40}
-        height={40}
-        x={0}
-        y={0}
-        filterUnits="userSpaceOnUse"
-      >
+      <filter id="Adobe_OpacityMaskFilter" width={40} height={40} x={0} y={0} filterUnits="userSpaceOnUse">
         <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" />
       </filter>
     </defs>
-    <mask
-      id="b-logo_1_1_"
-      width={40}
-      height={40}
-      x={0}
-      y={0}
-      maskUnits="userSpaceOnUse"
-    >
+    <mask id="b-logo_1_1_" width={40} height={40} x={0} y={0} maskUnits="userSpaceOnUse">
       <g
         style={{
           filter: 'url(#Adobe_OpacityMaskFilter)',

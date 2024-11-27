@@ -13,8 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ handleLogIn }) => (
     </Text>
 
     <Text size="xl" weight={500}>
-      Craft, build, and deploy applications unlocking the full potential of
-      decentralized technologies.
+      Craft, build, and deploy applications unlocking the full potential of decentralized technologies.
     </Text>
 
     <S.Hero.ButtonContainer>

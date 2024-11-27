@@ -10,10 +10,7 @@ import { useCanDeploySite } from '@/hooks/useCanDeploySite';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteLink } from '@/hooks/useSiteLink';
-import {
-  useSiteRedeploy,
-  useTriggerSiteDeployment,
-} from '@/hooks/useSiteRedeploy';
+import { useSiteRedeploy, useTriggerSiteDeployment } from '@/hooks/useSiteRedeploy';
 import { Page } from '@/types/App';
 import { Box, Button } from '@/ui';
 import { getSelfManagedFileSnippets } from '@/utils/getSelfManagedFileSnippets';
@@ -27,10 +24,7 @@ const SitePage: Page = () => {
   const projectId = router.query.projectId!;
   const [flagForPolling, setFlagForPolling] = useState(false);
 
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: siteId } },
-    requestPolicy: 'cache-and-network',
-  });
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } }, requestPolicy: 'cache-and-network' });
   const redeploy = useSiteRedeploy();
 
   const isLoading = siteQuery.fetching;
@@ -53,23 +47,9 @@ const SitePage: Page = () => {
     if (flagForPolling && site && site.lastDeployment) {
       const deploymentId = site.lastDeployment.id;
 
-      router
-        .prefetch(
-          routes.project.site.deployments.detail({
-            projectId,
-            siteId,
-            deploymentId,
-          }),
-        )
-        .finally(() => {
-          router.push(
-            routes.project.site.deployments.detail({
-              projectId,
-              siteId,
-              deploymentId,
-            }),
-          );
-        });
+      router.prefetch(routes.project.site.deployments.detail({ projectId, siteId, deploymentId })).finally(() => {
+        router.push(routes.project.site.deployments.detail({ projectId, siteId, deploymentId }));
+      });
     }
   }, [flagForPolling, site, projectId, router, siteId]);
 
@@ -103,10 +83,7 @@ const SitePage: Page = () => {
     <>
       <GitIntegration.SiteDisconnectedAlert siteQuery={siteQuery} />
       <Site.Elements.Overview siteQuery={siteQuery} />
-      <Site.Elements.RecentDeploy
-        isSelfManaged={isSelfManaged as boolean}
-        onRedeploy={handleRedeploy}
-      />
+      <Site.Elements.RecentDeploy isSelfManaged={isSelfManaged as boolean} onRedeploy={handleRedeploy} />
       <Site.Containers.Row>
         <Site.Containers.MainColumn>
           <Site.Elements.Ipfs
@@ -120,30 +97,14 @@ const SitePage: Page = () => {
           <Site.Elements.CustomDomain />
         </Site.Containers.MainColumn>
         <Site.Containers.RightColumn>
-          <ComingSoon.Overlay
-            description="Monitor your application's performance and user metrics."
-            isLoading={isLoading}
-          >
+          <ComingSoon.Overlay description="Monitor your application's performance and user metrics." isLoading={isLoading}>
             <Site.Elements.Performance score={99} isLoading={isLoading} />
           </ComingSoon.Overlay>
-          <ComingSoon.Overlay
-            description="Monitor the activity and changes on your application."
-            isLoading={isLoading}
-          >
+          <ComingSoon.Overlay description="Monitor the activity and changes on your application." isLoading={isLoading}>
             <Site.Elements.AuditLog
               items={[
-                {
-                  category: 'deploy-live',
-                  label: '5m ago',
-                  urlTitle: 'asdv',
-                  url: '#',
-                },
-                {
-                  category: 'deploy-started',
-                  label: '10m ago',
-                  urlTitle: 'hzcs',
-                  url: '#',
-                },
+                { category: 'deploy-live', label: '5m ago', urlTitle: 'asdv', url: '#' },
+                { category: 'deploy-started', label: '10m ago', urlTitle: 'hzcs', url: '#' },
                 { category: 'site-healthy', label: '15m ago' },
               ]}
               isLoading={isLoading}
@@ -158,17 +119,12 @@ const SitePage: Page = () => {
 const PageNavContent: React.FC = () => {
   const router = useRouter();
   const siteId = router.query.siteId!;
-  const hasDeployPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.DEPLOY],
-  });
+  const hasDeployPermission = usePermissions({ action: [constants.PERMISSION.SITE.DEPLOY] });
 
   const siteQuota = useCanDeploySite({ siteId });
   const triggerDeploy = useTriggerSiteDeployment();
 
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: siteId } },
-    requestPolicy: 'cache-and-network',
-  });
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } }, requestPolicy: 'cache-and-network' });
 
   const site = siteQuery.data?.site;
 
@@ -182,10 +138,7 @@ const PageNavContent: React.FC = () => {
   return (
     <Box className="flex-row gap-3">
       {!isSelfManaged && hasDeployPermission && (
-        <SiteQuotaTooltip
-          canDeploy={siteQuota.canDeploy}
-          isLoading={siteQuota.isFetching}
-        >
+        <SiteQuotaTooltip canDeploy={siteQuota.canDeploy} isLoading={siteQuota.isFetching}>
           <Button
             intent="neutral"
             onClick={handleRedeploy}
@@ -197,19 +150,12 @@ const PageNavContent: React.FC = () => {
         </SiteQuotaTooltip>
       )}
       <ExternalLink href={siteLink}>
-        <Button disabled={!siteLink || !site?.currentDeployment}>
-          Visit site
-        </Button>
+        <Button disabled={!siteLink || !site?.currentDeployment}>Visit site</Button>
       </ExternalLink>
     </Box>
   );
 };
 
-SitePage.getLayout = (page) => (
-  <Site.Layout nav={<PageNavContent />}>{page}</Site.Layout>
-);
+SitePage.getLayout = (page) => <Site.Layout nav={<PageNavContent />}>{page}</Site.Layout>;
 
-export default withAccess({
-  Component: SitePage,
-  requiredPermissions: [constants.PERMISSION.SITE.VIEW_OVERVIEW],
-});
+export default withAccess({ Component: SitePage, requiredPermissions: [constants.PERMISSION.SITE.VIEW_OVERVIEW] });

@@ -1,7 +1,4 @@
-mutation createEnsRecord(
-  $where: CreateEnsRecordWhereInput!
-  $data: CreateEnsRecordDataInput!
-) {
+mutation createEnsRecord($where: CreateEnsRecordWhereInput!, $data: CreateEnsRecordDataInput!) {
   createEnsRecord(where: $where, data: $data) {
     id
     status

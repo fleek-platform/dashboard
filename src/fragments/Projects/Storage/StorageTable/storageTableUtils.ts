@@ -2,32 +2,23 @@ import { useToast } from '@/hooks/useToast';
 import { Folder, Pin } from '@/types/StorageProviders';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { bytesToSize } from '@/utils/fileSizeFormat';
-import {
-  getLinkForIPFSGateway,
-  getSubDomainResolutionIpfsGatewayUrl,
-} from '@/utils/getLinkForIPFSGateway';
+import { getLinkForIPFSGateway, getSubDomainResolutionIpfsGatewayUrl } from '@/utils/getLinkForIPFSGateway';
 
 import { modalType, useStorageContext } from '../Storage.context';
 
-type UseStorageTableUtilsArgs =
-  | { pin: Pin }
-  | { folder: Folder }
-  | Record<string, never>;
+type UseStorageTableUtilsArgs = { pin: Pin } | { folder: Folder } | Record<string, never>;
 
 export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
   const toast = useToast();
   const { privateGatewayDomain, openModal } = useStorageContext();
 
   const isIpfsFolder = 'pin' in args && !args.pin?.extension;
-  const isFilecoinDealPending =
-    'pin' in args && !args.pin?.filecoinPin?.deals[0]?.dealId;
+  const isFilecoinDealPending = 'pin' in args && !args.pin?.filecoinPin?.deals[0]?.dealId;
   const isArweavePending = 'pin' in args && !args.pin?.arweavePin?.bundlrId;
 
   const getLink = () => {
     if ('folder' in args) {
-      return privateGatewayDomain
-        ? `https://${privateGatewayDomain}/${args.folder.path}`
-        : null;
+      return privateGatewayDomain ? `https://${privateGatewayDomain}/${args.folder.path}` : null;
     }
 
     if ('pin' in args) {
@@ -36,10 +27,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
       }
 
       return privateGatewayDomain
-        ? getLinkForIPFSGateway({
-            cid: args.pin.cid,
-            baseURL: privateGatewayDomain,
-          })
+        ? getLinkForIPFSGateway({ cid: args.pin.cid, baseURL: privateGatewayDomain })
         : getSubDomainResolutionIpfsGatewayUrl({ cid: args.pin.cid });
     }
 
@@ -56,9 +44,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
     try {
       copyToClipboard(url);
 
-      toast.success({
-        message: `${'folder' in args ? 'Folder' : isIpfsFolder ? 'IPFS folder' : 'IPFS file'} URL copied`,
-      });
+      toast.success({ message: `${'folder' in args ? 'Folder' : isIpfsFolder ? 'IPFS folder' : 'IPFS file'} URL copied` });
     } catch (error) {
       toast.error({ message: 'Failed to copy to clipboard' });
     }
@@ -70,9 +56,7 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
     }
 
     if ('pin' in args) {
-      return bytesToSize(
-        args.pin.sizeBigInt ? Number(args.pin.sizeBigInt) : args.pin.size,
-      );
+      return bytesToSize(args.pin.sizeBigInt ? Number(args.pin.sizeBigInt) : args.pin.size);
     }
   };
 
@@ -123,45 +107,23 @@ export const useStorageTableUtils = (args: UseStorageTableUtilsArgs) => {
 
   const handleEdit = () => {
     if ('folder' in args) {
-      openModal({
-        folderId: args.folder.id,
-        modal: modalType.UPDATE_FOLDER,
-        isFolder: true,
-        pinName: args.folder.name,
-      });
+      openModal({ folderId: args.folder.id, modal: modalType.UPDATE_FOLDER, isFolder: true, pinName: args.folder.name });
     }
 
     if ('pin' in args) {
-      const pinName = args.pin.extension
-        ? [args.pin.filename, args.pin.extension].join('.')
-        : args.pin.filename;
+      const pinName = args.pin.extension ? [args.pin.filename, args.pin.extension].join('.') : args.pin.filename;
 
-      openModal({
-        pinId: args.pin.id,
-        modal: modalType.UPDATE_PIN,
-        isFolder: false,
-        pinName,
-      });
+      openModal({ pinId: args.pin.id, modal: modalType.UPDATE_PIN, isFolder: false, pinName });
     }
   };
 
   const handleDelete = () => {
     if ('folder' in args) {
-      openModal({
-        folderId: args.folder.id,
-        modal: modalType.DELETE,
-        isFolder: true,
-        pinName: args.folder.name,
-      });
+      openModal({ folderId: args.folder.id, modal: modalType.DELETE, isFolder: true, pinName: args.folder.name });
     }
 
     if ('pin' in args) {
-      openModal({
-        pinId: args.pin.id,
-        modal: modalType.DELETE,
-        isFolder: false,
-        pinName: args.pin.filename,
-      });
+      openModal({ pinId: args.pin.id, modal: modalType.DELETE, isFolder: false, pinName: args.pin.filename });
     }
   };
 

@@ -8,11 +8,7 @@ export const SelectedPlan: React.FC = () => {
 
   return (
     <SelectedPlanStyles.Container>
-      <Billing.HorizontalPlanCard
-        title={`Upgrade to ${plan.name}`}
-        description={plan.description}
-        price={plan.price.toString()}
-      />
+      <Billing.HorizontalPlanCard title={`Upgrade to ${plan.name}`} description={plan.description} price={plan.price.toString()} />
     </SelectedPlanStyles.Container>
   );
 };

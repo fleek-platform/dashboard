@@ -4,10 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { StatusRadioProps } from '@/components';
 import { BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import {
-  DeploymentBuild,
-  DeploymentStatus as ParsedDeploymentStatus,
-} from '@/types/Deployment';
+import { DeploymentBuild, DeploymentStatus as ParsedDeploymentStatus } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Accordion, Box, Button, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
@@ -23,13 +20,7 @@ type DeploymentLogsProps = {
   startedAt?: string;
 };
 
-export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
-  build,
-  status,
-  deploymentStatus,
-  isSelfManaged,
-  startedAt,
-}) => {
+export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({ build, status, deploymentStatus, isSelfManaged, startedAt }) => {
   const toast = useToast();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [initialLog, setInitialLog] = useState<BuildLog[]>([]);
@@ -38,17 +29,12 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
   useEffect(() => {
     if (scrollContainerRef.current) {
       // Scroll to the bottom of the div when the component mounts or updates
-      scrollContainerRef.current.scrollTop =
-        scrollContainerRef.current.scrollHeight;
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
     }
   }, [build]);
 
   useEffect(() => {
-    if (
-      (!build || build?.logs?.length === 0) &&
-      initialLog.length === 0 &&
-      deploymentStatus === DeploymentStatus.BUILD_IN_PROGRESS
-    ) {
+    if ((!build || build?.logs?.length === 0) && initialLog.length === 0 && deploymentStatus === DeploymentStatus.BUILD_IN_PROGRESS) {
       setAccordionValue([...accordionValue, 'logs']);
       setInitialLog([
         {
@@ -74,35 +60,22 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
     }
   };
 
-  const steps = isSelfManaged
-    ? DeploymentSteps['self-managed']
-    : DeploymentSteps['managed'];
+  const steps = isSelfManaged ? DeploymentSteps['self-managed'] : DeploymentSteps['managed'];
 
   return (
-    <S.Accordion.Root
-      type="multiple"
-      defaultValue={['logs']}
-      value={accordionValue}
-      onValueChange={setAccordionValue}
-    >
+    <S.Accordion.Root type="multiple" defaultValue={['logs']} value={accordionValue} onValueChange={setAccordionValue}>
       {steps.map((step, index) => (
         <Accordion.Item value={step.key} key={step.key}>
           <AccordionHeader
             step={step}
             deploymentStatus={deploymentStatus!}
-            previousStepComplete={
-              index === 0 ? undefined : steps[index - 1].completedState
-            }
+            previousStepComplete={index === 0 ? undefined : steps[index - 1].completedState}
             key={step.key}
             startedAt={startedAt}
             isSelfManaged={isSelfManaged}
           >
             {step.key === 'logs' && (
-              <Button
-                size="sm"
-                onClick={handleCopyLogs}
-                disabled={isSelfManaged || logs.length === 0}
-              >
+              <Button size="sm" onClick={handleCopyLogs} disabled={isSelfManaged || logs.length === 0}>
                 Copy to clipboard
               </Button>
             )}
@@ -138,13 +111,7 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   startedAt,
   isSelfManaged,
 }) => {
-  const status = getStepState({
-    step,
-    currentStatus: deploymentStatus,
-    previousStepComplete,
-    startedAt,
-    isSelfManaged,
-  });
+  const status = getStepState({ step, currentStatus: deploymentStatus, previousStepComplete, startedAt, isSelfManaged });
 
   return (
     <S.Accordion.Header hideChevron={step.hideChevron} key={step.key}>
@@ -178,9 +145,7 @@ const LogRow: React.FC<LogRowProps> = ({ log, deploymentStatus }) => {
 
   return (
     <S.Log.Row status={getRowState()}>
-      <Text>
-        {dateFormat({ dateISO: log.createdAt, stringFormat: 'HH:mm:ss.SSS' })}
-      </Text>
+      <Text>{dateFormat({ dateISO: log.createdAt, stringFormat: 'HH:mm:ss.SSS' })}</Text>
       <Box>
         {log.text.split('\n').map((text) => (
           <Text key={text} variant="primary">
@@ -192,13 +157,7 @@ const LogRow: React.FC<LogRowProps> = ({ log, deploymentStatus }) => {
   );
 };
 
-type BuildStepKey =
-  | 'git'
-  | 'checkrun'
-  | 'logs'
-  | 'ipfs'
-  | 'release'
-  | 'availability';
+type BuildStepKey = 'git' | 'checkrun' | 'logs' | 'ipfs' | 'release' | 'availability';
 
 type BuildStep = {
   title: string;
@@ -234,11 +193,7 @@ const DeploymentSteps: Record<DeploymentType, BuildStep[]> = {
       key: 'logs',
       pendingStates: [DeploymentStatus.BUILD_IN_PROGRESS],
       completedState: DeploymentStatus.BUILD_COMPLETED,
-      failedStates: [
-        DeploymentStatus.BUILD_CANCELLED,
-        DeploymentStatus.BUILD_CANCELLING,
-        DeploymentStatus.BUILD_FAILED,
-      ],
+      failedStates: [DeploymentStatus.BUILD_CANCELLED, DeploymentStatus.BUILD_CANCELLING, DeploymentStatus.BUILD_FAILED],
     },
     {
       title: 'Upload to IPFS',
@@ -270,11 +225,7 @@ const DeploymentSteps: Record<DeploymentType, BuildStep[]> = {
       title: 'Build',
       pendingStates: [DeploymentStatus.BUILD_IN_PROGRESS],
       completedState: DeploymentStatus.BUILD_COMPLETED,
-      failedStates: [
-        DeploymentStatus.BUILD_CANCELLED,
-        DeploymentStatus.BUILD_CANCELLING,
-        DeploymentStatus.BUILD_FAILED,
-      ],
+      failedStates: [DeploymentStatus.BUILD_CANCELLED, DeploymentStatus.BUILD_CANCELLING, DeploymentStatus.BUILD_FAILED],
       hideChevron: true,
       key: 'logs',
     },
@@ -347,10 +298,7 @@ const getStepState = ({
     return undefined;
   }
 
-  if (
-    step.pendingStates.includes(currentStatus) ||
-    currentStatus === previousStepComplete
-  ) {
+  if (step.pendingStates.includes(currentStatus) || currentStatus === previousStepComplete) {
     return 'spinner';
   }
 
@@ -358,11 +306,7 @@ const getStepState = ({
     return 'error';
   }
 
-  if (
-    currentStatus === step.completedState ||
-    ORDERED_STEPS.indexOf(currentStatus) >
-      ORDERED_STEPS.indexOf(step.completedState)
-  ) {
+  if (currentStatus === step.completedState || ORDERED_STEPS.indexOf(currentStatus) > ORDERED_STEPS.indexOf(step.completedState)) {
     return 'success';
   }
 

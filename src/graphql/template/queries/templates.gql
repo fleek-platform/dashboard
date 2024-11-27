@@ -1,7 +1,4 @@
-query templates(
-  $where: TemplatesWhereInput!
-  $filter: TemplatesPaginationInput
-) {
+query templates($where: TemplatesWhereInput!, $filter: TemplatesPaginationInput) {
   templates(where: $where, filter: $filter) {
     data {
       id

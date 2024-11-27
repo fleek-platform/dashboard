@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const CodeWorkingIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M10 11.0156C10.5609 11.0156 11.0156 10.5609 11.0156 10C11.0156 9.43909 10.5609 8.98438 10 8.98438C9.43909 8.98438 8.98438 9.43909 8.98438 10C8.98438 10.5609 9.43909 11.0156 10 11.0156Z"
       fill="currentColor"

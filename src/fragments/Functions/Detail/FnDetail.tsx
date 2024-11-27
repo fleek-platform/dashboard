@@ -9,10 +9,7 @@ import { Box, Skeleton, Text } from '@/ui';
 
 import { Instructions } from '../Instructions';
 import { SiteBadge } from '../List/SiteBadge';
-import {
-  type FunctionDetailContext,
-  useFunctionDetailContext,
-} from './Context';
+import { type FunctionDetailContext, useFunctionDetailContext } from './Context';
 import { Description } from './Description';
 
 const { FUNCTIONS_MAX_DISPLAY_BYTES } = constants;
@@ -62,25 +59,14 @@ const FnDetailSkeleton = () => (
 
 type FnDetailContentProps = NonNullable<FunctionDetailContext>;
 
-const FnDetailContent = ({
-  name: functionName,
-  site,
-  currentDeployment,
-}: FnDetailContentProps) => {
+const FnDetailContent = ({ name: functionName, site, currentDeployment }: FnDetailContentProps) => {
   const cid = currentDeployment?.cid;
   const session = useSessionContext();
   const project = useProjectContext();
 
-  const [pinQuery] = usePinQuery({
-    variables: { where: { cid } },
-    pause: !cid,
-  });
+  const [pinQuery] = usePinQuery({ variables: { where: { cid } }, pause: !cid });
   // skip fetching the content until size is known and less than X bytes
-  const [ipfsContent] = useIpfsContent(
-    (pinQuery.data?.pin.size || Infinity) > FUNCTIONS_MAX_DISPLAY_BYTES
-      ? undefined
-      : cid,
-  );
+  const [ipfsContent] = useIpfsContent((pinQuery.data?.pin.size || Infinity) > FUNCTIONS_MAX_DISPLAY_BYTES ? undefined : cid);
 
   if (pinQuery.fetching || session.loading || !functionName) {
     return <FnDetailSkeleton />;
@@ -90,9 +76,7 @@ const FnDetailContent = ({
 
   return (
     <>
-      {pinQuery.error && (
-        <AlertBox variant="warning">{pinQuery.error.message}</AlertBox>
-      )}
+      {pinQuery.error && <AlertBox variant="warning">{pinQuery.error.message}</AlertBox>}
 
       <Box variant="container" className="bg-neutral-2">
         <Box className="flex-row justify-between items-center">
@@ -115,11 +99,7 @@ const FnDetailContent = ({
       {currentDeployment ? (
         <>
           <Ipfs cid={currentDeployment.cid} isFn active />
-          <CodeSnippet
-            title="Deployed code"
-            code={ipfsContent.data}
-            isLoading={ipfsContent.fetching}
-          />
+          <CodeSnippet title="Deployed code" code={ipfsContent.data} isLoading={ipfsContent.fetching} />
         </>
       ) : (
         <Instructions functionName={functionName} />

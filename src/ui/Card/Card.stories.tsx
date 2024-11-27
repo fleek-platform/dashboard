@@ -45,8 +45,7 @@ export const EmptyImage: Story = {
     return (
       <Card.Root {...args}>
         <Card.Cover>
-          <Icon name="image" css={{ fontSize: '20px' }} /> There is no source
-          image
+          <Icon name="image" css={{ fontSize: '20px' }} /> There is no source image
         </Card.Cover>
         <Card.Content.Wrapper>
           <Card.Content.Row>

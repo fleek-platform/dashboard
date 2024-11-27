@@ -26,10 +26,7 @@ const ProjectSettingsPage: Page = () => {
         email: values.email,
       };
 
-      await updateUser({
-        updateUserArgs: data,
-        successMessage: 'Updated email successfully',
-      });
+      await updateUser({ updateUserArgs: data, successMessage: 'Updated email successfully' });
     },
   });
 
@@ -41,8 +38,6 @@ const ProjectSettingsPage: Page = () => {
   );
 };
 
-ProjectSettingsPage.getLayout = (page) => (
-  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
-);
+ProjectSettingsPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
 
 export default ProjectSettingsPage;

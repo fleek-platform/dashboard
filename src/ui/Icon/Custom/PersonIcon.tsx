@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const PersonIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 18 17"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M11.4449 2.39383C10.8241 1.72359 9.95703 1.35449 9 1.35449C8.03786 1.35449 7.16792 1.72135 6.54999 2.38745C5.92537 3.06088 5.62103 3.97612 5.69249 4.96441C5.83413 6.91421 7.31785 8.50033 9 8.50033C10.6821 8.50033 12.1633 6.91452 12.3072 4.96505C12.3796 3.98569 12.0733 3.07236 11.4449 2.39383Z"
       fill="currentColor"

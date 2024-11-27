@@ -22,9 +22,7 @@ import { withAccess } from '@/utils/withAccess';
 const EnvironmentSettingsPage: Page = () => {
   const router = useRouter();
   const client = useClient();
-  const [siteQuery, refetchSiteQuery] = useSiteQuery({
-    variables: { where: { id: router.query.siteId! } },
-  });
+  const [siteQuery, refetchSiteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
   const toast = useToast();
 
   const [, createSecret] = useCreateSecretMutation();
@@ -44,10 +42,7 @@ const EnvironmentSettingsPage: Page = () => {
       encrypted: zod.boolean(),
     }),
     extraValidations: {
-      key: Form.createExtraValidation.siteSecret(
-        client,
-        siteQuery.data?.site.id,
-      ),
+      key: Form.createExtraValidation.siteSecret(client, siteQuery.data?.site.id),
     },
     onSubmit: async (values) => {
       try {
@@ -66,9 +61,7 @@ const EnvironmentSettingsPage: Page = () => {
             groupId: site.secretGroup.id,
             key: values.key,
             value: values.value,
-            visibility: values.encrypted
-              ? SecretVisibility.ENCRYPTED
-              : SecretVisibility.PUBLIC,
+            visibility: values.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
           },
         });
 
@@ -115,9 +108,7 @@ const EnvironmentSettingsPage: Page = () => {
   return (
     <>
       <Form.Provider value={addForm}>
-        <Site.Settings.Sections.AddEnvironmentVariable
-          isLoading={siteQuery.fetching}
-        />
+        <Site.Settings.Sections.AddEnvironmentVariable isLoading={siteQuery.fetching} />
       </Form.Provider>
 
       <Site.Settings.Sections.ManageEnvironmentVariables
@@ -130,16 +121,11 @@ const EnvironmentSettingsPage: Page = () => {
   );
 };
 
-EnvironmentSettingsPage.getLayout = (page) => (
-  <Site.Settings.Layout>{page}</Site.Settings.Layout>
-);
+EnvironmentSettingsPage.getLayout = (page) => <Site.Settings.Layout>{page}</Site.Settings.Layout>;
 
 export default withAccess({
   Component: EnvironmentSettingsPage,
-  requiredPermissions: [
-    constants.PERMISSION.SITE.VIEW_ENV_VARIABLES,
-    constants.PERMISSION.SITE.EDIT_ENV_VARIABLES,
-  ],
+  requiredPermissions: [constants.PERMISSION.SITE.VIEW_ENV_VARIABLES, constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
 });
 
 class CreateSecretError extends Error {}

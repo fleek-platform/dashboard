@@ -13,12 +13,7 @@ export type ContactSalesModalProps = {
   setOpen: (open: boolean) => void;
 };
 
-export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
-  children,
-  initialEmail = '',
-  open,
-  setOpen,
-}) => {
+export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({ children, initialEmail = '', open, setOpen }) => {
   const toast = useToast();
 
   const [, createSalesContactRequest] = useCreateSalesContactRequestMutation();
@@ -38,10 +33,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
           throw error;
         }
 
-        toast.success({
-          message:
-            'We have received your message, we will be in contact shortly.',
-        });
+        toast.success({ message: 'We have received your message, we will be in contact shortly.' });
         setOpen(false);
       } catch (error) {
         toast.error({ error, log: 'Failed to create Sales Contact Request' });
@@ -60,9 +52,8 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
         <SettingsModal.Heading>Talk to our Sales team</SettingsModal.Heading>
 
         <Text>
-          We&apos;ll find your business the plan and pricing you need, discuss
-          your requirements, and give you a demonstration of Fleek and how it
-          can provide the most value.
+          We&apos;ll find your business the plan and pricing you need, discuss your requirements, and give you a demonstration of Fleek and
+          how it can provide the most value.
         </Text>
 
         <Form.InputField
@@ -80,10 +71,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
           placeholder="I need to deploy X sites that usually takes Y minutes during each build run..."
           disableValidMessage
           autoFocus={initialEmail !== ''}
-          charactersCounter={
-            createSalesContactRequestSchema.shape.data.shape.description
-              .maxLength ?? undefined
-          }
+          charactersCounter={createSalesContactRequestSchema.shape.data.shape.description.maxLength ?? undefined}
         />
 
         <SettingsModal.Footer>

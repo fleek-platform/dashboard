@@ -2,15 +2,9 @@ import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 import { CryptoPayment } from '@/types/Billing';
 
-export const useCryptoPaymentCheckout = (
-  args: CryptoPaymentCheckoutArgs = {},
-) => {
+export const useCryptoPaymentCheckout = (args: CryptoPaymentCheckoutArgs = {}) => {
   return useMutation({
-    mutationFn: async ({
-      planId,
-      currency,
-      network,
-    }: CryptoPaymentCheckoutMutationArgs) => {
+    mutationFn: async ({ planId, currency, network }: CryptoPaymentCheckoutMutationArgs) => {
       const response = await fetch('/api/create-crypto-payment', {
         method: 'POST',
         headers: {
@@ -27,10 +21,7 @@ export const useCryptoPaymentCheckout = (
   });
 };
 
-export type CryptoPaymentCheckoutArgs = Omit<
-  UseMutationOptions<CryptoPayment, Error, CryptoPaymentCheckoutMutationArgs>,
-  'mutationFn'
->;
+export type CryptoPaymentCheckoutArgs = Omit<UseMutationOptions<CryptoPayment, Error, CryptoPaymentCheckoutMutationArgs>, 'mutationFn'>;
 
 export type CryptoPaymentCheckoutMutationArgs = {
   planId: string;

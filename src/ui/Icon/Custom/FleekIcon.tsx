@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const FleekIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 14 23"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

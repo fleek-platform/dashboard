@@ -18,9 +18,7 @@ type ProviderInstallationMessageProps = {
   onRefetch?: () => void;
 };
 
-export const ProviderInstallationMessage: React.FC<
-  ProviderInstallationMessageProps
-> = ({ onRefetch }) => {
+export const ProviderInstallationMessage: React.FC<ProviderInstallationMessageProps> = ({ onRefetch }) => {
   const { sourceProvider, gitProviderId } = useDeploySiteContext();
   const session = useSessionContext();
   const toast = useToast();
@@ -30,9 +28,7 @@ export const ProviderInstallationMessage: React.FC<
     const projectId = session.project.id;
 
     if (!projectId || !gitProviderId) {
-      toast.error({
-        message: 'Unexpected error when generating url, please try again',
-      });
+      toast.error({ message: 'Unexpected error when generating url, please try again' });
 
       return;
     }
@@ -41,18 +37,10 @@ export const ProviderInstallationMessage: React.FC<
       const createInstallationUrlResult = await client.mutation<
         CreateGithubAppInstallationUrlMutation,
         CreateGithubAppInstallationUrlMutationVariables
-      >(CreateGithubAppInstallationUrlDocument, {
-        where: { projectId, gitProviderId: gitProviderId },
-      });
+      >(CreateGithubAppInstallationUrlDocument, { where: { projectId, gitProviderId: gitProviderId } });
 
-      if (
-        createInstallationUrlResult.error ||
-        !createInstallationUrlResult.data?.createGithubAppInstallationUrl
-      ) {
-        throw (
-          createInstallationUrlResult.error ||
-          new Error('Failed to create GithubApp Installation Url')
-        );
+      if (createInstallationUrlResult.error || !createInstallationUrlResult.data?.createGithubAppInstallationUrl) {
+        throw createInstallationUrlResult.error || new Error('Failed to create GithubApp Installation Url');
       }
 
       openPopUpWindow({
@@ -61,10 +49,7 @@ export const ProviderInstallationMessage: React.FC<
         onClose: onRefetch,
       });
     } catch (error) {
-      toast.error({
-        error,
-        log: 'Failed to create GithubApp Installation Url',
-      });
+      toast.error({ error, log: 'Failed to create GithubApp Installation Url' });
     }
   };
 
@@ -73,12 +58,7 @@ export const ProviderInstallationMessage: React.FC<
       <S.Message>
         <Text variant="primary" size="md">
           Missing Git repository?&nbsp;
-          <ExternalLink
-            href="#"
-            variant="accent"
-            onClick={handleOpenGithubAppInstallationUrl}
-            className="hover:underline"
-          >
+          <ExternalLink href="#" variant="accent" onClick={handleOpenGithubAppInstallationUrl} className="hover:underline">
             Adjust GitHub App Permissions
           </ExternalLink>
         </Text>

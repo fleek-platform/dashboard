@@ -1,30 +1,23 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useCallback } from 'react';
 
-import {
-  FleekFunctionDetailQuery,
-  useDeleteFleekFunctionMutation,
-} from '@/generated/graphqlClient';
+import { FleekFunctionDetailQuery, useDeleteFleekFunctionMutation } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { createContext } from '@/utils/createContext';
 
-export type FunctionDetailContext =
-  | FleekFunctionDetailQuery['fleekFunctionByName']
-  | null;
+export type FunctionDetailContext = FleekFunctionDetailQuery['fleekFunctionByName'] | null;
 
-export const [FunctionDetailProvider, useFunctionDetailContext] =
-  createContext<FunctionDetailContext>({
-    name: 'FunctionDetailContext',
-    hookName: 'FunctionDetail.useContext',
-    providerName: 'FunctionDetail.Provider',
-  });
+export const [FunctionDetailProvider, useFunctionDetailContext] = createContext<FunctionDetailContext>({
+  name: 'FunctionDetailContext',
+  hookName: 'FunctionDetail.useContext',
+  providerName: 'FunctionDetail.Provider',
+});
 
 type UseDeleteFunctionArgs = { id: string };
 export const useDeleteFunction = ({ id }: UseDeleteFunctionArgs) => {
-  const [deleteFleekFunctionMutation, deleteFleekFunction] =
-    useDeleteFleekFunctionMutation();
+  const [deleteFleekFunctionMutation, deleteFleekFunction] = useDeleteFleekFunctionMutation();
 
   const router = useRouter();
   const {

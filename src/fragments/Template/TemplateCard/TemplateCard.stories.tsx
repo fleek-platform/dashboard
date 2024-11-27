@@ -28,8 +28,7 @@ export const Customizable: Story = {
       id: 'template-id',
       name: 'React',
       description: 'This is the template description',
-      banner:
-        'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
+      banner: 'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
       siteId: 'site-id',
       siteAvatar: 'https://avatars.githubusercontent.com/u/44036562?s=200&v=4',
       siteSlug: 'fleek',
@@ -40,8 +39,7 @@ export const Customizable: Story = {
       },
       deployment: {
         id: 'deployment-id',
-        previewImageUrl:
-          'https://avatars.githubusercontent.com/u/44036562?s=200&v=4',
+        previewImageUrl: 'https://avatars.githubusercontent.com/u/44036562?s=200&v=4',
       },
       usageCount: 0,
       createdAt: '2023-08-24T19:24:38.916Z',

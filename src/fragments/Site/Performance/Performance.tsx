@@ -7,10 +7,7 @@ export type PerformanceProps = LoadingProps<{
   score?: number;
 }>;
 
-export const Performance: React.FC<PerformanceProps> = ({
-  score,
-  isLoading,
-}) => {
+export const Performance: React.FC<PerformanceProps> = ({ score, isLoading }) => {
   if (isLoading) {
     return (
       <S.Container isLoading>
@@ -29,9 +26,7 @@ export const Performance: React.FC<PerformanceProps> = ({
       <Text variant="tertiary" size="lg" weight={700} className="self-start">
         Site Performance
       </Text>
-      <S.ScoreCircle variant={getScoreVariant(score)}>
-        {score || 'Pending'}
-      </S.ScoreCircle>
+      <S.ScoreCircle variant={getScoreVariant(score)}>{score || 'Pending'}</S.ScoreCircle>
       <S.Row>
         <Box>
           <S.CircleDecoration variant="red" />
@@ -51,13 +46,9 @@ export const Performance: React.FC<PerformanceProps> = ({
   );
 };
 
-type ScoreCircleVariantType = React.ComponentProps<
-  typeof S.ScoreCircle
->['variant'];
+type ScoreCircleVariantType = React.ComponentProps<typeof S.ScoreCircle>['variant'];
 
-const getScoreVariant = (
-  score: PerformanceProps['score'],
-): ScoreCircleVariantType => {
+const getScoreVariant = (score: PerformanceProps['score']): ScoreCircleVariantType => {
   if (!score) {
     return 'pending';
   }

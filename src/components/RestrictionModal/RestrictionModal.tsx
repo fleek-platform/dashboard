@@ -13,11 +13,7 @@ export type RestrictionModalProps = {
   shouldShowUpgradePlan: boolean;
 };
 
-export const RestrictionModal: React.FC<RestrictionModalProps> = ({
-  isOpen,
-  shouldShowUpgradePlan,
-  onOpenChange,
-}) => {
+export const RestrictionModal: React.FC<RestrictionModalProps> = ({ isOpen, shouldShowUpgradePlan, onOpenChange }) => {
   const session = useSessionContext();
 
   const projectId = session.project.id;
@@ -36,8 +32,7 @@ export const RestrictionModal: React.FC<RestrictionModalProps> = ({
             </Dialog.Title>
 
             <Text className="text-center">
-              You&apos;ve reached the limits of your Free plan. To continue
-              without interruption, upgrade your plan.
+              You&apos;ve reached the limits of your Free plan. To continue without interruption, upgrade your plan.
             </Text>
           </Box>
           <Box className="flex-row gap-2 items-baseline">
@@ -76,10 +71,7 @@ export const RestrictionModal: React.FC<RestrictionModalProps> = ({
             </Dialog.Close>
 
             {shouldShowUpgradePlan && (
-              <Link
-                href={routes.project.billing({ projectId })}
-                className="flex-1"
-              >
+              <Link href={routes.project.billing({ projectId })} className="flex-1">
                 <Button className="w-full">Upgrade plan</Button>
               </Link>
             )}

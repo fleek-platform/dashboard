@@ -11,15 +11,10 @@ type UseGetSubscriptionArgs = {
   pause?: boolean;
 };
 
-export const useGetSubscription = ({
-  subscriptionId,
-  pause = false,
-}: UseGetSubscriptionArgs) => {
+export const useGetSubscription = ({ subscriptionId, pause = false }: UseGetSubscriptionArgs) => {
   const cookies = useCookies();
 
-  const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
-  });
+  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
 
   const getSubscription = useCallback(async () => {
     if (!subscriptionId || pause) {
@@ -27,9 +22,7 @@ export const useGetSubscription = ({
     }
 
     try {
-      const response = await backendApi.fetch({
-        url: `/api/v1/subscriptions/${subscriptionId}`,
-      });
+      const response = await backendApi.fetch({ url: `/api/v1/subscriptions/${subscriptionId}` });
 
       if (!response.ok) {
         throw response.statusText;

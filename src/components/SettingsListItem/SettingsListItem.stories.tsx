@@ -27,13 +27,9 @@ export const WithDropdown: Story = {
     subtitle: 'Now I have a dropdown',
     children: (
       <SettingsListItem.DropdownMenu>
-        <SettingsListItem.DropdownMenuItem icon="refresh">
-          Refresh
-        </SettingsListItem.DropdownMenuItem>
+        <SettingsListItem.DropdownMenuItem icon="refresh">Refresh</SettingsListItem.DropdownMenuItem>
         <SettingsListItem.DropdownMenuSeparator />
-        <SettingsListItem.DropdownMenuItem icon="trash">
-          Delete
-        </SettingsListItem.DropdownMenuItem>
+        <SettingsListItem.DropdownMenuItem icon="trash">Delete</SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>
     ),
   },
@@ -47,13 +43,9 @@ export const WithBadge: Story = {
       <>
         <BadgeText colorScheme="green">Active</BadgeText>
         <SettingsListItem.DropdownMenu>
-          <SettingsListItem.DropdownMenuItem icon="refresh">
-            Refresh
-          </SettingsListItem.DropdownMenuItem>
+          <SettingsListItem.DropdownMenuItem icon="refresh">Refresh</SettingsListItem.DropdownMenuItem>
           <SettingsListItem.DropdownMenuSeparator />
-          <SettingsListItem.DropdownMenuItem icon="trash">
-            Delete
-          </SettingsListItem.DropdownMenuItem>
+          <SettingsListItem.DropdownMenuItem icon="trash">Delete</SettingsListItem.DropdownMenuItem>
         </SettingsListItem.DropdownMenu>
       </>
     ),

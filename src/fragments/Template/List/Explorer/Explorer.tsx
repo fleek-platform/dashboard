@@ -11,10 +11,7 @@ import { TemplateCard } from '../../TemplateCard/TemplateCard';
 const ITEMS_PER_PAGE = 12;
 const INITIAL_PAGES = [1];
 
-export const Explorer: React.FC<ExplorerProps> = ({
-  frameworkId,
-  categoryId,
-}) => {
+export const Explorer: React.FC<ExplorerProps> = ({ frameworkId, categoryId }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [pages, setPages] = useState(INITIAL_PAGES);
@@ -51,7 +48,7 @@ export const Explorer: React.FC<ExplorerProps> = ({
       {
         root: null,
         threshold: 0.8,
-      },
+      }
     );
 
     observer.observe(container);
@@ -73,19 +70,12 @@ export const Explorer: React.FC<ExplorerProps> = ({
       <S.List.Explorer.Controls>
         <Input.Root>
           <Input.Icon name="magnify" />
-          <Input.Field
-            onChange={handleSearchChange}
-            value={search}
-            placeholder="Search Templates"
-          />
+          <Input.Field onChange={handleSearchChange} value={search} placeholder="Search Templates" />
         </Input.Root>
       </S.List.Explorer.Controls>
 
       {isEmpty ? (
-        <SettingsBox.EmptyContent
-          title="No Results"
-          description="We found no template results."
-        />
+        <SettingsBox.EmptyContent title="No Results" description="We found no template results." />
       ) : (
         <S.List.Explorer.Grid>
           {pages.map((page) => (
@@ -117,14 +107,7 @@ type GridProps = {
   setIsEmpty: React.Dispatch<React.SetStateAction<boolean>>;
 } & ExplorerProps;
 
-const Grid: React.FC<GridProps> = ({
-  page,
-  frameworkId,
-  categoryId,
-  setIsComplete,
-  query,
-  setIsEmpty,
-}) => {
+const Grid: React.FC<GridProps> = ({ page, frameworkId, categoryId, setIsComplete, query, setIsEmpty }) => {
   const [templatesQuery] = useTemplatesQuery({
     variables: {
       where: {

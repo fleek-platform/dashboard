@@ -11,13 +11,9 @@ type UseIsTemplateOwner = {
   isOwner: boolean;
 };
 
-export const useIsTemplateOwner = ({
-  templateId,
-}: UseIsTemplateOwnerArgs): UseIsTemplateOwner => {
+export const useIsTemplateOwner = ({ templateId }: UseIsTemplateOwnerArgs): UseIsTemplateOwner => {
   const [meQuery] = useMeQuery();
-  const [templateQuery] = useTemplateQuery({
-    variables: { where: { id: templateId } },
-  });
+  const [templateQuery] = useTemplateQuery({ variables: { where: { id: templateId } } });
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

@@ -1,7 +1,4 @@
-mutation updateFolder(
-  $data: UpdateFolderDataInput!
-  $where: UpdateFolderWhereInput!
-) {
+mutation updateFolder($data: UpdateFolderDataInput!, $where: UpdateFolderWhereInput!) {
   updateFolder(data: $data, where: $where) {
     __typename
     id

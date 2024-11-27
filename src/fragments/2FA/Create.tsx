@@ -26,11 +26,7 @@ type CreateProps = {
   hasActiveKey?: boolean;
 };
 
-export const Create: React.FC<CreateProps> = ({
-  isLoading,
-  secretKey,
-  hasActiveKey,
-}) => {
+export const Create: React.FC<CreateProps> = ({ isLoading, secretKey, hasActiveKey }) => {
   const toast = useToast();
   const [otpUrl, setOtpUrl] = useState<string>('');
   const [, verifySecretKey] = useVerifySecretKeyMutation();
@@ -43,14 +39,12 @@ export const Create: React.FC<CreateProps> = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSecretKeyLoading, setIsSecretKeyLoading] = useState(false);
 
-  const [, generateTwoFactorSecretKey] =
-    useGenerateTwoFactorSecretKeyMutation();
+  const [, generateTwoFactorSecretKey] = useGenerateTwoFactorSecretKeyMutation();
   const { isVisible } = TwoFactorAuthentication.useTwoFactorModal();
-  const [deleteSecretKeyMutation, deleteSecretKey] =
-    TwoFactorAuthentication.useMutation({
-      useMutationHook: useDeleteSecretKeyMutation,
-      isEnabledByDefault: true,
-    });
+  const [deleteSecretKeyMutation, deleteSecretKey] = TwoFactorAuthentication.useMutation({
+    useMutationHook: useDeleteSecretKeyMutation,
+    isEnabledByDefault: true,
+  });
 
   const handleDeleteSecretKey = async () => {
     if (!secretKey) {
@@ -58,9 +52,7 @@ export const Create: React.FC<CreateProps> = ({
     }
 
     try {
-      const deleteResult = await deleteSecretKey({
-        where: { id: secretKey.id },
-      });
+      const deleteResult = await deleteSecretKey({ where: { id: secretKey.id } });
       setIsDeleteModalOpen(true);
 
       if (!deleteResult.data || !deleteResult.data.deleteSecretKey) {
@@ -89,22 +81,14 @@ export const Create: React.FC<CreateProps> = ({
       let errorMessage = 'Failed to verify token.';
 
       try {
-        const verifyResult = await verifySecretKey({
-          data: { token },
-          where: { secretKeyId },
-        });
+        const verifyResult = await verifySecretKey({ data: { token }, where: { secretKeyId } });
 
-        if (
-          !verifyResult.data ||
-          !verifyResult.data.verifyTwoFactorSecretKey.isVerified
-        ) {
+        if (!verifyResult.data || !verifyResult.data.verifyTwoFactorSecretKey.isVerified) {
           throw verifyResult.error || new Error(errorMessage);
         }
 
         errorMessage = 'Failed to generate recovery codes.';
-        const recoveryCodesResult = await generateRecoveryCodes({
-          where: { secretKeyId: secretKeyId },
-        });
+        const recoveryCodesResult = await generateRecoveryCodes({ where: { secretKeyId: secretKeyId } });
 
         if (!recoveryCodesResult.data) {
           throw recoveryCodesResult.error || new Error(errorMessage);
@@ -112,8 +96,7 @@ export const Create: React.FC<CreateProps> = ({
 
         return {
           isVerified: verifyResult?.data.verifyTwoFactorSecretKey.isVerified,
-          recoveryCodes:
-            recoveryCodesResult.data?.generateRecoveryCodes.recoveryCodes,
+          recoveryCodes: recoveryCodesResult.data?.generateRecoveryCodes.recoveryCodes,
         };
       } catch (error) {
         toast.error({ error, log: errorMessage });
@@ -134,13 +117,7 @@ export const Create: React.FC<CreateProps> = ({
     createTwoFactorAuthenticationForm.fields.secretKey.setValue(setupKey, true);
     createTwoFactorAuthenticationForm.fields.secretKey.setTouched(true);
 
-    const qrUrl = getURI({
-      label: username,
-      algorithm,
-      digits,
-      secret: key,
-      issuer: 'Fleek',
-    });
+    const qrUrl = getURI({ label: username, algorithm, digits, secret: key, issuer: 'Fleek' });
     setOtpUrl(qrUrl);
     setIsSecretKeyLoading(false);
   };
@@ -157,19 +134,11 @@ export const Create: React.FC<CreateProps> = ({
 
       const generateSecretKeyResponse = await generateTwoFactorSecretKey({});
 
-      if (
-        !generateSecretKeyResponse.data ||
-        !generateSecretKeyResponse.data.generateTwoFactorSecretKey
-      ) {
-        throw (
-          generateSecretKeyResponse.error ||
-          new Error('Failed to get or generate secret key')
-        );
+      if (!generateSecretKeyResponse.data || !generateSecretKeyResponse.data.generateTwoFactorSecretKey) {
+        throw generateSecretKeyResponse.error || new Error('Failed to get or generate secret key');
       }
 
-      generateOTPForSecretKey(
-        generateSecretKeyResponse.data?.generateTwoFactorSecretKey,
-      );
+      generateOTPForSecretKey(generateSecretKeyResponse.data?.generateTwoFactorSecretKey);
     } catch (error) {
       toast.error({ error, log: 'Failed to get or generate secret key' });
     }
@@ -180,8 +149,7 @@ export const Create: React.FC<CreateProps> = ({
     setIsSetupModalOpen(open);
   };
 
-  const handleChangeDeleteModalOpen = (open: boolean) =>
-    setIsDeleteModalOpen(open);
+  const handleChangeDeleteModalOpen = (open: boolean) => setIsDeleteModalOpen(open);
 
   const handleButtonAction = () => {
     if (hasActiveKey) {
@@ -198,24 +166,16 @@ export const Create: React.FC<CreateProps> = ({
     <SettingsBox.Container>
       <SettingsBox.Title>Two-factor Authentication</SettingsBox.Title>
       <SettingsBox.Text>
-        Two-factor authentication adds an additional layer of security to your
-        account by requiring more than just a password or wallet connection to
-        sign in.
+        Two-factor authentication adds an additional layer of security to your account by requiring more than just a password or wallet
+        connection to sign in.
       </SettingsBox.Text>
       <SettingsBox.ActionRow>
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_2FA_SETUP}>
-          two-factor authentication
-        </LearnMoreMessage>
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_2FA_SETUP}>two-factor authentication</LearnMoreMessage>
         {isLoading ? (
           <SettingsBox.Skeleton variant="button" />
         ) : (
-          <Button
-            intent={!hasActiveKey ? 'accent' : 'neutral'}
-            onClick={handleButtonAction}
-          >
-            {hasActiveKey
-              ? 'Disable two-factor authentication'
-              : 'Enable two-factor authentication'}
+          <Button intent={!hasActiveKey ? 'accent' : 'neutral'} onClick={handleButtonAction}>
+            {hasActiveKey ? 'Disable two-factor authentication' : 'Enable two-factor authentication'}
           </Button>
         )}
       </SettingsBox.ActionRow>
@@ -229,12 +189,7 @@ export const Create: React.FC<CreateProps> = ({
       )}
       {isSetupModalOpen && (
         <Form.Provider value={createTwoFactorAuthenticationForm}>
-          <SetupModal
-            open={isSetupModalOpen}
-            onOpenChange={handleChangeSetupModalOpen}
-            otpUrl={otpUrl}
-            isLoading={isSecretKeyLoading}
-          />
+          <SetupModal open={isSetupModalOpen} onOpenChange={handleChangeSetupModalOpen} otpUrl={otpUrl} isLoading={isSecretKeyLoading} />
         </Form.Provider>
       )}
     </SettingsBox.Container>

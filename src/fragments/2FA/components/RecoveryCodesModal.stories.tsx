@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import {
-  type RecoveryCodesModalProps,
-  RecoveryCodesModal,
-} from './RecoveryCodesModal';
+import { type RecoveryCodesModalProps, RecoveryCodesModal } from './RecoveryCodesModal';
 
 const meta: Meta = {
   title: 'Library/Fragments/2FA/Modals/RecoveryCodes',

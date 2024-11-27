@@ -10,8 +10,6 @@ const ProjectSettingsPage: Page = () => {
   );
 };
 
-ProjectSettingsPage.getLayout = (page) => (
-  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
-);
+ProjectSettingsPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
 
 export default ProjectSettingsPage;

@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
 import { useClient } from 'urql';
 
-import {
-  GitAccessTokenDocument,
-  GitAccessTokenQuery,
-  GitAccessTokenQueryVariables,
-} from '@/generated/graphqlClient';
+import { GitAccessTokenDocument, GitAccessTokenQuery, GitAccessTokenQueryVariables } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';
 
@@ -15,11 +11,7 @@ export type UsePollAccessTokensArgs = {
   pause?: boolean;
 };
 
-export const usePollAccessTokens = ({
-  pause,
-  onFinishedCallback,
-  gitProviderId,
-}: UsePollAccessTokensArgs) => {
+export const usePollAccessTokens = ({ pause, onFinishedCallback, gitProviderId }: UsePollAccessTokensArgs) => {
   const client = useClient();
 
   const queryFn = useCallback(async () => {
@@ -29,26 +21,19 @@ export const usePollAccessTokens = ({
 
     console.log('Polled Query for access tokens');
 
-    const gitAccessTokensResult = await client.query<
-      GitAccessTokenQuery,
-      GitAccessTokenQueryVariables
-    >(GitAccessTokenDocument, {}, { requestPolicy: 'network-only' });
+    const gitAccessTokensResult = await client.query<GitAccessTokenQuery, GitAccessTokenQueryVariables>(
+      GitAccessTokenDocument,
+      {},
+      { requestPolicy: 'network-only' }
+    );
 
-    const gitUserAccessTokens =
-      gitAccessTokensResult.data?.user.gitUserAccessTokens;
+    const gitUserAccessTokens = gitAccessTokensResult.data?.user.gitUserAccessTokens;
 
     if (gitAccessTokensResult.error || !gitUserAccessTokens) {
-      throw (
-        gitAccessTokensResult.error ||
-        new Error('Failed to get Git Access tokens')
-      );
+      throw gitAccessTokensResult.error || new Error('Failed to get Git Access tokens');
     }
 
-    return (
-      gitUserAccessTokens.find(
-        (accessToken) => accessToken.gitProviderId === gitProviderId,
-      )?.token || null
-    );
+    return gitUserAccessTokens.find((accessToken) => accessToken.gitProviderId === gitProviderId)?.token || null;
   }, [client, gitProviderId, pause]);
 
   return usePolling({

@@ -19,10 +19,7 @@ type BreakdownRowProps = {
   text?: string;
 };
 
-export const BreakdownRow: React.FC<BreakdownRowProps> = ({
-  label,
-  text = '-',
-}) => (
+export const BreakdownRow: React.FC<BreakdownRowProps> = ({ label, text = '-' }) => (
   <S.Row.Container>
     <Box>
       <Text variant="primary">{label}</Text>

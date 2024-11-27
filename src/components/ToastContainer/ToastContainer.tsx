@@ -21,14 +21,7 @@ export const ToastsContainer: React.FC = () => {
 
 type ToastProps = ToastType;
 
-const Toast: React.FC<ToastProps> = ({
-  id,
-  type,
-  message,
-  onDismiss,
-  duration = 3000,
-  withCloseButton = false,
-}) => {
+const Toast: React.FC<ToastProps> = ({ id, type, message, onDismiss, duration = 3000, withCloseButton = false }) => {
   const { onDismiss: removeToast } = useToastContext();
   const [open, setOpen] = useState(true);
 
@@ -47,16 +40,11 @@ const Toast: React.FC<ToastProps> = ({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onDismiss, id],
+    [onDismiss, id]
   );
 
   return (
-    <S.Root
-      open={open}
-      duration={duration}
-      variant={type}
-      onOpenChange={handleOpenChange}
-    >
+    <S.Root open={open} duration={duration} variant={type} onOpenChange={handleOpenChange}>
       <S.Layout>
         <S.Content>
           <S.Body>{message}</S.Body>

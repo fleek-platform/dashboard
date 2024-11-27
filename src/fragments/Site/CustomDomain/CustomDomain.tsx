@@ -9,13 +9,9 @@ import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 
 export const CustomDomain = () => {
   const router = useRouter();
-  const hasDomainsPermissions = usePermissions({
-    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN],
-  });
+  const hasDomainsPermissions = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN] });
 
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: router.query.siteId! } },
-  });
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
 
   if (siteQuery.fetching) {
     return <CustomDomainBox isLoading />;
@@ -25,10 +21,7 @@ export const CustomDomain = () => {
 
   const verifiedDomains = domains.filter((domain) => domain.isVerified);
   const isActive = verifiedDomains.length > 0;
-  const addDomainRoute = routes.project.site.settings.domains({
-    projectId: router.query.projectId!,
-    siteId: router.query.siteId!,
-  });
+  const addDomainRoute = routes.project.site.settings.domains({ projectId: router.query.projectId!, siteId: router.query.siteId! });
 
   return (
     <CustomDomainBox

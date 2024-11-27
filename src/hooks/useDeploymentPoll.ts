@@ -20,11 +20,7 @@ export type UseDeploymentPollArgs = {
   siteId: string;
 };
 
-export const useDeploymentPoll = ({
-  deploymentId,
-  pause = false,
-  siteId,
-}: UseDeploymentPollArgs) => {
+export const useDeploymentPoll = ({ deploymentId, pause = false, siteId }: UseDeploymentPollArgs) => {
   const client = useClient();
   const siteClient = useClient();
 
@@ -33,17 +29,14 @@ export const useDeploymentPoll = ({
       return null;
     }
 
-    const deploymentResult = await client.query<
-      DeploymentQuery,
-      DeploymentQueryVariables
-    >(
+    const deploymentResult = await client.query<DeploymentQuery, DeploymentQueryVariables>(
       DeploymentDocument,
       {
         where: { id: deploymentId },
       },
       {
         requestPolicy: 'cache-and-network',
-      },
+      }
     );
 
     if (!deploymentResult.data) {
@@ -73,7 +66,7 @@ export const useDeploymentPoll = ({
           { where: { id: siteId } },
           {
             requestPolicy: 'cache-and-network',
-          },
+          }
         );
       }
     },
@@ -84,10 +77,6 @@ export const useDeploymentPoll = ({
   });
 };
 
-const COMPLETED_STATUSES = new Set<DeploymentStatus>([
-  'cancelled',
-  'failed',
-  'success',
-]);
+const COMPLETED_STATUSES = new Set<DeploymentStatus>(['cancelled', 'failed', 'success']);
 
 class DeploymentStatusError extends Error {}

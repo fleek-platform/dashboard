@@ -8,20 +8,15 @@ export type RenameBadgeProps = {
   selectedProject?: Project;
 };
 
-export const RenameBadge: React.FC<RenameBadgeProps> = ({
-  selectedProject,
-}) => {
-  const shouldShowRenameBadge =
-    selectedProject?.name === constants.FIRST_PROJECT_NAME;
+export const RenameBadge: React.FC<RenameBadgeProps> = ({ selectedProject }) => {
+  const shouldShowRenameBadge = selectedProject?.name === constants.FIRST_PROJECT_NAME;
 
   if (!shouldShowRenameBadge) {
     return null;
   }
 
   return (
-    <Link
-      href={routes.project.settings.general({ projectId: selectedProject?.id })}
-    >
+    <Link href={routes.project.settings.general({ projectId: selectedProject?.id })}>
       <BadgeText colorScheme="slate" hoverable>
         Name it!
       </BadgeText>

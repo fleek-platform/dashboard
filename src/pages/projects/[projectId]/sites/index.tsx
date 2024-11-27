@@ -15,13 +15,7 @@ const Sites: Page = () => {
   const { page, handlePageChange, setPageCount } = useQueryPagination({
     pathname: routes.project.site.list({ projectId: session.project.id }),
   });
-  const [sitesQuery] = useSitesQuery({
-    variables: {
-      where: {},
-      filter: { page: page, take: constants.SITES_PAGE_SIZE },
-    },
-    pause: !page,
-  });
+  const [sitesQuery] = useSitesQuery({ variables: { where: {}, filter: { page: page, take: constants.SITES_PAGE_SIZE } }, pause: !page });
   const pageCount = sitesQuery.data?.sites.pageCount;
   const sites = sitesQuery?.data?.sites.data;
   const isLoading = session.loading || sitesQuery?.fetching;
@@ -47,12 +41,7 @@ const Sites: Page = () => {
 
   return (
     <>
-      <Site.Elements.List
-        sites={sites}
-        totalPages={pageCount}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
+      <Site.Elements.List sites={sites} totalPages={pageCount} currentPage={page} onPageChange={handlePageChange} />
     </>
   );
 };
@@ -61,11 +50,6 @@ const PageNavContent: React.FC = () => {
   return <Projects.Sites.AddSiteDropdown />;
 };
 
-Sites.getLayout = (page) => (
-  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
-);
+Sites.getLayout = (page) => <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>;
 
-export default withAccess({
-  Component: Sites,
-  requiredPermissions: [constants.PERMISSION.SITE.VIEW_OVERVIEW],
-});
+export default withAccess({ Component: Sites, requiredPermissions: [constants.PERMISSION.SITE.VIEW_OVERVIEW] });

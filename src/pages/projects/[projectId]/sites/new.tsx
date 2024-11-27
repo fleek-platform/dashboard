@@ -6,10 +6,7 @@ import { useClient } from 'urql';
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { DeploySite } from '@/fragments';
-import {
-  GitRepository,
-  GitUser,
-} from '@/fragments/DeploySite/Revamp/DeploySite.context';
+import { GitRepository, GitUser } from '@/fragments/DeploySite/Revamp/DeploySite.context';
 import {
   GitIntegrationDocument,
   GitIntegrationQuery,
@@ -48,8 +45,7 @@ const NewSitePage: Page = () => {
 const NewSite = () => {
   const [title, setTitle] = useState<string>();
   const [sourceProvider, setSourceProvider] = useState<SiteSourceProvider>();
-  const [handleBackClick, setHandleBackClick] =
-    useState<MouseEventHandler<HTMLButtonElement>>();
+  const [handleBackClick, setHandleBackClick] = useState<MouseEventHandler<HTMLButtonElement>>();
   const [gitUser, setGitUser] = useState<GitUser>();
   const [gitBranch, setGitBranch] = useState<string>();
   const [gitRepository, setGitRepository] = useState<GitRepository>();
@@ -95,10 +91,7 @@ const NewSite = () => {
             throw new Error('Failed to find installation id');
           }
 
-          const gitIntegrationResult = await client.query<
-            GitIntegrationQuery,
-            GitIntegrationQueryVariables
-          >(GitIntegrationDocument, {
+          const gitIntegrationResult = await client.query<GitIntegrationQuery, GitIntegrationQueryVariables>(GitIntegrationDocument, {
             where: { gitProviderId },
           });
 
@@ -123,10 +116,7 @@ const NewSite = () => {
             sourceRepositoryName: gitRepository?.name,
             sourceRepositoryOwner: gitRepository?.owner,
             sourceBranch: gitBranch ?? gitRepository?.defaultBranch,
-            githubInstallationId:
-              mode === 'self'
-                ? undefined
-                : parseInt(gitUser?.installationId as string),
+            githubInstallationId: mode === 'self' ? undefined : parseInt(gitUser?.installationId as string),
             dockerImage: values?.dockerImage,
 
             frameworkId: values.frameworkId ?? undefined,
@@ -143,18 +133,15 @@ const NewSite = () => {
 
         // create secrets if present
         if (values.secrets.length > 0 && secretGroupId) {
-          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(
-            async (newSecret: SiteNewSecret) =>
-              createSecret({
-                data: {
-                  groupId: secretGroupId,
-                  key: newSecret.key,
-                  value: newSecret.value,
-                  visibility: newSecret.encrypted
-                    ? SecretVisibility.ENCRYPTED
-                    : SecretVisibility.PUBLIC,
-                },
-              }),
+          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(async (newSecret: SiteNewSecret) =>
+            createSecret({
+              data: {
+                groupId: secretGroupId,
+                key: newSecret.key,
+                value: newSecret.value,
+                visibility: newSecret.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
+              },
+            })
           );
 
           await Promise.all(createSecretPromises).catch((error) => {
@@ -163,19 +150,12 @@ const NewSite = () => {
           });
         }
 
-        await triggerDeployment({
-          where: { siteId: createResult.data.createSite.id },
-        }).catch((error) => {
+        await triggerDeployment({ where: { siteId: createResult.data.createSite.id } }).catch((error) => {
           // should not stop the process if trigger deployment fails
           Log.error('Failed to trigger deployment', error);
         });
 
-        await router.push(
-          routes.project.site.overview({
-            projectId: session.project.id,
-            siteId: createResult.data.createSite.id,
-          }),
-        );
+        await router.push(routes.project.site.overview({ projectId: session.project.id, siteId: createResult.data.createSite.id }));
       } catch (error) {
         toast.error({ error, log: 'Create site failed' });
       }
@@ -272,8 +252,7 @@ const LegacyNewSite = () => {
   const [accessToken, setAccessToken] = useState<string>();
   const [gitRepository, setGitRepository] = useState<GitProvider.Repository>();
   const [gitBranch, setGitBranch] = useState<string>();
-  const [handleBackClick, setHandleBackClick] =
-    useState<MouseEventHandler<HTMLButtonElement>>();
+  const [handleBackClick, setHandleBackClick] = useState<MouseEventHandler<HTMLButtonElement>>();
 
   const [, createSite] = useCreateSiteMutation();
   const [, triggerDeployment] = useTriggerDeploymentMutation();
@@ -310,10 +289,7 @@ const LegacyNewSite = () => {
             throw new Error('Failed to find git provider installation');
           }
 
-          const gitIntegrationResult = await client.query<
-            GitIntegrationQuery,
-            GitIntegrationQueryVariables
-          >(GitIntegrationDocument, {
+          const gitIntegrationResult = await client.query<GitIntegrationQuery, GitIntegrationQueryVariables>(GitIntegrationDocument, {
             where: { gitProviderId },
           });
 
@@ -355,18 +331,15 @@ const LegacyNewSite = () => {
 
         // create secrets if present
         if (values.secrets.length > 0 && secretGroupId) {
-          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(
-            async (newSecret: SiteNewSecret) =>
-              createSecret({
-                data: {
-                  groupId: secretGroupId,
-                  key: newSecret.key,
-                  value: newSecret.value,
-                  visibility: newSecret.encrypted
-                    ? SecretVisibility.ENCRYPTED
-                    : SecretVisibility.PUBLIC,
-                },
-              }),
+          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(async (newSecret: SiteNewSecret) =>
+            createSecret({
+              data: {
+                groupId: secretGroupId,
+                key: newSecret.key,
+                value: newSecret.value,
+                visibility: newSecret.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
+              },
+            })
           );
 
           await Promise.all(createSecretPromises).catch((error) => {
@@ -375,19 +348,12 @@ const LegacyNewSite = () => {
           });
         }
 
-        await triggerDeployment({
-          where: { siteId: createResult.data.createSite.id },
-        }).catch((error) => {
+        await triggerDeployment({ where: { siteId: createResult.data.createSite.id } }).catch((error) => {
           // should not stop the process if trigger deployment fails
           Log.error('Failed to trigger deployment', error);
         });
 
-        await router.push(
-          routes.project.site.overview({
-            projectId: session.project.id,
-            siteId: createResult.data.createSite.id,
-          }),
-        );
+        await router.push(routes.project.site.overview({ projectId: session.project.id, siteId: createResult.data.createSite.id }));
       } catch (error) {
         toast.error({ error, log: 'Create site failed' });
       }
@@ -477,7 +443,4 @@ const LegacyNewSite = () => {
 
 NewSitePage.getLayout = (page) => <DeploySite.Layout>{page}</DeploySite.Layout>;
 
-export default withAccess({
-  Component: NewSitePage,
-  requiredPermissions: [constants.PERMISSION.SITE.CREATE],
-});
+export default withAccess({ Component: NewSitePage, requiredPermissions: [constants.PERMISSION.SITE.CREATE] });

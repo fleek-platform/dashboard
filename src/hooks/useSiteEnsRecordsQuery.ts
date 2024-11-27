@@ -13,10 +13,7 @@ import { useQueryWithCallback } from './useQueryWithCallback';
 
 type Data = SiteENSRecord[];
 
-export type UseSiteEnsRecordsQueryArgs = Omit<
-  UseQueryArgs<Exact<{ where: { id: string } }>, Data>,
-  'query'
->;
+export type UseSiteEnsRecordsQueryArgs = Omit<UseQueryArgs<Exact<{ where: { id: string } }>, Data>, 'query'>;
 
 export const useSiteEnsRecordsQuery = (args: UseSiteEnsRecordsQueryArgs) => {
   const client = useClient();
@@ -37,10 +34,10 @@ export const useSiteEnsRecordsQuery = (args: UseSiteEnsRecordsQueryArgs) => {
             .query<EnsRecordsByIpnsIdQuery, EnsRecordsByIpnsIdQueryVariables>(
               EnsRecordsByIpnsIdDocument,
               { where: { ipnsRecordId: ipns.id } },
-              { requestPolicy: 'network-only' },
+              { requestPolicy: 'network-only' }
             )
-            .toPromise(),
-        ),
+            .toPromise()
+        )
       );
 
       return ensRecordsByIpnsId

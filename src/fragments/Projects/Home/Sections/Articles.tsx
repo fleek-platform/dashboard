@@ -12,13 +12,7 @@ export type ArticleItemProps = {
   imgSrc: string;
 };
 
-const ArticleItem: React.FC<LoadingProps<ArticleItemProps>> = ({
-  title,
-  description,
-  href = '#',
-  imgSrc,
-  isLoading,
-}) => {
+const ArticleItem: React.FC<LoadingProps<ArticleItemProps>> = ({ title, description, href = '#', imgSrc, isLoading }) => {
   if (isLoading) {
     return (
       <S.ArticleItem.Wrapper key="title" href={href}>
@@ -67,13 +61,7 @@ export const Articles: React.FC = () => {
             <ArticleItem isLoading />
           </>
         ) : (
-          articles.map((article) => (
-            <ArticleItem
-              isLoading={isLoading}
-              key={article.title}
-              {...article}
-            />
-          ))
+          articles.map((article) => <ArticleItem isLoading={isLoading} key={article.title} {...article} />)
         )}
       </S.Articles.List>
       <S.OutsideLink href={constants.EXTERNAL_LINK.FLEEK_BLOG}>

@@ -11,17 +11,16 @@ export type LearnMoreMessageProps = ChildrenProps<
   } & React.ComponentPropsWithRef<typeof Text>
 >;
 
-export const LearnMoreMessage = forwardRef<
-  HTMLParagraphElement,
-  LearnMoreMessageProps
->(({ prefix = 'Learn more about', href, children, ...props }, ref) => {
-  return (
-    <Text ref={ref} {...props} className="flex items-center">
-      {prefix}&nbsp;
-      <ExternalLink href={href} variant="accent" className="hover:underline">
-        {children}
-      </ExternalLink>
-      .
-    </Text>
-  );
-});
+export const LearnMoreMessage = forwardRef<HTMLParagraphElement, LearnMoreMessageProps>(
+  ({ prefix = 'Learn more about', href, children, ...props }, ref) => {
+    return (
+      <Text ref={ref} {...props} className="flex items-center">
+        {prefix}&nbsp;
+        <ExternalLink href={href} variant="accent" className="hover:underline">
+          {children}
+        </ExternalLink>
+        .
+      </Text>
+    );
+  }
+);

@@ -12,9 +12,7 @@ export const Layout: React.FC<Layout> = ({ children, nav: pageNavContent }) => {
 
   return (
     <RootLayout.Container>
-      <RootLayout.Head
-        title={RootLayout.Head.titles.project(session.project?.name)}
-      />
+      <RootLayout.Head title={RootLayout.Head.titles.project(session.project?.name)} />
       <RootLayout.Page
         slotSidebar={<ProjectDropdown />}
         slotPage={pageNavContent}

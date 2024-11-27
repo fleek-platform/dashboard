@@ -23,11 +23,7 @@ export const PaymentDescription: React.FC = () => {
 
       <Divider />
 
-      <Form.InputField
-        name="promoCode"
-        label="Promo Code"
-        placeholder="Enter Promo"
-      />
+      <Form.InputField name="promoCode" label="Promo Code" placeholder="Enter Promo" />
 
       <S.GapWrapper>
         <PriceRow label="Plan" value={`${formatPrice(plan.price)} USD`} />
@@ -45,9 +41,7 @@ export const PaymentDescription: React.FC = () => {
         Overage will be billed next payment (if applicable)
       </AlertBox>
 
-      <LearnMoreMessage href={values.readMoreHref}>
-        {values.readMoreMessage}
-      </LearnMoreMessage>
+      <LearnMoreMessage href={values.readMoreHref}>{values.readMoreMessage}</LearnMoreMessage>
     </S.Container>
   );
 };
@@ -59,12 +53,7 @@ type PriceRowProps = {
   highlight?: boolean;
 };
 
-const PriceRow: React.FC<PriceRowProps> = ({
-  label,
-  value,
-  highlight,
-  copyValue,
-}) => {
+const PriceRow: React.FC<PriceRowProps> = ({ label, value, highlight, copyValue }) => {
   const toast = useToast();
 
   const handleCopy = () => {

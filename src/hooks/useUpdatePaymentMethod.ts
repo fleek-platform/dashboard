@@ -13,9 +13,7 @@ export const useUpdatePaymentMethod = () => {
   const projectId = router.query.projectId;
 
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
-  });
+  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
 
   const updatePaymentMethod = useCallback(async () => {
     try {

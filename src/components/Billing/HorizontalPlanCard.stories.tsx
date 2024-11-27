@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import {
-  HorizontalPlanCard,
-  HorizontalPlanCardProps,
-} from './HorizontalPlanCard';
+import { HorizontalPlanCard, HorizontalPlanCardProps } from './HorizontalPlanCard';
 
 const meta: Meta = {
   title: 'Library/Components/Billing/Horizontal Plan Card',

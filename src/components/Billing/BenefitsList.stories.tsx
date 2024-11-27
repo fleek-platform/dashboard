@@ -17,11 +17,6 @@ export const Component: Story = {
   },
 
   args: {
-    benefits: [
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-    ],
+    benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
   },
 };

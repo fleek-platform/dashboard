@@ -19,12 +19,9 @@ import { Log } from '@/utils/log';
 const PersonalAccessTokensPage: Page = () => {
   const toast = useToast();
 
-  const [createPATModalState, setCreatePATModalState] =
-    useState<CreatePATModalState>({ isOpen: false });
-  const [, createLoginVerificationSession] =
-    useCreateLoginVerificationSessionMutation();
-  const [, createPersonalAccessTokenFromVerificationSession] =
-    useCreatePersonalAccessTokenFromVerificationSessionMutation();
+  const [createPATModalState, setCreatePATModalState] = useState<CreatePATModalState>({ isOpen: false });
+  const [, createLoginVerificationSession] = useCreateLoginVerificationSessionMutation();
+  const [, createPersonalAccessTokenFromVerificationSession] = useCreatePersonalAccessTokenFromVerificationSessionMutation();
 
   const [personalAccessTokensQuery] = usePersonalAccessTokensQuery();
 
@@ -43,24 +40,17 @@ const PersonalAccessTokensPage: Page = () => {
     onSubmit: async (values) => {
       try {
         const verificationSessionId = uuid();
-        await createLoginVerificationSession({
+        await createLoginVerificationSession({ where: { id: verificationSessionId } });
+        const createPATResult = await createPersonalAccessTokenFromVerificationSession({
           where: { id: verificationSessionId },
+          data: { name: values.patName },
         });
-        const createPATResult =
-          await createPersonalAccessTokenFromVerificationSession({
-            where: { id: verificationSessionId },
-            data: { name: values.patName },
-          });
 
         if (!createPATResult.data) {
-          throw (
-            createPATResult.error ||
-            new Error('There was an error creating your Personal Access Token')
-          );
+          throw createPATResult.error || new Error('There was an error creating your Personal Access Token');
         }
 
-        const patValue =
-          createPATResult.data.createPersonalAccessTokenFromVerificationSession;
+        const patValue = createPATResult.data.createPersonalAccessTokenFromVerificationSession;
 
         setCreatePATModalState({ isOpen: true, patValue: patValue });
         createPATForm.resetForm();
@@ -112,18 +102,14 @@ const PersonalAccessTokensPage: Page = () => {
       <Form.Provider value={deletePATForm}>
         <Profile.Settings.Sections.ManagePAT
           isLoading={personalAccessTokensQuery.fetching}
-          patList={
-            personalAccessTokensQuery.data?.personalAccessTokens.data || []
-          }
+          patList={personalAccessTokensQuery.data?.personalAccessTokens.data || []}
         />
       </Form.Provider>
     </>
   );
 };
 
-PersonalAccessTokensPage.getLayout = (page) => (
-  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
-);
+PersonalAccessTokensPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
 
 type CreatePATModalState = {
   isOpen: boolean;

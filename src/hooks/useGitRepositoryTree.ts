@@ -11,22 +11,11 @@ export type UseGitRepositoryTreeArgs = {
   accessToken: string;
 } & Partial<GitProvider.GetTreeArgs>;
 
-export const useGitRepositoryTree = ({
-  provider,
-  pause,
-  accessToken = '',
-  ...args
-}: UseGitRepositoryTreeArgs) => {
+export const useGitRepositoryTree = ({ provider, pause, accessToken = '', ...args }: UseGitRepositoryTreeArgs) => {
   const gitProvider = useGitProvider({ provider, accessToken });
 
   const queryFn = useCallback(async () => {
-    if (
-      !gitProvider ||
-      accessToken.length === 0 ||
-      !args.slug ||
-      !args.repository ||
-      !args.ref
-    ) {
+    if (!gitProvider || accessToken.length === 0 || !args.slug || !args.repository || !args.ref) {
       return [];
     }
 
@@ -38,12 +27,7 @@ export const useGitRepositoryTree = ({
   }, [gitProvider, accessToken, args.slug, args.repository, args.ref]);
 
   return useQuery({
-    queryKey: [
-      'gitRepositoryTree',
-      provider,
-      accessToken,
-      ...Object.values(args),
-    ],
+    queryKey: ['gitRepositoryTree', provider, accessToken, ...Object.values(args)],
     queryFn,
     enabled: !pause,
   });

@@ -11,10 +11,7 @@ export type UseStripeCheckoutArgs = {
   domSelector: string;
 };
 
-export const useStripeCheckout = ({
-  plan,
-  domSelector,
-}: UseStripeCheckoutArgs) => {
+export const useStripeCheckout = ({ plan, domSelector }: UseStripeCheckoutArgs) => {
   const { constants } = useTheme();
   const [meQuery] = useMeQuery();
   const [checkout, setCheckout] = useState<StripeCheckout>();
@@ -24,9 +21,7 @@ export const useStripeCheckout = ({
   useEffect(() => {
     if (!checkout && constants && meQuery.data) {
       if (!meQuery.data.user.email) {
-        setMessage(
-          'Please setup your email in your account settings before proceeding.',
-        );
+        setMessage('Please setup your email in your account settings before proceeding.');
 
         return;
       }

@@ -1,10 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { SettingsDeleteModal } from '@/components';
-import {
-  useDeletePrivateGatewayDependenciesQuery,
-  usePrivateGatewaysQuery,
-} from '@/generated/graphqlClient';
+import { useDeletePrivateGatewayDependenciesQuery, usePrivateGatewaysQuery } from '@/generated/graphqlClient';
 import { Domain } from '@/types/Domain';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { SiteDomain } from '@/types/Site';
@@ -14,80 +11,51 @@ import { isActiveDomain } from '@/utils/isActiveDomain';
 
 import { useDeletePrivateGatewayContext } from './DeletePrivateGateway.context';
 
-export const DeletePrivateGatewayModal: React.FC<ChildrenProps> = ({
-  children,
-}) => {
-  const { isOpen, toggleOpen, privateGatewayId } =
-    useDeletePrivateGatewayContext();
+export const DeletePrivateGatewayModal: React.FC<ChildrenProps> = ({ children }) => {
+  const { isOpen, toggleOpen, privateGatewayId } = useDeletePrivateGatewayContext();
 
-  const [deletePrivateGatewayDependenciesQuery] =
-    useDeletePrivateGatewayDependenciesQuery({
-      variables: {
-        where: {
-          id: privateGatewayId!,
-        },
+  const [deletePrivateGatewayDependenciesQuery] = useDeletePrivateGatewayDependenciesQuery({
+    variables: {
+      where: {
+        id: privateGatewayId!,
       },
-      requestPolicy: 'network-only',
-      pause: !isOpen || !privateGatewayId,
-    });
+    },
+    requestPolicy: 'network-only',
+    pause: !isOpen || !privateGatewayId,
+  });
 
   const isLoading = deletePrivateGatewayDependenciesQuery.fetching;
-  const currentPrimaryDomain =
-    deletePrivateGatewayDependenciesQuery.data?.privateGateway.primaryDomain;
+  const currentPrimaryDomain = deletePrivateGatewayDependenciesQuery.data?.privateGateway.primaryDomain;
   const domains = useMemo(() => {
     if (deletePrivateGatewayDependenciesQuery.data) {
-      return filterDeletedDomains(
-        deletePrivateGatewayDependenciesQuery.data.privateGateway
-          .domains as SiteDomain[],
-      );
+      return filterDeletedDomains(deletePrivateGatewayDependenciesQuery.data.privateGateway.domains as SiteDomain[]);
     }
 
     return [];
   }, [deletePrivateGatewayDependenciesQuery.data]);
 
-  const shouldReplacePrimaryDomain =
-    currentPrimaryDomain &&
-    domains.some((domain) => domain.id === currentPrimaryDomain.id);
+  const shouldReplacePrimaryDomain = currentPrimaryDomain && domains.some((domain) => domain.id === currentPrimaryDomain.id);
 
   const [privateGatewaysQuery] = usePrivateGatewaysQuery({
     pause: !shouldReplacePrimaryDomain,
-    variables: {},
   });
 
   const primaryDomainCandidates = useMemo(() => {
     if (shouldReplacePrimaryDomain) {
-      return privateGatewaysQuery.data?.privateGateways.data.flatMap(
-        (gateway) => {
-          if (gateway.id === privateGatewayId) {
-            return [];
-          }
+      return privateGatewaysQuery.data?.privateGateways.data.flatMap((gateway) => {
+        if (gateway.id === privateGatewayId) {
+          return [];
+        }
 
-          return (
-            gateway.domains.filter((domain) =>
-              isActiveDomain({
-                domain,
-                primaryDomainId: currentPrimaryDomain.id,
-              }),
-            ) || []
-          );
-        },
-      );
+        return gateway.domains.filter((domain) => isActiveDomain({ domain, primaryDomainId: currentPrimaryDomain.id })) || [];
+      });
     }
 
     return [];
-  }, [
-    shouldReplacePrimaryDomain,
-    privateGatewaysQuery.data?.privateGateways.data,
-    privateGatewayId,
-    currentPrimaryDomain,
-  ]);
+  }, [shouldReplacePrimaryDomain, privateGatewaysQuery.data?.privateGateways.data, privateGatewayId, currentPrimaryDomain]);
 
   return (
-    <SettingsDeleteModal
-      trigger={children}
-      open={isOpen}
-      onOpenChange={toggleOpen}
-    >
+    <SettingsDeleteModal trigger={children} open={isOpen} onOpenChange={toggleOpen}>
       <Stepper.Root>
         <Stepper.Indicator />
 
@@ -97,11 +65,7 @@ export const DeletePrivateGatewayModal: React.FC<ChildrenProps> = ({
           </Stepper.Step>
 
           <Stepper.Step>
-            <Step2
-              domains={domains}
-              primaryDomainCandidates={primaryDomainCandidates}
-              isLoading={isLoading}
-            />
+            <Step2 domains={domains} primaryDomainCandidates={primaryDomainCandidates} isLoading={isLoading} />
           </Stepper.Step>
 
           <Stepper.Step>
@@ -122,29 +86,18 @@ const Step1: React.FC = () => {
 
   return (
     <>
-      <SettingsDeleteModal.Heading>
-        Delete private gateway
-      </SettingsDeleteModal.Heading>
+      <SettingsDeleteModal.Heading>Delete private gateway</SettingsDeleteModal.Heading>
 
-      <Text>
-        Please confirm that you want to delete this private gateway and all
-        associated domains.
-      </Text>
+      <Text>Please confirm that you want to delete this private gateway and all associated domains.</Text>
 
-      <Text>
-        In the following steps, you will confirm the deletion of all domains
-        used within this private gateway.
-      </Text>
+      <Text>In the following steps, you will confirm the deletion of all domains used within this private gateway.</Text>
 
       <SettingsDeleteModal.Warning />
 
       <SettingsDeleteModal.Footer>
         <SettingsDeleteModal.CancelButton />
 
-        <SettingsDeleteModal.ConfirmButton
-          onClick={handleConfirm}
-          className="flex-1"
-        >
+        <SettingsDeleteModal.ConfirmButton onClick={handleConfirm} className="flex-1">
           Continue
         </SettingsDeleteModal.ConfirmButton>
       </SettingsDeleteModal.Footer>
@@ -157,18 +110,12 @@ type Step2Props = LoadingProps<{
   primaryDomainCandidates?: Domain[];
 }>;
 
-const Step2: React.FC<Step2Props> = ({
-  domains,
-  isLoading,
-  primaryDomainCandidates,
-}) => {
+const Step2: React.FC<Step2Props> = ({ domains, isLoading, primaryDomainCandidates }) => {
   const stepper = Stepper.useContext();
-  const { newPrimaryDomain, setNewPrimaryDomain } =
-    useDeletePrivateGatewayContext();
+  const { newPrimaryDomain, setNewPrimaryDomain } = useDeletePrivateGatewayContext();
   const [isDomainsValid, setIsDomainsValid] = useState(false);
 
-  const shouldChoosePrimaryDomain =
-    primaryDomainCandidates && primaryDomainCandidates.length > 0;
+  const shouldChoosePrimaryDomain = primaryDomainCandidates && primaryDomainCandidates.length > 0;
 
   const domainsRows = useMemo(() => {
     if (!domains) {
@@ -184,22 +131,14 @@ const Step2: React.FC<Step2Props> = ({
 
   return (
     <>
-      <SettingsDeleteModal.Heading>
-        Confirm private gateway deletion
-      </SettingsDeleteModal.Heading>
+      <SettingsDeleteModal.Heading>Confirm private gateway deletion</SettingsDeleteModal.Heading>
 
       <Text>The active domains in your private gateway are listed below.</Text>
 
       {domainsRows.length > 0 && (
         <>
-          <Text>
-            To delete a private gateway that has domains, you will need to
-            remove the configurations from your DNS provider.
-          </Text>
-          <Text>
-            After that, mark the domains as confirmed for deletion by clicking
-            their check-boxes in the list below.
-          </Text>
+          <Text>To delete a private gateway that has domains, you will need to remove the configurations from your DNS provider.</Text>
+          <Text>After that, mark the domains as confirmed for deletion by clicking their check-boxes in the list below.</Text>
         </>
       )}
 
@@ -214,21 +153,14 @@ const Step2: React.FC<Step2Props> = ({
       {shouldChoosePrimaryDomain && (
         <>
           <Text>
-            Since your primary domain is associated to the private gateway, here
-            you can choose a new primary domain from your other private
+            Since your primary domain is associated to the private gateway, here you can choose a new primary domain from your other private
             gateway&apos;s domains
           </Text>
 
-          <Combobox
-            items={primaryDomainCandidates}
-            selected={[newPrimaryDomain, setNewPrimaryDomain]}
-            queryKey="hostname"
-          >
+          <Combobox items={primaryDomainCandidates} selected={[newPrimaryDomain, setNewPrimaryDomain]} queryKey="hostname">
             {({ Field, Options }) => (
               <>
-                <Field placeholder="Choose Domain">
-                  {(selected) => selected.hostname}
-                </Field>
+                <Field placeholder="Choose Domain">{(selected) => selected.hostname}</Field>
 
                 <Options>{(item) => item.hostname}</Options>
               </>
@@ -242,11 +174,7 @@ const Step2: React.FC<Step2Props> = ({
         <SettingsDeleteModal.CancelButton />
         <SettingsDeleteModal.ConfirmButton
           onClick={handleConfirm}
-          disabled={
-            !isDomainsValid ||
-            (shouldChoosePrimaryDomain && !newPrimaryDomain) ||
-            isLoading
-          }
+          disabled={!isDomainsValid || (shouldChoosePrimaryDomain && !newPrimaryDomain) || isLoading}
           className="flex-1"
         >
           Continue
@@ -257,15 +185,8 @@ const Step2: React.FC<Step2Props> = ({
 };
 
 const Step3: React.FC<LoadingProps> = ({ isLoading }) => {
-  const {
-    privateGatewayId,
-    newPrimaryDomain,
-    privateGatewayName,
-    onSubmitDelete,
-    toggleOpen,
-  } = useDeletePrivateGatewayContext();
-  const [privateGatewayConfirmation, setPrivateGatewayConfirmation] =
-    useState('');
+  const { privateGatewayId, newPrimaryDomain, privateGatewayName, onSubmitDelete, toggleOpen } = useDeletePrivateGatewayContext();
+  const [privateGatewayConfirmation, setPrivateGatewayConfirmation] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleConfirmationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -283,13 +204,11 @@ const Step3: React.FC<LoadingProps> = ({ isLoading }) => {
 
   return (
     <>
-      <SettingsDeleteModal.Heading>
-        Confirm private gateway deletion
-      </SettingsDeleteModal.Heading>
+      <SettingsDeleteModal.Heading>Confirm private gateway deletion</SettingsDeleteModal.Heading>
 
       <Text>
-        To confirm you want to delete your private gateway, enter the gateway
-        name in the field below and click &lsquo;Delete private gateway&rsquo;
+        To confirm you want to delete your private gateway, enter the gateway name in the field below and click &lsquo;Delete private
+        gateway&rsquo;
       </Text>
 
       <FormField.Root>
@@ -297,11 +216,7 @@ const Step3: React.FC<LoadingProps> = ({ isLoading }) => {
           Enter the private gateway name <b>{privateGatewayName}</b>
         </FormField.Label>
         <Input.Root>
-          <Input.Field
-            placeholder={privateGatewayName}
-            value={privateGatewayConfirmation}
-            onChange={handleConfirmationChange}
-          />
+          <Input.Field placeholder={privateGatewayName} value={privateGatewayConfirmation} onChange={handleConfirmationChange} />
         </Input.Root>
       </FormField.Root>
 
@@ -312,11 +227,7 @@ const Step3: React.FC<LoadingProps> = ({ isLoading }) => {
         <Button
           intent="danger"
           loading={isLoading}
-          disabled={
-            isSubmitting ||
-            privateGatewayName !== privateGatewayConfirmation ||
-            isSubmitting
-          }
+          disabled={isSubmitting || privateGatewayName !== privateGatewayConfirmation || isSubmitting}
           onClick={handleSubmit}
           className="flex-1"
         >

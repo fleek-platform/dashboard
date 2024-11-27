@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const GearIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M10 11.875C11.0356 11.875 11.875 11.0355 11.875 10C11.875 8.96447 11.0356 8.125 10 8.125C8.96448 8.125 8.12502 8.96447 8.12502 10C8.12502 11.0355 8.96448 11.875 10 11.875Z"
       fill="currentColor"

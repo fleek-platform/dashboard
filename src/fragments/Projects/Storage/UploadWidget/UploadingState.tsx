@@ -4,17 +4,11 @@ import { useUploadContext } from '@/providers/UploadProvider';
 import { Button, Text } from '@/ui';
 import { convertToReadableTime } from '@/utils/getDurationUntilNow';
 
-import {
-  UploadFileStyles as FS,
-  UploadingStateStyles as S,
-} from './UploadWidget.styles';
+import { UploadFileStyles as FS, UploadingStateStyles as S } from './UploadWidget.styles';
 
 export const UploadingSate: React.FC = () => {
-  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } =
-    useUploadContext();
-  const failedFiles = uploads.filter(
-    (upload) => upload.status === 'error',
-  ).length;
+  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } = useUploadContext();
+  const failedFiles = uploads.filter((upload) => upload.status === 'error').length;
 
   const isSuccessWithFailed = uploadStatus === 'success' && failedFiles;
 
@@ -52,9 +46,7 @@ export const UploadingSate: React.FC = () => {
         </S.ErrorMessage>
       )}
       <S.ButtonsContainer>
-        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && (
-          <Button onClick={retryUpload}>Retry all</Button>
-        )}
+        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && <Button onClick={retryUpload}>Retry all</Button>}
         {uploadStatus !== 'uploading' && (
           <Button intent="neutral" onClick={cancelAll}>
             Cancel all

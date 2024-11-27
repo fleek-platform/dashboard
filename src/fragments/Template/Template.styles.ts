@@ -83,8 +83,7 @@ export const TemplateStyles = {
       gridTemplateColumns: '1fr 15.125rem',
       gap: '$page-padding',
 
-      gridTemplateAreas:
-        '"overview overview" "content details" "spacer spacer" "similar similar"',
+      gridTemplateAreas: '"overview overview" "content details" "spacer spacer" "similar similar"',
 
       '@sm!': {
         gridTemplateColumns: '1fr',

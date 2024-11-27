@@ -37,8 +37,7 @@ export const ComingSoonStyles = {
       position: 'absolute',
       zIndex: 1,
       bottom: 0,
-      background:
-        'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, $background 100%)',
+      background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, $background 100%)',
       width: '$full',
       height: '16.125rem',
     }),

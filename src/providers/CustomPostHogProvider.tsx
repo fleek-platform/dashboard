@@ -27,13 +27,13 @@ export const CustomPostHogProvider = ({
   const posthog = useMemo(() => {
     if (client && apiKey) {
       Log.warn(
-        '[PostHog.js] You have provided both a client and an apiKey to PostHogProvider. The apiKey will be ignored in favour of the client.',
+        '[PostHog.js] You have provided both a client and an apiKey to PostHogProvider. The apiKey will be ignored in favour of the client.'
       );
     }
 
     if (client && options) {
       Log.warn(
-        '[PostHog.js] You have provided both a client and options to PostHogProvider. The options will be ignored in favour of the client.',
+        '[PostHog.js] You have provided both a client and options to PostHogProvider. The options will be ignored in favour of the client.'
       );
     }
 
@@ -43,9 +43,7 @@ export const CustomPostHogProvider = ({
 
     if (apiKey) {
       if (posthogJs.__loaded) {
-        Log.warn(
-          '[PostHog.js] was already loaded elsewhere. This may cause issues.',
-        );
+        Log.warn('[PostHog.js] was already loaded elsewhere. This may cause issues.');
       }
 
       posthogJs.init(apiKey, options);

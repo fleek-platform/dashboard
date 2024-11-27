@@ -21,13 +21,9 @@ export const NavButtons: React.FC = () => {
   const router = useRouter();
   const deploymentId = router.query.deploymentId!;
   const siteId = router.query.siteId!;
-  const [deploymentQuery] = useDeploymentQuery({
-    variables: { where: { id: deploymentId } },
-  });
+  const [deploymentQuery] = useDeploymentQuery({ variables: { where: { id: deploymentId } } });
   const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
-  const hasDeployPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.DEPLOY],
-  });
+  const hasDeployPermission = usePermissions({ action: [constants.PERMISSION.SITE.DEPLOY] });
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   const siteQuota = useCanDeploySite({ siteId });
@@ -41,9 +37,7 @@ export const NavButtons: React.FC = () => {
 
   const siteLink = useSiteLink({ siteId }) || '#';
 
-  const deploymentURL = deployment?.previewUrlSlug
-    ? getLinkForSiteSlug(deployment.previewUrlSlug)
-    : siteLink;
+  const deploymentURL = deployment?.previewUrlSlug ? getLinkForSiteSlug(deployment.previewUrlSlug) : siteLink;
 
   const parsedStatus = parseAPIDeploymentStatus(deployment?.status);
 
@@ -91,11 +85,7 @@ export const NavButtons: React.FC = () => {
             isDeploymentCancelable={isCancelable}
             deploymentId={deploymentId}
           />
-          <Button
-            intent="neutral"
-            disabled={!isCancelable}
-            onClick={handleCancelDeploy}
-          >
+          <Button intent="neutral" disabled={!isCancelable} onClick={handleCancelDeploy}>
             Cancel deployment
           </Button>
         </>
@@ -103,10 +93,7 @@ export const NavButtons: React.FC = () => {
     case 'cancelled':
     case 'failed':
       return hasDeployPermission ? (
-        <SiteQuotaTooltip
-          canDeploy={siteQuota.canDeploy}
-          isLoading={siteQuota.isFetching}
-        >
+        <SiteQuotaTooltip canDeploy={siteQuota.canDeploy} isLoading={siteQuota.isFetching}>
           <Button
             intent="neutral"
             onClick={handleRedeploy}
@@ -121,10 +108,7 @@ export const NavButtons: React.FC = () => {
       return (
         <Box className="flex-row gap-3">
           {hasDeployPermission && (
-            <SiteQuotaTooltip
-              canDeploy={siteQuota.canDeploy}
-              isLoading={siteQuota.isFetching}
-            >
+            <SiteQuotaTooltip canDeploy={siteQuota.canDeploy} isLoading={siteQuota.isFetching}>
               <Button
                 intent="neutral"
                 onClick={handleRedeploy}
@@ -136,9 +120,7 @@ export const NavButtons: React.FC = () => {
             </SiteQuotaTooltip>
           )}
           <ExternalLink href={deploymentURL}>
-            <Button disabled={!deploymentURL}>
-              {deployment.previewUrlSlug ? 'Visit preview' : 'Visit site'}
-            </Button>
+            <Button disabled={!deploymentURL}>{deployment.previewUrlSlug ? 'Visit preview' : 'Visit site'}</Button>
           </ExternalLink>
         </Box>
       );

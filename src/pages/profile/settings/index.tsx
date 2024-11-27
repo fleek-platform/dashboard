@@ -60,9 +60,7 @@ const GeneralSettingsPage: Page = () => {
       username: '',
     },
     schema: zod.object({
-      username: zod.literal(user?.username, {
-        errorMap: () => ({ message: 'Incorrect username' }),
-      }),
+      username: zod.literal(user?.username, { errorMap: () => ({ message: 'Incorrect username' }) }),
     }),
     // TODO: add validation
     onSubmit: async () => {
@@ -87,17 +85,12 @@ const GeneralSettingsPage: Page = () => {
       />
 
       <Form.Provider value={deleteForm}>
-        <Profile.Settings.Sections.DeleteUser
-          username={user?.username || ''}
-          isLoading={meQuery.fetching}
-        />
+        <Profile.Settings.Sections.DeleteUser username={user?.username || ''} isLoading={meQuery.fetching} />
       </Form.Provider>
     </>
   );
 };
 
-GeneralSettingsPage.getLayout = (page) => (
-  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
-);
+GeneralSettingsPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
 
 export default GeneralSettingsPage;

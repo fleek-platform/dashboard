@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const WalletIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       id="Vector"
       d="M3.73052 4.06276H16.2305C16.3765 4.06269 16.5224 4.07196 16.6672 4.0905C16.6181 3.74588 16.4998 3.41477 16.3193 3.11713C16.1387 2.8195 15.8998 2.5615 15.6169 2.3587C15.334 2.1559 15.0129 2.01249 14.6731 1.93713C14.3332 1.86176 13.9816 1.856 13.6395 1.92018L3.35942 3.67526H3.3477C2.70242 3.79866 2.12859 4.16375 1.74341 4.69596C2.32372 4.2832 3.01838 4.06184 3.73052 4.06276Z"

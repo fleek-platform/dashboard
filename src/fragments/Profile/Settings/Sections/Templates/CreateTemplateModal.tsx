@@ -2,12 +2,7 @@ import { createTemplateSchema } from '@fleek-platform/utils-validation';
 import { useState } from 'react';
 
 import { BannerField, ExternalLink, Form, SettingsModal } from '@/components';
-import {
-  TemplateCategoriesQuery,
-  useProjectsQuery,
-  useSitesQuery,
-  useTemplateCategoriesQuery,
-} from '@/generated/graphqlClient';
+import { TemplateCategoriesQuery, useProjectsQuery, useSitesQuery, useTemplateCategoriesQuery } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Project } from '@/types/Project';
 import { ChildrenProps } from '@/types/Props';
@@ -16,9 +11,7 @@ import { Avatar, Box, Button, Combobox, FormField, Stepper, Text } from '@/ui';
 
 export type CreateTemplateModalProps = ChildrenProps;
 
-export const CreateTemplateModal: React.FC<CreateTemplateModalProps> = ({
-  children,
-}) => {
+export const CreateTemplateModal: React.FC<CreateTemplateModalProps> = ({ children }) => {
   const form = Form.useContext();
 
   const handleOpenChange = () => {
@@ -60,10 +53,7 @@ const Step1: React.FC = () => {
     <>
       <SettingsModal.Heading>Select site for template</SettingsModal.Heading>
 
-      <Text>
-        The sites that can be used as templates are listed below. Please select
-        one to continue.
-      </Text>
+      <Text>The sites that can be used as templates are listed below. Please select one to continue.</Text>
 
       <Box className="gap-2">
         <Text variant="primary"> To be used as a template, a site must:</Text>
@@ -85,11 +75,7 @@ const Step1: React.FC = () => {
           </Button>
         </SettingsModal.Close>
 
-        <Button
-          onClick={handleConfirm}
-          disabled={!siteField.value}
-          className="flex-1"
-        >
+        <Button onClick={handleConfirm} disabled={!siteField.value} className="flex-1">
           Continue
         </Button>
       </SettingsModal.Footer>
@@ -99,8 +85,7 @@ const Step1: React.FC = () => {
 
 const Step2: React.FC = () => {
   const stepper = Stepper.useContext();
-  const siteName =
-    Form.useField<SiteListItem | undefined>('site').value?.name || '';
+  const siteName = Form.useField<SiteListItem | undefined>('site').value?.name || '';
 
   const handleBack = () => {
     stepper.prevStep();
@@ -110,29 +95,18 @@ const Step2: React.FC = () => {
     <>
       <SettingsModal.Heading>Add template details</SettingsModal.Heading>
       <Text>
-        Finalize the details for your template below. These will be visible in
-        the from the{' '}
-        <ExternalLink
-          className="inline-flex"
-          variant="accent"
-          href="https://app.fleek.xyz/templates"
-        >
+        Finalize the details for your template below. These will be visible in the from the{' '}
+        <ExternalLink className="inline-flex" variant="accent" href="https://app.fleek.xyz/templates">
           Templates
         </ExternalLink>{' '}
         gallery.
       </Text>
       <Text>
-        NOTE: We recommend having a filled out Readme.md for the repository that
-        you are submitting, this will help users understand what your Template
-        is.
+        NOTE: We recommend having a filled out Readme.md for the repository that you are submitting, this will help users understand what
+        your Template is.
       </Text>
 
-      <Form.InputField
-        name="name"
-        placeholder={`${siteName} template`}
-        label="Name"
-        autoFocus
-      />
+      <Form.InputField name="name" placeholder={`${siteName} template`} label="Name" autoFocus />
 
       <SelectTemplateCategoryField />
 
@@ -141,10 +115,7 @@ const Step2: React.FC = () => {
         fieldType="Textarea"
         name="description"
         placeholder="Describe your template in 500 characters or less. This will be public."
-        charactersCounter={
-          createTemplateSchema.shape.data.shape.description.maxLength ??
-          undefined
-        }
+        charactersCounter={createTemplateSchema.shape.data.shape.description.maxLength ?? undefined}
         disableValidMessage
       />
 
@@ -167,14 +138,11 @@ const Step3: React.FC = () => {
       <SettingsModal.Heading>Template in Review</SettingsModal.Heading>
 
       <Text>
-        The Template you submitted is in review, if accepted you will be
-        notified and the Template will be put in the Fleek Template Gallery.
+        The Template you submitted is in review, if accepted you will be notified and the Template will be put in the Fleek Template
+        Gallery.
       </Text>
 
-      <Text>
-        If we have an issue with the review of your Template, you will be
-        notified with the reasonings it was not accepted.
-      </Text>
+      <Text>If we have an issue with the review of your Template, you will be notified with the reasonings it was not accepted.</Text>
 
       <SettingsModal.Footer>
         <SettingsModal.Close asChild>
@@ -202,11 +170,7 @@ const SelectProjectField: React.FC = () => {
   return (
     <FormField.Root>
       <FormField.Label>Project</FormField.Label>
-      <Combobox
-        items={projects}
-        selected={[session.project, handleProjectChange]}
-        queryKey="name"
-      >
+      <Combobox items={projects} selected={[session.project, handleProjectChange]} queryKey="name">
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select">{ProjectSelectItem}</Field>
@@ -234,14 +198,7 @@ const SelectSiteField: React.FC = () => {
   const [query, setQuery] = useState<string>();
   const session = useSessionContext();
   const [sitesQuery] = useSitesQuery({
-    variables: {
-      where: {
-        hasSourceProvider: true,
-        isDeployed: true,
-        isTemplate: false,
-        name: query,
-      },
-    },
+    variables: { where: { hasSourceProvider: true, isDeployed: true, isTemplate: false, name: query } },
     requestPolicy: 'network-only',
   });
 
@@ -259,10 +216,7 @@ const SelectSiteField: React.FC = () => {
         items={sites}
         selected={[field.value, field.setValue]}
         queryKey="name"
-        isLoading={
-          (sitesQuery.fetching && !sitesQuery.data?.sites.data) ||
-          session.loading
-        }
+        isLoading={(sitesQuery.fetching && !sitesQuery.data?.sites.data) || session.loading}
         isSearching={sitesQuery.fetching}
         onQueryChange={handleRefetch}
       >
@@ -288,29 +242,19 @@ const SiteSelectItem: React.FC<SiteListItem> = (site) => (
 );
 
 const SelectTemplateCategoryField: React.FC = () => {
-  const field = Form.useField<
-    TemplateCategoriesQuery['templateCategories']['data'][0] | undefined
-  >('category');
+  const field = Form.useField<TemplateCategoriesQuery['templateCategories']['data'][0] | undefined>('category');
 
   const [templateCategoriesQuery] = useTemplateCategoriesQuery();
 
-  const categories =
-    templateCategoriesQuery.data?.templateCategories.data || [];
+  const categories = templateCategoriesQuery.data?.templateCategories.data || [];
 
   return (
     <FormField.Root>
       <FormField.Label>Category</FormField.Label>
-      <Combobox
-        items={categories}
-        selected={[field.value, field.setValue]}
-        queryKey="name"
-        isLoading={templateCategoriesQuery.fetching}
-      >
+      <Combobox items={categories} selected={[field.value, field.setValue]} queryKey="name" isLoading={templateCategoriesQuery.fetching}>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select a category">
-              {(selected) => selected.name}
-            </Field>
+            <Field placeholder="Select a category">{(selected) => selected.name}</Field>
 
             <Options viewportHeight="$4xs">{(item) => item.name}</Options>
           </>
@@ -333,13 +277,7 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button
-      type="submit"
-      loading={isSubmitting}
-      disabled={shouldDisableSubmit}
-      onClick={handleSubmit}
-      className="flex-1"
-    >
+    <Button type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit} className="flex-1">
       Create Template
     </Button>
   );

@@ -25,9 +25,7 @@ export const useGitProvider = ({
   return providerHook({ accessToken });
 };
 
-const useGithub = ({
-  accessToken,
-}: { accessToken?: string }): GitHub | undefined => {
+const useGithub = ({ accessToken }: { accessToken?: string }): GitHub | undefined => {
   const github = useMemo(() => {
     return new GitHub(accessToken || '');
   }, [accessToken]);

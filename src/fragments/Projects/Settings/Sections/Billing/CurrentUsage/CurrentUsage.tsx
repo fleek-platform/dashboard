@@ -14,24 +14,13 @@ export const CurrentUsage: React.FC = () => {
     <SettingsBox.Container>
       <SettingsBox.Title>Current Usage</SettingsBox.Title>
 
-      <SettingsBox.Text>
-        Quick breakdown of usage in this project, click a specific data point to
-        get a breakdown.
-      </SettingsBox.Text>
+      <SettingsBox.Text>Quick breakdown of usage in this project, click a specific data point to get a breakdown.</SettingsBox.Text>
 
       <S.Grid>
-        {query.isLoading &&
-          Array.from({ length: 15 }).map((_, index) => (
-            <UsageGridItem isLoading key={index} />
-          ))}
+        {query.isLoading && Array.from({ length: 15 }).map((_, index) => <UsageGridItem isLoading key={index} />)}
 
         {query.data?.map((item) => (
-          <UsageGridItem
-            title={item.title}
-            value={item.value}
-            href={item.href}
-            key={item.title}
-          />
+          <UsageGridItem title={item.title} value={item.value} href={item.href} key={item.title} />
         ))}
       </S.Grid>
     </SettingsBox.Container>
@@ -46,12 +35,7 @@ type UsageItem = {
 
 type UsageGridItemProps = LoadingProps<UsageItem>;
 
-const UsageGridItem: React.FC<UsageGridItemProps> = ({
-  title,
-  value,
-  href,
-  isLoading,
-}) => {
+const UsageGridItem: React.FC<UsageGridItemProps> = ({ title, value, href, isLoading }) => {
   if (isLoading) {
     return (
       <S.GridItem.Container>
@@ -68,12 +52,7 @@ const UsageGridItem: React.FC<UsageGridItemProps> = ({
   return (
     <Link href={href}>
       <S.GridItem.Container data-link>
-        <Text
-          as="h3"
-          variant="primary"
-          weight={500}
-          className="flex gap-1 justify-between"
-        >
+        <Text as="h3" variant="primary" weight={500} className="flex gap-1 justify-between">
           {title} <Icon name="chevron-right" />
         </Text>
         <Text>{value}</Text>

@@ -6,9 +6,7 @@ type CSVUploadModalProps = {
   triggerRef: React.RefObject<HTMLButtonElement>;
 };
 
-export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
-  triggerRef,
-}) => {
+export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({ triggerRef }) => {
   return (
     <Dialog.Root>
       <S.ModalUpload.Trigger ref={triggerRef} />

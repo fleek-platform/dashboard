@@ -3,11 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
-import {
-  AuthProviders,
-  AuthWith,
-  useAuthProviders,
-} from '@/hooks/useAuthProviders';
+import { AuthProviders, AuthWith, useAuthProviders } from '@/hooks/useAuthProviders';
 import { usePostHog } from '@/hooks/usePostHog';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
@@ -32,9 +28,7 @@ const [Provider, useContext] = createContext<AuthContext>({
   providerName: 'AuthProvider',
 });
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [accessToken, setAccessToken, clearAccessToken] = useAuthCookie();
   const posthog = usePostHog();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
@@ -56,7 +50,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       const provider = providers[providerName];
       provider.handleLogin();
     },
-    [providers],
+    [providers]
   );
 
   const logout = useCallback(async () => {
@@ -100,7 +94,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setLoading(false);
       }
     },
-    [setAccessToken, loading, logout],
+    [setAccessToken, loading, logout]
   );
 
   const switchProjectAuth = useCallback(
@@ -119,7 +113,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providersValues, requestAccessToken],
+    [providersValues, requestAccessToken]
   );
 
   useEffect(() => {
@@ -129,8 +123,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       // if has a provider token, it means that auth provider is authenticated
       cookies.set('authProviderToken', provider.token);
 
-      const projectId =
-        cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+      const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
 
       // redirect if is in home page
       if (router.pathname === routes.home()) {
@@ -157,10 +150,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    cookies.values.authProviderToken,
-    ...providersValues.map((provider) => provider.token),
-  ]);
+  }, [cookies.values.authProviderToken, ...providersValues.map((provider) => provider.token)]);
 
   return (
     <Provider

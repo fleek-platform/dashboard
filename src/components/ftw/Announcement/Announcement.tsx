@@ -8,20 +8,13 @@ export const Announcement: React.FC = () => {
   const [isDismissed, setIsDismissed] = useState(true);
 
   useEffect(() => {
-    const storedDismissedId = localStorage.getItem(
-      constants.ANNOUNCEMENT_BANNER.LOCAL_STORAGE_KEY,
-    );
+    const storedDismissedId = localStorage.getItem(constants.ANNOUNCEMENT_BANNER.LOCAL_STORAGE_KEY);
     setIsDismissed(storedDismissedId === constants.ANNOUNCEMENT_BANNER.ID);
   }, []);
 
-  const onDismissAnnouncementClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
+  const onDismissAnnouncementClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    localStorage.setItem(
-      constants.ANNOUNCEMENT_BANNER.LOCAL_STORAGE_KEY,
-      constants.ANNOUNCEMENT_BANNER.ID,
-    );
+    localStorage.setItem(constants.ANNOUNCEMENT_BANNER.LOCAL_STORAGE_KEY, constants.ANNOUNCEMENT_BANNER.ID);
     setIsDismissed(true);
   };
 
@@ -37,10 +30,7 @@ export const Announcement: React.FC = () => {
       <Box className="flex-row justify-between">
         <Text className="text-accent-11 text-[0.625rem]">✨ NEW</Text>
         <Box className="p-[1.5px]" onClick={onDismissAnnouncementClick}>
-          <Icon
-            name="close"
-            className="text-neutral-11 text-[0.625rem] cursor-pointer hover:text-neutral-12"
-          />
+          <Icon name="close" className="text-neutral-11 text-[0.625rem] cursor-pointer hover:text-neutral-12" />
         </Box>
       </Box>
       <Text variant="primary" className="text-[0.8125rem] leading-tight">

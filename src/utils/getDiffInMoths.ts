@@ -5,10 +5,5 @@ type GetDiffInMothsArgs = {
 };
 
 export const getDiffInMoths = ({ expirationDate }: GetDiffInMothsArgs) => {
-  return Math.floor(
-    DateTime.fromFormat(expirationDate, 'MM/yy')
-      .endOf('month')
-      .diffNow('months')
-      .as('months'),
-  );
+  return Math.floor(DateTime.fromFormat(expirationDate, 'MM/yy').endOf('month').diffNow('months').as('months'));
 };

@@ -26,26 +26,15 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
       constants.PERMISSION.SITE.DELETE,
     ],
   });
-  const hasBuildSettingsPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
-  });
+  const hasBuildSettingsPermission = usePermissions({ action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS] });
   const hasDomainsPermissions = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN,
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS,
-    ],
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN, constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
   });
   const hasGitPermissions = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.ADD_GIT_INTEGRATION,
-      constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION,
-    ],
+    action: [constants.PERMISSION.SITE.ADD_GIT_INTEGRATION, constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION],
   });
   const hasEditEnvVariablesPermission = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.VIEW_ENV_VARIABLES,
-      constants.PERMISSION.SITE.EDIT_ENV_VARIABLES,
-    ],
+    action: [constants.PERMISSION.SITE.VIEW_ENV_VARIABLES, constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
   });
 
   const projectId = session.project.id;
@@ -55,21 +44,13 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
 
   const navigation: SubNavigationItem[] = useMemo(() => {
     const defaultItems = [
-      {
-        label: 'General',
-        path: routes.project.site.settings.general({ projectId, siteId }),
-        hasAccess: hasGeneralSettingsPermission,
-      },
+      { label: 'General', path: routes.project.site.settings.general({ projectId, siteId }), hasAccess: hasGeneralSettingsPermission },
       {
         label: 'Build & Deploy',
         path: routes.project.site.settings.build({ projectId, siteId }),
         hasAccess: hasBuildSettingsPermission,
       },
-      {
-        label: 'Domains',
-        path: routes.project.site.settings.domains({ projectId, siteId }),
-        hasAccess: hasDomainsPermissions,
-      },
+      { label: 'Domains', path: routes.project.site.settings.domains({ projectId, siteId }), hasAccess: hasDomainsPermissions },
     ];
 
     if (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site)) {
@@ -78,11 +59,7 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
         path: routes.project.site.settings.environment({ projectId, siteId }),
         hasAccess: hasEditEnvVariablesPermission,
       });
-      defaultItems.push({
-        label: 'Git',
-        path: routes.project.site.settings.git({ projectId, siteId }),
-        hasAccess: hasGitPermissions,
-      });
+      defaultItems.push({ label: 'Git', path: routes.project.site.settings.git({ projectId, siteId }), hasAccess: hasGitPermissions });
     } else {
       const managedPaths = [
         routes.project.site.settings.environment({ projectId, siteId }),
@@ -91,9 +68,7 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
 
       for (const path of managedPaths) {
         if (router.asPath.includes(path)) {
-          router.replace(
-            routes.project.site.settings.general({ projectId, siteId }),
-          );
+          router.replace(routes.project.site.settings.general({ projectId, siteId }));
         }
       }
     }
@@ -113,10 +88,7 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
 
   return (
     <SiteLayout>
-      <SubNavigationLayout
-        navigation={navigation}
-        isNavigationLoading={session.loading}
-      >
+      <SubNavigationLayout navigation={navigation} isNavigationLoading={session.loading}>
         {children}
       </SubNavigationLayout>
     </SiteLayout>

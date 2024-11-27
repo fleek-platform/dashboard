@@ -1,11 +1,7 @@
 import { useCallback, useState } from 'react';
 
-type PromiseReturnType<T> = T extends (...args: any[]) => Promise<infer R>
-  ? R
-  : never;
-type AsyncCall = <T extends (...args: any) => any>(
-  fn: T,
-) => (...args: Parameters<T>) => Promise<PromiseReturnType<T>>;
+type PromiseReturnType<T> = T extends (...args: any[]) => Promise<infer R> ? R : never;
+type AsyncCall = <T extends (...args: any) => any>(fn: T) => (...args: Parameters<T>) => Promise<PromiseReturnType<T>>;
 
 export const useAsync = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +23,7 @@ export const useAsync = () => {
           setLoading(false);
         }
       },
-    [],
+    []
   );
 
   return [

@@ -12,16 +12,10 @@ import { SectionsStyles as S } from './Sections.styles';
 
 export const Main: React.FC = () => {
   const session = useSessionContext();
-  const hasCreateSitePermission = usePermissions({
-    action: [constants.PERMISSION.SITE.CREATE],
-  });
-  const hasStoragePermissions = usePermissions({
-    action: [constants.PERMISSION.STORAGE.UPLOAD],
-  });
+  const hasCreateSitePermission = usePermissions({ action: [constants.PERMISSION.SITE.CREATE] });
+  const hasStoragePermissions = usePermissions({ action: [constants.PERMISSION.STORAGE.UPLOAD] });
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
-  const hasManageBillingPermission = usePermissions({
-    action: [constants.PERMISSION.BILLING.MANAGE],
-  });
+  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,11 +27,7 @@ export const Main: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        shouldShowUpgradePlan={hasManageBillingPermission}
-      />
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
       <S.Main.GridArea>
         <Text as="h2" size="xl" weight={500}>
           Get on Fleek!

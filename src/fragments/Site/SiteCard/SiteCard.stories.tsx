@@ -1,10 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import {
-  DeploymentStatus,
-  SourceProvider,
-  StorageType,
-} from '@/generated/graphqlClient';
+import { DeploymentStatus, SourceProvider, StorageType } from '@/generated/graphqlClient';
 import { Box } from '@/ui';
 
 import { SiteCard, SiteCardProps } from './SiteCard';

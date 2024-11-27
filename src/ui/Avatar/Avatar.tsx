@@ -8,12 +8,7 @@ import { IconName } from '../Icon/IconLibrary';
 import { ImageProps } from '../Image/Image';
 import { AvatarStyles as S } from './Avatar.styles';
 
-export type AvatarProps = {
-  title?: string;
-  src?: ImageProps['src'];
-  icon?: IconName;
-  enableIcon?: boolean;
-} & Omit<
+export type AvatarProps = { title?: string; src?: ImageProps['src']; icon?: IconName; enableIcon?: boolean } & Omit<
   ComponentPropsWithRef<typeof S.Wrapper>,
   'children' | 'withIcon' | 'src'
 >;
@@ -47,5 +42,5 @@ export const Avatar = forwardStyledRef<HTMLImageElement, AvatarProps>(
         {text}
       </S.Wrapper>
     );
-  },
+  }
 );

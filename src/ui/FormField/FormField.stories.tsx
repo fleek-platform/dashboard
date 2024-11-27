@@ -52,19 +52,13 @@ export const WithCombobox: Story = {
   render: () => {
     const ComboboxExample = () => {
       const selected = useState<string>();
-      // TODO: Investigate why inferred type fails
-      // using any temporaly
+
       return (
-        <Combobox
-          items={['Option 1', 'Option 2', 'Option 3']}
-          selected={selected}
-        >
+        <Combobox items={['Option 1', 'Option 2', 'Option 3']} selected={selected}>
           {({ Field, Options }) => (
             <>
-              <Field placeholder="Select an option">
-                {(selected: any) => selected}
-              </Field>
-              <Options>{(item: any) => item}</Options>
+              <Field placeholder="Select an option">{(selected) => selected}</Field>
+              <Options>{(item) => item}</Options>
             </>
           )}
         </Combobox>
@@ -77,9 +71,7 @@ export const WithCombobox: Story = {
 
         <ComboboxExample />
 
-        <FormField.Hint icon="fleek">
-          Use this field to select something
-        </FormField.Hint>
+        <FormField.Hint icon="fleek">Use this field to select something</FormField.Hint>
       </>
     );
 

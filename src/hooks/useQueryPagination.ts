@@ -11,10 +11,7 @@ type UseQueryPaginationArgs = {
 
 const isNumeric = (value: string) => /^\d+$/.test(value);
 
-export const useQueryPagination = ({
-  pathname,
-  extraSearchParams,
-}: UseQueryPaginationArgs) => {
+export const useQueryPagination = ({ pathname, extraSearchParams }: UseQueryPaginationArgs) => {
   const router = useRouter();
   const [page, setPage] = useState<number>();
   const queryPage = router.query.page;
@@ -29,18 +26,14 @@ export const useQueryPagination = ({
     }
 
     if (page && !queryPage) {
-      router.replace({ pathname, query: getQueryParam(page) }, undefined, {
-        shallow: true,
-      });
+      router.replace({ pathname, query: getQueryParam(page) }, undefined, { shallow: true });
 
       return;
     }
 
     if (!queryPage || !isNumeric(queryPage) || parseInt(queryPage) < 1) {
       setPage(() => 1);
-      router.replace({ pathname, query: getQueryParam(1) }, undefined, {
-        shallow: true,
-      });
+      router.replace({ pathname, query: getQueryParam(1) }, undefined, { shallow: true });
 
       return;
     }
@@ -49,9 +42,7 @@ export const useQueryPagination = ({
   }, [page, , queryPage, router, pathname]);
 
   const handlePageChange = (page: number) => {
-    router.push({ pathname, query: getQueryParam(page) }, undefined, {
-      shallow: true,
-    });
+    router.push({ pathname, query: getQueryParam(page) }, undefined, { shallow: true });
     window.scrollTo({ top: 0 });
   };
 

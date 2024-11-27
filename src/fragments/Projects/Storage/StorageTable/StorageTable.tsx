@@ -3,11 +3,7 @@ import { useEffect, useMemo } from 'react';
 
 import { FolderNavigation } from '@/components/FolderNavigation/FolderNavigation';
 import { constants } from '@/constants';
-import {
-  useFolderDetailsQuery,
-  useListFolderQuery,
-  usePrivateGatewaysQuery,
-} from '@/generated/graphqlClient';
+import { useFolderDetailsQuery, useListFolderQuery, usePrivateGatewaysQuery } from '@/generated/graphqlClient';
 import { useQueryPagination } from '@/hooks/useQueryPagination';
 import { useCookies } from '@/providers/CookiesProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -27,8 +23,7 @@ export const StorageTable: React.FC = () => {
   const session = useSessionContext();
   const cookies = useCookies();
 
-  const { parentFolderId, absolutePath, setParentFolderId, folderHistory } =
-    useUploadContext();
+  const { parentFolderId, absolutePath, setParentFolderId, folderHistory } = useUploadContext();
 
   const { setPrivateGatewayDomain } = useStorageContext();
 
@@ -47,15 +42,11 @@ export const StorageTable: React.FC = () => {
   });
 
   const [listFolderQuery, refetchListFolderQuery] = useListFolderQuery({
-    variables: {
-      where: { id: parentFolderId },
-      filter: { take: constants.FILES_PAGE_SIZE, page },
-    },
+    variables: { where: { id: parentFolderId }, filter: { take: constants.FILES_PAGE_SIZE, page } },
     pause: !page,
   });
 
-  const [privateGatewaysQuery, refetchPrivateGatewaysQuery] =
-    usePrivateGatewaysQuery();
+  const [privateGatewaysQuery, refetchPrivateGatewaysQuery] = usePrivateGatewaysQuery();
 
   const totalPages = listFolderQuery.data?.listFolder.pageCount;
 
@@ -66,12 +57,8 @@ export const StorageTable: React.FC = () => {
   }, [listFolderQuery.data, setPageCount]);
 
   useEffect(() => {
-    if (
-      privateGatewaysQuery.data?.privateGateways.data &&
-      privateGatewaysQuery.data?.privateGateways.data?.length > 0
-    ) {
-      const primaryDomain =
-        privateGatewaysQuery.data?.privateGateways?.data[0].primaryDomain;
+    if (privateGatewaysQuery.data?.privateGateways.data && privateGatewaysQuery.data?.privateGateways.data?.length > 0) {
+      const primaryDomain = privateGatewaysQuery.data?.privateGateways?.data[0].primaryDomain;
 
       if (primaryDomain && primaryDomain.isVerified) {
         // we should not have Primary Domain that are not Active but just to double check
@@ -94,11 +81,8 @@ export const StorageTable: React.FC = () => {
   }, [cookies.values.accessToken]);
 
   const isLoading = useMemo(
-    () =>
-      session.loading ||
-      listFolderQuery.fetching ||
-      privateGatewaysQuery.fetching,
-    [listFolderQuery.fetching, privateGatewaysQuery.fetching, session.loading],
+    () => session.loading || listFolderQuery.fetching || privateGatewaysQuery.fetching,
+    [listFolderQuery.fetching, privateGatewaysQuery.fetching, session.loading]
   );
 
   useEffect(() => {
@@ -119,14 +103,10 @@ export const StorageTable: React.FC = () => {
 
   const pins = listFolderQuery.data?.listFolder.data || [];
 
-  const isFetchingFolderDetails = Boolean(
-    parentFolderId && folderDetailsQuery.fetching && !absolutePath,
-  );
+  const isFetchingFolderDetails = Boolean(parentFolderId && folderDetailsQuery.fetching && !absolutePath);
 
   const handleFolderNavigation = (path: string | undefined) => {
-    const folderId = folderHistory.find(
-      (folder) => folder.path === path,
-    )?.folderId;
+    const folderId = folderHistory.find((folder) => folder.path === path)?.folderId;
     setParentFolderId(folderId, path, true);
   };
 
@@ -134,11 +114,7 @@ export const StorageTable: React.FC = () => {
     <>
       <DeletePinModal />
       <EditPinNameModal />
-      <FolderNavigation
-        absolutePath={absolutePath}
-        onFolderClick={handleFolderNavigation}
-        isLoading={isFetchingFolderDetails}
-      />
+      <FolderNavigation absolutePath={absolutePath} onFolderClick={handleFolderNavigation} isLoading={isFetchingFolderDetails} />
       <S.Container>
         {/* <StorageHeader /> */}
         <S.Table.Container>
@@ -158,26 +134,12 @@ export const StorageTable: React.FC = () => {
             <S.Table.Body>
               {!isLoading && listFolderQuery.data
                 ? pins.map((pinOrFolder, index) => {
-                    const pin =
-                      pinOrFolder.__typename === 'Pin'
-                        ? pinOrFolder
-                        : undefined;
-                    const folder =
-                      pinOrFolder.__typename === 'Folder'
-                        ? pinOrFolder
-                        : undefined;
+                    const pin = pinOrFolder.__typename === 'Pin' ? pinOrFolder : undefined;
+                    const folder = pinOrFolder.__typename === 'Folder' ? pinOrFolder : undefined;
 
-                    return (
-                      <StorageRow
-                        key={pinOrFolder.id || index}
-                        pin={pin}
-                        folder={folder}
-                      />
-                    );
+                    return <StorageRow key={pinOrFolder.id || index} pin={pin} folder={folder} />;
                   })
-                : Array.from(Array(10).keys()).map((_, index) => (
-                    <StorageRow key={index} isLoading />
-                  ))}
+                : Array.from(Array(10).keys()).map((_, index) => <StorageRow key={index} isLoading />)}
             </S.Table.Body>
           </S.Table.Root>
           {!isLoading && pins.length === 0 && <EmptyFiles />}
@@ -186,11 +148,7 @@ export const StorageTable: React.FC = () => {
 
       {!isLoading && pins.length > 0 && totalPages && totalPages > 1 && (
         <S.PaginationContainer>
-          <Pagination
-            totalPages={totalPages}
-            currentPage={page}
-            onPageChange={handlePageChange}
-          />
+          <Pagination totalPages={totalPages} currentPage={page} onPageChange={handlePageChange} />
         </S.PaginationContainer>
       )}
     </>

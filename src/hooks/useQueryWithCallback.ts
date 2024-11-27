@@ -3,30 +3,19 @@ import { AnyVariables, UseQueryArgs, UseQueryResponse } from 'urql';
 
 import { Log } from '@/utils/log';
 
-type QueryArgs<Variables extends AnyVariables, Data> = Omit<
-  UseQueryArgs<Variables, Data>,
-  'query'
->;
+type QueryArgs<Variables extends AnyVariables, Data> = Omit<UseQueryArgs<Variables, Data>, 'query'>;
 
 type UseQuery<Data = any, Variables extends AnyVariables = AnyVariables> = (
-  args: QueryArgs<Variables, Data>,
+  args: QueryArgs<Variables, Data>
 ) => UseQueryResponse<Data, Variables>;
 
-export type UseQueryWithCallbackArgs<
-  InnerVariables extends AnyVariables,
-  InnerData,
-  Data,
-> = {
+export type UseQueryWithCallbackArgs<InnerVariables extends AnyVariables, InnerData, Data> = {
   args: QueryArgs<InnerVariables, InnerData>;
   useQuery: UseQuery<InnerData, InnerVariables>;
   callback: (data: InnerData) => Promise<Data>;
 };
 
-export const useQueryWithCallback = <
-  InnerVariables extends AnyVariables,
-  InnerData,
-  Data,
->({
+export const useQueryWithCallback = <InnerVariables extends AnyVariables, InnerData, Data>({
   args,
   useQuery: useInnerQuery,
   callback,

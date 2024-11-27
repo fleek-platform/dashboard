@@ -13,9 +13,7 @@ export default meta;
 
 export const Customizable: StoryObj<IconTooltipProps> = {
   render: (args) => (
-    <Box
-      css={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
-    >
+    <Box css={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}>
       <IconTooltip {...args} />
     </Box>
   ),

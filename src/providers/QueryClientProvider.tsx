@@ -1,7 +1,4 @@
-import {
-  QueryClient,
-  QueryClientProvider as Provider,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider as Provider } from '@tanstack/react-query';
 
 import { ChildrenProps } from '@/types/Props';
 
@@ -13,6 +10,4 @@ const queryClient = new QueryClient({
   },
 });
 
-export const QueryClientProvider: React.FC<ChildrenProps> = ({ children }) => (
-  <Provider client={queryClient}>{children}</Provider>
-);
+export const QueryClientProvider: React.FC<ChildrenProps> = ({ children }) => <Provider client={queryClient}>{children}</Provider>;

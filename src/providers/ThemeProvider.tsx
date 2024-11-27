@@ -1,9 +1,6 @@
 import { IBM_Plex_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
-import {
-  ThemeProvider as NextThemesProvider,
-  useTheme as useNextTheme,
-} from 'next-themes';
+import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import { themeGlobals, themes } from '@/theme';
@@ -61,12 +58,7 @@ const ThemeMetadataSetter = (): null => {
 
   useEffect(() => {
     if (resolvedTheme === 'light' || resolvedTheme === 'dark') {
-      document
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute(
-          'content',
-          themes[resolvedTheme].colors.foreground.value,
-        );
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themes[resolvedTheme].colors.foreground.value);
       document.documentElement.dataset.theme = resolvedTheme;
     }
   }, [resolvedTheme]);
@@ -78,10 +70,7 @@ type ThemeProviderProps = ChildrenProps<{
   forcedTheme?: string;
 }>;
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  forcedTheme,
-}) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, forcedTheme }) => {
   themeGlobals();
 
   return (
@@ -132,10 +121,7 @@ export const useTheme = (): ThemeHook => {
   };
 
   // light theme has all the constants
-  const constants =
-    theme === 'light'
-      ? themes.light
-      : Object.assign({}, themes.light, themes.dark);
+  const constants = theme === 'light' ? themes.light : Object.assign({}, themes.light, themes.dark);
 
   return Object.assign({}, nextTheme, { toggleTheme, constants });
 };

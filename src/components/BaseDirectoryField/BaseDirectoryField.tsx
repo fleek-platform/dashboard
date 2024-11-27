@@ -15,10 +15,9 @@ const LABEL = 'Base Directory';
 type DeprecatedProps<T, K> = ({ deprecated: true } & T) | ({ deprecated?: false } & K);
 
 type BaseDirectoryFieldProps = {
-  deprecated?: boolean;
   fieldName: string;
   isDisabled?: boolean;
-} & Partial<RadioGroupV2Props> & Partial<DeprecatedBaseDirectoryFieldProps>;
+} & DeprecatedProps<DeprecatedBaseDirectoryFieldProps, RadioGroupV2Props>;
 
 type DeprecatedBaseDirectoryFieldProps = LoadingProps<Partial<BaseDirectoryRadioGroupProps>>;
 

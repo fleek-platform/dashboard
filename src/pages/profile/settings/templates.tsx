@@ -99,9 +99,8 @@ const ComingSoonPage: React.FC = () => {
       modalContent={
         <>
           <ComingSoon.Modal.Description>
-            Soon we will introduce the create template flow, here you will be
-            able to upload templates to the public Fleek template gallery, where
-            any other Fleek user can pick and deploy them.
+            Soon we will introduce the create template flow, here you will be able to upload templates to the public Fleek template gallery,
+            where any other Fleek user can pick and deploy them.
           </ComingSoon.Modal.Description>
         </>
       }
@@ -143,8 +142,6 @@ const ComingSoonPage: React.FC = () => {
   );
 };
 
-TemplatesSettingsPage.getLayout = (page) => (
-  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
-);
+TemplatesSettingsPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
 
 export default TemplatesSettingsPage;

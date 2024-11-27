@@ -1,32 +1,17 @@
-import {
-  SiteBuildSettingsData,
-  SiteBuildSettingsOptions,
-} from '@fleek-platform/utils-sites';
+import { SiteBuildSettingsData, SiteBuildSettingsOptions } from '@fleek-platform/utils-sites';
 
 export type GitProvider = {
   getUserAndOrganizations: () => Promise<GitProvider.UserData>;
-  getUserRepositories: (
-    args: GitProvider.GetUserRepositoriesArgs,
-  ) => Promise<GitProvider.Repository[]>;
-  getBranches: (
-    args: GitProvider.GetRepositoryBranchesArgs,
-  ) => Promise<GitProvider.BranchesData>;
-  getRepositoryBuildSettings: (
-    args: GitProvider.GetRepositoryBuildSettingsArgs,
-  ) => Promise<SiteBuildSettingsData>;
+  getUserRepositories: (args: GitProvider.GetUserRepositoriesArgs) => Promise<GitProvider.Repository[]>;
+  getBranches: (args: GitProvider.GetRepositoryBranchesArgs) => Promise<GitProvider.BranchesData>;
+  getRepositoryBuildSettings: (args: GitProvider.GetRepositoryBuildSettingsArgs) => Promise<SiteBuildSettingsData>;
   /**
   /* @deprecated Usage is discouraged use BE method instead
   */
-  createRepositoryFromTemplate: (
-    args: GitProvider.CreateRepositoryFromTemplate,
-  ) => Promise<GitProvider.Repository>;
+  createRepositoryFromTemplate: (args: GitProvider.CreateRepositoryFromTemplate) => Promise<GitProvider.Repository>;
   getTree: (args: GitProvider.GetTreeArgs) => Promise<GitProvider.Tree>;
-  isRepositoryNameAvailable: (
-    args: GitProvider.CheckRepositoryNameAvailabilityArgs,
-  ) => Promise<boolean>;
-  getInstallationId: (
-    args: GitProvider.GetInstallationIdArgs,
-  ) => Promise<number>;
+  isRepositoryNameAvailable: (args: GitProvider.CheckRepositoryNameAvailabilityArgs) => Promise<boolean>;
+  getInstallationId: (args: GitProvider.GetInstallationIdArgs) => Promise<number>;
 };
 
 export namespace GitProvider {

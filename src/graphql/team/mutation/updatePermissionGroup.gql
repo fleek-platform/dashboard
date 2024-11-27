@@ -1,7 +1,4 @@
-mutation updateMembership(
-  $data: UpdateMembershipDataInput!
-  $where: UpdateMembershipWhereInput!
-) {
+mutation updateMembership($data: UpdateMembershipDataInput!, $where: UpdateMembershipWhereInput!) {
   updateMembership(data: $data, where: $where) {
     id
     role

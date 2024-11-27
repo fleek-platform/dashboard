@@ -5,8 +5,7 @@ import { KeyFrames, styled } from '@/theme';
 export const TooltipStyles = {
   Content: styled(Tooltip.Content, {
     borderRadius: '$lg',
-    padding:
-      '$sizes$inline-component-height-sm $sizes$inline-component-height-md',
+    padding: '$sizes$inline-component-height-sm $sizes$inline-component-height-md',
     textSize: '$inline-component-font-size',
     textCategory: '$primary',
     textAlign: 'center',

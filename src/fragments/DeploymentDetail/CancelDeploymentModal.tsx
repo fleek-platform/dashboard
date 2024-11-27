@@ -22,11 +22,7 @@ export const CancelDeploymentModal: React.FC<CancelDeploymentModalProps> = ({
   const siteId = router.query.siteId!;
 
   const handleCancelDeploy = async () => {
-    await stopDeploy.mutateAsync({
-      siteId,
-      deploymentId,
-      onSuccess: () => onOpenChange(false),
-    });
+    await stopDeploy.mutateAsync({ siteId, deploymentId, onSuccess: () => onOpenChange(false) });
   };
 
   return (
@@ -35,10 +31,7 @@ export const CancelDeploymentModal: React.FC<CancelDeploymentModalProps> = ({
 
       <Modal.Content>
         <Modal.Heading>Cancel deployment</Modal.Heading>
-        <Text>
-          Are you sure you want to cancel this deployment? You won&apos;t be
-          able to resume after canceling.
-        </Text>
+        <Text>Are you sure you want to cancel this deployment? You won&apos;t be able to resume after canceling.</Text>
 
         <Modal.CTARow>
           <Dialog.Close asChild>

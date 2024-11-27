@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const CopyIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M15.9375 18.75H7.1875C6.44158 18.75 5.72621 18.4537 5.19876 17.9262C4.67132 17.3988 4.375 16.6834 4.375 15.9375V7.1875C4.375 6.44158 4.67132 5.72621 5.19876 5.19876C5.72621 4.67132 6.44158 4.375 7.1875 4.375H15.9375C16.6834 4.375 17.3988 4.67132 17.9262 5.19876C18.4537 5.72621 18.75 6.44158 18.75 7.1875V15.9375C18.75 16.6834 18.4537 17.3988 17.9262 17.9262C17.3988 18.4537 16.6834 18.75 15.9375 18.75Z"
       fill="currentColor"

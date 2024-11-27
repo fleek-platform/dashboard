@@ -10,9 +10,7 @@ import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 
 export const SiteGit: React.FC = () => {
   const router = useRouter();
-  const [siteQuery] = useSiteQuery({
-    variables: { where: { id: router.query.siteId! } },
-  });
+  const [siteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
 
   const site = siteQuery.data?.site;
   const provider = parseAPISourceProvider(site?.sourceProvider);
@@ -20,15 +18,9 @@ export const SiteGit: React.FC = () => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Connected Git Repo</SettingsBox.Title>
-      <SettingsBox.Text>
-        This is the current repository associated with your Fleek site.
-      </SettingsBox.Text>
+      <SettingsBox.Text>This is the current repository associated with your Fleek site.</SettingsBox.Text>
 
-      <RepositoryField
-        provider={provider}
-        site={site}
-        isLoading={siteQuery.fetching}
-      />
+      <RepositoryField provider={provider} site={site} isLoading={siteQuery.fetching} />
 
       <SettingsBox.ActionRow>
         <ActionButton provider={provider} isLoading={siteQuery.fetching} />
@@ -42,11 +34,7 @@ type RepositoryFieldProps = LoadingProps<{
   site?: Site;
 }>;
 
-const RepositoryField: React.FC<RepositoryFieldProps> = ({
-  provider,
-  site,
-  isLoading,
-}) => {
+const RepositoryField: React.FC<RepositoryFieldProps> = ({ provider, site, isLoading }) => {
   if (isLoading) {
     return <SettingsListItem.Skeleton enableAvatar />;
   }
@@ -60,16 +48,9 @@ const RepositoryField: React.FC<RepositoryFieldProps> = ({
   const branch = site?.sourceBranch!;
 
   return (
-    <SettingsListItem
-      avatarIcon={provider}
-      title={`${slug}/${name}`}
-      subtitle={branch}
-    >
+    <SettingsListItem avatarIcon={provider} title={`${slug}/${name}`} subtitle={branch}>
       <SettingsListItem.DropdownMenu>
-        <SettingsListItem.DropdownMenuItem
-          icon="external-link"
-          href={getLinkForRepository({ provider, slug, name })}
-        >
+        <SettingsListItem.DropdownMenuItem icon="external-link" href={getLinkForRepository({ provider, slug, name })}>
           Visit
         </SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>

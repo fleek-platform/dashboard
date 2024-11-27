@@ -14,9 +14,8 @@ const AnalyticsPage: Page = () => {
       modalContent={
         <>
           <ComingSoon.Modal.Description>
-            Keep track of visitors coming to your page, the pages they view, and
-            the performance of your website. Analytics are privacy-friendly and
-            don&apos;t store personal information.
+            Keep track of visitors coming to your page, the pages they view, and the performance of your website. Analytics are
+            privacy-friendly and don&apos;t store personal information.
           </ComingSoon.Modal.Description>
         </>
       }
@@ -67,11 +66,6 @@ const AnalyticsPage: Page = () => {
   );
 };
 
-AnalyticsPage.getLayout = (page) => (
-  <Site.Analytics.Layout>{page}</Site.Analytics.Layout>
-);
+AnalyticsPage.getLayout = (page) => <Site.Analytics.Layout>{page}</Site.Analytics.Layout>;
 
-export default withAccess({
-  Component: AnalyticsPage,
-  requiredPermissions: [constants.PERMISSION.SITE.VIEW_ANALYTICS],
-});
+export default withAccess({ Component: AnalyticsPage, requiredPermissions: [constants.PERMISSION.SITE.VIEW_ANALYTICS] });

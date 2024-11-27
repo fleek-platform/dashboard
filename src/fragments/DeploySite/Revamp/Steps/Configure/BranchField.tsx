@@ -6,8 +6,7 @@ import { Combobox, FormField } from '@/ui';
 import { useDeploySiteContext } from '../../DeploySite.context';
 
 export const BranchField: React.FC = () => {
-  const { gitRepository, setGitBranch, gitProviderId, gitBranch } =
-    useDeploySiteContext();
+  const { gitRepository, setGitBranch, gitProviderId, gitBranch } = useDeploySiteContext();
   const [gitBranchesQuery] = useGitBranchesQuery({
     variables: {
       where: {
@@ -19,8 +18,7 @@ export const BranchField: React.FC = () => {
     pause: !gitProviderId || !gitRepository?.name || !gitRepository.owner,
   });
 
-  const branches =
-    gitBranchesQuery.data?.gitApiBranches.map((branch) => branch.name) || [];
+  const branches = gitBranchesQuery.data?.gitApiBranches.map((branch) => branch.name) || [];
 
   useEffect(() => {
     if (!gitBranch && gitRepository?.defaultBranch) {
@@ -33,21 +31,14 @@ export const BranchField: React.FC = () => {
   return (
     <FormField.Root>
       <FormField.Label>Branch</FormField.Label>
-      <Combobox
-        items={branches}
-        selected={[gitBranch, setGitBranch]}
-        isLoading={gitBranchesQuery.fetching}
-      >
+      <Combobox items={branches} selected={[gitBranch, setGitBranch]} isLoading={gitBranchesQuery.fetching}>
         {({ Field, Options }) => (
           <>
-            <Field
-              placeholder="Select a branch"
-              css={{ minHeight: '2rem', borderRadius: '0.5rem' }}
-            >
-              {(selected: string) => selected}
+            <Field placeholder="Select a branch" css={{ minHeight: '2rem', borderRadius: '0.5rem' }}>
+              {(selected) => selected}
             </Field>
 
-            <Options viewportHeight="$3xs">{(item: string) => item}</Options>
+            <Options viewportHeight="$3xs">{(item) => item}</Options>
           </>
         )}
       </Combobox>

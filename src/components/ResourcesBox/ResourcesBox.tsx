@@ -12,13 +12,7 @@ export type ResourcesBoxProps = {
   children: React.ReactElement<ExternalLinkProps>[];
 };
 
-export const ResourcesBox: React.FC<ResourcesBoxProps> = ({
-  title = 'Resources',
-  description,
-  externalLinkProps,
-  children,
-  ...props
-}) => {
+export const ResourcesBox: React.FC<ResourcesBoxProps> = ({ title = 'Resources', description, externalLinkProps, children, ...props }) => {
   return (
     <S.Container {...props}>
       <Text as="h3" variant="primary" size="lg" weight={700}>
@@ -30,7 +24,7 @@ export const ResourcesBox: React.FC<ResourcesBoxProps> = ({
           React.cloneElement(child, {
             ...externalLinkProps,
             ...child.props,
-          }),
+          })
         )}
       </S.Links.Container>
     </S.Container>
