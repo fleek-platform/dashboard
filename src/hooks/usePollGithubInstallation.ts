@@ -6,6 +6,7 @@ import {
   GithubAppInstallationsQuery,
   GithubAppInstallationsQueryVariables,
   GitUserAccessToken,
+  GithubAppInstallation,
 } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';
@@ -62,7 +63,8 @@ export const usePollGithubInstallation = ({
         return false;
       }
 
-      return data.some((gitAccessToken) => gitAccessToken.installationId);
+      // TODO: Why the inferred type's not correct? 
+      return data.some((gitHubAppInstallation: GithubAppInstallation ) => gitHubAppInstallation.installationId);
     },
     refetchInterval: 3_000,
     onFinishedCallback,

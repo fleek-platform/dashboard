@@ -13,7 +13,6 @@ import { useUserHasScrolled } from '@/hooks/useUserHasScrolled';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { TEST_ID } from '@/test/testId';
 import { ChildrenProps } from '@/types/Props';
 import {
   Box,
@@ -95,6 +94,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       href={navItem.path}
       intent={isActivePage ? 'accent' : 'ghost'}
       className="w-full justify-between px-3"
+      role="menuitem"
+      aria-label={navItem.label}
     >
       <Box className="flex flex-row gap-3 items-center">
         <Icon name={navItem.icon} className="size-4" />
@@ -174,8 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <Box
-      data-testid={TEST_ID.NAV_LINK_PROJECT}
-      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
+      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full" role="menu" aria-label="main menu"
     >
       <Box className="gap-3">
         <Box className="gap-4">

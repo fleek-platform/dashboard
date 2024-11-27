@@ -2,7 +2,6 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
 import { SourceProvider } from '@/generated/graphqlClient';
-import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { LoadingProps } from '@/types/Props';
 import { Site } from '@/types/Site';
@@ -61,7 +60,6 @@ export const SiteCard: React.FC<SiteCardProps> = ({
           <S.DetailsRow>
             <S.TextContainer>
               <Text
-                data-testid={TEST_ID.CARD_SITE_NAME}
                 variant="primary"
                 weight={700}
                 size="md"

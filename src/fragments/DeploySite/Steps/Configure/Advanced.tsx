@@ -1,5 +1,6 @@
 import { envVarName, envVarValue } from '@fleek-platform/utils-validation';
 import React, { useEffect, useRef, useState } from 'react';
+import { z } from 'zod';
 
 import { BaseDirectoryField, Form, ToggleButton } from '@/components';
 import { constants } from '@/constants';
@@ -208,7 +209,7 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
 
     if (!envVarNameValidation.success) {
       setEnvVarNameError(
-        envVarNameValidation.error.issues
+        (envVarNameValidation as z.SafeParseError<string>).error.issues
           .map((issue) => issue.message)
           .join('. '),
       );
@@ -249,7 +250,7 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
 
     if (!envVarValueValidation.success) {
       setEnvVarValueError(
-        envVarValueValidation.error.issues
+        (envVarValueValidation as z.SafeParseError<string>).error.issues
           .map((issue) => issue.message)
           .join('. '),
       );
