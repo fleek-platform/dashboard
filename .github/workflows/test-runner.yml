@@ -178,6 +178,13 @@ jobs:
             exit 1
           fi
 
+      - name: Run Component Functional tests
+        run: |
+          if ! pnpm test:component; then
+            echo "👹 Oops! Component Functional tests run failed"
+            exit 1
+          fi
+
       - name: Run Unit tests
         run: |
           if ! pnpm test:unit; then
