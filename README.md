@@ -244,6 +244,9 @@ Unit tests should be small tests that check individual parts of code for correct
 
 The terminology "Component Function tests" is used to describe unit tests for components. You can refer to it as unit-tests, but when communicating component functionality, it's our preference to refer to it as "Component Functional tests". It avoids confusion.
 
+> [!WARNING]
+> Do not confuse it with [Component testing](https://storybook.js.org/blog/component-testing/) as promoted by Storybook's team. The Component Function tests at Fleek's Frontend has a very particular meaning in the context's they're used and serves to communicate efficiently.
+
 Ideally, components should be tested in isolation (unit). Events or inputs should reproduce expected behaviour and output. Here's a break-down:
 
 - Focus on Component Behavior
