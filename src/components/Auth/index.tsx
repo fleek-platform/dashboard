@@ -1,4 +1,3 @@
-// src/components/Auth/index.tsx
 'use client';
 
 import { routes } from '@fleek-platform/utils-routes';
@@ -6,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { constants } from '../../constants';
 import { matchesPathname } from '../../utils/matchesPathname';
+import { FleekLogo } from '../FleekLogo/FleekLogo';
 
 import type { FC, ReactNode } from 'react';
 
@@ -56,7 +56,7 @@ export const Auth: FC<AuthProps> = ({ children }) => {
 
   if (isChecking) {
     // TODO: place the common loading here
-    return <div>Loading...</div>;
+    return <></>;
   }
 
   return <>{children}</>;
