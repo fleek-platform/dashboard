@@ -22,10 +22,7 @@ export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
     } = usePagination({ totalPages, currentPage, onPageChange: _onPageChange });
 
     return (
-      <PS.Container
-        {...props}
-        ref={ref}
-      >
+      <PS.Container {...props} ref={ref}>
         {items.map((pageItem: PaginationItem, index) => {
           const { page, type } = pageItem;
 

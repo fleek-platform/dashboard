@@ -17,15 +17,15 @@ type HostnameLookupData = {
 export const useHostnameLookup = ({ hostname }: UseHostnameLookupArgs) => {
   const queryFn = useCallback(async (): Promise<HostnameLookupData | null> => {
     Log.info('Fetching country for hostname:', hostname);
-    
+
     try {
       const result = await hostnameLookup(hostname);
-      
+
       if ('data' in result) {
         Log.info('Data found:', result.data);
         return result.data;
       }
-      
+
       Log.error('Error in response:', result.error);
       return null;
     } catch (error) {

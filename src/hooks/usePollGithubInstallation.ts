@@ -63,8 +63,11 @@ export const usePollGithubInstallation = ({
         return false;
       }
 
-      // TODO: Why the inferred type's not correct? 
-      return data.some((gitHubAppInstallation: GithubAppInstallation ) => gitHubAppInstallation.installationId);
+      // TODO: Why the inferred type's not correct?
+      return data.some(
+        (gitHubAppInstallation: GithubAppInstallation) =>
+          gitHubAppInstallation.installationId,
+      );
     },
     refetchInterval: 3_000,
     onFinishedCallback,

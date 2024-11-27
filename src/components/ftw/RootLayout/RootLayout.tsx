@@ -175,7 +175,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <Box
-      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full" role="menu" aria-label="main menu"
+      className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
+      role="menu"
+      aria-label="main menu"
     >
       <Box className="gap-3">
         <Box className="gap-4">

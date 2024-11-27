@@ -12,11 +12,7 @@ import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 
-const App = ({
-  Component,
-  pageProps,
-  requestCookies,
-}: AppProps) => {
+const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
   const [noCanonical, setNoCanonical] = useState(false);
@@ -34,7 +30,9 @@ const App = ({
     setMaintenanceMode(getMaintenanceMode());
 
     const pathname = window.location.pathname;
-    setNoCanonical(['/templates', '/templates/[templateId]'].includes(pathname));
+    setNoCanonical(
+      ['/templates', '/templates/[templateId]'].includes(pathname),
+    );
   }, []);
 
   if (maintenanceMode) {

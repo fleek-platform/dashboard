@@ -50,7 +50,8 @@ const StatusBox: React.FC = () => {
   const siteFrameworks = useSiteFrameworks();
   const field = Form.useField<string>('frameworkId');
 
-  const typeIcon = (sourceProvider && sourceProviderIcon[sourceProvider]) || "" as IconName;
+  const typeIcon =
+    (sourceProvider && sourceProviderIcon[sourceProvider]) || ('' as IconName);
   const typeText =
     gitUser?.slug || (sourceProvider && sourceProviderLabel[sourceProvider]);
   const framework = useMemo(

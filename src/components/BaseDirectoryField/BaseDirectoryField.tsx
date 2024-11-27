@@ -28,9 +28,12 @@ type BaseDirectoryFieldProps = {
   deprecated?: boolean;
   fieldName: string;
   isDisabled?: boolean;
-} & Partial<RadioGroupV2Props> & Partial<DeprecatedBaseDirectoryFieldProps>;
+} & Partial<RadioGroupV2Props> &
+  Partial<DeprecatedBaseDirectoryFieldProps>;
 
-type DeprecatedBaseDirectoryFieldProps = LoadingProps<Partial<BaseDirectoryRadioGroupProps>>;
+type DeprecatedBaseDirectoryFieldProps = LoadingProps<
+  Partial<BaseDirectoryRadioGroupProps>
+>;
 
 export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
   props,

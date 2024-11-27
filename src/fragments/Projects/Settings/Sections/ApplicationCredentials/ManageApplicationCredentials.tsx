@@ -39,7 +39,10 @@ export const ManageApplicationCredentials: React.FC<
 
   return (
     <ApplicationCredentialsProvider onSubmitDelete={onSubmitDelete}>
-      <SettingsBox.Container role="table" aria-label="Application credential list">
+      <SettingsBox.Container
+        role="table"
+        aria-label="Application credential list"
+      >
         <Header />
         {credentials?.length === 0 ? (
           <SettingsBox.EmptyContent
