@@ -19,6 +19,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [Unit tests](#unit-tests)
+  - [Component Functional Tests](#component-functional-tests)
   - [CI/CD Runner](#cicd-runner)
 * [🛠️Generators](#Generators)
   - [Sitemap](#sitemapxml)
@@ -202,6 +203,12 @@ Run the unit tests
 pnpm run test:unit
 ```
 
+Run the component function tests
+
+```sh
+pnpm run test:component
+```
+
 ### Good practices
 
 Here are some recommendations when writing tests.
@@ -232,6 +239,27 @@ Unit tests should be small tests that check individual parts of code for correct
 - Replace external dependencies (e.g., databases) with mock objects
 - Write simple, concise tests for easier debugging and maintenance, e.g. prefere storytelling
 
+
+#### Component Functional tests
+
+The terminology "Component Function tests" is used to describe unit tests for components. You can refer to it as unit-tests, but when communicating component functionality, it's our preference to refer to it as "Component Functional tests". It avoids confusion.
+
+Ideally, components should be tested in isolation (unit). Events or inputs should reproduce expected behaviour and output. Here's a break-down:
+
+- Focus on Component Behavior
+- Tests must be user-oriented, e.g. validate a component feature from a user's perspective
+- Ensure a component work as intended before integration with other components or the application
+- Avoid testing internal implementation details like state or private functions
+- Identify and prioritize testing the most common and critical component behaviors
+- Ensure all major user interactions and outcomes are tested
+- Props should be as realistic as possible to reflect how the component will be used in production
+- Test interactions (clicks, typing, form submissions) as closely as possible to real user actions
+- Simulate user actions or lifecycle changes
+- Ensure visual changes like showing/hiding elements are validated
+- Test only one behavior or aspect per test case, e.g. avoid long tests that cover multiple, unrelated scenarios
+- Do not rely on snapshots for dynamic or interactive components
+- Ensure tests are fast enough for regular execution
+- Update tests when refactoring or introducing new features
 
 #### CI/CD Runner
 
