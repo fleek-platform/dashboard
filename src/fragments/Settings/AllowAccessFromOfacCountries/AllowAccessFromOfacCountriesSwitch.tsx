@@ -13,14 +13,9 @@ export type AllowAccessFromOfacCountriesSwitchProps = {
   permissions: string[];
 };
 
-export const AllowAccessFromOfacCountriesSwitch: React.FC<LoadingProps & AllowAccessFromOfacCountriesSwitchProps> = ({
-  isLoading,
-  value,
-  onChange,
-  text,
-  title,
-  permissions,
-}) => {
+export const AllowAccessFromOfacCountriesSwitch: React.FC<
+  LoadingProps & AllowAccessFromOfacCountriesSwitchProps
+> = ({ isLoading, value, onChange, text, title, permissions }) => {
   const hasEditPermission = usePermissions({ action: permissions });
 
   const [allowed, setAllowed] = useState(true);

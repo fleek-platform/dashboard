@@ -9,7 +9,9 @@ type FileUploadModalProps = {
   triggerRef: React.RefObject<HTMLButtonElement>;
 };
 
-export const FileUploadModal: React.FC<FileUploadModalProps> = ({ triggerRef }) => {
+export const FileUploadModal: React.FC<FileUploadModalProps> = ({
+  triggerRef,
+}) => {
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -32,7 +34,9 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({ triggerRef }) 
             <Icon name="close-circle" />
           </Dialog.Close>
         </S.Title>
-        <S.AlertBox size="sm">If you drop a folder we will upload all the files inside it.</S.AlertBox>
+        <S.AlertBox size="sm">
+          If you drop a folder we will upload all the files inside it.
+        </S.AlertBox>
         <S.Dropzone {...dropzone.getRootProps()}>
           <Input.Field {...dropzone.getInputProps()} />
           <S.Container>

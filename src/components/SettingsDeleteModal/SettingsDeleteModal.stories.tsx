@@ -29,5 +29,7 @@ export const Table: TableStory = {
     onValidationChange: (value) => console.log(value),
     isLoading: false,
   },
-  render: (args: SettingsDeleteModal.TableProps) => <SettingsDeleteModal.Table {...args} />,
+  render: (args: SettingsDeleteModal.TableProps) => (
+    <SettingsDeleteModal.Table {...args} />
+  ),
 };

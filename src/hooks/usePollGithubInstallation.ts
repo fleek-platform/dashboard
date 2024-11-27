@@ -12,11 +12,17 @@ import { usePolling } from './usePolling';
 
 export type UsePollGithubInstallationArgs = {
   gitProviderId?: string;
-  onFinishedCallback?: (data: Pick<GitUserAccessToken, 'gitProviderId' & 'token'>[] | null) => void;
+  onFinishedCallback?: (
+    data: Pick<GitUserAccessToken, 'gitProviderId' & 'token'>[] | null,
+  ) => void;
   pause?: boolean;
 };
 
-export const usePollGithubInstallation = ({ pause, onFinishedCallback, gitProviderId }: UsePollGithubInstallationArgs) => {
+export const usePollGithubInstallation = ({
+  pause,
+  onFinishedCallback,
+  gitProviderId,
+}: UsePollGithubInstallationArgs) => {
   const client = useClient();
 
   const queryFn = useCallback(async () => {
@@ -24,18 +30,25 @@ export const usePollGithubInstallation = ({ pause, onFinishedCallback, gitProvid
       return null;
     }
 
-    const gitInstallationsResult = await client.query<GithubAppInstallationsQuery, GithubAppInstallationsQueryVariables>(
+    const gitInstallationsResult = await client.query<
+      GithubAppInstallationsQuery,
+      GithubAppInstallationsQueryVariables
+    >(
       GithubAppInstallationsDocument,
       {
         where: { gitProviderId },
       },
-      { requestPolicy: 'network-only' }
+      { requestPolicy: 'network-only' },
     );
 
-    const gitInstallations = gitInstallationsResult.data?.githubAppInstallations;
+    const gitInstallations =
+      gitInstallationsResult.data?.githubAppInstallations;
 
     if (gitInstallationsResult.error || !gitInstallations) {
-      throw gitInstallationsResult.error || new Error('Failed to get Git Access tokens');
+      throw (
+        gitInstallationsResult.error ||
+        new Error('Failed to get Git Access tokens')
+      );
     }
 
     return gitInstallations;

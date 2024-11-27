@@ -19,7 +19,10 @@ export const PaymentData: React.FC<PaymentDataProps> = ({ data, onCancel }) => {
     <>
       <S.GapWrapper>
         <S.Title>Pay with Crypto</S.Title>
-        <S.Text>Execute the transaction rather using the QRCode or transferring the exact amount described for the address below.</S.Text>
+        <S.Text>
+          Execute the transaction rather using the QRCode or transferring the
+          exact amount described for the address below.
+        </S.Text>
       </S.GapWrapper>
 
       <S.PaymentData.Container>
@@ -55,7 +58,9 @@ const Address: React.FC<AddressProps> = ({ children }) => {
 
   return (
     <S.PaymentData.Address.Wrapper>
-      <S.PaymentData.Address.Label>Recipient Address</S.PaymentData.Address.Label>
+      <S.PaymentData.Address.Label>
+        Recipient Address
+      </S.PaymentData.Address.Label>
       <S.PaymentData.Address.Container onClick={handleCopy}>
         <Text className="truncate">{children}</Text>
         <Icon name="copy" />
@@ -69,7 +74,9 @@ type TimerProps = {
 };
 
 const Timer: React.FC<TimerProps> = ({ expireAt }) => {
-  const [timeLeft, setTimeLeft] = useState(DateTime.fromISO(expireAt).diffNow());
+  const [timeLeft, setTimeLeft] = useState(
+    DateTime.fromISO(expireAt).diffNow(),
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -85,10 +92,15 @@ const Timer: React.FC<TimerProps> = ({ expireAt }) => {
     <S.PaymentData.Timer.Wrapper>
       <S.PaymentData.Timer.Counter data-testid={TEST_ID.BILLING_CHECKOUT_TIMER}>
         <Icon name="spinner" />
-        {Duration.fromMillis(Math.max(0, timeLeft.toMillis())).toFormat('hh:mm:ss')}
+        {Duration.fromMillis(Math.max(0, timeLeft.toMillis())).toFormat(
+          'hh:mm:ss',
+        )}
       </S.PaymentData.Timer.Counter>
 
-      <Text>Time left to send the payment, if not received in time, the transaction will cancel.</Text>
+      <Text>
+        Time left to send the payment, if not received in time, the transaction
+        will cancel.
+      </Text>
     </S.PaymentData.Timer.Wrapper>
   );
 };

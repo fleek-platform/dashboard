@@ -4,7 +4,10 @@ import { LoadingProps } from '@/types/Props';
 
 import { ProviderDetails } from './ProviderDetails';
 
-export const ManageContainer: React.FC<ManageContainerProps> = ({ gitProviders, isLoading }) => {
+export const ManageContainer: React.FC<ManageContainerProps> = ({
+  gitProviders,
+  isLoading,
+}) => {
   if (isLoading || !gitProviders) {
     return (
       <>

@@ -1,4 +1,7 @@
-import { createDomainSchema, createEnsRecordSchema } from '@fleek-platform/utils-validation';
+import {
+  createDomainSchema,
+  createEnsRecordSchema,
+} from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 
 import { Form } from '@/components';
@@ -35,7 +38,9 @@ const DomainsSettingsPage: Page = () => {
   const client = useClient();
   const toast = useToast();
 
-  const [siteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
+  const [siteQuery] = useSiteQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
 
   const [, createDomain] = useCreateDomainMutation();
   const [, createZoneForSite] = useCreateZoneForSiteMutation();
@@ -49,8 +54,13 @@ const DomainsSettingsPage: Page = () => {
   const [, verifyEnsRecord] = useVerifyEnsRecordMutation();
   const [, deleteEnsRecord] = useDeleteEnsRecordMutation();
 
-  const [, refetchSiteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
-  const [, refetchSiteEnsRecordsQuery] = useSiteEnsRecordsQuery({ variables: { where: { id: router.query.siteId! } }, pause: true });
+  const [, refetchSiteQuery] = useSiteQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
+  const [, refetchSiteEnsRecordsQuery] = useSiteEnsRecordsQuery({
+    variables: { where: { id: router.query.siteId! } },
+    pause: true,
+  });
 
   const newDomainForm = Form.useForm({
     values: {
@@ -63,13 +73,17 @@ const DomainsSettingsPage: Page = () => {
     onSubmit: async (values) => {
       try {
         const getZoneId = async (): Promise<string> => {
-          const existingZones = siteQuery.data?.site.zones?.filter((zone) => zone.status === 'CREATED');
+          const existingZones = siteQuery.data?.site.zones?.filter(
+            (zone) => zone.status === 'CREATED',
+          );
 
           if (existingZones?.[0]?.id) {
             return existingZones[0].id;
           }
 
-          const createZoneResult = await createZoneForSite({ where: { siteId: router.query.siteId! } });
+          const createZoneResult = await createZoneForSite({
+            where: { siteId: router.query.siteId! },
+          });
 
           const zoneId = createZoneResult.data?.createZoneForSite.id;
 
@@ -81,7 +95,11 @@ const DomainsSettingsPage: Page = () => {
             // This function should follow packages/cli/src/commands/domains/wait/waitForZoneCreationResult.ts
             conditionFn: async () => {
               const checkedZoneResult = await client
-                .query<ZoneQuery, ZoneQueryVariables>(ZoneDocument, { where: { id: zoneId } }, { requestPolicy: 'network-only' })
+                .query<ZoneQuery, ZoneQueryVariables>(
+                  ZoneDocument,
+                  { where: { id: zoneId } },
+                  { requestPolicy: 'network-only' },
+                )
                 .toPromise();
               const status = checkedZoneResult.data?.zone.status;
 
@@ -106,7 +124,10 @@ const DomainsSettingsPage: Page = () => {
 
         const zoneId = await getZoneId();
 
-        const createDomainResult = await createDomain({ where: { zoneId }, data: { hostname: values.hostname } }); // for now we create both DNS records (regular/dnslink)
+        const createDomainResult = await createDomain({
+          where: { zoneId },
+          data: { hostname: values.hostname },
+        }); // for now we create both DNS records (regular/dnslink)
 
         if (!createDomainResult.data) {
           throw createDomainResult.error;
@@ -115,7 +136,9 @@ const DomainsSettingsPage: Page = () => {
         refetchSiteQuery({ requestPolicy: 'cache-and-network' });
         newDomainForm.resetForm();
 
-        toast.success({ message: `Added ${values.hostname} to site ${siteQuery.data?.site.name}` });
+        toast.success({
+          message: `Added ${values.hostname} to site ${siteQuery.data?.site.name}`,
+        });
 
         return createDomainResult.data.createDomain.id;
       } catch (error) {
@@ -124,7 +147,10 @@ const DomainsSettingsPage: Page = () => {
     },
   });
 
-  const handleSubmitDomainVerification = async (domainId: string, withDnsLink?: boolean) => {
+  const handleSubmitDomainVerification = async (
+    domainId: string,
+    withDnsLink?: boolean,
+  ) => {
     try {
       let result;
 
@@ -144,19 +170,27 @@ const DomainsSettingsPage: Page = () => {
     }
   };
 
-  const handleSubmitDomainDelete = async (domainId: string, newPrimaryDomain?: string) => {
+  const handleSubmitDomainDelete = async (
+    domainId: string,
+    newPrimaryDomain?: string,
+  ) => {
     try {
       let newPrimaryDomainHostname = '';
 
       if (newPrimaryDomain) {
         // means we first need to set the new primary domain and then delete de domain
-        const newPrimaryDomainResult = await selectPrimaryDomain({ where: { id: newPrimaryDomain } });
+        const newPrimaryDomainResult = await selectPrimaryDomain({
+          where: { id: newPrimaryDomain },
+        });
 
         if (!newPrimaryDomainResult.data || newPrimaryDomainResult.error) {
-          throw new DeletePrimaryDomainError('Failed to set new primary domain');
+          throw new DeletePrimaryDomainError(
+            'Failed to set new primary domain',
+          );
         }
 
-        newPrimaryDomainHostname = newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
+        newPrimaryDomainHostname =
+          newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
       }
 
       const result = await deleteDomain({ where: { id: domainId } });
@@ -167,7 +201,9 @@ const DomainsSettingsPage: Page = () => {
 
       toast.success({
         message: `Domain removed ${result.data.deleteDomain.hostname}${
-          newPrimaryDomainHostname ? ` and replaced with ${newPrimaryDomainHostname}` : ''
+          newPrimaryDomainHostname
+            ? ` and replaced with ${newPrimaryDomainHostname}`
+            : ''
         }`,
       });
 
@@ -187,7 +223,9 @@ const DomainsSettingsPage: Page = () => {
 
       refetchSiteQuery({ requestPolicy: 'cache-and-network' });
 
-      toast.success({ message: `${result.data.selectPrimaryDomain.hostname} is now the primary domain for ${siteQuery.data?.site.name}` });
+      toast.success({
+        message: `${result.data.selectPrimaryDomain.hostname} is now the primary domain for ${siteQuery.data?.site.name}`,
+      });
 
       return true;
     } catch (error) {
@@ -210,7 +248,9 @@ const DomainsSettingsPage: Page = () => {
             return siteQuery.data?.site.ipnsRecords[0].id;
           }
 
-          const createIpnsResult = await createIpnsRecordForSite({ where: { siteId: router.query.siteId! } });
+          const createIpnsResult = await createIpnsRecordForSite({
+            where: { siteId: router.query.siteId! },
+          });
 
           const ipnsId = createIpnsResult.data?.createIpnsRecordForSite.id;
 
@@ -295,7 +335,9 @@ const DomainsSettingsPage: Page = () => {
   );
 };
 
-DomainsSettingsPage.getLayout = (page) => <Site.Settings.Layout>{page}</Site.Settings.Layout>;
+DomainsSettingsPage.getLayout = (page) => (
+  <Site.Settings.Layout>{page}</Site.Settings.Layout>
+);
 
 export default withAccess({
   Component: DomainsSettingsPage,

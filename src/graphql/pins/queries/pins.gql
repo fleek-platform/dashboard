@@ -30,7 +30,10 @@ fragment FolderFragment on Folder {
   sizeBigInt
 }
 
-query listFolder($where: ListFolderWhereInput!, $filter: ListFolderPaginationInput) {
+query listFolder(
+  $where: ListFolderWhereInput!
+  $filter: ListFolderPaginationInput
+) {
   listFolder(where: $where, filter: $filter) {
     pageCount
     data {

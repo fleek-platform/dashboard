@@ -7,7 +7,12 @@ type GetLinkForRepositoryArgs = {
   sourceRef?: string;
 };
 
-export const getLinkForRepository = ({ provider, slug, name, sourceRef }: GetLinkForRepositoryArgs): string => {
+export const getLinkForRepository = ({
+  provider,
+  slug,
+  name,
+  sourceRef,
+}: GetLinkForRepositoryArgs): string => {
   switch (provider) {
     case 'github':
       return `https://github.com/${slug}/${name}${sourceRef ? `/commit/${sourceRef}` : ''}`;

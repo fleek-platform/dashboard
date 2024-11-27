@@ -8,7 +8,11 @@ type GetLinkForIPFSDownloadArgs = {
   isFolder: boolean;
 };
 
-export const getLinkForIPFSDownload = ({ cid, filename, isFolder }: GetLinkForIPFSDownloadArgs) => {
+export const getLinkForIPFSDownload = ({
+  cid,
+  filename,
+  isFolder,
+}: GetLinkForIPFSDownloadArgs) => {
   return `${getSubDomainResolutionIpfsGatewayUrl({
     cid,
     baseURL: constants.IPFS_GATEWAYS.FLEEK_GW,

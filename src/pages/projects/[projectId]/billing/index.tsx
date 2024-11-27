@@ -57,8 +57,14 @@ const FeaturePage: React.FC = () => {
 
   return (
     <>
-      {flags.billingPlan && <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />}
-      {flags.billingPayment && <Projects.Settings.Sections.Billing.PaymentMethod isLoading={session.loading} />}
+      {flags.billingPlan && (
+        <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
+      )}
+      {flags.billingPayment && (
+        <Projects.Settings.Sections.Billing.PaymentMethod
+          isLoading={session.loading}
+        />
+      )}
       {flags.billingInvoices && <Projects.Settings.Sections.Billing.Invoices />}
     </>
   );
@@ -73,8 +79,9 @@ const ComingSoonPage: React.FC = () => {
       modalContent={
         <>
           <ComingSoon.Modal.Description>
-            Soon we will introduce a credit-based billing system to Fleek, with a usage-based model. Pay storage, hosting, and other Fleek
-            services granularly and only by usage with crypto or credit-card.
+            Soon we will introduce a credit-based billing system to Fleek, with
+            a usage-based model. Pay storage, hosting, and other Fleek services
+            granularly and only by usage with crypto or credit-card.
           </ComingSoon.Modal.Description>
         </>
       }
@@ -118,4 +125,7 @@ const ComingSoonPage: React.FC = () => {
 
 BillingPage.getLayout = (page) => <Projects.Layout>{page}</Projects.Layout>;
 
-export default withAccess({ Component: BillingPage, requiredPermissions: [constants.PERMISSION.BILLING.VIEW] });
+export default withAccess({
+  Component: BillingPage,
+  requiredPermissions: [constants.PERMISSION.BILLING.VIEW],
+});

@@ -1,7 +1,12 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const EllipsisCircleIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom {...props} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <S.Custom
+    {...props}
+    viewBox="0 0 26 26"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       id="Vector"
       d="M12.9998 14.3203C13.7289 14.3203 14.3201 13.7292 14.3201 13C14.3201 12.2708 13.7289 11.6797 12.9998 11.6797C12.2706 11.6797 11.6794 12.2708 11.6794 13C11.6794 13.7292 12.2706 14.3203 12.9998 14.3203Z"

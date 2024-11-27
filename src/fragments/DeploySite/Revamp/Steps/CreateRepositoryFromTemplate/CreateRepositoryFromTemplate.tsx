@@ -15,19 +15,46 @@ import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
-import { Avatar, Box, Checkbox, Combobox, FormField, Icon, Stepper, Text } from '@/ui';
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Combobox,
+  FormField,
+  Icon,
+  Stepper,
+  Text,
+} from '@/ui';
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
-import { GitUser, useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
+import {
+  GitUser,
+  useDeploySiteContext,
+  useStepSetup,
+} from '../../DeploySite.context';
 import { CreateRepositoryFromTemplateStyles as S } from './CreateRepositoryFromTemplate.styles';
 
 export const CreateTemplateFromRepositoryStep: React.FC = () => {
-  const { gitProviderId, gitUser, gitRepository, templateId, setSourceProvider, setGitRepository } = useDeploySiteContext();
+  const {
+    gitProviderId,
+    gitUser,
+    gitRepository,
+    templateId,
+    setSourceProvider,
+    setGitRepository,
+  } = useDeploySiteContext();
 
-  const [templateDeployQuery] = useTemplateDeployQuery({ variables: { where: { id: templateId! } }, requestPolicy: 'network-only' });
-  const [, createRepositoryFromTemplate] = useCreateRepositoryFromTemplateMutation();
+  const [templateDeployQuery] = useTemplateDeployQuery({
+    variables: { where: { id: templateId! } },
+    requestPolicy: 'network-only',
+  });
+  const [, createRepositoryFromTemplate] =
+    useCreateRepositoryFromTemplateMutation();
 
-  const [gitIntegrationQuery] = useGitIntegrationQuery({ variables: { where: { gitProviderId: gitProviderId! } }, pause: !gitProviderId });
+  const [gitIntegrationQuery] = useGitIntegrationQuery({
+    variables: { where: { gitProviderId: gitProviderId! } },
+    pause: !gitProviderId,
+  });
 
   const createSiteForm = Form.useContext();
   const toast = useToast();
@@ -61,7 +88,10 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     onSubmit: async (values) => {
       try {
         if (!gitUser || !templateGit.slug || !templateGit.repository) {
-          toast.error({ message: 'It is not possible to use this template. Please contact the support.' });
+          toast.error({
+            message:
+              'It is not possible to use this template. Please contact the support.',
+          });
 
           return;
         }
@@ -86,7 +116,10 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
         });
 
         if (!createResponse.data || createResponse.error) {
-          throw createResponse.error || new Error('Failed to create repository from template');
+          throw (
+            createResponse.error ||
+            new Error('Failed to create repository from template')
+          );
         }
 
         const repository = createResponse.data.createGithubRepoFromTemplate;
@@ -111,10 +144,22 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     }
 
     // null is not allowed as value
-    createSiteForm.fields.buildCommand.setValue(templateGit.buildCommand ?? undefined, true);
-    createSiteForm.fields.distDirectory.setValue(templateGit.distDirectory ?? undefined, true);
-    createSiteForm.fields.dockerImage.setValue(templateGit.dockerImage ?? undefined, true);
-    createSiteForm.fields.baseDirectory.setValue(templateGit.baseDirectory ?? undefined, true);
+    createSiteForm.fields.buildCommand.setValue(
+      templateGit.buildCommand ?? undefined,
+      true,
+    );
+    createSiteForm.fields.distDirectory.setValue(
+      templateGit.distDirectory ?? undefined,
+      true,
+    );
+    createSiteForm.fields.dockerImage.setValue(
+      templateGit.dockerImage ?? undefined,
+      true,
+    );
+    createSiteForm.fields.baseDirectory.setValue(
+      templateGit.baseDirectory ?? undefined,
+      true,
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateGit]);
@@ -168,7 +213,13 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
 
   return (
     <S.Container>
-      <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+      <Text
+        as="h2"
+        variant="primary"
+        size="xl"
+        weight={700}
+        className="self-start"
+      >
         Create Repository For Template
       </Text>
 
@@ -190,23 +241,30 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
           isLoading={showSkeleton}
         />
         <PrivateRepositoryField />
-        {showSkeleton ? <SettingsBox.Skeleton /> : <S.SubmitButton>Create and deploy template</S.SubmitButton>}
+        {showSkeleton ? (
+          <SettingsBox.Skeleton />
+        ) : (
+          <S.SubmitButton>Create and deploy template</S.SubmitButton>
+        )}
       </Form.Provider>
     </S.Container>
   );
 };
 
 const AccountField: React.FC = () => {
-  const { sourceProvider, gitUser, setGitUser, gitProviderId } = useDeploySiteContext();
+  const { sourceProvider, gitUser, setGitUser, gitProviderId } =
+    useDeploySiteContext();
 
-  const [countSitesWithSourceProviderQuery] = useCountSitesWithSourceProviderQuery();
+  const [countSitesWithSourceProviderQuery] =
+    useCountSitesWithSourceProviderQuery();
   const [gitInstallationsQuery] = useGitInstallationsQuery({
     variables: { where: { gitProviderId: gitProviderId! } },
     pause: !gitProviderId,
   });
 
   const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching || (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+    countSitesWithSourceProviderQuery.fetching ||
+    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const users = useMemo(() => {
     const data = gitInstallationsQuery.data?.gitApiInstallations;
@@ -225,7 +283,14 @@ const AccountField: React.FC = () => {
       });
     }
 
-    return data.map(({ name, installationId, avatar }) => ({ name, installationId: installationId.toString(), avatar } as GitUser));
+    return data.map(
+      ({ name, installationId, avatar }) =>
+        ({
+          name,
+          installationId: installationId.toString(),
+          avatar,
+        }) as GitUser,
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gitInstallationsQuery.data]);
 
@@ -254,7 +319,8 @@ const AccountField: React.FC = () => {
             disabled: shouldDisableAddOrganization,
             tooltip: shouldDisableAddOrganization
               ? {
-                  content: 'You already have sites that depend on the current GitHub installation.',
+                  content:
+                    'You already have sites that depend on the current GitHub installation.',
                   side: 'left',
                 }
               : undefined,
@@ -263,7 +329,15 @@ const AccountField: React.FC = () => {
       >
         {({ Field, Options }) => (
           <>
-            <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
+            <Field
+              placeholder={
+                <>
+                  {<Icon name={sourceProviderIcon[sourceProvider!]} />} Select
+                </>
+              }
+            >
+              {UserItem}
+            </Field>
 
             <Options>{UserItem}</Options>
           </>
@@ -287,7 +361,8 @@ const PrivateRepositoryField: React.FC = () => {
 
   return (
     <S.CheckboxWrapper onClick={() => field.setValue(!field.value, true)}>
-      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create private Git repository
+      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create
+      private Git repository
     </S.CheckboxWrapper>
   );
 };
@@ -299,7 +374,13 @@ type TitleRowProps = LoadingProps<{
   repository: string;
 }>;
 
-const TitleRow: React.FC<TitleRowProps> = ({ isLoading, image, templateName, gitUserName, repository }) => {
+const TitleRow: React.FC<TitleRowProps> = ({
+  isLoading,
+  image,
+  templateName,
+  gitUserName,
+  repository,
+}) => {
   if (isLoading) {
     return (
       <S.TemplateHeader.TitleRow>

@@ -138,7 +138,11 @@ const SectionsFragment: React.FC = () => {
   return (
     <S.Sections.Container>
       {Sections.map((section) => (
-        <Section key={section.title} title={section.title} links={section.links} />
+        <Section
+          key={section.title}
+          title={section.title}
+          links={section.links}
+        />
       ))}
     </S.Sections.Container>
   );
@@ -166,7 +170,10 @@ const LeftFragment: React.FC = () => {
 
   useEffect(() => {
     // on the client side, show versions if not prod or user is internal
-    if (!isServerSide() && (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)) {
+    if (
+      !isServerSide() &&
+      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
+    ) {
       setShowVersion(true);
     }
   }, [flags]);

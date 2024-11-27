@@ -1,4 +1,7 @@
-import { createDomainSchema, createPrivateGatewaySchema } from '@fleek-platform/utils-validation';
+import {
+  createDomainSchema,
+  createPrivateGatewaySchema,
+} from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 
 import { Form } from '@/components';
@@ -30,7 +33,8 @@ const PrivateGatewaysPage: Page = () => {
   const toast = useToast();
 
   const [, deletePrivateGateway] = useDeletePrivateGatewayMutation();
-  const [, createZoneForPrivateGateway] = useCreateZoneForPrivateGatewayMutation();
+  const [, createZoneForPrivateGateway] =
+    useCreateZoneForPrivateGatewayMutation();
   const [, createPrivateGateway] = useCreatePrivateGatewayMutation();
 
   const [, createDomain] = useCreateDomainMutation();
@@ -64,7 +68,11 @@ const PrivateGatewaysPage: Page = () => {
           await checkPeriodicallyUntil({
             conditionFn: async () => {
               const checkedZoneResult = await client
-                .query<ZoneQuery, ZoneQueryVariables>(ZoneDocument, { where: { id: zoneId } }, { requestPolicy: 'network-only' })
+                .query<ZoneQuery, ZoneQueryVariables>(
+                  ZoneDocument,
+                  { where: { id: zoneId } },
+                  { requestPolicy: 'network-only' },
+                )
                 .toPromise();
               const status = checkedZoneResult.data?.zone.status;
 
@@ -91,7 +99,10 @@ const PrivateGatewaysPage: Page = () => {
 
         // with the zone created we can create the PGW
 
-        const createPrivateGatewayResult = await createPrivateGateway({ where: { zoneId }, data: { name: values.name } });
+        const createPrivateGatewayResult = await createPrivateGateway({
+          where: { zoneId },
+          data: { name: values.name },
+        });
 
         if (!createPrivateGatewayResult.data) {
           throw createPrivateGatewayResult.error;
@@ -99,7 +110,9 @@ const PrivateGatewaysPage: Page = () => {
 
         newPrivateGatewayForm.resetForm();
 
-        toast.success({ message: `Private Gateway ${createPrivateGatewayResult.data.createPrivateGateway.name} created` });
+        toast.success({
+          message: `Private Gateway ${createPrivateGatewayResult.data.createPrivateGateway.name} created`,
+        });
 
         return zoneId;
       } catch (error) {
@@ -122,19 +135,27 @@ const PrivateGatewaysPage: Page = () => {
     }
   };
 
-  const handleSubmitDomainDelete = async (domainId: string, newPrimaryDomain?: string) => {
+  const handleSubmitDomainDelete = async (
+    domainId: string,
+    newPrimaryDomain?: string,
+  ) => {
     try {
       let newPrimaryDomainHostname = '';
 
       if (newPrimaryDomain) {
         // means we first need to set the new primary domain and then delete de domain
-        const newPrimaryDomainResult = await selectPrimaryDomain({ where: { id: newPrimaryDomain } });
+        const newPrimaryDomainResult = await selectPrimaryDomain({
+          where: { id: newPrimaryDomain },
+        });
 
         if (!newPrimaryDomainResult.data || newPrimaryDomainResult.error) {
-          throw new DeletePrimaryDomainError('Failed to set new primary domain');
+          throw new DeletePrimaryDomainError(
+            'Failed to set new primary domain',
+          );
         }
 
-        newPrimaryDomainHostname = newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
+        newPrimaryDomainHostname =
+          newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
       }
 
       const result = await deleteDomain({ where: { id: domainId } });
@@ -147,7 +168,9 @@ const PrivateGatewaysPage: Page = () => {
 
       toast.success({
         message: `Domain removed ${result.data.deleteDomain.hostname}${
-          newPrimaryDomainHostname ? ` and replaced with ${newPrimaryDomainHostname}` : ''
+          newPrimaryDomainHostname
+            ? ` and replaced with ${newPrimaryDomainHostname}`
+            : ''
         }`,
       });
 
@@ -157,31 +180,45 @@ const PrivateGatewaysPage: Page = () => {
     }
   };
 
-  const handlePrivateGatewayDelete = async (privateGatewayId: string, primaryDomainId?: string) => {
+  const handlePrivateGatewayDelete = async (
+    privateGatewayId: string,
+    primaryDomainId?: string,
+  ) => {
     try {
       let newPrimaryDomainHostname = '';
 
       if (primaryDomainId) {
-        const newPrimaryDomainResult = await selectPrimaryDomain({ where: { id: primaryDomainId } });
+        const newPrimaryDomainResult = await selectPrimaryDomain({
+          where: { id: primaryDomainId },
+        });
 
         if (!newPrimaryDomainResult.data || newPrimaryDomainResult.error) {
-          throw new DeletePrimaryDomainError('Failed to set new primary domain');
+          throw new DeletePrimaryDomainError(
+            'Failed to set new primary domain',
+          );
         }
 
-        newPrimaryDomainHostname = newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
+        newPrimaryDomainHostname =
+          newPrimaryDomainResult.data.selectPrimaryDomain.hostname;
       }
 
-      const result = await deletePrivateGateway({ where: { id: privateGatewayId } });
+      const result = await deletePrivateGateway({
+        where: { id: privateGatewayId },
+      });
 
       if (!result.data) {
-        throw result.error || new Error('Error trying to delete private gateway');
+        throw (
+          result.error || new Error('Error trying to delete private gateway')
+        );
       }
 
       refetchPrivateGatewaysQuery({ requestPolicy: 'cache-and-network' });
 
       toast.success({
         message: `Deleted Private Gateway ${result.data.deletePrivateGateway.name}${
-          newPrimaryDomainHostname ? ` and set ${newPrimaryDomainHostname} as the Primary domain` : ''
+          newPrimaryDomainHostname
+            ? ` and set ${newPrimaryDomainHostname} as the Primary domain`
+            : ''
         }`,
       });
 
@@ -202,10 +239,16 @@ const PrivateGatewaysPage: Page = () => {
     },
     onSubmit: async (values) => {
       try {
-        const createDomainResult = await createDomain({ where: { zoneId: values.zoneId }, data: { hostname: values.hostname } });
+        const createDomainResult = await createDomain({
+          where: { zoneId: values.zoneId },
+          data: { hostname: values.hostname },
+        });
 
         if (!createDomainResult.data) {
-          throw createDomainResult.error || new Error('Error trying to add domain to private gateway');
+          throw (
+            createDomainResult.error ||
+            new Error('Error trying to add domain to private gateway')
+          );
         }
 
         refetchPrivateGatewaysQuery({ requestPolicy: 'cache-and-network' });
@@ -227,7 +270,9 @@ const PrivateGatewaysPage: Page = () => {
 
       refetchPrivateGatewaysQuery({ requestPolicy: 'network-only' });
 
-      toast.success({ message: `${result.data.selectPrimaryDomain.hostname} is now the primary domain for private gateway` });
+      toast.success({
+        message: `${result.data.selectPrimaryDomain.hostname} is now the primary domain for private gateway`,
+      });
 
       return true;
     } catch (error) {
@@ -246,21 +291,30 @@ const PrivateGatewaysPage: Page = () => {
       onSubmitDelete={handleSubmitDomainDelete}
       onSubmitPrimaryDomain={handleSubmitPrimaryDomain}
     >
-      <Projects.Settings.Sections.PrivateGateways.Delete.Provider onSubmitDelete={handlePrivateGatewayDelete}>
+      <Projects.Settings.Sections.PrivateGateways.Delete.Provider
+        onSubmitDelete={handlePrivateGatewayDelete}
+      >
         <Form.Provider value={newPrivateGatewayForm}>
           <Projects.Settings.Sections.PrivateGateways.Main />
         </Form.Provider>
 
         <Form.Provider value={addDomainForm}>
-          <Projects.Settings.Sections.PrivateGateways.AddDomainModal onCancel={onCancelAddDomainClick} />
+          <Projects.Settings.Sections.PrivateGateways.AddDomainModal
+            onCancel={onCancelAddDomainClick}
+          />
         </Form.Provider>
       </Projects.Settings.Sections.PrivateGateways.Delete.Provider>
     </Projects.Settings.Sections.PrivateGateways.Provider>
   );
 };
 
-PrivateGatewaysPage.getLayout = (page) => <Projects.Settings.Layout>{page}</Projects.Settings.Layout>;
+PrivateGatewaysPage.getLayout = (page) => (
+  <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
+);
 
-export default withAccess({ Component: PrivateGatewaysPage, requiredPermissions: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW] });
+export default withAccess({
+  Component: PrivateGatewaysPage,
+  requiredPermissions: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW],
+});
 
 class DeletePrimaryDomainError extends Error {}

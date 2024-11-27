@@ -9,7 +9,8 @@ export const EmptyMessage: React.FC = () => {
         No sites yet
       </Text>
       <Text size="md" className="text-balance">
-        Use the <CodeBlock>Add new</CodeBlock> button or select a template below to deploy your first site on Fleek.
+        Use the <CodeBlock>Add new</CodeBlock> button or select a template below
+        to deploy your first site on Fleek.
       </Text>
     </SitesStyles.Empty.Wrapper>
   );

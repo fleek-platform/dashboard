@@ -7,7 +7,11 @@ type ProjectGoBackProps = {
   goBackUrl: string;
 };
 
-export const ProjectGoBack: React.FC<ProjectGoBackProps> = ({ isLoading = false, projectName, goBackUrl }) => {
+export const ProjectGoBack: React.FC<ProjectGoBackProps> = ({
+  isLoading = false,
+  projectName,
+  goBackUrl,
+}) => {
   return (
     <Link
       href={goBackUrl}
@@ -19,7 +23,10 @@ export const ProjectGoBack: React.FC<ProjectGoBackProps> = ({ isLoading = false,
       <Box className="w-full">
         <Text size="xs">Go back</Text>
         {isLoading ? (
-          <Skeleton variant="text" className="line-clamp-1 w-2/3 h-3 my-1 shrink-0" />
+          <Skeleton
+            variant="text"
+            className="line-clamp-1 w-2/3 h-3 my-1 shrink-0"
+          />
         ) : (
           <Text variant="primary" weight={500} className="line-clamp-1">
             {projectName}

@@ -22,7 +22,9 @@ export const useFleekSdk = () => {
       return;
     }
 
-    const accessTokenService = new StaticAccessTokenService({ accessToken: cookies.values.accessToken });
+    const accessTokenService = new StaticAccessTokenService({
+      accessToken: cookies.values.accessToken,
+    });
 
     const client = new FleekSdk({
       accessTokenService,

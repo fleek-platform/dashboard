@@ -3,7 +3,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useClient } from 'urql';
 
-import { useRetryDeploymentMutation, useTriggerDeploymentMutation } from '@/generated/graphqlClient';
+import {
+  useRetryDeploymentMutation,
+  useTriggerDeploymentMutation,
+} from '@/generated/graphqlClient';
 
 import { useRouter } from './useRouter';
 import { useToast } from './useToast';
@@ -27,10 +30,15 @@ export const useSiteRedeploy = () => {
   const redeploy = useCallback(
     async (args: RedeployArgs) => {
       try {
-        const resultRedeploy = await retryDeployment({ where: { deploymentId: args.deploymentId } });
+        const resultRedeploy = await retryDeployment({
+          where: { deploymentId: args.deploymentId },
+        });
 
         if (!resultRedeploy.data?.retryDeployment) {
-          throw resultRedeploy.error || new Error(`${ERROR_MESSAGE} ${args.deploymentId}`);
+          throw (
+            resultRedeploy.error ||
+            new Error(`${ERROR_MESSAGE} ${args.deploymentId}`)
+          );
         }
 
         toast.success({
@@ -43,7 +51,7 @@ export const useSiteRedeploy = () => {
             projectId,
             siteId: args.siteId,
             deploymentId: resultRedeploy.data?.retryDeployment.id!,
-          })
+          }),
         );
 
         return resultRedeploy.data?.retryDeployment.id;
@@ -51,7 +59,7 @@ export const useSiteRedeploy = () => {
         toast.error({ error, log: `${ERROR_MESSAGE}` });
       }
     },
-    [client, retryDeployment, toast]
+    [client, retryDeployment, toast],
   );
 
   return useMutation({ mutationFn: redeploy });
@@ -72,10 +80,15 @@ export const useTriggerSiteDeployment = () => {
   const triggerSiteDeployment = useCallback(
     async ({ siteId }: TriggerDeployArgs) => {
       try {
-        const resultTriggerDeployment = await triggerDeployment({ where: { siteId } });
+        const resultTriggerDeployment = await triggerDeployment({
+          where: { siteId },
+        });
 
         if (!resultTriggerDeployment.data?.triggerDeployment) {
-          throw resultTriggerDeployment.error || new Error('Failed to trigger deployment');
+          throw (
+            resultTriggerDeployment.error ||
+            new Error('Failed to trigger deployment')
+          );
         }
 
         toast.success({
@@ -88,7 +101,7 @@ export const useTriggerSiteDeployment = () => {
             projectId,
             siteId,
             deploymentId: resultTriggerDeployment.data?.triggerDeployment.id!,
-          })
+          }),
         );
 
         return resultTriggerDeployment.data?.triggerDeployment.id;
@@ -96,7 +109,7 @@ export const useTriggerSiteDeployment = () => {
         toast.error({ error, log: 'Trigger deployment failed' });
       }
     },
-    [client, router, toast, triggerDeployment]
+    [client, router, toast, triggerDeployment],
   );
 
   return useMutation({ mutationFn: triggerSiteDeployment });

@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { Address } from 'viem';
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';

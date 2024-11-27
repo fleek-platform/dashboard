@@ -76,12 +76,18 @@ export const styled = ((...args: any[]) => {
   for (const arg of args) {
     // forward default props
     if (typeof arg === 'object' && 'defaultProps' in arg) {
-      base.defaultProps = Object.assign(base.defaultProps || {}, arg.defaultProps);
+      base.defaultProps = Object.assign(
+        base.defaultProps || {},
+        arg.defaultProps,
+      );
     }
 
     // override with default variants
     if (typeof arg === 'object' && 'defaultVariants' in arg) {
-      base.defaultProps = Object.assign(base.defaultProps || {}, arg.defaultVariants);
+      base.defaultProps = Object.assign(
+        base.defaultProps || {},
+        arg.defaultVariants,
+      );
       delete arg.defaultVariants;
     }
   }

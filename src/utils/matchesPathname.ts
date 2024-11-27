@@ -1,4 +1,5 @@
-export const removeTrailingSlash = (val: string) => (val.endsWith('/') ? val.substring(0, val.length - 1) : val);
+export const removeTrailingSlash = (val: string) =>
+  val.endsWith('/') ? val.substring(0, val.length - 1) : val;
 
 export const matchesPathname = (pathname: string, asPath: string): boolean => {
   const normalizedPathname = removeTrailingSlash(pathname);

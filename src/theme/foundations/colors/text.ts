@@ -1,4 +1,15 @@
-import { amber, amberDark, gray, grayDark, green, greenDark, red, redDark, yellow, yellowDark } from '@radix-ui/colors';
+import {
+  amber,
+  amberDark,
+  gray,
+  grayDark,
+  green,
+  greenDark,
+  red,
+  redDark,
+  yellow,
+  yellowDark,
+} from '@radix-ui/colors';
 
 export const text = {
   dark: {

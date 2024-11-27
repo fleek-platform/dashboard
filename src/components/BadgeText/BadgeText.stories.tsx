@@ -12,14 +12,19 @@ const meta: Meta = {
 
 export default meta;
 
-export const Customizable: StoryObj<React.ComponentPropsWithRef<typeof BadgeTextStyles>> = {
+export const Customizable: StoryObj<
+  React.ComponentPropsWithRef<typeof BadgeTextStyles>
+> = {
   args: {
     children: 'Badge Text',
     colorScheme: 'yellow',
   },
   argTypes: {
     colorScheme: {
-      type: { name: 'enum', value: ['yellow', 'green', 'slate', 'red', 'amber'] },
+      type: {
+        name: 'enum',
+        value: ['yellow', 'green', 'slate', 'red', 'amber'],
+      },
     },
     hoverable: {
       type: { name: 'boolean' },
@@ -27,7 +32,9 @@ export const Customizable: StoryObj<React.ComponentPropsWithRef<typeof BadgeText
   },
 };
 
-export const CustomizableWithIcon: StoryObj<React.ComponentPropsWithRef<typeof BadgeTextStyles>> = {
+export const CustomizableWithIcon: StoryObj<
+  React.ComponentPropsWithRef<typeof BadgeTextStyles>
+> = {
   args: {
     children: (
       <>
@@ -38,7 +45,10 @@ export const CustomizableWithIcon: StoryObj<React.ComponentPropsWithRef<typeof B
   },
   argTypes: {
     colorScheme: {
-      type: { name: 'enum', value: ['yellow', 'green', 'slate', 'red', 'amber'] },
+      type: {
+        name: 'enum',
+        value: ['yellow', 'green', 'slate', 'red', 'amber'],
+      },
     },
     hoverable: {
       type: { name: 'boolean' },

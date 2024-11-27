@@ -12,7 +12,13 @@ export type UploadWidgetProps = {
 
 export const UploadWidget: React.FC<UploadWidgetProps> = ({ uploads }) => {
   return (
-    <S.Accordion.Root type="single" collapsible defaultValue="upload" hidden={uploads.length === 0} id="upload-widget">
+    <S.Accordion.Root
+      type="single"
+      collapsible
+      defaultValue="upload"
+      hidden={uploads.length === 0}
+      id="upload-widget"
+    >
       <S.Accordion.Item value="upload">
         <WidgetHeader />
         <S.Accordion.Content asChild>

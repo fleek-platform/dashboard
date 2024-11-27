@@ -27,20 +27,30 @@ export type DropdownMenuProps = {
 
 type HandleAsyncActionProps = (id: string) => Promise<void>;
 
-export const DropdownMenu: React.FC<DropdownMenuProps> = ({ deployment, onRedeploy, isSelfManaged }) => {
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  deployment,
+  onRedeploy,
+  isSelfManaged,
+}) => {
   const router = useRouter();
   const siteId = router.query.siteId!;
   const projectId = router.query.projectId!;
   const status = parseAPIDeploymentStatus(deployment.status);
   const siteQuota = useCanDeploySite({ siteId });
-  const hasDeployPermission = usePermissions({ action: [constants.PERMISSION.SITE.DEPLOY] });
-  const hasViewBuildSettings = usePermissions({ action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS] });
+  const hasDeployPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.DEPLOY],
+  });
+  const hasViewBuildSettings = usePermissions({
+    action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
+  });
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const siteLink = useSiteLink({ siteId }) || '#';
-  const deploymentURL = deployment.previewUrlSlug ? getLinkForSiteSlug(deployment.previewUrlSlug) : siteLink;
+  const deploymentURL = deployment.previewUrlSlug
+    ? getLinkForSiteSlug(deployment.previewUrlSlug)
+    : siteLink;
 
   const isCancelable = isDeployCancelable({ deployment });
 
@@ -55,7 +65,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ deployment, onRedepl
   const handleCopyUrl = () => {
     try {
       copyToClipboard(
-        `${window.location.origin}${routes.project.site.deployments.detail({ projectId, siteId, deploymentId: deployment.id })}`
+        `${window.location.origin}${routes.project.site.deployments.detail({ projectId, siteId, deploymentId: deployment.id })}`,
       );
       toast.success({ message: 'URL copied to clipboard' });
     } catch {
@@ -81,15 +91,27 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ deployment, onRedepl
 
     if (status === 'loading' || status === 'created') {
       return (
-        <SettingsListItem.DropdownMenuItem icon="close" onClick={() => setIsCancelModalOpen(true)} disabled={!isCancelable}>
+        <SettingsListItem.DropdownMenuItem
+          icon="close"
+          onClick={() => setIsCancelModalOpen(true)}
+          disabled={!isCancelable}
+        >
           Cancel deployment
         </SettingsListItem.DropdownMenuItem>
       );
     }
 
     return (
-      <SiteQuotaTooltip canDeploy={siteQuota.canDeploy} isLoading={siteQuota.isFetching} side="left">
-        <SettingsListItem.DropdownMenuItem icon="refresh" onClick={handleAsyncAction(onRedeploy)} disabled={!siteQuota.canDeploy}>
+      <SiteQuotaTooltip
+        canDeploy={siteQuota.canDeploy}
+        isLoading={siteQuota.isFetching}
+        side="left"
+      >
+        <SettingsListItem.DropdownMenuItem
+          icon="refresh"
+          onClick={handleAsyncAction(onRedeploy)}
+          disabled={!siteQuota.canDeploy}
+        >
           Redeploy
         </SettingsListItem.DropdownMenuItem>
       </SiteQuotaTooltip>
@@ -107,19 +129,34 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ deployment, onRedepl
       <SettingsListItem.DropdownMenu isLoading={isLoading}>
         {renderDeployActions()}
 
-        <Link href={routes.project.site.deployments.detail({ projectId, siteId, deploymentId: deployment.id })}>
-          <SettingsListItem.DropdownMenuItem icon="expand">View details</SettingsListItem.DropdownMenuItem>
+        <Link
+          href={routes.project.site.deployments.detail({
+            projectId,
+            siteId,
+            deploymentId: deployment.id,
+          })}
+        >
+          <SettingsListItem.DropdownMenuItem icon="expand">
+            View details
+          </SettingsListItem.DropdownMenuItem>
         </Link>
 
         {linkForRepository && (
-          <SettingsListItem.DropdownMenuItem href={linkForRepository} icon="code">
+          <SettingsListItem.DropdownMenuItem
+            href={linkForRepository}
+            icon="code"
+          >
             View source
           </SettingsListItem.DropdownMenuItem>
         )}
 
         {hasViewBuildSettings && (
-          <Link href={routes.project.site.settings.build({ projectId, siteId })}>
-            <SettingsListItem.DropdownMenuItem icon="gear">View build settings</SettingsListItem.DropdownMenuItem>
+          <Link
+            href={routes.project.site.settings.build({ projectId, siteId })}
+          >
+            <SettingsListItem.DropdownMenuItem icon="gear">
+              View build settings
+            </SettingsListItem.DropdownMenuItem>
           </Link>
         )}
 
@@ -136,7 +173,9 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ deployment, onRedepl
             <SettingsListItem.DropdownMenuSeparator />
 
             <ExternalLink href={deploymentURL}>
-              <SettingsListItem.DropdownMenuItem icon="arrow-up-right">Visit</SettingsListItem.DropdownMenuItem>
+              <SettingsListItem.DropdownMenuItem icon="arrow-up-right">
+                Visit
+              </SettingsListItem.DropdownMenuItem>
             </ExternalLink>
           </>
         )}

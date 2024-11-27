@@ -41,7 +41,11 @@ type GetDurationArgs = {
   finalISODate: string;
 } & FallbackArgs;
 
-export const getDuration = ({ initialISODate, finalISODate, fallback = constants.DEFAULT_DATE_FORMAT_FALLBACK }: GetDurationArgs) => {
+export const getDuration = ({
+  initialISODate,
+  finalISODate,
+  fallback = constants.DEFAULT_DATE_FORMAT_FALLBACK,
+}: GetDurationArgs) => {
   try {
     const targetTime = DateTime.fromISO(initialISODate);
     const finalTime = DateTime.fromISO(finalISODate);
@@ -76,8 +80,12 @@ type FallbackArgs = {
 
 // eslint-disable-next-line fleek-custom/valid-argument-types
 export const convertToReadableTime = (timeInMilliseconds: number) => {
-  const seconds = Math.floor(Duration.fromMillis(timeInMilliseconds).as('seconds'));
-  const minutes = Math.floor(Duration.fromMillis(timeInMilliseconds).as('minutes'));
+  const seconds = Math.floor(
+    Duration.fromMillis(timeInMilliseconds).as('seconds'),
+  );
+  const minutes = Math.floor(
+    Duration.fromMillis(timeInMilliseconds).as('minutes'),
+  );
   const hours = Math.floor(Duration.fromMillis(timeInMilliseconds).as('hours'));
 
   if (seconds <= 60) {

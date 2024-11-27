@@ -8,10 +8,15 @@ export const DeleteSiteDomainModal: React.FC = () => {
   return (
     <DeleteDomainModal>
       <Text>
-        Are you sure you want to remove the domain <b>{hostname}</b> from your site <b>{resourceName}</b>?
+        Are you sure you want to remove the domain <b>{hostname}</b> from your
+        site <b>{resourceName}</b>?
       </Text>
 
-      <Text> After removing, your site will no longer be accessible through this domain.</Text>
+      <Text>
+        {' '}
+        After removing, your site will no longer be accessible through this
+        domain.
+      </Text>
     </DeleteDomainModal>
   );
 };

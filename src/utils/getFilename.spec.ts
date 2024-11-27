@@ -6,7 +6,7 @@ describe('Utils getFilename', () => {
     const result = getFilename('document.pdf');
     expect(result).toEqual({
       filename: 'document',
-      extension: 'pdf'
+      extension: 'pdf',
     });
   });
 
@@ -14,7 +14,7 @@ describe('Utils getFilename', () => {
     const result = getFilename('my.special.test.file.txt');
     expect(result).toEqual({
       filename: 'my.special.test.file',
-      extension: 'txt'
+      extension: 'txt',
     });
   });
 
@@ -22,7 +22,7 @@ describe('Utils getFilename', () => {
     const result = getFilename('README');
     expect(result).toEqual({
       filename: 'README',
-      extension: ''
+      extension: '',
     });
   });
 
@@ -30,7 +30,7 @@ describe('Utils getFilename', () => {
     const result = getFilename('.gitignore');
     expect(result).toEqual({
       filename: '',
-      extension: 'gitignore'
+      extension: 'gitignore',
     });
   });
 
@@ -38,7 +38,7 @@ describe('Utils getFilename', () => {
     const result = getFilename('');
     expect(result).toEqual({
       filename: '',
-      extension: ''
+      extension: '',
     });
   });
 });

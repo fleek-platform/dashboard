@@ -9,12 +9,17 @@ const DEFAULT_OPTIONS: FormController.FormOptions = {
   partial: false,
 };
 
-export class FormController<Values extends FormController.FormValues, Response> {
+export class FormController<
+  Values extends FormController.FormValues,
+  Response,
+> {
   private initialValues: Values;
   private schema: FormController.ValidationSchema;
   private extraValidations: FormController.ExtraValidations<Values>;
   private fieldListeners: {
-    [key in keyof Values]: ((field: FormController.Field<Values[key]>) => void)[];
+    [key in keyof Values]: ((
+      field: FormController.Field<Values[key]>,
+    ) => void)[];
   };
   private formListeners: ((form: FormController<Values, Response>) => void)[];
   private submitHandler: FormController.SubmitHandler<Values, Response>;
@@ -24,7 +29,8 @@ export class FormController<Values extends FormController.FormValues, Response> 
   public isSubmitting = false;
 
   constructor(args: FormController.ConstructorArgs<Values, Response>) {
-    this.schema = args.schema || (zod.object({}) as FormController.ValidationSchema);
+    this.schema =
+      args.schema || (zod.object({}) as FormController.ValidationSchema);
     this.initialValues = args.values;
     this.extraValidations = args.extraValidations || {};
     this.submitHandler = args.onSubmit;
@@ -40,11 +46,16 @@ export class FormController<Values extends FormController.FormValues, Response> 
   public get isValid() {
     if (this.options.partial) {
       return Object.values(this.fields).every(
-        (field) => field.status !== 'invalid' && field.status !== 'validating' && field.status !== 'debouncing'
+        (field) =>
+          field.status !== 'invalid' &&
+          field.status !== 'validating' &&
+          field.status !== 'debouncing',
       );
     }
 
-    return Object.values(this.fields).every((field) => field.status === 'valid');
+    return Object.values(this.fields).every(
+      (field) => field.status === 'valid',
+    );
   }
 
   public get isDirty() {
@@ -89,7 +100,9 @@ export class FormController<Values extends FormController.FormValues, Response> 
   };
 
   public validate = async () => {
-    const validationPromises = Object.keys(this.fields).map((key) => this.validateField(key as keyof Values));
+    const validationPromises = Object.keys(this.fields).map((key) =>
+      this.validateField(key as keyof Values),
+    );
 
     await Promise.all(validationPromises);
 
@@ -101,11 +114,17 @@ export class FormController<Values extends FormController.FormValues, Response> 
       return;
     }
 
-    const validationResult = this.schema.shape[key]?.safeParse(this.fields[key].value);
+    const validationResult = this.schema.shape[key]?.safeParse(
+      this.fields[key].value,
+    );
 
     if (validationResult && !validationResult.success) {
       // when the field is in the schema but the value is invalid
-      this.handleStatusChange(key, 'invalid', validationResult.error.issues[0].message);
+      this.handleStatusChange(
+        key,
+        'invalid',
+        validationResult.error.issues[0].message,
+      );
 
       return;
     }
@@ -121,7 +140,11 @@ export class FormController<Values extends FormController.FormValues, Response> 
       if (willValidateFor === this.fields[key].value) {
         // if there is no change then set the result
 
-        this.handleStatusChange(key, validationResult.status, validationResult.message);
+        this.handleStatusChange(
+          key,
+          validationResult.status,
+          validationResult.message,
+        );
       }
 
       return;
@@ -136,23 +159,39 @@ export class FormController<Values extends FormController.FormValues, Response> 
     this.fields = this.createFields(this.initialValues);
   };
 
-  public addFieldListener = <Key extends keyof Values>(key: Key, listener: (field: FormController.Field<Values[Key]>) => void) => {
+  public addFieldListener = <Key extends keyof Values>(
+    key: Key,
+    listener: (field: FormController.Field<Values[Key]>) => void,
+  ) => {
     this.fieldListeners[key].push(listener);
   };
 
-  public removeFieldListener = <Key extends keyof Values>(key: Key, listener: (field: FormController.Field<Values[Key]>) => void) => {
-    this.fieldListeners[key] = this.fieldListeners[key].filter((l) => l !== listener);
+  public removeFieldListener = <Key extends keyof Values>(
+    key: Key,
+    listener: (field: FormController.Field<Values[Key]>) => void,
+  ) => {
+    this.fieldListeners[key] = this.fieldListeners[key].filter(
+      (l) => l !== listener,
+    );
   };
 
-  public addFormListener = (listener: (form: FormController<Values, Response>) => void) => {
+  public addFormListener = (
+    listener: (form: FormController<Values, Response>) => void,
+  ) => {
     this.formListeners.push(listener);
   };
 
-  public removeFormListener = (listener: (form: FormController<Values, Response>) => void) => {
+  public removeFormListener = (
+    listener: (form: FormController<Values, Response>) => void,
+  ) => {
     this.formListeners = this.formListeners.filter((l) => l !== listener);
   };
 
-  private handleValueChange<Key extends keyof Values>(key: Key, value: Values[Key], skipDebounce = false) {
+  private handleValueChange<Key extends keyof Values>(
+    key: Key,
+    value: Values[Key],
+    skipDebounce = false,
+  ) {
     this.fields[key].value = value;
     this.fields[key].dirty = this.fields[key].value !== this.initialValues[key];
     this.fields[key].message = undefined;
@@ -166,7 +205,9 @@ export class FormController<Values extends FormController.FormValues, Response> 
     }
 
     // debounce
-    new Promise((resolve) => setTimeout(resolve, this.options.validationDebounce)).then(() => {
+    new Promise((resolve) =>
+      setTimeout(resolve, this.options.validationDebounce),
+    ).then(() => {
       if (this.fields[key].value !== value) {
         return;
       }
@@ -175,7 +216,10 @@ export class FormController<Values extends FormController.FormValues, Response> 
     });
   }
 
-  private handleTouchChange<Key extends keyof Values>(key: Key, touched: boolean) {
+  private handleTouchChange<Key extends keyof Values>(
+    key: Key,
+    touched: boolean,
+  ) {
     this.fields[key].touched = touched;
 
     this.emitFieldChange(key);
@@ -186,7 +230,11 @@ export class FormController<Values extends FormController.FormValues, Response> 
     }
   }
 
-  private handleStatusChange<Key extends keyof Values>(key: Key, status: FormController.FieldStatus, message?: React.ReactNode) {
+  private handleStatusChange<Key extends keyof Values>(
+    key: Key,
+    status: FormController.FieldStatus,
+    message?: React.ReactNode,
+  ) {
     this.fields[key].status = status;
     this.fields[key].message = message;
 
@@ -203,33 +251,46 @@ export class FormController<Values extends FormController.FormValues, Response> 
   }
 
   private createFields(values: Values): FormController.Fields<Values> {
-    return Object.keys(values).reduce((acc, key: keyof Values) => {
-      acc[key] = {
-        value: values[key],
-        setValue: (value, skipDebounce) => this.handleValueChange(key, value, skipDebounce),
-        status: this.schema.shape[key] || this.extraValidations[key] ? 'pending' : 'valid',
-        dirty: false,
-        touched: false,
-        setTouched: (touched) => this.handleTouchChange(key, touched),
-      };
+    return Object.keys(values).reduce(
+      (acc, key: keyof Values) => {
+        acc[key] = {
+          value: values[key],
+          setValue: (value, skipDebounce) =>
+            this.handleValueChange(key, value, skipDebounce),
+          status:
+            this.schema.shape[key] || this.extraValidations[key]
+              ? 'pending'
+              : 'valid',
+          dirty: false,
+          touched: false,
+          setTouched: (touched) => this.handleTouchChange(key, touched),
+        };
 
-      return acc;
-    }, {} as FormController<Values, Response>['fields']);
+        return acc;
+      },
+      {} as FormController<Values, Response>['fields'],
+    );
   }
 
   private createFieldListeners(values: Values) {
-    return Object.keys(values).reduce((acc, key: keyof Values) => {
-      acc[key] = [];
+    return Object.keys(values).reduce(
+      (acc, key: keyof Values) => {
+        acc[key] = [];
 
-      return acc;
-    }, {} as FormController<Values, Response>['fieldListeners']);
+        return acc;
+      },
+      {} as FormController<Values, Response>['fieldListeners'],
+    );
   }
 
   /**
    * The next methods are used to bypass the memorized reference and keep the form callback updated
    */
 
-  public set _submitHandler(handler: FormController.SubmitHandler<Values, Response>) {
+  public set _submitHandler(handler: FormController.SubmitHandler<
+    Values,
+    Response
+  >) {
     this.submitHandler = handler;
   }
 
@@ -249,7 +310,9 @@ export namespace FormController {
     [field: string]: any;
   };
 
-  export type SubmitHandler<Values extends FormValues, Response> = (values: Values) => Promise<Response>;
+  export type SubmitHandler<Values extends FormValues, Response> = (
+    values: Values,
+  ) => Promise<Response>;
 
   export type ConstructorArgs<Values extends FormValues, Response> = {
     values: Values;
@@ -287,9 +350,15 @@ export namespace FormController {
   // TODO: Add generic type <Values extends FormValues> back
   export type ValidationSchema = AnyZodObject;
 
-  export type ExtraValidationResult = { status: FieldStatusCompleted; message?: React.ReactNode };
+  export type ExtraValidationResult = {
+    status: FieldStatusCompleted;
+    message?: React.ReactNode;
+  };
 
-  export type ExtraValidation<Key extends keyof Values, Values extends FormValues> = (arg: Values[Key]) => Promise<ExtraValidationResult>;
+  export type ExtraValidation<
+    Key extends keyof Values,
+    Values extends FormValues,
+  > = (arg: Values[Key]) => Promise<ExtraValidationResult>;
 
   export type ExtraValidations<Values extends FormValues> = {
     [key in keyof Values]?: FormController.ExtraValidation<key, Values>;
@@ -297,7 +366,11 @@ export namespace FormController {
 
   export type FieldStatusCompleted = 'valid' | 'invalid' | 'other';
 
-  export type FieldStatus = 'pending' | 'debouncing' | 'validating' | FieldStatusCompleted;
+  export type FieldStatus =
+    | 'pending'
+    | 'debouncing'
+    | 'validating'
+    | FieldStatusCompleted;
 
   export type Field<Type> = {
     value: Type;

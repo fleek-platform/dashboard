@@ -1,4 +1,9 @@
-import { loadStripe, Stripe, StripeElements, StripeElementsOptionsMode } from '@stripe/stripe-js';
+import {
+  loadStripe,
+  Stripe,
+  StripeElements,
+  StripeElementsOptionsMode,
+} from '@stripe/stripe-js';
 
 import { ThemeHook } from '@/providers/ThemeProvider';
 import { secrets } from '@/secrets';
@@ -100,25 +105,32 @@ export class StripeCheckout {
     this.elements.update({ appearance: createElementsAppearance({ theme }) });
   };
 
-  private requestClientSecret: StripeCheckout.RequestClientSecret = async () => {
-    /**
-     * TODO: This is a placeholder for the actual API call to create a payment intent.
-     * We will need to replace this with the correct call when backend is done.
-     */
-    const response = await fetch('/api/create-payment-intent', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ stripePriceId: this.plan.stripePriceId, customer: this.customer, email: this.email }),
-    });
+  private requestClientSecret: StripeCheckout.RequestClientSecret =
+    async () => {
+      /**
+       * TODO: This is a placeholder for the actual API call to create a payment intent.
+       * We will need to replace this with the correct call when backend is done.
+       */
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          stripePriceId: this.plan.stripePriceId,
+          customer: this.customer,
+          email: this.email,
+        }),
+      });
 
-    const { clientSecret } = await response.json();
+      const { clientSecret } = await response.json();
 
-    return clientSecret;
-  };
+      return clientSecret;
+    };
 
-  private createElementsArguments: StripeCheckout.CreateElementsArguments = ({ theme }) => {
+  private createElementsArguments: StripeCheckout.CreateElementsArguments = ({
+    theme,
+  }) => {
     return {
       /**
        * It is important that these arguments match with backend's client secret creation.
@@ -136,7 +148,8 @@ export class StripeCheckout {
       appearance: createElementsAppearance({ theme }),
       fonts: [
         {
-          cssSrc: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap',
+          cssSrc:
+            'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap',
         },
       ],
     };
@@ -152,7 +165,13 @@ class StripeCheckoutError extends Error {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace StripeCheckout {
-  export type State = 'initial' | 'stripe-loaded' | 'elements-mounted' | 'submitting' | 'submit-success' | 'submit-failed';
+  export type State =
+    | 'initial'
+    | 'stripe-loaded'
+    | 'elements-mounted'
+    | 'submitting'
+    | 'submit-success'
+    | 'submit-failed';
 
   export type Arguments = {
     setMessage: (message: string) => void;
@@ -174,7 +193,11 @@ export namespace StripeCheckout {
 
   export type Submit = React.MouseEventHandler<HTMLButtonElement>;
 
-  export type RequestClientSecret = (args: { plan: BillingPlan }) => Promise<string>;
+  export type RequestClientSecret = (args: {
+    plan: BillingPlan;
+  }) => Promise<string>;
 
-  export type CreateElementsArguments = (args: ThemeArgs) => StripeElementsOptionsMode;
+  export type CreateElementsArguments = (
+    args: ThemeArgs,
+  ) => StripeElementsOptionsMode;
 }

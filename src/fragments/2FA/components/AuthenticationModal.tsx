@@ -14,7 +14,8 @@ const AuthenticationMap = {
   },
   RECOVERY: {
     title: 'Enter Recovery code',
-    description: 'This is the recovery code you downloaded when you set up your authenticator app.',
+    description:
+      'This is the recovery code you downloaded when you set up your authenticator app.',
     inputName: 'recoveryCode',
   },
 };
@@ -39,17 +40,28 @@ export const AuthenticationModal: React.FC = () => {
     <Modal.Content>
       <Modal.Heading>{AuthenticationMap[modalType].title}</Modal.Heading>
       <Text>{AuthenticationMap[modalType].description}</Text>
-      <Form.InputField name={AuthenticationMap[modalType].inputName} placeholder="Enter Code" maxLength={8} disableValidMessage />
+      <Form.InputField
+        name={AuthenticationMap[modalType].inputName}
+        placeholder="Enter Code"
+        maxLength={8}
+        disableValidMessage
+      />
       {modalType === 'CODE' ? (
         <Text className="flex gap-1 whitespace-nowrap">
           Unable to scan? Use a{' '}
-          <Text onClick={() => setModalType('RECOVERY')} className="text-accent-11 cursor-pointer hover:underline">
+          <Text
+            onClick={() => setModalType('RECOVERY')}
+            className="text-accent-11 cursor-pointer hover:underline"
+          >
             recovery key
           </Text>{' '}
           instead.
         </Text>
       ) : (
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_SUPPORT} prefix="Still having trouble?">
+        <LearnMoreMessage
+          href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}
+          prefix="Still having trouble?"
+        >
           Contact Support
         </LearnMoreMessage>
       )}
@@ -60,7 +72,12 @@ export const AuthenticationModal: React.FC = () => {
           </Button>
         </Dialog.Close>
         <Dialog.Close asChild>
-          <Button loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit} className="flex-1">
+          <Button
+            loading={isSubmitting}
+            disabled={shouldDisableSubmit}
+            onClick={handleSubmit}
+            className="flex-1"
+          >
             Continue
           </Button>
         </Dialog.Close>

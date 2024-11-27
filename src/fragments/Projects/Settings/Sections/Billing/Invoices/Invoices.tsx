@@ -19,9 +19,14 @@ export const Invoices: React.FC = () => {
         </Button>
       </SettingsBox.TitleRow>
 
-      <SettingsBox.Text>Download your previous invoices and usage details.</SettingsBox.Text>
+      <SettingsBox.Text>
+        Download your previous invoices and usage details.
+      </SettingsBox.Text>
 
-      {query.isLoading && Array.from({ length: 5 }).map((_, index) => <InvoiceListItem isLoading key={index} />)}
+      {query.isLoading &&
+        Array.from({ length: 5 }).map((_, index) => (
+          <InvoiceListItem isLoading key={index} />
+        ))}
 
       {query.data?.map((item) => (
         <InvoiceListItem
@@ -45,7 +50,14 @@ type InvoiceListItemProps = LoadingProps<{
   dateTo: string;
 }>;
 
-const InvoiceListItem: React.FC<InvoiceListItemProps> = ({ title, value, overage, isLoading, dateFrom, dateTo }) => {
+const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
+  title,
+  value,
+  overage,
+  isLoading,
+  dateFrom,
+  dateTo,
+}) => {
   if (isLoading) {
     return <SettingsListItem.Skeleton enableAvatar />;
   }
@@ -56,11 +68,15 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({ title, value, overage
 
   return (
     <SettingsListItem title={title} subtitle={subtitle} avatarIcon="invoice">
-      {formattedOverage && <BadgeText colorScheme="yellow">{formattedOverage}</BadgeText>}
+      {formattedOverage && (
+        <BadgeText colorScheme="yellow">{formattedOverage}</BadgeText>
+      )}
       <BadgeText colorScheme="green">{formattedValue}</BadgeText>
 
       <SettingsListItem.DropdownMenu>
-        <SettingsListItem.DropdownMenuItem icon="download">Download</SettingsListItem.DropdownMenuItem>
+        <SettingsListItem.DropdownMenuItem icon="download">
+          Download
+        </SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>
     </SettingsListItem>
   );
@@ -68,7 +84,8 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({ title, value, overage
 
 const formatMoney = (value: number) => `$${value.toFixed(2)}`;
 
-const formatDate = (date: string) => dateFormat({ dateISO: date, stringFormat: 'MMM dd, yyyy' });
+const formatDate = (date: string) =>
+  dateFormat({ dateISO: date, stringFormat: 'MMM dd, yyyy' });
 
 const useMockedQuery = () =>
   useQuery({

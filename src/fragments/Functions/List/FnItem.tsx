@@ -40,20 +40,30 @@ export const FnItemSkeleton = () => {
 
 export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
   const href = routes.project.function.detail({ fnName: fn.name, projectId });
-  const settingsHref = routes.project.function.settings({ fnName: fn.name, projectId });
+  const settingsHref = routes.project.function.settings({
+    fnName: fn.name,
+    projectId,
+  });
   const router = useRouter();
   const navTo = useCallback((url: string) => () => router.push(url), [router]);
-  const hasFunctionOverviewPermissions = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.VIEW] });
-  const hasFunctionsSettingsPermissions = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS] });
+  const hasFunctionOverviewPermissions = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.VIEW],
+  });
+  const hasFunctionsSettingsPermissions = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.EDIT_SETTINGS],
+  });
 
   const [{ fetching: deleting }] = useDeleteFunction(fn);
 
   return (
     <Link
-      className={cn('p-4 grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50', {
-        'pointer-events-none opacity-50': deleting,
-        'cursor-default': !hasFunctionOverviewPermissions,
-      })}
+      className={cn(
+        'p-4 grid grid-cols-12 items-center border-b border-neutral-6 last:border-none hover:bg-neutral-3/50',
+        {
+          'pointer-events-none opacity-50': deleting,
+          'cursor-default': !hasFunctionOverviewPermissions,
+        },
+      )}
       href={hasFunctionOverviewPermissions ? href : '#'}
     >
       <Box className="col-span-6">
@@ -72,7 +82,12 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
       </Box>
 
       <Box className="col-span-2">
-        <DeployTime at={fn.currentDeployment?.createdAt} before="Deployed" size="xs" variant="secondary" />
+        <DeployTime
+          at={fn.currentDeployment?.createdAt}
+          before="Deployed"
+          size="xs"
+          variant="secondary"
+        />
       </Box>
 
       <Box className="col-span-2 flex-row items-center gap-3 place-self-end self-center">
@@ -92,11 +107,18 @@ export const FnItem: React.FC<FnItemProps> = ({ fn, projectId, source }) => {
           hasAccess={hasFunctionsSettingsPermissions}
         >
           {fn.currentDeployment && hasFunctionOverviewPermissions && (
-            <SettingsListItem.DropdownMenuItem icon="expand" onClick={navTo(href)}>
+            <SettingsListItem.DropdownMenuItem
+              icon="expand"
+              onClick={navTo(href)}
+            >
               View deployment
             </SettingsListItem.DropdownMenuItem>
           )}
-          <SettingsListItem.DropdownMenuItem icon="gear" onClick={(e) => e.preventDefault()} onMouseDown={navTo(settingsHref)}>
+          <SettingsListItem.DropdownMenuItem
+            icon="gear"
+            onClick={(e) => e.preventDefault()}
+            onMouseDown={navTo(settingsHref)}
+          >
             Settings
           </SettingsListItem.DropdownMenuItem>
         </SettingsListItem.DropdownMenu>

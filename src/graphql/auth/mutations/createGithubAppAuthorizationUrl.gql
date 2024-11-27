@@ -1,3 +1,5 @@
-mutation createGithubAppAuthorizationUrl($where: CreateGithubAppAuthorizationUrlWhereInput!) {
+mutation createGithubAppAuthorizationUrl(
+  $where: CreateGithubAppAuthorizationUrlWhereInput!
+) {
   createGithubAppAuthorizationUrl(where: $where)
 }

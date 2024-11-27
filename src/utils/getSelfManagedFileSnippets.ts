@@ -3,15 +3,23 @@ import { FleekRootConfig, Site } from '@/types/Site';
 
 type GetSelfManagedFileSnippetsArgs = Site;
 
-export const getSelfManagedFileSnippets = (args?: GetSelfManagedFileSnippetsArgs): CodeSnippetProps[] =>
+export const getSelfManagedFileSnippets = (
+  args?: GetSelfManagedFileSnippetsArgs,
+): CodeSnippetProps[] =>
   args ? [getFleekFileSnippet(args), getGitHubActionSnippet(args)] : [];
 
 const parseObject = (obj: any) => JSON.stringify(obj, null, 2);
 
 type GetFleekFileSnippetArgs = GetSelfManagedFileSnippetsArgs;
 
-const getFleekFileSnippet = ({ slug, distDirectory, buildCommand }: GetFleekFileSnippetArgs) => {
-  const config: FleekRootConfig = { sites: [{ slug, distDir: distDirectory, buildCommand }] };
+const getFleekFileSnippet = ({
+  slug,
+  distDirectory,
+  buildCommand,
+}: GetFleekFileSnippetArgs) => {
+  const config: FleekRootConfig = {
+    sites: [{ slug, distDir: distDirectory, buildCommand }],
+  };
 
   return {
     title: 'fleek.config.json',

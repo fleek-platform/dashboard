@@ -1,4 +1,8 @@
-import { SiteFrameworksQuery, SiteQuery, SitesQuery } from '@/generated/graphqlClient';
+import {
+  SiteFrameworksQuery,
+  SiteQuery,
+  SitesQuery,
+} from '@/generated/graphqlClient';
 
 export type Site = SiteQuery['site'];
 
@@ -24,7 +28,9 @@ export type FleekRootConfig = {
   sites: FleekSiteConfig[];
 };
 
-export type SiteSecret = NonNullable<SiteQuery['site']['secretGroup']>['secrets'][0];
+export type SiteSecret = NonNullable<
+  SiteQuery['site']['secretGroup']
+>['secrets'][0];
 
 export type SiteNewSecret = {
   key: string;

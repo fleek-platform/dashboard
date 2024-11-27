@@ -17,17 +17,27 @@ type Item = { id: number; label: string; icon: IconName };
 const icons = Object.keys(IconLibrary) as IconName[];
 const Items: Item[] = new Array(30)
   .fill(null)
-  .map((_, index) => ({ id: index, label: `Option ${index}`, icon: icons[Math.floor(Math.random() * icons.length)] }));
+  .map((_, index) => ({
+    id: index,
+    label: `Option ${index}`,
+    icon: icons[Math.floor(Math.random() * icons.length)],
+  }));
 
 export const Default: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options>{(item) => item.label}</Options>
           </>
@@ -44,10 +54,17 @@ export const WithLoading: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isLoading>
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+        isLoading
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options>{(item) => item.label}</Options>
           </>
@@ -64,10 +81,17 @@ export const WithSearching: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isSearching>
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+        isSearching
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options>{(item) => item.label}</Options>
           </>
@@ -84,7 +108,11 @@ export const WithIcon: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+      >
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
@@ -116,10 +144,16 @@ export const WithoutSearch: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options disableSearch>{(item) => item.label}</Options>
           </>
@@ -136,10 +170,17 @@ export const WithDisable: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" isDisabled={true}>
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+        isDisabled={true}
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options disableSearch>{(item) => item.label}</Options>
           </>
@@ -156,10 +197,17 @@ export const WithSize: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label" css={{ fontSize: '10px' }}>
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+        css={{ fontSize: '10px' }}
+      >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
             <Options>{(item) => item.label}</Options>
           </>
@@ -176,12 +224,25 @@ export const WithCompoundOptions: StoryFn = () => {
     const [selected, setSelected] = useState<Item>();
 
     return (
-      <Combobox items={Items} selected={[selected, setSelected]} queryKey="label">
+      <Combobox
+        items={Items}
+        selected={[selected, setSelected]}
+        queryKey="label"
+      >
         {({ Field, Options, CompoundOption }) => (
           <>
-            <Field placeholder="Select an option">{(selected) => selected.label}</Field>
+            <Field placeholder="Select an option">
+              {(selected) => selected.label}
+            </Field>
 
-            <Options>{(item) => <CompoundOption header={item.label} content="Description for compound option" />}</Options>
+            <Options>
+              {(item) => (
+                <CompoundOption
+                  header={item.label}
+                  content="Description for compound option"
+                />
+              )}
+            </Options>
           </>
         )}
       </Combobox>

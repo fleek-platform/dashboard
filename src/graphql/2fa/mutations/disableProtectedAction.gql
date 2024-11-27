@@ -1,3 +1,5 @@
-mutation disableProtectedAction($where: DisableTwoFactorProtectedActionWhereInput!) {
+mutation disableProtectedAction(
+  $where: DisableTwoFactorProtectedActionWhereInput!
+) {
   disableTwoFactorProtectedAction(where: $where)
 }

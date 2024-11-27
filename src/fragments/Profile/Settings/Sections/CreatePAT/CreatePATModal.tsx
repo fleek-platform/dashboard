@@ -8,7 +8,10 @@ export type CreatePATModalProps = {
   patValue?: string;
 };
 
-export const CreatePATModal: React.FC<CreatePATModalProps> = ({ closeModal, patValue }) => {
+export const CreatePATModal: React.FC<CreatePATModalProps> = ({
+  closeModal,
+  patValue,
+}) => {
   return (
     <>
       <Dialog.Overlay />
@@ -17,7 +20,10 @@ export const CreatePATModal: React.FC<CreatePATModalProps> = ({ closeModal, patV
         <Text as="h1" variant="primary" size="xl" weight={700}>
           Personal Access Token
         </Text>
-        <Text>Copy the below access token, you won&apos;t be able to see it again after this.</Text>
+        <Text>
+          Copy the below access token, you won&apos;t be able to see it again
+          after this.
+        </Text>
         <CodeSnippet title="Token" code={patValue || ' '} />
         <AlertBox variant="warning" size="sm">
           This token is only shown during creation.

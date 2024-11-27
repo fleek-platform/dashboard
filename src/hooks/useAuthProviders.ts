@@ -36,7 +36,9 @@ const useAuthWithDynamic = (): AuthWith => {
       return '';
     }
 
-    const { data, error } = await loginWithDynamic({ data: { authToken: dynamic.authToken, projectId } });
+    const { data, error } = await loginWithDynamic({
+      data: { authToken: dynamic.authToken, projectId },
+    });
 
     if (data && data.loginWithDynamic) {
       return data.loginWithDynamic;

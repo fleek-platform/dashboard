@@ -19,9 +19,22 @@ export type LogoUploadProps = DisabledProps<
   }
 >;
 
-export const LogoUpload: React.FC<LogoUploadProps> = forwardStyledRef<HTMLDivElement, LogoUploadProps>(
+export const LogoUpload: React.FC<LogoUploadProps> = forwardStyledRef<
+  HTMLDivElement,
+  LogoUploadProps
+>(
   S.Container,
-  ({ onSubmit, isDisabled, initialImage, withAvatar = false, avatarTitle = '', ...props }, ref) => {
+  (
+    {
+      onSubmit,
+      isDisabled,
+      initialImage,
+      withAvatar = false,
+      avatarTitle = '',
+      ...props
+    },
+    ref,
+  ) => {
     const [image, setImage] = useState(initialImage);
     const [isUploading, setIsUploading] = useState(false);
     const toast = useToast();
@@ -70,8 +83,18 @@ export const LogoUpload: React.FC<LogoUploadProps> = forwardStyledRef<HTMLDivEle
 
     return (
       <S.Container {...props} ref={ref} disabled={isDisabled}>
-        <Input.Field hidden type="file" accept="image/*" onChange={handleImageSelect} ref={refLogo} />
-        {withAvatar && !initialImage ? <AvatarMarble name={avatarTitle} /> : <S.Logo src={image} />}
+        <Input.Field
+          hidden
+          type="file"
+          accept="image/*"
+          onChange={handleImageSelect}
+          ref={refLogo}
+        />
+        {withAvatar && !initialImage ? (
+          <AvatarMarble name={avatarTitle} />
+        ) : (
+          <S.Logo src={image} />
+        )}
         {isUploading && (
           <S.SpinnerContainer>
             <Icon name="spinner" />
@@ -84,5 +107,5 @@ export const LogoUpload: React.FC<LogoUploadProps> = forwardStyledRef<HTMLDivEle
         )}
       </S.Container>
     );
-  }
+  },
 );

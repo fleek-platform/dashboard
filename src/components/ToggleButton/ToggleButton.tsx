@@ -24,7 +24,10 @@ export type ToggleButtonProps = DisabledProps<
   >
 >;
 
-export const ToggleButton: React.FC<ToggleButtonProps> = forwardRef<HTMLButtonElement, ToggleButtonProps>(
+export const ToggleButton: React.FC<ToggleButtonProps> = forwardRef<
+  HTMLButtonElement,
+  ToggleButtonProps
+>(
   (
     {
       value,
@@ -42,7 +45,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = forwardRef<HTMLButtonEl
       size = 'sm',
     },
 
-    ref
+    ref,
   ) => {
     const handleToggle: MouseEventHandler<HTMLButtonElement> = (event) => {
       onClick?.(event);
@@ -70,5 +73,5 @@ export const ToggleButton: React.FC<ToggleButtonProps> = forwardRef<HTMLButtonEl
         {text}
       </Button>
     );
-  }
+  },
 );

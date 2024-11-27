@@ -4,7 +4,10 @@ import { SiteENSRecord } from '@/types/Site';
 import { Button, Skeleton, Text } from '@/ui';
 
 import { BadgeText, Link, PermissionsTooltip } from '..';
-import { BoxWithFooter, BoxWithFooterProps } from '../BoxWithFooter/BoxWithFooter';
+import {
+  BoxWithFooter,
+  BoxWithFooterProps,
+} from '../BoxWithFooter/BoxWithFooter';
 import { CustomDomainBoxStyles as S } from './CustomDomainBox.styles';
 
 export type CustomDomainBoxProps = LoadingProps<
@@ -40,7 +43,12 @@ export const CustomDomainBox: React.FC<CustomDomainBoxProps> = ({
   const hasDomains = domainList.length > 0;
 
   return (
-    <BoxWithFooter footer={footer} footerIcon={footerIcon} footerIconLabel={footerIconLabel} iconContainerVariant={iconContainerVariant}>
+    <BoxWithFooter
+      footer={footer}
+      footerIcon={footerIcon}
+      footerIconLabel={footerIconLabel}
+      iconContainerVariant={iconContainerVariant}
+    >
       <S.Container>
         <S.Header>
           <Text as="h3" variant="primary" size="lg" weight={700}>
@@ -48,7 +56,11 @@ export const CustomDomainBox: React.FC<CustomDomainBoxProps> = ({
           </Text>
           {isActive && <BadgeText colorScheme="green">Active</BadgeText>}
         </S.Header>
-        <DomainList domainList={domainList} emptyText={emptyText} listLabel={listLabel} />
+        <DomainList
+          domainList={domainList}
+          emptyText={emptyText}
+          listLabel={listLabel}
+        />
         <DomainCTA
           hasDomains={hasDomains}
           CTAText={CTAText}
@@ -113,7 +125,11 @@ const getDomainItemName = (item: GetDomainItemNameProps): string => {
   }
 };
 
-const DomainList: React.FC<DomainListProps> = ({ domainList, emptyText, listLabel }) => {
+const DomainList: React.FC<DomainListProps> = ({
+  domainList,
+  emptyText,
+  listLabel,
+}) => {
   if (domainList.length === 0) {
     return <Text className="-mt-3">{emptyText}</Text>;
   }
@@ -132,7 +148,14 @@ const DomainList: React.FC<DomainListProps> = ({ domainList, emptyText, listLabe
   );
 };
 
-const DomainCTA: React.FC<DomainCTAProps> = ({ hasDomains, hasPermission = false, CTAText, CTAHref, emptyCTAText, emptyCTAHref }) => {
+const DomainCTA: React.FC<DomainCTAProps> = ({
+  hasDomains,
+  hasPermission = false,
+  CTAText,
+  CTAHref,
+  emptyCTAText,
+  emptyCTAHref,
+}) => {
   if (hasDomains) {
     if (!hasPermission) {
       return null;

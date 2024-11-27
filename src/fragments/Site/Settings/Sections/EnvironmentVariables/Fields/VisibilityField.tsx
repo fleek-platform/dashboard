@@ -10,7 +10,11 @@ type VisibilityFieldProps = LoadingProps<
   }>
 >;
 
-export const VisibilityField: React.FC<VisibilityFieldProps> = ({ isLoading, isDisabled, disableLabel }) => {
+export const VisibilityField: React.FC<VisibilityFieldProps> = ({
+  isLoading,
+  isDisabled,
+  disableLabel,
+}) => {
   const field = Form.useField<boolean>('encrypted');
 
   const handleValueChange = (value: boolean) => {
@@ -20,7 +24,12 @@ export const VisibilityField: React.FC<VisibilityFieldProps> = ({ isLoading, isD
   return (
     <S.VisibilityField.Root>
       {!disableLabel && <FormField.Label>Encrypt</FormField.Label>}
-      <ToggleButton value={field.value} onChange={handleValueChange} isLoading={isLoading} isDisabled={isDisabled} />
+      <ToggleButton
+        value={field.value}
+        onChange={handleValueChange}
+        isLoading={isLoading}
+        isDisabled={isDisabled}
+      />
     </S.VisibilityField.Root>
   );
 };

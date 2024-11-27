@@ -1,7 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useMemo, useState } from 'react';
 
-import { useCreateMigrationRequestsFromTokenMutation, useCreateMigrationTokenMutation, useProjectsQuery } from '@/generated/graphqlClient';
+import {
+  useCreateMigrationRequestsFromTokenMutation,
+  useCreateMigrationTokenMutation,
+  useProjectsQuery,
+} from '@/generated/graphqlClient';
 import { usePollMigrationRequests } from '@/hooks/usePollMigrationRequests';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
@@ -37,28 +41,40 @@ export const MigrationProvider: React.FC<ChildrenProps> = ({ children }) => {
   const { migrationToken } = router.query;
   const { currentStep, nextStep, setStep } = Stepper.useContext();
 
-  const [shouldPollMigration, setShouldPollMigration] = useState<boolean>(false);
-  const [createdMigrationRequests, setCreatedMigrationRequests] = useState<MigrationRequest[]>([]);
-  const [isSubmittingMigration, setIsSubmittingMigration] = useState<boolean>(false);
+  const [shouldPollMigration, setShouldPollMigration] =
+    useState<boolean>(false);
+  const [createdMigrationRequests, setCreatedMigrationRequests] = useState<
+    MigrationRequest[]
+  >([]);
+  const [isSubmittingMigration, setIsSubmittingMigration] =
+    useState<boolean>(false);
 
-  const [createMigrationTokenMutation, createMigrationToken] = useCreateMigrationTokenMutation();
-  const [createMigrationRequestsFromTokenMutation, createMigrationRequestsFromToken] = useCreateMigrationRequestsFromTokenMutation();
+  const [createMigrationTokenMutation, createMigrationToken] =
+    useCreateMigrationTokenMutation();
+  const [
+    createMigrationRequestsFromTokenMutation,
+    createMigrationRequestsFromToken,
+  ] = useCreateMigrationRequestsFromTokenMutation();
   const [, refetchProjectsQuery] = useProjectsQuery();
 
   const polledMigrationsResult = usePollMigrationRequests({
-    migrationRequestIds: createdMigrationRequests.map((migrationRequest) => migrationRequest.id),
+    migrationRequestIds: createdMigrationRequests.map(
+      (migrationRequest) => migrationRequest.id,
+    ),
     onFinishedCallback: () => {
       if (currentStep === 1) {
         refetchProjectsQuery({ requestPolicy: 'network-only' });
         nextStep();
       }
     },
-    pause: (!shouldPollMigration && !createdMigrationRequests) || createdMigrationRequests.length === 0,
+    pause:
+      (!shouldPollMigration && !createdMigrationRequests) ||
+      createdMigrationRequests.length === 0,
   });
 
   const polledMigrations = useMemo(
     () => polledMigrationsResult.data || createdMigrationRequests || [],
-    [polledMigrationsResult.data, createdMigrationRequests]
+    [polledMigrationsResult.data, createdMigrationRequests],
   );
 
   const asideTitle = AsideTitleMap[currentStep] || '';
@@ -75,7 +91,10 @@ export const MigrationProvider: React.FC<ChildrenProps> = ({ children }) => {
       const result = await createMigrationToken({ data: { teamIds } });
 
       if (!result.data) {
-        throw result.error || new Error('There was an error creating the migration token');
+        throw (
+          result.error ||
+          new Error('There was an error creating the migration token')
+        );
       }
 
       const token = result.data.createMigrationToken;
@@ -94,10 +113,15 @@ export const MigrationProvider: React.FC<ChildrenProps> = ({ children }) => {
     }
 
     try {
-      const result = await createMigrationRequestsFromToken({ data: { token: migrationToken } });
+      const result = await createMigrationRequestsFromToken({
+        data: { token: migrationToken },
+      });
 
       if (!result.data) {
-        throw result.error || new Error('There was an error creating the migration from token');
+        throw (
+          result.error ||
+          new Error('There was an error creating the migration from token')
+        );
       }
 
       const migrationRequests = result.data.createMigrationRequestsFromToken;
@@ -134,7 +158,7 @@ export const MigrationProvider: React.FC<ChildrenProps> = ({ children }) => {
         query: { migrationToken: newMigrationToken },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
 
     if (newMigrationToken) {

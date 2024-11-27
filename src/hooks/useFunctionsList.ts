@@ -18,15 +18,24 @@ export const useFunctionsList = (source?: UseFunctionsListArgs) => {
     project: { id: projectId },
   } = useProjectContext();
 
-  const pathname = isSiteSource ? routes.project.site.functions.list({ projectId, siteId }) : routes.project.function.list({ projectId });
+  const pathname = isSiteSource
+    ? routes.project.site.functions.list({ projectId, siteId })
+    : routes.project.function.list({ projectId });
 
   const { page, handlePageChange } = useQueryPagination({
     pathname,
   });
 
   const variables = isSiteSource
-    ? { filter: { page, take: constants.FUNCTIONS_PAGE_SIZE }, where: { siteId }, orderBy: { updatedAt: 'desc' } }
-    : { filter: { page, take: constants.FUNCTIONS_PAGE_SIZE }, orderBy: { updatedAt: 'desc' } };
+    ? {
+        filter: { page, take: constants.FUNCTIONS_PAGE_SIZE },
+        where: { siteId },
+        orderBy: { updatedAt: 'desc' },
+      }
+    : {
+        filter: { page, take: constants.FUNCTIONS_PAGE_SIZE },
+        orderBy: { updatedAt: 'desc' },
+      };
 
   const [fleekFunctionsQuery] = useFleekFunctionsQuery({
     variables,

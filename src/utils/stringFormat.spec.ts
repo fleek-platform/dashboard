@@ -5,7 +5,7 @@ describe('Utils stringFormat', () => {
   describe('shortStringFormat', () => {
     it('should format string with default index of 4', () => {
       const result = shortStringFormat({
-        str: 'abcdefghijklmnop'
+        str: 'abcdefghijklmnop',
       });
       expect(result).toBe('abcd...mnop');
     });
@@ -13,7 +13,7 @@ describe('Utils stringFormat', () => {
     it('should format string with custom index', () => {
       const result = shortStringFormat({
         str: 'abcdefghijklmnop',
-        index: 2
+        index: 2,
       });
       expect(result).toBe('ab...op');
     });
@@ -21,14 +21,14 @@ describe('Utils stringFormat', () => {
     it('should handle short strings that are shorter than 2 * index', () => {
       const result = shortStringFormat({
         str: 'abcdef',
-        index: 4
+        index: 4,
       });
       expect(result).toBe('abcd...cdef');
     });
 
     it('should handle empty string', () => {
       const result = shortStringFormat({
-        str: ''
+        str: '',
       });
       expect(result).toBe('...');
     });
@@ -36,7 +36,7 @@ describe('Utils stringFormat', () => {
     it('should handle string shorter than index', () => {
       const result = shortStringFormat({
         str: 'abc',
-        index: 4
+        index: 4,
       });
       expect(result).toBe('abc...abc');
     });

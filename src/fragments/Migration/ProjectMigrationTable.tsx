@@ -5,7 +5,10 @@ import { Icon, IconName, Text } from '@/ui';
 import { MigrationRequest } from './Migration';
 import { MigrationStyles as S } from './Migration.styles';
 
-export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({ migrationRequests, isLoading }) => {
+export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({
+  migrationRequests,
+  isLoading,
+}) => {
   return (
     <S.Content.Table.Container>
       <S.Content.Table.Root>
@@ -48,7 +51,12 @@ export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({ mi
   );
 };
 
-const MigrationRow: React.FC<MigrationRowProps> = ({ project = '', sites = 0, files = 0, status }) => {
+const MigrationRow: React.FC<MigrationRowProps> = ({
+  project = '',
+  sites = 0,
+  files = 0,
+  status,
+}) => {
   const cellStatusVariant = MigrationStatusCellColorMap[status] || undefined;
 
   return (
@@ -63,15 +71,24 @@ const MigrationRow: React.FC<MigrationRowProps> = ({ project = '', sites = 0, fi
   );
 };
 
-type CellVariants = Omit<React.ComponentProps<typeof S.Content.Table.Cell>, 'td'>['status'];
+type CellVariants = Omit<
+  React.ComponentProps<typeof S.Content.Table.Cell>,
+  'td'
+>['status'];
 
-const MigrationStatusIconMap: Record<MigrationStatus, MigrationRowProps['status']> = {
+const MigrationStatusIconMap: Record<
+  MigrationStatus,
+  MigrationRowProps['status']
+> = {
   IN_PROGRESS: 'spinner',
   COMPLETED: 'check-circled',
   FAILED: 'close-circle',
 };
 
-const MigrationStatusCellColorMap: Record<MigrationRowProps['status'], CellVariants> = {
+const MigrationStatusCellColorMap: Record<
+  MigrationRowProps['status'],
+  CellVariants
+> = {
   spinner: 'white',
   'check-circled': 'green',
   'close-circle': 'red',

@@ -32,7 +32,12 @@ export const Crypto: Story = {
   decorators: [
     (Story) => (
       <BillingCheckoutProvider initialMethod="crypto" plan={plan}>
-        <Form.Provider value={Form.useForm({ values: { promoCode: '' }, onSubmit: async () => {} })}>
+        <Form.Provider
+          value={Form.useForm({
+            values: { promoCode: '' },
+            onSubmit: async () => {},
+          })}
+        >
           <Story />
         </Form.Provider>
       </BillingCheckoutProvider>
@@ -48,7 +53,12 @@ export const Fiat: Story = {
   decorators: [
     (Story) => (
       <BillingCheckoutProvider initialMethod="fiat" plan={plan}>
-        <Form.Provider value={Form.useForm({ values: { promoCode: '' }, onSubmit: async () => {} })}>
+        <Form.Provider
+          value={Form.useForm({
+            values: { promoCode: '' },
+            onSubmit: async () => {},
+          })}
+        >
           <Story />
         </Form.Provider>
       </BillingCheckoutProvider>

@@ -4,7 +4,10 @@ import { publicProvider } from 'wagmi/providers/public';
 
 const { publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
-  [alchemyProvider({ apiKey: 'G9w8Db_Z9KA9RyoIjMSs3KsxtReq_-6l' }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: 'G9w8Db_Z9KA9RyoIjMSs3KsxtReq_-6l' }),
+    publicProvider(),
+  ],
 );
 
 const wagmiConfig = createConfig({
@@ -13,6 +16,8 @@ const wagmiConfig = createConfig({
   webSocketPublicClient,
 });
 
-export const WagmiProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const WagmiProvider: React.FC<React.PropsWithChildren<{}>> = ({
+  children,
+}) => {
   return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
 };

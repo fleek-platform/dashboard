@@ -16,10 +16,27 @@ export type CustomTooltipProps = ChildrenProps<
   } & TooltipTriggerProps
 >;
 
-export const CustomTooltip = forwardStyledRef<HTMLButtonElement, CustomTooltipProps>(
+export const CustomTooltip = forwardStyledRef<
+  HTMLButtonElement,
+  CustomTooltipProps
+>(
   Tooltip.Trigger,
-  ({ children, content, side = 'top', delayDuration, skipDelayDuration, asChild = false, ...props }, ref) => (
-    <Tooltip.Provider delayDuration={delayDuration} skipDelayDuration={skipDelayDuration}>
+  (
+    {
+      children,
+      content,
+      side = 'top',
+      delayDuration,
+      skipDelayDuration,
+      asChild = false,
+      ...props
+    },
+    ref,
+  ) => (
+    <Tooltip.Provider
+      delayDuration={delayDuration}
+      skipDelayDuration={skipDelayDuration}
+    >
       <Tooltip.Root>
         <Tooltip.Trigger asChild={asChild} ref={ref} {...props}>
           {children}
@@ -27,5 +44,5 @@ export const CustomTooltip = forwardStyledRef<HTMLButtonElement, CustomTooltipPr
         <S.TooltipContent side={side}>{content}</S.TooltipContent>
       </Tooltip.Root>
     </Tooltip.Provider>
-  )
+  ),
 );

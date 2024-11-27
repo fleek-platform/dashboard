@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 
-import { Form, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
+import {
+  Form,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+} from '@/components';
 import { constants } from '@/constants';
 import { useSettingsItemContext } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
 import { VerifyDomainModal } from '@/fragments/Site/Settings/Sections/CustomDomains/VerifyDomainModal/VerifyDomainModal';
@@ -18,7 +23,9 @@ import { PrivateGatewaysList } from './PrivateGatewaysList';
 
 export const PrivateGateways: React.FC = () => {
   const session = useSessionContext();
-  const hasCreatePermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.CREATE] });
+  const hasCreatePermission = usePermissions({
+    action: [constants.PERMISSION.PRIVATE_GATEWAY.CREATE],
+  });
 
   const [privateGatewaysQuery] = usePrivateGatewaysQuery();
 
@@ -32,19 +39,38 @@ export const PrivateGateways: React.FC = () => {
     <>
       <SettingsBox.Container>
         <SettingsBox.Title>Private Gateway</SettingsBox.Title>
-        <SettingsBox.Text>Configure a private DNS endpoint to access your storage on Fleek.</SettingsBox.Text>
+        <SettingsBox.Text>
+          Configure a private DNS endpoint to access your storage on Fleek.
+        </SettingsBox.Text>
 
         <PermissionsTooltip hasAccess={hasCreatePermission}>
-          <Form.InputField name="name" placeholder="Gateway" label="Name" isLoading={isLoading} isDisabled={!hasCreatePermission} />
+          <Form.InputField
+            name="name"
+            placeholder="Gateway"
+            label="Name"
+            isLoading={isLoading}
+            isDisabled={!hasCreatePermission}
+          />
         </PermissionsTooltip>
 
         <SettingsBox.ActionRow>
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PRIVATE_GATEWAYS}>private gateways</LearnMoreMessage>
-          {isLoading ? <SettingsBox.Skeleton variant="button" /> : <SubmitButton isDisabled={!hasCreatePermission} />}
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_PRIVATE_GATEWAYS}
+          >
+            private gateways
+          </LearnMoreMessage>
+          {isLoading ? (
+            <SettingsBox.Skeleton variant="button" />
+          ) : (
+            <SubmitButton isDisabled={!hasCreatePermission} />
+          )}
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
 
-      <PrivateGatewaysList isLoading={isLoading} privateGateways={privateGateways} />
+      <PrivateGatewaysList
+        isLoading={isLoading}
+        privateGateways={privateGateways}
+      />
       <DeletePrivateGatewayModal />
 
       <VerifyDomainModal />
@@ -58,7 +84,9 @@ const SubmitButton: React.FC<DisabledProps> = ({ isDisabled }) => {
   const { isSubmitting, submit, shouldDisableSubmit } = Form.useContext();
   const { openModal } = usePrivateGatewayContext();
   const { setShouldOpenModalOnCreated } = useSettingsItemContext();
-  const hasAddDomainPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.ADD_AND_VERIFY_DOMAIN] });
+  const hasAddDomainPermission = usePermissions({
+    action: [constants.PERMISSION.PRIVATE_GATEWAY.ADD_AND_VERIFY_DOMAIN],
+  });
 
   const handleSubmit = async () => {
     const zoneId = await submit();
@@ -70,7 +98,12 @@ const SubmitButton: React.FC<DisabledProps> = ({ isDisabled }) => {
   };
 
   return (
-    <Button type="submit" loading={isSubmitting} disabled={shouldDisableSubmit || isDisabled} onClick={handleSubmit}>
+    <Button
+      type="submit"
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit || isDisabled}
+      onClick={handleSubmit}
+    >
       Create private gateway
     </Button>
   );

@@ -11,9 +11,12 @@ import { Button, Dialog } from '@/ui';
 
 export const CreateBtn = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const hasCreateFunctionPermission = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.CREATE] });
+  const hasCreateFunctionPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.CREATE],
+  });
 
-  const [createFleekFunctionMutation, createFleekFunction] = useCreateFleekFunctionMutation();
+  const [createFleekFunctionMutation, createFleekFunction] =
+    useCreateFleekFunctionMutation();
   const toast = useToast();
 
   const form = Form.useForm({
@@ -41,14 +44,21 @@ export const CreateBtn = () => {
     setDialogOpen(isOpen);
   };
 
-  const handleKeyDown = useCallback<KeyboardEventHandler>(({ key }) => key === 'Enter' && form.submit(), [form]);
+  const handleKeyDown = useCallback<KeyboardEventHandler>(
+    ({ key }) => key === 'Enter' && form.submit(),
+    [form],
+  );
 
   const loading = createFleekFunctionMutation.fetching;
 
   return (
     <>
       <PermissionsTooltip hasAccess={hasCreateFunctionPermission} asChild>
-        <Button loading={loading} disabled={loading || !hasCreateFunctionPermission} onClick={() => handleOpenChange(true)}>
+        <Button
+          loading={loading}
+          disabled={loading || !hasCreateFunctionPermission}
+          onClick={() => handleOpenChange(true)}
+        >
           Add new function
         </Button>
       </PermissionsTooltip>
@@ -58,7 +68,12 @@ export const CreateBtn = () => {
           <Form.Provider value={form}>
             <Modal.Heading>Add new function</Modal.Heading>
 
-            <Form.InputField label="Name" name="name" placeholder="Function" onKeyDown={handleKeyDown} />
+            <Form.InputField
+              label="Name"
+              name="name"
+              placeholder="Function"
+              onKeyDown={handleKeyDown}
+            />
 
             <Modal.CTARow>
               <Dialog.Close asChild>

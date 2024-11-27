@@ -13,7 +13,10 @@ import { TemplateContentStyles as S } from './TemplateContent.styles';
 
 type TemplateContentProps = LoadingProps<{ template: Template }>;
 
-export const TemplateContent: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
+export const TemplateContent: React.FC<TemplateContentProps> = ({
+  template,
+  isLoading,
+}) => {
   if (isLoading) {
     return <TemplateContentSkeleton />;
   }
@@ -43,7 +46,11 @@ const Readme: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
   const readme = useReadme(template);
 
   if (readme.isLoading || isLoading) {
-    return <S.Details.ReadmeLoadingContainer>{new Array(6).fill(<ComingSoon.Skeleton.TextSkeleton />)}</S.Details.ReadmeLoadingContainer>;
+    return (
+      <S.Details.ReadmeLoadingContainer>
+        {new Array(6).fill(<ComingSoon.Skeleton.TextSkeleton />)}
+      </S.Details.ReadmeLoadingContainer>
+    );
   }
 
   if (readme.error || !readme.data) {
@@ -77,24 +84,45 @@ const Readme: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
         components={{
           /* eslint-disable @typescript-eslint/no-unused-vars */
           pre: ({ children, className, node, ...rest }) => (
-            <pre {...rest} className={cn(className, 'mb-4 bg-neutral-3 rounded-sm p-3 overflow-auto max-w-full')}>
+            <pre
+              {...rest}
+              className={cn(
+                className,
+                'mb-4 bg-neutral-3 rounded-sm p-3 overflow-auto max-w-full',
+              )}
+            >
               {children}
             </pre>
           ),
           code: ({ children, className, node, ...rest }) => (
-            <code {...rest} className={cn(className, 'text-natural-12 bg-neutral-3 rounded-sm px-2')}>
+            <code
+              {...rest}
+              className={cn(
+                className,
+                'text-natural-12 bg-neutral-3 rounded-sm px-2',
+              )}
+            >
               {children}
             </code>
           ),
           p: ({ children, className, node, ...rest }) => (
-            <Text {...rest} className={cn(className, 'mb-4 text-neutral-11')} as="p" variant="secondary" size="md">
+            <Text
+              {...rest}
+              className={cn(className, 'mb-4 text-neutral-11')}
+              as="p"
+              variant="secondary"
+              size="md"
+            >
               {children}
             </Text>
           ),
           h1: ({ children, className, node, ...rest }) => (
             <Text
               {...rest}
-              className={cn(className, 'mb-4 pb-2 border-transparent border-b-neutral-4 border-2')}
+              className={cn(
+                className,
+                'mb-4 pb-2 border-transparent border-b-neutral-4 border-2',
+              )}
               as="h1"
               variant="primary"
               weight={700}
@@ -106,7 +134,10 @@ const Readme: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
           h2: ({ children, className, node, ...rest }) => (
             <Text
               {...rest}
-              className={cn(className, 'mb-4 pb-2 border-transparent border-b-neutral-4 border-2')}
+              className={cn(
+                className,
+                'mb-4 pb-2 border-transparent border-b-neutral-4 border-2',
+              )}
               as="h2"
               variant="primary"
               weight={700}
@@ -116,32 +147,65 @@ const Readme: React.FC<TemplateContentProps> = ({ template, isLoading }) => {
             </Text>
           ),
           h3: ({ children, className, node, ...rest }) => (
-            <Text {...rest} className={cn(className, 'mb-4')} as="h3" variant="primary" weight={700} size="xl">
+            <Text
+              {...rest}
+              className={cn(className, 'mb-4')}
+              as="h3"
+              variant="primary"
+              weight={700}
+              size="xl"
+            >
               {children}
             </Text>
           ),
           table: ({ children, className, node, ...rest }) => (
-            <table {...rest} className={cn(className, 'p-2 border-neutral-4 border-collapse mb-4 border-2')}>
+            <table
+              {...rest}
+              className={cn(
+                className,
+                'p-2 border-neutral-4 border-collapse mb-4 border-2',
+              )}
+            >
               {children}
             </table>
           ),
           td: ({ children, className, node, ...rest }) => (
-            <td {...rest} className={cn(className, 'p-2 border-neutral-4 border-collapse text-neutral-11 border-2')}>
+            <td
+              {...rest}
+              className={cn(
+                className,
+                'p-2 border-neutral-4 border-collapse text-neutral-11 border-2',
+              )}
+            >
               {children}
             </td>
           ),
           th: ({ children, className, node, ...rest }) => (
-            <th {...rest} className={cn(className, 'p-2 border-neutral-4 border-collapse text-neutral-11 border-2')}>
+            <th
+              {...rest}
+              className={cn(
+                className,
+                'p-2 border-neutral-4 border-collapse text-neutral-11 border-2',
+              )}
+            >
               {children}
             </th>
           ),
           ul: ({ children, className, node, ...rest }) => (
-            <ul {...rest} className={cn(className, 'mb-4 pl-5 list-disc list-inside')}>
+            <ul
+              {...rest}
+              className={cn(className, 'mb-4 pl-5 list-disc list-inside')}
+            >
               {children}
             </ul>
           ),
           a: ({ children, className, node, href, ...rest }) => (
-            <ExternalLink {...rest} href={href || '#'} className={cn(className, 'inline')} variant="accent">
+            <ExternalLink
+              {...rest}
+              href={href || '#'}
+              className={cn(className, 'inline')}
+              variant="accent"
+            >
               {children}
             </ExternalLink>
           ),

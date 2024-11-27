@@ -12,16 +12,30 @@ type DeployBreadcrumpProps = {
   siteId: string;
 };
 
-export const DeployBreadcrumb: React.FC<DeployBreadcrumpProps> = ({ projectId, siteId }) => {
+export const DeployBreadcrumb: React.FC<DeployBreadcrumpProps> = ({
+  projectId,
+  siteId,
+}) => {
   const router = useRouter();
   const deploymentId = router.query.deploymentId!;
-  const [deploymentStatusQuery] = useDeploymentStatusQuery({ variables: { where: { id: deploymentId } }, pause: !deploymentId });
-  const parsedStatus = parseAPIDeploymentStatus(deploymentStatusQuery.data?.deployment.status);
+  const [deploymentStatusQuery] = useDeploymentStatusQuery({
+    variables: { where: { id: deploymentId } },
+    pause: !deploymentId,
+  });
+  const parsedStatus = parseAPIDeploymentStatus(
+    deploymentStatusQuery.data?.deployment.status,
+  );
 
   return (
     <S.Container>
       <S.Divider>/</S.Divider>
-      <S.Link href={routes.project.site.deployments.detail({ deploymentId, projectId, siteId })}>
+      <S.Link
+        href={routes.project.site.deployments.detail({
+          deploymentId,
+          projectId,
+          siteId,
+        })}
+      >
         <S.DeployStatus color={parsedStatus} />
         <S.Name>{shortStringFormat({ str: deploymentId, index: 5 })}</S.Name>
       </S.Link>

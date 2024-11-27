@@ -71,7 +71,11 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
   // Generate repository link
   const visitRepoSource =
     provider && repositoryOwner && repositoryName
-      ? getLinkForRepository({ provider, slug: repositoryOwner, name: repositoryName })
+      ? getLinkForRepository({
+          provider,
+          slug: repositoryOwner,
+          name: repositoryName,
+        })
       : undefined;
 
   // Parse deployment status
@@ -79,7 +83,11 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
 
   return (
     <SiteOverviewBox.Container>
-      <PreviewImage status={statusData.imageStatus} text={statusData.imageText} src={currentDeployment?.previewImageUrl || ''} />
+      <PreviewImage
+        status={statusData.imageStatus}
+        text={statusData.imageText}
+        src={currentDeployment?.previewImageUrl || ''}
+      />
       <SiteOverviewBox.DetailsContainer>
         {/* Status Row */}
         <SiteOverviewBox.StatusRow>
@@ -88,7 +96,9 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
             {statusData.label}
           </BadgeText>
           <SiteOverviewBox.ElapsedTime>
-            {(parsedStatus === 'loading' || parsedStatus === 'created') && <Icon name="gear" animated="spin" />}
+            {(parsedStatus === 'loading' || parsedStatus === 'created') && (
+              <Icon name="gear" animated="spin" />
+            )}
             {timeElapsed}
           </SiteOverviewBox.ElapsedTime>
         </SiteOverviewBox.StatusRow>
@@ -108,7 +118,12 @@ export const SiteOverview: React.FC<SiteOverviewProps> = ({ siteQuery }) => {
         />
 
         {/* Domain Information */}
-        <SiteOverviewBox.Domain projectId={projectId} siteId={siteId} siteLink={siteLink} isDisabled={!Boolean(currentDeployment)} />
+        <SiteOverviewBox.Domain
+          projectId={projectId}
+          siteId={siteId}
+          siteLink={siteLink}
+          isDisabled={!Boolean(currentDeployment)}
+        />
 
         {/* IPFS View */}
         <SiteOverviewBox.ViewOnIPFS cid={currentDeployment?.cid} />

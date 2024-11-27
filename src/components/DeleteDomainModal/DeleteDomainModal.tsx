@@ -10,8 +10,12 @@ type DeleteDomainModalProps = ChildrenProps<{
   title?: string;
 }>;
 
-export const DeleteDomainModal: React.FC<DeleteDomainModalProps> = ({ children, title = 'Remove Domain' }) => {
-  const { isDeleteDomainModalOpen, closeDeleteModal } = useSettingsItemContext();
+export const DeleteDomainModal: React.FC<DeleteDomainModalProps> = ({
+  children,
+  title = 'Remove Domain',
+}) => {
+  const { isDeleteDomainModalOpen, closeDeleteModal } =
+    useSettingsItemContext();
 
   const handleOpenChange = () => {
     if (isDeleteDomainModalOpen) {
@@ -42,7 +46,8 @@ export const DeleteDomainModal: React.FC<DeleteDomainModalProps> = ({ children, 
 };
 
 const SubmitButton: React.FC = () => {
-  const { selectedId, onSubmitDelete, closeDeleteModal } = useSettingsItemContext();
+  const { selectedId, onSubmitDelete, closeDeleteModal } =
+    useSettingsItemContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -55,7 +60,13 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button loading={isLoading} disabled={isLoading} onClick={handleSubmit} intent="danger" className="flex-1">
+    <Button
+      loading={isLoading}
+      disabled={isLoading}
+      onClick={handleSubmit}
+      intent="danger"
+      className="flex-1"
+    >
       Remove domain
     </Button>
   );

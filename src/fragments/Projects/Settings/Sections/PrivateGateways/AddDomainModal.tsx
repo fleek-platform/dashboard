@@ -12,7 +12,8 @@ type AddDomainModalProps = {
 };
 
 export const AddDomainModal: React.FC<AddDomainModalProps> = ({ onCancel }) => {
-  const { isModalOpen, closeModal, selectedZoneId } = usePrivateGatewayContext();
+  const { isModalOpen, closeModal, selectedZoneId } =
+    usePrivateGatewayContext();
   const form = Form.useContext();
 
   const handleOpenChange = () => {
@@ -32,13 +33,17 @@ export const AddDomainModal: React.FC<AddDomainModalProps> = ({ onCancel }) => {
       <Modal.Content>
         <Modal.Heading>Add domain to gateway</Modal.Heading>
         <Text>
-          Enter the domain you want to use within this gateway. You can edit this domain or add others later from the &lsquo;Settings&rsquo;
-          view.
+          Enter the domain you want to use within this gateway. You can edit
+          this domain or add others later from the &lsquo;Settings&rsquo; view.
         </Text>
 
         <DomainField withLabel />
 
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PRIVATE_GATEWAYS}>private gateway domains</LearnMoreMessage>
+        <LearnMoreMessage
+          href={constants.EXTERNAL_LINK.FLEEK_DOCS_PRIVATE_GATEWAYS}
+        >
+          private gateway domains
+        </LearnMoreMessage>
 
         <Modal.CTARow>
           <Dialog.Close asChild>
@@ -66,7 +71,12 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit} className="flex-1">
+    <Button
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmit}
+      className="flex-1"
+    >
       Add domain
     </Button>
   );

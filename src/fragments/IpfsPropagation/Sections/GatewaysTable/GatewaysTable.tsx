@@ -9,7 +9,14 @@ import { useIpfsPropagationContext } from '../../Context';
 import { ExampleHashes } from './ExampleHashes';
 import { GatewayRow } from './GatewayRow';
 export const GatewaysTable: React.FC = () => {
-  const { publicGateways, setShouldRefresh, shouldRefresh, gatewayCounters, testingHash, cancelPendingTests } = useIpfsPropagationContext();
+  const {
+    publicGateways,
+    setShouldRefresh,
+    shouldRefresh,
+    gatewayCounters,
+    testingHash,
+    cancelPendingTests,
+  } = useIpfsPropagationContext();
   const [lastRefresh, setLastRefresh] = useState<DateTime>();
 
   useEffect(() => {
@@ -39,16 +46,30 @@ export const GatewaysTable: React.FC = () => {
               <th colSpan={6}>
                 <Box className="xs:flex-row xs:items-stretch sticky right-0 flex-wrap p-4 justify-between gap-3 flex-row ">
                   <Box className="flex-row text-sm gap-3 items-center">
-                    <CounterBadge type="active" value={gatewayCounters.active} label="active" icon="check" />
+                    <CounterBadge
+                      type="active"
+                      value={gatewayCounters.active}
+                      label="active"
+                      icon="check"
+                    />
                     {!!gatewayCounters.pending && (
-                      <CounterBadge type="pending" value={gatewayCounters.pending} label="pending" icon="spinner" />
+                      <CounterBadge
+                        type="pending"
+                        value={gatewayCounters.pending}
+                        label="pending"
+                        icon="spinner"
+                      />
                     )}
                   </Box>
 
                   <Box className="flex-row text-sm gap-3 items-center">
-                    {lastRefresh && !shouldRefresh && <LastCheckedMessage time={lastRefresh} />}
+                    {lastRefresh && !shouldRefresh && (
+                      <LastCheckedMessage time={lastRefresh} />
+                    )}
                     <Button
-                      onClick={shouldRefresh ? cancelPendingTests : handleRefresh}
+                      onClick={
+                        shouldRefresh ? cancelPendingTests : handleRefresh
+                      }
                       size="md"
                       intent={shouldRefresh ? 'danger' : 'neutral'}
                     >
@@ -71,7 +92,8 @@ export const GatewaysTable: React.FC = () => {
                 <Box className="flex flex-row items-center gap-1">
                   <Text>Response time</Text>
                   <IconTooltip side="bottom">
-                    Response Time: Estimated time to fetch and return a file from the IPFS gateway. This is the average of 3 results.
+                    Response Time: Estimated time to fetch and return a file
+                    from the IPFS gateway. This is the average of 3 results.
                   </IconTooltip>
                 </Box>
               </THeadInner>
@@ -110,13 +132,16 @@ const LastCheckedMessage: React.FC<TableControlHeaderProps> = ({ time }) => {
       () => {
         setCounter(counter + 1);
       },
-      counter > 60 ? 60000 : 1000
+      counter > 60 ? 60000 : 1000,
     );
 
     return () => clearTimeout(interval);
   }, [counter, time]);
 
-  const timeString = time?.toRelative({ style: 'narrow' })?.replace(' sec.', 's')?.replace(' min.', 'm');
+  const timeString = time
+    ?.toRelative({ style: 'narrow' })
+    ?.replace(' sec.', 's')
+    ?.replace(' min.', 'm');
 
   return <Text variant="secondary">Last checked {timeString}</Text>;
 };
@@ -131,10 +156,13 @@ type CounterBadge = {
 const CounterBadge: React.FC<CounterBadge> = ({ type, value, label, icon }) => {
   return (
     <Box
-      className={cn('flex flex-row items-center text-sm text-tertiary p-3 py-2 rounded-lg gap-2', {
-        'text-neutral-10': type === 'pending',
-        'text-success-10': type === 'active',
-      })}
+      className={cn(
+        'flex flex-row items-center text-sm text-tertiary p-3 py-2 rounded-lg gap-2',
+        {
+          'text-neutral-10': type === 'pending',
+          'text-success-10': type === 'active',
+        },
+      )}
     >
       <Icon name={icon} />
       <Text
@@ -156,4 +184,6 @@ const THeader = ({ children }: { children: any }) => (
   </thead>
 );
 
-const THeadInner = ({ children }: { children?: any }) => <th className="text-left p-4 overflow-hidden items-center ">{children}</th>;
+const THeadInner = ({ children }: { children?: any }) => (
+  <th className="text-left p-4 overflow-hidden items-center ">{children}</th>
+);

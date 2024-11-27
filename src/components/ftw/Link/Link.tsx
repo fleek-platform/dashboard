@@ -21,12 +21,20 @@ export const linkVariants = cva('transition-colors', {
   },
 });
 
-export type LinkProps = ChildrenProps & ComponentProps<typeof NextLink> & VariantProps<typeof linkVariants>;
+export type LinkProps = ChildrenProps &
+  ComponentProps<typeof NextLink> &
+  VariantProps<typeof linkVariants>;
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({ variant, children, className, ...props }, ref) => {
-  return (
-    <NextLink {...props} ref={ref} className={cn(linkVariants({ variant }), className)}>
-      {children}
-    </NextLink>
-  );
-});
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ variant, children, className, ...props }, ref) => {
+    return (
+      <NextLink
+        {...props}
+        ref={ref}
+        className={cn(linkVariants({ variant }), className)}
+      >
+        {children}
+      </NextLink>
+    );
+  },
+);

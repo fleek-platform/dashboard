@@ -8,7 +8,9 @@ export type BoxWithFooterProps = ChildrenProps<
     footerIcon: IconName;
     footerIconLabel?: string;
     footer: string;
-    iconContainerVariant?: React.ComponentProps<typeof S.IconContainer>['variant'];
+    iconContainerVariant?: React.ComponentProps<
+      typeof S.IconContainer
+    >['variant'];
   }>
 >;
 

@@ -10,7 +10,8 @@ export const EmptyFiles: React.FC = () => {
           No files yet
         </Text>
         <Text size="md">
-          Click the <CodeBlock>Upload</CodeBlock> button to store your first file or folder on Fleek
+          Click the <CodeBlock>Upload</CodeBlock> button to store your first
+          file or folder on Fleek
         </Text>
       </>
     </S.EmptyFiles.Container>

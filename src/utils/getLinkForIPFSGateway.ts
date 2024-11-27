@@ -6,7 +6,10 @@ export type GetLinkForIPFSGatewayArgs = {
 };
 type GetSubDomainResolutionIpfsGatewayUrlArgs = GetLinkForIPFSGatewayArgs;
 
-export const getLinkForIPFSGateway = ({ cid, baseURL = constants.IPFS_GATEWAYS.FLEEK_GW }: GetLinkForIPFSGatewayArgs) => {
+export const getLinkForIPFSGateway = ({
+  cid,
+  baseURL = constants.IPFS_GATEWAYS.FLEEK_GW,
+}: GetLinkForIPFSGatewayArgs) => {
   const base = `https://${baseURL}/ipfs/`;
 
   return `${base}${cid}`;

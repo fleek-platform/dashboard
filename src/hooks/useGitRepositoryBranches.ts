@@ -10,7 +10,11 @@ export type UseGitRepositoryBranchesArgs = {
   accessToken: string;
 } & GitProvider.GetRepositoryBranchesArgs;
 
-export const useGitRepositoryBranches = ({ provider, accessToken = '', ...args }: UseGitRepositoryBranchesArgs) => {
+export const useGitRepositoryBranches = ({
+  provider,
+  accessToken = '',
+  ...args
+}: UseGitRepositoryBranchesArgs) => {
   const gitProvider = useGitProvider({ provider, accessToken });
 
   const queryFn = useCallback(async () => {
@@ -21,5 +25,8 @@ export const useGitRepositoryBranches = ({ provider, accessToken = '', ...args }
     return gitProvider.getBranches(args);
   }, [gitProvider, accessToken, args]);
 
-  return useQuery({ queryKey: ['gitRepositoryBranches', provider, args, accessToken], queryFn });
+  return useQuery({
+    queryKey: ['gitRepositoryBranches', provider, args, accessToken],
+    queryFn,
+  });
 };

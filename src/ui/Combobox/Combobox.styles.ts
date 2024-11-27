@@ -145,22 +145,36 @@ export const ComboboxStyles = {
 
     willChange: 'transform, opacity',
     '&[data-state="open"]': {
-      '&[data-side="top"]': { animationName: KeyFrames.slideDownAndFade, marginBottom: '$sizes$inline-component-height-sm' },
-      '&[data-side="right"]': { animationName: KeyFrames.slideLeftAndFade, marginLeft: '$sizes$inline-component-height-sm' },
-      '&[data-side="bottom"]': { animationName: KeyFrames.slideUpAndFade, marginTop: '$sizes$inline-component-height-sm' },
-      '&[data-side="left"]': { animationName: KeyFrames.slideRightAndFade, marginRight: '$sizes$inline-component-height-sm' },
+      '&[data-side="top"]': {
+        animationName: KeyFrames.slideDownAndFade,
+        marginBottom: '$sizes$inline-component-height-sm',
+      },
+      '&[data-side="right"]': {
+        animationName: KeyFrames.slideLeftAndFade,
+        marginLeft: '$sizes$inline-component-height-sm',
+      },
+      '&[data-side="bottom"]': {
+        animationName: KeyFrames.slideUpAndFade,
+        marginTop: '$sizes$inline-component-height-sm',
+      },
+      '&[data-side="left"]': {
+        animationName: KeyFrames.slideRightAndFade,
+        marginRight: '$sizes$inline-component-height-sm',
+      },
     },
   }),
 
   Scrollable: {
     Root: styled(Scrollable.Root),
     Viewport: styled(Scrollable.Viewport, {
-      maxHeight: 'calc(var(--radix-popover-content-available-height) - $inline-component-height-sm * 2)',
+      maxHeight:
+        'calc(var(--radix-popover-content-available-height) - $inline-component-height-sm * 2)',
       margin: '-$spacing-2-5 0',
       padding: '$spacing-2-5 0',
 
       '&[data-attribute="search"]': {
-        maxHeight: 'calc(var(--radix-popover-content-available-height) - $inline-component-height-sm - $space$spacing-9)',
+        maxHeight:
+          'calc(var(--radix-popover-content-available-height) - $inline-component-height-sm - $space$spacing-9)',
       },
     }),
     Bar: styled(Scrollable.VerticalBar, {
@@ -241,8 +255,16 @@ export const ComboboxStyles = {
 };
 
 export namespace ComboboxStyles {
-  export type RootProps = React.ComponentPropsWithRef<typeof ComboboxStyles.Root>;
-  export type OptionsProps = React.ComponentPropsWithRef<typeof ComboboxStyles.Options>;
-  export type FieldProps = React.ComponentPropsWithRef<typeof ComboboxStyles.Field>;
-  export type WrapperProps = React.ComponentPropsWithRef<typeof ComboboxStyles.Wrapper>;
+  export type RootProps = React.ComponentPropsWithRef<
+    typeof ComboboxStyles.Root
+  >;
+  export type OptionsProps = React.ComponentPropsWithRef<
+    typeof ComboboxStyles.Options
+  >;
+  export type FieldProps = React.ComponentPropsWithRef<
+    typeof ComboboxStyles.Field
+  >;
+  export type WrapperProps = React.ComponentPropsWithRef<
+    typeof ComboboxStyles.Wrapper
+  >;
 }

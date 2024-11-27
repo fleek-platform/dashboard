@@ -1,4 +1,7 @@
-query ensRecordsByIpnsId($where: EnsRecordsByIpnsIdWhereInput!, $filter: EnsRecordsByIpnsIdPaginationInput) {
+query ensRecordsByIpnsId(
+  $where: EnsRecordsByIpnsIdWhereInput!
+  $filter: EnsRecordsByIpnsIdPaginationInput
+) {
   ensRecordsByIpnsId(where: $where, filter: $filter) {
     data {
       id

@@ -27,7 +27,9 @@ export const ToastProvider: React.FC<ChildrenProps> = ({ children }) => {
     setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
   };
 
-  return <Provider value={{ toasts, pushToast, onDismiss }}>{children}</Provider>;
+  return (
+    <Provider value={{ toasts, pushToast, onDismiss }}>{children}</Provider>
+  );
 };
 
 export const useToastContext = useContext;

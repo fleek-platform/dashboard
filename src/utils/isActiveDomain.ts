@@ -6,5 +6,10 @@ type IsActiveDomainArgs = {
   primaryDomainId?: string;
 };
 
-export const isActiveDomain = ({ domain, primaryDomainId }: IsActiveDomainArgs) =>
-  domain.isVerified && domain.status === DomainStatus.ACTIVE && domain.id !== primaryDomainId;
+export const isActiveDomain = ({
+  domain,
+  primaryDomainId,
+}: IsActiveDomainArgs) =>
+  domain.isVerified &&
+  domain.status === DomainStatus.ACTIVE &&
+  domain.id !== primaryDomainId;

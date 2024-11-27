@@ -1,4 +1,7 @@
-import { useEmailVerificationRequest, useUserUpdateRequest } from '@dynamic-labs/sdk-react-core';
+import {
+  useEmailVerificationRequest,
+  useUserUpdateRequest,
+} from '@dynamic-labs/sdk-react-core';
 import { useState } from 'react';
 
 import { Form, Modal } from '@/components';
@@ -12,7 +15,11 @@ type UserEmailModalProps = {
   closeModal: () => void;
 };
 
-export const UserEmailModal: React.FC<UserEmailModalProps> = ({ isOpen, isEditing = false, closeModal }) => {
+export const UserEmailModal: React.FC<UserEmailModalProps> = ({
+  isOpen,
+  isEditing = false,
+  closeModal,
+}) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={closeModal}>
       <Dialog.Overlay />
@@ -54,7 +61,9 @@ const Step1: React.FC<Step1Props> = ({ isEditing }) => {
 
       nextStep();
     } catch (error) {
-      toast.error({ message: 'There was an error trying to update your email' });
+      toast.error({
+        message: 'There was an error trying to update your email',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -63,13 +72,21 @@ const Step1: React.FC<Step1Props> = ({ isEditing }) => {
   return (
     <>
       <Modal.Heading>{isEditing ? 'Change' : 'Add'} Email</Modal.Heading>
-      <Text>Enter your email address, after this you will receive a code to verify your email.</Text>
+      <Text>
+        Enter your email address, after this you will receive a code to verify
+        your email.
+      </Text>
 
       <Form.InputField name="email" placeholder="Email" />
 
       <Modal.CTARow>
         <SettingsItemModal.CloseButton />
-        <Button disabled={shouldDisableSubmit || isSubmitting} onClick={handleContinue} loading={isSubmitting} className="flex-1">
+        <Button
+          disabled={shouldDisableSubmit || isSubmitting}
+          onClick={handleContinue}
+          loading={isSubmitting}
+          className="flex-1"
+        >
           Continue
         </Button>
       </Modal.CTARow>
@@ -89,7 +106,9 @@ const Step2: React.FC<Step2Props> = ({ closeModal }) => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState('');
 
-  const handleCodeChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCodeChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { value } = event.target;
 
     const numericValue = value.replace(/[^0-9]/g, '');
@@ -122,11 +141,19 @@ const Step2: React.FC<Step2Props> = ({ closeModal }) => {
   return (
     <>
       <Modal.Heading>Verify Email</Modal.Heading>
-      <Text>A verification code has been sent to your email, input the code to save your new email address.</Text>
+      <Text>
+        A verification code has been sent to your email, input the code to save
+        your new email address.
+      </Text>
 
       <FormField.Root error={Boolean(error)}>
         <Input.Root>
-          <Input.Field placeholder="Enter code" onChange={handleCodeChange} value={otpCode} maxLength={6} />
+          <Input.Field
+            placeholder="Enter code"
+            onChange={handleCodeChange}
+            value={otpCode}
+            maxLength={6}
+          />
         </Input.Root>
 
         {error && <FormField.Hint>{error}</FormField.Hint>}
@@ -134,7 +161,11 @@ const Step2: React.FC<Step2Props> = ({ closeModal }) => {
 
       <Modal.CTARow>
         <SettingsItemModal.CloseButton />
-        <Button disabled={otpCode.length !== 6 || isSubmitting || isVerifying} loading={isSubmitting || isVerifying} onClick={handleSave}>
+        <Button
+          disabled={otpCode.length !== 6 || isSubmitting || isVerifying}
+          loading={isSubmitting || isVerifying}
+          onClick={handleSave}
+        >
           Save
         </Button>
       </Modal.CTARow>

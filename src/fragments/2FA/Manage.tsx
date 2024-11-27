@@ -30,12 +30,18 @@ export const EmptyManage = () => (
     <Styles.EmptyBox>
       <Icon name="question" />
       <Text as="h3">No Two-factor authentication</Text>
-      <Text>Once you enable two-factor authentication, options will appear here.</Text>
+      <Text>
+        Once you enable two-factor authentication, options will appear here.
+      </Text>
     </Styles.EmptyBox>
   </ManageSettingsBox>
 );
 
-export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecretKey }) => {
+export const Manage: React.FC<ManageProps> = ({
+  secretKey,
+  isLoading,
+  updateSecretKey,
+}) => {
   const toast = useToast();
   const [recoveryCodes, setRecoveryCodes] = useState<Codes>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -49,7 +55,8 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
 
   const username = useMemo(() => meQuery.data?.user.username || '', [meQuery]);
 
-  const { isVisible: isTwoFactorModalVisible } = TwoFactorAuthentication.useTwoFactorModal();
+  const { isVisible: isTwoFactorModalVisible } =
+    TwoFactorAuthentication.useTwoFactorModal();
 
   const [, generateRecoveryCodes] = useGenerateRecoveryCodesMutation();
   const [, deleteRecoveryCodes] = TwoFactorAuthentication.useMutation({
@@ -66,21 +73,31 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
     handleOpenRenegerateModal();
 
     try {
-      const deleteRecoveryCodesResult = await deleteRecoveryCodes({ where: { secretKeyId: secretKey.id } });
+      const deleteRecoveryCodesResult = await deleteRecoveryCodes({
+        where: { secretKeyId: secretKey.id },
+      });
 
       if (!deleteRecoveryCodesResult.data) {
-        throw deleteRecoveryCodesResult.error || new Error('Failed to delete recovery codes');
+        throw (
+          deleteRecoveryCodesResult.error ||
+          new Error('Failed to delete recovery codes')
+        );
       }
 
-      const recoveryCodes = await generateRecoveryCodes({ where: { secretKeyId: secretKey.id } });
+      const recoveryCodes = await generateRecoveryCodes({
+        where: { secretKeyId: secretKey.id },
+      });
 
       if (!recoveryCodes.data) {
         setIsRegenerateModalOpen(false);
-        throw recoveryCodes.error || new Error('Failed to generate recovery codes');
+        throw (
+          recoveryCodes.error || new Error('Failed to generate recovery codes')
+        );
       }
 
       toast.warning({
-        message: 'New two-factor recovery codes generated. Download the new codes to continue.',
+        message:
+          'New two-factor recovery codes generated. Download the new codes to continue.',
       });
 
       setRecoveryCodes(recoveryCodes.data.generateRecoveryCodes.recoveryCodes);
@@ -104,16 +121,24 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
     editSecretKeyForm.fields.secretKey.setValue(setupKey, true);
     editSecretKeyForm.fields.secretKey.setTouched(true);
 
-    const qrUrl = getURI({ label: username, algorithm, digits, secret: key, issuer: 'Fleek' });
+    const qrUrl = getURI({
+      label: username,
+      algorithm,
+      digits,
+      secret: key,
+      issuer: 'Fleek',
+    });
     setOtpUrl(qrUrl);
     setIsSecretKeyLoading(false);
   };
 
   const handleOpenRenegerateModal = () => setIsRegenerateModalOpen(true);
 
-  const handleChangeRegenerateModal = (open: boolean) => setIsRegenerateModalOpen(open);
+  const handleChangeRegenerateModal = (open: boolean) =>
+    setIsRegenerateModalOpen(open);
 
-  const handleChangeEditModal = async (open: boolean) => setIsEditModalOpen(open);
+  const handleChangeEditModal = async (open: boolean) =>
+    setIsEditModalOpen(open);
 
   useEffect(() => {
     if (!secretKey || !secretKey.isActive) {
@@ -123,7 +148,9 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
     }
 
     if (secretKey.verifiedAt) {
-      setSubtitle(`Active since ${getDurationUntilNow({ isoDateString: secretKey.verifiedAt, shortFormat: true })}`);
+      setSubtitle(
+        `Active since ${getDurationUntilNow({ isoDateString: secretKey.verifiedAt, shortFormat: true })}`,
+      );
     }
   }, [secretKey]);
 
@@ -149,9 +176,15 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
     }),
     onSubmit: async ({ secretKeyId, token }) => {
       try {
-        const verifyResult = await verifySecretKey({ data: { token }, where: { secretKeyId } });
+        const verifyResult = await verifySecretKey({
+          data: { token },
+          where: { secretKeyId },
+        });
 
-        if (!verifyResult.data || !verifyResult.data.verifyTwoFactorSecretKey.isVerified) {
+        if (
+          !verifyResult.data ||
+          !verifyResult.data.verifyTwoFactorSecretKey.isVerified
+        ) {
           throw verifyResult.error || new Error('Failed to verify token.');
         }
 
@@ -173,14 +206,28 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
 
   return (
     <ManageSettingsBox>
-      <SettingsListItem title="Authenticator App" subtitle={subtitle} avatarIcon="phone">
-        {secretKey.isActive ? <BadgeText colorScheme="green">Active</BadgeText> : <BadgeText colorScheme="slate">Inactive</BadgeText>}
+      <SettingsListItem
+        title="Authenticator App"
+        subtitle={subtitle}
+        avatarIcon="phone"
+      >
+        {secretKey.isActive ? (
+          <BadgeText colorScheme="green">Active</BadgeText>
+        ) : (
+          <BadgeText colorScheme="slate">Inactive</BadgeText>
+        )}
         {secretKey.isActive && (
           <SettingsListItem.DropdownMenu>
-            <SettingsListItem.DropdownMenuItem icon="pencil" onSelect={handleOpenEditModal}>
+            <SettingsListItem.DropdownMenuItem
+              icon="pencil"
+              onSelect={handleOpenEditModal}
+            >
               Edit 2FA App
             </SettingsListItem.DropdownMenuItem>
-            <SettingsListItem.DropdownMenuItem icon="documentLock" onSelect={handleRegenerateRecoveryCodes}>
+            <SettingsListItem.DropdownMenuItem
+              icon="documentLock"
+              onSelect={handleRegenerateRecoveryCodes}
+            >
               Regenerate Codes
             </SettingsListItem.DropdownMenuItem>
           </SettingsListItem.DropdownMenu>
@@ -189,7 +236,12 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
 
       {isEditModalOpen && (
         <Form.Provider value={editSecretKeyForm}>
-          <EditModal isLoading={isSecretKeyLoading} otpUrl={otpUrl} open={isEditModalOpen} onOpenChange={handleChangeEditModal} />
+          <EditModal
+            isLoading={isSecretKeyLoading}
+            otpUrl={otpUrl}
+            open={isEditModalOpen}
+            onOpenChange={handleChangeEditModal}
+          />
         </Form.Provider>
       )}
       {isRegenerateModalOpen && !isTwoFactorModalVisible && (
@@ -207,7 +259,9 @@ export const Manage: React.FC<ManageProps> = ({ secretKey, isLoading, updateSecr
 const ManageSettingsBox: React.FC<ChildrenProps> = ({ children }) => (
   <SettingsBox.Container>
     <SettingsBox.Title>Manage Two-factor Authentication</SettingsBox.Title>
-    <SettingsBox.Text>Here you can edit your secret key or regenerate your recovery codes.</SettingsBox.Text>
+    <SettingsBox.Text>
+      Here you can edit your secret key or regenerate your recovery codes.
+    </SettingsBox.Text>
     {children}
   </SettingsBox.Container>
 );

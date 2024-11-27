@@ -12,12 +12,9 @@ type AddApplicationCredentialsModalProps = {
   setClientId: (clientId: string) => void;
 };
 
-export const AddApplicationCredentialsModal: React.FC<AddApplicationCredentialsModalProps> = ({
-  isOpen,
-  clientId,
-  handleCloseModal,
-  setClientId,
-}) => {
+export const AddApplicationCredentialsModal: React.FC<
+  AddApplicationCredentialsModalProps
+> = ({ isOpen, clientId, handleCloseModal, setClientId }) => {
   const { resetForm } = Form.useContext();
 
   const handleOpenChange = () => {
@@ -55,7 +52,10 @@ const Step1: React.FC<Step1Props> = ({ setClientId }) => {
   return (
     <>
       <Modal.Heading>Application credentials</Modal.Heading>
-      <Text>Fill in the inputs below to create your application credentials. In the next step, you&apos;ll get your ID. </Text>
+      <Text>
+        Fill in the inputs below to create your application credentials. In the
+        next step, you&apos;ll get your ID.{' '}
+      </Text>
 
       <NameField />
 
@@ -87,7 +87,12 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ setClientId }) => {
   };
 
   return (
-    <Button loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit} className="flex-1">
+    <Button
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmit}
+      className="flex-1"
+    >
       Create
     </Button>
   );
@@ -102,7 +107,10 @@ const Step2: React.FC<Step2Props> = ({ clientId, handleCloseModal }) => {
   return (
     <>
       <Modal.Heading>Application credential ID</Modal.Heading>
-      <Text>Copy the below credential ID. You can also view and copy it later within &lsquo;Settings&rsquo;. </Text>
+      <Text>
+        Copy the below credential ID. You can also view and copy it later within
+        &lsquo;Settings&rsquo;.{' '}
+      </Text>
 
       <CodeSnippet title="Token" code={clientId || ' '} />
 

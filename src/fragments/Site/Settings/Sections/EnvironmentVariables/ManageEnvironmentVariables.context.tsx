@@ -6,7 +6,10 @@ export type ManageEnvironmentVariablesContext = {
   onSubmitUpdate: (args: UpdateSecretMutationVariables) => Promise<void>;
 };
 
-export const [ManageEnvironmentVariablesProvider, useManageEnvironmentVariablesContext] = createContext<ManageEnvironmentVariablesContext>({
+export const [
+  ManageEnvironmentVariablesProvider,
+  useManageEnvironmentVariablesContext,
+] = createContext<ManageEnvironmentVariablesContext>({
   name: 'ManageEnvironmentVariablesContext',
   hookName: 'useManageEnvironmentVariablesContext',
   providerName: 'ManageEnvironmentVariablesProvider',

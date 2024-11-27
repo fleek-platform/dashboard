@@ -54,10 +54,15 @@ export const WithCombobox: Story = {
       const selected = useState<string>();
 
       return (
-        <Combobox items={['Option 1', 'Option 2', 'Option 3']} selected={selected}>
+        <Combobox
+          items={['Option 1', 'Option 2', 'Option 3']}
+          selected={selected}
+        >
           {({ Field, Options }) => (
             <>
-              <Field placeholder="Select an option">{(selected) => selected}</Field>
+              <Field placeholder="Select an option">
+                {(selected) => selected}
+              </Field>
               <Options>{(item) => item}</Options>
             </>
           )}
@@ -71,7 +76,9 @@ export const WithCombobox: Story = {
 
         <ComboboxExample />
 
-        <FormField.Hint icon="fleek">Use this field to select something</FormField.Hint>
+        <FormField.Hint icon="fleek">
+          Use this field to select something
+        </FormField.Hint>
       </>
     );
 

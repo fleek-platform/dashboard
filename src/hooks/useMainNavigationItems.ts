@@ -10,11 +10,21 @@ export const useMainNavigationItems = () => {
   const session = useSessionContext();
 
   const hasGeneralSettingsPermission = usePermissions({
-    action: [constants.PERMISSION.PROJECT.EDIT_NAME, constants.PERMISSION.PROJECT.DELETE, constants.PERMISSION.PROJECT.EDIT_AVATAR],
+    action: [
+      constants.PERMISSION.PROJECT.EDIT_NAME,
+      constants.PERMISSION.PROJECT.DELETE,
+      constants.PERMISSION.PROJECT.EDIT_AVATAR,
+    ],
   });
-  const hasStorageSettingsPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS] });
-  const hasPrivateGatewaysPermission = usePermissions({ action: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW] });
-  const hasApplicationCredentialsPermission = usePermissions({ action: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW] });
+  const hasStorageSettingsPermission = usePermissions({
+    action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS],
+  });
+  const hasPrivateGatewaysPermission = usePermissions({
+    action: [constants.PERMISSION.PRIVATE_GATEWAY.VIEW],
+  });
+  const hasApplicationCredentialsPermission = usePermissions({
+    action: [constants.PERMISSION.APPLICATION_CREDENTIALS.VIEW],
+  });
   const hasTeamMembersPermission = usePermissions({
     action: [
       constants.PERMISSION.TEAM.ASSIGN_OWNER,
@@ -23,7 +33,12 @@ export const useMainNavigationItems = () => {
       constants.PERMISSION.TEAM.INVITE,
     ],
   });
-  const hasBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE, constants.PERMISSION.BILLING.VIEW] });
+  const hasBillingPermission = usePermissions({
+    action: [
+      constants.PERMISSION.BILLING.MANAGE,
+      constants.PERMISSION.BILLING.VIEW,
+    ],
+  });
 
   const hasProjectSettingsPermission =
     hasGeneralSettingsPermission ||
@@ -59,20 +74,34 @@ export const useMainNavigationItems = () => {
   };
 
   const navigation: NavigationItem[] = [
-    { icon: 'home', label: 'Dashboard', path: routes.project.home({ projectId }), hasAccess: true },
+    {
+      icon: 'home',
+      label: 'Dashboard',
+      path: routes.project.home({ projectId }),
+      hasAccess: true,
+    },
     {
       icon: 'browser',
       label: 'Hosting',
       path: routes.project.site.list({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_OVERVIEW] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.SITE.VIEW_OVERVIEW],
+      }),
     },
     {
       icon: 'archive',
       label: 'Storage',
       path: routes.project.storage({ projectId }),
-      hasAccess: usePermissions({ action: [constants.PERMISSION.STORAGE.VIEW_LIST] }),
+      hasAccess: usePermissions({
+        action: [constants.PERMISSION.STORAGE.VIEW_LIST],
+      }),
     },
-    { icon: 'globe-filled', label: 'Functions', path: routes.project.function.list({ projectId }), hasAccess: true },
+    {
+      icon: 'globe-filled',
+      label: 'Functions',
+      path: routes.project.function.list({ projectId }),
+      hasAccess: true,
+    },
     {
       icon: 'credit-card',
       label: 'Billing',

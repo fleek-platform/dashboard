@@ -42,7 +42,8 @@ export const MigrationStyles = {
       justifyContent: 'center',
       gap: '$spacing-7',
       top: 'calc($page-padding + $spacing-9)',
-      maxHeight: 'calc($min-page-height - 2 * $space$page-padding - $space$spacing-9)',
+      maxHeight:
+        'calc($min-page-height - 2 * $space$page-padding - $space$spacing-9)',
 
       '@md!': {
         position: 'static',

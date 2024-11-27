@@ -14,7 +14,9 @@ export const ExampleHashes: React.FC = () => {
         Enter an IPFS hash above to continue
       </Text>
       <Box className="grid pt-2 gap-2.5">
-        <Text className="pb-5 text-center">or test with one of our examples below</Text>
+        <Text className="pb-5 text-center">
+          or test with one of our examples below
+        </Text>
         {constants.IPFS_PROPAGATION_TOOL.DEFAULT_IPFS_HASHES.map((hash) => (
           <Button
             key={hash}

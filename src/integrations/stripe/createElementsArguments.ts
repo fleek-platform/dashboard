@@ -2,9 +2,13 @@ import { StripeElementsOptionsMode } from '@stripe/stripe-js';
 
 import { ThemeHook } from '@/providers/ThemeProvider';
 
-type CreateElementsAppearance = (args: ThemeArgs) => StripeElementsOptionsMode['appearance'];
+type CreateElementsAppearance = (
+  args: ThemeArgs,
+) => StripeElementsOptionsMode['appearance'];
 
-export const createElementsAppearance: CreateElementsAppearance = ({ theme }) => ({
+export const createElementsAppearance: CreateElementsAppearance = ({
+  theme,
+}) => ({
   theme: 'stripe',
   variables: {
     fontFamily: 'IBM Plex Sans, sans-serif',

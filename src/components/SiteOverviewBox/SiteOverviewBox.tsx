@@ -5,8 +5,15 @@ import { constants } from '@/constants';
 import { DisabledProps, LoadingProps } from '@/types/Props';
 import { Box, Icon, IconName, Menu, Skeleton, Text } from '@/ui';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
-import { getLinkForIPFSGateway, GetLinkForIPFSGatewayArgs, getSubDomainResolutionIpfsGatewayUrl } from '@/utils/getLinkForIPFSGateway';
-import { getLinkForSiteSlug, getLinkPartsForSiteSlug } from '@/utils/siteSlugLinks';
+import {
+  getLinkForIPFSGateway,
+  GetLinkForIPFSGatewayArgs,
+  getSubDomainResolutionIpfsGatewayUrl,
+} from '@/utils/getLinkForIPFSGateway';
+import {
+  getLinkForSiteSlug,
+  getLinkPartsForSiteSlug,
+} from '@/utils/siteSlugLinks';
 
 import { BadgeText } from '../BadgeText/BadgeText';
 import { PreviewImage } from '../PreviewImage/PreviewImage';
@@ -31,7 +38,13 @@ const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
   const Container: React.ElementType = localLink ? Link : ExternalLink;
 
   return (
-    <Container variant="neutral" href={!isDisabled && href ? href : '#'} disabled={isDisabled} className="flex gap-2.5" {...props}>
+    <Container
+      variant="neutral"
+      href={!isDisabled && href ? href : '#'}
+      disabled={isDisabled}
+      className="flex gap-2.5"
+      {...props}
+    >
       <S.SiteDetail.IconContainer variant={iconVariant}>
         <Icon name={avatarName} />
       </S.SiteDetail.IconContainer>
@@ -67,13 +80,24 @@ const SiteDetailSkeleton: React.FC = () => (
   </Box>
 );
 
-const Domain: React.FC<SiteOverviewBox.DomainProps> = ({ projectId, siteId, siteLink, previewURL, isPreview = false, isDisabled }) => {
+const Domain: React.FC<SiteOverviewBox.DomainProps> = ({
+  projectId,
+  siteId,
+  siteLink,
+  previewURL,
+  isPreview = false,
+  isDisabled,
+}) => {
   if (previewURL && isPreview) {
     return (
       <SiteDetail
         avatarName="domain"
         iconVariant="web"
-        title={isDisabled ? 'URL Pending' : getLinkPartsForSiteSlug({ slug: previewURL }).getLinkNoHttps()}
+        title={
+          isDisabled
+            ? 'URL Pending'
+            : getLinkPartsForSiteSlug({ slug: previewURL }).getLinkNoHttps()
+        }
         href={getLinkForSiteSlug(previewURL)}
         isDisabled={isDisabled}
       />
@@ -106,7 +130,12 @@ const Domain: React.FC<SiteOverviewBox.DomainProps> = ({ projectId, siteId, site
 };
 
 const GitCommit: React.FC<SiteOverviewBox.GitCommitProps> = ({ message }) => (
-  <SiteDetail href="#" avatarName="git-commit" iconVariant="web" title={message} />
+  <SiteDetail
+    href="#"
+    avatarName="git-commit"
+    iconVariant="web"
+    title={message}
+  />
 );
 
 const SiteSourceDetail: React.FC<SiteOverviewBox.SiteSourceDetail> = ({
@@ -118,22 +147,51 @@ const SiteSourceDetail: React.FC<SiteOverviewBox.SiteSourceDetail> = ({
 }) => {
   if (repositoryName && repositoryOwner && !isSelfManaged) {
     return (
-      <SiteDetail avatarName="github" iconVariant="gitProvider" title={repositoryOwner} subtitle={repositoryName} href={visitRepoSource} />
+      <SiteDetail
+        avatarName="github"
+        iconVariant="gitProvider"
+        title={repositoryOwner}
+        subtitle={repositoryName}
+        href={visitRepoSource}
+      />
     );
   }
 
-  return <SiteDetail avatarName="cloud-upload" iconVariant="web" title={siteName} href={visitRepoSource} />;
+  return (
+    <SiteDetail
+      avatarName="cloud-upload"
+      iconVariant="web"
+      title={siteName}
+      href={visitRepoSource}
+    />
+  );
 };
 
-const ViewOnIPFS: React.FC<SiteOverviewBox.ViewOnIPFSProps> = ({ cid, isDisabled }) => {
+const ViewOnIPFS: React.FC<SiteOverviewBox.ViewOnIPFSProps> = ({
+  cid,
+  isDisabled,
+}) => {
   if (!cid || isDisabled) {
-    return <SiteDetail avatarName="ipfs-colored" iconVariant="ipfs" title="IPFS Hash Pending" href="#" isDisabled />;
+    return (
+      <SiteDetail
+        avatarName="ipfs-colored"
+        iconVariant="ipfs"
+        title="IPFS Hash Pending"
+        href="#"
+        isDisabled
+      />
+    );
   }
 
   return (
     <Menu.Root>
       <Menu.Trigger>
-        <SiteOverviewBox.SiteDetail href="#" avatarName="ipfs-colored" iconVariant="ipfs" title="View on IPFS" />
+        <SiteOverviewBox.SiteDetail
+          href="#"
+          avatarName="ipfs-colored"
+          iconVariant="ipfs"
+          title="View on IPFS"
+        />
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Content align="start">
@@ -166,20 +224,29 @@ export const SiteOverviewBox = {
 
 export namespace SiteOverviewBox {
   export type ContainerProps = React.ComponentPropsWithRef<typeof S.Container>;
-  export type DetailsContainerProps = React.ComponentPropsWithRef<typeof S.DetailsContainer>;
+  export type DetailsContainerProps = React.ComponentPropsWithRef<
+    typeof S.DetailsContainer
+  >;
   export type StatusRowProps = React.ComponentPropsWithRef<typeof S.StatusRow>;
-  export type ElapsedTimeProps = React.ComponentPropsWithRef<typeof S.ElapsedTime>;
+  export type ElapsedTimeProps = React.ComponentPropsWithRef<
+    typeof S.ElapsedTime
+  >;
   export type SiteDetailProps = LoadingProps<
     DisabledProps<{
       avatarName: IconName;
       title: string;
       subtitle?: string;
-      iconVariant: React.ComponentProps<typeof S.SiteDetail.IconContainer>['variant'];
+      iconVariant: React.ComponentProps<
+        typeof S.SiteDetail.IconContainer
+      >['variant'];
       badgeText?: string;
       localLink?: boolean;
     }>
   > &
-    Omit<React.ComponentPropsWithRef<typeof ExternalLink | typeof Link>, 'disabled'>;
+    Omit<
+      React.ComponentPropsWithRef<typeof ExternalLink | typeof Link>,
+      'disabled'
+    >;
   export type DomainProps = DisabledProps<{
     siteId: string;
     projectId: string;
@@ -209,8 +276,24 @@ type PublicGateway = {
 };
 
 const publicGateways: PublicGateway[] = [
-  { name: 'flk-ipfs.xyz', baseURL: constants.IPFS_GATEWAYS.FLEEK_GW, urlResolution: getLinkForIPFSGateway },
-  { name: 'ipfs.io', baseURL: constants.IPFS_GATEWAYS.IPFS_IO, urlResolution: getLinkForIPFSGateway },
-  { name: 'dweb.link', baseURL: constants.IPFS_GATEWAYS.DWEB_LINK, urlResolution: getSubDomainResolutionIpfsGatewayUrl },
-  { name: 'fleek.cool', baseURL: constants.IPFS_GATEWAYS.FLEEK_COOL, urlResolution: getSubDomainResolutionIpfsGatewayUrl },
+  {
+    name: 'flk-ipfs.xyz',
+    baseURL: constants.IPFS_GATEWAYS.FLEEK_GW,
+    urlResolution: getLinkForIPFSGateway,
+  },
+  {
+    name: 'ipfs.io',
+    baseURL: constants.IPFS_GATEWAYS.IPFS_IO,
+    urlResolution: getLinkForIPFSGateway,
+  },
+  {
+    name: 'dweb.link',
+    baseURL: constants.IPFS_GATEWAYS.DWEB_LINK,
+    urlResolution: getSubDomainResolutionIpfsGatewayUrl,
+  },
+  {
+    name: 'fleek.cool',
+    baseURL: constants.IPFS_GATEWAYS.FLEEK_COOL,
+    urlResolution: getSubDomainResolutionIpfsGatewayUrl,
+  },
 ];

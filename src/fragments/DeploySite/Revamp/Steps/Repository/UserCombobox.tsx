@@ -1,4 +1,7 @@
-import { GitRepositoriesQuery, useCountSitesWithSourceProviderQuery } from '@/generated/graphqlClient';
+import {
+  GitRepositoriesQuery,
+  useCountSitesWithSourceProviderQuery,
+} from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, Icon } from '@/ui';
@@ -14,17 +17,28 @@ type UserComboboxProps = LoadingProps<{
   onRefetch?: () => void;
 }>;
 
-export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoading, currentUser, setCurrentUser, onRefetch }) => {
+export const UserCombobox: React.FC<UserComboboxProps> = ({
+  users = [],
+  isLoading,
+  currentUser,
+  setCurrentUser,
+  onRefetch,
+}) => {
   const toast = useToast();
   const { sourceProvider, providerState } = useDeploySiteContext();
-  const [countSitesWithSourceProviderQuery] = useCountSitesWithSourceProviderQuery();
+  const [countSitesWithSourceProviderQuery] =
+    useCountSitesWithSourceProviderQuery();
 
   const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching || (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+    countSitesWithSourceProviderQuery.fetching ||
+    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const handleAddGHAccount = async () => {
     if (!providerState?.requirements?.installationUrl) {
-      toast.error({ message: 'Unexpected error finding installation url, please contact support' });
+      toast.error({
+        message:
+          'Unexpected error finding installation url, please contact support',
+      });
 
       return;
     }
@@ -61,7 +75,8 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoadin
           disabled: shouldDisableAddOrganization,
           tooltip: shouldDisableAddOrganization
             ? {
-                content: 'You already have sites that depend on the current GitHub installation.',
+                content:
+                  'You already have sites that depend on the current GitHub installation.',
                 side: 'left',
               }
             : undefined,
@@ -70,7 +85,13 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoadin
     >
       {({ Field, Options }) => (
         <>
-          <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
+          <Field
+            placeholder={
+              <>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>
+            }
+          >
+            {UserItem}
+          </Field>
 
           <Options align="start">{UserItem}</Options>
         </>

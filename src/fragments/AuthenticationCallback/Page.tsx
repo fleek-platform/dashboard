@@ -40,7 +40,8 @@ export const AuthenticationCallbackPage: React.FC = () => {
           Authentication Complete
         </Text>
         <Text>
-          Your authentication was successful. This page will be closed in <b>{timer}</b> seconds.
+          Your authentication was successful. This page will be closed in{' '}
+          <b>{timer}</b> seconds.
         </Text>
       </Layout>
     </Providers>

@@ -20,28 +20,36 @@ export class GitHub implements GitProvider {
   }
 
   public async someAppsInstalled(installationIds: string[]) {
-    const { installations } = await this.getInstalledApplicationsForAuthenticatedUser();
+    const { installations } =
+      await this.getInstalledApplicationsForAuthenticatedUser();
 
-    return installations.some((installation) => installationIds.includes(installation.id.toString()));
+    return installations.some((installation) =>
+      installationIds.includes(installation.id.toString()),
+    );
   }
 
   public async getUserAndOrganizations() {
     const githubUser = await this.octokit.rest.users.getAuthenticated();
     const installations = await this.octokit.paginate<any>(
-      this.octokit.rest.apps.listInstallationsForAuthenticatedUser.endpoint.merge({
-        per_page: 100,
-        v: DateTime.now().toJSDate(),
-        headers: {
-          'If-None-Match': '', // this remove default browser caching of 60 seconds
+      this.octokit.rest.apps.listInstallationsForAuthenticatedUser.endpoint.merge(
+        {
+          per_page: 100,
+          v: DateTime.now().toJSDate(),
+          headers: {
+            'If-None-Match': '', // this remove default browser caching of 60 seconds
+          },
         },
-      })
+      ),
     );
 
     return {
       user: {
         slug: githubUser.data.login,
         avatar: githubUser.data.avatar_url,
-        installationId: installations.find((installation) => installation.account.login === githubUser.data.login)?.id,
+        installationId: installations.find(
+          (installation) =>
+            installation.account.login === githubUser.data.login,
+        )?.id,
         isOrganization: githubUser.data.type === 'Organization',
       },
       organizations: installations
@@ -57,14 +65,16 @@ export class GitHub implements GitProvider {
 
   public async getUserRepositories(args: GitProvider.GetUserRepositoriesArgs) {
     const repositories = await this.octokit.paginate<any>(
-      this.octokit.rest.apps.listInstallationReposForAuthenticatedUser.endpoint.merge({
-        installation_id: args.installationId,
-        per_page: 100,
-        v: DateTime.now().toJSDate(),
-        headers: {
-          'If-None-Match': '', // this remove default browser caching of 60 seconds
+      this.octokit.rest.apps.listInstallationReposForAuthenticatedUser.endpoint.merge(
+        {
+          installation_id: args.installationId,
+          per_page: 100,
+          v: DateTime.now().toJSDate(),
+          headers: {
+            'If-None-Match': '', // this remove default browser caching of 60 seconds
+          },
         },
-      })
+      ),
     );
 
     return repositories.map((repository) => ({
@@ -76,11 +86,12 @@ export class GitHub implements GitProvider {
   }
 
   public async getInstalledApplicationsForAuthenticatedUser() {
-    const { data } = await this.octokit.rest.apps.listInstallationsForAuthenticatedUser({
-      headers: {
-        'If-None-Match': '', // Remove browser caching of 60 seconds
-      },
-    });
+    const { data } =
+      await this.octokit.rest.apps.listInstallationsForAuthenticatedUser({
+        headers: {
+          'If-None-Match': '', // Remove browser caching of 60 seconds
+        },
+      });
 
     return data;
   }
@@ -93,7 +104,10 @@ export class GitHub implements GitProvider {
     baseDirectory,
   }: GitProvider.GetRepositoryBuildSettingsArgs) {
     const concatBaseDirectory = (path: string) => {
-      return `${baseDirectory ? `${baseDirectory}/` : ''}${path}`.replace(/\/$/g, '');
+      return `${baseDirectory ? `${baseDirectory}/` : ''}${path}`.replace(
+        /\/$/g,
+        '',
+      );
     };
 
     const readFile = async (path: string): Promise<string> => {
@@ -129,21 +143,25 @@ export class GitHub implements GitProvider {
     return new SiteBuildSettings({ readFile, readPath, frameworks }).get();
   }
 
-  public async getBranches({ slug: owner, repository: repo }: GitProvider.GetRepositoryBranchesArgs) {
+  public async getBranches({
+    slug: owner,
+    repository: repo,
+  }: GitProvider.GetRepositoryBranchesArgs) {
     const data = await this.octokit.paginate<any>(
       this.octokit.rest.repos.listBranches.endpoint.merge({
         owner,
         repo,
         per_page: 100,
         v: DateTime.now().toJSDate(),
-      })
+      }),
     );
 
     return data.map((branch) => branch.name);
   }
 
   public async getInstallationId({ slug }: GitProvider.GetInstallationIdArgs) {
-    const { data } = await this.octokit.rest.apps.listInstallationsForAuthenticatedUser();
+    const { data } =
+      await this.octokit.rest.apps.listInstallationsForAuthenticatedUser();
 
     if (Array.isArray(data.installations)) {
       const installation = data.installations.find((installation) => {
@@ -202,7 +220,9 @@ export class GitHub implements GitProvider {
       return files;
     };
 
-    const createRepository = async (): Promise<ReturnType<Octokit['rest']['repos']['createForAuthenticatedUser']>> => {
+    const createRepository = async (): Promise<
+      ReturnType<Octokit['rest']['repos']['createForAuthenticatedUser']>
+    > => {
       try {
         const user = await this.octokit.rest.users.getAuthenticated();
 
@@ -224,7 +244,9 @@ export class GitHub implements GitProvider {
         return await promise;
       } catch (error: any) {
         if (error.status === 422) {
-          throw new GitHubError(`Repository "${repositoryName}" already exists in your GitHub account.`);
+          throw new GitHubError(
+            `Repository "${repositoryName}" already exists in your GitHub account.`,
+          );
         } else {
           throw error;
         }
@@ -248,7 +270,7 @@ export class GitHub implements GitProvider {
                   content: data.content,
                 };
               }
-            })
+            }),
           )
         ).filter((file) => typeof file !== 'undefined') as GitFileContent[];
 
@@ -299,7 +321,11 @@ export class GitHub implements GitProvider {
     };
   }
 
-  public async getTree({ slug, repository, ref }: GitProvider.GetTreeArgs): Promise<any> {
+  public async getTree({
+    slug,
+    repository,
+    ref,
+  }: GitProvider.GetTreeArgs): Promise<any> {
     const { data } = await this.octokit.rest.git.getTree({
       owner: slug,
       repo: repository,
@@ -310,7 +336,9 @@ export class GitHub implements GitProvider {
     return data.tree;
   }
 
-  public async isRepositoryNameAvailable({ repositoryName }: GitProvider.CheckRepositoryNameAvailabilityArgs): Promise<boolean> {
+  public async isRepositoryNameAvailable({
+    repositoryName,
+  }: GitProvider.CheckRepositoryNameAvailabilityArgs): Promise<boolean> {
     try {
       const { data } = await this.octokit.rest.users.getAuthenticated();
 

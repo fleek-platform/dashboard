@@ -5,7 +5,9 @@ export const Hero: React.FC = () => {
     <S.HeadingWrapper>
       <S.Heading>Pricing You Can Get Pumped About</S.Heading>
 
-      <S.SubHeading>Try for free and upgrade when needed. Transparent, simple and flexible.</S.SubHeading>
+      <S.SubHeading>
+        Try for free and upgrade when needed. Transparent, simple and flexible.
+      </S.SubHeading>
     </S.HeadingWrapper>
   );
 };

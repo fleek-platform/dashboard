@@ -18,7 +18,21 @@ export type LinkButtonProps = ChildrenProps &
   };
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
-  ({ children, variant, intent, size, className, disabled, isExternalLink, iconLeft, iconRight, ...props }, ref) => {
+  (
+    {
+      children,
+      variant,
+      intent,
+      size,
+      className,
+      disabled,
+      isExternalLink,
+      iconLeft,
+      iconRight,
+      ...props
+    },
+    ref,
+  ) => {
     const content = (
       <>
         {iconLeft && <Icon name={iconLeft} />}
@@ -33,7 +47,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
           className={cn(
             buttonVariants({ intent: 'ghost', size }),
             'cursor-not-allowed opacity-50 hover:bg-transparent active:bg-transparent',
-            className
+            className,
           )}
         >
           {content}
@@ -56,5 +70,5 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
         {content}
       </Link>
     );
-  }
+  },
 );

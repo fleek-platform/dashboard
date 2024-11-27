@@ -28,7 +28,7 @@ describe('Utils Log', () => {
         '[flk]',
         'Error:',
         new Error('Test'),
-        { details: 'test' }
+        { details: 'test' },
       );
     });
   });
@@ -45,7 +45,7 @@ describe('Utils Log', () => {
         '[flk]',
         'Warning:',
         { type: 'test' },
-        123
+        123,
       );
     });
   });
@@ -62,7 +62,7 @@ describe('Utils Log', () => {
         '[flk]',
         'Info:',
         { data: 'test' },
-        [1, 2, 3]
+        [1, 2, 3],
       );
     });
   });

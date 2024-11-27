@@ -47,17 +47,27 @@ const [Provider, useContext] = createContext<StorageContext>({
 });
 
 export const StorageProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const [selectedStorage, setSelectedStorage] = useState<StorageProviderType | undefined>(constants.STORAGE_PROVIDERS.all);
+  const [selectedStorage, setSelectedStorage] = useState<
+    StorageProviderType | undefined
+  >(constants.STORAGE_PROVIDERS.all);
   const [selectedPinId, setSelectedPinId] = useState<string>('');
   const [selectedFolderId, setSelectedFolderId] = useState<string>('');
-  const [privateGatewayDomain, setPrivateGatewayDomain] = useState<string | undefined>();
+  const [privateGatewayDomain, setPrivateGatewayDomain] = useState<
+    string | undefined
+  >();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditPinModalOpen, setIsEditPinModalOpen] = useState(false);
   const [isEditFolderModalOpen, setIsEditFolderModalOpen] = useState(false);
   const [selectedItemName, setSelectedItemName] = useState<string>('');
   const [isFolder, setIsFolder] = useState<boolean>(false);
 
-  const openModal = ({ pinId, folderId, modal, isFolder, pinName }: OpenModalProps) => {
+  const openModal = ({
+    pinId,
+    folderId,
+    modal,
+    isFolder,
+    pinName,
+  }: OpenModalProps) => {
     if (folderId) {
       setSelectedFolderId(folderId);
       setSelectedPinId('');

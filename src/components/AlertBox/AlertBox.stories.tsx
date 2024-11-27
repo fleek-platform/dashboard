@@ -19,7 +19,10 @@ export const Customizable: StoryObj<AlertBoxProps> = {
   },
   argTypes: {
     variant: {
-      type: { name: 'enum', value: ['primary', 'tertiary', 'ghost', 'success', 'danger', 'warning'] },
+      type: {
+        name: 'enum',
+        value: ['primary', 'tertiary', 'ghost', 'success', 'danger', 'warning'],
+      },
     },
     size: {
       type: { name: 'enum', value: ['sm', 'lg'] },

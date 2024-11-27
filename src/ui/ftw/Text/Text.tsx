@@ -35,7 +35,16 @@ const textVariants = cva([], {
   },
 });
 
-export const validTextElement = ['p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
+export const validTextElement = [
+  'p',
+  'span',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+] as const;
 
 type ValidTextElement = (typeof validTextElement)[number];
 
@@ -47,6 +56,14 @@ type TextProps = ChildrenProps &
 
 export const Text = forwardRef<HTMLParagraphElement, TextProps>(
   ({ children, as = 'p', variant, size, weight, className, ...props }, ref) => {
-    return createElement(as, { ref, className: cn(textVariants({ variant, size, weight }), className), ...props }, children);
-  }
+    return createElement(
+      as,
+      {
+        ref,
+        className: cn(textVariants({ variant, size, weight }), className),
+        ...props,
+      },
+      children,
+    );
+  },
 );

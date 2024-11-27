@@ -9,7 +9,10 @@ type UpdatePinModalProps = {
   handleOpenChange: (open: boolean) => void;
 };
 
-export const UpdatePinModal: React.FC<UpdatePinModalProps> = ({ isEditModalOpen, handleOpenChange }) => {
+export const UpdatePinModal: React.FC<UpdatePinModalProps> = ({
+  isEditModalOpen,
+  handleOpenChange,
+}) => {
   const { isFolder } = useStorageContext();
 
   const { value: extension } = useFormField<string>('extension');
@@ -29,7 +32,9 @@ export const UpdatePinModal: React.FC<UpdatePinModalProps> = ({ isEditModalOpen,
           beforeContent={
             <Box className="absolute flex-row whitespace-nowrap pointer-events-none">
               <span className="invisible">{name}</span>
-              <span className="text-neutral-9">{extension ? `.${extension}` : ''}</span>
+              <span className="text-neutral-9">
+                {extension ? `.${extension}` : ''}
+              </span>
             </Box>
           }
         />

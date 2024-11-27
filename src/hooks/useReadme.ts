@@ -18,7 +18,7 @@ const decode = (data: string) =>
       .map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join('')
+      .join(''),
   );
 
 const fetchReadme = async (owner: string, repo: string) => {

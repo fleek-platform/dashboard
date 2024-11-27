@@ -2,17 +2,26 @@ import isEqual from 'lodash.isequal';
 import { useEffect, useRef, useState } from 'react';
 import { useClient } from 'urql';
 
-import { Membership, ProjectMembersDocument, ProjectMembersQuery, useMeQuery } from '@/generated/graphqlClient';
+import {
+  Membership,
+  ProjectMembersDocument,
+  ProjectMembersQuery,
+  useMeQuery,
+} from '@/generated/graphqlClient';
 
 type UseProjectMembershipArgs = {
   projectIds: string[];
 };
 
-export const useProjectMembership = ({ projectIds }: UseProjectMembershipArgs) => {
+export const useProjectMembership = ({
+  projectIds,
+}: UseProjectMembershipArgs) => {
   const client = useClient();
   const [meQuery] = useMeQuery();
 
-  const [userMemberships, setUserMemberships] = useState(new Map<string, Membership | undefined>());
+  const [userMemberships, setUserMemberships] = useState(
+    new Map<string, Membership | undefined>(),
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -33,7 +42,11 @@ export const useProjectMembership = ({ projectIds }: UseProjectMembershipArgs) =
       }
 
       const queries = projectIdsRef.current.map((projectId) =>
-        client.query<ProjectMembersQuery>(ProjectMembersDocument, { where: { id: projectId } }).toPromise()
+        client
+          .query<ProjectMembersQuery>(ProjectMembersDocument, {
+            where: { id: projectId },
+          })
+          .toPromise(),
       );
 
       try {
@@ -46,7 +59,9 @@ export const useProjectMembership = ({ projectIds }: UseProjectMembershipArgs) =
             throw result.error;
           }
 
-          const membership = result.data?.project.memberships.find((membership) => membership.user.id === userId);
+          const membership = result.data?.project.memberships.find(
+            (membership) => membership.user.id === userId,
+          );
           tempMembershipsMap.set(projectIdsRef.current[index], membership);
         });
 

@@ -3,7 +3,9 @@ import { GitProvider } from '@/integrations/git';
 
 type ParseAPISourceProviderArgs = SourceProvider | null | undefined;
 
-export const parseAPISourceProvider = (sourceProvider?: ParseAPISourceProviderArgs): GitProvider.Name | undefined => {
+export const parseAPISourceProvider = (
+  sourceProvider?: ParseAPISourceProviderArgs,
+): GitProvider.Name | undefined => {
   switch (sourceProvider) {
     case SourceProvider.GITHUB:
       return 'github';

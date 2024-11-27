@@ -21,7 +21,9 @@ export type DeploySiteContext = {
   title?: string;
   setTitle: (title: string) => void;
   handleBackClick?: MouseEventHandler<HTMLButtonElement>;
-  setHandleBackClick: (handleBackClick: MouseEventHandler<HTMLButtonElement>) => void;
+  setHandleBackClick: (
+    handleBackClick: MouseEventHandler<HTMLButtonElement>,
+  ) => void;
 
   sourceProvider?: SiteSourceProvider;
   setSourceProvider: (sourceProvider?: SiteSourceProvider) => void;
@@ -43,11 +45,12 @@ export type DeploySiteContext = {
   templateId?: string;
 };
 
-export const [DeploySiteProvider, useDeploySiteContext] = createContext<DeploySiteContext>({
-  name: 'DeploySiteContext',
-  hookName: 'DeploySite.useContext',
-  providerName: 'DeploySite.Provider',
-});
+export const [DeploySiteProvider, useDeploySiteContext] =
+  createContext<DeploySiteContext>({
+    name: 'DeploySiteContext',
+    hookName: 'DeploySite.useContext',
+    providerName: 'DeploySite.Provider',
+  });
 
 type UseStepSetupArgs = {
   title?: string;
@@ -75,25 +78,31 @@ export const useGitInstallationStep = () => {
   const session = useSessionContext();
   const projectId = session.project.id;
 
-  const [isCheckingForInstallation, setIsCheckingForInstallation] = useState<boolean>();
+  const [isCheckingForInstallation, setIsCheckingForInstallation] =
+    useState<boolean>();
   const [shouldInstall, setShouldInstall] = useState<boolean>();
 
   const checkWithGithub = useCallback(
     async (installationId: string) => {
       try {
-        const gitAccessTokensResult = await client.query<GitAccessTokenQuery, GitAccessTokenQueryVariables>(
-          GitAccessTokenDocument,
-          {},
-          { requestPolicy: 'network-only' }
-        );
+        const gitAccessTokensResult = await client.query<
+          GitAccessTokenQuery,
+          GitAccessTokenQueryVariables
+        >(GitAccessTokenDocument, {}, { requestPolicy: 'network-only' });
 
-        const gitUserAccessTokens = gitAccessTokensResult.data?.user.gitUserAccessTokens;
+        const gitUserAccessTokens =
+          gitAccessTokensResult.data?.user.gitUserAccessTokens;
 
         if (gitAccessTokensResult.error || !gitUserAccessTokens) {
-          throw gitAccessTokensResult.error || new Error('Failed to get Git Access tokens');
+          throw (
+            gitAccessTokensResult.error ||
+            new Error('Failed to get Git Access tokens')
+          );
         }
 
-        const accessToken = gitUserAccessTokens.find((accessToken) => accessToken.gitProviderId === gitProviderId)?.token;
+        const accessToken = gitUserAccessTokens.find(
+          (accessToken) => accessToken.gitProviderId === gitProviderId,
+        )?.token;
 
         if (!accessToken) {
           return false;
@@ -112,22 +121,29 @@ export const useGitInstallationStep = () => {
         return false;
       }
     },
-    [client, gitProviderId, setAccessToken]
+    [client, gitProviderId, setAccessToken],
   );
 
   const getInstallation = useCallback(async () => {
-    const gitInstallationsResult = await client.query<GithubAppInstallationsQuery, GithubAppInstallationsQueryVariables>(
+    const gitInstallationsResult = await client.query<
+      GithubAppInstallationsQuery,
+      GithubAppInstallationsQueryVariables
+    >(
       GithubAppInstallationsDocument,
       {
         where: { gitProviderId },
       },
-      { requestPolicy: 'network-only' }
+      { requestPolicy: 'network-only' },
     );
 
-    const gitInstallations = gitInstallationsResult.data?.githubAppInstallations;
+    const gitInstallations =
+      gitInstallationsResult.data?.githubAppInstallations;
 
     if (gitInstallationsResult.error || !gitInstallations) {
-      throw gitInstallationsResult.error || new Error('Failed to get Git Access tokens');
+      throw (
+        gitInstallationsResult.error ||
+        new Error('Failed to get Git Access tokens')
+      );
     }
 
     return gitInstallations;
@@ -136,7 +152,9 @@ export const useGitInstallationStep = () => {
   const handleCheckInstallation = useCallback(async () => {
     setIsCheckingForInstallation(true);
     const gitInstallations = await getInstallation();
-    const installationId = gitInstallations.find((gitInstallation) => gitInstallation.installationId)?.installationId;
+    const installationId = gitInstallations.find(
+      (gitInstallation) => gitInstallation.installationId,
+    )?.installationId;
 
     if (!installationId) {
       setShouldInstall(!installationId);
@@ -173,7 +191,9 @@ export const useGitInstallationStep = () => {
       setIsCheckingForInstallation(true);
 
       const gitInstallations = await getInstallation();
-      const installationId = gitInstallations.find((gitInstallation) => gitInstallation.installationId)?.installationId;
+      const installationId = gitInstallations.find(
+        (gitInstallation) => gitInstallation.installationId,
+      )?.installationId;
 
       if (!active) {
         return;
@@ -199,7 +219,17 @@ export const useGitInstallationStep = () => {
       setShouldInstall(!hasAppInstalled);
       setIsCheckingForInstallation(false);
     }
-  }, [client, gitProviderId, nextStep, projectId, accessToken, setAccessToken, getInstallation, checkWithGithub, shouldInstall]);
+  }, [
+    client,
+    gitProviderId,
+    nextStep,
+    projectId,
+    accessToken,
+    setAccessToken,
+    getInstallation,
+    checkWithGithub,
+    shouldInstall,
+  ]);
 
   return {
     isCheckingForInstallation,

@@ -13,7 +13,12 @@ type SiteListProps = {
   onPageChange?: (page: number) => void;
 };
 
-export const SiteList: React.FC<SiteListProps> = ({ sites, totalPages = 0, onPageChange, currentPage }) => {
+export const SiteList: React.FC<SiteListProps> = ({
+  sites,
+  totalPages = 0,
+  onPageChange,
+  currentPage,
+}) => {
   const session = useSessionContext();
   const projectId = session.project.id;
 
@@ -26,7 +31,13 @@ export const SiteList: React.FC<SiteListProps> = ({ sites, totalPages = 0, onPag
       </S.SitesGrid>
 
       <S.PaginationContainer>
-        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={onPageChange} />}
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        )}
       </S.PaginationContainer>
     </>
   );
@@ -36,7 +47,9 @@ type SiteListSkeletonProps = {
   count?: number;
 };
 
-export const SkeletonList: React.FC<SiteListSkeletonProps> = ({ count = 9 }) => {
+export const SkeletonList: React.FC<SiteListSkeletonProps> = ({
+  count = 9,
+}) => {
   return (
     <S.SitesGrid>
       {Array.from({ length: count }).map((_, index) => (

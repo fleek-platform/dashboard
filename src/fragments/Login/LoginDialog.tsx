@@ -11,13 +11,21 @@ export type LoginDialogProps = ChildrenProps<{
   withExternalLink?: boolean;
 }>;
 
-export const LoginDialog: React.FC<LoginDialogProps> = ({ heading, description, withExternalLink = false, children }) => {
+export const LoginDialog: React.FC<LoginDialogProps> = ({
+  heading,
+  description,
+  withExternalLink = false,
+  children,
+}) => {
   return (
     <S.Container>
       <Modal.Heading>{heading}</Modal.Heading>
       <Text>{description}</Text>
       {withExternalLink && (
-        <LearnMoreMessage prefix="Need Help?" href={constants.EXTERNAL_LINK.FLEEK_DOCS_CLI}>
+        <LearnMoreMessage
+          prefix="Need Help?"
+          href={constants.EXTERNAL_LINK.FLEEK_DOCS_CLI}
+        >
           Follow instructions Here
         </LearnMoreMessage>
       )}

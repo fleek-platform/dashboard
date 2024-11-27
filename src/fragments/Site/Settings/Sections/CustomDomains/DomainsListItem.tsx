@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react';
 import { match } from 'ts-pattern';
 
-import { BadgeText, CustomTooltip, ErrorBadge, SettingsListItem } from '@/components';
+import {
+  BadgeText,
+  CustomTooltip,
+  ErrorBadge,
+  SettingsListItem,
+} from '@/components';
 import { constants } from '@/constants';
-import { DnslinkStatus, DomainStatus, useCreateDnsConfigMutation, useDomainStatusQuery } from '@/generated/graphqlClient';
+import {
+  DnslinkStatus,
+  DomainStatus,
+  useCreateDnsConfigMutation,
+  useDomainStatusQuery,
+} from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
@@ -55,7 +65,12 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
 
   const { status = initialStatus } = domainStatusQuery.data?.domain || {};
 
-  const { openModal, shouldOpenModalOnCreated, setShouldOpenModalOnCreated, refetchQuery } = useSettingsItemContext();
+  const {
+    openModal,
+    shouldOpenModalOnCreated,
+    setShouldOpenModalOnCreated,
+    refetchQuery,
+  } = useSettingsItemContext();
 
   const handleOpenDomainModal = () => {
     if (hasVerifyDomainPermission) {
@@ -90,7 +105,10 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [domainStatusQuery.data, refetchDomainStatusQuery]);
 
-  if (status === DomainStatus.DELETING || domainStatusQuery.error?.message.includes('not found')) {
+  if (
+    status === DomainStatus.DELETING ||
+    domainStatusQuery.error?.message.includes('not found')
+  ) {
     // this conditional is going to clean up after the domain is deleted
 
     return null;
@@ -103,7 +121,13 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
       titleSuffix={hostnameSuffix}
       testId={TEST_ID.DOMAINS_LIST_ITEM}
     >
-      {flags.enableDnsLink && dnslinkStatus && <DnsLinkBadge domainId={id} dnsLinkStatus={dnslinkStatus} errorMessage={errorMessage} />}
+      {flags.enableDnsLink && dnslinkStatus && (
+        <DnsLinkBadge
+          domainId={id}
+          dnsLinkStatus={dnslinkStatus}
+          errorMessage={errorMessage}
+        />
+      )}
       {isPrimaryDomain && (
         <CustomTooltip side="top" content={primaryDomainTooltipContent}>
           <BadgeText colorScheme="yellow" hoverable>
@@ -113,9 +137,15 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
       )}
 
       {match(status)
-        .with(DomainStatus.ACTIVE, () => <BadgeText colorScheme="green">Active</BadgeText>)
+        .with(DomainStatus.ACTIVE, () => (
+          <BadgeText colorScheme="green">Active</BadgeText>
+        ))
         .with(DomainStatus.CREATED, () => (
-          <BadgeText hoverable={hasVerifyDomainPermission} colorScheme="amber" onClick={handleOpenDomainModal}>
+          <BadgeText
+            hoverable={hasVerifyDomainPermission}
+            colorScheme="amber"
+            onClick={handleOpenDomainModal}
+          >
             Set DNS Record
           </BadgeText>
         ))
@@ -129,8 +159,14 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
             Verifying <Icon name="spinner" />
           </BadgeText>
         ))
-        .with(DomainStatus.CREATING_FAILED, () => <ErrorBadge errorMessage={errorMessage}>Creation Failed</ErrorBadge>)
-        .with(DomainStatus.VERIFYING_FAILED, () => <ErrorBadge errorMessage={errorMessage}>Verification Failed</ErrorBadge>)
+        .with(DomainStatus.CREATING_FAILED, () => (
+          <ErrorBadge errorMessage={errorMessage}>Creation Failed</ErrorBadge>
+        ))
+        .with(DomainStatus.VERIFYING_FAILED, () => (
+          <ErrorBadge errorMessage={errorMessage}>
+            Verification Failed
+          </ErrorBadge>
+        ))
         .otherwise(() => null)}
 
       <DropdownMenu
@@ -180,7 +216,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   hasRemoveDomainPermission,
   hasChangePrimaryDomainPermission,
 }) => {
-  const { activeDomains, openDeleteModal, setWithDnsLink, onSubmitPrimaryDomain, closeModal } = useSettingsItemContext();
+  const {
+    activeDomains,
+    openDeleteModal,
+    setWithDnsLink,
+    onSubmitPrimaryDomain,
+    closeModal,
+  } = useSettingsItemContext();
   const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
   const toast = useToast();
@@ -190,7 +232,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
   const isSiteDomain = route.pathname.includes('sites');
 
-  const disableDelete = status === DomainStatus.DELETING || status === DomainStatus.CREATING || status === DomainStatus.VERIFYING;
+  const disableDelete =
+    status === DomainStatus.DELETING ||
+    status === DomainStatus.CREATING ||
+    status === DomainStatus.VERIFYING;
 
   if (isLoading) {
     // needed cause the forwardStyledRef
@@ -203,7 +248,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     }
 
     if (isPrimaryDomain && activeDomains.length > 0) {
-      openDeleteModal({ itemId: id, hostname, resourceName, modal: 'primary-domain' });
+      openDeleteModal({
+        itemId: id,
+        hostname,
+        resourceName,
+        modal: 'primary-domain',
+      });
     } else {
       openDeleteModal({ itemId: id, hostname, resourceName, modal: 'domain' });
     }
@@ -227,7 +277,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       });
 
       if (!result.data) {
-        throw result.error || new Error('Error trying to create DNS Link config');
+        throw (
+          result.error || new Error('Error trying to create DNS Link config')
+        );
       }
     } catch (error) {
       toast.error({ error, log: 'Failed to create DNS Link config' });
@@ -240,21 +292,34 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     handleOpenDomainModal();
   };
 
-  const shouldShowDnsLinkItems = isSiteDomain && status === DomainStatus.ACTIVE && hasVerifyDomainPermission;
+  const shouldShowDnsLinkItems =
+    isSiteDomain && status === DomainStatus.ACTIVE && hasVerifyDomainPermission;
 
   const doesNotHaveAccess =
-    (status !== DomainStatus.ACTIVE && !hasVerifyDomainPermission && !hasRemoveDomainPermission) ||
-    (status === DomainStatus.ACTIVE && !hasChangePrimaryDomainPermission && hideVisitButton);
+    (status !== DomainStatus.ACTIVE &&
+      !hasVerifyDomainPermission &&
+      !hasRemoveDomainPermission) ||
+    (status === DomainStatus.ACTIVE &&
+      !hasChangePrimaryDomainPermission &&
+      hideVisitButton);
 
-  const shouldDisableMenu = status === DomainStatus.CREATING || doesNotHaveAccess;
+  const shouldDisableMenu =
+    status === DomainStatus.CREATING || doesNotHaveAccess;
 
   return (
-    <SettingsListItem.DropdownMenu isLoading={isLoading} isDisabled={shouldDisableMenu} hasAccess={!doesNotHaveAccess}>
+    <SettingsListItem.DropdownMenu
+      isLoading={isLoading}
+      isDisabled={shouldDisableMenu}
+      hasAccess={!doesNotHaveAccess}
+    >
       {match(status)
         .with(DomainStatus.ACTIVE, () => (
           <>
             {!hideVisitButton && (
-              <SettingsListItem.DropdownMenuItem href={getLinkForDomain(hostname)} icon="external-link">
+              <SettingsListItem.DropdownMenuItem
+                href={getLinkForDomain(hostname)}
+                icon="external-link"
+              >
                 Visit
               </SettingsListItem.DropdownMenuItem>
             )}
@@ -263,7 +328,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         .with(DomainStatus.CREATED, () => (
           <>
             {hasVerifyDomainPermission && (
-              <SettingsListItem.DropdownMenuItem icon="gear" onClick={handleOpenDomainModal}>
+              <SettingsListItem.DropdownMenuItem
+                icon="gear"
+                onClick={handleOpenDomainModal}
+              >
                 Verify
               </SettingsListItem.DropdownMenuItem>
             )}
@@ -272,7 +340,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         .with(DomainStatus.VERIFYING_FAILED, () => (
           <>
             {hasVerifyDomainPermission && (
-              <SettingsListItem.DropdownMenuItem icon="refresh" onClick={handleOpenDomainModal}>
+              <SettingsListItem.DropdownMenuItem
+                icon="refresh"
+                onClick={handleOpenDomainModal}
+              >
                 Retry Verification
               </SettingsListItem.DropdownMenuItem>
             )}
@@ -281,17 +352,24 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         .otherwise(() => null)}
 
       {isPrimaryDomain && hasChangePrimaryDomainPermission && (
-        <PrimaryDomainMenuItem title="Primary" subtitle={primaryDomainSubtitle} isPrimaryDomain showSeparator={!hideVisitButton} />
-      )}
-
-      {!isPrimaryDomain && status === DomainStatus.ACTIVE && hasChangePrimaryDomainPermission && (
         <PrimaryDomainMenuItem
-          title="Make Primary"
+          title="Primary"
           subtitle={primaryDomainSubtitle}
-          onClick={handleSetPrimaryDomain}
+          isPrimaryDomain
           showSeparator={!hideVisitButton}
         />
       )}
+
+      {!isPrimaryDomain &&
+        status === DomainStatus.ACTIVE &&
+        hasChangePrimaryDomainPermission && (
+          <PrimaryDomainMenuItem
+            title="Make Primary"
+            subtitle={primaryDomainSubtitle}
+            onClick={handleSetPrimaryDomain}
+            showSeparator={!hideVisitButton}
+          />
+        )}
 
       {flags.enableDnsLink &&
         shouldShowDnsLinkItems &&
@@ -299,7 +377,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           .with(DnslinkStatus.CREATED, () => (
             <>
               <SettingsListItem.DropdownMenuSeparator />
-              <SettingsListItem.DropdownMenuItem icon="gear" onClick={handleSetDNSLink}>
+              <SettingsListItem.DropdownMenuItem
+                icon="gear"
+                onClick={handleSetDNSLink}
+              >
                 Verify DNSLink
               </SettingsListItem.DropdownMenuItem>
             </>
@@ -307,7 +388,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           .with(DnslinkStatus.VERIFICATION_FAILED, () => (
             <>
               <SettingsListItem.DropdownMenuSeparator />
-              <SettingsListItem.DropdownMenuItem icon="refresh" onClick={handleSetDNSLink}>
+              <SettingsListItem.DropdownMenuItem
+                icon="refresh"
+                onClick={handleSetDNSLink}
+              >
                 Retry DNSLink Verification
               </SettingsListItem.DropdownMenuItem>
             </>
@@ -316,7 +400,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           .otherwise(() => (
             <>
               <SettingsListItem.DropdownMenuSeparator />
-              <SettingsListItem.DropdownMenuItem icon="ipfs-colored" onClick={handleCreateDnsConfig}>
+              <SettingsListItem.DropdownMenuItem
+                icon="ipfs-colored"
+                onClick={handleCreateDnsConfig}
+              >
                 Set DNSLink
               </SettingsListItem.DropdownMenuItem>
             </>
@@ -325,7 +412,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       {hasRemoveDomainPermission && (
         <>
           <SettingsListItem.DropdownMenuSeparator />
-          <SettingsListItem.DropdownMenuItem icon="close" onClick={handleDelete} disabled={disableDelete}>
+          <SettingsListItem.DropdownMenuItem
+            icon="close"
+            onClick={handleDelete}
+            disabled={disableDelete}
+          >
             Remove
           </SettingsListItem.DropdownMenuItem>
         </>

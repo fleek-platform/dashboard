@@ -5,11 +5,17 @@ import { forwardStyledRef } from '@/theme';
 
 import { QrCodeStyles as S } from './QrCode.styles';
 
-export type QrCodeProps = Omit<React.ComponentProps<typeof S.Container>, 'children'> & {
+export type QrCodeProps = Omit<
+  React.ComponentProps<typeof S.Container>,
+  'children'
+> & {
   data?: string;
 };
 
-export const QrCode: React.FC<QrCodeProps> = forwardStyledRef<HTMLDivElement, QrCodeProps>(S.Container, ({ data, ...props }, ref) => {
+export const QrCode: React.FC<QrCodeProps> = forwardStyledRef<
+  HTMLDivElement,
+  QrCodeProps
+>(S.Container, ({ data, ...props }, ref) => {
   const [src, setSrc] = useState<string | null>(null);
 
   useEffect(() => {

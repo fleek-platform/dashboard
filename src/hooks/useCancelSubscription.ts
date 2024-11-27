@@ -10,9 +10,13 @@ type UseCancelMockedMutationArgs = {
   subscriptionId?: string;
 };
 
-export const useCancelMockedMutation = ({ subscriptionId }: UseCancelMockedMutationArgs) => {
+export const useCancelMockedMutation = ({
+  subscriptionId,
+}: UseCancelMockedMutationArgs) => {
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
+  const backendApi = new BackendApiClient({
+    accessToken: cookies.values.accessToken,
+  });
 
   const cancelSubscription = useCallback(async () => {
     if (!subscriptionId) {
@@ -20,7 +24,10 @@ export const useCancelMockedMutation = ({ subscriptionId }: UseCancelMockedMutat
     }
 
     try {
-      const response = await backendApi.fetch({ url: `/api/v1/subscriptions/${subscriptionId}`, method: 'DELETE' });
+      const response = await backendApi.fetch({
+        url: `/api/v1/subscriptions/${subscriptionId}`,
+        method: 'DELETE',
+      });
 
       if (!response.ok) {
         throw response.statusText;

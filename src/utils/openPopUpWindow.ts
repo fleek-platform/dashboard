@@ -5,14 +5,19 @@ export type OpenPopUpWindowArgs = {
   onClose?: () => void;
 };
 
-export const openPopUpWindow = ({ url, width = 500, height = 800, onClose }: OpenPopUpWindowArgs) => {
+export const openPopUpWindow = ({
+  url,
+  width = 500,
+  height = 800,
+  onClose,
+}: OpenPopUpWindowArgs) => {
   const left = screen.width / 2 - width / 2;
   const top = screen.height / 2 - height / 2;
 
   const popUp = window.open(
     url,
     'Authentication',
-    `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`
+    `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`,
   );
 
   if (popUp && onClose) {

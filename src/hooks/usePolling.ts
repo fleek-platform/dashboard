@@ -1,4 +1,10 @@
-import { QueryFunction, QueryKey, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import {
+  QueryFunction,
+  QueryKey,
+  useQuery,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 
 type UsePollingArgs<TQueryFnData, TError, TQueryKey extends QueryKey> = {
@@ -8,10 +14,17 @@ type UsePollingArgs<TQueryFnData, TError, TQueryKey extends QueryKey> = {
   onFinishedCallback?: (data: Awaited<TQueryFnData>) => void;
   onStoppedPolling?: (data: Awaited<TQueryFnData>) => void;
   refetchInterval?: number;
-  options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, 'queryKey' | 'queryFn'>;
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>,
+    'queryKey' | 'queryFn'
+  >;
 };
 
-export const usePolling = <TQueryFnData, TError = unknown, TQueryKey extends QueryKey = QueryKey>({
+export const usePolling = <
+  TQueryFnData,
+  TError = unknown,
+  TQueryKey extends QueryKey = QueryKey,
+>({
   queryKey,
   queryFn,
   stopCondition,
@@ -19,7 +32,10 @@ export const usePolling = <TQueryFnData, TError = unknown, TQueryKey extends Que
   onStoppedPolling = () => {},
   refetchInterval = 3_000,
   options,
-}: UsePollingArgs<TQueryFnData, TError, TQueryKey>): UseQueryResult<TQueryFnData, TError> => {
+}: UsePollingArgs<TQueryFnData, TError, TQueryKey>): UseQueryResult<
+  TQueryFnData,
+  TError
+> => {
   const [shouldStop, setShouldStop] = useState(false);
   const [hasPolled, setHasPolled] = useState(false);
 
@@ -45,7 +61,7 @@ export const usePolling = <TQueryFnData, TError = unknown, TQueryKey extends Que
       return data;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [queryFn, stopCondition]
+    [queryFn, stopCondition],
   );
 
   return useQuery({

@@ -1,4 +1,7 @@
-query deployments($where: DeploymentsWhereInput!, $filter: DeploymentsPaginationInput) {
+query deployments(
+  $where: DeploymentsWhereInput!
+  $filter: DeploymentsPaginationInput
+) {
   deployments(where: $where, filter: $filter) {
     pageCount
     data {

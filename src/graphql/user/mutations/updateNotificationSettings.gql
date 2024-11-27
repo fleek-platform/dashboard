@@ -1,3 +1,5 @@
-mutation updateNotificationSettings($data: UpdateNotificationSettingsDataInput!) {
+mutation updateNotificationSettings(
+  $data: UpdateNotificationSettingsDataInput!
+) {
   updateNotificationSettings(data: $data)
 }

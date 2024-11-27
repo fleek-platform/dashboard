@@ -35,14 +35,24 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_NAME] });
-  const hasViewPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.VIEW_INFORMATION] });
-  const hasDeletePermission = usePermissions({ action: [constants.PERMISSION.STORAGE.DELETE] });
+  const hasEditPermission = usePermissions({
+    action: [constants.PERMISSION.STORAGE.EDIT_NAME],
+  });
+  const hasViewPermission = usePermissions({
+    action: [constants.PERMISSION.STORAGE.VIEW_INFORMATION],
+  });
+  const hasDeletePermission = usePermissions({
+    action: [constants.PERMISSION.STORAGE.DELETE],
+  });
 
   const handleDownloadPin = async () => {
     if (pin) {
       const filename = `${pin.filename}.${pin.extension}`;
-      const fileUrl = getLinkForIPFSDownload({ cid: pin.cid, filename, isFolder: !pin.extension });
+      const fileUrl = getLinkForIPFSDownload({
+        cid: pin.cid,
+        filename,
+        isFolder: !pin.extension,
+      });
 
       setIsDownloading(true);
 
@@ -100,7 +110,10 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
         {pin?.cid && (
           <>
-            <Menu.DropdownMenuItem icon="arrow-up-right" href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}>
+            <Menu.DropdownMenuItem
+              icon="arrow-up-right"
+              href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}
+            >
               View on IPFS
             </Menu.DropdownMenuItem>
           </>
@@ -124,9 +137,15 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
               </Menu.DropdownMenuItem>
             )}
             {pin?.storedOnArweave && (
-              <Menu.DropdownMenuItem icon={isArweavePending ? null : 'copy'} onClick={handleCopyArweaveId} disabled={isArweavePending}>
+              <Menu.DropdownMenuItem
+                icon={isArweavePending ? null : 'copy'}
+                onClick={handleCopyArweaveId}
+                disabled={isArweavePending}
+              >
                 Copy Arweave Hash
-                {isArweavePending && <BadgeText colorScheme="slate">Pending</BadgeText>}
+                {isArweavePending && (
+                  <BadgeText colorScheme="slate">Pending</BadgeText>
+                )}
               </Menu.DropdownMenuItem>
             )}
             {pin?.storedOnFilecoin && (
@@ -136,7 +155,9 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
                 disabled={isFilecoinDealPending}
               >
                 Copy FIL Deal ID
-                {isFilecoinDealPending && <BadgeText colorScheme="slate">Pending</BadgeText>}
+                {isFilecoinDealPending && (
+                  <BadgeText colorScheme="slate">Pending</BadgeText>
+                )}
               </Menu.DropdownMenuItem>
             )}
 
@@ -151,7 +172,10 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
             {pin && (
               <>
-                <Menu.DropdownMenuItem icon="download" onClick={handleDownloadPin}>
+                <Menu.DropdownMenuItem
+                  icon="download"
+                  onClick={handleDownloadPin}
+                >
                   Download {!pin?.extension ? 'IPFS Folder' : 'File'}
                 </Menu.DropdownMenuItem>
                 <Menu.DropdownMenuSeparator />

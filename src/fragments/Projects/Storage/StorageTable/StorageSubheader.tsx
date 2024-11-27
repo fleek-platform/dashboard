@@ -54,7 +54,9 @@ export const StorageSubheader: React.FC = () => {
       <S.Table.HeaderCell>
         <Box css={{ flexDirection: 'row', gap: '$2xs' }}>
           <Text>Storage</Text>
-          <IconTooltip side="bottom">Adjust your storage settings in project settings</IconTooltip>
+          <IconTooltip side="bottom">
+            Adjust your storage settings in project settings
+          </IconTooltip>
         </Box>
       </S.Table.HeaderCell>
 

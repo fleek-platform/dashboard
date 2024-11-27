@@ -89,7 +89,9 @@ export const CustomChildren: Story = {
     children: (
       <>
         Custom children
-        <section className="bg-neutral-11 text-neutral-2 flex size-4 items-center justify-center rounded-full text-[10px]">1</section>
+        <section className="bg-neutral-11 text-neutral-2 flex size-4 items-center justify-center rounded-full text-[10px]">
+          1
+        </section>
       </>
     ),
     loading: false,

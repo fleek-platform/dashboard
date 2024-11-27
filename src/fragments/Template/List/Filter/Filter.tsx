@@ -16,7 +16,12 @@ type FilterProps = {
   setCategoryId: (id?: string | null) => void;
 };
 
-export const Filter: React.FC<FilterProps> = ({ frameworkId, setFrameworkId, categoryId, setCategoryId }) => {
+export const Filter: React.FC<FilterProps> = ({
+  frameworkId,
+  setFrameworkId,
+  categoryId,
+  setCategoryId,
+}) => {
   const siteFrameworks = useSiteFrameworks();
   const [templateCategoriesQuery] = useTemplateCategoriesQuery();
 
@@ -105,7 +110,14 @@ type FilterCollapsibleProps = LoadingProps & {
   toggleActiveCategory: (item: FilterItem) => void;
 };
 
-const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, toggleActiveCategory, enableAvatar, activeId, isLoading }) => {
+const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({
+  title,
+  items,
+  toggleActiveCategory,
+  enableAvatar,
+  activeId,
+  isLoading,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -120,13 +132,27 @@ const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, tog
         <Collapsible.Content asChild>
           <S.List.Filter.CollapsibleContent>
             {isLoading
-              ? new Array(4).fill(null).map((_, index) => <FilterRowSkeleton enableAvatar={enableAvatar} key={index} />)
+              ? new Array(4)
+                  .fill(null)
+                  .map((_, index) => (
+                    <FilterRowSkeleton
+                      enableAvatar={enableAvatar}
+                      key={index}
+                    />
+                  ))
               : items.map((item) => (
                   <S.List.Filter.Row key={item.id}>
-                    <Checkbox checked={item.id === activeId} onCheckedChange={() => toggleActiveCategory(item)} />
-                    {enableAvatar && <Avatar src={item.avatar} enableIcon icon="gear" />}
+                    <Checkbox
+                      checked={item.id === activeId}
+                      onCheckedChange={() => toggleActiveCategory(item)}
+                    />
+                    {enableAvatar && (
+                      <Avatar src={item.avatar} enableIcon icon="gear" />
+                    )}
                     <Text>{item.label}</Text>
-                    {item.badge && <BadgeText colorScheme="slate">{item.badge}</BadgeText>}
+                    {item.badge && (
+                      <BadgeText colorScheme="slate">{item.badge}</BadgeText>
+                    )}
                   </S.List.Filter.Row>
                 ))}
           </S.List.Filter.CollapsibleContent>
@@ -136,7 +162,9 @@ const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, tog
   );
 };
 
-const FilterRowSkeleton: React.FC<Pick<FilterCollapsibleProps, 'enableAvatar'>> = ({ enableAvatar }) => {
+const FilterRowSkeleton: React.FC<
+  Pick<FilterCollapsibleProps, 'enableAvatar'>
+> = ({ enableAvatar }) => {
   return (
     <S.List.Filter.Row>
       <S.List.Filter.Skeleton variant="checkbox" />

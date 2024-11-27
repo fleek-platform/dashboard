@@ -1,4 +1,7 @@
-query domainsByZoneId($where: DomainsByZoneIdWhereInput!, $filter: DomainsByZoneIdPaginationInput) {
+query domainsByZoneId(
+  $where: DomainsByZoneIdWhereInput!
+  $filter: DomainsByZoneIdPaginationInput
+) {
   domainsByZoneId(where: $where, filter: $filter) {
     data {
       __typename

@@ -1,4 +1,7 @@
-mutation updateProject($data: UpdateProjectDataInput!, $where: UpdateProjectWhereInput!) {
+mutation updateProject(
+  $data: UpdateProjectDataInput!
+  $where: UpdateProjectWhereInput!
+) {
   updateProject(data: $data, where: $where) {
     id
     name

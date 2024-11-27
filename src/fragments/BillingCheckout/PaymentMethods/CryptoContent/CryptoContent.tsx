@@ -13,7 +13,8 @@ import { PaymentData } from './PaymentData';
 import { PaymentTrigger } from './PaymentTrigger';
 
 export const CryptoContent: React.FC = () => {
-  const { selectedToken, selectedPlatform, plan, setTokenAmount, setStage } = useBillingCheckoutContext();
+  const { selectedToken, selectedPlatform, plan, setTokenAmount, setStage } =
+    useBillingCheckoutContext();
   const [state, setState] = useState('trigger');
   const [paymentData, setPaymentData] = useState<CryptoPayment>();
   const toast = useToast();
@@ -50,7 +51,10 @@ export const CryptoContent: React.FC = () => {
       setState('data');
       setStage('crypto-selected');
     } catch (error) {
-      toast.error({ message: 'Failed to create payment intent. Please contact the support or try again later.' });
+      toast.error({
+        message:
+          'Failed to create payment intent. Please contact the support or try again later.',
+      });
     }
   };
 
@@ -89,8 +93,18 @@ export const CryptoContent: React.FC = () => {
         isDisabled={isPaymentTriggerDisabled}
       />
     ))
-    .with('data', () => <PaymentData data={paymentData as CryptoPayment} onCancel={handleCancel} />)
-    .with('confirming', () => <PaymentConfirming network={statusPool.data?.network} transactionId={statusPool.data?.transactionId} />)
+    .with('data', () => (
+      <PaymentData
+        data={paymentData as CryptoPayment}
+        onCancel={handleCancel}
+      />
+    ))
+    .with('confirming', () => (
+      <PaymentConfirming
+        network={statusPool.data?.network}
+        transactionId={statusPool.data?.transactionId}
+      />
+    ))
     .with('complete', () => <PaymentComplete />)
     .otherwise(() => null);
 };

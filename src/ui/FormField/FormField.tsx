@@ -15,17 +15,23 @@ type RootProps = ChildrenProps &
     error?: boolean;
   };
 
-const Root = forwardRef<HTMLDivElement, RootProps>(({ error = false, children, className, ...props }, ref) => {
-  return (
-    <FormFieldContext.Provider value={{ error }}>
-      <Box {...props} className={cn('gap-2', className)} ref={ref}>
-        {children}
-      </Box>
-    </FormFieldContext.Provider>
-  );
-});
+const Root = forwardRef<HTMLDivElement, RootProps>(
+  ({ error = false, children, className, ...props }, ref) => {
+    return (
+      <FormFieldContext.Provider value={{ error }}>
+        <Box {...props} className={cn('gap-2', className)} ref={ref}>
+          {children}
+        </Box>
+      </FormFieldContext.Provider>
+    );
+  },
+);
 
-const Label: React.FC<InputLabelProps> = ({ children, className, ...props }) => {
+const Label: React.FC<InputLabelProps> = ({
+  children,
+  className,
+  ...props
+}) => {
   const { error } = useContext(FormFieldContext);
 
   return (

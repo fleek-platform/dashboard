@@ -4,7 +4,10 @@ import { Form } from '@/components';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
 import { Box, Icon, IconName, Image, Stepper, Text } from '@/ui';
 
-import { sourceProviderIcon, sourceProviderLabel } from './DeploySite.constants';
+import {
+  sourceProviderIcon,
+  sourceProviderLabel,
+} from './DeploySite.constants';
 import { useDeploySiteContext } from './DeploySite.context';
 import { DeploySiteStyles as S } from './DeploySite.styles';
 
@@ -16,7 +19,13 @@ type StatusItemProps = React.PropsWithChildren<{
 }> &
   React.ComponentPropsWithoutRef<typeof S.StatusBox.Item>;
 
-const StatusItem: React.FC<StatusItemProps> = ({ title, icon = 'gear', image, children = 'Pending...', fullSize = false }) => (
+const StatusItem: React.FC<StatusItemProps> = ({
+  title,
+  icon = 'gear',
+  image,
+  children = 'Pending...',
+  fullSize = false,
+}) => (
   <S.StatusBox.Item fullSize={fullSize}>
     <Text as="h3" size="xs">
       {title}
@@ -31,7 +40,9 @@ const StatusItem: React.FC<StatusItemProps> = ({ title, icon = 'gear', image, ch
   </S.StatusBox.Item>
 );
 
-const StatusSeparator: React.FC = () => <S.StatusBox.Separator name="arrow-right" />;
+const StatusSeparator: React.FC = () => (
+  <S.StatusBox.Separator name="arrow-right" />
+);
 
 const StatusBox: React.FC = () => {
   const { sourceProvider, mode, providerState } = useDeploySiteContext();
@@ -46,15 +57,25 @@ const StatusBox: React.FC = () => {
       };
     }
 
-    const providerAuthenticated = !providerState?.requirements?.shouldAuthenticate && sourceProvider !== undefined;
+    const providerAuthenticated =
+      !providerState?.requirements?.shouldAuthenticate &&
+      sourceProvider !== undefined;
 
     return {
-      icon: providerAuthenticated ? sourceProviderIcon[sourceProvider] : undefined,
-      text: providerAuthenticated ? sourceProviderLabel[sourceProvider] : undefined,
+      icon: providerAuthenticated
+        ? sourceProviderIcon[sourceProvider]
+        : undefined,
+      text: providerAuthenticated
+        ? sourceProviderLabel[sourceProvider]
+        : undefined,
     };
   }, [providerState?.requirements?.shouldAuthenticate, sourceProvider, mode]);
 
-  const framework = useMemo(() => siteFrameworks.data?.find((framework) => framework.id === field.value), [siteFrameworks, field.value]);
+  const framework = useMemo(
+    () =>
+      siteFrameworks.data?.find((framework) => framework.id === field.value),
+    [siteFrameworks, field.value],
+  );
 
   return (
     <S.StatusBox.Container wrapped={mode === 'template'}>

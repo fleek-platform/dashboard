@@ -1,6 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { BreadcrumbItem, NavigationItem, ProjectGoBack, RootLayout } from '@/components';
+import {
+  BreadcrumbItem,
+  NavigationItem,
+  ProjectGoBack,
+  RootLayout,
+} from '@/components';
 import { useFleekFunctionDetailQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -14,7 +19,9 @@ export const FnLayout: React.FC<FnLayoutProps> = ({ children }) => {
   const session = useSessionContext();
   const router = useRouter();
   const fnName = String(router.query.fnName);
-  const [fleekFunctionDetailQuery] = useFleekFunctionDetailQuery({ variables: { where: { name: fnName } } });
+  const [fleekFunctionDetailQuery] = useFleekFunctionDetailQuery({
+    variables: { where: { name: fnName } },
+  });
 
   const projectId = session.project.id;
 
@@ -60,12 +67,19 @@ export const FnLayout: React.FC<FnLayoutProps> = ({ children }) => {
     <RootLayout.Container>
       <RootLayout.Head title={RootLayout.Head.titles.function(fnName)} />
       <RootLayout.Page
-        slotSidebar={<ProjectGoBack projectName={session.project.name} goBackUrl={routes.project.function.list({ projectId })} />}
+        slotSidebar={
+          <ProjectGoBack
+            projectName={session.project.name}
+            goBackUrl={routes.project.function.list({ projectId })}
+          />
+        }
         navigation={navigation}
         isNavigationLoading={session.loading}
         breadcrumbs={breadcrumbs}
       >
-        <FunctionDetailProvider value={data?.fleekFunctionByName || null}>{children}</FunctionDetailProvider>
+        <FunctionDetailProvider value={data?.fleekFunctionByName || null}>
+          {children}
+        </FunctionDetailProvider>
       </RootLayout.Page>
     </RootLayout.Container>
   );

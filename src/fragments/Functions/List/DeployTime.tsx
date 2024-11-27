@@ -10,7 +10,12 @@ type DeployTimeProps = {
   variant?: ComponentProps<typeof Text>['variant'];
 };
 
-export const DeployTime = ({ at, before, size = 'sm', variant = 'primary' }: DeployTimeProps) => {
+export const DeployTime = ({
+  at,
+  before,
+  size = 'sm',
+  variant = 'primary',
+}: DeployTimeProps) => {
   if (!at) {
     return (
       <Text size={size} variant={variant}>

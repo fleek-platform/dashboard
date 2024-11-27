@@ -8,7 +8,12 @@ export type DeleteProjectModalProps = ChildrenProps<{
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>;
 
-export const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ children, projectName, isOpen, setIsOpen }) => {
+export const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
+  children,
+  projectName,
+  isOpen,
+  setIsOpen,
+}) => {
   const form = Form.useContext();
 
   const handleOpenChange = (open: boolean) => {
@@ -17,11 +22,18 @@ export const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ children
   };
 
   return (
-    <SettingsDeleteModal trigger={children} open={isOpen} onOpenChange={handleOpenChange}>
-      <SettingsDeleteModal.Heading>Confirm Project Deletion</SettingsDeleteModal.Heading>
+    <SettingsDeleteModal
+      trigger={children}
+      open={isOpen}
+      onOpenChange={handleOpenChange}
+    >
+      <SettingsDeleteModal.Heading>
+        Confirm Project Deletion
+      </SettingsDeleteModal.Heading>
 
       <Text>
-        If you are positive you want to delete your project, use the field below to confirm and click <CodeBlock>Delete project</CodeBlock>.
+        If you are positive you want to delete your project, use the field below
+        to confirm and click <CodeBlock>Delete project</CodeBlock>.
       </Text>
 
       <Form.InputField
@@ -39,7 +51,11 @@ export const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ children
 
       <SettingsDeleteModal.Footer>
         <SettingsDeleteModal.CancelButton />
-        <Form.SubmitButton intent="danger" onSubmit={() => handleOpenChange(false)} className="flex-1">
+        <Form.SubmitButton
+          intent="danger"
+          onSubmit={() => handleOpenChange(false)}
+          className="flex-1"
+        >
           Delete project
         </Form.SubmitButton>
       </SettingsDeleteModal.Footer>
