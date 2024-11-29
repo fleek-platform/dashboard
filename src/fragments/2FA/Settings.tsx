@@ -48,11 +48,11 @@ export const Settings = () => {
 
     await Promise.allSettled(mutationsArray)
       .then((mutationResults) => {
-        mutationResults.forEach((operation) => {
+        for (const operation of mutationResults) {
           if (operation.status === 'rejected' || operation.value.error) {
             toast.error({ message: 'Failed to save protected action changes' });
-          }
-        });
+          }          
+        }
       })
       .catch(() =>
         toast.error({

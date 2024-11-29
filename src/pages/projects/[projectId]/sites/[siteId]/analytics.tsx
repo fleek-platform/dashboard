@@ -2,7 +2,7 @@ import { ComingSoon } from '@/components';
 import { constants } from '@/constants';
 import { Site } from '@/fragments';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const AnalyticsPage: Page = () => {

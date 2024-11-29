@@ -1,6 +1,6 @@
 import { LearnMoreMessage, Modal } from '@/components';
 import { constants } from '@/constants';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { LoginStyles as S } from './Login.styles';

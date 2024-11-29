@@ -1,4 +1,4 @@
-import { GitRepositoriesQuery } from '@/generated/graphqlClient';
+import type { GitRepositoriesQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { Button, Icon, Stepper, Text } from '@/ui';
 
@@ -70,7 +70,7 @@ const Repository: React.FC<{ repo: Repository; owner?: string }> = ({
 
     setGitRepository({
       id: repo.id.toString(),
-      gitProviderId: gitProviderId!,
+      gitProviderId,
       defaultBranch: repo.defaultBranch,
       name: repo.name,
       owner,

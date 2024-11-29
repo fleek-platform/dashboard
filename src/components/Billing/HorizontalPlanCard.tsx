@@ -1,5 +1,5 @@
 import { BadgeText } from '@/components';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Box, Text } from '@/ui';
 
 import { BillingStyles as S } from './Billing.styles';

@@ -1,5 +1,6 @@
 import { groupBy, mapValues } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import { SettingsBox } from '@/components';
 import {

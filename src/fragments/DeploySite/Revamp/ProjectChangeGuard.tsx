@@ -11,12 +11,12 @@ export const ProjectChangeGuard: React.FC = () => {
   const stepper = Stepper.useContext();
 
   useEffect(() => {
+    if (!session.project.id) return;
+
     stepper.setStep(1);
 
     setSourceProvider(undefined);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.project.id]);
+  }, [stepper.setStep, session.project.id, setSourceProvider]);
 
   return null;
 };

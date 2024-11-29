@@ -1,7 +1,7 @@
 import { forwardStyledRef } from '@/theme';
 
 import { IconStyles } from './Icon.styles';
-import { IconLibrary, IconName, IconType } from './IconLibrary';
+import { IconLibrary, type IconName, type IconType } from './IconLibrary';
 
 export type IconProps = {
   name: IconName;

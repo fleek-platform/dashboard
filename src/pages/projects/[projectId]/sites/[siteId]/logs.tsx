@@ -1,7 +1,7 @@
 import { ComingSoon } from '@/components';
 import { Site } from '@/fragments';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const LogPage: Page = () => {
   const { resolvedTheme = 'dark' } = useTheme();

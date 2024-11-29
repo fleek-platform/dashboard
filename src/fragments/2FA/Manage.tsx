@@ -10,8 +10,8 @@ import {
   useVerifySecretKeyMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { RecoveryCodes as Codes, SecretKey } from '@/types/2FA';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { RecoveryCodes as Codes, SecretKey } from '@/types/2FA';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getManualSecret, getURI } from '@/utils/TOTP';

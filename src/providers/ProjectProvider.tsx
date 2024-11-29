@@ -8,7 +8,7 @@ import {
   useProjectsQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
-import { ProjectList } from '@/types/Project';
+import type { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
 import { Log } from '@/utils/log';
 

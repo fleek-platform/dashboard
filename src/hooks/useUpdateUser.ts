@@ -1,6 +1,6 @@
 import {
-  UpdateUserDataInput,
-  UpdateUserMutationVariables,
+  type UpdateUserDataInput,
+  type UpdateUserMutationVariables,
   useUpdateUserMutation,
 } from '@/generated/graphqlClient';
 

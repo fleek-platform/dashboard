@@ -7,8 +7,8 @@ import {
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { forwardStyledRef } from '@/theme';
-import { Deployment } from '@/types/Deployment';
-import { Site } from '@/types/Site';
+import type { Deployment } from '@/types/Deployment';
+import type { Site } from '@/types/Site';
 import { Skeleton, Text } from '@/ui';
 import { canRedeploySite } from '@/utils/canRedeploySite';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
@@ -17,7 +17,7 @@ import {
   Deploy,
   DeployAuthorSkeleton,
   DeployItemSkeleton,
-  DeployProps,
+  type DeployProps,
   DeploySkeleton,
 } from '../Deployments/Deploy/Deploy';
 import { RecentDeployStyles as S } from './RecentDeploy.styles';

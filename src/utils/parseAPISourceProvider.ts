@@ -1,5 +1,5 @@
 import { SourceProvider } from '@/generated/graphqlClient';
-import { GitProvider } from '@/integrations/git';
+import type { GitProvider } from '@/integrations/git';
 
 type ParseAPISourceProviderArgs = SourceProvider | null | undefined;
 

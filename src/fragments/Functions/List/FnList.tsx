@@ -4,7 +4,7 @@ import { AlertBox } from '@/components';
 import { Functions as F } from '@/fragments';
 import {
   useFunctionsList,
-  UseFunctionsListArgs,
+  type UseFunctionsListArgs,
 } from '@/hooks/useFunctionsList';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';

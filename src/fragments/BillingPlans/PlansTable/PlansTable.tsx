@@ -1,5 +1,5 @@
-import { ChildrenProps } from '@/types/Props';
-import { Box, Button, ButtonProps, Icon, IconName, Text } from '@/ui';
+import type { ChildrenProps } from '@/types/Props';
+import { Box, Button, type ButtonProps, Icon, type IconName, Text } from '@/ui';
 
 import { PlansTableStyles as S } from './PlansTable.styles';
 
@@ -31,11 +31,11 @@ export const PlansTable: React.FC<PlansTableProps> = ({ plans, sections }) => {
       <S.Root>
         <colgroup>
           <col span={1} style={{ width: '25%' }} />
-          {plans.map((_, index) => (
+          {plans.map((_) => (
             <col
               span={1}
               style={{ width: `${75 / plans.length}%` }}
-              key={index}
+              key={crypto.randomUUID()}
             />
           ))}
         </colgroup>
@@ -103,11 +103,11 @@ const Section: React.FC<SectionProps> = ({ section, planValues }) => {
 
       <S.Body>
         {section.rows.map((title, rowIndex) => (
-          <S.Row key={rowIndex}>
+          <S.Row key={crypto.randomUUID()}>
             <S.Cell as="th">{title}</S.Cell>
 
-            {planValues.map((plan, planIndex) => (
-              <S.Cell key={planIndex}>{plan[rowIndex]}</S.Cell>
+            {planValues.map((plan) => (
+              <S.Cell key={crypto.randomUUID()}>{plan[rowIndex]}</S.Cell>
             ))}
           </S.Row>
         ))}

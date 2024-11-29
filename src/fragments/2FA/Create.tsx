@@ -12,7 +12,7 @@ import {
   useVerifySecretKeyMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { SecretKey } from '@/types/2FA';
+import type { SecretKey } from '@/types/2FA';
 import { Button } from '@/ui';
 import { getManualSecret, getURI } from '@/utils/TOTP';
 

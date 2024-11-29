@@ -7,7 +7,7 @@ import { PermissionsTooltip, SettingsBox } from '@/components';
 import { Form } from '@/components/Form/Form';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box } from '@/ui';
 
 import { SlugField } from './SlugField';

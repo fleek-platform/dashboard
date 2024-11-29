@@ -4,10 +4,10 @@ import { useClient } from 'urql';
 import { constants } from '@/constants';
 import {
   ListFolderDocument,
-  ListFolderQuery,
-  ListFolderQueryVariables,
+  type ListFolderQuery,
+  type ListFolderQueryVariables,
 } from '@/generated/graphqlClient';
-import { Upload, UploadProgress, UploadStatus } from '@/types/Upload';
+import type { Upload, UploadProgress, UploadStatus } from '@/types/Upload';
 import { Log } from '@/utils/log';
 
 import { useFleekSdk } from './useFleekSdk';

@@ -1,9 +1,9 @@
-import { MouseEventHandler, useMemo, useRef, useState } from 'react';
+import { type MouseEventHandler, useMemo, useRef, useState } from 'react';
 
 import { BadgeText, Form, SettingsModal } from '@/components';
 import { useGitRepositoryTree } from '@/hooks/useGitRepositoryTree';
-import { GitProvider } from '@/integrations/git';
-import { LoadingProps } from '@/types/Props';
+import type { GitProvider } from '@/integrations/git';
+import type { LoadingProps } from '@/types/Props';
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import {
 import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
 import {
   BaseDirectoryRadioGroup as RadioGroupV2,
-  BaseDirectoryRadioGroupProps as RadioGroupV2Props,
+  type BaseDirectoryRadioGroupProps as RadioGroupV2Props,
 } from './BaseDirectoryRadioGroup';
 
 const PATH = Symbol('path');
@@ -96,10 +96,10 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
   const RadioGroup = props.deprecated ? (
     <BaseDirectoryRadioGroup
       fieldName={props.fieldName}
-      sourceProvider={props.sourceProvider!}
-      slug={props.slug!}
-      repository={props.repository!}
-      branch={props.branch!}
+      sourceProvider={props.sourceProvider}
+      slug={props.slug}
+      repository={props.repository}
+      branch={props.branch}
       accessToken={props.accessToken as string}
     />
   ) : (

@@ -22,24 +22,34 @@ export const hasRequiredPermissions = ({
   );
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: Allowing flexible component types
+type ComponentWithLayout = React.ComponentType<any> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
 type WithAccessProps = {
-  Component: any;
+  Component: ComponentWithLayout;
   requiredPermissions?: string[] | null;
   billingResource?: string;
   featureFlagName?: string;
 };
+
+interface PageProps {
+  // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible props
+  [key: string]: any;
+}
 
 export const withAccess = ({
   Component,
   requiredPermissions,
   featureFlagName,
 }: WithAccessProps) => {
-  return function WithAccessWrapper(pageProps: any) {
+  return function WithAccessWrapper(pageProps: PageProps) {
     const session = useSessionContext();
     const featureFlags = useFeatureFlags();
     const permissions = session.permissions;
 
-    const getLayout = Component.getLayout ?? ((page: any) => page);
+    const getLayout = Component.getLayout ?? ((page) => page);
 
     const hasAccess = useMemo(() => {
       const hasPermission =
@@ -57,19 +67,19 @@ export const withAccess = ({
         }
 
         return featureFlag;
-      } else {
-        return hasPermission;
       }
-    }, [featureFlags, permissions, session.loading]);
+      
+      return hasPermission;
+    }, [featureFlags, featureFlagName, permissions, session.loading, requiredPermissions]);
 
     if (hasAccess || session.loading) {
       return <>{getLayout(<Component {...pageProps} />)}</>;
-    } else {
-      return (
-        <NotFound.Page.Layout>
-          <NotFound.Page.Content />
-        </NotFound.Page.Layout>
-      );
     }
+
+    return (
+      <NotFound.Page.Layout>
+        <NotFound.Page.Content />
+      </NotFound.Page.Layout>
+    );
   };
 };

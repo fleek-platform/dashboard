@@ -1,6 +1,6 @@
 import { match } from 'ts-pattern';
 
-import { BadgeText, ErrorBadge, ErrorBadgeProps } from '@/components';
+import { BadgeText, ErrorBadge, type ErrorBadgeProps } from '@/components';
 import { DnslinkStatus } from '@/generated/graphqlClient';
 
 import { useSettingsItemContext } from '../../Elements/SettingsItem.context';

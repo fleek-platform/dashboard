@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '@/ui';
 
-import { Performance, PerformanceProps } from './Performance';
+import { Performance, type PerformanceProps } from './Performance';
 
 const meta: Meta = {
   title: 'Library/Fragments/Site/Performance',

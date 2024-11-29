@@ -2,7 +2,7 @@ import { SiteBuildSettings } from '@fleek-platform/utils-sites';
 import { DateTime } from 'luxon';
 import { Octokit } from 'octokit';
 
-import { GitProvider } from '../interfaces/GitProvider';
+import type { GitProvider } from '../interfaces/GitProvider';
 
 export class GitHub implements GitProvider {
   private octokit: Octokit;

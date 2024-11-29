@@ -2,7 +2,7 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { BadgeText, Link } from '@/components';
 import { constants } from '@/constants';
-import { Project } from '@/types/Project';
+import type { Project } from '@/types/Project';
 
 export type RenameBadgeProps = {
   selectedProject?: Project;

@@ -9,8 +9,8 @@ import { useMeQuery } from '@/generated/graphqlClient';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
-import { LoadingProps } from '@/types/Props';
-import { Avatar, AvatarMarble, AvatarProps, Icon, Menu, Skeleton } from '@/ui';
+import type { LoadingProps } from '@/types/Props';
+import { Avatar, AvatarMarble, type AvatarProps, Icon, Menu, Skeleton } from '@/ui';
 
 import { UserMenuStyles as S } from './UserMenu.styles';
 

@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { createContext } from '@/utils/createContext';
 
 import { FormController } from './FormController';
+import type { FormValues } from '@/components/Form/Form';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const [Provider, useInternalForm] = createContext<FormController<any, any>>({
+const [Provider, useInternalForm] = createContext<FormController<FormValues, void>>({
   hookName: 'Form.useContext',
   providerName: 'Form.Provider',
   name: 'Form',
@@ -14,10 +14,10 @@ const [Provider, useInternalForm] = createContext<FormController<any, any>>({
 export const useForm = <Values extends FormController.FormValues, Response>(
   args: FormController.ConstructorArgs<Values, Response>,
 ) => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: values are handled by valueReferences utility
   const form = useMemo(
     () => new FormController<Values, Response>(args),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    valueReferences(args.values), // recreate the form when the values change
+    valueReferences(args.values), // recreate the form when the values change  
   );
 
   /**
@@ -77,6 +77,7 @@ const useFormWithListener = (field?: string) => {
   return form;
 };
 
+// TODO: Move as an utility?
 const valueReferences = <
   ValueReferencesProps extends FormController.FormValues,
 >(

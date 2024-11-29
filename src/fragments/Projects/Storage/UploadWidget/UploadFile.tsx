@@ -1,5 +1,5 @@
 import { BadgeText, CustomTooltip, IconTooltip } from '@/components';
-import { Upload, UploadStatus } from '@/types/Upload';
+import type { Upload, UploadStatus } from '@/types/Upload';
 import { Box, Icon, Image, Text } from '@/ui';
 
 import { UploadFileStyles as S } from './UploadWidget.styles';

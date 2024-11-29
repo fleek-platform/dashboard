@@ -4,7 +4,7 @@ import { LearnMoreMessage, PermissionsTooltip } from '@/components';
 import { SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 import { Log } from '@/utils/log';
 

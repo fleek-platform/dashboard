@@ -1,12 +1,13 @@
 /* eslint-disable react/forbid-elements */
 
-import { cva, VariantProps } from 'class-variance-authority';
-import React, { forwardRef } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import type React from 'react';
+import { forwardRef } from 'react';
 
 import { IconTooltip } from '@/components';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Icon as IconComponent } from '@/ui/Icon/Icon';
-import { IconName } from '@/ui/Icon/IconLibrary';
+import type { IconName } from '@/ui/Icon/IconLibrary';
 import { cn } from '@/utils/cn';
 
 import { Text } from '../Text/Text';

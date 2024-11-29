@@ -3,10 +3,10 @@ import { useClient } from 'urql';
 
 import {
   GithubAppInstallationsDocument,
-  GithubAppInstallationsQuery,
-  GithubAppInstallationsQueryVariables,
-  GitUserAccessToken,
-  GithubAppInstallation,
+  type GithubAppInstallationsQuery,
+  type GithubAppInstallationsQueryVariables,
+  type GitUserAccessToken,
+  type GithubAppInstallation,
 } from '@/generated/graphqlClient';
 
 import { usePolling } from './usePolling';

@@ -5,7 +5,7 @@ import { BadgeText, SettingsListItem as Menu } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
-import { Folder, Pin } from '@/types/StorageProviders';
+import type { Folder, Pin } from '@/types/StorageProviders';
 import { Icon } from '@/ui';
 import { getLinkForIPFSDownload } from '@/utils/getLinkForIPFSdownload';
 

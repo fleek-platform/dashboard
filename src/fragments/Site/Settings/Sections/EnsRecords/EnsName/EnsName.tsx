@@ -1,4 +1,4 @@
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { EnsNameStyles as S } from './EnsName.styles';

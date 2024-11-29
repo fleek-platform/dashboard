@@ -1,4 +1,4 @@
-import { GitProvider } from '@/integrations/git';
+import type { GitProvider } from '@/integrations/git';
 import { Button, Icon, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext } from '../../DeploySite.context';

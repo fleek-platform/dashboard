@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/useToast';
-import { Folder, Pin } from '@/types/StorageProviders';
+import type { Folder, Pin } from '@/types/StorageProviders';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { bytesToSize } from '@/utils/fileSizeFormat';
 import {

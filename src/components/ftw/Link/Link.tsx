@@ -1,9 +1,9 @@
 /* eslint-disable no-restricted-imports */
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import NextLink from 'next/link';
-import React, { ComponentProps, forwardRef } from 'react';
+import React, { type ComponentProps, forwardRef } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
 export const linkVariants = cva('transition-colors', {

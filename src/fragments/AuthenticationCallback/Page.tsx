@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { LayoutHead } from '@/components';
 import { QueryClientProvider } from '@/providers/QueryClientProvider';
 import { ThemeProvider } from '@/providers/ThemeProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Icon, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
 

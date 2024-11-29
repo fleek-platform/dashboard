@@ -1,6 +1,6 @@
 import { ComingSoonStyles as S } from './ComingSoon.styles';
-import { ComingSoonModal, ComingSoonModalNamespace } from './ComingSoonModal';
-import { ComingSoonOverlay, ComingSoonOverlayProps } from './ComingSoonOverlay';
+import { ComingSoonModal, type ComingSoonModalNamespace } from './ComingSoonModal';
+import { ComingSoonOverlay, type ComingSoonOverlayProps } from './ComingSoonOverlay';
 
 export const ComingSoon = {
   Overlay: ComingSoonOverlay,

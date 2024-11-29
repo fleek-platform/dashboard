@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-restricted-imports
 import { useRouter as useNextRouter } from 'next/router';
-import { NextRouter } from 'next/router';
+import type { NextRouter } from 'next/router';
 
 export const useRouter = () => {
   const router: NextRouter & {

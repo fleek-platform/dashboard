@@ -7,8 +7,8 @@ import {
 import { constants } from '@/constants';
 import { useGitBranchesQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
-import { DisabledProps } from '@/types/Props';
-import { Site } from '@/types/Site';
+import type { DisabledProps } from '@/types/Props';
+import type { Site } from '@/types/Site';
 import { Combobox, FormField } from '@/ui';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 

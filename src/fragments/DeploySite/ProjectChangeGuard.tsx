@@ -12,15 +12,15 @@ export const ProjectChangeGuard: React.FC = () => {
   const stepper = Stepper.useContext();
 
   useEffect(() => {
+    if (!session.project.id) return;
+    
     stepper.setStep(1);
 
     setGitBranch(undefined);
     setGitUser(undefined);
     setGitRepository(undefined);
     setSourceProvider(undefined);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.project.id]);
+  }, [setGitBranch, setGitUser, setGitRepository, setSourceProvider, session.project.id, stepper.setStep]);
 
   return null;
 };

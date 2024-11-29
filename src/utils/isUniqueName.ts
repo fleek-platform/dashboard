@@ -1,6 +1,7 @@
+type Values = Record<'name', string>;
 type IsUniqueNameArgs = {
   name: string;
-  list: any[];
+  list: Values[];
 };
 
 export const isUniqueName = ({ name, list }: IsUniqueNameArgs): boolean =>

@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
 type CodeBlock = ChildrenProps & React.HTMLAttributes<HTMLElement>;

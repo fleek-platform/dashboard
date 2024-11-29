@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { Button, ButtonProps } from '@/ui';
+import { Button, type ButtonProps } from '@/ui';
 
 import { useFormContext } from '../FormProvider';
 

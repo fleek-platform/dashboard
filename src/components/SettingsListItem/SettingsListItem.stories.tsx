@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '@/ui';
 
 import { BadgeText } from '../BadgeText/BadgeText';
-import { SettingsListItem, SettingsListItemProps } from './SettingsListItem';
+import { SettingsListItem, type SettingsListItemProps } from './SettingsListItem';
 
 const meta: Meta = {
   title: 'Library/Components/Settings List Item',
@@ -23,7 +23,7 @@ export const Default: Story = {
 
 export const WithDropdown: Story = {
   args: {
-    ...(Default.args as any),
+    ...Default.args,
     subtitle: 'Now I have a dropdown',
     children: (
       <SettingsListItem.DropdownMenu>
@@ -41,7 +41,7 @@ export const WithDropdown: Story = {
 
 export const WithBadge: Story = {
   args: {
-    ...(WithDropdown.args as any),
+    ...WithDropdown.args,
     subtitle: 'Now I have a badge and dropdown',
     children: (
       <>
@@ -62,7 +62,7 @@ export const WithBadge: Story = {
 
 export const WithAvatar: Story = {
   args: {
-    ...(WithBadge.args as any),
+    ...WithBadge.args,
     subtitle: 'Now I have an avatar, badge and dropdown',
     avatarSrc: 'https://avatars.githubusercontent.com/u/263385',
   },
@@ -70,7 +70,7 @@ export const WithAvatar: Story = {
 
 export const WithIconAvatar: Story = {
   args: {
-    ...(WithBadge.args as any),
+    ...WithBadge.args,
     subtitle: 'Now I have an avatar, badge and dropdown',
     avatarIcon: 'github',
   },

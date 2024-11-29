@@ -9,7 +9,7 @@ import {
   useEnsRecordStatusQuery,
 } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
-import { EnsRecord } from '@/types/EnsRecord';
+import type { EnsRecord } from '@/types/EnsRecord';
 import { Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { PrimaryDomainItem } from '@/types/Domain';
-import { ChildrenProps } from '@/types/Props';
+import type { PrimaryDomainItem } from '@/types/Domain';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type DeletePrivateGatewayContext = {

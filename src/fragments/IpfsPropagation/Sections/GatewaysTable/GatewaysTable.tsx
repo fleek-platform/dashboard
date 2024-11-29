@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 
 import { IconTooltip } from '@/components';
-import { Box, Button, Icon, IconName, Text } from '@/ui';
+import { Box, Button, Icon, type IconName, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { useIpfsPropagationContext } from '../../Context';

@@ -1,4 +1,4 @@
-import { MigrationRequest, OverallMigrationStatus } from './Migration';
+import type { MigrationRequest, OverallMigrationStatus } from './Migration';
 
 export const getMigrationStatus: (
   migrationRequests: MigrationRequest[],

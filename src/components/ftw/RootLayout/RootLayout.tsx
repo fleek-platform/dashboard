@@ -1,5 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import { ExternalLink, Link, LinkButton } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';
@@ -13,12 +14,12 @@ import { useUserHasScrolled } from '@/hooks/useUserHasScrolled';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import {
   Box,
   Button,
   Icon,
-  IconName,
+  type IconName,
   Scrollable,
   SidebarSidepanel,
   Skeleton,
@@ -32,7 +33,7 @@ import { FleekLogo } from '../../FleekLogo/FleekLogo';
 import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
-import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { type BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
 
 export type NavigationItem = {
   icon: IconName;
@@ -132,6 +133,7 @@ const ExternalLinkWrapper: React.FC<
 
   return (
     <button
+      type="button"
       onClick={onClick}
       className="group px-3 flex justify-between items-center rounded-sm ring-0 outline-0 focus-visible:ring-2 ring-neutral-8"
     >
@@ -193,9 +195,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         <Box className="gap-2">
           {isNavigationLoading ? (
             <>
-              {Array.from({ length: 5 }).map((_, i) => (
+              {Array.from({ length: 5 }).map((_) => (
                 <Box
-                  key={i}
+                  key={crypto.randomUUID()}
                   variant="container"
                   className="border-0 flex-row gap-3 py-2 px-3 h-[2rem] items-center"
                 >

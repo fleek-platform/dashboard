@@ -1,5 +1,5 @@
 import { AlertBox, Form } from '@/components';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Dialog, Text } from '@/ui';
 
 import { ProfileStyles as S } from '../../../Profile.styles';

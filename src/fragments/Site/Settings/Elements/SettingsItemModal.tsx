@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Modal } from '@/components';
 import { useRouter } from '@/hooks/useRouter';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Dialog } from '@/ui';
 
 import { useSettingsItemContext } from './SettingsItem.context';

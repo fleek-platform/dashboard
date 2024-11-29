@@ -1,8 +1,8 @@
-import { MigrationStatus } from '@/generated/graphqlClient';
-import { LoadingProps } from '@/types/Props';
-import { Icon, IconName, Text } from '@/ui';
+import type { MigrationStatus } from '@/generated/graphqlClient';
+import type { LoadingProps } from '@/types/Props';
+import { Icon, type IconName, Text } from '@/ui';
 
-import { MigrationRequest } from './Migration';
+import type { MigrationRequest } from './Migration';
 import { MigrationStyles as S } from './Migration.styles';
 
 export const ProjectMigrationTable: React.FC<ProjectMigrationtableProps> = ({

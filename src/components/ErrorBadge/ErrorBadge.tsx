@@ -1,5 +1,5 @@
-import { Maybe } from '@/generated/graphqlClient';
-import { ChildrenProps } from '@/types/Props';
+import type { Maybe } from '@/generated/graphqlClient';
+import type { ChildrenProps } from '@/types/Props';
 import { Icon } from '@/ui';
 
 import { BadgeText } from '../BadgeText/BadgeText';

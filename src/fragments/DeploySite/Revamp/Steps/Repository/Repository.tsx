@@ -7,7 +7,7 @@ import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 import { ProviderInstallationMessage } from './ProviderInstallationMessage';
 import { RepositoryStyles as S } from './Repository.styles';
 import { RepositoryList } from './RepositoryList';
-import { GitUser, UserCombobox } from './UserCombobox';
+import { type GitUser, UserCombobox } from './UserCombobox';
 
 export const RepositoryStep: React.FC = () => {
   const stepper = Stepper.useContext();
@@ -33,7 +33,7 @@ export const RepositoryStep: React.FC = () => {
         installationId: currentUser.installationId.toString(),
       });
     },
-    [setCurrentUser, setGitUser],
+    [setGitUser],
   );
 
   useEffect(() => {

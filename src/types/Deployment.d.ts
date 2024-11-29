@@ -1,4 +1,4 @@
-import { DeploymentQuery } from '@/generated/graphqlClient';
+import type { DeploymentQuery } from '@/generated/graphqlClient';
 
 export type DeploymentStatus =
   | 'created'

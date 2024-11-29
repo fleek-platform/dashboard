@@ -8,9 +8,9 @@ import { Profile } from '@/fragments';
 import { useCreateTemplateMutation } from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useToast } from '@/hooks/useToast';
-import { Page } from '@/types/App';
-import { Site } from '@/types/Site';
-import { TemplateCategory } from '@/types/Template';
+import type { Page } from '@/types/App';
+import type { Site } from '@/types/Site';
+import type { TemplateCategory } from '@/types/Template';
 
 const TemplatesSettingsPage: Page = () => {
   const flags = useFeatureFlags();

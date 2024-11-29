@@ -7,7 +7,7 @@ import { Login } from '@/fragments';
 import { useCreateLoginVerificationSessionMutation } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { Button } from '@/ui';
 import { Log } from '@/utils/log';
 

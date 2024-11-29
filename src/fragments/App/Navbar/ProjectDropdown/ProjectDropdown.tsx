@@ -3,7 +3,7 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Project } from '@/types/Project';
+import type { Project } from '@/types/Project';
 import { Avatar, AvatarMarble, Icon, Menu } from '@/ui';
 
 import { ProjectDropdownStyles as S } from './ProjectDropdown.styles';

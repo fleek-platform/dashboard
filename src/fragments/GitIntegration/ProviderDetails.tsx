@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { BadgeText, SettingsListItem } from '@/components';
 import {
-  GitProvidersQuery,
+  type GitProvidersQuery,
   GitProviderTags,
-  SiteDeploymentRequirements,
+  type SiteDeploymentRequirements,
   useSiteDeploymentRequirementsMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';

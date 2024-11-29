@@ -1,7 +1,7 @@
 import {
-  Dispatch,
-  MouseEventHandler,
-  SetStateAction,
+  type Dispatch,
+  type MouseEventHandler,
+  type SetStateAction,
   useCallback,
   useEffect,
   useReducer,
@@ -11,12 +11,12 @@ import { useClient } from 'urql';
 
 import {
   GitProviderDocument,
-  GitProviderQuery,
-  GitProviderQueryVariables,
+  type GitProviderQuery,
+  type GitProviderQueryVariables,
   GitProviderTags,
   SiteDeploymentRequirementsDocument,
-  SiteDeploymentRequirementsMutation,
-  SiteDeploymentRequirementsMutationVariables,
+  type SiteDeploymentRequirementsMutation,
+  type SiteDeploymentRequirementsMutationVariables,
   SourceProvider,
 } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
@@ -183,7 +183,7 @@ const reducer = (state: State, action: ActionType): State => {
   }
 };
 
-const PREFETCH_SOURCE_PROVIDER = SourceProvider['GITHUB'];
+const PREFETCH_SOURCE_PROVIDER = SourceProvider.GITHUB;
 
 export const DeploySiteProvider: React.FC<
   React.PropsWithChildren<{ value: BaseDeploySiteContext }>
@@ -205,6 +205,8 @@ export const DeploySiteProvider: React.FC<
 
   const fetchGitProviderRequirements = useCallback(
     async (gitProviderId: string, sourceProvider: SourceProvider) => {
+      if (!session.project.id) return;
+      
       try {
         dispatch({ type: 'REQUIREMENTS_START', provider: sourceProvider });
 
@@ -249,8 +251,6 @@ export const DeploySiteProvider: React.FC<
         dispatch({ type: 'REQUIREMENTS_ERROR', provider: sourceProvider });
       }
     },
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [client, session.project.id],
   );
 
@@ -306,7 +306,6 @@ export const DeploySiteProvider: React.FC<
       fetchGitProviderRequirements,
       value.mode,
       value.sourceProvider,
-      session.project.id,
     ],
   );
 
@@ -391,7 +390,7 @@ export const DeploySiteProvider: React.FC<
       const requirements = currentProviderState.requirements;
 
       pendingRequirementsRef.current = {
-        gitProviderId: currentProviderState.gitProviderId!,
+        gitProviderId: currentProviderState.gitProviderId,
         sourceProvider,
       };
       value.setGitProviderId(currentProviderState.gitProviderId);
@@ -427,8 +426,8 @@ export const DeploySiteProvider: React.FC<
       }
 
       pendingRequirementsRef.current = {
-        gitProviderId: currentGitProvider.gitProviderId!,
-        sourceProvider: value.sourceProvider!,
+        gitProviderId: currentGitProvider.gitProviderId,
+        sourceProvider: value.sourceProvider,
       };
       handleOpenPopUp(currentGitProvider.requirements.installationUrl);
     } catch {}
@@ -472,9 +471,7 @@ export const useStepSetup = ({ title, handleBackClick }: UseStepSetupProps) => {
     }
 
     setHandleBackClick(() => handleBackClick); // suppress react set state function
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleBackClick, setTitle, title]);
 };
 
 export type GitUser = {

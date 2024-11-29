@@ -1,6 +1,6 @@
 import {
-  UpdateProjectDataInput,
-  UpdateProjectMutationVariables,
+  type UpdateProjectDataInput,
+  type UpdateProjectMutationVariables,
   useUpdateProjectMutation,
 } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';

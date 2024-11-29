@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Home } from '@/fragments/Home/Home';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const HomePage: Page = () => {
   const session = useSessionContext();

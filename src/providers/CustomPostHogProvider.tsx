@@ -1,6 +1,7 @@
 import type { PostHog } from 'posthog-js';
-import posthogJs, { PostHogConfig } from 'posthog-js';
-import React, { useMemo } from 'react';
+import posthogJs, { type PostHogConfig } from 'posthog-js';
+import type React from 'react';
+import { useMemo } from 'react';
 
 import { createContext } from '@/utils/createContext';
 import { Log } from '@/utils/log';

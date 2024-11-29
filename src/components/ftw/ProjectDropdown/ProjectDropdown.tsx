@@ -1,7 +1,7 @@
 import { useProjectsQuery } from '@/generated/graphqlClient';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Project } from '@/types/Project';
+import type { Project } from '@/types/Project';
 import {
   Avatar,
   AvatarMarble,

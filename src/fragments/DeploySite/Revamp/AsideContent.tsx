@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Form } from '@/components';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
-import { Box, Icon, IconName, Image, Stepper, Text } from '@/ui';
+import { Box, Icon, type IconName, Image, Stepper, Text } from '@/ui';
 
 import {
   sourceProviderIcon,

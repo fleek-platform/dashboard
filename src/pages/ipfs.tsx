@@ -1,6 +1,6 @@
 import { constants } from '@/constants';
 import { IpfsPropagation } from '@/fragments';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 export const metadata = {
   title: 'Fleek | IPFS Gateway Browser',

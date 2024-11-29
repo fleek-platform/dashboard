@@ -19,3 +19,8 @@ export const Form = {
 
   createExtraValidation,
 };
+
+export interface FormValues {
+  // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible form values
+  [key: string]: any;
+}

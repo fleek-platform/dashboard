@@ -1,5 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 import { DropdownItem, RestrictionModal } from '@/components';
 import { constants } from '@/constants';

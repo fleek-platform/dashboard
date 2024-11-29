@@ -2,12 +2,12 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { ExternalLink, Link } from '@/components';
 import { constants } from '@/constants';
-import { DisabledProps, LoadingProps } from '@/types/Props';
-import { Box, Icon, IconName, Menu, Skeleton, Text } from '@/ui';
+import type { DisabledProps, LoadingProps } from '@/types/Props';
+import { Box, Icon, type IconName, Menu, Skeleton, Text } from '@/ui';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 import {
   getLinkForIPFSGateway,
-  GetLinkForIPFSGatewayArgs,
+  type GetLinkForIPFSGatewayArgs,
   getSubDomainResolutionIpfsGatewayUrl,
 } from '@/utils/getLinkForIPFSGateway';
 import {

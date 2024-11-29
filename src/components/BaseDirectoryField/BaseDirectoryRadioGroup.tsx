@@ -1,8 +1,8 @@
-import { MouseEventHandler, useMemo, useState } from 'react';
+import { type MouseEventHandler, useMemo, useState } from 'react';
 
 import { BadgeText, Form } from '@/components';
 import { useGitTreeQuery } from '@/generated/graphqlClient';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Box, Icon, RadioGroup, Scrollable, Text } from '@/ui';
 
 import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
@@ -28,10 +28,10 @@ export const BaseDirectoryRadioGroup: React.FC<
   const [gitTreeQuery] = useGitTreeQuery({
     variables: {
       where: {
-        gitProviderId: gitProviderId!,
-        sourceRepositoryOwner: sourceRepositoryOwner!,
-        sourceRepositoryName: sourceRepositoryName!,
-        sourceBranch: sourceBranch!,
+        gitProviderId: gitProviderId,
+        sourceRepositoryOwner: sourceRepositoryOwner,
+        sourceRepositoryName: sourceRepositoryName,
+        sourceBranch: sourceBranch,
       },
     },
     pause:
@@ -57,7 +57,7 @@ export const BaseDirectoryRadioGroup: React.FC<
             }
 
             if (i === segments.length - 1) {
-              inner[segments[i]] = { [PATH]: cur.path! };
+              inner[segments[i]] = { [PATH]: cur.path };
             }
 
             inner = inner[segments[i]];

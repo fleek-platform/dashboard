@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import { themeGlobals, themes } from '@/theme';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 
 const plex = IBM_Plex_Sans({
   subsets: ['latin'],

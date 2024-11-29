@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 
 import { NavbarProject } from './NavbarProject';
 import { NavbarUnauthenticated } from './NavbarUnauthenticated';
