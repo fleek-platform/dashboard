@@ -21,6 +21,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Changeset](#changeset)
   - [Regression Suite](#regression-suite)
   - [Branch Deployment Matrix](#branch-deployment-matrix)
+  - [Distribution](#distribution)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [Unit tests](#unit-tests)
@@ -79,6 +80,7 @@ NEXT_PUBLIC_UI__ZENDESK_PROXY_API="https://support-prod-eu-lon-1-01.flkservices.
 NEXT_PUBLIC_ZENDESK_PROXY_HOSTNAME="support-prod-eu-lon-1-01.flkservices.io"
 NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL="https://uploads.service.fleek.xyz",
 NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
+NEXT_DASHBOARD_WEBSITE_URL="https://fleek-dashboard-staging.on-fleek.app"
 ```
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
@@ -190,6 +192,10 @@ develop (latest)    |  https://fleek-dashboard-staging.on-fleek.app
 develop (storybook) |  https://fleek-dashboard-storybook.on-fleek.app
 main                |  https://fleek-dashboard-production.on-fleek.app
 ```
+
+### Distribution
+
+To enable support for redirects, single-page-applications, custom 404 pages on IPFS-backed hosting, we use f the [_redirects](https://docs.ipfs.tech/how-to/websites-on-ipfs/redirects-and-custom-404s/#evaluation).
 
 ## Tests
 

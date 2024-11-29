@@ -36,7 +36,10 @@ const Document = () => (
         content="https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta"
       />
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={secrets.NEXT_DASHBOARD_WEBSITE_URL} />
+      <meta
+        property="twitter:url"
+        content={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+      />
       <meta property="twitter:title" content="Dashboard | Fleek App" />
       <meta
         property="twitter:description"

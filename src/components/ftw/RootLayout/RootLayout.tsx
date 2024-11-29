@@ -168,7 +168,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     // on the client side, show versions if not prod or user is internal
     if (
       !isServerSide() &&
-      (location.hostname !== secrets.NEXT_DASHBOARD_WEBSITE_URL || flags.isInternalUser)
+      (location.hostname !== secrets.NEXT_DASHBOARD_WEBSITE_URL ||
+        flags.isInternalUser)
     ) {
       setShowVersion(true);
     }

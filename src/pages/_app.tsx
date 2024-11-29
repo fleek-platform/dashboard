@@ -43,7 +43,11 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     <>
       {!noCanonical && (
         <Head>
-          <link rel="canonical" href={secrets.NEXT_DASHBOARD_WEBSITE_URL} key="canonical" />
+          <link
+            rel="canonical"
+            href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+            key="canonical"
+          />
         </Head>
       )}
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
