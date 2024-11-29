@@ -1,5 +1,1 @@
-/login/* /login/[verificationSessionId]/index.html 200
-/projects/*/settings/members /projects/[projectId]/settings/members/index.html 200
-/projects/*/storage /projects/[projectId]/storage/index.html 200
-/projects/*/new /projects/[projectId]/new/index.html 200
 /* /index.html 200
