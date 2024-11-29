@@ -6,7 +6,11 @@ Here's a change
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Tests](https://github.com/fleek-platform/cli/actions/workflows/test-runner.yml/badge.svg)
+[![💍 Tester runner](https://github.com/fleek-platform/dashboard/actions/workflows/test-runner.yml/badge.svg)](https://github.com/fleek-platform/dashboard/actions/workflows/test-runner.yml)
+[![🔧 Build (dry-run)](https://github.com/fleek-platform/dashboard/actions/workflows/build-dry-run.yml/badge.svg)](https://github.com/fleek-platform/dashboard/actions/workflows/build-dry-run.yml)
+[![⚡️ Deploy Storybook (Staging)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-storybook.yml/badge.svg)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-storybook.yml)
+[![⚡️ Deploy Dashboard (Staging)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-staging.yml/badge.svg)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-staging.yml)
+[![⚡️ Deploy Dashboard (Production)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-production.yml/badge.svg)](https://github.com/fleek-platform/dashboard/actions/workflows/fleek-deploy-production.yml)
 
 The Dashboard is the interface for managing all Fleek platform services, which includes site deployments, functions and storage.
 
