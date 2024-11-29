@@ -17,7 +17,7 @@ export const DeployBreadcrumb: React.FC<DeployBreadcrumpProps> = ({
   siteId,
 }) => {
   const router = useRouter();
-  const deploymentId = router.query.deploymentId!;
+  const deploymentId = router.query.deploymentId;
   const [deploymentStatusQuery] = useDeploymentStatusQuery({
     variables: { where: { id: deploymentId } },
     pause: !deploymentId,

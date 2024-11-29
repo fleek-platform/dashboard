@@ -1,4 +1,4 @@
-import { CodeSnippet, CodeSnippetProps, LearnMoreMessage } from '@/components';
+import { CodeSnippet, type CodeSnippetProps, LearnMoreMessage } from '@/components';
 import { constants } from '@/constants';
 import { Button, Divider, Stepper, Text } from '@/ui';
 

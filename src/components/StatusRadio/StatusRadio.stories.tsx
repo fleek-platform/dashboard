@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { StatusRadio, StatusRadioProps } from './StatusRadio';
+import { StatusRadio, type StatusRadioProps } from './StatusRadio';
 
 const meta: Meta = {
   title: 'Library/Components/Satus Radio',

@@ -1,5 +1,5 @@
 import { DeploymentStatus as APIDeploymentStatus } from '@/generated/graphqlClient';
-import { DeploymentStatus } from '@/types/Deployment';
+import type { DeploymentStatus } from '@/types/Deployment';
 
 type ParseAPIDeploymentStatusArgs = APIDeploymentStatus;
 
@@ -36,7 +36,6 @@ export const parseAPIDeploymentStatus = (
     case APIDeploymentStatus.BUILD_CANCELLING:
       return 'cancelling';
 
-    case APIDeploymentStatus.CREATED:
     default:
       return 'created';
   }

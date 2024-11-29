@@ -7,7 +7,7 @@ import {
 } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Button } from '@/ui';
 
 import { AddApplicationCredentialsModal } from './AddAplicationCredentialsModal';

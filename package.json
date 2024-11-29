@@ -14,7 +14,7 @@
     "format:e2e": "pnpm exec biome format --write ./tests/e2e",
     "format:unsafe": "pnpm exec biome check --write --unsafe ./src",
     "generate:sitemap": "pnpm exec bun run .scripts/generate_sitemap.ts",
-    "lint": "pnpm exec biome lint --write --changed --no-errors-on-unmatched ./src",
+    "lint": "pnpm exec biome lint --write --no-errors-on-unmatched ./src",
     "lint:check": "pnpm exec biome lint ./src",
     "lint:unsafe": "pnpm exec biome lint --write --unsafe --changed --no-errors-on-unmatched ./src",
     "start": "next start",

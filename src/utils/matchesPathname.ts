@@ -14,21 +14,12 @@ export const matchesPathname = (pathname: string, asPath: string): boolean => {
     const patternSeg = pathnameSegments[i];
     const pathSeg = asPathSegments[i] || 'MISSING';
 
-    if (patternSeg.startsWith('[[') && patternSeg.endsWith(']]')) {
+    if (patternSeg.startsWith('[[') && patternSeg.endsWith(']]') || 
+       patternSeg.startsWith('[...') && patternSeg.endsWith(']')) {
       catchAllEncountered = true;
-      break;
-    } else if (patternSeg.startsWith('[...') && patternSeg.endsWith(']')) {
-      catchAllEncountered = true;
-
-      if (pathSeg === 'MISSING') {
-        return false;
-      }
-
-      break;
+      if (pathSeg === 'MISSING') return false;
     } else if (patternSeg.startsWith('[') && patternSeg.endsWith(']')) {
-      if (pathSeg === 'MISSING') {
-        return false;
-      }
+      if (pathSeg === 'MISSING') return false;
     } else if (patternSeg !== pathSeg) {
       return false;
     }

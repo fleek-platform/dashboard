@@ -2,7 +2,7 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Box, Button, Icon, IconName, Text } from '@/ui';
+import { Box, Button, Icon, type IconName, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 
 import { SettingsBoxStyles as S } from './SettingsBox.styles';

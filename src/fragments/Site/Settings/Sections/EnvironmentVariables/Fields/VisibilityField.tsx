@@ -1,5 +1,5 @@
 import { Form, ToggleButton } from '@/components';
-import { DisabledProps, LoadingProps } from '@/types/Props';
+import type { DisabledProps, LoadingProps } from '@/types/Props';
 import { FormField } from '@/ui';
 
 import { EnvironmentVariablesStyles as S } from '../EnvironmentVariables.styles';

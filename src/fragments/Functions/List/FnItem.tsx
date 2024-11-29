@@ -1,10 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
-import React, { useCallback } from 'react';
+import type React from 'react';
+import { useCallback } from 'react';
 
 import { Link, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
-import { type FleekFunctionsQuery } from '@/generated/graphqlClient';
-import { UseFunctionsListArgs } from '@/hooks/useFunctionsList';
+import type { FleekFunctionsQuery } from '@/generated/graphqlClient';
+import type { UseFunctionsListArgs } from '@/hooks/useFunctionsList';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { Box, Skeleton, Text } from '@/ui';

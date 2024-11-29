@@ -1,5 +1,5 @@
 import { ExternalLink } from '@/components';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Text } from '@/ui';
 
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';

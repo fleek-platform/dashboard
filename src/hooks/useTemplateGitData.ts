@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import { GitProvider } from '@/integrations/git';
-import { Template } from '@/types/Template';
+import type { GitProvider } from '@/integrations/git';
+import type { Template } from '@/types/Template';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 
 export type UseTemplateGitDataArgs = Pick<Template, 'deployment'>;

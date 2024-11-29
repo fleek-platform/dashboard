@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const BillingPage: Page = () => {

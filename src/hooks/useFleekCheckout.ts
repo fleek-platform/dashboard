@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
 import { useCookies } from '@/providers/CookiesProvider';
-import { CheckoutResponse, PlanResponse } from '@/types/Billing';
+import type { CheckoutResponse, PlanResponse } from '@/types/Billing';
 
 import { useRouter } from './useRouter';
 

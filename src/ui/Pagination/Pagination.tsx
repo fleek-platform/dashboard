@@ -2,11 +2,11 @@ import { forwardStyledRef } from '@/theme';
 
 import { Icon } from '../Icon/Icon';
 import { PaginationStyles as PS } from './Pagination.styles';
-import { PaginationItem } from './Pagination.utils';
+import type { PaginationItem } from './Pagination.utils';
 import {
   PaginationItemType,
   usePagination,
-  UsePaginationArgs,
+  type UsePaginationArgs,
 } from './usePagination';
 
 export type PaginationProps = UsePaginationArgs &

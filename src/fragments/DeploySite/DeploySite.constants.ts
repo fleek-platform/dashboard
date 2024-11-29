@@ -1,5 +1,5 @@
-import { SiteSourceProvider } from '@/types/Site';
-import { IconName } from '@/ui';
+import type { SiteSourceProvider } from '@/types/Site';
+import type { IconName } from '@/ui';
 
 export const sourceProviderLabel: Record<SiteSourceProvider, string> = {
   github: 'GitHub',

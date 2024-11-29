@@ -1,5 +1,5 @@
 import { Profile } from '@/fragments';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const NotificationsPage: Page = () => {
   return <Profile.Settings.Sections.ManageNotifications />;

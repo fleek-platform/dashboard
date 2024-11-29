@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 export const useUserHasScrolled = () => {
   const [hasScrolled, setHasScrolled] = useState(false);

@@ -1,6 +1,6 @@
 import { Text } from '@/ui';
 
-import { OverallMigrationStatus } from './Migration';
+import type { OverallMigrationStatus } from './Migration';
 import { MigrationStyles as S } from './Migration.styles';
 
 type MigrationStatusBoxProps = {

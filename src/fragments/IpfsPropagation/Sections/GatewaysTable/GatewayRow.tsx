@@ -4,7 +4,7 @@ import { BadgeText, CustomTooltip, ExternalLink } from '@/components';
 import { useGatewayTest } from '@/hooks/useGatewayTest';
 import { useHostnameLookup } from '@/hooks/useHostnameLookup';
 import { useToast } from '@/hooks/useToast';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Box, Button, Icon, Image, Skeleton, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getLinkForIPFSCountryFlag } from '@/utils/getLinkForIPFSCountryFlag';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ExternalLinkProps } from '@/components';
+import type { ExternalLinkProps } from '@/components';
 import { Text } from '@/ui';
 
 import { BoxStyles as S } from './ResourcesBox.styles';

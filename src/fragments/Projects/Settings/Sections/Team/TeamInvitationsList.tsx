@@ -4,12 +4,12 @@ import { BadgeText, SettingsListItem } from '@/components';
 import { SettingsBox } from '@/components/SettingsBox/SettingsBox';
 import { useInvitationsQuery } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Invitation } from '@/types/TeamProject';
+import type { Invitation } from '@/types/TeamProject';
 import { Box, Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import {
-  TeamProjectContext,
+  type TeamProjectContext,
   TeamProjectProvider,
   useTeamProjectContext,
 } from './TeamProject.context';

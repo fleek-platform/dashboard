@@ -1,4 +1,4 @@
-import { HandleLogoUploadProps } from '@/types/Logo';
+import type { HandleLogoUploadProps } from '@/types/Logo';
 import { FormField } from '@/ui';
 
 import { Form } from '../Form/Form';

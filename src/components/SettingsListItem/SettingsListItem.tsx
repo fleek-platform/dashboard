@@ -1,6 +1,6 @@
 import { ExternalLink } from '@/components';
-import { ChildrenProps, DisabledProps, LoadingProps } from '@/types/Props';
-import { AvatarMarble, Button, Icon, IconName, Menu, Text } from '@/ui';
+import type { ChildrenProps, DisabledProps, LoadingProps } from '@/types/Props';
+import { AvatarMarble, Button, Icon, type IconName, Menu, Text } from '@/ui';
 
 import { PermissionsTooltip } from '../PermissionsTooltip/PermissionsTooltip';
 import { SettingsListItemStyles as S } from './SettingsListItem.styles';
@@ -76,7 +76,7 @@ SettingsListItem.DropdownMenu = ({
         loading
         disabled
         className="self-center p-1"
-      ></Button>
+      />
     );
   }
 

@@ -1,6 +1,6 @@
 import {
   SiteBuildSettings,
-  SiteBuildSettingsData,
+  type SiteBuildSettingsData,
 } from '@fleek-platform/utils-sites';
 import { useCallback, useEffect, useMemo } from 'react';
 
@@ -9,9 +9,9 @@ import { useGitRepositoryBranches } from '@/hooks/useGitRepositoryBranches';
 import { useGitRepositoryBuildSettings } from '@/hooks/useGitRepositoryBuildSettings';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
-import { GitProvider } from '@/integrations/git';
-import { LoadingProps } from '@/types/Props';
-import { SiteFramework } from '@/types/Site';
+import type { GitProvider } from '@/integrations/git';
+import type { LoadingProps } from '@/types/Props';
+import type { SiteFramework } from '@/types/Site';
 import { Avatar, Combobox, FormField, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';

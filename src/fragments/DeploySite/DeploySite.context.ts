@@ -1,17 +1,17 @@
-import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { type MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { useClient } from 'urql';
 
 import {
   GitAccessTokenDocument,
-  GitAccessTokenQuery,
-  GitAccessTokenQueryVariables,
+  type GitAccessTokenQuery,
+  type GitAccessTokenQueryVariables,
   GithubAppInstallationsDocument,
-  GithubAppInstallationsQuery,
-  GithubAppInstallationsQueryVariables,
+  type GithubAppInstallationsQuery,
+  type GithubAppInstallationsQueryVariables,
 } from '@/generated/graphqlClient';
-import { GitHub, GitProvider } from '@/integrations/git';
+import { GitHub, type GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { SiteSourceProvider } from '@/types/Site';
+import type { SiteSourceProvider } from '@/types/Site';
 import { Stepper } from '@/ui';
 import { createContext } from '@/utils/createContext';
 
@@ -64,10 +64,12 @@ export const useStepSetup = ({ title, handleBackClick }: UseStepSetupArgs) => {
       setTitle(title);
     }
 
+    if (!handleBackClick) return;
+    
     setHandleBackClick(() => handleBackClick); // suppress react set state function
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleBackClick, setHandleBackClick, title]);
 };
 
 export const useGitInstallationStep = () => {
@@ -220,11 +222,7 @@ export const useGitInstallationStep = () => {
       setIsCheckingForInstallation(false);
     }
   }, [
-    client,
-    gitProviderId,
     nextStep,
-    projectId,
-    accessToken,
     setAccessToken,
     getInstallation,
     checkWithGithub,

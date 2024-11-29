@@ -1,5 +1,5 @@
 import { SourceProvider } from '@/generated/graphqlClient';
-import { SiteSourceProvider } from '@/types/Site';
+import type { SiteSourceProvider } from '@/types/Site';
 
 type GetAPISourceProviderArgs = SiteSourceProvider;
 

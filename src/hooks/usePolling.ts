@@ -1,9 +1,9 @@
 import {
-  QueryFunction,
-  QueryKey,
+  type QueryFunction,
+  type QueryKey,
   useQuery,
-  UseQueryOptions,
-  UseQueryResult,
+  type UseQueryOptions,
+  type UseQueryResult,
 } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 

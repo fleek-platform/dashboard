@@ -36,11 +36,11 @@ export const RecoveryCodes: React.FC<RecoveryCodesProps> = ({
       </S.RecoveryCodes.Header>
       <S.RecoveryCodes.Content>
         {isLoading || !codes
-          ? Array.from({ length: 12 }).map((_, i) => (
-              <SkeletonElement variant="text" key={i} />
+          ? Array.from({ length: 12 }).map((_) => (
+              <SkeletonElement variant="text" key={crypto.randomUUID()} />
             ))
-          : codes.map((code, i) => (
-              <Text key={`recovery-code-${i}`}>{code}</Text>
+          : codes.map((code) => (
+              <Text key={`recovery-code-${crypto.randomUUID()}`}>{code}</Text>
             ))}
       </S.RecoveryCodes.Content>
     </S.RecoveryCodes.Container>

@@ -242,12 +242,16 @@ export class FormController<
   }
 
   private emitFieldChange<Key extends keyof Values>(key: Key) {
-    this.fieldListeners[key].forEach((listener) => listener(this.fields[key]));
+    for (const listener of this.fieldListeners[key]) {
+      listener(this.fields[key]);
+    }
     this.emitFormChange();
   }
 
   private emitFormChange() {
-    this.formListeners.forEach((listener) => listener(this));
+    for (const listener of this.formListeners) {
+      listener(this);      
+    }
   }
 
   private createFields(values: Values): FormController.Fields<Values> {
@@ -303,10 +307,10 @@ export class FormController<
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
+// TODO: The "FormValues" type was declared in the component/forms, where applies use this one instead
 export namespace FormController {
   export type FormValues = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible values
     [field: string]: any;
   };
 

@@ -1,6 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { Image, ImageProps } from '@/ui';
+import { Image, type ImageProps } from '@/ui';
 import { AvatarMarble } from '@/ui/AvatarMarble/AvatarMarble';
 
 import { BreadcrumbStyle as S } from './Breadcrumb.styles';

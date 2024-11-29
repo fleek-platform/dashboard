@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Box } from '@/ui';
 
-import { AuditLog, AuditLogProps } from './AuditLog';
+import { AuditLog, type AuditLogProps } from './AuditLog';
 
 const meta: Meta = {
   title: 'Library/Fragments/Site/Audit Log',

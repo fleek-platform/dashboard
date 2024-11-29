@@ -1,6 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { NavigationItem } from '@/components';
+import type { NavigationItem } from '@/components';
 import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 

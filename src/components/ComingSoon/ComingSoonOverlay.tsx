@@ -1,4 +1,4 @@
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Text } from '@/ui';
 
 import { ComingSoonStyles as S } from './ComingSoon.styles';

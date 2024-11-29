@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AnyVariables, UseQueryArgs, UseQueryResponse } from 'urql';
+import type { AnyVariables, UseQueryArgs, UseQueryResponse } from 'urql';
 
 import { Log } from '@/utils/log';
 

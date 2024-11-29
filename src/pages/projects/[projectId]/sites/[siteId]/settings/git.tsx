@@ -1,6 +1,6 @@
 import { constants } from '@/constants';
 import { Site } from '@/fragments';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const GitSettingsPage: Page = () => {

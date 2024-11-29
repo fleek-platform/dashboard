@@ -10,7 +10,7 @@ import { useRouter } from '@/hooks/useRouter';
 import { useSiteEnsRecordsQuery } from '@/hooks/useSiteEnsRecordsQuery';
 import { Button } from '@/ui';
 
-import { SettingsItemProviderProps } from '../../Elements/SettingsItem.context';
+import type { SettingsItemProviderProps } from '../../Elements/SettingsItem.context';
 import { EnsMethodSetupModal } from './EnsMethodSetupModal';
 import { EnsRecordsList } from './EnsRecordsList';
 import {

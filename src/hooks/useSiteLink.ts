@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { DomainStatus, useSiteQuery } from '@/generated/graphqlClient';
-import { Site } from '@/types/Site';
+import type { Site } from '@/types/Site';
 import { getActiveEnsList } from '@/utils/getActiveEnsList';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 import { getLinkForIPFSGateway } from '@/utils/getLinkForIPFSGateway';

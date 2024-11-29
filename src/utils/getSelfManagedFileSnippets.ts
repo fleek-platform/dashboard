@@ -1,13 +1,14 @@
-import { CodeSnippetProps } from '@/components';
-import { FleekRootConfig, Site } from '@/types/Site';
+import type { CodeSnippetProps } from '@/components';
+import type { FleekRootConfig, Site } from '@/types/Site';
 
 type GetSelfManagedFileSnippetsArgs = Site;
 
 export const getSelfManagedFileSnippets = (
   args?: GetSelfManagedFileSnippetsArgs,
 ): CodeSnippetProps[] =>
-  args ? [getFleekFileSnippet(args), getGitHubActionSnippet(args)] : [];
+  args ? [getFleekFileSnippet(args), getGitHubActionSnippet()] : [];
 
+// biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible values
 const parseObject = (obj: any) => JSON.stringify(obj, null, 2);
 
 type GetFleekFileSnippetArgs = GetSelfManagedFileSnippetsArgs;
@@ -29,7 +30,9 @@ const getFleekFileSnippet = ({
 
 type GetGitHubActionSnippetArgs = GetSelfManagedFileSnippetsArgs;
 
-const getGitHubActionSnippet = ({}: GetGitHubActionSnippetArgs) => ({
+// TODO: Why did this declared an empty object
+// in the function signature?
+const getGitHubActionSnippet = () => ({
   title: '.github/workflows/deploy-to-fleek.yml',
   code: `name: Deploy Site on Fleek.xyz
 

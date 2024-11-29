@@ -2,7 +2,7 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box, Button, Dialog, Divider, Icon, Text } from '@/ui';
 
 import { Modal } from '../Modal/Modal';

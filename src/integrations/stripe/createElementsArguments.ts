@@ -1,6 +1,6 @@
-import { StripeElementsOptionsMode } from '@stripe/stripe-js';
+import type { StripeElementsOptionsMode } from '@stripe/stripe-js';
 
-import { ThemeHook } from '@/providers/ThemeProvider';
+import type { ThemeHook } from '@/providers/ThemeProvider';
 
 type CreateElementsAppearance = (
   args: ThemeArgs,

@@ -3,7 +3,7 @@ import { constants } from '@/constants';
 import { Projects } from '@/fragments';
 import { GitIntegration } from '@/fragments';
 import { useGitProvidersQuery } from '@/generated/graphqlClient';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { Button } from '@/ui';
 import { withAccess } from '@/utils/withAccess';
 

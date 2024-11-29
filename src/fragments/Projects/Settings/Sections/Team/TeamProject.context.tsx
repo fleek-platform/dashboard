@@ -1,5 +1,5 @@
-import { ChildrenProps } from '@/types/Props';
-import { HandleUpdateRoleProps } from '@/types/TeamProject';
+import type { ChildrenProps } from '@/types/Props';
+import type { HandleUpdateRoleProps } from '@/types/TeamProject';
 import { createContext } from '@/utils/createContext';
 
 export type TeamProjectContext = {

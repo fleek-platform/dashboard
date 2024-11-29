@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
-  AuthProviders,
-  AuthWith,
+  type AuthProviders,
+  type AuthWith,
   useAuthProviders,
 } from '@/hooks/useAuthProviders';
 import { usePostHog } from '@/hooks/usePostHog';

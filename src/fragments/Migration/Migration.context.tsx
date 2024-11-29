@@ -9,12 +9,12 @@ import {
 import { usePollMigrationRequests } from '@/hooks/usePollMigrationRequests';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Stepper } from '@/ui';
 import { createContext } from '@/utils/createContext';
 
 import { getMigrationStatus } from './getMigrationStatus';
-import { MigrationRequest, OverallMigrationStatus } from './Migration';
+import type { MigrationRequest, OverallMigrationStatus } from './Migration';
 
 type MigrationContext = {
   isStep1Loading: boolean;

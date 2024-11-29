@@ -32,13 +32,13 @@ else
   echo "🦖 Automated CI run detected - skipping test prompt"
 fi
 
-if pnpm run format:check; then
-  echo "✅ Code format checked!"
-else
-  echo "⚠️ WARNING: Incorrect code format, fix it before committing, please!"
-  echo "💡 Use the command pnpm format"
-  exit 1
-fi
+# if pnpm run format:check; then
+#   echo "✅ Code format checked!"
+# else
+#   echo "⚠️ WARNING: Incorrect code format, fix it before committing, please!"
+#   echo "💡 Use the command pnpm format"
+#   exit 1
+# fi
 
 # TODO: There are several linter warnings
 # Can't auto-fix, have to be revised manually

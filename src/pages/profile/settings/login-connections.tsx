@@ -4,9 +4,9 @@ import { useClient } from 'urql';
 
 import { Form } from '@/components';
 import { Profile } from '@/fragments';
-import { UpdateUserDataInput } from '@/generated/graphqlClient';
+import type { UpdateUserDataInput } from '@/generated/graphqlClient';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const ProjectSettingsPage: Page = () => {
   const { update: updateUser } = useUpdateUser();

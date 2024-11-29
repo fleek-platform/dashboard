@@ -1,7 +1,7 @@
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useState } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type EnsSettingsContext = {

@@ -11,9 +11,9 @@ export const BranchField: React.FC = () => {
   const [gitBranchesQuery] = useGitBranchesQuery({
     variables: {
       where: {
-        gitProviderId: gitProviderId!,
-        sourceRepositoryOwner: gitRepository?.owner as string,
-        sourceRepositoryName: gitRepository?.name as string,
+        gitProviderId: gitProviderId,
+        sourceRepositoryOwner: gitRepository?.owner,
+        sourceRepositoryName: gitRepository?.name,
       },
     },
     pause: !gitProviderId || !gitRepository?.name || !gitRepository.owner,

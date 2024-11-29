@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { SelfManagedSetup, SelfManagedSetupProps } from './SelfManagedSetup';
+import { SelfManagedSetup, type SelfManagedSetupProps } from './SelfManagedSetup';
 
 const meta: Meta = {
   title: 'Library/Fragments/Site/Self Managed/File Setup',

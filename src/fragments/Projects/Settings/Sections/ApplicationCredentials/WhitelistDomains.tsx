@@ -1,9 +1,9 @@
 import { createApplicationSchemaNext } from '@fleek-platform/utils-validation';
 import { useEffect, useState } from 'react';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 import { Form, SettingsBox } from '@/components';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Box, Button, FormField, Icon, Input } from '@/ui';
 
 import { ApplicationCredentialsStyles as S } from './ApplicationCredentials.styles';

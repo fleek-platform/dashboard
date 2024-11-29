@@ -1,8 +1,8 @@
-import { VariantProps } from 'class-variance-authority';
-import React, { ComponentProps, forwardRef } from 'react';
+import type { VariantProps } from 'class-variance-authority';
+import React, { type ComponentProps, forwardRef } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
-import { buttonVariants, Icon, IconName, Text } from '@/ui';
+import type { ChildrenProps } from '@/types/Props';
+import { buttonVariants, Icon, type IconName, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { ExternalLink } from '../ExternalLink/ExternalLink';

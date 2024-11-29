@@ -9,7 +9,7 @@ import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
-import { AppProps } from '@/types/App';
+import type { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {

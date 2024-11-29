@@ -11,7 +11,7 @@ const colorSchemes = {
   red: {},
 };
 
-const buildColorScheme = (color: ColorScheme, hoverable: boolean): any => {
+const buildColorScheme = (color: ColorScheme, hoverable: boolean) => {
   if (color === 'slate') {
     return {
       backgroundColor: '$surface-tertiary',
@@ -20,22 +20,7 @@ const buildColorScheme = (color: ColorScheme, hoverable: boolean): any => {
         ? {
             cursor: 'pointer',
             '&:hover': {
-              backgroundColor: `$surface-actionable`,
-            },
-          }
-        : {
-            cursor: 'default',
-          }),
-    };
-  } else {
-    return {
-      backgroundColor: `$surface-${color}-light`,
-      color: `$text-${color}`,
-      ...(hoverable
-        ? {
-            cursor: 'pointer',
-            '&:hover': {
-              backgroundColor: `$surface-${color}-actionable`,
+              backgroundColor: '$surface-actionable',
             },
           }
         : {
@@ -43,6 +28,21 @@ const buildColorScheme = (color: ColorScheme, hoverable: boolean): any => {
           }),
     };
   }
+  
+  return {
+    backgroundColor: `$surface-${color}-light`,
+    color: `$text-${color}`,
+    ...(hoverable
+      ? {
+          cursor: 'pointer',
+          '&:hover': {
+            backgroundColor: `$surface-${color}-actionable`,
+          },
+        }
+      : {
+          cursor: 'default',
+        }),
+  };
 };
 
 const compoundVariants = (() => {

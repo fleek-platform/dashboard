@@ -1,14 +1,14 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import {
-  BreadcrumbItem,
+  type BreadcrumbItem,
   LayoutHead,
   ProjectDropdown,
   RootLayout,
 } from '@/components';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 
 import { App } from '../App/App';
 

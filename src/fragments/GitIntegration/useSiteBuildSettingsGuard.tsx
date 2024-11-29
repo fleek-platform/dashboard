@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { UseQueryExecute, UseQueryState } from 'urql';
+import type { UseQueryExecute, UseQueryState } from 'urql';
 
 import { SettingsBox } from '@/components';
-import { Site } from '@/types/Site';
+import type { Site } from '@/types/Site';
 
-import { ProviderDetails, ProviderDetailsProps } from './ProviderDetails';
+import { ProviderDetails, type ProviderDetailsProps } from './ProviderDetails';
 
 type UseSiteBuildSettingsGuardProps = {
   siteQuery?: UseQueryState<{ site: Site }, { where: { id: string } }>;

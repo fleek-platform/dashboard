@@ -14,7 +14,7 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import {
   Avatar,
   Box,
@@ -28,7 +28,7 @@ import {
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
 import {
-  GitUser,
+  type GitUser,
   useDeploySiteContext,
   useStepSetup,
 } from '../../DeploySite.context';
@@ -45,14 +45,14 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
   } = useDeploySiteContext();
 
   const [templateDeployQuery] = useTemplateDeployQuery({
-    variables: { where: { id: templateId! } },
+    variables: { where: { id: templateId } },
     requestPolicy: 'network-only',
   });
   const [, createRepositoryFromTemplate] =
     useCreateRepositoryFromTemplateMutation();
 
   const [gitIntegrationQuery] = useGitIntegrationQuery({
-    variables: { where: { gitProviderId: gitProviderId! } },
+    variables: { where: { gitProviderId } },
     pause: !gitProviderId,
   });
 
@@ -125,7 +125,7 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
         const repository = createResponse.data.createGithubRepoFromTemplate;
         setGitRepository({
           id: repository.repositoryId.toString(),
-          gitProviderId: gitProviderId as string,
+          gitProviderId,
           defaultBranch: repository.defaultBranch,
           name: repository.name,
           owner: gitUser.name,
@@ -160,9 +160,7 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
       templateGit.baseDirectory ?? undefined,
       true,
     );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [templateGit]);
+  }, [templateGit, createSiteForm.fields.baseDirectory.setValue, form.fields.repositoryName.setValue]);
 
   useEffect(() => {
     setIsLoading(templateDeployQuery.fetching);
@@ -258,7 +256,7 @@ const AccountField: React.FC = () => {
   const [countSitesWithSourceProviderQuery] =
     useCountSitesWithSourceProviderQuery();
   const [gitInstallationsQuery] = useGitInstallationsQuery({
-    variables: { where: { gitProviderId: gitProviderId! } },
+    variables: { where: { gitProviderId } },
     pause: !gitProviderId,
   });
 

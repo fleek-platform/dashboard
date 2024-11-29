@@ -1,8 +1,8 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { forwardStyledRef } from '@/theme';
-import { LoadingProps } from '@/types/Props';
-import { Templates } from '@/types/Template';
+import type { LoadingProps } from '@/types/Props';
+import type { Templates } from '@/types/Template';
 import { Avatar, Card, Icon, Skeleton, Text } from '@/ui';
 
 import { TemplateCardStyles as S } from './TemplateCard.styles';

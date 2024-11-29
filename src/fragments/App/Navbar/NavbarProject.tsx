@@ -13,8 +13,8 @@ import { useRouter } from '@/hooks/useRouter';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Project } from '@/types/Project';
-import { ChildrenProps } from '@/types/Props';
+import type { Project } from '@/types/Project';
+import type { ChildrenProps } from '@/types/Props';
 
 import { Navbar } from '../Navbar/Navbar';
 import { NavbarStyles as S } from './Navbar.styles';
@@ -34,8 +34,8 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const [enableNavigation, setEnableNavigation] = useState(true);
   const isDesktop = useMediaQueryWindow('(min-width: 768px)');
 
-  const siteId = router.query.siteId!;
-  const deploymentId = router.query.deploymentId!;
+  const siteId = router.query.siteId;
+  const deploymentId = router.query.deploymentId;
 
   const [siteQuery] = useSiteQuery({
     variables: { where: { id: siteId } },
@@ -52,7 +52,7 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
 
   useEffect(() => {
     setEnableNavigation(isDesktop);
-  }, [setEnableNavigation, isDesktop]);
+  }, [isDesktop]);
 
   const projects = projectsQuery.data?.projects.data;
   const shouldShowSkeleton =

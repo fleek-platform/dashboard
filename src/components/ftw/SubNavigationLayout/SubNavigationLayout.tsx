@@ -1,5 +1,5 @@
 import { useIsActivePage } from '@/hooks/useIsActivePage';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box, Scrollable, Skeleton } from '@/ui';
 
 import { LinkButton } from '../LinkButton/LinkButton';
@@ -59,9 +59,9 @@ export const SubNavigationLayout: React.FC<
           <Box className="flex-row gap-2 flex-nowrap overflow-auto">
             {isNavigationLoading ? (
               <>
-                {Array.from({ length: 5 }).map((_, i) => (
+                {Array.from({ length: 5 }).map((_) => (
                   <Skeleton
-                    key={i}
+                    key={crypto.randomUUID()}
                     variant="text"
                     className="w-1/6 h-[2rem] rounded-lg"
                   />

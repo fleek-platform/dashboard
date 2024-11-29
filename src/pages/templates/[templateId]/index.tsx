@@ -13,7 +13,7 @@ import { useIsTemplateOwner } from '@/hooks/useIsTemplateOwner';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { Button } from '@/ui';
 
 const TemplatePage: Page = () => {

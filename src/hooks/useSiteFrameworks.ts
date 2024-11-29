@@ -6,8 +6,8 @@ import { useClient } from 'urql';
 import {
   SiteFrameworkRecognitionStrategy,
   SiteFrameworksDocument,
-  SiteFrameworksQuery,
-  SiteFrameworksQueryVariables,
+  type SiteFrameworksQuery,
+  type SiteFrameworksQueryVariables,
 } from '@/generated/graphqlClient';
 
 export const useSiteFrameworks = () => {

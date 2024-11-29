@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { StripeCheckout } from '@/integrations/stripe/StripeCheckout';
 import { useTheme } from '@/providers/ThemeProvider';
-import { BillingPlan } from '@/types/Billing';
+import type { BillingPlan } from '@/types/Billing';
 import { Log } from '@/utils/log';
 
 export type UseStripeCheckoutArgs = {

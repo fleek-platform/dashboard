@@ -1,5 +1,5 @@
 import { useUploadContext } from '@/providers/UploadProvider';
-import { Upload } from '@/types/Upload';
+import type { Upload } from '@/types/Upload';
 import { Box } from '@/ui';
 
 import { UploadFile } from './UploadFile';

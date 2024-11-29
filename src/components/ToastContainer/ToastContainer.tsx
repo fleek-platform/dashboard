@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { useToastContext } from '@/providers/ToastProvider';
-import { Toast as ToastType } from '@/types/Toast';
+import type { Toast as ToastType } from '@/types/Toast';
 import { Button } from '@/ui';
 
 import { DismissTimeout, ToastStyles as S } from './ToastContainer.styles';
@@ -47,7 +47,7 @@ const Toast: React.FC<ToastProps> = ({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onDismiss, id],
+    [onDismiss, id, removeToast],
   );
 
   return (

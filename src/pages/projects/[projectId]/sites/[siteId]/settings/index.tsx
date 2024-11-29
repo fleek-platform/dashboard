@@ -6,7 +6,7 @@ import { Form } from '@/components';
 import { constants } from '@/constants';
 import { Site, TwoFactorAuthentication } from '@/fragments';
 import {
-  UpdateSiteDataInput,
+  type UpdateSiteDataInput,
   useMeQuery,
   usePurgeSiteCacheMutation,
   useSiteQuery,
@@ -14,8 +14,8 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useUpdateSite } from '@/hooks/useUpdateSite';
-import { Page } from '@/types/App';
-import { HandleLogoUploadProps } from '@/types/Logo';
+import type { Page } from '@/types/App';
+import type { HandleLogoUploadProps } from '@/types/Logo';
 import { withAccess } from '@/utils/withAccess';
 
 const SiteSettingsPage: Page = () => {

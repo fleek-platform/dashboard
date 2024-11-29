@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 
-import { StatusRadioProps } from '@/components';
-import { BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
+import type { StatusRadioProps } from '@/components';
+import { type BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import {
+import type {
   DeploymentBuild,
   DeploymentStatus as ParsedDeploymentStatus,
 } from '@/types/Deployment';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Accordion, Box, Button, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { dateFormat } from '@/utils/dateFormats';

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { BadgeText } from '@/components';
 import { useTemplateCategoriesQuery } from '@/generated/graphqlClient';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Avatar, Box, Checkbox, Icon, Text } from '@/ui';
 
 import { TemplateStyles as S } from '../../Template.styles';

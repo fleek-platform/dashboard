@@ -9,7 +9,7 @@ describe('Utils isServerSide', () => {
   });
 
   it('should return true when window is undefined', () => {
-    delete (global as any).window;
+    global.window = undefined;
     expect(isServerSide()).toBe(true);
   });
 
@@ -19,7 +19,7 @@ describe('Utils isServerSide', () => {
   });
 
   it('should handle window being null', () => {
-    (global as any).window = null;
+    global.window = null;
     expect(isServerSide()).toBe(true);
   });
 });

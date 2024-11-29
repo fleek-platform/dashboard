@@ -1,7 +1,7 @@
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { createElement, forwardRef } from 'react';
 
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
 const textVariants = cva([], {

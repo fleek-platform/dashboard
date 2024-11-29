@@ -1,18 +1,18 @@
 export const Log = {
   IDENTIFIER: '[flk]',
 
+  // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible values
   error(...args: any[]): void {
-    // eslint-disable-next-line no-console
     console.error(this.IDENTIFIER, ...args);
   },
 
+  // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible values
   warn(...args: any[]): void {
-    // eslint-disable-next-line no-console
     console.warn(this.IDENTIFIER, ...args);
   },
 
+  // biome-ignore lint/suspicious/noExplicitAny: Allow any for flexible values
   info(...args: any[]): void {
-    // eslint-disable-next-line no-console
     console.info(this.IDENTIFIER, ...args);
   },
 };

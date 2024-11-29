@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { Link, LinkProps } from './Link';
+import { Link, type LinkProps } from './Link';
 
 const meta: Meta = {
   title: 'FTW/Link',

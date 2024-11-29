@@ -17,7 +17,7 @@ import {
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { SiteDomain } from '@/types/Site';
+import type { SiteDomain } from '@/types/Site';
 import { Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';

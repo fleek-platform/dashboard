@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { Link, SettingsBox } from '@/components';
-import { LoadingProps } from '@/types/Props';
+import type { LoadingProps } from '@/types/Props';
 import { Box, Icon, Text } from '@/ui';
 
 import { CurrentUsageStyles as S } from './CurrentUsage.styles';

@@ -1,12 +1,13 @@
 import { envVarName, envVarValue } from '@fleek-platform/utils-validation';
-import React, { useEffect, useRef, useState } from 'react';
-import { z } from 'zod';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { z } from 'zod';
 
 import { BaseDirectoryField, Form, ToggleButton } from '@/components';
 import { constants } from '@/constants';
 import { useDebounce } from '@/hooks/useDebounce';
 import { space } from '@/theme/foundations/space';
-import { SiteNewSecret } from '@/types/Site';
+import type { SiteNewSecret } from '@/types/Site';
 import { Button, Divider, FormField, Icon, Input, Text } from '@/ui';
 
 import { useDeploySiteContext } from '../../DeploySite.context';

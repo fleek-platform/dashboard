@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { useClient } from 'urql';
 
 import { useVersionQuery } from '@/generated/graphqlClient';

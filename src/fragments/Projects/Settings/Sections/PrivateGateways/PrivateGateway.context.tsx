@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import {
-  SettingsItemContext,
+  type SettingsItemContext,
   SettingsItemProvider,
 } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
 import { usePrivateGatewaysQuery } from '@/generated/graphqlClient';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type PrivateGatewayContext = {

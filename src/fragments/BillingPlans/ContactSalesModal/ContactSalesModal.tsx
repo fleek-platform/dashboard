@@ -50,6 +50,8 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
   });
 
   useEffect(() => {
+    if (!open) return;
+    
     form.resetForm();
     form.fields.email.setValue(initialEmail, true);
   }, [open, form, initialEmail]);

@@ -1,7 +1,7 @@
 import { ExternalLink } from '@/components';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
-import { LoadingProps } from '@/types/Props';
-import { Template } from '@/types/Template';
+import type { LoadingProps } from '@/types/Props';
+import type { Template } from '@/types/Template';
 import { Avatar, Icon, Image, Skeleton, Text } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { getLinkForSiteSlug } from '@/utils/siteSlugLinks';

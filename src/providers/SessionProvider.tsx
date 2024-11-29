@@ -3,16 +3,16 @@ import { useEffect, useMemo } from 'react';
 import { useToast } from '@/hooks/useToast';
 import { createContext } from '@/utils/createContext';
 
-import { AuthContext, AuthProvider, useAuthContext } from './AuthProvider';
+import { type AuthContext, AuthProvider, useAuthContext } from './AuthProvider';
 import { BillingProvider, useBillingContext } from './BillingProvider';
 import { useCookies } from './CookiesProvider';
 import {
-  PermissionsContext,
+  type PermissionsContext,
   PermissionsProvider,
   usePermissionsContext,
 } from './PermissionsProvider';
 import {
-  ProjectContext,
+  type ProjectContext,
   ProjectProvider,
   useProjectContext,
 } from './ProjectProvider';

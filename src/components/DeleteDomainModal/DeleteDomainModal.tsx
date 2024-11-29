@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useSettingsItemContext } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Button, Dialog } from '@/ui';
 
 import { Modal } from '../Modal/Modal';

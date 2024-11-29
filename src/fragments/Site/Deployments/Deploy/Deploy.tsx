@@ -3,8 +3,8 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
-import { Deployment } from '@/types/Deployment';
-import { ChildrenProps } from '@/types/Props';
+import type { Deployment } from '@/types/Deployment';
+import type { ChildrenProps } from '@/types/Props';
 import { Icon, Skeleton, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -12,7 +12,7 @@ import { shortStringFormat } from '@/utils/stringFormat';
 
 import { DeployStyles as S } from './Deploy.styles';
 import { DeployStatus } from './DeployStatus';
-import { DropdownMenu, DropdownMenuProps } from './DropdownMenu';
+import { DropdownMenu, type DropdownMenuProps } from './DropdownMenu';
 
 export type DeployProps = {
   deployment: Deployment;

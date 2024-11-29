@@ -44,7 +44,10 @@ const domainLookup = async (domain: string): Promise<DomainLookupResponse> => {
       throw new Error(`DNS lookup failed: ${response.statusText}`);
     }
     const res = (await response.json()) as unknown as DNSResponse;
-    const { data: address, name } = res.Answer?.find(
+
+    if (!res.Answer) throw Error('Expected a DNS answer reposponse list but got undefined.');
+    
+    const { data: address, name } = res.Answer.find(
       (record) => record.type === 1,
     );
 

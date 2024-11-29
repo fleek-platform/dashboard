@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 
@@ -45,16 +46,16 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
   return (
     <S.Table.Root>
       <colgroup>
-        {headers.map((header, index) => (
-          <col key={index} span={1} style={{ width: header.size }} />
+        {headers.map((header) => (
+          <col key={crypto.randomUUID()} span={1} style={{ width: header.size }} />
         ))}
         <col span={1} style={{ width: '4rem' }} />
       </colgroup>
 
       <S.Table.Header>
         <S.Table.Row>
-          {headers.map((header, index) => (
-            <S.Table.HeaderCell key={index}>
+          {headers.map((header) => (
+            <S.Table.HeaderCell key={crypto.randomUUID()}>
               {header.children}
             </S.Table.HeaderCell>
           ))}
@@ -65,11 +66,11 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
       <S.Table.Body>
         {rows.map((row, rowIndex) => (
           <S.Table.Row
-            key={rowIndex}
+            key={crypto.randomUUID()}
             onClick={() => handleChange(rowIndex, !values[rowIndex])}
           >
-            {row.map((cell, columnIndex) => (
-              <S.Table.Cell key={columnIndex}>{cell}</S.Table.Cell>
+            {row.map((cell) => (
+              <S.Table.Cell key={crypto.randomUUID()}>{cell}</S.Table.Cell>
             ))}
 
             <S.Table.Cell>
@@ -80,8 +81,8 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
 
         {isLoading && (
           <S.Table.Row>
-            {headers.map((_, columnIndex) => (
-              <S.Table.Cell key={columnIndex}>
+            {headers.map((_) => (
+              <S.Table.Cell key={crypto.randomUUID()}>
                 <Skeleton />
               </S.Table.Cell>
             ))}

@@ -3,8 +3,8 @@ import { useClient } from 'urql';
 import { ExternalLink } from '@/components';
 import {
   CreateGithubAppInstallationUrlDocument,
-  CreateGithubAppInstallationUrlMutation,
-  CreateGithubAppInstallationUrlMutationVariables,
+  type CreateGithubAppInstallationUrlMutation,
+  type CreateGithubAppInstallationUrlMutationVariables,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';

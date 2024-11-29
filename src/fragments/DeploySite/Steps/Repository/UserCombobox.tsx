@@ -2,14 +2,14 @@ import { useClient } from 'urql';
 
 import {
   CreateGithubAppInstallationUrlDocument,
-  CreateGithubAppInstallationUrlMutation,
-  CreateGithubAppInstallationUrlMutationVariables,
+  type CreateGithubAppInstallationUrlMutation,
+  type CreateGithubAppInstallationUrlMutationVariables,
   useCountSitesWithSourceProviderQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { GitProvider } from '@/integrations/git';
-import { LoadingProps } from '@/types/Props';
+import type { GitProvider } from '@/integrations/git';
+import type { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, Icon } from '@/ui';
 import { openPopUpWindow } from '@/utils/openPopUpWindow';
 
@@ -40,7 +40,7 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
     (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const handleAddGHAccount = async () => {
-    const projectId = router.query.projectId!;
+    const projectId = router.query.projectId;
 
     if (!projectId || !gitProviderId) {
       toast.error({
@@ -113,7 +113,7 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
         <>
           <Field
             placeholder={
-              <>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>
+              <>{<Icon name={sourceProviderIcon[sourceProvider]} />} Select</>
             }
           >
             {UserItem}

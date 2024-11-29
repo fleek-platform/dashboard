@@ -1,19 +1,19 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { createSiteSchema } from '@fleek-platform/utils-validation';
-import { MouseEventHandler, useMemo, useState } from 'react';
+import { type MouseEventHandler, useMemo, useState } from 'react';
 import { useClient } from 'urql';
 
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { DeploySite } from '@/fragments';
-import {
+import type {
   GitRepository,
   GitUser,
 } from '@/fragments/DeploySite/Revamp/DeploySite.context';
 import {
   GitIntegrationDocument,
-  GitIntegrationQuery,
-  GitIntegrationQueryVariables,
+  type GitIntegrationQuery,
+  type GitIntegrationQueryVariables,
   SecretVisibility,
   useCountSitesWithSourceProviderQuery,
   useCreateSecretMutation,
@@ -26,7 +26,7 @@ import { useToast } from '@/hooks/useToast';
 import type { GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
 import type { Page } from '@/types/App';
-import { SiteNewSecret, SiteSourceProvider } from '@/types/Site';
+import type { SiteNewSecret, SiteSourceProvider } from '@/types/Site';
 import { Stepper } from '@/ui';
 import { getAPISourceProvider } from '@/utils/getSourceProvider';
 import { Log } from '@/utils/log';
@@ -126,7 +126,7 @@ const NewSite = () => {
             githubInstallationId:
               mode === 'self'
                 ? undefined
-                : parseInt(gitUser?.installationId as string),
+                : Number.parseInt(gitUser?.installationId as string),
             dockerImage: values?.dockerImage,
 
             frameworkId: values.frameworkId ?? undefined,

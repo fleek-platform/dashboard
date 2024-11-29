@@ -1,4 +1,4 @@
-import { SiteQuery } from '@/generated/graphqlClient';
+import type { SiteQuery } from '@/generated/graphqlClient';
 
 type IsSiteSelfManagedArgs = SiteQuery['site'];
 

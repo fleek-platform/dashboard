@@ -8,7 +8,7 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Button, Icon, IconName, Stepper, Text } from '@/ui';
+import { Button, Icon, type IconName, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 import { GitProviderStyles as S } from './GitProvider.styles';
@@ -106,11 +106,11 @@ export const GitProviderStep: React.FC = () => {
         </Text>
 
         <ProviderButton
-          provider={SourceProvider['GITHUB']}
+          provider={SourceProvider.GITHUB}
           isRestricted={hasReachedSitesLimit || session.loading}
         />
-        <ProviderButton provider={SourceProvider['GITLAB']} disabled />
-        <ProviderButton provider={SourceProvider['BITBUCKET']} disabled />
+        <ProviderButton provider={SourceProvider.GITLAB} disabled />
+        <ProviderButton provider={SourceProvider.BITBUCKET} disabled />
       </S.Container>
 
       <S.Message>

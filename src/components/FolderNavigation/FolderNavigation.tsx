@@ -1,4 +1,4 @@
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Menu, Skeleton, Text } from '@/ui';
 
 export type FolderNavigationProps = {
@@ -58,9 +58,9 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
             folders={theeDotsFolders}
             onClickFolder={onFolderClick}
           />
-          {lastTwoFolders.map((folder, index) => (
+          {lastTwoFolders.map((folder) => (
             <FolderItem
-              key={index}
+              key={crypto.randomUUID()}
               onClickFolder={() => onFolderClick(folder.pathToFolder)}
             >
               {folder.label}
@@ -70,9 +70,9 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
       );
     }
 
-    return folderItems.map((folder, index) => (
+    return folderItems.map((folder) => (
       <FolderItem
-        key={index}
+        key={crypto.randomUUID()}
         onClickFolder={() => onFolderClick(folder.pathToFolder)}
       >
         {folder.label}
@@ -118,7 +118,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({
         <Menu.Content align="start">
           {folders.map((folder, index) => (
             <Menu.Item
-              key={index}
+              key={crypto.randomUUID()}
               className="justify-start gap-2.5"
               onClick={() => onClickFolder(folder.pathToFolder)}
             >

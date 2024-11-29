@@ -13,7 +13,7 @@ import {
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 
 const HomePage: Page = () => {
   const router = useRouter();
