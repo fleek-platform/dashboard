@@ -18,6 +18,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Code format](#code-format)
   - [Changeset](#changeset)
   - [Regression Suite](#regression-suite)
+  - [Branch Deployment Matrix](#branch-deployment-matrix)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [Unit tests](#unit-tests)
@@ -173,6 +174,20 @@ pnpm changeset:add
 Regression in software testing refers to when a previously working feature stops working after new changes are made. When contributing make sure that changes are healthy and cause issues.
 
 Learn how to run and write tests [here](#tests).
+
+### Branch Deployment Matrix
+
+This table shows the corresponding deployment URLs for each branch. Note that the availability and state of each URL depends on successful CI/CD build and deployment.
+
+⚠️ The URLs below may be temporarily unavailable during deployments or if a build fails.
+
+```
+Branch              |  URL
+----------------------------------
+develop (latest)    |  https://fleek-dashboard-staging.on-fleek.app
+develop (storybook) |  https://fleek-dashboard-storybook.on-fleek.app
+main                |  https://fleek-dashboard-production.on-fleek.app
+```
 
 ## Tests
 
