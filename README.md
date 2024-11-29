@@ -25,6 +25,8 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [CI/CD Runner](#cicd-runner)
 * [🛠️Generators](#Generators)
   - [Sitemap](#sitemapxml)
+* [🖍️Component Library](#component-library)
+  - [Storybook](#storybook)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -281,6 +283,26 @@ Generate a sitemap by executing the command:
 ```sh
 pnpm run generate:sitemap
 ```
+
+## Component Library
+
+The component library provides a collection of ready-to-use components. We use [Storybook](#storybook) to showcase and document our components.
+
+### Storybook
+
+Start the storybook development server:
+
+```sh
+pnpm storybook
+```
+
+To build a static version:
+
+```sh
+pnpm storybook:build
+```
+
+When committing to develop branch, a new build is deployed to [https://fleek-dashboard-storybook.on-app.xyz](https://fleek-dashboard-storybook.on-app.xyz).
 
 ## Contributing
 
