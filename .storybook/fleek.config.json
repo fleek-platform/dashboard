@@ -2,7 +2,7 @@
   "sites": [
     {
       "slug": "fleek-dashboard-storybook",
-      "distDir": "out",
+      "distDir": ".storybook/out",
       "buildCommand": "pnpm storybook:build"
     }
   ]
