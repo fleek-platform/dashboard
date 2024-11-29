@@ -55,12 +55,14 @@ jobs:
 
       - name: Build & deploy
         run: |
-          if ! cd .storybook; then
-            echo "👹 Oops! Failed to change directory to .storybook for some reason..."
+          fleekConfigJson="fleek.config.json"
+          fleekConfigPath=".storybook/$fleekConfigJson"
+          if [[ ! -f "$fleekConfigPath" ]]; then
+            echo "👹 Oops! Failed to find $fleekConfigJson"
             exit 1
           fi
           
-          fleek sites deploy
+          pnpm storybook:deploy
 
       - name: Clear
         run: |
