@@ -33,6 +33,7 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { secrets } from '@/secrets';
 
 export type NavigationItem = {
   icon: IconName;
@@ -167,7 +168,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     // on the client side, show versions if not prod or user is internal
     if (
       !isServerSide() &&
-      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
+      (location.hostname !== secrets.NEXT_DASHBOARD_WEBSITE_URL || flags.isInternalUser)
     ) {
       setShowVersion(true);
     }

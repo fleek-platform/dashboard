@@ -28,6 +28,9 @@ export const secrets = {
     process.env.NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL,
   NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME:
     process.env.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,
+  // TODO: Switch to app.fleek.xyz or whichever address
+  // is decided as client facing. At the moment using *.on-fleek.app for prd
+  NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
 };
 
 // TODO: This should be deprecated

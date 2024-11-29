@@ -25,7 +25,7 @@ const Document = () => (
         content="Access and manage your apps or start new projects with the Fleek app. All the tools you need in one seamless workflow. Functions, hosting, storage and more."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://app.fleek.xyz/" />
+      <meta property="og:url" content={secrets.NEXT_DASHBOARD_WEBSITE_URL} />
       <meta property="og:title" content="Dashboard | Fleek App" />
       <meta
         property="og:description"
@@ -36,7 +36,7 @@ const Document = () => (
         content="https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta"
       />
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://app.fleek.xyz/" />
+      <meta property="twitter:url" content={secrets.NEXT_DASHBOARD_WEBSITE_URL} />
       <meta property="twitter:title" content="Dashboard | Fleek App" />
       <meta
         property="twitter:description"

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+distPath="out"
+
+echo "👷 Build Static site..."
+
+echo "🤖 Run next build..."
+if ! next build; then
+  echo "👹 Oops! Nextjs build failed"
+  exit 1
+fi
+
+echo "🤖 Generate sitemap..."
+if ! pnpm run generate:sitemap; then
+  echo "👹 Oops! Sitemap generator failure"
+  exit 1
+fi
+
+echo "🤖 Copy public assets to $distPath"
+if ! cp -r public/* "$distPath"; then
+  echo "👹Oops! Failed to copy public assets to distribution directory"
+  exit 1
+fi
+
+echo
+echo "👍 Static site builder completed!"

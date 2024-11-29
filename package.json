@@ -2,7 +2,7 @@
   "name": "@fleek-platform/dashboard",
   "version": "0.1.0",
   "scripts": {
-    "build": "next build && pnpm run generate:sitemap",
+    "build": ".scripts/build_static_site",
     "build:ci": "pnpm run build",
     "clean": "rm -rf node_modules src/generated",
     "dev": ".scripts/start_dev_server",
