@@ -17,5 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+
       - name: Commit checks
         run: ./.husky/pre-commit
