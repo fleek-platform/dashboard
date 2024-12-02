@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Required vars (shared)
+source .scripts/test_runner_vars
+
+hash=$(.scripts/hash_dir "$csv_paths")
+
+echo "[TEST_RUN] $hash"

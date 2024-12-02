@@ -1,6 +1,7 @@
 #!/bin/bash
 
-distPath="out"
+dist_path="out"
+build_hash="$dist_path/hash"
 
 echo "👷 Build Static site..."
 
@@ -16,11 +17,13 @@ if ! pnpm run generate:sitemap; then
   exit 1
 fi
 
-echo "🤖 Copy public assets to $distPath"
-if ! cp -r public/* "$distPath"; then
+echo "🤖 Copy public assets to $dist_path"
+if ! cp -r public/* "$dist_path"; then
   echo "👹Oops! Failed to copy public assets to distribution directory"
   exit 1
 fi
+
+.scripts/test_run_hash_signature > "$build_hash"
 
 echo
 echo "👍 Static site builder completed!"

@@ -6,7 +6,7 @@
 source .tests/.env
 
 SERVER_PORT="$NEXT_DEV_SERVER_PORT"
-skipDevServerAwait=0
+skip_http_server_await=0
 
 if [[ "$UI_TEST_DEV_SERVER_MODE" = "build" ]]; then
   SERVER_PORT="$UI_TEST_HTTP_SERVER_PORT"
@@ -14,13 +14,13 @@ if [[ "$UI_TEST_DEV_SERVER_MODE" = "build" ]]; then
   if ! lsof -i :3001 | grep -q LISTEN; then
     .scripts/test_runner_http_server 2>&1 &
   else
-    skipDevServerAwait=1
+    skip_http_server_await=1
     echo "🤖 Skipping server initialisation! Test runner static HTTP server's already running."
   fi
 fi
 
 # Should wait for development server readyness
-[[ "$skipDevServerAwait" -eq 0 ]] && .scripts/await_dev_server "$SERVER_PORT"
+[[ "$skip_http_server_await" -eq 0 ]] && .scripts/await_dev_server "$SERVER_PORT"
 
 onFailure() {
   echo "👹 Oops! Test runner failed!"
@@ -39,17 +39,17 @@ if ! pnpm run test:unit; then
   onFailure
 fi
 
-# Required vars (shared)
-source .scripts/test_runner_vars
-
-hash=$(.scripts/hash_dir "$csv_paths")
+current_has_signature=$(.scripts/test_run_hash_signature)
+hash=$(echo "$current_has_signature" | cut -d ' ' -f2)
 
 if [[ -z "$hash" ]]; then
   echo "👹 Oops! Failed to hash source directory for test runner"
   exit 1
 fi
 
-echo "[TEST_RUN] $hash" > "$info_path"
+.scripts/test_run_hash_signature > "$info_path"
 
 echo
 echo "✅ Test runner completed!"
+
+# TODO: Add SIGTERM to terminate/interrupt the script

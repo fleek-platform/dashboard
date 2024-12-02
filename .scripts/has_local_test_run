@@ -8,11 +8,11 @@ format() {
 source .scripts/test_runner_vars
 
 expected=$(cat "$info_path")
-hash=$(.scripts/hash_dir "$csv_paths")
-hashTrimmed="${hash:0:6}"
-current="[TEST_RUN] $hash"
+current_has_signature=$(.scripts/test_run_hash_signature)
+hash=$(echo "$current_has_signature" | cut -d ' ' -f2)
+hash_trimmed="${hash:0:6}"
 
-echo "🔍 Check for local test run with $hashTrimmed..."
+echo "🔍 Check for local test run with $hash_trimmed..."
 
 if [[ "$current" != "$expected" ]]; then
 	echo "⚠️Expected $(format "$expected"), but got $(format "$current")"
