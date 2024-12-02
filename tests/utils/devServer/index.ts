@@ -1,7 +1,12 @@
 const hostname = 'localhost';
 
 export const hasDevServerPortEnvVar = () => {
-  const port = Number.parseInt(process.env.NEXT_DEV_SERVER_PORT as string);
+  let port = Number.parseInt(process.env.NEXT_DEV_SERVER_PORT as string);
+
+  if (process.env.UI_TEST_DEV_SERVER_MODE == 'build') {
+    port = Number.parseInt(process.env.UI_TEST_HTTP_SERVER_PORT as string);
+  }
+
   if (typeof port !== 'number' && !isNaN(port) && !Number.isInteger(port)) {
     return false;
   }
@@ -10,7 +15,11 @@ export const hasDevServerPortEnvVar = () => {
 };
 
 export const getDevServerDetails = () => {
-  const port = Number.parseInt(process.env.NEXT_DEV_SERVER_PORT as string);
+  let port = Number.parseInt(process.env.NEXT_DEV_SERVER_PORT as string);
+
+  if (process.env.UI_TEST_DEV_SERVER_MODE == 'build') {
+    port = Number.parseInt(process.env.UI_TEST_HTTP_SERVER_PORT as string);
+  }
 
   if (typeof port !== 'number' && !isNaN(port) && !Number.isInteger(port)) {
     console.error(
