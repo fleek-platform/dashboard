@@ -23,6 +23,7 @@
     "storybook:deploy": "fleek sites deploy -c .storybook/fleek.config.json",
     "test": ".scripts/run_tests",
     "test:component": "pnpm exec vitest run $(find src -name '*.spec.tsx')",
+    "test:terminate_http_server": ".scripts/test_terminate_http_server",
     "test:e2e": "pnpm exec playwright test --reporter=list",
     "test:ui": "pnpm exec playwright test --ui",
     "test:unit": "pnpm exec vitest run src/**/*.spec.ts",
