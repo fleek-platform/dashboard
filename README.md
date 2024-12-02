@@ -137,13 +137,15 @@ NEXT_DEV_SERVER_PORT=1234
 
 ### Terminate UI test static server
 
-Terminate the UI test static server gracefully by running:
+When the UI test static server's running, there might be cases you want to shut it down, e.g. free up the port 3001 for some other process.
+
+To terminate the UI test static server gracefully by running:
 
 ```sh
 pnpm test:terminate_http_server
 ```
 
-Next, you can proceed to [install](#install) the project dependencies.
+Now that you've learned to setup the development environment, you can proceed to [install](#install) the project dependencies.
 
 ## Install
 
