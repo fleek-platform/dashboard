@@ -22,5 +22,8 @@ jobs:
         with:
           version: 9
 
+      - name: Install
+        run: pnpm i
+
       - name: Commit checks
         run: ./.husky/pre-commit
