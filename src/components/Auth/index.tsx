@@ -19,7 +19,11 @@ export const Auth: FC<AuthProps> = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = () => {
-      const authToken = document.cookie
+      const authProviderToken = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('accessToken='))
+        ?.split('=')[1];
+      const accessToken = document.cookie
         .split('; ')
         .find((row) => row.startsWith('authProviderToken='))
         ?.split('=')[1];
@@ -28,7 +32,8 @@ export const Auth: FC<AuthProps> = ({ children }) => {
           .split('; ')
           .find((row) => row.startsWith('projectId='))
           ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
-      const hasAuthentication = Boolean(authToken);
+      const hasAuthentication =
+        Boolean(authProviderToken) || Boolean(accessToken);
       const currentPath = window.location.pathname;
 
       if (hasAuthentication && currentPath === routes.home()) {
