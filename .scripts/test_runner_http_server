@@ -1,0 +1,40 @@
+#!/usr/bin/env bun
+
+import express from 'express';
+import path from 'path';
+import { createServer } from 'http';
+import { getDevServerDetails, hasDevServerPortEnvVar } from '../tests/utils';
+import dotenv from 'dotenv';
+
+const testsDotEnvPath = '.tests/.env';
+
+dotenv.config({
+  path: path.resolve(__dirname, '..', testsDotEnvPath),
+});
+
+const { hostname, port } = getDevServerDetails();
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, '..', 'out')));
+
+app.get('*', (req, res) => {
+  const filePath = path.join(__dirname, '..', 'out', 'index.html');
+  res.sendFile(filePath);
+});
+
+const server = createServer(app);
+
+server.listen(port, () => {
+  console.log(`🤖 Server running on http://${hostname}:${port}`);
+});
+
+// Handle Ctrl+C gracefully
+process.on('SIGINT', () => {
+  console.log('🦖 Received SIGINT. Shutting down...');
+
+  server.close(() => {
+    console.log('👍 Terminated test runner http server');
+    process.exit(0);
+  });
+});
