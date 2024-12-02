@@ -12,7 +12,6 @@ export const CreateGatewayButton: React.FC = () => {
   const handleClick = () => {
     if (!hasToken) {
       session.auth.login(
-        'dynamic',
         routes.project.settings.privateGateways({ projectId: 'project' }),
       );
     }

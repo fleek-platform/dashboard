@@ -3,13 +3,15 @@ import { useEffect } from 'react';
 import { Home } from '@/fragments/Home/Home';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
+import { routes } from '@fleek-platform/utils-routes';
+import { constants } from '@/constants';
 
 const HomePage: Page = () => {
   const session = useSessionContext();
 
   const handleLogIn = () => {
     if (!session.error && !session.loading && !session.auth.token) {
-      session.auth.login('dynamic');
+      session.auth.login(routes.project.home({ projectId: '[projectId]' }));
     }
   };
 

@@ -8,6 +8,7 @@ import { Button, ButtonProps, Input } from '@/ui';
 
 import { NavbarStyles as S } from './Navbar.styles';
 import { Navigation } from './Navigation';
+import { constants } from '@/constants';
 
 const Search: React.FC = () => {
   const handleSearch = (/* e: React.ChangeEvent<HTMLInputElement> */) => {
@@ -68,7 +69,14 @@ const LoginButton: React.FC<LoginButtonProps> = ({ title, intent }) => {
   const session = useSessionContext();
 
   return (
-    <Button intent={intent} onClick={() => session.auth.login('dynamic')}>
+    <Button
+      intent={intent}
+      onClick={() =>
+        session.auth.login(
+          routes.project.home({ projectId: constants.DEFAULT_PROJECT_ID }),
+        )
+      }
+    >
       {title}
     </Button>
   );

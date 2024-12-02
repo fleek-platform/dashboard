@@ -74,7 +74,6 @@ const PageNavContent: React.FC = () => {
   const handleDeploy = () => {
     if (!session.auth.token) {
       session.auth.login(
-        'dynamic',
         routes.project.site.newFromTemplate({
           projectId: '[projectId]',
           templateId,

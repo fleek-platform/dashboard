@@ -1,4 +1,3 @@
-import { routes } from '@fleek-platform/utils-routes';
 import { useMemo, useState } from 'react';
 
 import { BadgeText, SettingsBox, SettingsListItem } from '@/components';
@@ -9,15 +8,13 @@ import {
   useMeQuery,
   useProjectsQuery,
 } from '@/generated/graphqlClient';
-import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { useCookies } from '@/providers/CookiesProvider';
 import { Icon } from '@/ui';
 import { firstLetterUpperCase } from '@/utils/stringFormat';
+import { useSessionContext } from '@/providers/SessionProvider';
 
 export const ManageProjects: React.FC = () => {
-  const router = useRouter();
-  const cookies = useCookies();
+  const session = useSessionContext();
   const toast = useToast();
   const [meQuery] = useMeQuery();
   const [projectsQuery] = useProjectsQuery();
@@ -46,8 +43,7 @@ export const ManageProjects: React.FC = () => {
   }
 
   const handleViewProject = ({ projectId }: HandleViewProjectProps) => {
-    cookies.set('projectId', projectId);
-    router.push(routes.project.home({ projectId }));
+    session.setProject(projectId);
   };
 
   const handleLeaveProject = async ({ projectId }: HandleLeaveProjectProps) => {

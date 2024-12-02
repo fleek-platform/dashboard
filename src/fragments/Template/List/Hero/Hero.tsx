@@ -41,7 +41,7 @@ const SubmitTemplateButton: React.FC = () => {
 
   const handleSubmitTemplate = () => {
     if (!session.auth.token) {
-      return session.auth.login('dynamic', routes.profile.settings.templates());
+      return session.auth.login(routes.profile.settings.templates());
     }
 
     return router.push(routes.profile.settings.templates());
