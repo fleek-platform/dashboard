@@ -76,9 +76,7 @@ describe('On Project settings page', () => {
         update: false,
       });
 
-      await page.goto(
-        `http://${hostname}:${port}/projects/${projectId}/home/`,
-      );
+      await page.goto(`http://${hostname}:${port}/projects/${projectId}/home/`);
     });
 
     afterEach(async ({ page }) => {
