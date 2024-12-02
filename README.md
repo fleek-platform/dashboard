@@ -15,6 +15,8 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 ## Overview
 
 * [🎮 Environment Setup](#environment-setup)
+  - [Environment Variables](#environment-variables)
+  - [UI Test dev-server mode](#ui-test-dev-server-mode)
 * [🤖 Install](#install)
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
@@ -22,6 +24,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Regression Suite](#regression-suite)
   - [Branch Deployment Matrix](#branch-deployment-matrix)
   - [Distribution](#distribution)
+  - [Build](#build)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [Unit tests](#unit-tests)
@@ -54,6 +57,8 @@ Once cloned, you'll have to set up the local development environment, e.g. to ha
 
 For runtime we utilize [Nodejs](https://nodejs.org/en/download) and [PNPM](https://pnpm.io/installation) as the package manager.
 
+### Environment Variables
+
 Create a new file named .env in the root directory of your project. This file will store environment variables needed for local development.
 
 ```sh
@@ -63,7 +68,6 @@ touch .env.development
 Open the .env.development file in a text editor and add the following:
 
 ```sh
-NEXT_DEV_SERVER_PORT=3001
 NEXT_PUBLIC_SDK__AUTHENTICATION_URL="https://graphql.service.fleek.xyz/graphql"
 NEXT_PUBLIC_UI_FLEEK_REST_API_URL="https://api.fleek.xyz"
 NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID="de23a5f0-aaa5-412e-8212-4fb056a3b30d"
@@ -89,6 +93,46 @@ NEXT_DASHBOARD_WEBSITE_URL="https://fleek-dashboard-staging.on-fleek.app"
 > Set the NODE_ENV variable to select the corresponding environment file (.env*), e.g. NODE_ENV="production" would read the file .env.production
 > Keep it simple, name the file to the corresponding environment like .env.<NODE_ENV>
 > The test runner ignores .env.local.*
+
+Test specific environment variables must be setup in the location `.tests/.env`.
+
+```sh
+NEXT_DEV_SERVER_PORT=3001
+UI_TEST_HTTP_SERVER_PORT=3001
+UI_TEST_DEV_SERVER_MODE="" 
+UI_TEST_DEV_SERVER_STATIC_PATH="out"
+UI_TEST_DEV_SERVER_HOSTNAME="localhost"
+```
+
+### UI Test dev-server mode
+
+To set the E2E tests to use the static build, set the UI_TEST_DEV_SERVER_MODE to "build". Leave empty to default to the next dev server.
+
+The "build" mode can be useful for users on lower specification machines, e.g. test timeouts. Unfortunately, the Nextjs library dev server consume a lot of resources.
+
+When using the "build" mode, a new build has to be processed for every source-code change. Otherwise, you'll be testing the wrong source-code output version.
+
+Consequently, due to the amount of time the build process takes to complete, it's not suitable for testing continuous contributions.
+
+```sh
+UI_TEST_DEV_SERVER_MODE="build"
+```
+
+### UI Test dev-server ports
+
+It's recommended to use the default port 3001. Due to intercepting network calls (mocking) and reusability of call data information (HAR) across contributors. For this reason, when opting for "build" mode, set the UI_TEST_HTTP_SERVER_PORTas 3001. You can use a different port for the nextjs dev server, e.g. 1234.
+
+```
+UI_TEST_HTTP_SERVER_PORT=3001
+UI_TEST_DEV_SERVER_MODE="build"
+NEXT_DEV_SERVER_PORT=1234
+```
+
+> [!WARNING]
+> To use the default nextjs for testing, you must update the NEXT_DEV_SERVER_PORT to the recommended default port number 3001. Disable the "build" mode and you must restart the servers.
+
+> [!NOTE]
+> As a result of the "build" processing time, which's long, build requests have to be executed manually. Learn how to build [here](#build)
 
 Next, you can proceed to [install](#install) the project dependencies.
 
@@ -124,6 +168,22 @@ For example, let's say it was bound to the default port 3000, you'd get:
 > If the port 3000 is not free on execution a different port's utilized. Check the output for the correct address, please!
 
 Open the address [http://localhost:3000](http://localhost:3000) in your favourite development browser.
+
+### Build
+
+Buil the project by executing the command:
+
+```sh
+pnpm run build
+```
+
+Our build process outputs static files to:
+
+```sh
+out
+```
+
+The output directory is where all public files are stored and published.
 
 ### Code Format
 
