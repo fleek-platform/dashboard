@@ -14,8 +14,8 @@ hash_trimmed="${hash:0:6}"
 
 echo "🔍 Check for local test run with $hash_trimmed..."
 
-if [[ "$current" != "$expected" ]]; then
-	echo "⚠️Expected $(format "$expected"), but got $(format "$current")"
+if [[ "$current_has_signature" != "$expected" ]]; then
+	echo "⚠️Expected $(format "$expected"), but got $(format "$current_has_signature")"
 	exit 1
 fi
 
