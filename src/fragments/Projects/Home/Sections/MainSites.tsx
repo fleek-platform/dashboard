@@ -9,8 +9,10 @@ import {
 } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Box, Icon, Skeleton, Text } from '@/ui';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 export const MainSites: React.FC = () => {
+  const auth = useAuthContext();
   const session = useSessionContext();
 
   const projectId = session.project.id;
@@ -25,6 +27,7 @@ export const MainSites: React.FC = () => {
         sortOrder: SortOrder.desc,
       },
     },
+    pause: !auth.tokenProjectId,
   });
 
   const sites = sitesQuery?.data?.sites.data || [];

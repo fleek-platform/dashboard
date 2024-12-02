@@ -24,6 +24,7 @@ import {
   SubmitSupportFormError,
   uploadFile,
 } from './submitForm';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -33,13 +34,14 @@ export const formSchema = zod.object({
 });
 
 export const FeedbackModal: React.FC = () => {
+  const auth = useAuthContext();
   const feedbackModal = useFeedbackModal();
   const [inputValue, setInputValue] = useState('');
   const [view, setView] = useState<'FORM' | 'SUBMITTED'>('FORM');
 
   const [files, setFiles] = useState<File[]>([]);
   const toast = useToast();
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ variables: {}, pause: !auth.token });
   const user = meQuery.data?.user;
   const isAuthed = !!user;
 

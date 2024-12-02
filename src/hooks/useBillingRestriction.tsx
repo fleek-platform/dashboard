@@ -9,8 +9,10 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 
 import { useRouter } from './useRouter';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 export const useSiteRestriction = () => {
+  const auth = useAuthContext();
   const billing = useBillingContext();
 
   const [sitesQuery] = useSitesQuery({
@@ -18,6 +20,7 @@ export const useSiteRestriction = () => {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !auth.tokenProjectId,
   });
 
   return billing.hasReachedLimit(

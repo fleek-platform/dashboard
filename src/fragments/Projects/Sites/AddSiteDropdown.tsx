@@ -8,8 +8,10 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Button, Menu, Skeleton } from '@/ui';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 export const AddSiteDropdown: React.FC = () => {
+  const auth = useAuthContext();
   const session = useSessionContext();
   const hasDeployPermissions = usePermissions({
     action: [constants.PERMISSION.SITE.CREATE],
@@ -27,6 +29,7 @@ export const AddSiteDropdown: React.FC = () => {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !auth.tokenProjectId,
   });
 
   if (sitesQuery.fetching) {

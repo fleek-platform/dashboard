@@ -8,6 +8,7 @@ import { getLinkForTemplateReport } from '@/utils/getLinkForTemplateReport';
 import { firstLetterUpperCase } from '@/utils/stringFormat';
 
 import { TemplateDetailsStyles as S } from './TemplateDetails.styles';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 export type TemplateDetailsProps = LoadingProps<{ template: Template }>;
 
@@ -15,7 +16,8 @@ export const TemplateDetails: React.FC<TemplateDetailsProps> = ({
   isLoading,
   template,
 }) => {
-  const [meQuery] = useMeQuery();
+  const auth = useAuthContext();
+  const [meQuery] = useMeQuery({ variables: {}, pause: !auth.token });
 
   if (isLoading) {
     return <TemplateDetailsSkeleton />;
