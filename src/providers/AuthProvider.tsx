@@ -1,28 +1,36 @@
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { routes } from '@fleek-platform/utils-routes';
-import { useCallback, useEffect, useState } from 'react';
+import { decodeJwt } from 'jose';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { constants } from '@/constants';
-import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
-  AuthProviders,
-  AuthWith,
-  useAuthProviders,
-} from '@/hooks/useAuthProviders';
+  LoginWithDynamicDocument,
+  LoginWithDynamicMutation,
+  LoginWithDynamicMutationVariables,
+} from '@/generated/graphqlClient';
+import { useAuthCookie } from '@/hooks/useAuthCookie';
 import { usePostHog } from '@/hooks/usePostHog';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
 
 import { useCookies } from './CookiesProvider';
+import { DynamicProvider } from './DynamicProvider';
+import { ChildrenProps } from '@/types/Props';
+import { Log } from '@/utils/log';
+import { GraphqlApiClient } from '@/integrations/graphql/GraphqlApi';
+//import gql from 'graphql-tag';
 
 export type AuthContext = {
-  loading: boolean;
+  isLoading: boolean;
   error?: unknown;
   token?: string;
+  tokenProjectId?: string;
   redirectUrl: string | null;
 
-  login: (provider: AuthProviders, redirectUrl?: string) => void;
+  login: (redirectUrl?: string) => void;
   logout: () => void;
-  switchProjectAuth: (projectId: string) => Promise<void>;
+  switchProjectAuth: (projectId: string, silent?: boolean) => Promise<void>;
   setRedirectUrl: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
@@ -32,145 +40,205 @@ const [Provider, useContext] = createContext<AuthContext>({
   providerName: 'AuthProvider',
 });
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
-  const [accessToken, setAccessToken, clearAccessToken] = useAuthCookie();
+export const AuthProvider: React.FC<ChildrenProps> = ({ children }) => {
+  const [accessToken, setAccessToken, removeAccessToken] = useAuthCookie();
   const posthog = usePostHog();
-  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const cookies = useCookies();
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<unknown>();
-
-  const providers = useAuthProviders();
-  const providersValues = Object.values(providers);
   const router = useRouter();
 
-  const login = useCallback(
-    (providerName: AuthProviders, redirectUrl?: string) => {
-      if (redirectUrl) {
-        setRedirectUrl(redirectUrl);
-      }
+  const [error, setError] = useState<unknown>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
-      const provider = providers[providerName];
-      provider.handleLogin();
-    },
-    [providers],
-  );
-
-  const logout = useCallback(async () => {
+  const handleLogout = useCallback(async () => {
+    posthog.reset();
     cookies.remove('authProviderToken');
+
     const invitationHash = router.query.invitation;
+
+    removeAccessToken();
 
     if (!constants.PUBLIC_ROUTES.includes(router.pathname.toLowerCase())) {
       await router.replace({
         pathname: routes.home(),
-        query: invitationHash ? `invitation=${invitationHash}` : undefined,
+        query: invitationHash ? { invitation: invitationHash } : undefined,
       });
     }
+  }, [cookies, posthog, removeAccessToken, router]);
 
-    providersValues.forEach((provider) => {
-      if (provider.token) {
-        provider.handleLogout();
+  const requestAccessToken = async (
+    authProviderToken: string,
+    projectId?: string,
+    silent?: boolean,
+  ): Promise<string | undefined> => {
+    if (isLoading || !authProviderToken) {
+      return '';
+    }
+
+    try {
+      setIsLoading(true);
+      setError(undefined);
+      const result = await loginWithDynamic({
+        data: { authToken: authProviderToken, projectId },
+      });
+
+      if (projectId) {
+        cookies.set('lastProjectId', projectId);
+        setAccessToken(result.loginWithDynamic);
       }
-    });
 
-    cookies.remove('projectId');
-    clearAccessToken();
-    posthog.reset();
-  }, [cookies, clearAccessToken, router, providersValues]);
+      return result.loginWithDynamic;
+    } catch (error) {
+      const parsedError = error || new Error('Failed to login with dynamic');
 
-  const requestAccessToken = useCallback(
-    async (provider: AuthWith, projectId?: string) => {
-      if (loading) {
+      if (silent) {
+        Log.error('Failed request for accessToken');
+      } else {
+        setError(parsedError);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAuthSuccess = useCallback(
+    async (authProviderToken: string, cbRedirectUrl?: string) => {
+      setIsLoading(true);
+      cookies.set('authProviderToken', authProviderToken);
+      const result = await requestAccessToken(authProviderToken);
+
+      if (!result) {
         return;
       }
 
-      try {
-        setLoading(true);
-        setError(undefined);
+      setAccessToken(result);
 
-        const token = await provider.requestAccessToken(projectId);
-        setAccessToken(token);
-      } catch (requestError) {
-        logout();
-        setError(requestError);
-      } finally {
-        setLoading(false);
+      console.info('auth success redirect url ->', cbRedirectUrl, redirectUrl);
+
+      if (cbRedirectUrl || redirectUrl) {
+        console.log(
+          'redirecting from authProvider',
+          cbRedirectUrl,
+          redirectUrl,
+        );
+        await router.replace(cbRedirectUrl ?? redirectUrl!);
       }
+
+      setIsLoading(false);
     },
-    [setAccessToken, loading, logout],
+    [cookies, redirectUrl, requestAccessToken, router, setAccessToken],
   );
 
-  const switchProjectAuth = useCallback(
-    async (projectId: string) => {
-      const provider = providersValues.find((provider) => provider.token);
+  const loginWithDynamic = async (data: LoginWithDynamicMutationVariables) => {
+    const graphqlApi = new GraphqlApiClient({ accessToken });
 
-      if (provider) {
-        // if in site page, redirect to sites list first
-        if (router.query.siteId) {
-          await router.replace(routes.project.site.list({ projectId }));
-          delete router.query.siteId;
-        }
+    return graphqlApi.fetch<
+      LoginWithDynamicMutation,
+      LoginWithDynamicMutationVariables
+    >({
+      document: LoginWithDynamicDocument.loc.source.body,
+      variables: data,
+    });
+  };
 
-        return requestAccessToken(provider, projectId);
-      }
-    },
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providersValues, requestAccessToken],
+  return (
+    <DynamicProvider
+      handleAuthSuccess={handleAuthSuccess}
+      handleLogout={handleLogout}
+    >
+      <InnerProvider
+        error={error}
+        isLoading={isLoading}
+        redirectUrl={redirectUrl}
+        setRedirectUrl={setRedirectUrl}
+        requestAccessToken={requestAccessToken}
+        handleAuthSuccess={handleAuthSuccess}
+      >
+        {children}
+      </InnerProvider>
+    </DynamicProvider>
   );
+};
 
-  useEffect(() => {
-    const provider = providersValues.find((provider) => provider.token);
+type InnerProviderProps = ChildrenProps<{
+  isLoading: boolean;
+  error?: unknown;
+  setRedirectUrl: React.Dispatch<React.SetStateAction<string | null>>;
+  redirectUrl: string | null;
+  requestAccessToken: (
+    authProviderToken: string,
+    projectId?: string,
+    silent?: boolean,
+  ) => void;
+  handleAuthSuccess: (authProviderToken: string, redirectUrl?: string) => void;
+}>;
 
-    if (provider?.token) {
-      // if has a provider token, it means that auth provider is authenticated
-      cookies.set('authProviderToken', provider.token);
+const InnerProvider: React.FC<InnerProviderProps> = ({
+  children,
+  isLoading,
+  error,
+  requestAccessToken,
+  redirectUrl,
+  setRedirectUrl,
+  handleAuthSuccess,
+}) => {
+  const [accessToken] = useAuthCookie();
+  const dynamic = useDynamicContext();
+  const router = useRouter();
+  const cookies = useCookies();
 
-      const projectId =
-        cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+  const tokenProjectId = useMemo(() => {
+    return accessToken
+      ? (decodeJwt(accessToken)?.projectId as string)
+      : undefined;
+  }, [accessToken]);
 
-      // redirect if is in home page
-      if (router.pathname === routes.home()) {
-        // keep query on redirect
-        router.push({
-          pathname: routes.project.home({ projectId }),
-          query: router.query,
-        });
-      }
+  const login = (redirectUrl?: string) => {
+    if (dynamic.authToken || cookies.values.authProviderToken) {
+      handleAuthSuccess(
+        dynamic.authToken ?? cookies.values.authProviderToken!,
+        redirectUrl,
+      );
 
-      // redirect if has a redirect url pending
-      if (redirectUrl) {
-        router.push(redirectUrl.replace('[projectid]', projectId));
-
-        setRedirectUrl(null);
-      }
-
-      // uses the auth provider token to request the access token from graphql
-      if (!accessToken) {
-        requestAccessToken(provider);
-      }
-    } else {
-      logout();
+      return;
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    cookies.values.authProviderToken,
-    ...providersValues.map((provider) => provider.token),
-  ]);
+    if (redirectUrl) {
+      setRedirectUrl(redirectUrl);
+    }
+
+    dynamic.setShowAuthFlow(true);
+  };
+
+  const logout = dynamic.handleLogOut;
+
+  const switchProjectAuth = async (projectId: string, silent?: boolean) => {
+    if (dynamic.authToken) {
+      // if in site page, redirect to sites list first
+      if (router.query.siteId) {
+        await router.replace(routes.project.site.list({ projectId }));
+        delete router.query.siteId;
+      }
+
+      if (projectId !== tokenProjectId) {
+        requestAccessToken(dynamic.authToken, projectId, silent);
+      }
+    } else {
+      dynamic.handleLogOut();
+    }
+  };
 
   return (
     <Provider
       value={{
-        loading,
-        error,
+        isLoading,
+        token: accessToken,
+        error: error,
+        tokenProjectId,
+
         login,
         logout,
         switchProjectAuth,
-        token: accessToken,
         redirectUrl,
         setRedirectUrl,
       }}
@@ -179,5 +247,4 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     </Provider>
   );
 };
-
 export const useAuthContext = useContext;
