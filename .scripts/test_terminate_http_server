@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Required environment vars
+source ".tests/.env"
+
+PORT="$UI_TEST_HTTP_SERVER_PORT"
+SERVER_NAME="http-server"
+
+echo "🔫 Attempting to terminate $SERVER_NAME on port $PORT..."
+
+if ! pkill -f "$PORT"; then
+  echo "👹 Oops! Unable to terminate $SERVER_NAME on port $PORT"
+  exit 1
+fi
+
+echo "✅ Terminated $SERVER_NAME on port $PORT"
