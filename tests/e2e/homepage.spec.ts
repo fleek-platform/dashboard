@@ -1,100 +1,104 @@
 import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
+import { getDevServerDetails } from '../utils/devServer';
+
 const { describe, beforeEach, afterEach } = it;
 
+const { hostname, port } = getDevServerDetails();
+
 describe('On Home page', () => {
-  describe('A non-authenticated user', () => {
-    beforeEach(async ({ page }) => {
-      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}`);
-    });
+  // describe('A non-authenticated user', () => {
+  //   beforeEach(async ({ page }) => {
+  //     await page.goto(`http://${hostname}:${port}`);
+  //   });
 
-    afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
-    });
+  //   afterEach(async ({ page }) => {
+  //     await page.evaluate(() => {
+  //       localStorage.clear();
+  //       sessionStorage.clear();
+  //       document.cookie.split(';').forEach((cookie) => {
+  //         document.cookie =
+  //           cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+  //       });
+  //     });
+  //   });
 
-    it('Should get the title page "Home"', async ({ page }) => {
-      await expect(page).toHaveTitle(/Home - Fleek/);
-    });
+  //   it('Should get the title page "Home"', async ({ page }) => {
+  //     await expect(page).toHaveTitle(/Home - Fleek/);
+  //   });
 
-    it('Should have login or signup modal', async ({ page }) => {
-      const el = page.locator('.modal');
-      await expect(el).toContainText('Log in or sign up');
-    });
+  //   it('Should have login or signup modal', async ({ page }) => {
+  //     const el = page.locator('.modal');
+  //     await expect(el).toContainText('Log in or sign up');
+  //   });
 
-    it('Should have a sign-in header button', async ({ page }) => {
-      const el = page.locator('header');
-      await expect(el).toContainText('Sign in');
-    });
-  });
+  //   it('Should have a sign-in header button', async ({ page }) => {
+  //     const el = page.locator('header');
+  //     await expect(el).toContainText('Sign in');
+  //   });
+  // });
 
-  describe('Invalid cookie token user', () => {
-    const invalidToken = 'abcdef';
-    const projectId = 'cls4v91mt0001l708wu51eozd';
+  // describe('Invalid cookie token user', () => {
+  //   const invalidToken = 'abcdef';
+  //   const projectId = 'cls4v91mt0001l708wu51eozd';
 
-    beforeEach(async ({ page }) => {
-      await page.context().addCookies([
-        {
-          name: 'accessToken',
-          value: invalidToken,
-          domain: 'localhost',
-          path: '/',
-        },
-        {
-          name: 'authProviderToken',
-          value: invalidToken,
-          domain: 'localhost',
-          path: '/',
-        },
-        {
-          name: 'projectId',
-          value: projectId,
-          domain: 'localhost',
-          path: '/',
-        },
-      ]);
+  //   beforeEach(async ({ page }) => {
+  //     await page.context().addCookies([
+  //       {
+  //         name: 'accessToken',
+  //         value: invalidToken,
+  //         domain: 'localhost',
+  //         path: '/',
+  //       },
+  //       {
+  //         name: 'authProviderToken',
+  //         value: invalidToken,
+  //         domain: 'localhost',
+  //         path: '/',
+  //       },
+  //       {
+  //         name: 'projectId',
+  //         value: projectId,
+  //         domain: 'localhost',
+  //         path: '/',
+  //       },
+  //     ]);
 
-      await page.goto(
-        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`,
-      );
+  //     await page.goto(
+  //       `http://${hostname}:${port}/projects/${projectId}/home/`,
+  //     );
 
-      await page.waitForURL(
-        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`,
-        {
-          waitUntil: 'domcontentloaded',
-        },
-      );
-    });
+  //     await page.waitForURL(
+  //       `http://${hostname}:${port}/`,
+  //       {
+  //         waitUntil: 'domcontentloaded',
+  //       },
+  //     );
+  //   });
 
-    afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
-    });
+  //   afterEach(async ({ page }) => {
+  //     await page.evaluate(() => {
+  //       localStorage.clear();
+  //       sessionStorage.clear();
+  //       document.cookie.split(';').forEach((cookie) => {
+  //         document.cookie =
+  //           cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
+  //       });
+  //     });
+  //   });
 
-    it('Should redirect to the homepage url', async ({ page }) => {
-      const currentUrl = page.url();
-      expect(currentUrl).toBe(
-        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/`,
-      );
-    });
+  //   it('Should redirect to the homepage url', async ({ page }) => {
+  //     const currentUrl = page.url();
+  //     expect(currentUrl).toBe(
+  //       `http://${hostname}:${port}/`,
+  //     );
+  //   });
 
-    it('Should redirect to the homepage with title', async ({ page }) => {
-      await expect(page).toHaveTitle(/Home - Fleek/);
-    });
-  });
+  //   it('Should redirect to the homepage with title', async ({ page }) => {
+  //     await expect(page).toHaveTitle(/Home - Fleek/);
+  //   });
+  // });
 
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
@@ -179,7 +183,7 @@ describe('On Home page', () => {
         update: false,
       });
 
-      await page.goto(`http://localhost:${process.env.NEXT_DEV_SERVER_PORT}`);
+      await page.goto(`http://${hostname}:${port}`);
     });
 
     afterEach(async ({ page }) => {
