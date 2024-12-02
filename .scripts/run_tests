@@ -27,7 +27,7 @@ onFailure() {
   exit 1
 }
 
-trap cleanup SIGINT
+trap cleanup SIGINT SIGTERM
 
 echo "🤖 Should start the e2e tests..."
 if ! pnpm run test:e2e; then
@@ -51,5 +51,3 @@ fi
 
 echo
 echo "✅ Test runner completed!"
-
-# TODO: Add SIGTERM to terminate/interrupt the script
