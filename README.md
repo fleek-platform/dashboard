@@ -17,6 +17,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [🎮 Environment Setup](#environment-setup)
   - [Environment Variables](#environment-variables)
   - [UI Test dev-server mode](#ui-test-dev-server-mode)
+  - [UI Terminate test static server](#terminate-ui-test-static-server)
 * [🤖 Install](#install)
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
@@ -133,6 +134,14 @@ NEXT_DEV_SERVER_PORT=1234
 
 > [!NOTE]
 > As a result of the "build" processing time, which's long, build requests have to be executed manually. Learn how to build [here](#build)
+
+### Terminate UI test static server
+
+Terminate the UI test static server gracefully by running:
+
+```sh
+pnpm test:terminate_http_server
+```
 
 Next, you can proceed to [install](#install) the project dependencies.
 
