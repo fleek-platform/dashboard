@@ -1,7 +1,7 @@
 #!/bin/bash
 
-dist_path="out"
-build_hash="$dist_path/hash"
+# Required vars (shared)
+source .scripts/test_runner_vars
 
 echo "👷 Build Static site..."
 
@@ -17,13 +17,13 @@ if ! pnpm run generate:sitemap; then
   exit 1
 fi
 
-echo "🤖 Copy public assets to $dist_path"
-if ! cp -r public/* "$dist_path"; then
+echo "🤖 Copy public assets to $build_out_path"
+if ! cp -r public/* "$build_out_path"; then
   echo "👹Oops! Failed to copy public assets to distribution directory"
   exit 1
 fi
 
-.scripts/test_run_hash_signature > "$build_hash"
+.scripts/test_run_hash_signature > "$build_hash_path"
 
 echo
 echo "👍 Static site builder completed!"
