@@ -111,7 +111,7 @@ describe('On Home page', () => {
           path: '/',
         },
         {
-          name: 'projectId',
+          name: 'lastProjectId',
           value: 'cls4v91mt0001l708wu51eozd',
           domain: 'localhost',
           path: '/',
