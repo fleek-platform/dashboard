@@ -35,6 +35,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Sitemap](#sitemapxml)
 * [🖍️Component Library](#component-library)
   - [Storybook](#storybook)
+* [🕷️Migration processes](#migration-processes)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -397,6 +398,20 @@ pnpm storybook:build
 ```
 
 When committing to develop branch, a new build is deployed to [https://fleek-dashboard-storybook.on-app.xyz](https://fleek-dashboard-storybook.on-app.xyz).
+
+## Migration processes
+
+To assist with migrating from an outdated repository and updating our workflows, we've outlined the following processes.
+
+### Sync from monorepo process 
+
+The "sync from monorepo" process automates the transfer of source code files from the deprecated monorepo to the new repository. It only copies files created or changed in the range of commit hash from to the latest HEAD version. By using this process, you reduce the number of files to synchronize to only what has been changed. Reducing the number of files to verify, due to cases where the current repository might have progressed containing changes that do not exist in the source repository.
+
+Before you start, check the original repository commit hash you want to pick changes from. The commit hash you choose is exclusive. It marks a point in history but doesn't include its files. To sync files, use the previous commit hash. This creates a range for selective file inclusion, allowing you to choose exactly which changes to apply.
+
+```sh
+pnpm run migrate:sync_from_monorepo
+```
 
 ## Contributing
 
