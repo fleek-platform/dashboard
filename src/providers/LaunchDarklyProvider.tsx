@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import { useMeQuery } from '@/generated/graphqlClient';
 import { secrets } from '@/secrets';
+import { useAuthContext } from './AuthProvider';
 
 type LaunchDarklyProviderProps = React.PropsWithChildren<{}>;
 
@@ -18,7 +19,8 @@ export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({
 };
 
 const Identifier: React.FC = () => {
-  const [meQuery] = useMeQuery();
+  const auth = useAuthContext();
+  const [meQuery] = useMeQuery({ pause: !auth.token });
   const ldClient = useLDClient();
 
   useEffect(() => {

@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 
 import { useMeQuery } from '@/generated/graphqlClient';
 import { ChildrenProps } from '@/types/Props';
+import { useAuthContext } from './AuthProvider';
 
 export const LogRocketProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const [meQuery] = useMeQuery();
+  const auth = useAuthContext();
+  const [meQuery] = useMeQuery({ pause: !auth.token });
 
   useEffect(() => {
     if (meQuery.data) {

@@ -9,6 +9,7 @@ import { isServerSide } from '@/utils/isServerSide';
 import { Log } from '@/utils/log';
 
 import { CustomPostHogProvider } from './CustomPostHogProvider';
+import { useSessionContext } from './SessionProvider';
 
 if (!isServerSide()) {
   posthogJs.init(secrets.NEXT_PUBLIC_UI__POSTHOG_KEY!, {
@@ -27,16 +28,14 @@ if (!isServerSide()) {
 
 export const PHProvider: React.FC<ChildrenProps> = ({ children }) => {
   return (
-    <CustomPostHogProvider client={posthogJs}>
-      <Identifier />
-      {children}
-    </CustomPostHogProvider>
+    <CustomPostHogProvider client={posthogJs}>{children}</CustomPostHogProvider>
   );
 };
 
-const Identifier: React.FC = () => {
-  const [meQuery] = useMeQuery();
+export const PHIdentifier: React.FC = () => {
+  const session = useSessionContext();
   const posthog = usePostHog();
+  const [meQuery] = useMeQuery({ pause: !session.auth.token });
 
   // If user is logged in, identify them
   useEffect(() => {
