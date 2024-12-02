@@ -10,7 +10,7 @@ SERVER_PORT="$NEXT_DEV_SERVER_PORT"
 if [[ "$UI_TEST_DEV_SERVER_MODE" = "build" ]]; then
   SERVER_PORT="$UI_TEST_HTTP_SERVER_PORT"
 
-  .scripts/test_runner_http_server > server.log 2>&1 &
+  .scripts/test_runner_http_server 2>&1 &
 fi
 
 # Should wait for development server readyness
