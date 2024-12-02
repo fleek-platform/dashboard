@@ -8,9 +8,15 @@ SERVER_NAME="http-server"
 
 echo "🔫 Attempting to terminate $SERVER_NAME on port $PORT..."
 
-if ! pkill -f "$PORT"; then
-  echo "👹 Oops! Unable to terminate $SERVER_NAME on port $PORT"
-  exit 1
+# Try SIGTERM first
+if lsof -t -i "tcp:$PORT" | xargs -r kill -15 >/dev/null 2>&1; then
+    echo "🤖Wait a moment for graceful shutdown..."
+    sleep 1
+fi
+
+if ! lsof -t -i "tcp:$PORT" | xargs -r kill -9 >/dev/null 2>&1; then
+    echo "👹 Oops! Unable to terminate $SERVER_NAME on port $PORT"
+    exit 1
 fi
 
 echo "✅ Terminated $SERVER_NAME on port $PORT"

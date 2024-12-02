@@ -12,6 +12,15 @@ dotenv.config({
   path: path.resolve(__dirname, '..', testsDotEnvPath),
 });
 
+const shutdown = (signal: string) => {
+  console.log(`🦖 Received ${signal}. Shutting down...`);
+
+  server.close(() => {
+    console.log('👍 Terminated test runner http server');
+    process.exit(0);
+  });  
+}
+
 const { hostname, port } = getDevServerDetails();
 
 const app = express();
@@ -30,11 +39,6 @@ server.listen(port, () => {
 });
 
 // Handle Ctrl+C gracefully
-process.on('SIGINT', () => {
-  console.log('🦖 Received SIGINT. Shutting down...');
-
-  server.close(() => {
-    console.log('👍 Terminated test runner http server');
-    process.exit(0);
-  });
-});
+process.on('SIGINT', () => shutdown('SIGINT'));
+// Handle graceful termination (code 15)
+process.on('SIGTERM', () => shutdown('SIGTERM'));
