@@ -1,7 +1,10 @@
 import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
+import { getDevServerDetails } from '../utils/devServer';
 const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
+
+const { hostname, port } = getDevServerDetails();
 
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
@@ -74,7 +77,7 @@ describe('On Project settings page', () => {
       });
 
       await page.goto(
-        `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`,
+        `http://${hostname}:${port}/projects/${projectId}/home/`,
       );
     });
 
@@ -97,13 +100,13 @@ describe('On Project settings page', () => {
     describe('On settings panel', async () => {
       beforeEach(async ({ page }) => {
         page.getByRole('menuitem', { name: 'settings' }).click();
-        const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/`;
+        const url = `http://${hostname}:${port}/projects/${projectId}/settings/`;
         await page.waitForURL(url);
       });
 
       // afterEach(async ({ page }) => {
       //   page.getByRole('menuitem', { name: 'dashboard' }).click();
-      //   const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/home/`;
+      //   const url = `http://${hostname}:${port}/projects/${projectId}/home/`;
       //   await page.waitForURL(url);
       // });
 
@@ -146,7 +149,7 @@ describe('On Project settings page', () => {
             .getByRole('navigation')
             .getByRole('menuitem', { name: 'storage' })
             .click();
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/storage/`;
+          const url = `http://${hostname}:${port}/projects/${projectId}/settings/storage/`;
           await page.waitForURL(url, {
             waitUntil: 'domcontentloaded',
           });
@@ -175,7 +178,7 @@ describe('On Project settings page', () => {
             .getByRole('navigation')
             .getByRole('menuitem', { name: 'private gateways' })
             .click();
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/private-gateways/`;
+          const url = `http://${hostname}:${port}/projects/${projectId}/settings/private-gateways/`;
           await page.waitForURL(url, {
             waitUntil: 'domcontentloaded',
           });
@@ -243,7 +246,7 @@ describe('On Project settings page', () => {
             .getByRole('navigation')
             .getByRole('menuitem', { name: 'application credentials' })
             .click();
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
+          const url = `http://${hostname}:${port}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
           // To help assert correct page
           await expect(
@@ -307,7 +310,7 @@ describe('On Project settings page', () => {
             .getByRole('navigation')
             .getByRole('menuitem', { name: 'application credentials' })
             .click();
-          const url = `http://localhost:${process.env.NEXT_DEV_SERVER_PORT}/projects/${projectId}/settings/application-credentials/`;
+          const url = `http://${hostname}:${port}/projects/${projectId}/settings/application-credentials/`;
           await page.waitForURL(url);
           // To help assert correct page
           await expect(
