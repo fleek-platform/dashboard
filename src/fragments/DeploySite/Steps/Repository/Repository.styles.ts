@@ -43,7 +43,8 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background: 'linear-gradient(180deg, $surface-secondary 10%, $transparent 100%)',
+          background:
+            'linear-gradient(180deg, $surface-secondary 10%, $transparent 100%)',
           pointerEvents: 'none',
         },
 
@@ -55,13 +56,17 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background: 'linear-gradient(0deg, $surface-secondary 10%, $transparent 100%)',
+          background:
+            'linear-gradient(0deg, $surface-secondary 10%, $transparent 100%)',
           borderRadius: '0 0 $xl $xl',
           pointerEvents: 'none',
         },
       }),
       Viewport: styled(Scrollable.Viewport),
-      Bar: styled(Scrollable.VerticalBar, { margin: '$spacing-6 $spacing-2 $spacing-4 0', zIndex: 1 }),
+      Bar: styled(Scrollable.VerticalBar, {
+        margin: '$spacing-6 $spacing-2 $spacing-4 0',
+        zIndex: 1,
+      }),
     },
     Spinner: styled(Icon, {
       fontSize: '$xl',

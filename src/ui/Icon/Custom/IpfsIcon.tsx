@@ -2,7 +2,14 @@ import React, { SVGProps } from 'react';
 
 export const IpfsIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
-    <svg width="40" height="46" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="40"
+      height="46"
+      viewBox="0 0 40 46"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
         d="M18.3351 20.4412L6.59375 13.7404C6.62014 13.5318 6.62014 13.3232 6.59375 13.1146L18.3351 6.42688C19.3246 7.1439 20.6702 7.1439 21.6597 6.42688L33.3879 13.1146C33.3616 13.3232 33.3616 13.5318 33.3879 13.7404L21.6597 20.4281C20.6702 19.7111 19.3246 19.7111 18.3351 20.4412Z"
         fill="currentColor"
