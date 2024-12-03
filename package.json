@@ -4,6 +4,9 @@
   "scripts": {
     "build": ".scripts/build_static_site",
     "build:ci": "pnpm run build",
+    "changeset:add": "pnpm exec changeset",
+    "changeset:status": "pnpm exec changeset status",
+    "changeset:version": "pnpm exec changeset version",
     "clean": "rm -rf node_modules src/generated",
     "dev": ".scripts/start_dev_server",
     "dev:check_required": ".scripts/local_requirements",
@@ -17,6 +20,7 @@
     "lint": "pnpm exec biome lint --write --changed --no-errors-on-unmatched ./src",
     "lint:check": "pnpm exec biome lint ./src",
     "lint:unsafe": "pnpm exec biome lint --write --unsafe --changed --no-errors-on-unmatched ./src",
+    "migrate:sync_from_monorepo": ".scripts/sync_code_from_monorepo",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build -o .storybook/out",
@@ -104,6 +108,7 @@
   },
   "devDependencies": {
     "@bbbtech/storybook-formik": "^2.5.0",
+    "@changesets/cli": "^2.27.10",
     "@fleek-platform/env-guards": "^1.10.0",
     "@fleek-platform/tester": "^2.11.0",
     "@fleek-platform/utils-routes": "^0.5.0",
