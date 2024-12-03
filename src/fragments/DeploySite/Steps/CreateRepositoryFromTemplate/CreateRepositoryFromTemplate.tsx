@@ -5,73 +5,39 @@ import * as zod from 'zod';
 
 import { Form, SettingsBox } from '@/components';
 import {
-  CreateGithubAppInstallationUrlDocument,
-  CreateGithubAppInstallationUrlMutation,
-  CreateGithubAppInstallationUrlMutationVariables,
   useCountSitesWithSourceProviderQuery,
   useCreateRepositoryFromTemplateMutation,
+  useGitInstallationsQuery,
   useGitIntegrationQuery,
   useTemplateDeployQuery,
 } from '@/generated/graphqlClient';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
-import { useGitProvider } from '@/hooks/useGitProvider';
-import { useGitUserAndOrganizations } from '@/hooks/useGitUserAndOrganizations';
 import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
-import { GitProvider } from '@/integrations/git';
 import { LoadingProps } from '@/types/Props';
-import {
-  Avatar,
-  Box,
-  Checkbox,
-  Combobox,
-  FormField,
-  Icon,
-  Stepper,
-  Text,
-} from '@/ui';
-import { openPopUpWindow } from '@/utils/openPopUpWindow';
+import { Avatar, Box, Checkbox, Combobox, FormField, Icon, Stepper, Text } from '@/ui';
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
-import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
+import { GitUser, useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 import { CreateRepositoryFromTemplateStyles as S } from './CreateRepositoryFromTemplate.styles';
 
 export const CreateTemplateFromRepositoryStep: React.FC = () => {
-  const featureFlags = useFeatureFlags();
-  const {
-    gitProviderId,
-    sourceProvider,
-    gitUser,
-    setGitRepository,
-    gitRepository,
-    templateId,
-    setSourceProvider,
-    accessToken,
-  } = useDeploySiteContext();
-  const [templateDeployQuery] = useTemplateDeployQuery({
-    variables: { where: { id: templateId! } },
-    requestPolicy: 'network-only',
-  });
-  const [, createRepositoryFromTemplate] =
-    useCreateRepositoryFromTemplateMutation();
-  const [gitIntegrationQuery] = useGitIntegrationQuery({
-    variables: { where: { gitProviderId: gitProviderId! } },
-    pause: !gitProviderId,
-  });
+  const { gitProviderId, gitUser, gitRepository, templateId, setSourceProvider, setGitRepository } = useDeploySiteContext();
+
+  const [templateDeployQuery] = useTemplateDeployQuery({ variables: { where: { id: templateId! } }, requestPolicy: 'network-only' });
+  const [, createRepositoryFromTemplate] = useCreateRepositoryFromTemplateMutation();
+
+  const [gitIntegrationQuery] = useGitIntegrationQuery({ variables: { where: { gitProviderId: gitProviderId! } }, pause: !gitProviderId });
+
   const createSiteForm = Form.useContext();
   const toast = useToast();
   const router = useRouter();
   const stepper = Stepper.useContext();
   const client = useClient();
 
-  const provider = sourceProvider as GitProvider.Name;
-
   const template = templateDeployQuery.data?.template;
 
   const templateGit = useTemplateGitData(template);
-
-  const git = useGitProvider({ provider, accessToken });
 
   const [isLoading, setIsLoading] = useState(templateDeployQuery.fetching);
 
@@ -90,71 +56,47 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     },
     schema: zod.object({ repositoryName: siteName }),
     extraValidations: {
-      repositoryName: Form.createExtraValidation.siteName(client, git),
+      repositoryName: Form.createExtraValidation.siteName(client),
     },
     onSubmit: async (values) => {
       try {
-        if (!git || !gitUser || !templateGit.slug || !templateGit.repository) {
-          toast.error({
-            message:
-              'It is not possible to use this template. Please contact the support.',
-          });
+        if (!gitUser || !templateGit.slug || !templateGit.repository) {
+          toast.error({ message: 'It is not possible to use this template. Please contact the support.' });
 
           return;
         }
 
         setIsLoading(true);
 
-        if (featureFlags.enableBackendGitIntegration) {
-          const gitIntegrationId = gitIntegrationQuery.data?.gitIntegration.id;
-          const installationId = await git.getInstallationId({
-            slug: gitUser.slug,
-          });
+        const gitIntegrationId = gitIntegrationQuery.data?.gitIntegration.id;
 
-          if (!gitIntegrationId || !installationId) {
-            toast.error({
-              message: 'Failed to find git provider installation',
-            });
-          }
-
-          const createResponse = await createRepositoryFromTemplate({
-            where: { gitIntegrationId: gitIntegrationId! },
-            data: {
-              templateOwner: templateGit.slug,
-              templateRepo: templateGit.repository,
-              repoOwner: gitUser.slug,
-              isPrivate: values.privateRepo,
-              repoName: values.repositoryName,
-            },
-          });
-
-          if (!createResponse.data || createResponse.error) {
-            throw (
-              createResponse.error ||
-              new Error('Failed to create repository from template')
-            );
-          }
-
-          const repository = createResponse.data.createGithubRepoFromTemplate;
-
-          setGitRepository({
-            id: repository.repositoryId,
-            installationId,
-            name: repository.name,
-            defaultBranch: repository.defaultBranch,
-          });
-        } else {
-          const repository = await git.createRepositoryFromTemplate({
-            templateOwner: templateGit.slug,
-            templateRepository: templateGit.repository,
-            slug: gitUser.slug,
-            repositoryName: values.repositoryName,
-            privateRepo: values.privateRepo,
-            initialCommitMessage: `initiated deployment of ${templateGit.slug}/${templateGit.repository}`,
-          });
-
-          setGitRepository(repository);
+        if (!gitIntegrationId || !gitUser.installationId) {
+          toast.error({ message: 'Failed to find git provider installation' });
         }
+
+        const createResponse = await createRepositoryFromTemplate({
+          where: { gitIntegrationId: gitIntegrationId! },
+          data: {
+            templateOwner: templateGit.slug,
+            templateRepo: templateGit.repository,
+            repoOwner: gitUser.name,
+            isPrivate: values.privateRepo,
+            repoName: values.repositoryName,
+          },
+        });
+
+        if (!createResponse.data || createResponse.error) {
+          throw createResponse.error || new Error('Failed to create repository from template');
+        }
+
+        const repository = createResponse.data.createGithubRepoFromTemplate;
+        setGitRepository({
+          id: repository.repositoryId.toString(),
+          gitProviderId: gitProviderId as string,
+          defaultBranch: repository.defaultBranch,
+          name: repository.name,
+          owner: gitUser.name,
+        });
       } catch (error) {
         toast.error({ error, log: 'Failed to create repository' });
         setIsLoading(false);
@@ -169,22 +111,10 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     }
 
     // null is not allowed as value
-    createSiteForm.fields.buildCommand.setValue(
-      templateGit.buildCommand ?? undefined,
-      true,
-    );
-    createSiteForm.fields.distDirectory.setValue(
-      templateGit.distDirectory ?? undefined,
-      true,
-    );
-    createSiteForm.fields.dockerImage.setValue(
-      templateGit.dockerImage ?? undefined,
-      true,
-    );
-    createSiteForm.fields.baseDirectory.setValue(
-      templateGit.baseDirectory ?? undefined,
-      true,
-    );
+    createSiteForm.fields.buildCommand.setValue(templateGit.buildCommand ?? undefined, true);
+    createSiteForm.fields.distDirectory.setValue(templateGit.distDirectory ?? undefined, true);
+    createSiteForm.fields.dockerImage.setValue(templateGit.dockerImage ?? undefined, true);
+    createSiteForm.fields.baseDirectory.setValue(templateGit.baseDirectory ?? undefined, true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateGit]);
@@ -238,12 +168,14 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
 
   return (
     <S.Container>
-      <Text>Create Repository For Template</Text>
+      <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+        Create Repository For Template
+      </Text>
 
       <TitleRow
         isLoading={templateDeployQuery.fetching as true}
-        name={template?.name}
-        slug={templateGit?.slug}
+        templateName={template?.name}
+        gitUserName={templateGit?.slug}
         repository={templateGit?.repository}
         image={template?.framework?.avatar}
       />
@@ -258,96 +190,52 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
           isLoading={showSkeleton}
         />
         <PrivateRepositoryField />
-        {showSkeleton ? (
-          <SettingsBox.Skeleton />
-        ) : (
-          <S.SubmitButton>Create and deploy template</S.SubmitButton>
-        )}
+        {showSkeleton ? <SettingsBox.Skeleton /> : <S.SubmitButton>Create and deploy template</S.SubmitButton>}
       </Form.Provider>
     </S.Container>
   );
 };
 
 const AccountField: React.FC = () => {
-  const router = useRouter();
-  const toast = useToast();
-  const client = useClient();
-  const { sourceProvider, gitUser, setGitUser, gitProviderId, accessToken } =
-    useDeploySiteContext();
+  const { sourceProvider, gitUser, setGitUser, gitProviderId } = useDeploySiteContext();
 
-  const gitUsersAndOrganizations = useGitUserAndOrganizations({
-    provider: sourceProvider as GitProvider.Name,
-    accessToken: accessToken as string,
+  const [countSitesWithSourceProviderQuery] = useCountSitesWithSourceProviderQuery();
+  const [gitInstallationsQuery] = useGitInstallationsQuery({
+    variables: { where: { gitProviderId: gitProviderId! } },
+    pause: !gitProviderId,
   });
-  const [countSitesWithSourceProviderQuery] =
-    useCountSitesWithSourceProviderQuery();
 
   const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching ||
-    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+    countSitesWithSourceProviderQuery.fetching || (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
+
   const users = useMemo(() => {
-    const { data } = gitUsersAndOrganizations;
+    const data = gitInstallationsQuery.data?.gitApiInstallations;
 
     if (!data) {
       return [];
     }
 
-    if (!gitUser) {
-      setGitUser(data.user);
+    if (!gitUser && data.length > 0) {
+      const { name, installationId, avatar } = data[0];
+
+      setGitUser({
+        name,
+        installationId: installationId.toString(),
+        avatar,
+      });
     }
 
-    return [
-      data.user,
-      ...data.organizations.filter(
-        (organization) => organization.isOrganization,
-      ),
-    ];
+    return data.map(({ name, installationId, avatar }) => ({ name, installationId: installationId.toString(), avatar } as GitUser));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gitUsersAndOrganizations.data]);
+  }, [gitInstallationsQuery.data]);
 
-  const handleUserChange = (user?: GitProvider.User) => {
+  // eslint-disable-next-line fleek-custom/valid-argument-types
+  const handleUserChange = (user?: GitUser) => {
     setGitUser(user);
   };
 
   const handleAddGHAccount = async () => {
-    const projectId = router.query.projectId!;
-
-    if (!projectId || !gitProviderId) {
-      toast.error({
-        message: 'Unexpected error when generating url, please try again',
-      });
-
-      return null;
-    }
-
-    try {
-      const createInstallationUrlResult = await client.mutation<
-        CreateGithubAppInstallationUrlMutation,
-        CreateGithubAppInstallationUrlMutationVariables
-      >(CreateGithubAppInstallationUrlDocument, {
-        where: { projectId, gitProviderId },
-      });
-
-      if (
-        createInstallationUrlResult.error ||
-        !createInstallationUrlResult.data?.createGithubAppInstallationUrl
-      ) {
-        throw (
-          createInstallationUrlResult.error ||
-          new Error('Failed to create GithubApp Installation Url')
-        );
-      }
-
-      openPopUpWindow({
-        url: createInstallationUrlResult.data.createGithubAppInstallationUrl,
-        onClose: () => gitUsersAndOrganizations.refetch(),
-      });
-    } catch (error) {
-      toast.error({
-        error,
-        log: 'Failed to create GithubApp Installation Url',
-      });
-    }
+    // TODO: handle add acount
   };
 
   return (
@@ -356,8 +244,8 @@ const AccountField: React.FC = () => {
       <Combobox
         items={users}
         selected={[gitUser, handleUserChange]}
-        queryKey="slug"
-        isLoading={gitUsersAndOrganizations.isFetching}
+        queryKey="name"
+        isLoading={gitInstallationsQuery.fetching}
         extraItems={[
           {
             label: 'Add GitHub Organization',
@@ -366,8 +254,7 @@ const AccountField: React.FC = () => {
             disabled: shouldDisableAddOrganization,
             tooltip: shouldDisableAddOrganization
               ? {
-                  content:
-                    'You already have sites that depend on the current GitHub installation.',
+                  content: 'You already have sites that depend on the current GitHub installation.',
                   side: 'left',
                 }
               : undefined,
@@ -376,15 +263,7 @@ const AccountField: React.FC = () => {
       >
         {({ Field, Options }) => (
           <>
-            <Field
-              placeholder={
-                <>
-                  {<Icon name={sourceProviderIcon[sourceProvider!]} />} Select
-                </>
-              }
-            >
-              {UserItem}
-            </Field>
+            <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
 
             <Options>{UserItem}</Options>
           </>
@@ -394,10 +273,10 @@ const AccountField: React.FC = () => {
   );
 };
 
-const UserItem: React.FC<GitProvider.User> = ({ slug, avatar }) => (
+const UserItem: React.FC<GitUser> = ({ name, avatar }) => (
   <>
     <Avatar src={avatar} />
-    {slug}
+    {name}
   </>
 );
 
@@ -408,26 +287,19 @@ const PrivateRepositoryField: React.FC = () => {
 
   return (
     <S.CheckboxWrapper onClick={() => field.setValue(!field.value, true)}>
-      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create
-      private Git repository
+      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create private Git repository
     </S.CheckboxWrapper>
   );
 };
 
 type TitleRowProps = LoadingProps<{
   image: string;
-  name: string;
-  slug: string;
+  templateName: string;
+  gitUserName: string;
   repository: string;
 }>;
 
-const TitleRow: React.FC<TitleRowProps> = ({
-  isLoading,
-  image,
-  name,
-  slug,
-  repository,
-}) => {
+const TitleRow: React.FC<TitleRowProps> = ({ isLoading, image, templateName, gitUserName, repository }) => {
   if (isLoading) {
     return (
       <S.TemplateHeader.TitleRow>
@@ -444,10 +316,10 @@ const TitleRow: React.FC<TitleRowProps> = ({
     <S.TemplateHeader.TitleRow>
       <S.TemplateHeader.Avatar src={image} enableIcon icon="gear" />
       <Box>
-        <Text as="h3">{name}</Text>
-        <Text size="xs">
-          {slug}/{repository}
-        </Text>
+        <Text as="h3">{templateName}</Text>
+        <S.TemplateHeader.OwnerText>
+          {gitUserName}/{repository}
+        </S.TemplateHeader.OwnerText>
       </Box>
     </S.TemplateHeader.TitleRow>
   );

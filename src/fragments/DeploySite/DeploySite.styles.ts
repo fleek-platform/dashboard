@@ -10,14 +10,13 @@ export const DeploySiteStyles = {
       gridTemplateColumns: '1fr 1fr',
       gridTemplateAreas: `"aside content"`,
       gap: 'calc(4 * $page-padding)',
-      padding: '0 $spacing-7',
 
       '@md!': {
         gridTemplateColumns: '1fr',
         gridTemplateAreas: `"aside" "content"`,
         gridTemplateRows: 'min-content min-content',
         gap: '$spacing-9',
-        padding: '$spacing-4',
+        paddingTop: '$spacing-9',
       },
     }),
 
@@ -31,8 +30,7 @@ export const DeploySiteStyles = {
       justifyContent: 'center',
       gap: '$spacing-7',
       top: 'calc($page-padding + $spacing-9)',
-      maxHeight:
-        'calc($min-page-height - 2 * $space$page-padding - $space$spacing-9)',
+      maxHeight: 'calc($min-page-height - 2 * $space$page-padding - $space$spacing-9)',
 
       '@md!': {
         position: 'static',
@@ -60,6 +58,7 @@ export const DeploySiteStyles = {
           container: {
             borderRadius: '$xl',
             padding: '$spacing-4',
+            background: '$surface-content-fill',
           },
         },
         wrapped: {

@@ -1,5 +1,6 @@
+import { ExternalLink } from '@/components';
 import { styled } from '@/theme';
-import { Box, Icon } from '@/ui';
+import { Box, Icon, Text } from '@/ui';
 
 import { DeploySiteStepsStyles } from '../Steps.styles';
 
@@ -15,6 +16,27 @@ export const GitProviderStyles = {
     Item: {
       Wrapper: styled(Box, {
         gap: '$spacing-2',
+      }),
+
+      TitleWrapper: styled(Box, {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+        [`> ${Text}`]: {
+          textCategory: '$secondary',
+          color: '$text-primary',
+        },
+      }),
+
+      Message: styled(Text, {
+        textSize: '$sm',
+        display: 'inline-block',
+
+        [`${ExternalLink}`]: {
+          textSize: 'inherit',
+          display: 'inherit',
+          color: '$text-yellow',
+        },
       }),
     },
   },

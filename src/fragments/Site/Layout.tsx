@@ -1,12 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useMemo } from 'react';
 
-import {
-  BreadcrumbItem,
-  NavigationItem,
-  ProjectGoBack,
-  RootLayout,
-} from '@/components';
+import { BreadcrumbItem, NavigationItem, ProjectGoBack, RootLayout } from '@/components';
 import { constants } from '@/constants';
 import { useSiteQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -19,10 +14,7 @@ export type SiteLayoutProps = ChildrenProps<{
   nav?: React.ReactNode | React.ReactNode[];
 }>;
 
-export const SiteLayout: React.FC<SiteLayoutProps> = ({
-  children,
-  nav: pageNavContent,
-}) => {
+export const SiteLayout: React.FC<SiteLayoutProps> = ({ children, nav: pageNavContent }) => {
   const session = useSessionContext();
   const router = useRouter();
 
@@ -35,26 +27,15 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
       constants.PERMISSION.SITE.DELETE,
     ],
   });
-  const hasBuildSettingsPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
-  });
+  const hasBuildSettingsPermission = usePermissions({ action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS] });
   const hasDomainsPermissions = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN,
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS,
-    ],
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN, constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
   });
   const hasGitPermissions = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.ADD_GIT_INTEGRATION,
-      constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION,
-    ],
+    action: [constants.PERMISSION.SITE.ADD_GIT_INTEGRATION, constants.PERMISSION.SITE.REMOVE_GIT_INTEGRATION],
   });
   const hasEditEnvVariablesPermission = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.VIEW_ENV_VARIABLES,
-      constants.PERMISSION.SITE.EDIT_ENV_VARIABLES,
-    ],
+    action: [constants.PERMISSION.SITE.VIEW_ENV_VARIABLES, constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
   });
 
   const hasSiteSettingsPermission =
@@ -81,17 +62,11 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
       return routes.project.site.settings.domains({ projectId, siteId });
     }
 
-    if (
-      hasEditEnvVariablesPermission &&
-      (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))
-    ) {
+    if (hasEditEnvVariablesPermission && (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))) {
       return routes.project.site.settings.environment({ projectId, siteId });
     }
 
-    if (
-      hasGitPermissions &&
-      (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))
-    ) {
+    if (hasGitPermissions && (!siteQuery.data || !isSiteSelfManaged(siteQuery.data?.site))) {
       return routes.project.site.settings.git({ projectId, siteId });
     }
 
@@ -107,9 +82,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
     siteQuery.data,
   ]);
 
-  const hasSiteFunctions = Boolean(
-    siteQuery.data?.site.currentDeployment?.functionDeployments.length,
-  );
+  const hasSiteFunctions = Boolean(siteQuery.data?.site.currentDeployment?.functionDeployments.length);
 
   const navigation: NavigationItem[] = [
     {
@@ -120,11 +93,9 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
     },
     {
       icon: 'code-working',
-      label: 'Deploys',
+      label: 'Deployments',
       path: routes.project.site.deployments.list({ projectId, siteId }),
-      hasAccess: usePermissions({
-        action: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS],
-      }),
+      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_DEPLOYMENTS] }),
     },
     {
       icon: 'pulse',
@@ -136,17 +107,19 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
       icon: 'analytics',
       label: 'Analytics',
       path: routes.project.site.analytics({ projectId, siteId }),
-      hasAccess: usePermissions({
-        action: [constants.PERMISSION.SITE.VIEW_ANALYTICS],
-      }),
+      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_ANALYTICS] }),
+    },
+    {
+      icon: 'bolt',
+      label: 'Onchain',
+      path: routes.project.site.onchain.general({ projectId, siteId }),
+      hasAccess: usePermissions({ action: [constants.PERMISSION.SITE.VIEW_OVERVIEW] }),
     },
     {
       icon: 'globe-filled',
       label: 'Functions',
       path: routes.project.site.functions.list({ projectId, siteId }),
-      hasAccess:
-        usePermissions({ action: [constants.PERMISSION.FUNCTIONS.VIEW] }) &&
-        hasSiteFunctions,
+      hasAccess: usePermissions({ action: [constants.PERMISSION.FUNCTIONS.VIEW] }) && hasSiteFunctions,
     },
     {
       icon: 'gear',
@@ -178,9 +151,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
 
   return (
     <RootLayout.Container>
-      <RootLayout.Head
-        title={RootLayout.Head.titles.site(siteQuery.data?.site.name)}
-      />
+      <RootLayout.Head title={RootLayout.Head.titles.site(siteQuery.data?.site.name)} />
       <RootLayout.Page
         slotSidebar={
           <ProjectGoBack

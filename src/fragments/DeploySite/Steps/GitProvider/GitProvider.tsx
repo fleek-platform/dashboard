@@ -1,320 +1,146 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
-import { useClient } from 'urql';
 
-import { BadgeText, Form, Link } from '@/components';
-import {
-  GitAccessTokenQuery,
-  GitProviderDocument,
-  GitProviderQuery,
-  GitProviderQueryVariables,
-  GitProviderTags,
-  useCreateGithubAppAuthorizationUrlMutation,
-} from '@/generated/graphqlClient';
-import { GitAccessTokenQueryVariables } from '@/generated/graphqlClient';
-import { GitAccessTokenDocument } from '@/generated/graphqlClient';
-import { usePollAccessTokens } from '@/hooks/usePollAccessTokens';
+import { BadgeText, RestrictionModal } from '@/components';
+import { constants } from '@/constants';
+import { SourceProvider } from '@/generated/graphqlClient';
+import { useSiteRestriction } from '@/hooks/useBillingRestriction';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
-import { useToast } from '@/hooks/useToast';
-import { GitHub, GitProvider } from '@/integrations/git';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { LoadingProps } from '@/types/Props';
-import { Button, Icon, Stepper, Text } from '@/ui';
-import { openPopUpWindow } from '@/utils/openPopUpWindow';
+import { Button, Icon, IconName, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
-import { GitHubAuthentication } from './GitHubAuthentication';
 import { GitProviderStyles as S } from './GitProvider.styles';
 
 export const GitProviderStep: React.FC = () => {
-  const { nextStep } = Stepper.useContext();
-  const {
-    setSourceProvider,
-    mode,
-    sourceProvider,
-    setGitUser,
-    setGitRepository,
-    setGitBranch,
-    setGitProviderId,
-  } = useDeploySiteContext();
   const session = useSessionContext();
   const router = useRouter();
-  const form = Form.useContext();
+  const { nextStep } = Stepper.useContext();
+  const { providerState, mode, handleInstallation, isPopUpOpen } = useDeploySiteContext();
+  const hasBillingPermissions = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
+  const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useStepSetup({
-    title: 'Connect the Git Provider you want to use.',
-    handleBackClick: () =>
-      router.replace(
-        routes.project.site.list({ projectId: session.project.id }),
-      ),
+    title: 'Connect the Git provider you want to use.',
+    handleBackClick: () => router.replace(routes.project.site.list({ projectId: session.project.id })),
   });
 
   useEffect(() => {
-    if (mode === 'self') {
-      setSourceProvider('self');
-      nextStep();
+    if (hasReachedSitesLimit) {
+      setIsModalOpen(true);
     }
-  }, [mode, nextStep, setSourceProvider]);
+  }, [hasReachedSitesLimit]);
 
   useEffect(() => {
-    // clean up git states
-    setGitProviderId(undefined);
-    setSourceProvider(undefined);
-    setGitUser(undefined);
-    setGitRepository(undefined);
-    setGitBranch(undefined);
-    form.resetForm();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (mode === 'self') {
+      nextStep();
+    }
+  }, [mode, nextStep]);
 
-  if (sourceProvider === 'github') {
-    return <GitHubAuthentication />;
+  if (providerState?.requirements?.shouldInstall && !providerState.requirements.shouldAuthenticate) {
+    const textMessage =
+      mode === 'template'
+        ? 'In order to deploy a Fleek Template, you will need to have installed the Fleek Templates App on GitHub. This app requests admin permissions in order to enable Fleek to create the repository for your template. Use the button below to begin the installation.'
+        : 'In order to surface your GitHub repositories, you will need to have installed the Fleek App on GitHub. Use the button below to begin the installation.';
+
+    return (
+      <>
+        <S.Container>
+          <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+            GitHub Installation
+          </Text>
+
+          <S.InstallProviderMessage>
+            <Icon name="github" />
+            <Text as="h3" variant="primary" weight={500}>
+              Connect GitHub Account or Org
+            </Text>
+            <Text>{textMessage}</Text>
+          </S.InstallProviderMessage>
+
+          <Button loading={isPopUpOpen || providerState.requirementsFetching} onClick={handleInstallation}>
+            Install Fleek {mode === 'template' ? 'Templates' : ''} app on GitHub
+          </Button>
+        </S.Container>
+      </>
+    );
   }
 
   return (
     <>
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasBillingPermissions} />
       <S.Container>
-        <Text
-          as="h2"
-          variant="primary"
-          size="xl"
-          weight={700}
-          className="self-start"
-        >
-          Select Code Location
+        <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+          Select code Location
         </Text>
-        <GitHubButton />
-        <ProviderButton provider="gitlab" text="GitLab" disabled />
-        <ProviderButton provider="bitbucket" text="Bitbucket" disabled />
+
+        <ProviderButton provider={SourceProvider['GITHUB']} isRestricted={hasReachedSitesLimit || session.loading} />
+        <ProviderButton provider={SourceProvider['GITLAB']} disabled />
+        <ProviderButton provider={SourceProvider['BITBUCKET']} disabled />
       </S.Container>
+
       <S.Message>
-        <Text variant="primary" size="md">
-          Do you want to manage your own site deployment using the Fleek
-          CLI?&nbsp;
-          <Link
-            className="text-accent-11 hover:underline"
-            href={{
-              pathname: routes.project.site.new({
-                projectId: session.project.id,
-              }),
-              query: { mode: 'self' },
-            }}
-            replace
-          >
+        Do you want to manage your own site deployment using the Fleek CLI?&nbsp;
+        {hasReachedSitesLimit ? (
+          <Text className="text-accent-11 cursor-not-allowed inline" size="md">
             Click here
-          </Link>
-          .
-        </Text>
+          </Text>
+        ) : (
+          <S.Link href={{ pathname: routes.project.site.new({ projectId: session.project.id }), query: { mode: 'self' } }} replace>
+            Click here
+          </S.Link>
+        )}
+        .
       </S.Message>
     </>
   );
 };
 
-const GitHubButton: React.FC = () => {
-  const client = useClient();
-  const {
-    mode,
-    setSourceProvider,
-    setGitProviderId,
-    gitProviderId,
-    setAccessToken,
-  } = useDeploySiteContext();
-  const [, createGithubAppAuthorizationUrl] =
-    useCreateGithubAppAuthorizationUrlMutation();
-  const [shouldPollAccessTokens, setShouldPollAccessTokens] =
-    useState<boolean>(false);
-  usePollAccessTokens({
-    gitProviderId,
-    pause: !shouldPollAccessTokens || !gitProviderId,
-    onFinishedCallback: (data) => {
-      handleFinishedPolling(data);
-    },
-  });
-
-  const toast = useToast();
-  const [isSelected, setIsSelected] = useState(false);
-
-  const onPopUpClose = async () => {
-    setShouldPollAccessTokens(true);
-  };
-
-  const fetchRequiredData = async () => {
-    try {
-      const gitAccessTokensResult = await client.query<
-        GitAccessTokenQuery,
-        GitAccessTokenQueryVariables
-      >(GitAccessTokenDocument, {}, { requestPolicy: 'network-only' });
-
-      const gitUserAccessTokens =
-        gitAccessTokensResult.data?.user.gitUserAccessTokens;
-
-      if (gitAccessTokensResult.error || !gitUserAccessTokens) {
-        throw (
-          gitAccessTokensResult.error ||
-          new Error('Failed to get Git Access tokens')
-        );
-      }
-
-      const tag =
-        mode === 'template' ? GitProviderTags.templates : GitProviderTags.sites;
-
-      const gitProviderQueryResult = await client.query<
-        GitProviderQuery,
-        GitProviderQueryVariables
-      >(
-        GitProviderDocument,
-        { where: { tag } },
-        { requestPolicy: 'network-only' },
-      );
-
-      const gitProvider = gitProviderQueryResult.data?.gitProvider;
-
-      if (gitProviderQueryResult.error || !gitProvider) {
-        throw gitProviderQueryResult.error;
-      }
-
-      return {
-        gitProviderId: gitProvider?.id,
-        accessTokens: gitUserAccessTokens,
-      };
-    } catch (error) {
-      toast.error({
-        error,
-        log: 'Unexpected error checking if should authenticate',
-      });
-      setIsSelected(false);
-    }
-  };
-
-  const handleGithubAuth = async ({
-    authorizationGitProviderId,
-  }: { authorizationGitProviderId: string }) => {
-    try {
-      if (!authorizationGitProviderId) {
-        // eslint-disable-next-line fleek-custom/no-default-error
-        throw new Error('Unexpected auth without authenticationGitProviderId');
-      }
-
-      const result = await createGithubAppAuthorizationUrl({
-        where: { gitProviderId: authorizationGitProviderId },
-      });
-
-      if (result.error || !result.data?.createGithubAppAuthorizationUrl) {
-        setIsSelected(false);
-
-        throw result.error || new Error('Failed to create authorization url');
-      }
-
-      return openPopUpWindow({
-        url: result.data.createGithubAppAuthorizationUrl,
-        onClose: onPopUpClose,
-      });
-    } catch (error) {
-      return toast.error({ error, log: 'Failed to create authorization url' });
-    }
-  };
-
-  const checkIfShouldAuthenticate = async ({
-    accessToken,
-  }: { accessToken?: string }) => {
-    if (!accessToken) {
-      return true;
-    }
-
-    try {
-      await GitHub.testAuth(accessToken);
-
-      return false;
-    } catch {
-      return true;
-    }
-  };
-
-  const handleFinishedPolling = async (accessToken?: string | null) => {
-    if (!accessToken) {
-      return;
-    }
-
-    const shouldAuthenticate = await checkIfShouldAuthenticate({ accessToken });
-
-    if (shouldAuthenticate) {
-      handleSelect();
-    } else {
-      setAccessToken(accessToken);
-      setSourceProvider('github');
-    }
-  };
-
-  const handleSelect = async () => {
-    setIsSelected(true);
-
-    const data = await fetchRequiredData();
-
-    if (!data || !data.gitProviderId) {
-      setIsSelected(false);
-
-      return;
-    }
-
-    setGitProviderId(data.gitProviderId);
-
-    const authorizationAccessToken = data.accessTokens.find(
-      (gitAccessToken) => gitAccessToken.gitProviderId === data.gitProviderId,
-    )?.token;
-
-    if (!authorizationAccessToken) {
-      return handleGithubAuth({
-        authorizationGitProviderId: data.gitProviderId,
-      });
-    }
-
-    const shouldAuthenticate = await checkIfShouldAuthenticate({
-      accessToken: authorizationAccessToken,
-    });
-
-    if (shouldAuthenticate) {
-      return handleGithubAuth({
-        authorizationGitProviderId: data.gitProviderId,
-      });
-    }
-
-    setAccessToken(authorizationAccessToken);
-    setSourceProvider('github');
-  };
-
-  return (
-    <ProviderButton
-      text="GitHub"
-      provider="github"
-      isLoading={isSelected}
-      onClick={handleSelect}
-    />
-  );
+const GitProviderMap: Record<
+  SourceProvider,
+  {
+    icon: IconName;
+    text: string;
+  }
+> = {
+  GITHUB: {
+    icon: 'github',
+    text: 'GitHub',
+  },
+  BITBUCKET: {
+    icon: 'bitbucket',
+    text: 'Bitbucket',
+  },
+  GITLAB: {
+    icon: 'gitlab',
+    text: 'Gitlab',
+  },
 };
 
 type ProviderButtonProps = {
-  provider: GitProvider.Name;
-  text: string;
-} & Omit<React.ComponentProps<typeof Button>, 'children'> &
-  LoadingProps;
+  provider: SourceProvider;
+  isRestricted?: boolean;
+} & Omit<React.ComponentProps<typeof Button>, 'children'>;
 
-const ProviderButton: React.FC<ProviderButtonProps> = ({
-  provider,
-  text,
-  isLoading,
-  ...props
-}) => {
+const ProviderButton: React.FC<ProviderButtonProps> = ({ provider, isRestricted = false, ...props }) => {
+  const { handleGitProviderSelection, isCurrentProviderLoading, sourceProvider } = useDeploySiteContext();
+
   return (
     <Button
       {...props}
-      loading={isLoading}
+      disabled={props.disabled || isRestricted}
+      onClick={() => handleGitProviderSelection(provider)}
+      loading={sourceProvider === provider && isCurrentProviderLoading}
       intent="ghost"
       size="lg"
       className="w-full group disabled:hover:bg-neutral-4 disabled:opacity-40 disabled:hover:opacity-100"
     >
       <section className="flex justify-between w-full">
-        {text}
-        <Icon name={provider} />
+        {GitProviderMap[provider].text}
+        <Icon name={GitProviderMap[provider].icon} />
       </section>
       {props.disabled && (
         <BadgeText

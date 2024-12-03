@@ -10,6 +10,7 @@ export const DeploySiteStepsStyles = {
         container: {
           gap: '$spacing-6',
           borderRadius: '$xl',
+          background: '$surface-content-fill',
         },
       },
     },
@@ -26,6 +27,7 @@ export const DeploySiteStepsStyles = {
       variant: {
         container: {
           borderRadius: '$xl',
+          background: '$surface-content-fill',
         },
       },
     },

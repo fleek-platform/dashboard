@@ -1,3 +1,4 @@
-export * from './providers/GitHub';
-export * from './providers/MockedGitProvider';
-export * from './interfaces/GitProvider';
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace GitProvider {
+  export type Name = 'github' | 'gitlab' | 'bitbucket';
+}

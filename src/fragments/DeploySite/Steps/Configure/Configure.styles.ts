@@ -1,5 +1,5 @@
 import { styled } from '@/theme';
-import { Box, Button, FormField, Icon, Image, Input } from '@/ui';
+import { Box, Button, Icon, Image } from '@/ui';
 
 export const ConfigureStepStyles = {
   Form: {
@@ -8,7 +8,7 @@ export const ConfigureStepStyles = {
       fontSize: '$sm',
 
       [`> ${Button}`]: {
-        width: '100%',
+        width: '$full',
       },
     }),
 
@@ -55,13 +55,7 @@ export const ConfigureStepStyles = {
     Row: styled(Box, {
       flexDirection: 'row',
       gap: '$spacing-3',
-      [`${FormField.Root}`]: {
-        flex: 1,
 
-        [`${Input.Root}`]: {
-          minHeight: '$inline-component-height-xl',
-        },
-      },
       [`${Button}`]: {
         maxHeight: '$inline-component-height-xl',
       },

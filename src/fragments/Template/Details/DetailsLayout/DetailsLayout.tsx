@@ -9,29 +9,21 @@ import { TemplateStyles as S } from '../../Template.styles';
 
 export type DetailsLayout = React.PropsWithChildren<{
   nav?: React.ReactNode | React.ReactNode[];
+  title: string;
+  description?: string;
 }>;
 
-export const DetailsLayout: React.FC<DetailsLayout> = ({
-  children,
-  nav: pageNavContent,
-}) => {
+export const DetailsLayout: React.FC<DetailsLayout> = ({ children, nav: pageNavContent, title, description }) => {
   const flags = useFeatureFlags();
 
   return (
     <>
-      <LayoutHead title={LayoutHead.titles.templates} />
+      <LayoutHead title={title} description={description} />
       <App.Navbar.Combined />
       <App.Content>
         <PageNavigation
           items={[
-            {
-              icon: 'arrow-left',
-              label: 'Go back',
-              path: routes.template.list(),
-              isExact: true,
-              variant: 'primary',
-              hasAccess: true,
-            },
+            { icon: 'arrow-left', label: 'Go back', path: routes.template.list(), isExact: true, variant: 'primary', hasAccess: true },
           ]}
         >
           {pageNavContent}

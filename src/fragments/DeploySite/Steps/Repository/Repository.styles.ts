@@ -1,5 +1,5 @@
 import { styled } from '@/theme';
-import { Avatar, Box, Icon, Input, Scrollable } from '@/ui';
+import { Avatar, Box, Button, Icon, Scrollable, Text } from '@/ui';
 
 import { DeploySiteStepsStyles as S } from '../Steps.styles';
 
@@ -13,9 +13,6 @@ export const RepositoryStyles = {
     flexDirection: 'row',
     gap: '$spacing-3',
     textSize: '$sm',
-    flexWrap: 'wrap',
-
-    [`${Input.Root}`]: { flex: 1 },
   }),
 
   List: {
@@ -46,8 +43,7 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background:
-            'linear-gradient(180deg, $surface-primary 10%, $transparent 100%)',
+          background: 'linear-gradient(180deg, $surface-secondary 10%, $transparent 100%)',
           pointerEvents: 'none',
         },
 
@@ -59,17 +55,13 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background:
-            'linear-gradient(0deg, $surface-primary 10%, $transparent 100%)',
+          background: 'linear-gradient(0deg, $surface-secondary 10%, $transparent 100%)',
           borderRadius: '0 0 $xl $xl',
           pointerEvents: 'none',
         },
       }),
       Viewport: styled(Scrollable.Viewport),
-      Bar: styled(Scrollable.VerticalBar, {
-        margin: '$spacing-6 $spacing-2 $spacing-4 0',
-        zIndex: 1,
-      }),
+      Bar: styled(Scrollable.VerticalBar, { margin: '$spacing-6 $spacing-2 $spacing-4 0', zIndex: 1 }),
     },
     Spinner: styled(Icon, {
       fontSize: '$xl',
@@ -85,6 +77,13 @@ export const RepositoryStyles = {
 
       baseBorderBottom: '$border-slate',
       padding: '$spacing-4 0',
+
+      [`${Button}`]: {
+        textSize: '$sm',
+        minHeight: 'unset',
+        padding: '$spacing-1 $spacing-3',
+        borderRadius: '$md',
+      },
 
       '&:first-child': {
         paddingTop: 0,
@@ -108,6 +107,11 @@ export const RepositoryStyles = {
       textAlign: 'center',
       gap: '$xs',
       textSize: '$sm',
+    }),
+    Title: styled(Text, {
+      color: '$text-primary',
+      textSize: '$sm',
+      textCategory: '$secondary',
     }),
   },
 

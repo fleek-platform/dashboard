@@ -4,10 +4,7 @@ import { Form } from '@/components';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
 import { Box, Icon, IconName, Image, Stepper, Text } from '@/ui';
 
-import {
-  sourceProviderIcon,
-  sourceProviderLabel,
-} from './DeploySite.constants';
+import { sourceProviderIcon, sourceProviderLabel } from './DeploySite.constants';
 import { useDeploySiteContext } from './DeploySite.context';
 import { DeploySiteStyles as S } from './DeploySite.styles';
 
@@ -19,13 +16,7 @@ type StatusItemProps = React.PropsWithChildren<{
 }> &
   React.ComponentPropsWithoutRef<typeof S.StatusBox.Item>;
 
-const StatusItem: React.FC<StatusItemProps> = ({
-  title,
-  icon = 'gear',
-  image,
-  children = 'pending...',
-  fullSize = false,
-}) => (
+const StatusItem: React.FC<StatusItemProps> = ({ title, icon = 'gear', image, children = 'Pending...', fullSize = false }) => (
   <S.StatusBox.Item fullSize={fullSize}>
     <Text as="h3" size="xs">
       {title}
@@ -34,41 +25,41 @@ const StatusItem: React.FC<StatusItemProps> = ({
       <Image src={image} alt={title}>
         <Icon name={icon} />
       </Image>
-      <Text variant="primary" size="xs">
-        {children}
-      </Text>
+
+      {children}
     </Box>
   </S.StatusBox.Item>
 );
 
-const StatusSeparator: React.FC = () => (
-  <S.StatusBox.Separator name="arrow-right" />
-);
+const StatusSeparator: React.FC = () => <S.StatusBox.Separator name="arrow-right" />;
 
 const StatusBox: React.FC = () => {
-  const { sourceProvider, gitUser, mode } = useDeploySiteContext();
+  const { sourceProvider, mode, providerState } = useDeploySiteContext();
   const siteFrameworks = useSiteFrameworks();
   const field = Form.useField<string>('frameworkId');
 
-  const typeIcon =
-    (sourceProvider && sourceProviderIcon[sourceProvider]) || ('' as IconName);
-  const typeText =
-    gitUser?.slug || (sourceProvider && sourceProviderLabel[sourceProvider]);
-  const framework = useMemo(
-    () =>
-      siteFrameworks.data?.find((framework) => framework.id === field.value),
-    [siteFrameworks, field.value],
-  );
+  const typeStatus = useMemo(() => {
+    if (mode === 'self') {
+      return {
+        icon: sourceProviderIcon.self,
+        text: sourceProviderLabel.self,
+      };
+    }
+
+    const providerAuthenticated = !providerState?.requirements?.shouldAuthenticate && sourceProvider !== undefined;
+
+    return {
+      icon: providerAuthenticated ? sourceProviderIcon[sourceProvider] : undefined,
+      text: providerAuthenticated ? sourceProviderLabel[sourceProvider] : undefined,
+    };
+  }, [providerState?.requirements?.shouldAuthenticate, sourceProvider, mode]);
+
+  const framework = useMemo(() => siteFrameworks.data?.find((framework) => framework.id === field.value), [siteFrameworks, field.value]);
 
   return (
     <S.StatusBox.Container wrapped={mode === 'template'}>
-      <StatusItem
-        title="Type"
-        icon={typeIcon}
-        image={gitUser?.avatar}
-        fullSize={!!gitUser?.avatar}
-      >
-        {typeText}
+      <StatusItem title="Type" icon={typeStatus.icon}>
+        {typeStatus.text}
       </StatusItem>
 
       <StatusSeparator />

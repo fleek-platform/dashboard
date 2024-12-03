@@ -1,15 +1,10 @@
 import { AsideContent } from './AsideContent';
 import { BackButton } from './BackButton';
 import { sourceProviderLabel } from './DeploySite.constants';
-import {
-  DeploySiteContext,
-  DeploySiteProvider,
-  useDeploySiteContext,
-} from './DeploySite.context';
+import { DeploySiteContext, DeploySiteProvider, useDeploySiteContext } from './DeploySite.context';
 import { DeploySiteStyles as S } from './DeploySite.styles';
 import { Layout } from './Layout';
 import { ProjectChangeGuard } from './ProjectChangeGuard';
-import { Revamp } from './Revamp/Revamp';
 import { ConfigureStep } from './Steps/Configure/Configure';
 import { CreateTemplateFromRepositoryStep } from './Steps/CreateRepositoryFromTemplate/CreateRepositoryFromTemplate';
 import { GitProviderStep } from './Steps/GitProvider/GitProvider';
@@ -23,9 +18,9 @@ export const DeploySite = {
 
   // fragments
   Steps: {
-    Configure: ConfigureStep,
-    Repository: RepositoryStep,
     GitProvider: GitProviderStep,
+    Repository: RepositoryStep,
+    Configure: ConfigureStep,
     CreateRepositoryFromTemplate: CreateTemplateFromRepositoryStep,
   },
   AsideContent,
@@ -39,8 +34,6 @@ export const DeploySite = {
   constants: {
     sourceProviderLabel,
   },
-
-  Revamp,
 };
 
 export namespace DeploySite {

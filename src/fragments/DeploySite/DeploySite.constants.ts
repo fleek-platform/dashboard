@@ -1,16 +1,18 @@
-import { SiteSourceProvider } from '@/types/Site';
+import { SourceProvider } from '@/generated/graphqlClient';
 import { IconName } from '@/ui';
 
-export const sourceProviderLabel: Record<SiteSourceProvider, string> = {
-  github: 'GitHub',
-  gitlab: 'GitLab',
-  bitbucket: 'Bitbucket',
+type MixedSourceProvider = SourceProvider | 'self';
+
+export const sourceProviderLabel: Record<MixedSourceProvider, string> = {
+  [SourceProvider.GITHUB]: 'GitHub',
+  [SourceProvider.GITLAB]: 'GitLab',
+  [SourceProvider.BITBUCKET]: 'Bitbucket',
   self: 'Self',
 };
 
-export const sourceProviderIcon: Record<SiteSourceProvider, IconName> = {
-  github: 'github',
-  gitlab: 'gitlab',
-  bitbucket: 'bitbucket',
+export const sourceProviderIcon: Record<MixedSourceProvider, IconName> = {
+  [SourceProvider.GITHUB]: 'github',
+  [SourceProvider.GITLAB]: 'gitlab',
+  [SourceProvider.BITBUCKET]: 'bitbucket',
   self: 'person',
 };
