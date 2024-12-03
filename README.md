@@ -36,6 +36,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [🖍️Component Library](#component-library)
   - [Storybook](#storybook)
 * [🕷️Migration processes](#migration-processes)
+* [🚀 Release to Production](#release-to-production)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
@@ -412,6 +413,19 @@ Before you start, check the original repository commit hash you want to pick cha
 ```sh
 pnpm run migrate:sync_from_monorepo
 ```
+
+## Release to production
+
+You can release to production following a linear strategy. This assumes that the convention "main" branch is of linear history and is a subset of the "develop" branch commit history. For example, the team is happy to have "develop" as where the latest version of the project exists, that "main" shouldn't diverge and only contain commits from "develop".
+
+Use-case examples:
+
+- The team has merged some feature branches into develop identified as commit hash "abc123" and want to release upto to the commit history hash "abc123" onto "main". By doing this they expect the build process to occur and deploy into the Fleek Platform
+- The team has merged several feature branches into develop identified as commit hashes `commitFeat1`, `commitFeat2` and `commitFeat3` by this historical order. It's decided to release everything in commit history until `commitFeat1`, but not `commitFeat2` and `commitFeat3`. Although, it'd be wiser to keep the feature branches in pending state as "develop" should always be in a ready state for testing and release as the team may want to release some quick hotfixes, etc
+
+To release to production open the actions tab [here](https://github.com/fleek-platform/dashboard/actions).
+
+Select the "🚀 Release by develop hash" job in the left sidebar. Next, select the "Run workflow" drop-down and provide the required details.
 
 ## Contributing
 
