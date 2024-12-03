@@ -98,6 +98,9 @@ NEXT_DASHBOARD_WEBSITE_URL="https://fleek-dashboard-staging.on-fleek.app"
 > Keep it simple, name the file to the corresponding environment like .env.<NODE_ENV>
 > The test runner ignores .env.local.*
 
+> [!IMPORTANT]
+> The build process requires the environment variables to be populated. If you're building the project locally, you should create a .env.production, otherwise it'll fail to locate the environment variables.
+
 Test specific environment variables must be setup in the location `.tests/.env`.
 
 ```sh
@@ -196,6 +199,9 @@ Our build process outputs static files to:
 ```sh
 out
 ```
+
+> [!WARNING]
+> The build process requires the environment variables to be populated. If you're building the project locally, you should create a .env.production, otherwise it'll fail to locate the environment variables.
 
 The output directory is where all public files are stored and published.
 
