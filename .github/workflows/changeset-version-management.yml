@@ -1,0 +1,122 @@
+name: 🪡 Changeset (Version Management)
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  changeset_handler:
+    name: Changeset handler
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: fleek-platform-bot-token
+        with:
+          app-id: ${{ secrets.FLEEK_PLATFORM_BOT_APP_ID }}
+          private-key: ${{ secrets.FLEEK_PLATFORM_BOT_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.fleek-platform-bot-token.outputs.token }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+          
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Get pnpm store directory
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          pnpm install
+
+      - name: Changeset status
+        id: changeset-status
+        shell: bash
+        run: |
+          # Default skip state
+          skip="false"
+          # Changeset artifacts
+          changesetArtifactsRegex="\.changeset/.*\.md$"
+          # Commit hash that triggered workflow
+          commitHash="${{ github.sha }}"
+
+          pendingChangesetList=$(find .changeset -type f -name "*.md" ! -name "README.md")
+
+          if [[ -n "$pendingChangesetList" ]]; then
+            echo "⚠️ There are pending changeset files:"
+            echo "$pendingChangesetList"
+          fi
+          
+          # If no changes found, skip
+          if echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
+            echo "✅ Changeset found!"
+          else
+            echo "⚠️ Warning: The .changeset directory doesn't have new changesets, should skip!"
+            skip="true"
+          fi
+
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+
+      - name: Set version
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          pnpm changeset:version
+          git status --short
+
+      - name: Commit changes
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if ! git add -A; then
+            echo "👹 Oops! Failed stage changes"
+            exit 1
+          fi
+
+          echo "✅ Staged all changes!"
+
+          pkgVersion=$(node -p "require('./package.json').version")
+          if ! git commit \
+            --allow-empty \
+            --no-verify \
+            -m "[skip ci] 🦖 updated package version to $pkgVersion"; then
+            echo "👹 Oops! Failed to commit package version."
+            exit 1
+          fi
+
+          echo "✅ Committed package version!"
+
+          if ! git push; then
+            echo "👹 Oops! Failed to push changes."
+            exit 1
+          fi
+
+          echo "✅ Pushed changes to repository!"
