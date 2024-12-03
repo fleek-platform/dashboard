@@ -1,0 +1,63 @@
+#!/bin/bash
+
+src_path="src"
+pkg_ui_path="packages/ui"
+commit_hash=""
+monorepo_path=""
+root_path=$(pwd)
+
+if [[ ! -f "package.json" && ! -d "src" && ! -d "tests" && ! -f ".tests" && ! -d ".storybook" ]]; then
+  echo "👹 Oops! You don't seem to be running this process from the root of the Fleek-platform dashboard repository. As the process will copy files from monorepo, it might override or cause consequences. Make sure you run the process from the project root, please!"
+  exit 1
+fi
+
+while read -rp "❓What is the absolute path for the source monorepo? " ans; do
+  if [[ ! -d "$ans/$pkg_ui_path" ]]; then
+    echo "⚠️ WARNING: The provided location path \"$ans\" doesn't seem valid. Is it correct? Try again..."
+    continue;
+  fi
+
+  if [[ "$ans" != "" ]]; then
+    monorepo_path="$ans"
+    break;
+  fi
+
+  echo  "💩 Uh-oh! We expect an answer. Try again...\n"
+done;
+
+while read -rp "❓What is the commit hash you want to synchronise files from? " ans; do  
+  if [[ "$ans" != "" ]]; then
+    commit_hash="$ans"
+    break;
+  fi
+
+  echo  "💩 Uh-oh! We expect an answer. Try again...\n"
+done;
+
+if ! cd "$monorepo_path"; then
+  echo "👹 Oops! Failed to change directory to $monorepo_path. Is the path correct?"
+  exit 1
+fi
+
+git reset --hard HEAD
+
+git --no-pager diff --name-only "$commit_hash..HEAD" -- "$pkg_ui_path" | while read -r file; do
+  if [[ "$file" != *"packages/ui/src"* ]]; then
+    echo "⚠️ WARNING: Skipped $file"
+    continue;
+  fi
+  
+  relative_path=${file#packages/ui/src/}
+
+  if [[ ! -f "$file" ]]; then
+    echo "⚠️ WARNING: Missing $file, might have change on latest commits!"
+    continue;
+  fi
+
+  target_path="$root_path/src/$relative_path"
+  if ! rsync -a "$file" "$target_path"; then
+    echo "⚠️ WARNING: Failed to copy $file to $target_path"
+  fi  
+done
+
+echo "👍 Done! Synchronized the source-files to $root_path"
