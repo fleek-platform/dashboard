@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const ArweaveIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 31.8 31.8"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 31.8 31.8" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle
       cx={15.9}
       cy={15.9}

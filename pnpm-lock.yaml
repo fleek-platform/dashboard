@@ -232,8 +232,8 @@ importers:
         specifier: ^2.11.0
         version: 2.11.0(bufferutil@4.0.8)(encoding@0.1.13)(graphql@15.9.0)(utf-8-validate@5.0.10)
       '@fleek-platform/utils-routes':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.0
+        version: 0.6.0
       '@fleek-platform/utils-sites':
         specifier: ^1.5.34
         version: 1.5.34
@@ -1749,8 +1749,8 @@ packages:
   '@fleek-platform/utils-permissions@1.0.0':
     resolution: {integrity: sha512-94w5b40cKNoa4YhLJjD/gwymtxToBo8AzPn88tY3GsPXfSP16sYWB0W2jtz1MdSBoVmPpkkt6g+1FAIJAuFM+g==}
 
-  '@fleek-platform/utils-routes@0.5.0':
-    resolution: {integrity: sha512-QbZEHeFo6OBRjt/KzmG3h1mhZKO12wh2AIe7KS8KEbvGL7F7vTsRxIqcfbJ+lfY+0QNqRLglpJyG8WOHBJ5XOg==}
+  '@fleek-platform/utils-routes@0.6.0':
+    resolution: {integrity: sha512-of2EbspU7MNlNDF6WJwgUqe77FVhUrex4VKma7h4zpaCPF4ik6zA5RHVcoCLqL1MbER2Z3G3aa3TRXA8ZmF3lA==}
 
   '@fleek-platform/utils-sites@1.5.34':
     resolution: {integrity: sha512-vkc99fMINUk66U6y++5RARpmEB8Cu2knlq5VLd736iPqCuKXewCIw/+Cz7N9b95D3i5QeD1vmbmnd86Dzt9FbA==}
@@ -13451,7 +13451,7 @@ snapshots:
     dependencies:
       aws-lambda: 1.0.7
 
-  '@fleek-platform/utils-routes@0.5.0': {}
+  '@fleek-platform/utils-routes@0.6.0': {}
 
   '@fleek-platform/utils-sites@1.5.34':
     dependencies:

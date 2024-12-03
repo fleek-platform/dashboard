@@ -1,12 +1,7 @@
 import { IconStyles as S } from '../Icon.styles';
 
 export const AlbumsIcon: React.FC<S.CustomProps> = (props) => (
-  <S.Custom
-    {...props}
-    viewBox="0 0 38 38"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <S.Custom {...props} viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M27.3125 7.125H10.6875C10.3726 7.125 10.0705 6.99989 9.84781 6.77719C9.62511 6.55449 9.5 6.25244 9.5 5.9375C9.5 5.62256 9.62511 5.32051 9.84781 5.09781C10.0705 4.87511 10.3726 4.75 10.6875 4.75H27.3125C27.6274 4.75 27.9295 4.87511 28.1522 5.09781C28.3749 5.32051 28.5 5.62256 28.5 5.9375C28.5 6.25244 28.3749 6.55449 28.1522 6.77719C27.9295 6.99989 27.6274 7.125 27.3125 7.125Z"
       fill="currentColor"
