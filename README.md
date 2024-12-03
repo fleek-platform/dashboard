@@ -423,7 +423,7 @@ Use-case examples:
 - The team has merged some feature branches into develop identified as commit hash "abc123" and want to release upto to the commit history hash "abc123" onto "main". By doing this they expect the build process to occur and deploy into the Fleek Platform
 - The team has merged several feature branches into develop identified as commit hashes `commitFeat1`, `commitFeat2` and `commitFeat3` by this historical order. It's decided to release everything in commit history until `commitFeat1`, but not `commitFeat2` and `commitFeat3`. Although, it'd be wiser to keep the feature branches in pending state as "develop" should always be in a ready state for testing and release as the team may want to release some quick hotfixes, etc
 
-To release to production open the actions tab [here](https://github.com/fleek-platform/dashboard/actions).
+To release to production open the actions tab [here](https://github.com/fleek-platform/dashboard/actions/workflows/release-by-develop-hash.yml).
 
 Select the "🚀 Release by develop hash" job in the left sidebar. Next, select the "Run workflow" drop-down and provide the required details.
 
