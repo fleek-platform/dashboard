@@ -20,6 +20,10 @@ jobs:
         with:
           app-id: ${{ secrets.FLEEK_PLATFORM_BOT_APP_ID }}
           private-key: ${{ secrets.FLEEK_PLATFORM_BOT_PRIVATE_KEY }}
+          permissions:
+            contents: write
+            checks: write
+            pull-requests: write
 
       - name: Checkout repository
         uses: actions/checkout@v4
