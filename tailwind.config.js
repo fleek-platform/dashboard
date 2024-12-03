@@ -1,4 +1,4 @@
-import { colors, extend, fontSize, spacing } from './.tailwind';
+import { borderRadius, colors, extend, fontSize, spacing } from './.tailwind';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,10 +8,12 @@ module.exports = {
     spacing,
     fontSize,
     extend,
+    borderRadius,
   },
   plugins: [
     ({ addVariant }) => {
       addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
     },
   ],
 };
