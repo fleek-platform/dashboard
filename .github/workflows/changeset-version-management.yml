@@ -126,7 +126,9 @@ jobs:
 
           echo "✅ Committed package version!"
 
-          if ! git push; then
+          # Using force push, due to issue bypassing
+          # branching protection rules
+          if ! git push --force-with-lease origin "$BRANCH_NAME"; then
             echo "👹 Oops! Failed to push changes to $BRANCH_NAME"
             exit 1
           fi
