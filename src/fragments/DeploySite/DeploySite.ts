@@ -1,11 +1,7 @@
 import { AsideContent } from './AsideContent';
 import { BackButton } from './BackButton';
 import { sourceProviderLabel } from './DeploySite.constants';
-import {
-  DeploySiteContext,
-  DeploySiteProvider,
-  useDeploySiteContext,
-} from './DeploySite.context';
+import { DeploySiteContext, DeploySiteProvider, useDeploySiteContext } from './DeploySite.context';
 import { DeploySiteStyles as S } from './DeploySite.styles';
 import { Layout } from './Layout';
 import { ProjectChangeGuard } from './ProjectChangeGuard';

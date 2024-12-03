@@ -10,18 +10,13 @@ type ProviderInstallationMessageProps = {
   onRefetch: () => void;
 };
 
-export const ProviderInstallationMessage: React.FC<
-  ProviderInstallationMessageProps
-> = ({ onRefetch }) => {
+export const ProviderInstallationMessage: React.FC<ProviderInstallationMessageProps> = ({ onRefetch }) => {
   const toast = useToast();
   const { sourceProvider, providerState } = useDeploySiteContext();
 
   const handleOpenGithubAppInstallationUrl = async () => {
     if (!providerState?.requirements?.installationUrl) {
-      toast.error({
-        message:
-          'Unexpected error finding installation url, please contact support',
-      });
+      toast.error({ message: 'Unexpected error finding installation url, please contact support' });
 
       return;
     }
@@ -37,11 +32,7 @@ export const ProviderInstallationMessage: React.FC<
     return (
       <S.Message>
         Missing Git repository?&nbsp;
-        <ExternalLink
-          href="#"
-          variant="accent"
-          onClick={handleOpenGithubAppInstallationUrl}
-        >
+        <ExternalLink href="#" variant="accent" onClick={handleOpenGithubAppInstallationUrl}>
           Adjust GitHub permissions
         </ExternalLink>
       </S.Message>
