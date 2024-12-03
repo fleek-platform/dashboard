@@ -12,6 +12,8 @@ jobs:
     environment: staging
     permissions:
       contents: write
+      checks: write
+      pull-requests: write
     steps:
       - uses: actions/create-github-app-token@v1
         id: fleek-platform-bot-token
