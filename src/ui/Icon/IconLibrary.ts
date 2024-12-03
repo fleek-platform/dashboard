@@ -46,6 +46,7 @@ import { ArrowUpCircledIcon } from './Custom/ArrowUpCircled';
 import { ArweaveIcon } from './Custom/ArweaveIcon';
 import { BannedIcon } from './Custom/BannedIcon';
 import { BitbucketIcon } from './Custom/BitbucketIcon';
+import { BoltIcon } from './Custom/BoltIcon';
 import { BrowserIcon } from './Custom/BrowserIcon';
 import { BulbIcon } from './Custom/BulbIcon';
 import { CheckCircledIcon } from './Custom/CheckCircledIcon';
@@ -115,6 +116,7 @@ export const IconLibrary = Object.freeze({
   arweave: ArweaveIcon,
   banned: BannedIcon,
   bitbucket: BitbucketIcon,
+  bolt: BoltIcon,
   bookmark: BookmarkFilledIcon,
   browser: BrowserIcon,
   bulb: BulbIcon,
