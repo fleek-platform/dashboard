@@ -9,6 +9,7 @@ jobs:
   changeset_handler:
     name: Changeset handler
     runs-on: ubuntu-latest
+    environment: staging
     permissions:
       contents: write
     steps:
