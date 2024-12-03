@@ -36,6 +36,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [🖍️Component Library](#component-library)
   - [Storybook](#storybook)
 * [🕷️Migration processes](#migration-processes)
+  - [Sync from monorepo](#sync-from-monorepo-process)
 * [🚀 Release to Production](#release-to-production)
 * [📖 Docs](https://fleek.xyz/docs)
 * [🙏 Contributing](#contributing)
