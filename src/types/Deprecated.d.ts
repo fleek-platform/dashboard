@@ -1,1 +1,3 @@
-export type DeprecatedProps<T, K> = ({ deprecated: true } & T) | ({ deprecated?: false } & K);
+export type DeprecatedProps<T, K> =
+  | ({ deprecated: true } & T)
+  | ({ deprecated?: false } & K);

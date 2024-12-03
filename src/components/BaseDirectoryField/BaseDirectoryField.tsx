@@ -5,7 +5,10 @@ import { LoadingProps } from '@/types/Props';
 import { Box, Button, FormField, Icon, Input, RadioGroup, Text } from '@/ui';
 
 import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
-import { BaseDirectoryRadioGroup, BaseDirectoryRadioGroupProps } from './BaseDirectoryRadioGroup';
+import {
+  BaseDirectoryRadioGroup,
+  BaseDirectoryRadioGroupProps,
+} from './BaseDirectoryRadioGroup';
 
 const PATH = Symbol('path');
 const LABEL = 'Base Directory';
@@ -15,16 +18,30 @@ type BaseDirectoryFieldProps = {
   isDisabled?: boolean;
 } & BaseDirectoryRadioGroupProps;
 
-export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => {
+export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
+  props,
+) => {
   const field = Form.useField<string>(props.fieldName);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const initialValue = useRef<string>(field.value);
   const fieldValue = useRef<string>(field.value);
 
-  const isLoading = !props.gitProviderId || !props.sourceRepositoryOwner || !props.sourceRepositoryName || !props.sourceBranch;
+  const isLoading =
+    !props.gitProviderId ||
+    !props.sourceRepositoryOwner ||
+    !props.sourceRepositoryName ||
+    !props.sourceBranch;
 
   if (isLoading) {
-    return <Form.InputField name={props.fieldName} label={LABEL} placeholder="./" isLoading={isLoading} disableValidMessage />;
+    return (
+      <Form.InputField
+        name={props.fieldName}
+        label={LABEL}
+        placeholder="./"
+        isLoading={isLoading}
+        disableValidMessage
+      />
+    );
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -73,7 +90,11 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => 
           <FormField.Label>{LABEL}</FormField.Label>
           <S.Trigger.RowWrapper>
             <Input.Root disabled={props.isDisabled}>
-              <Input.Field readOnly value={field.value || './'} disabled={props.isDisabled} />
+              <Input.Field
+                readOnly
+                value={field.value || './'}
+                disabled={props.isDisabled}
+              />
             </Input.Root>
 
             <Button intent="neutral" disabled={props.isDisabled} size="sm">
@@ -97,7 +118,10 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => 
         </SettingsModal.Close>
 
         <SettingsModal.Close asChild>
-          <SettingsModal.ConfirmButton onClick={handleConfirm} className="flex-1">
+          <SettingsModal.ConfirmButton
+            onClick={handleConfirm}
+            className="flex-1"
+          >
             Continue
           </SettingsModal.ConfirmButton>
         </SettingsModal.Close>
@@ -113,7 +137,11 @@ type RecursiveFoldersProps = LoadingProps<{
   selected: string;
 }>;
 
-const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, isLoading }) => {
+const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
+  folders,
+  selected,
+  isLoading,
+}) => {
   if (isLoading) {
     return <RecursiveFoldersSkeleton />;
   }
@@ -124,7 +152,9 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         const folderPath = value[PATH];
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [showNested, setShowNested] = useState(selected.startsWith(folderPath));
+        const [showNested, setShowNested] = useState(
+          selected.startsWith(folderPath),
+        );
 
         const hasNested = Object.keys(value).length > 0;
 
@@ -139,7 +169,10 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         return (
           <Box key={key}>
             <S.RecursiveFolders.Row onClick={handleShowNested}>
-              <S.RecursiveFolders.Indicator hasNested={hasNested} showNested={showNested && hasNested}>
+              <S.RecursiveFolders.Indicator
+                hasNested={hasNested}
+                showNested={showNested && hasNested}
+              >
                 <Icon name="chevron-right" />
               </S.RecursiveFolders.Indicator>
               <RadioGroup.Item value={folderPath} onClick={handleSelect} />

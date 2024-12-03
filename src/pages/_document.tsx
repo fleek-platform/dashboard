@@ -7,7 +7,8 @@ import { getCssText } from '@/theme';
 const Document = () => (
   <Html>
     <Head>
-      <style id="stitches" dangerouslySetInnerHTML={{ __html: getCssText() }} /> {/* Usage for SSR */}
+      <style id="stitches" dangerouslySetInnerHTML={{ __html: getCssText() }} />{' '}
+      {/* Usage for SSR */}
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
