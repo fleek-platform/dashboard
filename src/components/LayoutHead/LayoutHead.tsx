@@ -38,7 +38,7 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
 };
 
 LayoutHead.titles = {
-  home: 'Dashboard',
+  home: 'Home',
   login: 'Login',
   project: (projectName: string) => `${projectName}`,
   deploy: (projectName: string) => `Deploy - ${projectName}`,
