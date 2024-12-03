@@ -1,5 +1,5 @@
 import { routes } from '@fleek-platform/utils-routes';
-import type { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { RestrictionModal } from '@/components';
@@ -14,20 +14,23 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { useIsTemplateOwner } from '@/hooks/useIsTemplateOwner';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
-import { createUrqlClient } from '@/integrations';
 import { useSessionContext } from '@/providers/SessionProvider';
 import type { Page } from '@/types/App';
 import { Button } from '@/ui';
 
-const TemplatePage: Page = () => {
+const TemplatePage = () => {
   const router = useRouter();
-  const templateId = router.query.templateId! as string;
+  const templateId = router.query.templateId as string;
+  const [isLoading, setIsLoading] = useState(true);
 
   const [templateQuery] = useTemplateQuery({
     variables: { where: { id: templateId } },
+    pause: !templateId,
   });
 
   useEffect(() => {
+    if (!templateId) return;
+
     if (
       templateQuery.error ||
       (templateQuery.data &&
@@ -36,7 +39,18 @@ const TemplatePage: Page = () => {
     ) {
       router.replace(routes.template.list());
     }
-  }, [templateQuery.data, templateQuery.error, router]);
+  }, [templateQuery.data, templateQuery.error, router, templateId]);
+
+  useEffect(() => {
+    if (!templateQuery.fetching) {
+      setIsLoading(false);
+    }
+  }, [templateQuery.fetching]);
+
+  if (isLoading || !templateId) {
+    // TODO: Might be necessary to add loader/loading
+    return <></>;
+  }
 
   const template = templateQuery?.data?.template!;
 
@@ -82,13 +96,11 @@ const PageNavContent: React.FC = () => {
           templateId,
         }),
       );
-
       return;
     }
 
     if (hasReachedSitesLimit) {
       setIsModalOpen(true);
-
       return;
     }
 
@@ -112,44 +124,22 @@ const PageNavContent: React.FC = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { templateId } = context.query;
+TemplatePage.getLayout = (page) => {
+  const templateQuery = useTemplateQuery({
+    variables: { where: { id: page.props.templateId } },
+  })[0];
 
-  const urqlClient = createUrqlClient({
-    logout: () => {},
-  });
-
-  const result = await urqlClient
-    .query(TemplateDocument, { where: { id: templateId } })
-    .toPromise();
-
-  if (
-    result.error ||
-    result.data.template.reviewStatus !== TemplateReviewStatus.APPROVED
-  ) {
-    return {
-      redirect: {
-        destination: routes.template.list(),
-        permanent: false,
-      },
-    };
+  if (templateQuery.fetching) {
+    // TODO: Might be necessary to add loader/loading
+    return <></>;
   }
 
-  return {
-    props: {
-      templateId,
-      templateData: result.data.template,
-    },
-  };
-};
-
-TemplatePage.getLayout = (page) => {
-  const templateData = page.props.templateData;
+  const templateData = templateQuery.data?.template;
 
   return (
     <Template.Details.Layout
-      title={templateData.name}
-      description={templateData.description}
+      title={templateData?.name}
+      description={templateData?.description}
       nav={<PageNavContent />}
     >
       {page}
