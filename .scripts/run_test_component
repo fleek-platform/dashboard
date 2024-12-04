@@ -1,0 +1,16 @@
+#!/bin/bash
+
+target_dir="src"
+has_spec_files="$(find "$target_dir" -name '*.component.spec.tsx')"
+
+if [[ "$has_spec_files" == "" ]]; then
+  echo "👹 Oops! Couldn't find any component tests. Has the tests location for components changed?"
+  exit 1
+fi
+
+if ! pnpm exec vitest run "$has_spec_files"; then
+  echo "👹 Oops! The test runner has encountered issues."
+  exit 1
+fi
+
+echo "👍 Test run for components completed!"
