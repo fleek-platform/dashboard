@@ -26,6 +26,8 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Branch Deployment Matrix](#branch-deployment-matrix)
   - [Distribution](#distribution)
   - [Build](#build)
+* [⚡️ Performance](#performance)
+  - [React Performance checks](#react-performance-checks)
 * [💍 Tests](#Tests)
   - [End-to-End](#end-to-end-e2e)
   - [Unit tests](#unit-tests)
@@ -276,6 +278,20 @@ main                |  https://fleek-dashboard-production.on-fleek.app
 ### Distribution
 
 To enable support for redirects, single-page-applications, custom 404 pages on IPFS-backed hosting, we use f the [_redirects](https://docs.ipfs.tech/how-to/websites-on-ipfs/redirects-and-custom-404s/#evaluation).
+
+## Performance
+
+The following are performance tools to help identify rendering bottlenecks and component inefficiencies.
+
+### React Performance checks
+
+We use [react-scan](https://github.com/aidenybai/react-scan) to help detect performance issues in the dashboard (react application). The process will help identify unnecessary renders that cause the application to become slow. Learn more [here](https://github.com/aidenybai/react-scan).
+
+To spin up an interactive and isolated browser instance run the following command:
+
+```sh
+pnpm run perf:scan
+```
 
 ## Tests
 
