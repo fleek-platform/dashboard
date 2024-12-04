@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react';
 import { RestrictionModal } from '@/components';
 import { constants } from '@/constants';
 import { Template } from '@/fragments';
-import { TemplateReviewStatus, useTemplateQuery } from '@/generated/graphqlClient';
+import {
+  TemplateReviewStatus,
+  useTemplateQuery,
+} from '@/generated/graphqlClient';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { useIsTemplateOwner } from '@/hooks/useIsTemplateOwner';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -23,7 +26,12 @@ const TemplatePage: Page = () => {
   });
 
   useEffect(() => {
-    if (templateQuery.error || (templateQuery.data && templateQuery.data.template.reviewStatus !== TemplateReviewStatus.APPROVED)) {
+    if (
+      templateQuery.error ||
+      (templateQuery.data &&
+        templateQuery.data.template.reviewStatus !==
+          TemplateReviewStatus.APPROVED)
+    ) {
       router.replace(routes.template.list());
     }
   }, [templateQuery.data, templateQuery.error, router]);
@@ -32,9 +40,18 @@ const TemplatePage: Page = () => {
 
   return (
     <>
-      <Template.Details.Elements.Content template={template} isLoading={templateQuery.fetching} />
-      <Template.Details.Elements.Overview template={template} isLoading={templateQuery.fetching} />
-      <Template.Details.Elements.Details template={template} isLoading={templateQuery.fetching} />
+      <Template.Details.Elements.Content
+        template={template}
+        isLoading={templateQuery.fetching}
+      />
+      <Template.Details.Elements.Overview
+        template={template}
+        isLoading={templateQuery.fetching}
+      />
+      <Template.Details.Elements.Details
+        template={template}
+        isLoading={templateQuery.fetching}
+      />
       <Template.Details.Elements.Spacer />
       <Template.Details.Elements.SimilarTemplates templateId={templateId} />
     </>
@@ -47,14 +64,22 @@ const PageNavContent: React.FC = () => {
   const session = useSessionContext();
   const projectId = session.project.id;
   const { isOwner, isLoading } = useIsTemplateOwner({ templateId });
-  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
+  const hasManageBillingPermission = usePermissions({
+    action: [constants.PERMISSION.BILLING.MANAGE],
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
 
   const handleDeploy = () => {
     if (!session.auth.token) {
-      session.auth.login('dynamic', routes.project.site.newFromTemplate({ projectId: '[projectId]', templateId }));
+      session.auth.login(
+        'dynamic',
+        routes.project.site.newFromTemplate({
+          projectId: '[projectId]',
+          templateId,
+        }),
+      );
 
       return;
     }
@@ -70,7 +95,11 @@ const PageNavContent: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
+      <RestrictionModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        shouldShowUpgradePlan={hasManageBillingPermission}
+      />
       {isOwner && !isLoading && (
         <Template.UpdateModal templateId={templateId}>
           <Button intent="neutral">Edit template</Button>
@@ -84,7 +113,11 @@ const PageNavContent: React.FC = () => {
 TemplatePage.getLayout = (page) => {
   const { templateData } = page.props;
   return (
-    <Template.Details.Layout title={templateData?.name} description={templateData?.description} nav={<PageNavContent />}>
+    <Template.Details.Layout
+      title={templateData?.name}
+      description={templateData?.description}
+      nav={<PageNavContent />}
+    >
       {page}
     </Template.Details.Layout>
   );

@@ -32,9 +32,7 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   return (
     <S.Logo.Container>
       {projectId ? (
-        <Link
-          href={routes.project.home({ projectId })}
-        >
+        <Link href={routes.project.home({ projectId })}>
           <FleekLogo showTypography={false} {...props} />
         </Link>
       ) : (

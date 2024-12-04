@@ -59,11 +59,7 @@ export const SiteCard: React.FC<SiteCardProps> = ({
         <S.Details>
           <S.DetailsRow>
             <S.TextContainer>
-              <Text
-                variant="primary"
-                weight={700}
-                size="md"
-              >
+              <Text variant="primary" weight={700} size="md">
                 {name}
               </Text>
               <Text
