@@ -339,6 +339,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      react-scan:
+        specifier: ^0.0.35
+        version: 0.0.35
       sass:
         specifier: ^1.56.1
         version: 1.81.0
@@ -1224,6 +1227,12 @@ packages:
 
   '@changesets/write@0.3.2':
     resolution: {integrity: sha512-kDxDrPNpUgsjDbWBvUo27PzKX4gqeKOlhibaOXDJA6kuBisGqNHv/HwGJrAu8U/dSf8ZEFIeHIPtvSlZI1kULw==}
+
+  '@clack/core@0.3.5':
+    resolution: {integrity: sha512-5cfhQNH+1VQ2xLQlmzXMqUoiaH0lRBq9/CLW9lTyMbuKLC3+xEK01tHVvyut++mLOn5urSHmkm6I0Lg9MaJSTQ==}
+
+  '@clack/prompts@0.8.2':
+    resolution: {integrity: sha512-6b9Ab2UiZwJYA9iMyboYyW9yJvAO9V753ZhS+DHKEjZRKAxPPOb7MXXu84lsPFG+vZt6FRFniZ8rXi+zCIw4yQ==}
 
   '@coinbase/wallet-sdk@3.9.2':
     resolution: {integrity: sha512-SyfUlG0DzgRu2WQ8+c7DpFEIe8Bt/nxyP1hcExDUXF7cHaopdAU43djT8SLIWH8Li40ZK9VBGVuNIK/pwHR9LA==}
@@ -9588,6 +9597,10 @@ packages:
       '@types/react':
         optional: true
 
+  react-scan@0.0.35:
+    resolution: {integrity: sha512-1ZrSO4prPDDiJg6/ZauxlYMaCFsxo6KrV9fBOVJ5aGkwXw3EyBCzfQpYzIzkwE19iE9Nw3mWd8uEiWupAwDP1w==}
+    hasBin: true
+
   react-shallow-renderer@16.15.0:
     resolution: {integrity: sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==}
     peerDependencies:
@@ -12704,6 +12717,17 @@ snapshots:
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 2.8.8
+
+  '@clack/core@0.3.5':
+    dependencies:
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
+  '@clack/prompts@0.8.2':
+    dependencies:
+      '@clack/core': 0.3.5
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
 
   '@coinbase/wallet-sdk@3.9.2':
     dependencies:
@@ -23934,6 +23958,14 @@ snapshots:
       use-sidecar: 1.1.2(@types/react@18.0.9)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.0.9
+
+  react-scan@0.0.35:
+    dependencies:
+      '@clack/core': 0.3.5
+      '@clack/prompts': 0.8.2
+      kleur: 4.1.5
+      mri: 1.2.0
+      playwright: 1.49.0
 
   react-shallow-renderer@16.15.0(react@18.3.1):
     dependencies:
