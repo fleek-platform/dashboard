@@ -1,0 +1,53 @@
+#!/bin/bash
+
+getDotEnvs() {
+  find . -maxdepth 1 -name ".env*" -type f -exec basename {} \;
+}
+
+createTestsDotEnv() {
+  local test_artifacts_path="$1"
+  local tests_dot_env_path="$2"
+  
+  if [[ ! -d "$test_artifacts_path" ]]; then
+    mkdir "$test_artifacts_path"
+  fi
+
+  tests_dot_env_path="$test_artifacts_path/.env"
+
+  if [[ -f "$tests_dot_env_path" ]]; then
+    if ! rm "$tests_dot_env_path"; then
+      echo "👹 Oops! Failed to delete $tests_dot_env_path for some reason..."
+      exit 1
+    fi
+  fi
+
+  echo "NEXT_DEV_SERVER_PORT=$NEXT_DEV_SERVER_PORT" > "$tests_dot_env_path"
+}
+
+dotEnvUserInputHandling() {
+  local dev_environment="$1"
+  local dot_env_count="$2"
+  local dot_env_ls="$3"
+  local dot_env_count="$4"
+  local check_env_filename="$5"
+  local test_artifacts_path="$6"
+
+  if [[ "$dot_env_count" -gt 1 ]]; then
+    read -rp "⚠️ WARNING: Found $dot_env_count .env files! The process is going to try load .env.development. For any questions check the README file! Press ENTER process continue..."
+
+    check_env_filename=".env.$dev_environment"
+    if [[ ! -f "$check_env_filename" ]]; then
+      echo "👹 Oops! The file $check_env_filename doesn't exist. Since you have $dot_env_count, we need you to declare a .env.development"
+      exit 1
+    fi
+  else
+    check_env_filename="$dot_env_ls"
+
+    if [[ "$check_env_filename" != ".env.$dev_environment" ]]; then
+      read -rp "⚠️ WARNING: The filename $check_env_filename  doesn't match NODE_ENV=development. To avoid confusion, consider renaming it to .env.development. This change will clearly indicate that the file is specifically for the development environment, aligning with NODE_ENV setting when running the development server. Press ENTER process continue..."
+    fi
+  fi
+
+  echo "🤖 Should parse $check_env_filename..."
+  source "$check_env_filename"
+}

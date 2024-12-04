@@ -2,49 +2,8 @@
 
 set -e
 
-
-getDotEnvs() {
-  find . -maxdepth 1 -name ".env*" -type f -exec basename {} \;
-}
-
-createTestsDotEnv() {
-  if [[ ! -d "$test_artifacts_path" ]]; then
-    mkdir "$test_artifacts_path"
-  fi
-
-  tests_dot_env_path="$test_artifacts_path/.env"
-
-  if [[ -f "$tests_dot_env_path" ]]; then
-    if ! rm "$tests_dot_env_path"; then
-      echo "👹 Oops! Failed to delete $tests_dot_env_path for some reason..."
-      exit 1
-    fi
-  fi
-
-  echo "NEXT_DEV_SERVER_PORT=$NEXT_DEV_SERVER_PORT" > "$tests_dot_env_path"
-}
-
-dotEnvUserInputHandling() {
-
-  if [[ "$dot_env_count" -gt 1 ]]; then
-    read -rp "⚠️ WARNING: Found $dot_env_count .env files! The process is going to try load .env.development. For any questions check the README file! Press ENTER process continue..."
-
-    check_env_filename=".env.$dev_environment"
-    if [[ ! -f "$check_env_filename" ]]; then
-      echo "👹 Oops! The file $check_env_filename doesn't exist. Since you have $dot_env_count, we need you to declare a .env.development"
-      exit 1
-    fi
-  else
-    check_env_filename="$dot_env_ls"
-
-    if [[ "$check_env_filename" != ".env.$dev_environment" ]]; then
-      read -rp "⚠️ WARNING: The filename $check_env_filename  doesn't match NODE_ENV=development. To avoid confusion, consider renaming it to .env.development. This change will clearly indicate that the file is specifically for the development environment, aligning with NODE_ENV setting when running the development server. Press ENTER process continue..."
-    fi
-  fi
-
-  echo "🤖 Should parse $check_env_filename..."
-  source "$check_env_filename"
-}
+# Required dotenv utils
+source .scripts/dotenv_utils
 
 startDevServer() {
   echo "🤖 Should start the server at localhost:$NEXT_DEV_SERVER_PORT..."
@@ -62,16 +21,23 @@ check_env_filename=""
 test_artifacts_path=".tests"
 
 if [[ "$interactive_mode" -eq 1 ]]; then
-  dotEnvUserInputHandling
+  dotEnvUserInputHandling \
+    "$dev_environment" \
+    "$dot_env_count" \
+    "$dot_env_ls" \
+    "$dot_env_count" \
+    "$check_env_filename" \
+    "$test_artifacts_path"
 
   # Requirements quick check
   pnpm dev:check_required
 fi
 
-
 # The test server is interested
 # in the port number
-createTestsDotEnv
+createTestsDotEnv \
+  "$test_artifacts_path" \
+  "$tests_dot_env_path"
 
 echo "🤖 Should start the server at localhost:$NEXT_DEV_SERVER_PORT..."
 pnpm exec next dev --port $NEXT_DEV_SERVER_PORT
