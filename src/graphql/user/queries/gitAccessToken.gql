@@ -1,9 +1,0 @@
-query gitAccessToken {
-  user {
-    gitUserAccessTokens {
-      __typename
-      gitProviderId
-      token
-    }
-  }
-}
