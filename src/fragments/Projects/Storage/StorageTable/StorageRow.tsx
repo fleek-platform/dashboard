@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 
 import { BadgeText, ExternalLink } from '@/components';
 import { useUploadContext } from '@/providers/UploadProvider';
+import { TEST_ID } from '@/test/testId';
 import { LoadingProps } from '@/types/Props';
 import { Folder, Pin } from '@/types/StorageProviders';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
@@ -51,7 +52,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
   const publicUrl = getLink();
 
   return (
-    <S.Table.Row>
+    <S.Table.Row data-testid={TEST_ID.TABLE_ROW_STORAGE}>
       <S.Table.Cell>
         <RS.NameRow>
           {folder || isIpfsFolder ? (

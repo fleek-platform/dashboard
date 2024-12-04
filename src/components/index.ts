@@ -46,6 +46,7 @@ export * from './FleekLogoDotted/FleekLogoDotted';
 export * from './RestrictionModal/RestrictionModal';
 export * from './DropdownItem/DropdownItem';
 export * from './FeedbackModal/FeedbackModal';
+export * from './IpfsBox/IpfsBox';
 
 // New UI navigation with FTW
 export * from './ftw/RootLayout/RootLayout';

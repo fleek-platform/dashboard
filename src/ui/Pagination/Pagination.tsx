@@ -1,3 +1,4 @@
+import { TEST_ID } from '@/test/testId';
 import { forwardStyledRef } from '@/theme';
 
 import { Icon } from '../Icon/Icon';
@@ -22,7 +23,11 @@ export const Pagination = forwardStyledRef<HTMLDivElement, PaginationProps>(
     } = usePagination({ totalPages, currentPage, onPageChange: _onPageChange });
 
     return (
-      <PS.Container {...props} ref={ref}>
+      <PS.Container
+        {...props}
+        ref={ref}
+        data-testid={TEST_ID.PAGINATION_CONTAINER}
+      >
         {items.map((pageItem: PaginationItem, index) => {
           const { page, type } = pageItem;
 

@@ -7,7 +7,7 @@ export const BoxElement = styled('div', {
   variants: {
     variant: {
       container: {
-        padding: '$spacing-6',
+        padding: '$spacing-4',
         gap: '$spacing-4',
 
         backgroundColor: '$surface-primary',

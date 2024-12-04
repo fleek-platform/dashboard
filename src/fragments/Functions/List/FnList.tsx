@@ -8,7 +8,7 @@ import {
 } from '@/hooks/useFunctionsList';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Box, Button, CodeBlock, Input, Pagination, Text } from '@/ui';
+import { Box, Button, EmptyState, Input, Pagination, Text } from '@/ui';
 
 import { FnItem, FnItemSkeleton } from './FnItem';
 
@@ -36,13 +36,10 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
 
   if (fetching || session.loading) {
     return (
-      <Box className="gap-4 pt-[1px]">
-        <F.Sections.ExternalLinks />
-        <Box className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-          <FnItemSkeleton />
-          <FnItemSkeleton />
-          <FnItemSkeleton />
-        </Box>
+      <Box className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
+        <FnItemSkeleton />
+        <FnItemSkeleton />
+        <FnItemSkeleton />
       </Box>
     );
   }
@@ -59,14 +56,12 @@ export const FnList: React.FC<FnListProps> = ({ source = 'project' }) => {
     return (
       <>
         <F.Sections.ExternalLinks />
-        <Box variant="container" className="items-center justify-center py-10">
-          <Text as="h2" variant="primary" size="2xl" weight={700}>
-            No functions yet
-          </Text>
-          <Text size="md">
-            Use the CLI or click the <CodeBlock>Add new function</CodeBlock>{' '}
-            button above to create one.
-          </Text>
+        <Box variant="container" className="py-10">
+          <EmptyState
+            title="No functions yet"
+            description="Use the CLI or click the `Add new function` button above to create one."
+            section="functions"
+          />
         </Box>
       </>
     );

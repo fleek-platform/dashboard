@@ -39,7 +39,7 @@ export const Container: React.FC<SettingsBox.ContainerProps> = ({
     return (
       <S.Container className="relative">
         {children}
-        <Box className="text-center gap-3 justify-center items-center absolute top-0 left-0 h-full w-full z-[2] bg-[#191919] rounded-lg p-9">
+        <Box className="text-center gap-3 justify-center items-center absolute top-0 left-0 h-full w-full z-[2] bg-surface-content rounded-lg p-9">
           <Box className="gap-1">
             <Text variant="primary" weight={700}>
               Upgrade plan

@@ -77,6 +77,8 @@ export const BadgeTextStyles = styled('div', {
   textSize: '$xs',
   textCategory: '$primary',
   fontWeight: '$tertiary',
+  whiteSpace: 'nowrap',
+  height: 'fit-content',
 
   variants: {
     colorScheme: colorSchemes,

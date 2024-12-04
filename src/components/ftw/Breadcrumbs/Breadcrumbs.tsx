@@ -76,7 +76,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
   }
 
   return (
-    <Box className="flex-row items-center gap-2">
+    <Box className="flex-row items-center gap-2 flex-wrap">
       {breadcrumbs.map((breadcrumb, idx) => {
         const isLastBreadcrumb = breadcrumbs.length === idx + 1;
 

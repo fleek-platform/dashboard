@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   AlertBox,
   Billing,
+  ExternalLink,
   LearnMoreMessage,
-  Link,
   PermissionsTooltip,
   SettingsBox,
 } from '@/components';
@@ -174,16 +174,16 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
   return (
     <>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
-        <Link href="mailto:business@fleek.xyz">
+        <ExternalLink href="https://fleek.typeform.com/fleekinterest?typeform-source=fleek.xyz">
           <Button
             intent="neutral"
             size="sm"
             className={className}
             disabled={!hasManageBillingPermission}
           >
-            Contact Sales
+            Contact us
           </Button>
-        </Link>
+        </ExternalLink>
       </PermissionsTooltip>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
         <Button

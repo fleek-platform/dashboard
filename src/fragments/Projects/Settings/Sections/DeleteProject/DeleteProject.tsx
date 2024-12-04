@@ -8,6 +8,8 @@ import {
   CustomTooltip,
   Form,
   LearnMoreMessage,
+  Link,
+  Modal,
   PermissionsTooltip,
   SettingsBox,
 } from '@/components';
@@ -26,9 +28,11 @@ import {
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
+import { useBillingContext } from '@/providers/BillingProvider';
 import { useCookies } from '@/providers/CookiesProvider';
-import { LoadingProps } from '@/types/Props';
-import { Button } from '@/ui';
+import { useSessionContext } from '@/providers/SessionProvider';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { Button, Dialog, Text } from '@/ui';
 
 import {
   DeleteProjectModal,
@@ -50,8 +54,6 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
   const router = useRouter();
   const toast = useToast();
   const cookies = useCookies();
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const [, createProject] = useCreateProjectMutation();
 
@@ -124,8 +126,6 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
           );
         }
 
-        setIsOpen(false);
-
         if (redirectProjectId) {
           cookies.set('projectId', redirectProjectId);
         }
@@ -149,8 +149,6 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
     parentForm: deleteForm,
   });
 
-  const { isVisible } = TwoFactorAuthentication.useTwoFactorModal();
-
   return (
     <Form.Provider value={deleteForm}>
       <SettingsBox.Container>
@@ -166,17 +164,14 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
             deleting a project
           </LearnMoreMessage>
 
-          <DeleteProjectModal
-            projectName={projectName}
-            isOpen={isVisible ? false : isOpen}
-            setIsOpen={setIsOpen}
-          >
-            {isLoading ? (
-              <SettingsBox.Skeleton variant="button" />
-            ) : (
-              <DeleteProjectButton isOnlyProject={isOnlyProject} />
-            )}
-          </DeleteProjectModal>
+          {isLoading ? (
+            <SettingsBox.Skeleton variant="button" />
+          ) : (
+            <DeleteProjectButton
+              isOnlyProject={isOnlyProject}
+              projectName={projectName}
+            />
+          )}
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
     </Form.Provider>
@@ -185,15 +180,20 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
 
 type DeleteProjectButtonProps = {
   isOnlyProject: boolean;
+  projectName?: string;
 };
 
 const DeleteProjectButton = forwardRef<
   HTMLButtonElement,
   DeleteProjectButtonProps
->(({ isOnlyProject, ...props }, ref) => {
+>(({ isOnlyProject, projectName, ...props }, ref) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { subscription } = useBillingContext();
   const hasDeleteProjectPermission = usePermissions({
     action: [constants.PERMISSION.PROJECT.DELETE],
   });
+  const { isVisible } = TwoFactorAuthentication.useTwoFactorModal();
 
   const children = (
     <Button
@@ -226,5 +226,50 @@ const DeleteProjectButton = forwardRef<
     );
   }
 
-  return children;
+  if (subscription.data && !subscription.data?.endDate) {
+    return <SubscriptionWarningModal>{children}</SubscriptionWarningModal>;
+  }
+
+  return (
+    <DeleteProjectModal
+      projectName={projectName}
+      isOpen={isVisible ? false : isOpen}
+      setIsOpen={setIsOpen}
+    >
+      {children}
+    </DeleteProjectModal>
+  );
 });
+
+const SubscriptionWarningModal: React.FC<ChildrenProps> = ({ children }) => {
+  const {
+    project: { id: projectId },
+  } = useSessionContext();
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger>{children}</Dialog.Trigger>
+      <Dialog.Overlay />
+
+      <Modal.Content>
+        <Modal.Heading>Cancel subscription to continue</Modal.Heading>
+        <Text>
+          If you are sure you want to delete your project, you must first cancel
+          your subscription.
+        </Text>
+
+        <Modal.CTARow>
+          <Dialog.Close asChild>
+            <Button intent="ghost" className="flex-1">
+              Never mind
+            </Button>
+          </Dialog.Close>
+
+          <Link href={routes.project.billing({ projectId })} className="flex-1">
+            <Button className="w-full">Go to billing</Button>
+          </Link>
+        </Modal.CTARow>
+      </Modal.Content>
+    </Dialog.Root>
+  );
+};

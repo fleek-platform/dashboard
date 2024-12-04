@@ -30,7 +30,7 @@ export const buttonVariants = cva(
       },
       intent: buttonIntent,
       size: {
-        xs: 'px-2.5 h-6',
+        xs: 'px-2.5 h-6 text-xs rounded-md',
         sm: 'h-[2rem] px-2.5 text-sm rounded-md gap-1',
         md: 'h-[2.5rem] px-3 text-sm rounded-lg gap-3',
         lg: 'h-8 px-4 text-md rounded-xl gap-3',

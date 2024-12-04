@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import { PinQuery } from '@/generated/graphqlClient';
-import { bytesToSize } from '@/utils/fileSizeFormat';
+import { bytesToSize } from '@/utils/fileSizeFormt';
 
 import { DeployTime } from '../List/DeployTime';
 import { InvokeLink } from '../List/InvokeLink';

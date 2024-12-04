@@ -36,8 +36,6 @@ const SitePage: Page = () => {
   const isLoading = siteQuery.fetching;
 
   const site = siteQuery.data?.site;
-  const ipnsRecords = site?.ipnsRecords || [];
-  const ipnsName = ipnsRecords[ipnsRecords.length - 1]?.name;
   const isSelfManaged = isSiteSelfManaged(site);
   const currentDeployment = getSiteCurrentDeployment(site);
 
@@ -104,53 +102,24 @@ const SitePage: Page = () => {
       <GitIntegration.SiteDisconnectedAlert siteQuery={siteQuery} />
       <Site.Elements.Overview siteQuery={siteQuery} />
       <Site.Elements.RecentDeploy
+        siteQuery={siteQuery}
         isSelfManaged={isSelfManaged as boolean}
         onRedeploy={handleRedeploy}
       />
-      <Site.Containers.Row>
-        <Site.Containers.MainColumn>
-          <Site.Elements.Ipfs
-            cid={currentDeployment?.cid}
-            ipns={ipnsName}
-            active={Boolean(currentDeployment?.cid || ipnsName)}
-            isLoading={isLoading}
-            isFn={Boolean(site?.currentDeployment?.functionDeployments?.length)}
-          />
-          <Site.Elements.CustomENS />
-          <Site.Elements.CustomDomain />
-        </Site.Containers.MainColumn>
-        <Site.Containers.RightColumn>
-          <ComingSoon.Overlay
-            description="Monitor your application's performance and user metrics."
-            isLoading={isLoading}
-          >
-            <Site.Elements.Performance score={99} isLoading={isLoading} />
-          </ComingSoon.Overlay>
-          <ComingSoon.Overlay
-            description="Monitor the activity and changes on your application."
-            isLoading={isLoading}
-          >
-            <Site.Elements.AuditLog
-              items={[
-                {
-                  category: 'deploy-live',
-                  label: '5m ago',
-                  urlTitle: 'asdv',
-                  url: '#',
-                },
-                {
-                  category: 'deploy-started',
-                  label: '10m ago',
-                  urlTitle: 'hzcs',
-                  url: '#',
-                },
-                { category: 'site-healthy', label: '15m ago' },
-              ]}
-              isLoading={isLoading}
-            />
-          </ComingSoon.Overlay>
-        </Site.Containers.RightColumn>
-      </Site.Containers.Row>
+      <Box className="sm:flex-row gap-5">
+        <ComingSoon.Overlay
+          description="Monitor the activity and changes on your application."
+          className="flex-1"
+        >
+          <Site.Elements.Analytics />
+        </ComingSoon.Overlay>
+        <ComingSoon.Overlay
+          description="Monitor your application's performance and user metrics."
+          className="flex-1"
+        >
+          <Site.Elements.Performance score={99} />
+        </ComingSoon.Overlay>
+      </Box>
     </>
   );
 };
@@ -175,12 +144,14 @@ const PageNavContent: React.FC = () => {
   const isSelfManaged = isSiteSelfManaged(site);
   const siteLink = useSiteLink({ siteId }) || '#';
 
+  const ipfsHash = site?.currentDeployment?.cid || '';
+
   const handleRedeploy = async () => {
     await triggerDeploy.mutateAsync({ siteId });
   };
 
   return (
-    <Box className="flex-row gap-3">
+    <Box className="flex-row gap-2">
       {!isSelfManaged && hasDeployPermission && (
         <SiteQuotaTooltip
           canDeploy={siteQuota.canDeploy}
@@ -191,13 +162,23 @@ const PageNavContent: React.FC = () => {
             onClick={handleRedeploy}
             disabled={triggerDeploy.isLoading || !siteQuota.canDeploy}
             loading={triggerDeploy.isLoading || siteQuota.isFetching}
+            iconRight="refresh"
           >
             Redeploy
           </Button>
         </SiteQuotaTooltip>
       )}
+
+      <ExternalLink href={routes.ipfsPropagation.withHash({ hash: ipfsHash })}>
+        <Button intent="neutral" disabled={!ipfsHash} iconRight="bolt">
+          View on IPFS
+        </Button>
+      </ExternalLink>
       <ExternalLink href={siteLink}>
-        <Button disabled={!siteLink || !site?.currentDeployment}>
+        <Button
+          disabled={!siteLink || !site?.currentDeployment}
+          iconRight="arrow-up-right"
+        >
           Visit site
         </Button>
       </ExternalLink>

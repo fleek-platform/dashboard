@@ -7,6 +7,7 @@ import { useDeploymentQuery, useSiteQuery } from '@/generated/graphqlClient';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteLink } from '@/hooks/useSiteLink';
+import { ChildrenProps } from '@/types/Props';
 import { Accordion, Box, Skeleton, Text } from '@/ui';
 import { statusDataMap } from '@/utils/deployUtils';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
@@ -16,8 +17,7 @@ import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 import { shortStringFormat } from '@/utils/stringFormat';
 
-import { DeploymentStyles as S } from './DeploymentDetail.styles';
-import { DeploymentLogs } from './DeploymentLogs';
+import { AccordionHeaderContainer, DeploymentLogs } from './DeploymentLogs';
 
 export const DeploymentOverview: React.FC = () => {
   const router = useRouter();
@@ -32,6 +32,7 @@ export const DeploymentOverview: React.FC = () => {
   const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
 
   const currentDeployment = getSiteCurrentDeployment(siteQuery.data?.site);
+  const commitMessage = currentDeployment?.sourceMessage;
   const siteLink = useSiteLink({ siteId, noHttps: true });
   let deployment = deploymentQuery.data?.deployment;
   const site = siteQuery.data?.site;
@@ -114,7 +115,7 @@ export const DeploymentOverview: React.FC = () => {
             </Text>
           </Box>
 
-          <S.ProviderWrapper>
+          <SiteOverviewBox.ProviderWrapper>
             <SiteOverviewBox.SiteSourceDetail
               siteName={site.name}
               isSelfManaged={isSelfManaged}
@@ -125,7 +126,12 @@ export const DeploymentOverview: React.FC = () => {
             {!isSelfManaged && (
               <BadgeText colorScheme="slate">{`branch: ${deployment.sourceBranch || 'Not found'}`}</BadgeText>
             )}
-          </S.ProviderWrapper>
+          </SiteOverviewBox.ProviderWrapper>
+
+          {/* Commit message */}
+          {!isSelfManaged && (
+            <SiteOverviewBox.GitCommit message={commitMessage} />
+          )}
 
           <SiteOverviewBox.Domain
             siteId={siteId}
@@ -134,11 +140,6 @@ export const DeploymentOverview: React.FC = () => {
             isDisabled={parsedStatus !== 'success'}
             isPreview={isPreview}
             previewURL={deployment.previewUrlSlug ?? undefined}
-          />
-
-          <SiteOverviewBox.ViewOnIPFS
-            cid={deployment?.cid}
-            isDisabled={parsedStatus !== 'success'}
           />
         </SiteOverviewBox.DetailsContainer>
       </SiteOverviewBox.Container>
@@ -155,53 +156,72 @@ export const DeploymentOverview: React.FC = () => {
 };
 
 const AccordionSkeleton: React.FC = () => (
-  <S.Accordion.Root type="multiple" defaultValue={['logs']}>
+  <Accordion.Root type="multiple" defaultValue={['logs']}>
     <Accordion.Item value="logs">
-      <S.Accordion.Header>
-        <Skeleton />
-      </S.Accordion.Header>
-      <S.Accordion.Content>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-        <S.Log.Row>
-          <S.RowSkeleton variant="text" />
-          <S.RowSkeleton variant="message" />
-        </S.Log.Row>
-      </S.Accordion.Content>
+      <AccordionHeaderContainer>
+        <HeaderSkeleton />
+      </AccordionHeaderContainer>
+      <AccordionHeaderContainer>
+        <HeaderSkeleton />
+      </AccordionHeaderContainer>
+      <Accordion.Content className="max-h-[30rem] bg-monochrome-normal">
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+        <LogRowSkeleton>
+          <TextRowSkeleton />
+          <TextMessageSkeleton />
+        </LogRowSkeleton>
+      </Accordion.Content>
     </Accordion.Item>
     <Accordion.Item value="breakdown">
-      <S.Accordion.Header>
-        <Skeleton />
-      </S.Accordion.Header>
-      <S.Accordion.Content>
-        <Skeleton />
-      </S.Accordion.Content>
+      <AccordionHeaderContainer>
+        <HeaderSkeleton />
+      </AccordionHeaderContainer>
+      <Accordion.Content>
+        <HeaderSkeleton />
+      </Accordion.Content>
     </Accordion.Item>
     <Accordion.Item value="domains">
-      <S.Accordion.Header>
+      <AccordionHeaderContainer>
+        <HeaderSkeleton />
+      </AccordionHeaderContainer>
+      <Accordion.Content>
         <Skeleton />
-      </S.Accordion.Header>
-      <S.Accordion.Content>
-        <Skeleton />
-      </S.Accordion.Content>
+      </Accordion.Content>
     </Accordion.Item>
-  </S.Accordion.Root>
+  </Accordion.Root>
+);
+
+const HeaderSkeleton: React.FC = () => (
+  <Skeleton className="w-1/3 h-[1.15rem] my-[0.175rem]" />
+);
+
+const TextRowSkeleton: React.FC = () => <Skeleton className="h-5 w-[15%]" />;
+
+const TextMessageSkeleton: React.FC = () => (
+  <Skeleton className="h-5 w-[90%]" />
+);
+
+const LogRowSkeleton: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex-row py-2.5 px-4 bg-monochrome-normal gap-6">
+    {children}
+  </Box>
 );

@@ -1,17 +1,11 @@
-import { CodeBlock, Text } from '@/ui';
-
-import { SitesStyles } from './Sites.styles';
+import { EmptyState } from '@/ui';
 
 export const EmptyMessage: React.FC = () => {
   return (
-    <SitesStyles.Empty.Wrapper>
-      <Text as="h2" variant="primary" size="2xl" weight={700}>
-        No sites yet
-      </Text>
-      <Text size="md" className="text-balance">
-        Use the <CodeBlock>Add new</CodeBlock> button or select a template below
-        to deploy your first site on Fleek.
-      </Text>
-    </SitesStyles.Empty.Wrapper>
+    <EmptyState
+      title="No sites yet"
+      description="Use the `Add new` button or select a template to deploy your first site on Fleek."
+      section="hosting"
+    />
   );
 };

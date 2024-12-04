@@ -44,10 +44,10 @@ const PageNavContent: React.FC = () => {
         isLoading={siteQuota.isFetching}
       >
         <Button
-          intent="neutral"
           onClick={handleRedeploy}
           loading={triggerDeploy.isLoading || siteQuota.isFetching}
           disabled={triggerDeploy.isLoading || !siteQuota.canDeploy}
+          iconRight="refresh"
         >
           Redeploy
         </Button>

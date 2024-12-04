@@ -1,15 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
+import React from 'react';
 
 import { ExternalLink, Link } from '@/components';
-import { constants } from '@/constants';
-import { DisabledProps, LoadingProps } from '@/types/Props';
-import { Box, Icon, IconName, Menu, Skeleton, Text } from '@/ui';
+import { ChildrenProps, DisabledProps, LoadingProps } from '@/types/Props';
+import { Box, Icon, IconName, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
-import {
-  getLinkForIPFSGateway,
-  GetLinkForIPFSGatewayArgs,
-  getSubDomainResolutionIpfsGatewayUrl,
-} from '@/utils/getLinkForIPFSGateway';
 import {
   getLinkForSiteSlug,
   getLinkPartsForSiteSlug,
@@ -17,7 +13,6 @@ import {
 
 import { BadgeText } from '../BadgeText/BadgeText';
 import { PreviewImage } from '../PreviewImage/PreviewImage';
-import { SiteOverviewBoxStyles as S } from './SiteOverviewBox.styles';
 
 const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
   isLoading,
@@ -45,9 +40,9 @@ const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
       className="flex gap-2.5"
       {...props}
     >
-      <S.SiteDetail.IconContainer variant={iconVariant}>
-        <Icon name={avatarName} />
-      </S.SiteDetail.IconContainer>
+      <IconContainer variant={iconVariant}>
+        <Icon name={avatarName} className="text-xs" />
+      </IconContainer>
       <Text size="md" variant="primary">
         {title} {subtitle && `/ ${subtitle}`}
       </Text>
@@ -56,21 +51,37 @@ const SiteDetail: React.FC<SiteOverviewBox.SiteDetailProps> = ({
   );
 };
 
+type IconContainerProps = ChildrenProps<{
+  variant: 'gitProvider' | 'web' | 'loading';
+}>;
+
+const IconContainer: React.FC<IconContainerProps> = ({ children, variant }) => (
+  <Box
+    className={cn('h-fit p-1 w-auto rounded-full', {
+      'p-0': variant === 'loading',
+      'bg-monochrome-reverse text-monochrome-normal': variant === 'gitProvider',
+      'bg-neutral-5': variant === 'web',
+    })}
+  >
+    {children}
+  </Box>
+);
+
 const SkeletonOverview: React.FC = () => (
-  <S.Container>
+  <Container>
     <PreviewImage isLoading />
-    <S.DetailsContainer>
-      <S.StatusRow>
+    <DetailsContainer>
+      <StatusRow>
         <BadgeText colorScheme="slate">
-          <Skeleton />
+          <Skeleton className="w-9 h-3 my-[0.125rem]" />
         </BadgeText>
-      </S.StatusRow>
-      <Skeleton />
+      </StatusRow>
+      <Skeleton className="w-[40%] h-[1.625rem]" />
       <SiteDetail href="#" isLoading />
       <SiteDetail href="#" isLoading />
       <SiteDetail href="#" isLoading />
-    </S.DetailsContainer>
-  </S.Container>
+    </DetailsContainer>
+  </Container>
 );
 
 const SiteDetailSkeleton: React.FC = () => (
@@ -134,7 +145,7 @@ const GitCommit: React.FC<SiteOverviewBox.GitCommitProps> = ({ message }) => (
     href="#"
     avatarName="git-commit"
     iconVariant="web"
-    title={message}
+    title={message || 'Pending'}
   />
 );
 
@@ -167,78 +178,54 @@ const SiteSourceDetail: React.FC<SiteOverviewBox.SiteSourceDetail> = ({
   );
 };
 
-const ViewOnIPFS: React.FC<SiteOverviewBox.ViewOnIPFSProps> = ({
-  cid,
-  isDisabled,
-}) => {
-  if (!cid || isDisabled) {
-    return (
-      <SiteDetail
-        avatarName="ipfs-colored"
-        iconVariant="ipfs"
-        title="IPFS Hash Pending"
-        href="#"
-        isDisabled
-      />
-    );
-  }
+const Container: React.FC<ChildrenProps> = ({ children }) => (
+  <Box
+    variant="container"
+    className="flex-row items-center justify-between flex-wrap gap-6 bg-surface-content"
+  >
+    {children}
+  </Box>
+);
 
-  return (
-    <Menu.Root>
-      <Menu.Trigger>
-        <SiteOverviewBox.SiteDetail
-          href="#"
-          avatarName="ipfs-colored"
-          iconVariant="ipfs"
-          title="View on IPFS"
-        />
-      </Menu.Trigger>
-      <Menu.Portal>
-        <Menu.Content align="start">
-          {publicGateways.map(({ baseURL, name, urlResolution }) => (
-            <ExternalLink href={urlResolution({ cid, baseURL })} key={name}>
-              <Menu.Item>
-                View on {name}
-                <Icon name="external-link" />
-              </Menu.Item>
-            </ExternalLink>
-          ))}
-        </Menu.Content>
-      </Menu.Portal>
-    </Menu.Root>
-  );
-};
+const DetailsContainer: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex-1 gap-5">{children}</Box>
+);
+
+const StatusRow: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex-row justify-between text-xs">{children}</Box>
+);
+
+const ElapsedTime: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex-row items-center gap-1 text-neutral-11">{children}</Box>
+);
+
+const ProviderWrapper: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex flex-row flex-wrap  gap-2.5  items-center">
+    {children}
+  </Box>
+);
 
 export const SiteOverviewBox = {
-  Container: S.Container,
+  Container,
   Domain,
   GitCommit,
-  DetailsContainer: S.DetailsContainer,
-  StatusRow: S.StatusRow,
-  ElapsedTime: S.ElapsedTime,
+  DetailsContainer,
+  StatusRow,
+  ElapsedTime,
   SiteDetail,
   SiteSourceDetail,
   SkeletonOverview,
-  ViewOnIPFS,
+  ProviderWrapper,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace SiteOverviewBox {
-  export type ContainerProps = React.ComponentPropsWithRef<typeof S.Container>;
-  export type DetailsContainerProps = React.ComponentPropsWithRef<
-    typeof S.DetailsContainer
-  >;
-  export type StatusRowProps = React.ComponentPropsWithRef<typeof S.StatusRow>;
-  export type ElapsedTimeProps = React.ComponentPropsWithRef<
-    typeof S.ElapsedTime
-  >;
   export type SiteDetailProps = LoadingProps<
     DisabledProps<{
       avatarName: IconName;
       title: string;
       subtitle?: string;
-      iconVariant: React.ComponentProps<
-        typeof S.SiteDetail.IconContainer
-      >['variant'];
+      iconVariant: 'gitProvider' | 'web' | 'loading';
       badgeText?: string;
       localLink?: boolean;
     }>
@@ -255,7 +242,7 @@ export namespace SiteOverviewBox {
     isPreview?: boolean;
   }>;
   export type GitCommitProps = {
-    message: string;
+    message?: string | null;
   };
   export type SiteSourceDetail = {
     siteName: string;
@@ -268,32 +255,3 @@ export namespace SiteOverviewBox {
     cid?: string | null;
   }>;
 }
-
-type PublicGateway = {
-  baseURL: string;
-  name: string;
-  urlResolution: (input: GetLinkForIPFSGatewayArgs) => string;
-};
-
-const publicGateways: PublicGateway[] = [
-  {
-    name: 'flk-ipfs.xyz',
-    baseURL: constants.IPFS_GATEWAYS.FLEEK_GW,
-    urlResolution: getLinkForIPFSGateway,
-  },
-  {
-    name: 'ipfs.io',
-    baseURL: constants.IPFS_GATEWAYS.IPFS_IO,
-    urlResolution: getLinkForIPFSGateway,
-  },
-  {
-    name: 'dweb.link',
-    baseURL: constants.IPFS_GATEWAYS.DWEB_LINK,
-    urlResolution: getSubDomainResolutionIpfsGatewayUrl,
-  },
-  {
-    name: 'fleek.cool',
-    baseURL: constants.IPFS_GATEWAYS.FLEEK_COOL,
-    urlResolution: getSubDomainResolutionIpfsGatewayUrl,
-  },
-];

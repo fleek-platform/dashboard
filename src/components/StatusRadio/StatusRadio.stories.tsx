@@ -9,10 +9,9 @@ const meta: Meta = {
 export default meta;
 
 export const Customizable: StoryObj<StatusRadioProps> = {
-  render: (args) => <StatusRadio {...args} />,
+  render: (args) => <StatusRadio {...args} className="text-md" />,
   args: {
     status: 'success',
-    css: { fontSize: '1rem' },
   },
   argTypes: {
     status: {

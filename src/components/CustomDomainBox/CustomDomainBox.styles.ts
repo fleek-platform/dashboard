@@ -1,7 +1,7 @@
 import { styled } from '@/theme';
 import { Box, Skeleton } from '@/ui';
 
-import { Link } from '@/components/Link/Link';
+import { Link } from '..';
 
 export const CustomDomainBoxStyles = {
   Container: styled(Box, {

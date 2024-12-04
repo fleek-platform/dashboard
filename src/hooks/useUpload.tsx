@@ -13,8 +13,6 @@ import { Log } from '@/utils/log';
 import { useFleekSdk } from './useFleekSdk';
 import { useRouter } from './useRouter';
 
-import type { UploadPinResponse } from '@fleek-platform/sdk';
-
 type MutateAsyncProps = {
   upload: Upload;
   updateUpload: (upload: Upload) => void;
@@ -53,21 +51,25 @@ export const useUpload = () => {
         }
       };
 
-      let uploadResult: UploadPinResponse | undefined;
+      let uploadResult;
 
       if (upload.type === 'file') {
-        uploadResult = await fleekSdk.storage().uploadFile({
-          file: upload.file as File,
-          parentFolderId,
-          onUploadProgress,
-        });
+        uploadResult = await fleekSdk
+          .storage()
+          .uploadFile({
+            file: upload.file as File,
+            parentFolderId,
+            onUploadProgress,
+          });
       } else {
-        uploadResult = await fleekSdk.storage().uploadVirtualDirectory({
-          files: upload.files as File[],
-          directoryName: upload.name,
-          parentFolderId,
-          onUploadProgress,
-        });
+        uploadResult = await fleekSdk
+          .storage()
+          .uploadVirtualDirectory({
+            files: upload.files as File[],
+            directoryName: upload.name,
+            parentFolderId,
+            onUploadProgress,
+          });
       }
 
       if (uploadResult) {

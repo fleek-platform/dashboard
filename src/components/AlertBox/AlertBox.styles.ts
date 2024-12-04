@@ -7,6 +7,7 @@ export const AlertBoxStyles = {
     gap: '$spacing-2-5',
     borderRadius: '$lg',
     alignItems: 'center',
+    fontWeight: 500,
 
     variants: {
       variant: {
@@ -55,6 +56,7 @@ export const AlertBoxStyles = {
       size: {
         xs: {
           padding: '$spacing-2-5 $spacing-3',
+          fontSize: '$sm',
         },
         sm: {
           padding: '$spacing-3',

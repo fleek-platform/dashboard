@@ -28,5 +28,6 @@ export * from './ftw/CodeBlock/CodeBlock';
 export * from './ftw/Switch/Switch';
 export * from './ftw/SidebarDropdown/SidebarDropdown';
 export * from './ftw/SidebarSidepanel/SidebarSidepanel';
+export * from './ftw/EmptyState/EmptyState';
 
 // EOF

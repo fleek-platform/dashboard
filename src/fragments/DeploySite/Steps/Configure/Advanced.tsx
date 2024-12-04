@@ -10,7 +10,6 @@ import { Button, Divider, FormField, Icon, Input, Text } from '@/ui';
 
 import { useDeploySiteContext } from '../../DeploySite.context';
 import { ConfigureStepStyles as S } from './Configure.styles';
-import { SafeParseError } from 'zod';
 
 export const Advanced: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
@@ -206,7 +205,7 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
 
     if (!envVarNameValidation.success) {
       setEnvVarNameError(
-        (envVarNameValidation as SafeParseError<string>).error.issues
+        envVarNameValidation.error.issues
           .map((issue) => issue.message)
           .join('. '),
       );
@@ -247,7 +246,7 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
 
     if (!envVarValueValidation.success) {
       setEnvVarValueError(
-        (envVarValueValidation as SafeParseError<string>).error.issues
+        envVarValueValidation.error.issues
           .map((issue) => issue.message)
           .join('. '),
       );

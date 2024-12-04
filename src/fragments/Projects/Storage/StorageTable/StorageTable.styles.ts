@@ -93,16 +93,6 @@ export const StorageTableStyles = {
       active: 'false',
     },
   }),
-  EmptyFiles: {
-    Container: styled(Box, {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '$spacing-2',
-      flex: 1,
-    }),
-  },
 };
 
 export const StorageRowStyles = {

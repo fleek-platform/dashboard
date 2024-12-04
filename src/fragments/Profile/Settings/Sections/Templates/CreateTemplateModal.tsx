@@ -13,7 +13,6 @@ import { Project } from '@/types/Project';
 import { ChildrenProps } from '@/types/Props';
 import { SiteListItem } from '@/types/Site';
 import { Avatar, Box, Button, Combobox, FormField, Stepper, Text } from '@/ui';
-import { secrets } from '@/secrets';
 
 export type CreateTemplateModalProps = ChildrenProps;
 
@@ -116,7 +115,7 @@ const Step2: React.FC = () => {
         <ExternalLink
           className="inline-flex"
           variant="accent"
-          href={`${secrets.NEXT_DASHBOARD_WEBSITE_URL}/templates`}
+          href="https://app.fleek.xyz/templates"
         >
           Templates
         </ExternalLink>{' '}

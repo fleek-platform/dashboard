@@ -30,10 +30,7 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
     action: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
   });
   const hasDomainsPermissions = usePermissions({
-    action: [
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN,
-      constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS,
-    ],
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN],
   });
   const hasGitPermissions = usePermissions({
     action: [

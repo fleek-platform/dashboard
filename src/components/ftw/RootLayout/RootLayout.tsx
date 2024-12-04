@@ -13,6 +13,7 @@ import { useUserHasScrolled } from '@/hooks/useUserHasScrolled';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { TEST_ID } from '@/test/testId';
 import { ChildrenProps } from '@/types/Props';
 import {
   Box,
@@ -33,7 +34,6 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
-import { secrets } from '@/secrets';
 
 export type NavigationItem = {
   icon: IconName;
@@ -94,16 +94,17 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       key={navItem.path}
       href={navItem.path}
       intent={isActivePage ? 'accent' : 'ghost'}
-      className="w-full justify-between px-3"
-      role="menuitem"
-      aria-label={navItem.label}
+      className="w-full justify-between px-3 group"
     >
       <Box className="flex flex-row gap-3 items-center">
         <Icon name={navItem.icon} className="size-4" />
         {navItem.label}
       </Box>
       {navItem.showNewTag && (
-        <BadgeText colorScheme={colorScheme} className="pointer-events-none">
+        <BadgeText
+          colorScheme={colorScheme}
+          className="pointer-events-none group-hover:bg-transparent"
+        >
           ✨ New
         </BadgeText>
       )}
@@ -168,8 +169,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     // on the client side, show versions if not prod or user is internal
     if (
       !isServerSide() &&
-      (location.hostname !== secrets.NEXT_DASHBOARD_WEBSITE_URL ||
-        flags.isInternalUser)
+      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
     ) {
       setShowVersion(true);
     }
@@ -177,9 +177,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <Box
+      data-testid={TEST_ID.NAV_LINK_PROJECT}
       className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
-      role="menu"
-      aria-label="main menu"
     >
       <Box className="gap-3">
         <Box className="gap-4">
@@ -294,7 +293,7 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
       />
       <Scrollable.VerticalBar />
       <Scrollable.Viewport className="w-full h-full" onScroll={handleScroll}>
-        <Box className="flex flex-col gap-6 p-4 pt-0 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
+        <Box className="flex flex-col gap-5 p-4 pt-0 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
           {children}
         </Box>
       </Scrollable.Viewport>

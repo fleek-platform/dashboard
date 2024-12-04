@@ -36,10 +36,6 @@ export const FiatContent: React.FC = () => {
     }
   }, [checkout.state, setStage]);
 
-  if (checkout.state === 'submit-success') {
-    return <PaymentComplete />;
-  }
-
   return match(checkout.state)
     .with(
       undefined,
@@ -83,5 +79,6 @@ export const FiatContent: React.FC = () => {
         );
       },
     )
+    .with('submit-success', () => <PaymentComplete />)
     .exhaustive();
 };

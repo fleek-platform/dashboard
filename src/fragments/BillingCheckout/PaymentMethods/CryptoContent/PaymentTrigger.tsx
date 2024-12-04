@@ -1,4 +1,3 @@
-// TODO: This file and related can be deleted?
 import { useEffect } from 'react';
 
 import { constants } from '@/constants';
@@ -20,7 +19,7 @@ export const PaymentTrigger: React.FC<PaymentTriggerProps> = ({
   isPaymentBeginning,
   isDisabled,
 }) => {
-  const cryptoPaymentOptions = useCryptoPaymentOptions() as any;
+  const cryptoPaymentOptions = useCryptoPaymentOptions();
 
   return (
     <>

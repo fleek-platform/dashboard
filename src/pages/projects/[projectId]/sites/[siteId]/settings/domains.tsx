@@ -1,7 +1,4 @@
-import {
-  createDomainSchema,
-  createEnsRecordSchema,
-} from '@fleek-platform/utils-validation';
+import { createDomainSchema } from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 
 import { Form } from '@/components';
@@ -9,23 +6,18 @@ import { constants } from '@/constants';
 import { Site } from '@/fragments';
 import {
   useCreateDomainMutation,
-  useCreateEnsRecordMutation,
-  useCreateIpnsRecordForSiteMutation,
   useCreateZoneForSiteMutation,
   useDeleteDomainMutation,
-  useDeleteEnsRecordMutation,
   useSelectPrimaryDomainMutation,
   useSiteQuery,
   useVerifyDnslinkMutation,
   useVerifyDomainMutation,
-  useVerifyEnsRecordMutation,
   ZoneDocument,
   ZoneQuery,
   ZoneQueryVariables,
   ZoneStatus,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
-import { useSiteEnsRecordsQuery } from '@/hooks/useSiteEnsRecordsQuery';
 import { useToast } from '@/hooks/useToast';
 import { Page } from '@/types/App';
 import { checkPeriodicallyUntil } from '@/utils/checkPeriodicallyUntil';
@@ -49,17 +41,8 @@ const DomainsSettingsPage: Page = () => {
   const [, deleteDomain] = useDeleteDomainMutation();
   const [, selectPrimaryDomain] = useSelectPrimaryDomainMutation();
 
-  const [, createIpnsRecordForSite] = useCreateIpnsRecordForSiteMutation();
-  const [, createEnsRecord] = useCreateEnsRecordMutation();
-  const [, verifyEnsRecord] = useVerifyEnsRecordMutation();
-  const [, deleteEnsRecord] = useDeleteEnsRecordMutation();
-
   const [, refetchSiteQuery] = useSiteQuery({
     variables: { where: { id: router.query.siteId! } },
-  });
-  const [, refetchSiteEnsRecordsQuery] = useSiteEnsRecordsQuery({
-    variables: { where: { id: router.query.siteId! } },
-    pause: true,
   });
 
   const newDomainForm = Form.useForm({
@@ -233,88 +216,6 @@ const DomainsSettingsPage: Page = () => {
     }
   };
 
-  const newEnsRecordForm = Form.useForm({
-    values: {
-      name: '',
-    },
-    schema: createEnsRecordSchema.shape.data,
-    extraValidations: {
-      name: Form.createExtraValidation.ensName(client, router.query.siteId!),
-    },
-    onSubmit: async (values) => {
-      try {
-        const getIpnsId = async (): Promise<string> => {
-          if (siteQuery.data?.site.ipnsRecords[0]?.id) {
-            return siteQuery.data?.site.ipnsRecords[0].id;
-          }
-
-          const createIpnsResult = await createIpnsRecordForSite({
-            where: { siteId: router.query.siteId! },
-          });
-
-          const ipnsId = createIpnsResult.data?.createIpnsRecordForSite.id;
-
-          if (!ipnsId) {
-            throw createIpnsResult.error;
-          }
-
-          return ipnsId;
-        };
-
-        const ipnsId = await getIpnsId();
-
-        const createEnsRecordResult = await createEnsRecord({
-          where: { siteId: router.query.siteId!, ipnsRecordId: ipnsId },
-          data: { name: values.name },
-        });
-
-        if (!createEnsRecordResult.data) {
-          throw createEnsRecordResult.error;
-        }
-
-        refetchSiteEnsRecordsQuery({ requestPolicy: 'network-only' });
-
-        newEnsRecordForm.resetForm();
-
-        return createEnsRecordResult.data.createEnsRecord.id;
-      } catch (error) {
-        toast.error({ error, log: 'Failed to create ens record' });
-      }
-    },
-  });
-
-  const handleSubmitEnsRecordVerification = async (id: string) => {
-    try {
-      const result = await verifyEnsRecord({ where: { id } });
-
-      if (!result.data) {
-        throw result.error;
-      }
-
-      refetchSiteEnsRecordsQuery({ requestPolicy: 'network-only' });
-
-      return true;
-    } catch (error) {
-      toast.error({ error, log: 'Failed to verify ens record' });
-    }
-  };
-
-  const handleSubmitEnsRecordDelete = async (id: string) => {
-    try {
-      const result = await deleteEnsRecord({ where: { id } });
-
-      if (!result.data) {
-        throw result.error;
-      }
-
-      refetchSiteEnsRecordsQuery({ requestPolicy: 'network-only' });
-
-      return true;
-    } catch (error) {
-      toast.error({ error, log: 'Failed to delete ens record' });
-    }
-  };
-
   return (
     <>
       <Form.Provider value={newDomainForm}>
@@ -322,13 +223,6 @@ const DomainsSettingsPage: Page = () => {
           onSubmitVerification={handleSubmitDomainVerification}
           onSubmitDelete={handleSubmitDomainDelete}
           onSubmitPrimaryDomain={handleSubmitPrimaryDomain}
-        />
-      </Form.Provider>
-
-      <Form.Provider value={newEnsRecordForm}>
-        <Site.Settings.Sections.EnsRecords
-          onSubmitVerification={handleSubmitEnsRecordVerification}
-          onSubmitDelete={handleSubmitEnsRecordDelete}
         />
       </Form.Provider>
     </>
@@ -342,8 +236,6 @@ DomainsSettingsPage.getLayout = (page) => (
 export default withAccess({
   Component: DomainsSettingsPage,
   requiredPermissions: [
-    constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS,
-    constants.PERMISSION.SITE.DELETE_ENS,
     constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN,
     constants.PERMISSION.SITE.DELETE_DOMAIN,
     constants.PERMISSION.SITE.CHANGE_PRIMARY_DOMAIN,

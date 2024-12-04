@@ -3,7 +3,7 @@ import { uuid } from 'uuidv4';
 import { constants } from '@/constants';
 import { Upload } from '@/types/Upload';
 
-import { bytesToSize } from './fileSizeFormat';
+import { bytesToSize } from './fileSizeFormt';
 
 type FilteredFilesResult = {
   acceptedFiles: Upload[];

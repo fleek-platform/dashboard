@@ -39,10 +39,7 @@ export const ManageApplicationCredentials: React.FC<
 
   return (
     <ApplicationCredentialsProvider onSubmitDelete={onSubmitDelete}>
-      <SettingsBox.Container
-        role="table"
-        aria-label="Application credential list"
-      >
+      <SettingsBox.Container>
         <Header />
         {credentials?.length === 0 ? (
           <SettingsBox.EmptyContent
@@ -52,7 +49,7 @@ export const ManageApplicationCredentials: React.FC<
         ) : (
           credentials?.map((credential, index) => {
             return (
-              <Box key={credential.id} role="row">
+              <Box key={credential.id}>
                 <ApplicationCredentialItem credential={credential} />
                 {index < credentials.length - 1 && <Divider />}
               </Box>
@@ -76,7 +73,7 @@ const Header: React.FC = () => (
 );
 
 const CredentialsSkeleton: React.FC = () => (
-  <SettingsBox.Container role="table">
+  <SettingsBox.Container>
     <Header />
     <S.Item.Container isLoading>
       <Box>

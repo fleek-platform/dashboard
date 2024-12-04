@@ -96,6 +96,7 @@ export const constants = {
       'https://fleek.xyz/docs/platform/fleek-functions#moving-fleek-functions-from-alpha-to-production',
     FLEEK_DOCS_GIT_INTEGRATIONS:
       'https://fleek.xyz/docs/platform/git_integrations/',
+    FLEEK_DOCS_IPFS: 'https://docs.ipfs.tech/',
     MEDIA_KIT:
       'https://fleek.notion.site/Fleek-Brand-Kit-9a2bcf7eb40740a9b7e951fc951b478a',
   },

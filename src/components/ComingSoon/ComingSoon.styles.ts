@@ -9,7 +9,7 @@ export const ComingSoonStyles = {
     }),
     Overlay: styled(Box, {
       textAlign: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
       alignItems: 'center',
       padding: '$spacing-6 $spacing-5',
       gap: '$spacing-1',

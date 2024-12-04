@@ -25,7 +25,6 @@ import { useToast } from '@/hooks/useToast';
 import { Page } from '@/types/App';
 import { checkPeriodicallyUntil } from '@/utils/checkPeriodicallyUntil';
 import { withAccess } from '@/utils/withAccess';
-import { ReactElement } from 'react';
 
 class PrivateGatewayCreationError extends Error {}
 
@@ -184,8 +183,7 @@ const PrivateGatewaysPage: Page = () => {
   const handlePrivateGatewayDelete = async (
     privateGatewayId: string,
     primaryDomainId?: string,
-    // TODO: Investigate why this type had to be added
-  ): Promise<true> => {
+  ) => {
     try {
       let newPrimaryDomainHostname = '';
 
@@ -310,8 +308,7 @@ const PrivateGatewaysPage: Page = () => {
   );
 };
 
-// TODO: Why the inferred type's any? Is the added type correct?
-PrivateGatewaysPage.getLayout = (page: ReactElement) => (
+PrivateGatewaysPage.getLayout = (page) => (
   <Projects.Settings.Layout>{page}</Projects.Settings.Layout>
 );
 

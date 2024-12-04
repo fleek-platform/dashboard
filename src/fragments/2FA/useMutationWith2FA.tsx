@@ -33,7 +33,6 @@ export const useMutationWith2FA = <
   const [getSecretKeysQuery] = useGetSecretKeysQuery();
   const [protectedActionsQuery] = useProtectedActionsQuery({
     requestPolicy: 'network-only',
-    variables: {},
   });
   const { showModal, setOnClose } = useTwoFactorModal();
 

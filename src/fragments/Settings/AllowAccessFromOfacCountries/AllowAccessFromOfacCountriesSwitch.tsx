@@ -40,7 +40,11 @@ export const AllowAccessFromOfacCountriesSwitch: React.FC<
           <SettingsBox.Title>{title}</SettingsBox.Title>
           <SettingsBox.Text>{text}</SettingsBox.Text>
         </SettingsBox.Column>
-        <PermissionsTooltip hasAccess={hasEditPermission}>
+        <PermissionsTooltip
+          hasAccess={hasEditPermission}
+          asChild
+          isLoading={isLoading}
+        >
           <Switch
             checked={allowed}
             onCheckedChange={handleOnChange}

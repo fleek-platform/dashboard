@@ -1,32 +1,37 @@
-import { forwardStyledRef } from '@/theme';
-import { Icon } from '@/ui';
+import { forwardRef } from 'react';
 
-import { StatusRadioStyles as S } from './StatusRadio.styles';
+import { Icon } from '@/ui';
+import { cn } from '@/utils/cn';
 
 export type StatusRadioProps = {
-  state?: 'error' | 'success' | 'spinner';
-} & React.ComponentPropsWithRef<typeof S.Container>;
+  status?: 'error' | 'success' | 'spinner';
+} & React.HTMLAttributes<HTMLSpanElement>;
 
-export const StatusRadio = forwardStyledRef<HTMLDivElement, StatusRadioProps>(
-  S.Container,
-  ({ state, ...props }, ref) => {
+export const StatusRadio = forwardRef<HTMLSpanElement, StatusRadioProps>(
+  ({ status, ...props }, ref) => {
     const getIcon = () => {
-      switch (state) {
+      switch (status) {
         case 'error':
-          return <Icon name="alert" />;
+          return 'alert-circled';
         case 'success':
-          return <Icon name="check" />;
+          return 'check-circled';
         case 'spinner':
-          return <Icon name="spinner" />;
+          return 'spinner';
         default:
-          return <Icon name="circle" />;
+          return 'circle';
       }
     };
 
     return (
-      <S.Container {...props} ref={ref} status={state}>
-        {getIcon()}
-      </S.Container>
+      <Icon
+        {...props}
+        ref={ref}
+        name={getIcon()}
+        className={cn('text-neutral-7', {
+          'text-success-11': status === 'success',
+          'text-danger-11': status === 'error',
+        })}
+      />
     );
   },
 );

@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 
-import { StatusRadioProps } from '@/components';
+import { StatusRadio, StatusRadioProps } from '@/components';
 import { BuildLog, DeploymentStatus } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import {
@@ -10,10 +10,9 @@ import {
 } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Accordion, Box, Button, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { dateFormat } from '@/utils/dateFormats';
-
-import { DeploymentStyles as S } from './DeploymentDetail.styles';
 
 type DeploymentLogsProps = {
   build: DeploymentBuild;
@@ -79,7 +78,7 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
     : DeploymentSteps['managed'];
 
   return (
-    <S.Accordion.Root
+    <Accordion.Root
       type="multiple"
       defaultValue={['logs']}
       value={accordionValue}
@@ -99,7 +98,7 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
           >
             {step.key === 'logs' && (
               <Button
-                size="sm"
+                size="xs"
                 onClick={handleCopyLogs}
                 disabled={isSelfManaged || logs.length === 0}
               >
@@ -108,17 +107,20 @@ export const DeploymentLogs: React.FC<DeploymentLogsProps> = ({
             )}
           </AccordionHeader>
           {step.key === 'logs' && !isSelfManaged && (
-            <S.Accordion.Content ref={scrollContainerRef}>
+            <Accordion.Content
+              ref={scrollContainerRef}
+              className="max-h-[30rem] bg-monochrome-normal overflow-y-auto p-0"
+            >
               <Box>
                 {logs.map((log) => (
                   <LogRow key={log.id} log={log} deploymentStatus={status} />
                 ))}
               </Box>
-            </S.Accordion.Content>
+            </Accordion.Content>
           )}
         </Accordion.Item>
       ))}
-    </S.Accordion.Root>
+    </Accordion.Root>
   );
 };
 
@@ -147,17 +149,45 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   });
 
   return (
-    <S.Accordion.Header hideChevron={step.hideChevron} key={step.key}>
-      <Box>
-        <S.StatusRadio state={status} status={status} />{' '}
-        <Text variant="primary" size="lg" weight={500}>
+    <Accordion.Header
+      hideChevron={step.hideChevron}
+      key={step.key}
+      className="text-md gap-4 p-4 bg-surface-content"
+    >
+      <Box className="flex-row items-center gap-3">
+        <StatusRadio
+          status={status}
+          className={cn('p-1 child:text-monochrome-normal', {
+            'bg-success-11': status === 'success',
+          })}
+        />{' '}
+        <Text variant="primary" size="md" weight={700}>
           {step.title}
         </Text>
       </Box>
-      <S.RightAlignedBox>{children}</S.RightAlignedBox>
-    </S.Accordion.Header>
+      <Box className="ml-auto">{children}</Box>
+    </Accordion.Header>
   );
 };
+
+type AccordionHeaderContainer = ChildrenProps<{
+  hideChevron?: boolean;
+  key?: string;
+}>;
+
+export const AccordionHeaderContainer: React.FC<AccordionHeaderContainer> = ({
+  children,
+  hideChevron,
+  key,
+}) => (
+  <Accordion.Header
+    hideChevron={hideChevron}
+    key={key}
+    className="text-md gap-4 p-4 bg-surface-content"
+  >
+    {children}
+  </Accordion.Header>
+);
 
 type LogRowProps = {
   log: BuildLog;
@@ -165,19 +195,13 @@ type LogRowProps = {
 };
 
 const LogRow: React.FC<LogRowProps> = ({ log, deploymentStatus }) => {
-  const getRowState = () => {
-    switch (deploymentStatus) {
-      case 'failed':
-        return 'failed';
-      case 'loading':
-        return 'loading';
-      default:
-        return undefined;
-    }
-  };
-
   return (
-    <S.Log.Row status={getRowState()}>
+    <Box
+      className={cn('flex-row py-2.5 px-4 bg-monochrome-normal gap-6', {
+        'last:bg-warning-3': deploymentStatus === 'loading',
+        'last:bg-danger-3': deploymentStatus === 'failed',
+      })}
+    >
       <Text>
         {dateFormat({ dateISO: log.createdAt, stringFormat: 'HH:mm:ss.SSS' })}
       </Text>
@@ -188,7 +212,7 @@ const LogRow: React.FC<LogRowProps> = ({ log, deploymentStatus }) => {
           </Text>
         ))}
       </Box>
-    </S.Log.Row>
+    </Box>
   );
 };
 
@@ -342,7 +366,7 @@ const getStepState = ({
   previousStepComplete,
   startedAt,
   isSelfManaged,
-}: GetStepStateProps): StatusRadioProps['state'] => {
+}: GetStepStateProps): StatusRadioProps['status'] => {
   if (!step || !currentStatus || (!isSelfManaged && !startedAt)) {
     return undefined;
   }

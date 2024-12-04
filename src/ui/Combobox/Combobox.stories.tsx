@@ -15,11 +15,13 @@ export default meta;
 type Item = { id: number; label: string; icon: IconName };
 
 const icons = Object.keys(IconLibrary) as IconName[];
-const Items: Item[] = new Array(30).fill(null).map((_, index) => ({
-  id: index,
-  label: `Option ${index}`,
-  icon: icons[Math.floor(Math.random() * icons.length)],
-}));
+const Items: Item[] = new Array(30)
+  .fill(null)
+  .map((_, index) => ({
+    id: index,
+    label: `Option ${index}`,
+    icon: icons[Math.floor(Math.random() * icons.length)],
+  }));
 
 export const Default: StoryFn = () => {
   const ElementWithState = (): JSX.Element => {
@@ -34,10 +36,10 @@ export const Default: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options>{(item: Item) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -61,10 +63,10 @@ export const WithLoading: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options>{(item: Item) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -88,10 +90,10 @@ export const WithSearching: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options>{(item: Item) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -114,7 +116,7 @@ export const WithIcon: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => (
+              {(selected) => (
                 <>
                   <Icon name={selected.icon} /> {selected.label}
                 </>
@@ -122,7 +124,7 @@ export const WithIcon: StoryFn = () => {
             </Field>
 
             <Options>
-              {(item: Item) => (
+              {(item) => (
                 <>
                   <Icon name={item.icon} /> {item.label}
                 </>
@@ -150,10 +152,10 @@ export const WithoutSearch: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options disableSearch>{(item: Item) => item.label}</Options>
+            <Options disableSearch>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -177,10 +179,10 @@ export const WithDisable: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options disableSearch>{(item: Item) => item.label}</Options>
+            <Options disableSearch>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -204,10 +206,10 @@ export const WithSize: StoryFn = () => {
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
-            <Options>{(item: Item) => item.label}</Options>
+            <Options>{(item) => item.label}</Options>
           </>
         )}
       </Combobox>
@@ -230,11 +232,11 @@ export const WithCompoundOptions: StoryFn = () => {
         {({ Field, Options, CompoundOption }) => (
           <>
             <Field placeholder="Select an option">
-              {(selected: Item) => selected.label}
+              {(selected) => selected.label}
             </Field>
 
             <Options>
-              {(item: Item) => (
+              {(item) => (
                 <CompoundOption
                   header={item.label}
                   content="Description for compound option"

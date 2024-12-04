@@ -1,6 +1,5 @@
-import { AlertBox, CodeSnippet } from '@/components';
+import { AlertBox, CodeSnippet, IpfsBox } from '@/components';
 import { constants } from '@/constants';
-import { Ipfs } from '@/fragments/Site/Ipfs/Ipfs';
 import { usePinQuery } from '@/generated/graphqlClient';
 import { useIpfsContent } from '@/hooks/useIpfsContent';
 import { useProjectContext } from '@/providers/ProjectProvider';
@@ -114,7 +113,7 @@ const FnDetailContent = ({
       </Box>
       {currentDeployment ? (
         <>
-          <Ipfs cid={currentDeployment.cid} isFn active />
+          <IpfsBox cid={currentDeployment.cid} />
           <CodeSnippet
             title="Deployed code"
             code={ipfsContent.data}

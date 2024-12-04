@@ -12,6 +12,6 @@ export const gradient = {
   dark: {
     ...defaultGradients,
     'coming-soon-overlay':
-      'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #111 69.79%)',
+      'linear-gradient(180deg, rgba(25, 25, 25, 0.90) 20%, #111 100%)',
   },
 };

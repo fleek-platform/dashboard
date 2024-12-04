@@ -61,9 +61,9 @@ export const WithCombobox: Story = {
           {({ Field, Options }) => (
             <>
               <Field placeholder="Select an option">
-                {(selected: string) => selected}
+                {(selected) => selected}
               </Field>
-              <Options>{(item: string) => item}</Options>
+              <Options>{(item) => item}</Options>
             </>
           )}
         </Combobox>

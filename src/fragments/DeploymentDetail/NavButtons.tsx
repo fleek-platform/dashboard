@@ -1,3 +1,4 @@
+import { routes } from '@fleek-platform/utils-routes';
 import { useState } from 'react';
 
 import { ExternalLink } from '@/components';
@@ -79,6 +80,8 @@ export const NavButtons: React.FC = () => {
     );
   }
 
+  const ipfsHash = site?.currentDeployment?.cid || '';
+
   switch (parsedStatus) {
     case 'cancelling':
     case 'loading':
@@ -92,7 +95,7 @@ export const NavButtons: React.FC = () => {
             deploymentId={deploymentId}
           />
           <Button
-            intent="neutral"
+            intent="danger"
             disabled={!isCancelable}
             onClick={handleCancelDeploy}
           >
@@ -112,6 +115,7 @@ export const NavButtons: React.FC = () => {
             onClick={handleRedeploy}
             loading={redeploy.isLoading || siteQuota.isFetching}
             disabled={redeploy.isLoading || !siteQuota.canDeploy}
+            iconRight="refresh"
           >
             Redeploy
           </Button>
@@ -119,7 +123,7 @@ export const NavButtons: React.FC = () => {
       ) : null;
     case 'success':
       return (
-        <Box className="flex-row gap-3">
+        <Box className="flex-row gap-2">
           {hasDeployPermission && (
             <SiteQuotaTooltip
               canDeploy={siteQuota.canDeploy}
@@ -130,13 +134,22 @@ export const NavButtons: React.FC = () => {
                 onClick={handleRedeploy}
                 loading={redeploy.isLoading || siteQuota.isFetching}
                 disabled={redeploy.isLoading || !siteQuota.canDeploy}
+                iconRight="refresh"
               >
                 Redeploy
               </Button>
             </SiteQuotaTooltip>
           )}
+
+          <ExternalLink
+            href={routes.ipfsPropagation.withHash({ hash: ipfsHash })}
+          >
+            <Button intent="neutral" disabled={!ipfsHash} iconRight="bolt">
+              View on IPFS
+            </Button>
+          </ExternalLink>
           <ExternalLink href={deploymentURL}>
-            <Button disabled={!deploymentURL}>
+            <Button disabled={!deploymentURL} iconRight="arrow-up-right">
               {deployment.previewUrlSlug ? 'Visit preview' : 'Visit site'}
             </Button>
           </ExternalLink>

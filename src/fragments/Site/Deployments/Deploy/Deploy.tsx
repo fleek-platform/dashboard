@@ -3,14 +3,14 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
+import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
-import { Icon, Skeleton, Text } from '@/ui';
+import { Box, Icon, Skeleton, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { shortStringFormat } from '@/utils/stringFormat';
 
-import { DeployStyles as S } from './Deploy.styles';
 import { DeployStatus } from './DeployStatus';
 import { DropdownMenu, DropdownMenuProps } from './DropdownMenu';
 
@@ -50,7 +50,7 @@ export const Deploy: React.FC<DeployProps> = ({
   const environment = deployment?.previewOnly ? 'Preview' : 'Production';
 
   return (
-    <S.ItemRow className={className}>
+    <ItemRow data-testid={TEST_ID.DEPLOYMENT_CONTAINER} className={className}>
       <Link
         href={routes.project.site.deployments.detail({
           projectId,
@@ -62,24 +62,24 @@ export const Deploy: React.FC<DeployProps> = ({
           'sm:[grid-template-columns:1.5fr_1.5fr_2.5fr_1fr]': !isSelfManaged,
         })}
       >
-        <S.ItemContainer>
+        <ItemContainer>
           <Text variant="primary" weight={700}>
             {shortStringFormat({ str: deployment?.id, index: 6 })}
           </Text>
           <Text size="xs">
             {isSelfManaged ? 'Deployed from CLI' : environment}
           </Text>
-        </S.ItemContainer>
+        </ItemContainer>
 
-        <S.ItemContainer>
+        <ItemContainer>
           <DeployStatus
             deployment={deployment}
             isMostRecentDeployment={isMostRecentDeployment}
           />
-        </S.ItemContainer>
+        </ItemContainer>
 
         {!isSelfManaged && (
-          <S.ItemContainer>
+          <ItemContainer>
             <Text variant="primary" weight={700} className="truncate">
               {deployment?.sourceMessage || ''}
             </Text>
@@ -87,17 +87,17 @@ export const Deploy: React.FC<DeployProps> = ({
               <Icon name="git-pull-request" />
               {deployment?.sourceBranch || '-'}
             </Text>
-          </S.ItemContainer>
+          </ItemContainer>
         )}
 
-        <S.AuthorContainer>
+        <AuthorContainer>
           <Text size="xs">
             <TimeElapsed deployment={deployment} />
           </Text>
-          <Text size="xs" className="truncate w-full">
+          <Text size="xs" className="truncate w-fit">
             {author}
           </Text>
-        </S.AuthorContainer>
+        </AuthorContainer>
       </Link>
       {deployment && (
         <DropdownMenu
@@ -107,7 +107,7 @@ export const Deploy: React.FC<DeployProps> = ({
           canRedeploy={canRedeploy}
         />
       )}
-    </S.ItemRow>
+    </ItemRow>
   );
 };
 
@@ -131,21 +131,34 @@ type DeploySkeletonProps = ChildrenProps<{
 export const DeploySkeleton: React.FC<DeploySkeletonProps> = ({
   children,
   className,
-}) => <S.ItemRow className={className}>{children}</S.ItemRow>;
+}) => <ItemRow className={className}>{children}</ItemRow>;
 
 export const DeployItemSkeleton: React.FC = () => (
-  <S.ItemContainer>
-    <S.TextSkeleton>
-      <Skeleton />
-    </S.TextSkeleton>
-    <S.LabelSkeleton>
-      <Skeleton />
-    </S.LabelSkeleton>
-  </S.ItemContainer>
+  <ItemContainer>
+    <Skeleton className="w-full h-[0.875rem] my-[0.125rem]" />
+    <Skeleton className="w-3/4 h-3 my-[0.125rem]" />
+  </ItemContainer>
 );
 
 export const DeployAuthorSkeleton: React.FC = () => (
-  <S.AuthorContainer>
-    <Skeleton />
-  </S.AuthorContainer>
+  <AuthorContainer>
+    <Skeleton className="w-full h-5 my-1" />
+  </AuthorContainer>
+);
+
+const ItemRow: React.FC<ChildrenProps<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  <Box className={cn('flex-row justify-between gap-3', className)}>
+    {children}
+  </Box>
+);
+
+const ItemContainer: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="justify-between gap-2 min-w-[10%]">{children}</Box>
+);
+
+const AuthorContainer: React.FC<ChildrenProps> = ({ children }) => (
+  <Box className="flex-col items-end self-center min-w-[10%]">{children}</Box>
 );

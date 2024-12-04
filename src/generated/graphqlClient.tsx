@@ -6442,20 +6442,6 @@ export type EmailAvailabilityQuery = {
   emailAvailability: boolean;
 };
 
-export type GitAccessTokenQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GitAccessTokenQuery = {
-  __typename?: 'Query';
-  user: {
-    __typename?: 'User';
-    gitUserAccessTokens: Array<{
-      __typename: 'GitUserAccessToken';
-      gitProviderId: string;
-      token: string;
-    }>;
-  };
-};
-
 export type NotificationsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type NotificationsQuery = {
@@ -9690,26 +9676,6 @@ export function useEmailAvailabilityQuery(
   return Urql.useQuery<EmailAvailabilityQuery, EmailAvailabilityQueryVariables>(
     { query: EmailAvailabilityDocument, ...options },
   );
-}
-export const GitAccessTokenDocument = gql`
-    query gitAccessToken {
-  user {
-    gitUserAccessTokens {
-      __typename
-      gitProviderId
-      token
-    }
-  }
-}
-    `;
-
-export function useGitAccessTokenQuery(
-  options?: Omit<Urql.UseQueryArgs<GitAccessTokenQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitAccessTokenQuery, GitAccessTokenQueryVariables>({
-    query: GitAccessTokenDocument,
-    ...options,
-  });
 }
 export const NotificationsDocument = gql`
     query notifications {

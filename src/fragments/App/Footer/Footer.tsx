@@ -7,7 +7,6 @@ import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { Icon, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
-import { secrets } from '@/secrets';
 
 import { FooterStyles as S } from './Footer.styles';
 
@@ -173,8 +172,7 @@ const LeftFragment: React.FC = () => {
     // on the client side, show versions if not prod or user is internal
     if (
       !isServerSide() &&
-      (location.hostname !== secrets.NEXT_DASHBOARD_WEBSITE_URL ||
-        flags.isInternalUser)
+      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
     ) {
       setShowVersion(true);
     }
