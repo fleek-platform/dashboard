@@ -12,7 +12,6 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useCookies } from '@/providers/CookiesProvider';
-import { TEST_ID } from '@/test/testId';
 import { Icon } from '@/ui';
 import { firstLetterUpperCase } from '@/utils/stringFormat';
 
@@ -84,7 +83,6 @@ export const ManageProjects: React.FC = () => {
             subtitle={membershipLabel}
             avatarSrc={project.avatar || ''}
             marbleSrc={project.id}
-            testId={TEST_ID.PROJECTS_LIST_ITEM}
           >
             {leavingProjects.includes(project.id) && (
               <BadgeText colorScheme="slate">

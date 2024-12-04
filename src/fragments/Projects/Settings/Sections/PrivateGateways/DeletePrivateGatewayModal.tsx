@@ -51,6 +51,7 @@ export const DeletePrivateGatewayModal: React.FC<ChildrenProps> = ({
 
   const [privateGatewaysQuery] = usePrivateGatewaysQuery({
     pause: !shouldReplacePrimaryDomain,
+    variables: {},
   });
 
   const primaryDomainCandidates = useMemo(() => {

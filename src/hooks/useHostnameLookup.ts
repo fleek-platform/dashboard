@@ -1,32 +1,35 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-import { HostnameLookupResponse } from '@/pages/api/hostname-lookup';
+import { hostnameLookup } from '@/utils/hostnameLookup';
 import { Log } from '@/utils/log';
 
 type UseHostnameLookupArgs = {
   hostname: string;
 };
 
+type HostnameLookupData = {
+  country: string;
+  ip: string;
+  hostname: string;
+};
+
 export const useHostnameLookup = ({ hostname }: UseHostnameLookupArgs) => {
-  const queryFn = useCallback(async () => {
+  const queryFn = useCallback(async (): Promise<HostnameLookupData | null> => {
     Log.info('Fetching country for hostname:', hostname);
+
     try {
-      const response = await fetch(`/api/hostname-lookup?hostname=${hostname}`);
-      Log.info('Response received:', response);
+      const result = await hostnameLookup(hostname);
 
-      const body = (await response.json()) as HostnameLookupResponse;
-
-      if (body && 'data' in body) {
-        Log.info('Data found:', body.data);
-
-        return body.data;
+      if ('data' in result) {
+        Log.info('Data found:', result.data);
+        return result.data;
       }
 
+      Log.error('Error in response:', result.error);
       return null;
     } catch (error) {
       Log.error('Error fetching data:', error);
-
       return null;
     }
   }, [hostname]);
