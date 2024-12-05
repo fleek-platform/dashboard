@@ -211,7 +211,6 @@ export const InnerForm: React.FC<InnerFormProps> = ({
   selectedTab,
   setSelectedTab,
 }) => {
-  const feedbackModal = useFeedbackModal();
   const toast = useToast();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -292,26 +291,22 @@ export const InnerForm: React.FC<InnerFormProps> = ({
                 placeholder="Enter your email"
                 disableValidMessage
                 className="focus:outline-none"
-                inputRootClassName="w-full border border-gray-300 rounded-lg text-sm"
                 formFieldRootClassName="w-full"
               />
-              <Link
-                href={routes.profile.settings.loginConnections()}
-                onClick={feedbackModal.toggleModal}
-              >
-                <Box
-                  className="flex flex-row gap-2 items-center hover:cursor-pointer hover:opacity-100 opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:opacity-100 "
-                  as="button"
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Attach images, files or videos"
-                >
-                  <Icon name="plus" />
-                  <Text>
-                    Add your email to your account to avoid entering it again.
-                  </Text>
-                </Box>
-              </Link>
+              <Box className="flex-row items-center gap-2 pt-1">
+                <Icon name="info" className="text-neutral-11 text-xs" />
+                <Text className="flex">
+                  Save your email for next time by entering it on
+                  <Link
+                    href={routes.profile.settings.loginConnections()}
+                    target="_blank"
+                    className="flex self-end gap-2 items-center pl-1 text-neutral-12 underline underline-offset-2 hover:no-underline"
+                  >
+                    Account Settings
+                  </Link>
+                  .
+                </Text>
+              </Box>
             </Box>
           </>
         )}
@@ -342,7 +337,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
             selectedTab === 'QUESTION' && 'shadow-lg',
           )}
         >
-          <Icon name="question" />
+          <Icon name="question-circle" />
           Question
         </Button>
         <Button
