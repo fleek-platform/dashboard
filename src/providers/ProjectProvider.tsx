@@ -79,7 +79,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       const redirect = async () => {
-        const shouldRedirect = router.pathname === routes.home();
+        const shouldRedirect = router.asPath === routes.home();
 
         if (shouldRedirect) {
           // keep query on redirect
@@ -122,14 +122,6 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     changeProject(cookies.values.lastProjectId ?? projects[0].id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.values.lastProjectId, projectsQuery]);
-
-  useEffect(() => {
-    if (router.query.projectId) {
-      cookies.set('lastProjectId', router.query.projectId);
-    }
-    // Update cookie on first run if it is present in the url
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const project = useMemo(() => {
     const { data } = projectsQuery;

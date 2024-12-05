@@ -19,7 +19,6 @@ import { DynamicProvider } from './DynamicProvider';
 import { ChildrenProps } from '@/types/Props';
 import { Log } from '@/utils/log';
 import { GraphqlApiClient } from '@/integrations/graphql/GraphqlApi';
-//import gql from 'graphql-tag';
 
 export type AuthContext = {
   isLoading: boolean;
@@ -51,14 +50,12 @@ export const AuthProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
   const handleLogout = useCallback(async () => {
+    const invitationHash = router.query.invitation;
     posthog.reset();
     cookies.remove('authProviderToken');
-
-    const invitationHash = router.query.invitation;
-
     removeAccessToken();
 
-    if (!constants.PUBLIC_ROUTES.includes(router.pathname.toLowerCase())) {
+    if (router.asPath !== routes.home()) {
       await router.replace({
         pathname: routes.home(),
         query: invitationHash ? { invitation: invitationHash } : undefined,
@@ -103,6 +100,7 @@ export const AuthProvider: React.FC<ChildrenProps> = ({ children }) => {
 
   const handleAuthSuccess = useCallback(
     async (authProviderToken: string, cbRedirectUrl?: string) => {
+      console.log('Getting authProviderToken', authProviderToken);
       setIsLoading(true);
       cookies.set('authProviderToken', authProviderToken);
       const result = await requestAccessToken(authProviderToken);
@@ -188,12 +186,24 @@ const InnerProvider: React.FC<InnerProviderProps> = ({
   const cookies = useCookies();
 
   const tokenProjectId = useMemo(() => {
-    return accessToken
-      ? (decodeJwt(accessToken)?.projectId as string)
-      : undefined;
+    try {
+      return accessToken
+        ? (decodeJwt(accessToken)?.projectId as string)
+        : undefined;
+    } catch {
+      console.log('failed to decode accessToken');
+      dynamic.handleLogOut();
+
+      return undefined;
+    }
   }, [accessToken]);
 
   const login = (redirectUrl?: string) => {
+    console.log(
+      'inside login',
+      dynamic.authToken,
+      cookies.values.authProviderToken,
+    );
     if (dynamic.authToken || cookies.values.authProviderToken) {
       handleAuthSuccess(
         dynamic.authToken ?? cookies.values.authProviderToken!,

@@ -8,6 +8,7 @@ import { matchesPathname } from '../../utils/matchesPathname';
 import { FleekLogo } from '../FleekLogo/FleekLogo';
 
 import type { FC, ReactNode } from 'react';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 interface AuthProps {
   children: ReactNode;
@@ -15,29 +16,22 @@ interface AuthProps {
 
 export const Auth: FC<AuthProps> = ({ children }) => {
   const router = useRouter();
+  const auth = useAuthContext();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     const checkAuth = () => {
       const authProviderToken = document.cookie
         .split('; ')
-        .find((row) => row.startsWith('accessToken='))
-        ?.split('=')[1];
-      const accessToken = document.cookie
-        .split('; ')
         .find((row) => row.startsWith('authProviderToken='))
         ?.split('=')[1];
-      const projectId =
-        document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('projectId='))
-          ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
-      const hasAuthentication =
-        Boolean(authProviderToken) || Boolean(accessToken);
+      const hasAuthentication = Boolean(authProviderToken);
       const currentPath = window.location.pathname;
 
       if (hasAuthentication && currentPath === routes.home()) {
-        router.push(routes.project.home({ projectId }));
+        router.push(
+          routes.project.home({ projectId: constants.DEFAULT_PROJECT_ID }),
+        );
 
         setIsChecking(false);
         return;
@@ -50,7 +44,8 @@ export const Auth: FC<AuthProps> = ({ children }) => {
       );
 
       if (!hasAuthentication && !isPublicRoute) {
-        router.push(routes.home());
+        console.log('logging out from auth');
+        auth.logout();
       }
 
       setIsChecking(false);

@@ -55,6 +55,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
           onAuthSuccess: (args) => {
+            console.log('onAuthSuccess', args);
             handleAuthSuccess(args.authToken);
           },
           onLogout: handleLogout,
