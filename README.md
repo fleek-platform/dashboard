@@ -33,6 +33,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Unit tests](#unit-tests)
   - [Component Functional Tests](#component-functional-tests)
   - [CI/CD Runner](#cicd-runner)
+  - [Managing HAR (HTTP Archive) files](#managing-har-http-archive-files)
 * [🛠️Generators](#Generators)
   - [Sitemap](#sitemapxml)
 * [🖍️Component Library](#component-library)
@@ -393,6 +394,19 @@ Ideally, components should be tested in isolation (unit). Events or inputs shoul
 On CI/CD runners, low specs cause inconsistent runs to mitigate any inconsistency playwright's team recommends running in a single worker [CI/Workers](https:playwright.dev/docs/ciworkers).
 
 Note that launching a [large](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners/about-larger-runners), e.g. `macos-latest-xlarge` runner is more efficient but increases cost dramatically.
+
+#### Managing HAR (HTTP Archive) files
+
+A HAR (HTTP Archive) file records network requests during page loads, including headers, cookies, content, and timings. To use HAR files for mocking:
+
+1. Record the HAR
+2. Save it with tests
+3. Route requests using the HAR
+
+> [!IMPORTANT]
+> It's important to fully comprehend the existing tests. For example, if you're going to replace an HAR file, you'll have to reproduce the actions that the tests expect to create. There are cases where a test fills an input field with a particular value, you can use a placeholder and then edit in the HAR file directly with the expected value, or modify the input text in the test.
+
+Alternatively, an HAR file can also be loaded and extended. In your favourite browser, locate the "Import HAR file..." option to import the HAR file located [here](./tests/utils/har.ts).
 
 ## Generators
 
