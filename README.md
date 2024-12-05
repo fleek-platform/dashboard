@@ -74,6 +74,7 @@ touch .env.development
 Open the .env.development file in a text editor and add the following:
 
 ```sh
+NEXT_DEV_SERVER_PORT="3001"
 NEXT_PUBLIC_SDK__AUTHENTICATION_URL="https://graphql.service.fleek.xyz/graphql"
 NEXT_PUBLIC_UI_FLEEK_REST_API_URL="https://api.fleek.xyz"
 NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID="de23a5f0-aaa5-412e-8212-4fb056a3b30d"
