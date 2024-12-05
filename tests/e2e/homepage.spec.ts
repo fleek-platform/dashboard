@@ -67,9 +67,8 @@ describe('On Home page', () => {
 
       await page.goto(`http://${hostname}:${port}/projects/${projectId}/home/`);
 
-      await page.waitForURL(`http://${hostname}:${port}/`, {
-        waitUntil: 'domcontentloaded',
-      });
+      // Just a safe-guard to ensure we're in the correct page
+      await expect(page.getByText('Log in or sign up')).toBeVisible();
     });
 
     afterEach(async ({ page }) => {
@@ -177,6 +176,9 @@ describe('On Home page', () => {
       });
 
       await page.goto(`http://${hostname}:${port}`);
+
+      // Just a safe-guard to ensure we're in the correct page
+      await expect(page.getByText('Get on Fleek!')).toBeVisible();
     });
 
     afterEach(async ({ page }) => {
