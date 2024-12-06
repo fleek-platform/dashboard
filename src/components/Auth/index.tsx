@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { constants } from '../../constants';
 import { matchesPathname } from '../../utils/matchesPathname';
-import { FleekLogo } from '../FleekLogo/FleekLogo';
 
 import type { FC, ReactNode } from 'react';
 
