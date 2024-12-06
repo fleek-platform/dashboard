@@ -8,7 +8,7 @@ export type AuthProviders = 'dynamic';
 
 export type AuthWith = {
   handleLogin: () => void;
-  handleLogout: () => void;
+  handleLogout: () => Promise<void>;
   requestAccessToken: (projectId?: string) => Promise<string>;
   token: string | undefined;
 };
@@ -29,7 +29,7 @@ const useAuthWithDynamic = (): AuthWith => {
 
   const handleLogin = () => dynamic.setShowAuthFlow(true);
 
-  const handleLogout = () => dynamic.handleLogOut();
+  const handleLogout = async () => dynamic.handleLogOut();
 
   const requestAccessToken = async (projectId?: string): Promise<string> => {
     if (!dynamic.authToken) {
@@ -61,7 +61,7 @@ const getMockedProvider: () => AuthWith = () => {
 
   return {
     handleLogin: () => {},
-    handleLogout: () => {},
+    handleLogout: async () => {},
     requestAccessToken: async () => 'mocked-token',
     token: cookies.values.authProviderToken,
   };
