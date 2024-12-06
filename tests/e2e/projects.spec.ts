@@ -3,12 +3,13 @@ import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 import { getDevServerDetails } from '../utils/devServer';
 const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
+import { clearUserSession } from '../../src/utils/clearUSerSession';
 
 const { hostname, port } = getDevServerDetails();
 
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
-    const projectId = 'cls4v91mt0001l708wu51eozd';
+    const projectId = 's4v91mt0001l708wu51eozd';
 
     beforeEach(async ({ page }) => {
       const validMockToken =
@@ -80,14 +81,7 @@ describe('On Project settings page', () => {
     });
 
     afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
+      await page.evaluate(() => clearUserSession());
     });
 
     it('Should redirect to projects page', async ({ page }) => {

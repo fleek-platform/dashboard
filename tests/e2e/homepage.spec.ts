@@ -2,6 +2,7 @@ import { test as it, expect } from '@playwright/test';
 import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 import { getDevServerDetails } from '../utils/devServer';
+import { clearUserSession } from '../../src/utils/clearUSerSession';
 
 const { describe, beforeEach, afterEach } = it;
 
@@ -14,14 +15,7 @@ describe('On Home page', () => {
     });
 
     afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
+      await page.evaluate(() => clearUserSession());
     });
 
     it('Should get the title page "Home"', async ({ page }) => {
@@ -73,14 +67,7 @@ describe('On Home page', () => {
     });
 
     afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
+      await page.evaluate(() => clearUserSession());
     });
 
     it('Should redirect to the homepage url', async ({ page }) => {
@@ -180,14 +167,7 @@ describe('On Home page', () => {
     });
 
     afterEach(async ({ page }) => {
-      await page.evaluate(() => {
-        localStorage.clear();
-        sessionStorage.clear();
-        document.cookie.split(';').forEach((cookie) => {
-          document.cookie =
-            cookie.trim() + '; expires=Thu Jan 01 1970 00:00:00 GMT';
-        });
-      });
+      await page.evaluate(() => clearUserSession());
     });
 
     it('Should redirect to projects page', async ({ page }) => {
