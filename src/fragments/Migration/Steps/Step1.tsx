@@ -6,7 +6,7 @@ import { useMigrationContext } from '../Migration.context';
 import { MigrationStyles as S } from '../Migration.styles';
 
 export const Step1: React.FC = () => {
-  const session = useSessionContext();
+  const { auth: { accessToken } } = useSessionContext();
   const {
     isStep1Loading: isLoading,
     handleBeginMigration,
@@ -14,7 +14,7 @@ export const Step1: React.FC = () => {
     migrationToken,
   } = useMigrationContext();
 
-  const isDisabled = !session.auth.token || isLoading || !migrationToken;
+  const isDisabled = !accessToken || isLoading || !migrationToken;
 
   return (
     <S.Content.Container>

@@ -16,7 +16,7 @@ export const useAuthCookie = (): [
 
   const set = (jwt: string) => {
     try {
-      const parsed = decodeAccessToken({ token: jwt });
+      const parsed = decodeAccessToken({ accessToken: jwt });
 
       cookies.set(key, jwt, {
         expires: DateTime.fromSeconds(parsed.exp).toJSDate(),

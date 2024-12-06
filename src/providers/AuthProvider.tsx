@@ -1,5 +1,5 @@
 import { routes } from '@fleek-platform/utils-routes';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
@@ -18,13 +18,14 @@ import { clearUserSession } from '@/utils/clearUSerSession';
 export type AuthContext = {
   loading: boolean;
   error?: unknown;
-  token?: string;
+  accessToken?: string;
   redirectUrl: string | null;
 
   login: (provider: AuthProviders, redirectUrl?: string) => void;
   logout: () => void;
   switchProjectAuth: (projectId: string) => Promise<void>;
   setRedirectUrl: React.Dispatch<React.SetStateAction<string | null>>;
+  gotoProjectHome: (projectId: string) => void;
 };
 
 const [Provider, useContext] = createContext<AuthContext>({
@@ -45,22 +46,22 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [error, setError] = useState<unknown>();
 
   const providers = useAuthProviders();
-  const providersValues = Object.values(providers);
   const router = useRouter();
 
-  const login = useCallback(
-    (providerName: AuthProviders, redirectUrl?: string) => {
-      if (redirectUrl) {
-        setRedirectUrl(redirectUrl);
-      }
+  // TODO: There's only a "provider" which is "dynamic"
+  // looks like premature complexity. Change to "dynamic"
+  const login = (providerName: AuthProviders, redirectUrl?: string) => {
+    // TODO: This looks like a "future"
+    // once the user is "logged in" go to the "future" location
+    if (redirectUrl) {
+      setRedirectUrl(redirectUrl);
+    }
 
-      const provider = providers[providerName];
-      provider.handleLogin();
-    },
-    [providers],
-  );
+    const provider = providers[providerName];
+    provider.handleLogin();
+  };
 
-  const logout = useCallback(async () => {
+  const logout = async () => {
     const invitationHash = router.query.invitation;
 
     // TODO: Why would an invitation hash have to be
@@ -74,29 +75,12 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       });
     }
 
-    for (const provider of providersValues) {
-      if (!provider.token) {
-        // TODO: On "auth provider" initialisation
-        // a name should be provided to help troubleshoot.
-        // Include a name for each provider initialised.
-        console.warn('Provider doesn\'t have a token or loogout callback');
-        continue;
-      }
-
-      if (provider.token && typeof provider.handleLogout !== 'function') {
-        // TODO: Name provider on initialisation
-        // see related TODO above.
-        console.warn('Provider doesn\'t have a logout callback');
-        continue;
-      }
-
-      // TODO: For some reason the original author
-      // hasn't awaited for the logout request.
-      // This has to be revised as its possible
-      // that there are asynchronous calls involved
-      // which would have to be awaited for?
-      await provider.handleLogout();
-    }
+    // TODO: For some reason the original author
+    // hasn't awaited for the logout request.
+    // This has to be revised as its possible
+    // that there are asynchronous calls involved
+    // which would have to be awaited for?
+    await providers.dynamic.handleLogout();
 
     posthog.reset();
 
@@ -105,93 +89,106 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // values should persist. Use of a whitelist approach
     // can help. Until this is revised, all session data wiped
     clearUserSession();
-  }, [cookies, clearAccessToken, router, providersValues]);
+  };
 
-  const requestAccessToken = useCallback(
-    async (provider: AuthWith, projectId?: string) => {
-      if (loading) {
+  const requestAccessToken = async (dynamic: AuthWith, projectId?: string) => {
+    console.log('[debug] AuthProvider: requestAccessToken: 1');
+    // TODO: The requestAccessToken shouldn't 
+    // be called when loading. This doesn't seem correct.
+    if (loading) {
+      console.log('[debug] AuthProvider: requestAccessToken:is loading')
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(undefined);
+
+      const accessToken = await dynamic.requestAccessToken(projectId);
+
+      if (!accessToken) {
+        console.log(`[debug] AuthProvider: requestAccessToken: doesnt seem valid: ${JSON.stringify(accessToken)}`)
+        return;
+      }
+      
+      setAccessToken(accessToken);
+    } catch (requestError) {
+      logout();
+      setError(requestError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const switchProjectAuth = async (projectId: string) => {
+    if (!providers.dynamic.accessToken) {
+      console.log('[debug] AuthProvider: switchProject: !providers.dynamic.hasAccessToken')
+      return;
+    }
+
+    // if in site page, redirect to sites list first
+    // TODO: Why would redirecting to a site be necessary?
+    if (router.query.siteId) {
+      await router.replace(routes.project.site.list({ projectId }));
+      delete router.query.siteId;
+    }
+
+    return requestAccessToken(providers.dynamic, projectId);
+  };
+
+  useEffect(() => {
+    console.log('[debug] AuthProvider: useEffect: dep authProviderToken: 1');
+    const onTokenChange = async () => {
+      try {
+      console.log('[debug] AuthProvider: useEffect: dep authProviderToken: onTokenChange: 1');
+
+      // TODO: The original author was iterating over a list
+      // and picking any random accessToken. Suspicious?
+      const { accessToken } = providers.dynamic;
+
+      if (!accessToken) {
+        console.log('[debug] AuthProvider: dep authProviderToken: useEffect: !accessToken, should logout');
+        // TODO: Make sure other logout's are being awaited
+        await logout();
+        requestAccessToken(providers.dynamic);
         return;
       }
 
-      try {
-        setLoading(true);
-        setError(undefined);
+      cookies.set('authProviderToken', accessToken);
 
-        const token = await provider.requestAccessToken(projectId);
-        setAccessToken(token);
-      } catch (requestError) {
-        logout();
-        setError(requestError);
-      } finally {
-        setLoading(false);
+      // TODO: Move to ProjectProvider context
+      // TODO: On project id make sure the route path changes
+      // const projectId =
+      //   cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+      } catch (err) {
+        console.log('[debug] AuthProvider: useEffect: dep dynamic.accessToken: error')        
+        console.error(err);
       }
-    },
-    [setAccessToken, loading, logout],
-  );
+    };
 
-  const switchProjectAuth = useCallback(
-    async (projectId: string) => {
-      const provider = providersValues.find((provider) => provider.token);
+    onTokenChange();
+  }, [
+    providers.dynamic.accessToken,
+  ]);
 
-      if (provider) {
-        // if in site page, redirect to sites list first
-        if (router.query.siteId) {
-          await router.replace(routes.project.site.list({ projectId }));
-          delete router.query.siteId;
-        }
+  const gotoProjectHome = (projectId: string) => {
+    // Before anything, are there any pending requests?
+    if (redirectUrl) {
+      router.push(redirectUrl.replace('[projectid]', projectId));
 
-        return requestAccessToken(provider, projectId);
-      }
-    },
+      setRedirectUrl(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providersValues, requestAccessToken],
-  );
-
-  useEffect(() => {
-    const provider = providersValues.find((provider) => provider.token);
-
-    if (provider?.token) {
-      // if has a provider token, it means that auth provider is authenticated
-      // TODO: If this is the token generated by dynamic
-      // for the call to get the `accessToken`
-      // if the token is valid, we seem to not have to need
-      // dynamic for any purpose? Likewise, this doesn't
-      // seem necessary.
-      // cookies.set('authProviderToken', provider.token);
-
-      const projectId =
-        cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
-
-      // redirect if is in home page
-      if (router.pathname === routes.home()) {
-        // keep query on redirect
-        router.push({
-          pathname: routes.project.home({ projectId }),
-          query: router.query,
-        });
-      }
-
-      // redirect if has a redirect url pending
-      if (redirectUrl) {
-        router.push(redirectUrl.replace('[projectid]', projectId));
-
-        setRedirectUrl(null);
-      }
-
-      // uses the auth provider token to request the access token from graphql
-      if (!accessToken) {
-        requestAccessToken(provider);
-      }
-    } else {
-      logout();
+      return;
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    cookies.values.authProviderToken,
-    ...providersValues.map((provider) => provider.token),
-  ]);
+    // TODO: The original author seem to check
+    // if the user is in the public landing page
+    // before redirecting. Shouldn't it be regardless?
+    router.push({
+      pathname: routes.project.home({ projectId }),
+      query: router.query,
+    });
+  };
 
   return (
     <Provider
@@ -201,9 +198,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         login,
         logout,
         switchProjectAuth,
-        token: accessToken,
+        accessToken,
         redirectUrl,
         setRedirectUrl,
+        gotoProjectHome,
       }}
     >
       {children}

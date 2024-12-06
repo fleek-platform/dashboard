@@ -8,11 +8,11 @@ import { Button, Stepper } from '@/ui';
 import { withAccess } from '@/utils/withAccess';
 
 const MigrationPage: Page = () => {
-  const session = useSessionContext();
+  const { auth: { accessToken } } = useSessionContext();
 
   return (
     <>
-      {session.auth.token && (
+      {accessToken && (
         <Link href={routes.home()}>
           <Button intent="neutral" iconLeft="arrow-left">
             Go back

@@ -36,12 +36,12 @@ export const Hero: React.FC = () => {
 };
 
 const SubmitTemplateButton: React.FC = () => {
-  const session = useSessionContext();
+  const { auth: { accessToken, login } } = useSessionContext();
   const router = useRouter();
 
   const handleSubmitTemplate = () => {
-    if (!session.auth.token) {
-      return session.auth.login('dynamic', routes.profile.settings.templates());
+    if (!accessToken) {
+      return login('dynamic', routes.profile.settings.templates());
     }
 
     return router.push(routes.profile.settings.templates());

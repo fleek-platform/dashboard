@@ -36,18 +36,67 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const router = useRouter();
   const cookies = useCookies();
   const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
-    pause: !auth.token,
+    pause: !auth.accessToken,
     variables: {},
   });
   const [, createProject] = useCreateProjectMutation();
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
+  const [defaultProjectId, setDefaultProjectId] = useState('');
+
+  useEffect(() => {
+    // Before, do we already have a Project Id?
+    if (cookies.values.projectId) {
+      setDefaultProjectId(cookies.values.projectId);
+
+      return;
+    }
+    
+    console.log('[debug] useEffect: auth.accessToken: 1')
+    if (!auth.accessToken) {
+      console.log('[debug] Providers>ProjectProviders>auth.token');
+      return;
+    }
+
+    if (projectsQuery.fetching) {
+      console.log('[debug] Providers>ProjectsProviders>projectsQuery.fetching');
+      return;
+    }
+
+    if (!Array.isArray(projectsQuery.data.projects.data) || !projectsQuery.data.projects.data.length) {
+      console.log('[debug] Providers>ProjectsProviders>projectsQuery.data.projects.data NOT');
+      return;
+    }
+
+    // TODO: Create utility to decide which project
+    // to pick when one is not known. For now default first.
+    const projectId = projectsQuery.data.projects.data[0].id;
+
+    if (!projectId) {
+      console.log(`[debug] ProjectProvider: useEffect: deps accessToken, projectsQuery, etc: projectId NOT`)
+
+      return;
+    }
+  
+    setDefaultProjectId(projectId);
+  }, [auth.accessToken, projectsQuery.fetching, projectsQuery.data?.projects?.data, cookies.values?.projectId]);
+
+  useEffect(() => {
+    if (!defaultProjectId) {
+      console.log('[debug] ProjectProvider: defaultProjectId NOT');
+      
+      return;
+    }
+
+    console.log(`[debug] ProjectProvider: defaultProjectId = ${defaultProjectId}`);
+    auth.gotoProjectHome(defaultProjectId);
+  }, [defaultProjectId]);
 
   useEffect(() => {
     const { data, fetching } = projectsQuery;
-    const { token } = auth;
+    const { accessToken } = auth;
 
-    if (!data || !token || fetching) {
+    if (!data || !accessToken || fetching) {
       return;
     }
 
@@ -102,7 +151,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       };
 
       const sameProject =
-        decodeAccessToken({ token }).projectId === newProjectId;
+        decodeAccessToken({ accessToken }).projectId === newProjectId;
 
       if (sameProject && allowedProject) {
         await redirect();
@@ -164,7 +213,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       return false;
     }
 
-    if (cookies.values.authProviderToken && !auth.token) {
+    if (cookies.values.authProviderToken && !auth.accessToken) {
       return true;
     }
 
@@ -174,7 +223,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, [
     projectsQuery.data,
     project.id,
-    auth.token,
+    auth.accessToken,
     cookies.values.authProviderToken,
   ]);
 

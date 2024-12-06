@@ -13,7 +13,7 @@ import { Log } from '@/utils/log';
 
 const LoginWithSessionPage: Page = () => {
   const router = useRouter();
-  const session = useSessionContext();
+  const { auth: { accessToken, login }, project, loading } = useSessionContext();
 
   const [
     createLoginVerificationSessionMutation,
@@ -26,9 +26,9 @@ const LoginWithSessionPage: Page = () => {
 
   const handleRedirect = useCallback(() => {
     return router.replace(
-      routes.project.home({ projectId: session.project.id }),
+      routes.project.home({ projectId: project.id }),
     );
-  }, [router, session.project.id]);
+  }, [router, project.id]);
 
   const handleCreateVerificationSession = useCallback(async () => {
     try {
@@ -76,7 +76,7 @@ const LoginWithSessionPage: Page = () => {
   }
 
   if (
-    session.auth.token &&
+    accessToken &&
     !createLoginVerificationSessionMutation?.data
       ?.createLoginVerificationSession
   ) {
@@ -106,8 +106,8 @@ const LoginWithSessionPage: Page = () => {
       withExternalLink
     >
       <Button
-        onClick={() => session.auth.login('dynamic')}
-        loading={session.loading}
+        onClick={() => login('dynamic')}
+        loading={loading}
         className="w-full"
       >
         Sign in

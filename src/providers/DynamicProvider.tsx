@@ -8,7 +8,8 @@ import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
 import { useMeQuery, useUpdateUserMutation } from '@/generated/graphqlClient';
 import { secrets } from '@/secrets';
 
-import { useCookies } from './CookiesProvider';
+// TODO: Fix name
+import { clearUserSession } from '@/utils/clearUSerSession';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -17,7 +18,6 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
 }) => {
   const [, updateUser] = useUpdateUserMutation();
   const [meQuery] = useMeQuery();
-  const cookies = useCookies();
 
   return (
     <DynamicContextProvider
@@ -25,10 +25,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         environmentId: secrets.NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID,
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
-          onLogout: () => {
-            cookies.remove('authProviderToken');
-            cookies.remove('accessToken');
-          },
+          onLogout: () => clearUserSession(),
           onLinkSuccess: async (args) => {
             // for now we want to save the first wallet linked
             if (

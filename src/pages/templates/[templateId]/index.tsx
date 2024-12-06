@@ -61,8 +61,8 @@ const TemplatePage: Page = () => {
 const PageNavContent: React.FC = () => {
   const router = useRouter();
   const templateId = router.query.templateId!;
-  const session = useSessionContext();
-  const projectId = session.project.id;
+  const { project, auth: { accessToken, login } } = useSessionContext();
+  const projectId = project.id;
   const { isOwner, isLoading } = useIsTemplateOwner({ templateId });
   const hasManageBillingPermission = usePermissions({
     action: [constants.PERMISSION.BILLING.MANAGE],
@@ -72,8 +72,8 @@ const PageNavContent: React.FC = () => {
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
 
   const handleDeploy = () => {
-    if (!session.auth.token) {
-      session.auth.login(
+    if (!accessToken) {
+      login(
         'dynamic',
         routes.project.site.newFromTemplate({
           projectId: '[projectId]',

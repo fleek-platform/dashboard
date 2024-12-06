@@ -5,13 +5,13 @@ import { ActionBox } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 export const CreateGatewayButton: React.FC = () => {
-  const session = useSessionContext();
+  const { auth: { accessToken, login } } = useSessionContext();
 
-  const hasToken = Boolean(session.auth.token);
+  const hasToken = Boolean(accessToken);
 
   const handleClick = () => {
     if (!hasToken) {
-      session.auth.login(
+      login(
         'dynamic',
         routes.project.settings.privateGateways({ projectId: 'project' }),
       );
