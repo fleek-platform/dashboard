@@ -170,6 +170,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     // on the client side, show versions if not prod or user is internal
     if (
       !isServerSide() &&
+      // TODO: This shouldn't be hard-typed
+      // e.g. staging vs prd URLs
       (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
     ) {
       setShowVersion(true);

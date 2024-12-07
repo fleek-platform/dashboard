@@ -2,13 +2,11 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
-import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
   AuthProviders,
   AuthWith,
   useAuthProviders,
 } from '@/hooks/useAuthProviders';
-import { usePostHog } from '@/hooks/usePostHog';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
 
@@ -23,9 +21,10 @@ export type AuthContext = {
 
   login: (provider: AuthProviders, redirectUrl?: string) => void;
   logout: () => void;
-  switchProjectAuth: (projectId: string) => Promise<void>;
+  switchProjectAuth: (projectId: string) => Promise<string>;
   setRedirectUrl: React.Dispatch<React.SetStateAction<string | null>>;
   gotoProjectHome: (projectId: string) => void;
+  setAccessToken: (token: string) => void;
 };
 
 const [Provider, useContext] = createContext<AuthContext>({
@@ -37,8 +36,6 @@ const [Provider, useContext] = createContext<AuthContext>({
 export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const [accessToken, setAccessToken, clearAccessToken] = useAuthCookie();
-  const posthog = usePostHog();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const cookies = useCookies();
 
@@ -47,6 +44,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const providers = useAuthProviders();
   const router = useRouter();
+  const [accessToken, setAccessToken] = useState<string>();
 
   // TODO: There's only a "provider" which is "dynamic"
   // looks like premature complexity. Change to "dynamic"
@@ -82,8 +80,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // which would have to be awaited for?
     await providers.dynamic.handleLogout();
 
-    posthog.reset();
-
     // TODO: Session has third-party data
     // at time of writing there's no way to know which
     // values should persist. Use of a whitelist approach
@@ -111,7 +107,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         return;
       }
       
-      setAccessToken(accessToken);
+      return accessToken;
     } catch (requestError) {
       logout();
       setError(requestError);
@@ -121,7 +117,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   const switchProjectAuth = async (projectId: string) => {
-    if (!providers.dynamic.accessToken) {
+    if (!providers.dynamic.authProviderToken) {
       console.log('[debug] AuthProvider: switchProject: !providers.dynamic.hasAccessToken')
       return;
     }
@@ -137,29 +133,44 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   useEffect(() => {
-    console.log('[debug] AuthProvider: useEffect: dep authProviderToken: 1');
+    console.log('[debug] AuthProvider: useEffect: dep providers.dynamic.accessToken: 1');
     const onTokenChange = async () => {
       try {
-      console.log('[debug] AuthProvider: useEffect: dep authProviderToken: onTokenChange: 1');
+        console.log('[debug] AuthProvider: useEffect: dep providers.dynamic.accessToken: onTokenChange: 1');
 
-      // TODO: The original author was iterating over a list
-      // and picking any random accessToken. Suspicious?
-      const { accessToken } = providers.dynamic;
+        // TODO: The original author was iterating over a list
+        // and picking any random accessToken. Suspicious?
+        const { authProviderToken } = providers.dynamic;
 
-      if (!accessToken) {
-        console.log('[debug] AuthProvider: dep authProviderToken: useEffect: !accessToken, should logout');
-        // TODO: Make sure other logout's are being awaited
-        await logout();
-        requestAccessToken(providers.dynamic);
-        return;
-      }
+        if (!authProviderToken) {
+          console.log('[debug] AuthProvider: dep providers.dynamic.accessToken: useEffect: !accessToken, should logout');
+          // TODO: Make sure other logout's are being awaited
+          // the original author seem to not have awaited
+          // for some reason.
+          await logout();
 
-      cookies.set('authProviderToken', accessToken);
+          return;
+        }
 
-      // TODO: Move to ProjectProvider context
-      // TODO: On project id make sure the route path changes
-      // const projectId =
-      //   cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+        // TODO: The cookies.set authProviderToken
+        // should happen after successfull requestAccessToken
+        // e.g. as success callback
+        const accessToken = await requestAccessToken(providers.dynamic);
+
+        if (!accessToken) {
+          console.log('[debug] AuthProvider: useEffect: providers.dynamic.authProviderToken: after response of requestAccessToken: accessToken NOT')
+          return;
+        }
+        
+        console.log(`[debug] AuthProvider: useEffect: deps providers.dynamic.accessToken: cookies.set authProviderToken: authProviderToken = ${authProviderToken}, accessToken = ${accessToken}`);
+
+        // TODO: useAuthCookie.setAccessToken hook doesn't seem
+        // to update the token, so using cookies.set
+        // until investigation
+        cookies.set('authProviderToken', authProviderToken);
+        cookies.set('accessToken', accessToken);
+
+        setAccessToken(accessToken);
       } catch (err) {
         console.log('[debug] AuthProvider: useEffect: dep dynamic.accessToken: error')        
         console.error(err);
@@ -168,7 +179,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
     onTokenChange();
   }, [
-    providers.dynamic.accessToken,
+    providers.dynamic.authProviderToken,
   ]);
 
   const gotoProjectHome = (projectId: string) => {
@@ -202,6 +213,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         redirectUrl,
         setRedirectUrl,
         gotoProjectHome,
+        setAccessToken,
       }}
     >
       {children}

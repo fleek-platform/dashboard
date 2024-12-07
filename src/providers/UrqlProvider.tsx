@@ -9,6 +9,8 @@ export const UrqlProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const cookies = useCookies();
 
+  console.log(`[debug] UrqlProvider: cookies.values.accessToken = ${cookies.values.accessToken}`);
+
   const urqlClient = useMemo(
     () =>
       createUrqlClient({

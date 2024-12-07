@@ -3,9 +3,7 @@ import { ChildrenProps } from '@/types/Props';
 import { CookiesContext, CookiesProvider } from './CookiesProvider';
 import { DynamicProvider } from './DynamicProvider';
 import { FeedbackModalProvider } from './FeedbackModalProvider';
-import { LaunchDarklyProvider } from './LaunchDarklyProvider';
 import { LogRocketProvider } from './LogRocketProvider';
-import { PHProvider } from './PHProvider';
 import { QueryClientProvider } from './QueryClientProvider';
 import { SessionProvider } from './SessionProvider';
 import { ThemeProvider } from './ThemeProvider';
@@ -25,34 +23,28 @@ export const Providers: React.FC<ProvidersProps> = ({
   forcedTheme,
 }) => {
   return (
-    <CookiesProvider requestCookies={requestCookies}>
-      <UrqlProvider>
-        <LaunchDarklyProvider>
+    <ToastProvider>
+      <CookiesProvider requestCookies={requestCookies}>
+        <UrqlProvider>
           <DynamicProvider>
             <LogRocketProvider>
               <QueryClientProvider>
-                <WagmiProvider>
-                  <ThemeProvider forcedTheme={forcedTheme}>
-                    <ToastProvider>
-                      <PHProvider>
-                        <SessionProvider>
-                          <UploadProvider>
-                            <PHProvider>
-                              <FeedbackModalProvider>
-                                {children}
-                              </FeedbackModalProvider>
-                            </PHProvider>
-                          </UploadProvider>
-                        </SessionProvider>
-                      </PHProvider>
-                    </ToastProvider>
-                  </ThemeProvider>
-                </WagmiProvider>
+                <SessionProvider>
+                  <WagmiProvider>
+                    <ThemeProvider forcedTheme={forcedTheme}>
+                      <UploadProvider>
+                        <FeedbackModalProvider>
+                          {children}
+                        </FeedbackModalProvider>
+                      </UploadProvider>
+                    </ThemeProvider>
+                  </WagmiProvider>
+                </SessionProvider>
               </QueryClientProvider>
             </LogRocketProvider>
           </DynamicProvider>
-        </LaunchDarklyProvider>
-      </UrqlProvider>
-    </CookiesProvider>
+        </UrqlProvider>
+      </CookiesProvider>
+    </ToastProvider>
   );
 };
