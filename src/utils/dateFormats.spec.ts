@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { dateFormat } from './dateFormats';
-import { DateTime } from 'luxon';
+import { DateTime, Settings } from 'luxon';
 
 // TODO: The dateFormat is used accross components
 // and there are multiple formats. It'd be easier
@@ -11,14 +11,31 @@ import { DateTime } from 'luxon';
 // Once that's done replace the tests with arguments
 // by the utility fn
 describe('Utils dateFormats', () => {
-  const testDate = '2023-12-25T15:30:45.123Z';
+  const testDate = '2024-12-25T15:30:45.123Z';
 
+  beforeAll(() => {
+    vi.useFakeTimers();
+    Settings.defaultZone = 'UTC';
+    process.env.TZ = 'UTC';
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+    Settings.defaultZone = undefined;
+    process.env.TZ = undefined;
+  });
+
+  it('should be UTC timezone', () => {
+    const date = new Date();
+    expect(date.getTimezoneOffset()).toBe(0);
+  });
+      
   it('should format date using DateTime.DATE_MED', () => {
     const result = dateFormat({
       dateISO: testDate,
       format: DateTime.DATE_MED,
     });
-    expect(result).toBe('Dec 25, 2023');
+    expect(result).toBe('Dec 25, 2024');
   });
 
   it('should format date using "LLLL, dd, y" format', () => {
@@ -26,7 +43,7 @@ describe('Utils dateFormats', () => {
       dateISO: testDate,
       stringFormat: 'LLLL, dd, y',
     });
-    expect(result).toBe('December, 25, 2023');
+    expect(result).toBe('December, 25, 2024');
   });
 
   it('should format date using "MMM dd, yyyy" format', () => {
@@ -34,7 +51,7 @@ describe('Utils dateFormats', () => {
       dateISO: testDate,
       stringFormat: 'MMM dd, yyyy',
     });
-    expect(result).toBe('Dec 25, 2023');
+    expect(result).toBe('Dec 25, 2024');
   });
 
   it('should format date using DateTime.DATE_FULL', () => {
@@ -42,7 +59,7 @@ describe('Utils dateFormats', () => {
       dateISO: testDate,
       format: DateTime.DATE_FULL,
     });
-    expect(result).toBe('December 25, 2023');
+    expect(result).toBe('December 25, 2024');
   });
 
   it('should format time using "HH:mm:ss.SSS" format', () => {
