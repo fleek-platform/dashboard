@@ -15,10 +15,10 @@ import { App } from '../App/App';
 export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
   children,
 }) => {
-  const session = useSessionContext();
+  const { loading, auth: { accessToken }} = useSessionContext();
   const navItems = useMainNavigationItems();
 
-  if (!session.auth.token) {
+  if (!accessToken) {
     return (
       <>
         <LayoutHead title={LayoutHead.titles.ipfsPropagation} />
@@ -42,7 +42,7 @@ export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
       <RootLayout.Head title={LayoutHead.titles.ipfsPropagation} />
       <RootLayout.Page
         slotSidebar={<ProjectDropdown />}
-        isNavigationLoading={session.loading}
+        isNavigationLoading={loading}
         navigation={navItems}
         breadcrumbs={breadcrumbs}
       >
@@ -53,9 +53,9 @@ export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
 };
 
 const Content: React.FC<ChildrenProps> = ({ children }) => {
-  const session = useSessionContext();
+  const { auth: { accessToken } } = useSessionContext();
 
-  if (session.auth.token) {
+  if (accessToken) {
     return <App.Content>{children}</App.Content>;
   }
 

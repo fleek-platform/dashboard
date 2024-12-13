@@ -13,11 +13,11 @@ export type Layout = React.PropsWithChildren<{
 }>;
 
 export const Layout: React.FC<Layout> = ({ children }) => {
-  const session = useSessionContext();
+  const { error, auth: { login, accessToken }, loading } = useSessionContext();
 
   const handleLogIn = () => {
-    if (!session.error && !session.loading && !session.auth.token) {
-      session.auth.login('dynamic', routes.migration());
+    if (!error && !loading && !accessToken) {
+      login('dynamic', routes.migration());
     }
   };
 
@@ -26,7 +26,7 @@ export const Layout: React.FC<Layout> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (session.auth.token) {
+  if (accessToken) {
     return (
       <>
         <LayoutHead title={LayoutHead.titles.migration} />

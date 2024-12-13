@@ -4,9 +4,9 @@ import { NavbarProject } from './NavbarProject';
 import { NavbarUnauthenticated } from './NavbarUnauthenticated';
 
 export const NavbarCombined: React.FC = () => {
-  const session = useSessionContext(true);
+  const { loading, auth: { accessToken } } = useSessionContext(true);
 
-  if (session.loading || session.auth.token) {
+  if (loading || accessToken) {
     return <NavbarProject />;
   }
 

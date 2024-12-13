@@ -5,18 +5,18 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
 
 const HomePage: Page = () => {
-  const session = useSessionContext();
+  const { error, loading, auth: { accessToken, login } } = useSessionContext();
 
   const handleLogIn = () => {
-    if (!session.error && !session.loading && !session.auth.token) {
-      session.auth.login('dynamic');
+    if (!error && !loading && !accessToken) {
+      login('dynamic');
     }
   };
 
   useEffect(() => {
     handleLogIn();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.loading]);
+  }, [loading]);
 
   return (
     <>

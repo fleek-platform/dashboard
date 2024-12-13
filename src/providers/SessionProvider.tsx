@@ -21,7 +21,7 @@ type SessionContext = {
   loading: boolean;
   error?: any;
 
-  auth: Pick<AuthContext, 'login' | 'logout' | 'token'>;
+  auth: Pick<AuthContext, 'login' | 'logout' | 'accessToken'>;
   project: ProjectContext['project'];
   permissions: PermissionsContext['permissions'];
 
@@ -42,6 +42,14 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
   const project = useProjectContext();
   const cookies = useCookies();
+
+  useEffect(() => {
+    console.log(`[debug] SessionProvider: 1: accessToken = ${cookies.values.accessToken}`);
+  }, [cookies.values.accessToken]);
+
+  useEffect(() => {
+    console.log(`[debug] SessionProvider: 1: authProvidertoken = ${cookies.values.authProviderToken}`)
+  }, [cookies.values.authProviderToken]);
 
   const loading = useMemo(
     () =>

@@ -17,6 +17,11 @@ const [Provider, useContext] = createContext<PermissionsContext>({
 export const PermissionsProvider: React.FC<ChildrenProps> = ({ children }) => {
   const { project: data, loading } = useProjectContext();
 
+  if (!data || loading) {
+    console.log('[debug] PermissionsProvider: !data || loading')
+    return;
+  }
+
   return (
     <Provider
       value={{

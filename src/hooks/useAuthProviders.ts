@@ -8,9 +8,9 @@ export type AuthProviders = 'dynamic';
 
 export type AuthWith = {
   handleLogin: () => void;
-  handleLogout: () => void;
+  handleLogout: () => Promise<void>;
   requestAccessToken: (projectId?: string) => Promise<string>;
-  token: string | undefined;
+  authProviderToken?: string;
 };
 
 export const useAuthProviders = (): Record<AuthProviders, AuthWith> => {
@@ -29,16 +29,21 @@ const useAuthWithDynamic = (): AuthWith => {
 
   const handleLogin = () => dynamic.setShowAuthFlow(true);
 
-  const handleLogout = () => dynamic.handleLogOut();
+  const handleLogout = async () => dynamic.handleLogOut();
 
   const requestAccessToken = async (projectId?: string): Promise<string> => {
+    console.log('[debug] useAuthProvidders: requestAccessToken: 1')
     if (!dynamic.authToken) {
+      console.log('[debug] useAuthProvidders: requestAccessToken: requestAccessToken NOT')
+
       return '';
     }
 
     const { data, error } = await loginWithDynamic({
       data: { authToken: dynamic.authToken, projectId },
     });
+
+    console.log(`[debug] useAuthProvidders: requestAccessToken: loginWithDynamic: response: ${JSON.stringify(data)}`)
 
     if (data && data.loginWithDynamic) {
       return data.loginWithDynamic;
@@ -51,7 +56,7 @@ const useAuthWithDynamic = (): AuthWith => {
     handleLogin,
     handleLogout,
     requestAccessToken,
-    token: dynamic.authToken,
+    authProviderToken: dynamic.authToken,
   };
 };
 
@@ -61,8 +66,8 @@ const getMockedProvider: () => AuthWith = () => {
 
   return {
     handleLogin: () => {},
-    handleLogout: () => {},
+    handleLogout: async () => {},
     requestAccessToken: async () => 'mocked-token',
-    token: cookies.values.authProviderToken,
+    accessToken: cookies.values.authProviderToken,
   };
 };
