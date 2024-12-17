@@ -1,7 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
 
-import { BadgeText, RestrictionModal } from '@/components';
+import { BadgeText, Link, RestrictionModal } from '@/components';
 import { constants } from '@/constants';
 import { SourceProvider } from '@/generated/graphqlClient';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
@@ -121,7 +121,8 @@ export const GitProviderStep: React.FC = () => {
             Click here
           </Text>
         ) : (
-          <S.Link
+          <Link
+            variant="accent"
             href={{
               pathname: routes.project.site.new({
                 projectId: session.project.id,
@@ -131,7 +132,7 @@ export const GitProviderStep: React.FC = () => {
             replace
           >
             Click here
-          </S.Link>
+          </Link>
         )}
         .
       </S.Message>

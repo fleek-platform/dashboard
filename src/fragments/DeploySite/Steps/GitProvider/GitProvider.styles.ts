@@ -1,4 +1,3 @@
-import { ExternalLink } from '@/components';
 import { styled } from '@/theme';
 import { Box, Icon, Text } from '@/ui';
 
@@ -31,12 +30,6 @@ export const GitProviderStyles = {
       Message: styled(Text, {
         textSize: '$sm',
         display: 'inline-block',
-
-        [`${ExternalLink}`]: {
-          textSize: 'inherit',
-          display: 'inherit',
-          color: '$text-yellow',
-        },
       }),
     },
   },
