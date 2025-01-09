@@ -1,5 +1,11 @@
+// TODO: Create project config/settings
+// The fleek sites dashboard basepath
+const basePath = '/dashboard';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath,
+  assetPrefix: basePath,
   output: 'export',
   // TODO: replace instances of next/image'
   // or do image optimization on build
