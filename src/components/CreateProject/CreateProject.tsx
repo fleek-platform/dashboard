@@ -7,7 +7,6 @@ import {
   useCreateProjectMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { useCookies } from '@/providers/CookiesProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { Button, Dialog, Text } from '@/ui';
 
@@ -15,13 +14,14 @@ import { Form } from '../Form/Form';
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';
 import { Modal } from '../Modal/Modal';
 import { ProjectField } from '../ProjectField/ProjectField';
+import { useSessionContext } from '@/providers/SessionProvider';
 
 export const CreateProject: React.FC = () => {
+  const session = useSessionContext();
   const { isCreateProjectModalOpen: isModalOpen, setIsCreateProjectModalOpen } =
     useProjectContext();
   const toast = useToast();
 
-  const cookies = useCookies();
   const client = useClient();
 
   const [, createProject] = useCreateProjectMutation();
@@ -63,7 +63,7 @@ export const CreateProject: React.FC = () => {
             });
           }
 
-          cookies.set('projectId', data.createProject.id);
+          session.setProject(data.createProject.id);
           handleModalChange(false);
         } catch (error) {
           toast.error({

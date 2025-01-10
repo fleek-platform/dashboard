@@ -17,7 +17,7 @@ export const Layout: React.FC<Layout> = ({ children }) => {
 
   const handleLogIn = () => {
     if (!session.error && !session.loading && !session.auth.token) {
-      session.auth.login('dynamic', routes.migration());
+      session.auth.login(routes.migration());
     }
   };
 

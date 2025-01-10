@@ -14,8 +14,10 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { Page } from '@/types/App';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 const HomePage: Page = () => {
+  const auth = useAuthContext();
   const router = useRouter();
   const toast = useToast();
 
@@ -25,28 +27,33 @@ const HomePage: Page = () => {
   // fetch invitation data from hash (when a user is invited through link)
   const [invitationQuery, refetchInvitationQuery] = useInvitationQuery({
     variables: { where: { hash: invitationHashQueryParam || '' } },
-    pause: !invitationHashQueryParam,
+    pause: !invitationHashQueryParam || !auth.tokenProjectId,
   });
 
   // fetch invitation data when is invited through email
-  const [meQuery, refetchMeQuery] = useMeQuery();
+  const [meQuery, refetchMeQuery] = useMeQuery({ pause: !auth.tokenProjectId });
 
   useSitesQuery({
     variables: {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !auth.tokenProjectId,
   });
   useListFolderQuery({
     variables: {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !auth.tokenProjectId,
   });
 
   const [, acceptInvitation] = useAcceptInvitationMutation();
   const [, declineInvitation] = useDeclineInvitationMutation();
-  const [, refetchProjectsQuery] = useProjectsQuery();
+  const [, refetchProjectsQuery] = useProjectsQuery({
+    variables: {},
+    pause: !auth.token,
+  });
 
   const handleAcceptInvitation = async (invitationHash: string) => {
     try {

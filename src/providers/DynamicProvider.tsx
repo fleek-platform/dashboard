@@ -4,20 +4,49 @@ import {
   WalletConnector,
 } from '@dynamic-labs/sdk-react-core';
 import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
+import { useCallback } from 'react';
 
-import { useMeQuery, useUpdateUserMutation } from '@/generated/graphqlClient';
+import {
+  MeDocument,
+  MeQuery,
+  MeQueryVariables,
+} from '@/generated/graphqlClient';
+import { useAuthCookie } from '@/hooks/useAuthCookie';
+import { useUpdateUserMutation } from '@/hooks/useUpdateUserMutation';
+import { GraphqlApiClient } from '@/integrations/graphql/GraphqlApi';
 import { secrets } from '@/secrets';
+import { ChildrenProps } from '@/types/Props';
+import { Log } from '@/utils/log';
 
-import { useCookies } from './CookiesProvider';
-
-export type DynamicProviderProps = React.PropsWithChildren<{}>;
+type DynamicProviderProps = ChildrenProps<{
+  handleAuthSuccess: (authProviderToken: string) => void;
+  handleLogout: () => void;
+}>;
 
 export const DynamicProvider: React.FC<DynamicProviderProps> = ({
+  handleLogout,
+  handleAuthSuccess,
   children,
 }) => {
-  const [, updateUser] = useUpdateUserMutation();
-  const [meQuery] = useMeQuery();
-  const cookies = useCookies();
+  const [accessToken] = useAuthCookie();
+  const { mutate: updateUser } = useUpdateUserMutation();
+
+  const getUserQuery = useCallback(() => {
+    try {
+      if (!accessToken) {
+        return undefined;
+      }
+
+      const graphqlApi = new GraphqlApiClient({ accessToken });
+
+      return graphqlApi.fetch<MeQuery, MeQueryVariables>({
+        document: MeDocument.loc.source.body,
+        variables: {},
+      });
+    } catch (error) {
+      Log.error('Failed to get user on auth provider callbacks', error);
+    }
+  }, [accessToken]);
 
   return (
     <DynamicContextProvider
@@ -25,30 +54,37 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         environmentId: secrets.NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID,
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
-          onLogout: () => {
-            cookies.remove('authProviderToken');
-            cookies.remove('accessToken');
+          onAuthSuccess: (args) => {
+            console.log('onAuthSuccess', args);
+            handleAuthSuccess(args.authToken);
           },
+          onLogout: handleLogout,
           onLinkSuccess: async (args) => {
+            const data = await getUserQuery();
+
+            if (!data?.user) {
+              return;
+            }
+
             // for now we want to save the first wallet linked
-            if (
-              !meQuery.fetching &&
-              !meQuery.data?.user.walletAddress &&
-              args.walletConnector
-            ) {
+            if (!data.user.walletAddress && args.walletConnector) {
               const wallet = await (
                 args.walletConnector as WalletConnector
               ).fetchPublicAddress();
-
               updateUser({ data: { walletAddress: wallet } });
             }
           },
           onUnlinkSuccess: async (wallet) => {
+            const data = await getUserQuery();
+
+            if (!data?.user) {
+              return;
+            }
+
             // remove wallet if is the one we have stored
             if (
-              !meQuery.fetching &&
-              meQuery.data?.user.walletAddress &&
-              meQuery.data?.user.walletAddress === wallet.address
+              data.user.walletAddress &&
+              data.user.walletAddress === wallet.address
             ) {
               updateUser({ data: { walletAddress: null, walletChain: null } });
             }

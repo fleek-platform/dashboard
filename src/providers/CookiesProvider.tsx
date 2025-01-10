@@ -12,7 +12,7 @@ class CookiesError extends Error {
   }
 }
 
-export type AppCookies = 'authProviderToken' | 'accessToken' | 'projectId';
+export type AppCookies = 'authProviderToken' | 'accessToken' | 'lastProjectId';
 
 export type CookiesContext = {
   values: { [key in AppCookies]?: string };

@@ -2,28 +2,28 @@ import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
-import { useCookies } from '@/providers/CookiesProvider';
 import { ProjectResponse, TeamResponse } from '@/types/Billing';
 import { Log } from '@/utils/log';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 type UseGetTeamArgs = {
   pause?: boolean;
 };
 
 export const useGetTeam = ({ pause }: UseGetTeamArgs) => {
-  const cookies = useCookies();
+  const auth = useAuthContext();
   const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
+    accessToken: auth.token,
   });
 
   const getTeam = useCallback(async () => {
-    if (pause) {
+    if (pause || !auth.tokenProjectId) {
       return null;
     }
 
     try {
       const projectResponse = await backendApi.fetch({
-        url: `/api/v1/projects/${cookies.values.projectId}`,
+        url: `/api/v1/projects/${auth.tokenProjectId}`,
       });
 
       const projectResult: ProjectResponse = await projectResponse.json();
@@ -59,10 +59,10 @@ export const useGetTeam = ({ pause }: UseGetTeamArgs) => {
       throw error;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookies.values.accessToken, pause]);
+  }, [auth.token, pause]);
 
   return useQuery({
-    queryKey: ['team', cookies.values.accessToken],
+    queryKey: ['team', auth.token],
     queryFn: getTeam,
   });
 };

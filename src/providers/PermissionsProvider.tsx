@@ -2,6 +2,7 @@ import { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 import { useProjectContext } from './ProjectProvider';
+import { useAuthContext } from './AuthProvider';
 
 export type PermissionsContext = {
   loading: boolean;
@@ -15,12 +16,13 @@ const [Provider, useContext] = createContext<PermissionsContext>({
 });
 
 export const PermissionsProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const { project: data, loading } = useProjectContext();
+  const { project: data, loading: projectLoading } = useProjectContext();
+  const { isLoading: authLoading } = useAuthContext();
 
   return (
     <Provider
       value={{
-        loading,
+        loading: authLoading || projectLoading,
         permissions:
           data.currentUserMembership.permissionGroup.permissions.slice() ?? [],
       }}

@@ -79,7 +79,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       const redirect = async () => {
-        const shouldRedirect = router.pathname === routes.home();
+        const shouldRedirect = router.asPath === routes.home();
 
         if (shouldRedirect) {
           // keep query on redirect
@@ -113,23 +113,15 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       try {
         await auth.switchProjectAuth(newProjectId);
         await redirect();
-        cookies.set('projectId', newProjectId);
+        cookies.set('lastProjectId', newProjectId);
       } catch (error) {
         Log.error('Failed to switch project', error);
       }
     };
 
-    changeProject(cookies.values.projectId ?? projects[0].id);
+    changeProject(cookies.values.lastProjectId ?? projects[0].id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookies.values.projectId, projectsQuery]);
-
-  useEffect(() => {
-    if (router.query.projectId) {
-      cookies.set('projectId', router.query.projectId);
-    }
-    // Update cookie on first run if it is present in the url
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cookies.values.lastProjectId, projectsQuery]);
 
   const project = useMemo(() => {
     const { data } = projectsQuery;
@@ -152,10 +144,10 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const projects = data.projects.data;
 
     return (
-      projects.find((project) => project.id === cookies.values.projectId) ||
+      projects.find((project) => project.id === cookies.values.lastProjectId) ||
       defaultProject
     );
-  }, [cookies.values.projectId, projectsQuery, router]);
+  }, [cookies.values.lastProjectId, projectsQuery, router]);
 
   const isLoading = useMemo(() => {
     if (!cookies.values.authProviderToken) {

@@ -29,7 +29,7 @@ export const UserMenu: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const session = useSessionContext();
   const projectId = session.project.id;
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !session.auth.token });
 
   const handleCreateProjectClick = (): void => {
     projectContext.setIsCreateProjectModalOpen(true);

@@ -11,7 +11,7 @@ export const constants = {
   VERSION: Package.version,
 
   FIRST_PROJECT_NAME: 'First Project',
-  DEFAULT_PROJECT_ID: 'new-project',
+  DEFAULT_PROJECT_ID: '[projectid]',
 
   EXTERNAL_LINK: {
     ENS_DOMAIN: 'https://app.ens.domains',

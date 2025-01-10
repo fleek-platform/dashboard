@@ -29,7 +29,6 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
-import { useCookies } from '@/providers/CookiesProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Button, Dialog, Text } from '@/ui';
@@ -53,7 +52,7 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
   const client = useClient();
   const router = useRouter();
   const toast = useToast();
-  const cookies = useCookies();
+  const session = useSessionContext();
 
   const [, createProject] = useCreateProjectMutation();
 
@@ -127,7 +126,7 @@ export const DeleteProject: React.FC<DeleteProjectProps> = ({
         }
 
         if (redirectProjectId) {
-          cookies.set('projectId', redirectProjectId);
+          session.setProject(redirectProjectId);
         }
 
         toast.success({

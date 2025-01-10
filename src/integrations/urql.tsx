@@ -124,14 +124,6 @@ const addAuthToOperation = ({
   });
 };
 
-const getAuth = async ({ token }: { token?: string }) => {
-  if (token) {
-    return { token };
-  }
-
-  return { token: null };
-};
-
 // TODO: Logout user on token expiration
 export const createUrqlClient = ({
   token,
@@ -1036,7 +1028,7 @@ export const createUrqlClient = ({
         },
       }),
       authExchange(async () => {
-        const authState: AuthState = await getAuth({ token });
+        const authState: AuthState = { token: token ?? null };
 
         return {
           addAuthToOperation: (operation: Operation) =>

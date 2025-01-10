@@ -106,7 +106,11 @@ const LoginWithSessionPage: Page = () => {
       withExternalLink
     >
       <Button
-        onClick={() => session.auth.login('dynamic')}
+        onClick={() =>
+          session.auth.login(
+            routes.project.home({ projectId: constants.DEFAULT_PROJECT_ID }),
+          )
+        }
         loading={session.loading}
         className="w-full"
       >
