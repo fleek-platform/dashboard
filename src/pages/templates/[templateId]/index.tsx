@@ -115,7 +115,7 @@ TemplatePage.getLayout = (page) => {
   return (
     <Template.Details.Layout
       title={templateData?.name}
-      description={templateData.description}
+      description={templateData?.description}
       nav={<PageNavContent />}
     >
       {page}
