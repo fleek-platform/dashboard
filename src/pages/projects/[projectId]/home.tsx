@@ -13,9 +13,13 @@ import {
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from '@/providers/AuthProvider';
+import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
 
 const HomePage: Page = () => {
+  const auth = useAuthContext();
+  const session = useSessionContext();
   const router = useRouter();
   const toast = useToast();
 
@@ -29,36 +33,25 @@ const HomePage: Page = () => {
   });
 
   // fetch invitation data when is invited through email
-  const [meQuery, refetchMeQuery] = useMeQuery();
+  const [meQuery, refetchMeQuery] = useMeQuery({ pause: !auth.accessToken });
 
-  useSitesQuery({
-    variables: {
-      where: {},
-      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
-    },
-  });
+  useSitesQuery({ variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } }, pause: !session.accesTokenProjectId });
   useListFolderQuery({
-    variables: {
-      where: {},
-      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
-    },
+    variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } },
+    pause: !session.accesTokenProjectId,
   });
+
+  const [, refetchProjectsQuery] = useProjectsQuery({ pause: !auth.accessToken });
 
   const [, acceptInvitation] = useAcceptInvitationMutation();
   const [, declineInvitation] = useDeclineInvitationMutation();
-  const [, refetchProjectsQuery] = useProjectsQuery();
 
   const handleAcceptInvitation = async (invitationHash: string) => {
     try {
-      const acceptInvitationResult = await acceptInvitation({
-        where: { hash: invitationHash },
-      });
+      const acceptInvitationResult = await acceptInvitation({ where: { hash: invitationHash } });
 
       if (!acceptInvitationResult.data?.acceptInvitation) {
-        throw (
-          acceptInvitationResult.error ||
-          new Error('Error trying to accept invitation')
-        );
+        throw acceptInvitationResult.error || new Error('Error trying to accept invitation');
       }
 
       // TODO handle this through cache update
@@ -89,15 +82,10 @@ const HomePage: Page = () => {
 
   const handleDeclineInvitation = async (invitationHash: string) => {
     try {
-      const declineInvitationResult = await declineInvitation({
-        where: { hash: invitationHash },
-      });
+      const declineInvitationResult = await declineInvitation({ where: { hash: invitationHash } });
 
       if (!declineInvitationResult.data?.declineInvitation) {
-        throw (
-          declineInvitationResult.error ||
-          new Error('Error trying to accept invitation')
-        );
+        throw declineInvitationResult.error || new Error('Error trying to accept invitation');
       }
 
       // TODO handle this through cache update
@@ -132,23 +120,13 @@ const HomePage: Page = () => {
 
   return (
     <>
-      {(invitationQuery.fetching ||
-        invitationQuery.data?.invitation ||
-        userPendingInvitations.length > 0) && (
+      {(invitationQuery.fetching || invitationQuery.data?.invitation || userPendingInvitations.length > 0) && (
         <Projects.Home.Sections.Invitation
           isLoading={invitationQuery.fetching}
-          invitationHash={
-            invitationHashQueryParam || userPendingInvitations[0]?.hash
-          }
+          invitationHash={invitationHashQueryParam || userPendingInvitations[0]?.hash}
           projectId={invitationQuery.data?.invitation.projectId}
-          projectName={
-            invitationQuery.data?.invitation.projectName ||
-            userPendingInvitations[0]?.projectName
-          }
-          avatarSrc={
-            invitationQuery.data?.invitation.projectAvatar ||
-            userPendingInvitations[0]?.projectAvatar
-          }
+          projectName={invitationQuery.data?.invitation.projectName || userPendingInvitations[0]?.projectName}
+          avatarSrc={invitationQuery.data?.invitation.projectAvatar || userPendingInvitations[0]?.projectAvatar}
           onAcceptInvitation={handleAcceptInvitation}
           onDeclineInvitation={handleDeclineInvitation}
         />
@@ -169,8 +147,6 @@ const PageNavContent: React.FC = () => {
   return <Projects.Home.AddNewDropdown />;
 };
 
-HomePage.getLayout = (page) => (
-  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
-);
+HomePage.getLayout = (page) => <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>;
 
 export default HomePage;

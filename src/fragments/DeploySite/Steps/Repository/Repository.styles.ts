@@ -1,24 +1,8 @@
 import { styled } from '@/theme';
-import { Avatar, Box, Button, Icon, Scrollable, Text } from '@/ui';
-
-import { DeploySiteStepsStyles as S } from '../Steps.styles';
+import { Scrollable } from '@/ui';
 
 export const RepositoryStyles = {
-  Container: styled(S.Container, {
-    height: '$md',
-  }),
-
-  Wrapper: styled(Box, {
-    position: 'relative',
-    flexDirection: 'row',
-    gap: '$spacing-3',
-    textSize: '$sm',
-  }),
-
   List: {
-    Content: styled(Box, {
-      padding: '$spacing-6 0',
-    }),
     Scrollable: {
       Root: styled(Scrollable.Root, {
         display: 'flex',
@@ -43,8 +27,7 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background:
-            'linear-gradient(180deg, $surface-secondary 10%, $transparent 100%)',
+          background: 'linear-gradient(180deg, $surface-secondary 10%, $transparent 100%)',
           pointerEvents: 'none',
         },
 
@@ -56,81 +39,13 @@ export const RepositoryStyles = {
           left: 0,
           right: 0,
           height: '$space$spacing-7',
-          background:
-            'linear-gradient(0deg, $surface-secondary 10%, $transparent 100%)',
+          background: 'linear-gradient(0deg, $surface-secondary 10%, $transparent 100%)',
           borderRadius: '0 0 $xl $xl',
           pointerEvents: 'none',
         },
       }),
       Viewport: styled(Scrollable.Viewport),
-      Bar: styled(Scrollable.VerticalBar, {
-        margin: '$spacing-6 $spacing-2 $spacing-4 0',
-        zIndex: 1,
-      }),
+      Bar: styled(Scrollable.VerticalBar, { margin: '$spacing-6 $spacing-2 $spacing-4 0', zIndex: 1 }),
     },
-    Spinner: styled(Icon, {
-      fontSize: '$xl',
-    }),
-  },
-
-  Repository: {
-    Container: styled(Box, {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      zIndex: '$docked',
-
-      baseBorderBottom: '$border-slate',
-      padding: '$spacing-4 0',
-
-      [`${Button}`]: {
-        textSize: '$sm',
-        minHeight: 'unset',
-        padding: '$spacing-1 $spacing-3',
-        borderRadius: '$md',
-      },
-
-      '&:first-child': {
-        paddingTop: 0,
-      },
-
-      '&:last-child': {
-        borderBottom: 'none',
-        paddingBottom: 0,
-      },
-    }),
-    LeftColumn: styled(Box, {
-      flexDirection: 'row',
-      gap: '$spacing-2-5',
-    }),
-  },
-
-  NoRepositories: {
-    Container: styled(Box, {
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-      gap: '$xs',
-      textSize: '$sm',
-    }),
-    Title: styled(Text, {
-      color: '$text-primary',
-      textSize: '$sm',
-      textCategory: '$secondary',
-    }),
-  },
-
-  SelectBranch: {
-    Container: S.Container,
-    TitleRow: styled(Box, {
-      flexDirection: 'row',
-      gap: '$spacing-3',
-      alignItems: 'center',
-    }),
-    Avatar: styled(Avatar, {
-      fontSize: '$2xl',
-      padding: '$spacing-2-5 !important',
-      backgroundColor: '$surface-secondary !important',
-    }),
   },
 };

@@ -12,7 +12,7 @@ const MigrationPage: Page = () => {
 
   return (
     <>
-      {session.auth.token && (
+      {session.auth.accessToken && (
         <Link href={routes.home()}>
           <Button intent="neutral" iconLeft="arrow-left">
             Go back
@@ -50,8 +50,4 @@ const MigrationPage: Page = () => {
 MigrationPage.getLayout = (page) => <Migration.Layout>{page}</Migration.Layout>;
 
 // eslint-disable-next-line fleek-custom/no-unequal-resolver-names
-export default withAccess({
-  Component: MigrationPage,
-  requiredPermissions: null,
-  featureFlagName: 'enableMigrationFlow',
-});
+export default withAccess({ Component: MigrationPage, requiredPermissions: null, featureFlagName: 'enableMigrationFlow' });

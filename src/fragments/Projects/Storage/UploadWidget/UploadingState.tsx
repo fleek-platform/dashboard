@@ -1,20 +1,13 @@
 import { useMemo } from 'react';
 
 import { useUploadContext } from '@/providers/UploadProvider';
-import { Button, Text } from '@/ui';
+import { Box, Button, Icon, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 import { convertToReadableTime } from '@/utils/getDurationUntilNow';
 
-import {
-  UploadFileStyles as FS,
-  UploadingStateStyles as S,
-} from './UploadWidget.styles';
-
 export const UploadingSate: React.FC = () => {
-  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } =
-    useUploadContext();
-  const failedFiles = uploads.filter(
-    (upload) => upload.status === 'error',
-  ).length;
+  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } = useUploadContext();
+  const failedFiles = uploads.filter((upload) => upload.status === 'error').length;
 
   const isSuccessWithFailed = uploadStatus === 'success' && failedFiles;
 
@@ -43,24 +36,27 @@ export const UploadingSate: React.FC = () => {
   }
 
   return (
-    <S.Container status={isSuccessWithFailed ? 'error' : uploadStatus}>
+    <Box
+      className={cn('bg-neutral-2 flex-row gap-2 items-center p-3 justify-between border-b border-neutral-6', {
+        'bg-danger-2': isSuccessWithFailed || uploadStatus === 'error',
+      })}
+    >
       {uploadStatus === 'uploading' ? (
         <Text>{`${remainingText}`}</Text>
       ) : (
-        <S.ErrorMessage>
-          <FS.Icon name="alert-circled" status="error" /> Choose Action
-        </S.ErrorMessage>
+        <Box className="flex-row gap-2">
+          <Icon name="alert-circled" className="text-danger-11 text-sm" />
+          <Text className="text-danger-11">Choose Action</Text>
+        </Box>
       )}
-      <S.ButtonsContainer>
-        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && (
-          <Button onClick={retryUpload}>Retry all</Button>
-        )}
+      <Box className="flex-row items-center gap-2">
+        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && <Button onClick={retryUpload}>Retry all</Button>}
         {uploadStatus !== 'uploading' && (
           <Button intent="neutral" onClick={cancelAll}>
             Cancel all
           </Button>
         )}
-      </S.ButtonsContainer>
-    </S.Container>
+      </Box>
+    </Box>
   );
 };

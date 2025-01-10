@@ -1,22 +1,17 @@
 import { BadgeText } from '@/components';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Box, Text } from '@/ui';
+import { Box, Skeleton, Text } from '@/ui';
 
-import { BillingStyles as S } from './Billing.styles';
 import { PriceTag } from './PriceTag';
 
 export type HorizontalPlanCardProps = ChildrenProps<HeaderProps>;
 
-export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({
-  children,
-  ...headerProps
-}) => {
+export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({ children, ...headerProps }) => {
   return (
-    <S.Container horizontal>
+    <Box variant="container">
       <Header {...headerProps} />
-
       {children}
-    </S.Container>
+    </Box>
   );
 };
 
@@ -28,40 +23,35 @@ type HeaderProps = LoadingProps<{
   withOverload?: boolean;
 }>;
 
-const Header: React.FC<HeaderProps> = ({
-  title,
-  description,
-  price,
-  isActive,
-  isLoading,
-  withOverload,
-}) => {
+const Header: React.FC<HeaderProps> = ({ title, description, price, isActive, isLoading, withOverload }) => {
   if (isLoading) {
     return (
-      <S.HeaderWrapper>
-        <Box>
-          <S.Skeleton variant="title" />
-          <S.Skeleton variant="description" />
+      <Box className="flex-row justify-between items-center">
+        <Box className="w-1/3 gap-3">
+          <Skeleton variant="text" className="w-1/2" />
+          <Skeleton variant="text" />
         </Box>
-        <S.Skeleton variant="price" />
-      </S.HeaderWrapper>
+        <Skeleton variant="text" className="w-1/5" />
+      </Box>
     );
   }
 
   return (
-    <S.HeaderWrapper>
-      <Box>
-        <S.Title>
-          {title}
+    <Box className="flex-row justify-between items-center">
+      <Box className="gap-2">
+        <Box>
+          <Text variant="primary" weight={700} size="lg">
+            {title}
+          </Text>
           {isActive && <BadgeText colorScheme="green">Active</BadgeText>}
-        </S.Title>
-        <S.Description>{description}</S.Description>
+        </Box>
+        <Text>{description}</Text>
       </Box>
 
-      <span>
+      <Box>
         <PriceTag>{price}</PriceTag>
         {withOverload && <Text>&nbsp;(+ overage)</Text>}
-      </span>
-    </S.HeaderWrapper>
+      </Box>
+    </Box>
   );
 };

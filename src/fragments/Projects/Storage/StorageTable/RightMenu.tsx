@@ -6,10 +6,9 @@ import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
 import { Folder, Pin } from '@/types/StorageProviders';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { getLinkForIPFSDownload } from '@/utils/getLinkForIPFSdownload';
 
-import { StorageRowStyles as S } from './StorageTable.styles';
 import { useStorageTableUtils } from './storageTableUtils';
 
 type RightMenuProps = {
@@ -35,24 +34,14 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const hasEditPermission = usePermissions({
-    action: [constants.PERMISSION.STORAGE.EDIT_NAME],
-  });
-  const hasViewPermission = usePermissions({
-    action: [constants.PERMISSION.STORAGE.VIEW_INFORMATION],
-  });
-  const hasDeletePermission = usePermissions({
-    action: [constants.PERMISSION.STORAGE.DELETE],
-  });
+  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_NAME] });
+  const hasViewPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.VIEW_INFORMATION] });
+  const hasDeletePermission = usePermissions({ action: [constants.PERMISSION.STORAGE.DELETE] });
 
   const handleDownloadPin = async () => {
     if (pin) {
       const filename = `${pin.filename}.${pin.extension}`;
-      const fileUrl = getLinkForIPFSDownload({
-        cid: pin.cid,
-        filename,
-        isFolder: !pin.extension,
-      });
+      const fileUrl = getLinkForIPFSDownload({ cid: pin.cid, filename, isFolder: !pin.extension });
 
       setIsDownloading(true);
 
@@ -85,14 +74,14 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
   if (!folder && !pin) {
     return (
-      <S.RightMenu.Container>
+      <Box className="place-self-end pr-6">
         <Menu.DropdownMenu side="left" align="center" isDisabled={true} />
-      </S.RightMenu.Container>
+      </Box>
     );
   }
 
   return (
-    <S.RightMenu.Container>
+    <Box className="place-self-end pr-6">
       {isDownloading && (
         <BadgeText colorScheme="slate">
           Downloading <Icon name="spinner" />
@@ -110,10 +99,7 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
         {pin?.cid && (
           <>
-            <Menu.DropdownMenuItem
-              icon="arrow-up-right"
-              href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}
-            >
+            <Menu.DropdownMenuItem icon="arrow-up-right" href={routes.ipfsPropagation.withHash({ hash: pin?.cid })}>
               View on IPFS
             </Menu.DropdownMenuItem>
           </>
@@ -137,15 +123,9 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
               </Menu.DropdownMenuItem>
             )}
             {pin?.storedOnArweave && (
-              <Menu.DropdownMenuItem
-                icon={isArweavePending ? null : 'copy'}
-                onClick={handleCopyArweaveId}
-                disabled={isArweavePending}
-              >
+              <Menu.DropdownMenuItem icon={isArweavePending ? null : 'copy'} onClick={handleCopyArweaveId} disabled={isArweavePending}>
                 Copy Arweave Hash
-                {isArweavePending && (
-                  <BadgeText colorScheme="slate">Pending</BadgeText>
-                )}
+                {isArweavePending && <BadgeText colorScheme="slate">Pending</BadgeText>}
               </Menu.DropdownMenuItem>
             )}
             {pin?.storedOnFilecoin && (
@@ -155,9 +135,7 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
                 disabled={isFilecoinDealPending}
               >
                 Copy FIL Deal ID
-                {isFilecoinDealPending && (
-                  <BadgeText colorScheme="slate">Pending</BadgeText>
-                )}
+                {isFilecoinDealPending && <BadgeText colorScheme="slate">Pending</BadgeText>}
               </Menu.DropdownMenuItem>
             )}
 
@@ -172,10 +150,7 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
             {pin && (
               <>
-                <Menu.DropdownMenuItem
-                  icon="download"
-                  onClick={handleDownloadPin}
-                >
+                <Menu.DropdownMenuItem icon="download" onClick={handleDownloadPin}>
                   Download {!pin?.extension ? 'IPFS Folder' : 'File'}
                 </Menu.DropdownMenuItem>
                 <Menu.DropdownMenuSeparator />
@@ -190,6 +165,6 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
           </>
         )}
       </Menu.DropdownMenu>
-    </S.RightMenu.Container>
+    </Box>
   );
 };

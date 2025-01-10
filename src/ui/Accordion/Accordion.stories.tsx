@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
 import { Accordion } from './Accordion';
@@ -38,9 +38,7 @@ export const WithMultipleItems: Story = {
       <Accordion.Root {...args}>
         <Accordion.Item value="item-1">
           <Accordion.Header>
-            <Box
-              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
-            >
+            <Box className="flex-row items-center gap-2">
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Source Build
@@ -51,9 +49,7 @@ export const WithMultipleItems: Story = {
         </Accordion.Item>
         <Accordion.Item value="item-2">
           <Accordion.Header>
-            <Box
-              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
-            >
+            <Box className="flex-row items-center gap-2">
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Build Breakdown
@@ -64,9 +60,7 @@ export const WithMultipleItems: Story = {
         </Accordion.Item>
         <Accordion.Item value="item-3">
           <Accordion.Header>
-            <Box
-              css={{ flexDirection: 'row', alignItems: 'center', gap: '$xs' }}
-            >
+            <Box className="flex-row items-center gap-2">
               <Input.Field type="radio" />{' '}
               <Text as="h3" variant="primary">
                 Domains

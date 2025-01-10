@@ -1,19 +1,17 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { ExternalLink } from '@/components';
+import { LinkButton } from '@/components';
 import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Button, Text } from '@/ui';
-
-import { TemplateStyles as S } from '../../Template.styles';
+import { Box, Button, Text } from '@/ui';
 
 export const Hero: React.FC = () => {
   const flags = useFeatureFlags();
 
   return (
-    <S.List.Hero.Container>
+    <Box className="[grid-area:hero] items-center gap-2.5">
       <Text size="md" weight={500}>
         TEMPLATES
       </Text>
@@ -21,17 +19,17 @@ export const Hero: React.FC = () => {
         Begin with a template
       </Text>
       <Text size="lg" className="max-w-[40rem] text-center">
-        Use a template to kick start your application. Pick from just a
-        framework or a full web3 starter kit, the possibilities are limitless.
+        Use a template to kick start your application. Pick from just a framework or a full web3 starter kit, the possibilities are
+        limitless.
       </Text>
-      <S.List.Hero.ButtonContainer>
-        <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS_TEMPLATES}>
-          <Button>Learn more</Button>
-        </ExternalLink>
+      <Box className="flex-row gap-3 pt-5">
+        <LinkButton href={constants.EXTERNAL_LINK.FLEEK_DOCS_TEMPLATES} isExternalLink>
+          Learn more
+        </LinkButton>
 
         {flags.enableTemplateCreation && <SubmitTemplateButton />}
-      </S.List.Hero.ButtonContainer>
-    </S.List.Hero.Container>
+      </Box>
+    </Box>
   );
 };
 
@@ -40,7 +38,7 @@ const SubmitTemplateButton: React.FC = () => {
   const router = useRouter();
 
   const handleSubmitTemplate = () => {
-    if (!session.auth.token) {
+    if (!session.auth.accessToken) {
       return session.auth.login('dynamic', routes.profile.settings.templates());
     }
 

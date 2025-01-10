@@ -12,7 +12,7 @@ class CookiesError extends Error {
   }
 }
 
-export type AppCookies = 'authProviderToken' | 'accessToken' | 'projectId';
+export type AppCookies = 'authToken' | 'accessToken' | 'projectId' | 'logout';
 
 export type CookiesContext = {
   values: { [key in AppCookies]?: string };
@@ -26,25 +26,22 @@ const [Provider, useContext] = createContext<CookiesContext>({
   providerName: 'CookiesProvider',
 });
 
-export const CookiesProvider: React.FC<
-  React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>
-> = ({ requestCookies = {}, children }) => {
+export const CookiesProvider: React.FC<React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>> = ({
+  requestCookies = {},
+  children,
+}) => {
   const [cookies, setCookies] = useState<CookiesContext['values']>(
-    isServerSide()
-      ? requestCookies
-      : (getCookies() as CookiesContext['values']),
+    isServerSide() ? requestCookies : (getCookies() as CookiesContext['values'])
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const documentCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('authProviderToken'));
+      const documentCookie = document.cookie.split('; ').find((row) => row.startsWith('authToken'));
 
-      if (!documentCookie && cookies.authProviderToken) {
+      if (!documentCookie && cookies.authToken) {
         // update app state
 
-        remove('authProviderToken');
+        remove('authToken');
       }
     }, 3000);
 
@@ -70,9 +67,7 @@ export const CookiesProvider: React.FC<
     deleteCookie(key);
   };
 
-  return (
-    <Provider value={{ values: cookies, set, remove }}>{children}</Provider>
-  );
+  return <Provider value={{ values: cookies, set, remove }}>{children}</Provider>;
 };
 
 export const useCookies = useContext;

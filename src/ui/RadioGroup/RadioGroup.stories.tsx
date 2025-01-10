@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 
 import { BadgeText } from '@/components';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Text } from '../ftw/Text/Text';
 import { RadioGroup } from './RadioGroup';
 
@@ -17,32 +17,20 @@ type Story = StoryFn;
 export const Default: Story = () => {
   return (
     <form>
-      <RadioGroup.Root
-        defaultValue="item1"
-        css={{ maxWidth: '23.5rem', textSize: '$sm' }}
-      >
-        <Box css={{ flexDirection: 'row', gap: '$spacing-2-5' }}>
+      <RadioGroup.Root defaultValue="item1" css={{ maxWidth: '23.5rem', textSize: '$sm' }}>
+        <Box className="flex-row gap-2.5">
           <RadioGroup.Item value="item1" />
           IPNS Content Hash
-          <BadgeText
-            colorScheme="yellow"
-            css={{ paddingTop: '0', paddingBottom: '0' }}
-          >
+          <BadgeText colorScheme="yellow" css={{ paddingTop: '0', paddingBottom: '0' }}>
             Recommended
           </BadgeText>
         </Box>
-        <Text>
-          If you deploy updates to your site frequently, and don&apos;t want to
-          pay gas for every update.
-        </Text>
-        <Box css={{ flexDirection: 'row', gap: '$spacing-2-5' }}>
+        <Text>If you deploy updates to your site frequently, and don&apos;t want to pay gas for every update.</Text>
+        <Box className="flex-row gap-2.5">
           <RadioGroup.Item value="item2" />
           IPFS Content Hash
         </Box>
-        <Text>
-          If you deploy updates to your site less frequently, and want to pay
-          gas for every update.
-        </Text>
+        <Text>If you deploy updates to your site less frequently, and want to pay gas for every update.</Text>
       </RadioGroup.Root>
     </form>
   );

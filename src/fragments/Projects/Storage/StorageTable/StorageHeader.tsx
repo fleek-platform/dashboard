@@ -1,14 +1,12 @@
 import { Box, Button, Combobox, Icon } from '@/ui';
 
 import { useStorageContext } from '../Storage.context';
-import { StorageHeaderStyles as S } from './StorageTable.styles';
 
 export const StorageHeader: React.FC = () => {
-  const { storageProviders, setSelectedStorage, selectedStorage } =
-    useStorageContext();
+  const { storageProviders, setSelectedStorage, selectedStorage } = useStorageContext();
 
   return (
-    <S.Container>
+    <Box className="border border-neutral-6 bg-neutral-2 rounded">
       {/* TODO refactor combobox and move to styles */}
       <Combobox
         items={storageProviders}
@@ -43,6 +41,6 @@ export const StorageHeader: React.FC = () => {
           Export CSV
         </Button>
       </Box>
-    </S.Container>
+    </Box>
   );
 };

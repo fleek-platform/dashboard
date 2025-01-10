@@ -1,29 +1,19 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { email } from '@fleek-platform/utils-validation';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as zod from 'zod';
 
 import { Form, Link } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from '@/providers/AuthProvider';
 import { TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { Box, Button, Dialog, Divider, Icon, Input, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { useFormField } from '../Form/FormProvider';
 import FileBadge from './FileBadge';
-import {
-  FileUploadError,
-  submitForm,
-  SubmitSupportFormError,
-  uploadFile,
-} from './submitForm';
+import { FileUploadError, submitForm, SubmitSupportFormError, uploadFile } from './submitForm';
 
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -33,13 +23,14 @@ export const formSchema = zod.object({
 });
 
 export const FeedbackModal: React.FC = () => {
+  const auth = useAuthContext();
   const feedbackModal = useFeedbackModal();
   const [inputValue, setInputValue] = useState('');
   const [view, setView] = useState<'FORM' | 'SUBMITTED'>('FORM');
 
   const [files, setFiles] = useState<File[]>([]);
   const toast = useToast();
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !auth.accessToken });
   const user = meQuery.data?.user;
   const isAuthed = !!user;
 
@@ -63,9 +54,7 @@ export const FeedbackModal: React.FC = () => {
 
       try {
         // Upload files and get upload tokens
-        const uploadTokens = await Promise.all(
-          files.map((file) => uploadFile({ file })),
-        );
+        const uploadTokens = await Promise.all(files.map((file) => uploadFile({ file })));
 
         const feedbackData = {
           email,
@@ -75,12 +64,7 @@ export const FeedbackModal: React.FC = () => {
           userName: user.username,
         };
 
-        await submitForm(
-          feedbackData,
-          resetForm,
-          feedbackModal.selectedTab,
-          uploadTokens,
-        );
+        await submitForm(feedbackData, resetForm, feedbackModal.selectedTab, uploadTokens);
         setView('SUBMITTED');
       } catch (error) {
         let errorMessage = 'Failed to send message. ';
@@ -102,17 +86,7 @@ export const FeedbackModal: React.FC = () => {
         });
       }
     },
-    [
-      user?.id,
-      user?.firstName,
-      user?.username,
-      user?.email,
-      email,
-      inputValue,
-      toast,
-      feedbackModal.selectedTab,
-      files,
-    ],
+    [user?.id, user?.firstName, user?.username, user?.email, email, inputValue, toast, feedbackModal.selectedTab, files]
   );
 
   const form = Form.useForm({
@@ -134,11 +108,7 @@ export const FeedbackModal: React.FC = () => {
 
   // Needs to pass email validation from the form, and custom validation for the textarea
   const canSubmit = useMemo(() => {
-    return !!(
-      form.isValid &&
-      inputValue.length > 3 &&
-      inputValue.length < 5000
-    );
+    return !!(form.isValid && inputValue.length > 3 && inputValue.length < 5000);
   }, [form.isValid, inputValue, form.fields.email.value]);
 
   if (!isAuthed) {
@@ -147,16 +117,11 @@ export const FeedbackModal: React.FC = () => {
 
   return (
     <>
-      <Dialog.Root
-        open={feedbackModal.isOpen}
-        onOpenChange={feedbackModal.toggleModal}
-      >
+      <Dialog.Root open={feedbackModal.isOpen} onOpenChange={feedbackModal.toggleModal}>
         <Dialog.Overlay />
 
         <Dialog.Portal>
-          <Dialog.Content
-            css={{ maxWidth: '40rem', width: '$full', padding: '$none' }}
-          >
+          <Dialog.Content css={{ maxWidth: '40rem', width: '$full', padding: '$none' }}>
             {view === 'FORM' ? (
               <Form.Provider value={form}>
                 <InnerForm
@@ -174,10 +139,7 @@ export const FeedbackModal: React.FC = () => {
                 <Text as="h1" variant="primary" size="xl" weight={700}>
                   Thank you!
                 </Text>
-                <Text>
-                  Your ticket has been submitted successfully. You will receive
-                  an email to follow up on your submission.
-                </Text>
+                <Text>Your ticket has been submitted successfully. You will receive an email to follow up on your submission.</Text>
                 <Box className="flex flex-row flex-1 w-full gap-4 items-end">
                   <Button intent="neutral" onClick={feedbackModal.toggleModal}>
                     Close
@@ -319,10 +281,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           intent={selectedTab === 'PROBLEM' ? 'accent' : 'ghost'}
           onClick={() => setSelectedTab('PROBLEM')}
           size="sm"
-          className={cn(
-            'p-2 rounded-sm',
-            selectedTab === 'PROBLEM' && 'shadow-lg',
-          )}
+          className={cn('p-2 rounded-sm', selectedTab === 'PROBLEM' && 'shadow-lg')}
         >
           <Icon name="exclamation-triangle" animated={true} />
           Problem
@@ -332,10 +291,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           intent={selectedTab === 'QUESTION' ? 'accent' : 'ghost'}
           onClick={() => setSelectedTab('QUESTION')}
           size="sm"
-          className={cn(
-            'p-2 rounded-sm',
-            selectedTab === 'QUESTION' && 'shadow-lg',
-          )}
+          className={cn('p-2 rounded-sm', selectedTab === 'QUESTION' && 'shadow-lg')}
         >
           <Icon name="question-circle" />
           Question
@@ -345,10 +301,7 @@ export const InnerForm: React.FC<InnerFormProps> = ({
           intent={selectedTab === 'FEEDBACK' ? 'accent' : 'ghost'}
           onClick={() => setSelectedTab('FEEDBACK')}
           size="sm"
-          className={cn(
-            'p-2 rounded-sm',
-            selectedTab === 'FEEDBACK' && 'shadow-lg',
-          )}
+          className={cn('p-2 rounded-sm', selectedTab === 'FEEDBACK' && 'shadow-lg')}
         >
           <Icon name="chat-bubble" />
           Feedback
@@ -358,30 +311,16 @@ export const InnerForm: React.FC<InnerFormProps> = ({
       <Box className="flex flex-col gap-2 items-start px-6">
         <Box className="flex flex-col w-full">
           <Input.Root variant="ghost" size="md">
-            <Input.Textarea
-              placeholder={getTabText()}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              autoFocus
-            />
+            <Input.Textarea placeholder={getTabText()} value={inputValue} onChange={(e) => setInputValue(e.target.value)} autoFocus />
           </Input.Root>
         </Box>
 
-        <Input.Field
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          hidden
-        />
+        <Input.Field type="file" ref={fileInputRef} onChange={handleFileChange} hidden />
 
         {!!files.length && (
           <Box className="flex flex-row flex-wrap gap-2">
             {files.map((file, index) => (
-              <FileBadge
-                key={index}
-                file={file}
-                onRemove={() => handleRemoveFile(index)}
-              />
+              <FileBadge key={index} file={file} onRemove={() => handleRemoveFile(index)} />
             ))}
           </Box>
         )}
@@ -389,8 +328,6 @@ export const InnerForm: React.FC<InnerFormProps> = ({
         <Box
           onClick={handleAttachFileClick}
           className="flex flex-row gap-2 mt-3 items-center hover:cursor-pointer hover:opacity-100 opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:opacity-100 "
-          as="button"
-          role="button"
           tabIndex={0}
           aria-label="Attach images, files or videos"
         >
@@ -401,21 +338,11 @@ export const InnerForm: React.FC<InnerFormProps> = ({
       <Divider />
       <Box className="flex flex-row gap-4 items-end pb-6 px-6">
         <Dialog.Close asChild>
-          <Button
-            intent="ghost"
-            variant="primary"
-            disabled={form.isSubmitting}
-            className="flex-1"
-          >
+          <Button intent="ghost" variant="primary" disabled={form.isSubmitting} className="flex-1">
             Cancel
           </Button>
         </Dialog.Close>
-        <Button
-          onClick={handleFormSubmit}
-          loading={form.isSubmitting}
-          disabled={!canSubmit || form.isSubmitting}
-          className="flex-1"
-        >
+        <Button onClick={handleFormSubmit} loading={form.isSubmitting} disabled={!canSubmit || form.isSubmitting} className="flex-1">
           {form.isSubmitting ? 'Sending...' : 'Send message'}
         </Button>
       </Box>

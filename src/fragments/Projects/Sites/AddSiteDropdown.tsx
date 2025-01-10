@@ -11,22 +11,16 @@ import { Button, Menu, Skeleton } from '@/ui';
 
 export const AddSiteDropdown: React.FC = () => {
   const session = useSessionContext();
-  const hasDeployPermissions = usePermissions({
-    action: [constants.PERMISSION.SITE.CREATE],
-  });
-  const hasManageBillingPermission = usePermissions({
-    action: [constants.PERMISSION.BILLING.MANAGE],
-  });
+  const hasDeployPermissions = usePermissions({ action: [constants.PERMISSION.SITE.CREATE] });
+  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
 
   const billingRestriction = useSiteRestriction();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [sitesQuery] = useSitesQuery({
-    variables: {
-      where: {},
-      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
-    },
+    variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } },
+    pause: !session.accesTokenProjectId,
   });
 
   if (sitesQuery.fetching) {
@@ -39,11 +33,7 @@ export const AddSiteDropdown: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        shouldShowUpgradePlan={hasManageBillingPermission}
-      />
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>

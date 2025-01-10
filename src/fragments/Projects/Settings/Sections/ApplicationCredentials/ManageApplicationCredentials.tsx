@@ -1,17 +1,12 @@
 import { useState } from 'react';
 
-import {
-  BadgeText,
-  CustomTooltip,
-  SettingsBox,
-  SettingsListItem,
-} from '@/components';
+import { BadgeText, CustomTooltip, SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
 import { Credential } from '@/types/Credentials';
 import { LoadingProps } from '@/types/Props';
-import { Box, Divider, Icon, Skeleton, Text } from '@/ui';
+import { Box, Divider, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { parseWhitelistDomains } from '@/utils/whitelistDomains';
@@ -21,7 +16,6 @@ import {
   ApplicationCredentialsProvider,
   useApplicationCredentialsContext,
 } from './ApplicationCredentials.context';
-import { ApplicationCredentialsStyles as S } from './ApplicationCredentials.styles';
 import { ApplicationCredentialsEditModal } from './ApplicationCredentialsEditModal';
 
 export type ManageApplicationCredentialsProps = LoadingProps<
@@ -30,29 +24,21 @@ export type ManageApplicationCredentialsProps = LoadingProps<
   } & Pick<ApplicationCredentialsContext, 'onSubmitDelete'>
 >;
 
-export const ManageApplicationCredentials: React.FC<
-  ManageApplicationCredentialsProps
-> = ({ isLoading, credentials, onSubmitDelete }) => {
+export const ManageApplicationCredentials: React.FC<ManageApplicationCredentialsProps> = ({ isLoading, credentials, onSubmitDelete }) => {
   if (isLoading) {
     return <CredentialsSkeleton />;
   }
 
   return (
     <ApplicationCredentialsProvider onSubmitDelete={onSubmitDelete}>
-      <SettingsBox.Container
-        role="table"
-        aria-label="Application credential list"
-      >
+      <SettingsBox.Container>
         <Header />
         {credentials?.length === 0 ? (
-          <SettingsBox.EmptyContent
-            title="Credentials"
-            description="Once you add credentials, they will appear here."
-          />
+          <SettingsBox.EmptyContent title="Credentials" description="Once you add credentials, they will appear here." />
         ) : (
           credentials?.map((credential, index) => {
             return (
-              <Box key={credential.id} role="row">
+              <Box key={credential.id} className="gap-4">
                 <ApplicationCredentialItem credential={credential} />
                 {index < credentials.length - 1 && <Divider />}
               </Box>
@@ -69,42 +55,30 @@ export const ManageApplicationCredentials: React.FC<
 const Header: React.FC = () => (
   <>
     <SettingsBox.Title>Manage Credentials</SettingsBox.Title>
-    <SettingsBox.Text>
-      Remove or edit the information associated with an application token.
-    </SettingsBox.Text>
+    <SettingsBox.Text>Remove or edit the information associated with an application token.</SettingsBox.Text>
   </>
 );
 
 const CredentialsSkeleton: React.FC = () => (
-  <SettingsBox.Container role="table">
+  <SettingsBox.Container>
     <Header />
-    <S.Item.Container isLoading>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+    <Box className="grid grid-cols-2 sm:grid-cols-12">
+      <Box className="col-span-3 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+      <Box className="col-span-4 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+      <Box className="col-span-4 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Skeleton />
-    </S.Item.Container>
+      <Box className="place-self-end self-center">
+        <SettingsBox.Skeleton variant="button" className="size-6" />
+      </Box>
+    </Box>
   </SettingsBox.Container>
 );
 
@@ -112,9 +86,7 @@ type ApplicationCredentialItemProps = {
   credential: Credential;
 };
 
-const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
-  credential,
-}) => {
+const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ credential }) => {
   const toast = useToast();
 
   // Warning: The reason why of parsing is related
@@ -135,66 +107,48 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
   const handleCopyToClipboard = () => {
     try {
       copyToClipboard(credential.clientId);
-      toast.success({
-        message: 'Application Credential ID copied to clipboard',
-      });
+      toast.success({ message: 'Application Credential ID copied to clipboard' });
     } catch {
-      toast.error({
-        message: 'Failed to copy Application Credential ID to clipboard',
-      });
+      toast.error({ message: 'Failed to copy Application Credential ID to clipboard' });
     }
   };
 
   return (
-    <S.Item.Container>
-      <S.Item.Name>
+    <Box className="grid grid-cols-2 sm:grid-cols-12">
+      <Box className="col-span-3">
         <Text variant="primary" weight={700}>
           {credential.name}
         </Text>
-        <Text size="xs">
-          {getDurationUntilNow({
-            isoDateString: credential.createdAt,
-            shortFormat: true,
-          })}
-        </Text>
-      </S.Item.Name>
-      <S.Item.DomainsList>
+        <Text size="xs">{getDurationUntilNow({ isoDateString: credential.createdAt, shortFormat: true })}</Text>
+      </Box>
+      <Box className="col-span-4">
         <Text variant="primary" weight={700}>
           Domains
         </Text>
-        <S.Item.Domains.Container>
+        <Box className="flex-row gap-2 items-center">
           <Text size="xs" className="truncate">
             {whitelistDomains}
           </Text>
           {applicationData.length > 2 && (
-            <CustomTooltip
-              content={applicationData
-                .map((domain) => domain.hostname)
-                .join(', ')}
-              side="bottom"
-            >
-              <BadgeText colorScheme="slate">
-                +{applicationData.length - 2} more
-              </BadgeText>
+            <CustomTooltip content={applicationData.map((domain) => domain.hostname).join(', ')} side="bottom">
+              <BadgeText colorScheme="slate">+{applicationData.length - 2} more</BadgeText>
             </CustomTooltip>
           )}
-        </S.Item.Domains.Container>
-      </S.Item.DomainsList>
-      <S.Item.ClientId>
+        </Box>
+      </Box>
+      <Box className="col-span-4">
         <Text variant="primary" weight={700}>
           ID
         </Text>
-        <Text
-          size="xs"
-          onClick={handleCopyToClipboard}
-          className="flex items-center gap-2 hover:text-neutral-12 cursor-pointer"
-        >
+        <Text size="xs" onClick={handleCopyToClipboard} className="flex items-center gap-2 hover:text-neutral-12 cursor-pointer">
           {credential.clientId}
           <Icon name="copy" color="slate" />
         </Text>
-      </S.Item.ClientId>
-      <DropdownMenu id={credential.id} />
-    </S.Item.Container>
+      </Box>
+      <Box className="place-self-end">
+        <DropdownMenu id={credential.id} />
+      </Box>
+    </Box>
   );
 };
 
@@ -205,9 +159,7 @@ type DropdownMenuProps = {
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ id }) => {
   const { openModal, onSubmitDelete } = useApplicationCredentialsContext();
   const [isLoading, setIsLoading] = useState(false);
-  const hasEditPermission = usePermissions({
-    action: [constants.PERMISSION.APPLICATION_CREDENTIALS.EDIT],
-  });
+  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.APPLICATION_CREDENTIALS.EDIT] });
 
   if (isLoading) {
     // needed cause the forwardStyledRef
@@ -225,11 +177,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ id }) => {
   };
 
   return (
-    <SettingsListItem.DropdownMenu
-      isLoading={isLoading}
-      isDisabled={!hasEditPermission}
-      hasAccess={hasEditPermission}
-    >
+    <SettingsListItem.DropdownMenu isLoading={isLoading} isDisabled={!hasEditPermission} hasAccess={hasEditPermission}>
       <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDelete}>
         Delete
       </SettingsListItem.DropdownMenuItem>

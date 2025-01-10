@@ -27,13 +27,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem }) => {
   }
 
   return (
-    <LinkButton
-      href={navItem.path}
-      intent={isActivePage ? 'accent' : 'ghost'}
-      className="px-3"
-      role="menuitem"
-      aria-label={navItem.label}
-    >
+    <LinkButton href={navItem.path} intent={isActivePage ? 'accent' : 'ghost'} className="px-3">
       {navItem.label}
     </LinkButton>
   );
@@ -44,27 +38,17 @@ type SubNavigationProps = {
   isNavigationLoading: boolean;
 };
 
-export const SubNavigationLayout: React.FC<
-  SubNavigationProps & ChildrenProps
-> = ({ navigation, isNavigationLoading, children }) => {
+export const SubNavigationLayout: React.FC<SubNavigationProps & ChildrenProps> = ({ navigation, isNavigationLoading, children }) => {
   return (
     <>
-      <Scrollable.Root
-        type="auto"
-        className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden"
-        role="navigation"
-      >
+      <Scrollable.Root type="auto" className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden">
         <Scrollable.HorizontalBar className="peer" />
         <Scrollable.Viewport className="w-full h-full peer-data-[state=visible]:pb-4">
           <Box className="flex-row gap-2 flex-nowrap overflow-auto">
             {isNavigationLoading ? (
               <>
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Skeleton
-                    key={i}
-                    variant="text"
-                    className="w-1/6 h-[2rem] rounded-lg"
-                  />
+                  <Skeleton key={i} variant="text" className="w-1/6 h-[2rem] rounded" />
                 ))}
               </>
             ) : (

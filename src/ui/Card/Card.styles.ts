@@ -1,6 +1,6 @@
 import { styled } from '@/theme';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Image } from '../Image/Image';
 
 export const CardStyles = {

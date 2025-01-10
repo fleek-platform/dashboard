@@ -1,10 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import {
-  DeploymentStatus,
-  SourceProvider,
-  StorageType,
-} from '@/generated/graphqlClient';
+import { DeploymentStatus, SourceProvider, StorageType } from '@/generated/graphqlClient';
 import { Box } from '@/ui';
 
 import { SiteCard, SiteCardProps } from './SiteCard';
@@ -44,7 +40,7 @@ export const Default: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -60,7 +56,7 @@ export const Pending: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -73,7 +69,7 @@ export const Skeleton: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),

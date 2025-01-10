@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import { Box } from '../Box/Box';
 import { Combobox } from '../Combobox/Combobox';
+import { Box } from '../ftw/Box/Box';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
 import { Icon } from '../Icon/Icon';
@@ -35,7 +35,7 @@ export const WithInput: Story = {
     );
 
     return (
-      <Box css={{ gap: '$lg' }}>
+      <Box className="gap-8">
         <FormField.Root>
           <Content />
         </FormField.Root>
@@ -54,16 +54,11 @@ export const WithCombobox: Story = {
       const selected = useState<string>();
 
       return (
-        <Combobox
-          items={['Option 1', 'Option 2', 'Option 3']}
-          selected={selected}
-        >
+        <Combobox items={['Option 1', 'Option 2', 'Option 3']} selected={selected}>
           {({ Field, Options }) => (
             <>
-              <Field placeholder="Select an option">
-                {(selected: string) => selected}
-              </Field>
-              <Options>{(item: string) => item}</Options>
+              <Field placeholder="Select an option">{(selected) => selected}</Field>
+              <Options>{(item) => item}</Options>
             </>
           )}
         </Combobox>
@@ -76,14 +71,12 @@ export const WithCombobox: Story = {
 
         <ComboboxExample />
 
-        <FormField.Hint icon="fleek">
-          Use this field to select something
-        </FormField.Hint>
+        <FormField.Hint icon="fleek">Use this field to select something</FormField.Hint>
       </>
     );
 
     return (
-      <Box css={{ gap: '$lg' }}>
+      <Box className="gap-8">
         <FormField.Root>
           <Content />
         </FormField.Root>

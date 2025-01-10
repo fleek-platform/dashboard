@@ -1,14 +1,11 @@
 import { routes } from '@fleek-platform/utils-routes';
+import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useCallback, useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
-import {
-  AuthProviders,
-  AuthWith,
-  useAuthProviders,
-} from '@/hooks/useAuthProviders';
-import { usePostHog } from '@/hooks/usePostHog';
+import { AuthProviders, AuthWith, useAuthProviders } from '@/hooks/useAuthProviders';
+import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
 
@@ -17,7 +14,7 @@ import { useCookies } from './CookiesProvider';
 export type AuthContext = {
   loading: boolean;
   error?: unknown;
-  token?: string;
+  accessToken?: string;
   redirectUrl: string | null;
 
   login: (provider: AuthProviders, redirectUrl?: string) => void;
@@ -32,12 +29,10 @@ const [Provider, useContext] = createContext<AuthContext>({
   providerName: 'AuthProvider',
 });
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
-  const [accessToken, setAccessToken, clearAccessToken] = useAuthCookie();
-  const posthog = usePostHog();
+export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+  const [accessToken, setAccessToken] = useAuthCookie();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  const { logout } = useLogout();
   const cookies = useCookies();
 
   const [loading, setLoading] = useState(false);
@@ -45,6 +40,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
+  const authenticatedProvider = providersValues.find((provider) => provider.authToken);
   const router = useRouter();
 
   const login = useCallback(
@@ -56,30 +52,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       const provider = providers[providerName];
       provider.handleLogin();
     },
-    [providers],
+    [providers]
   );
-
-  const logout = useCallback(async () => {
-    cookies.remove('authProviderToken');
-    const invitationHash = router.query.invitation;
-
-    if (!constants.PUBLIC_ROUTES.includes(router.pathname.toLowerCase())) {
-      await router.replace({
-        pathname: routes.home(),
-        query: invitationHash ? `invitation=${invitationHash}` : undefined,
-      });
-    }
-
-    providersValues.forEach((provider) => {
-      if (provider.token) {
-        provider.handleLogout();
-      }
-    });
-
-    cookies.remove('projectId');
-    clearAccessToken();
-    posthog.reset();
-  }, [cookies, clearAccessToken, router, providersValues]);
 
   const requestAccessToken = useCallback(
     async (provider: AuthWith, projectId?: string) => {
@@ -91,8 +65,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setLoading(true);
         setError(undefined);
 
-        const token = await provider.requestAccessToken(projectId);
-        setAccessToken(token);
+        const accessToken = await provider.requestAccessToken(projectId);
+        setAccessToken(accessToken);
       } catch (requestError) {
         logout();
         setError(requestError);
@@ -100,12 +74,12 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setLoading(false);
       }
     },
-    [setAccessToken, loading, logout],
+    [setAccessToken, loading, logout]
   );
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
-      const provider = providersValues.find((provider) => provider.token);
+      const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
         // if in site page, redirect to sites list first
@@ -119,48 +93,58 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providersValues, requestAccessToken],
+    [providersValues, requestAccessToken]
   );
 
   useEffect(() => {
-    const provider = providersValues.find((provider) => provider.token);
-
-    if (provider?.token) {
-      // if has a provider token, it means that auth provider is authenticated
-      cookies.set('authProviderToken', provider.token);
-
-      const projectId =
-        cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
-
-      // redirect if is in home page
-      if (router.pathname === routes.home()) {
-        // keep query on redirect
-        router.push({
-          pathname: routes.project.home({ projectId }),
-          query: router.query,
-        });
-      }
-
-      // redirect if has a redirect url pending
-      if (redirectUrl) {
-        router.push(redirectUrl.replace('[projectid]', projectId));
-
-        setRedirectUrl(null);
-      }
-
-      // uses the auth provider token to request the access token from graphql
-      if (!accessToken) {
-        requestAccessToken(provider);
-      }
-    } else {
+    if (!authenticatedProvider && cookies.values.accessToken) {
       logout();
+
+      return;
     }
 
+    if (!authenticatedProvider) {
+      return;
+    }
+
+    const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+
+    // redirect if is in home page
+    if (router.pathname === routes.home()) {
+      // keep query on redirect
+      router.push({
+        pathname: routes.project.home({ projectId }),
+        query: router.query,
+      });
+    }
+
+    // redirect if has a redirect url pending
+    if (redirectUrl) {
+      router.push(redirectUrl.replace('[projectid]', projectId));
+
+      setRedirectUrl(null);
+    }
+
+    // uses the auth provider accessToken to request the access accessToken from graphql
+    if (!cookies.values.accessToken) {
+      requestAccessToken(authenticatedProvider);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    cookies.values.authProviderToken,
-    ...providersValues.map((provider) => provider.token),
-  ]);
+  }, [authenticatedProvider]);
+
+  useEffect(() => {
+    const accessToken = cookies.values.accessToken;
+
+    try {
+      if (!accessToken) {
+        return;
+      }
+
+      decodeAccessToken({ token: accessToken });
+    } catch {
+      logout();
+    }
+  }, [cookies, logout]);
 
   return (
     <Provider
@@ -170,7 +154,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         login,
         logout,
         switchProjectAuth,
-        token: accessToken,
+        accessToken: accessToken,
         redirectUrl,
         setRedirectUrl,
       }}

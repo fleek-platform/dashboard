@@ -21,12 +21,7 @@ export const Component: Story = {
   args: {
     title: 'Basic Plan',
     description: 'Our most popular plan for hobby developers.',
-    benefits: [
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-      'Domain/ENS not configured',
-    ],
+    benefits: ['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured'],
     price: '10',
     buttonText: 'Select plan',
     colorScheme: 'accent',
@@ -36,26 +31,11 @@ export const Component: Story = {
 export const Combined: Story = {
   render: () => {
     return (
-      <Box
-        css={{
-          flexDirection: 'row',
-          gap: '$spacing-5',
-          resize: 'horizontal',
-          background: 'transparent',
-          overflow: 'auto',
-          flexWrap: 'wrap',
-        }}
-        variant="container"
-      >
+      <Box className="flex-row gap-5 resize-x bg-transparent overflow-auto flex-wrap" variant="container">
         <VerticalPlanCard
           title="Basic Plan"
           description="Our most popular plan for hobby developers."
-          benefits={[
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-          ]}
+          benefits={['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured']}
           price="10"
           buttonText="Select plan"
           colorScheme="success"
@@ -65,12 +45,7 @@ export const Combined: Story = {
         <VerticalPlanCard
           title="Basic Plan"
           description="Our most popular plan for hobby developers."
-          benefits={[
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-          ]}
+          benefits={['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured']}
           price="20"
           buttonText="Upgrade to plan"
           colorScheme="accent"
@@ -79,12 +54,7 @@ export const Combined: Story = {
         <VerticalPlanCard
           title="Enterprise"
           description="Our most popular plan for hobby developers."
-          benefits={[
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-            'Domain/ENS not configured',
-          ]}
+          benefits={['Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured', 'Domain/ENS not configured']}
           price="Custom"
           buttonText="Contact Sales"
           colorScheme="neutral"

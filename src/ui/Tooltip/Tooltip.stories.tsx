@@ -10,12 +10,8 @@ const meta: Meta = {
 
 export default meta;
 
-export const Customizable: StoryFn<
-  React.ComponentPropsWithRef<typeof Tooltip.Content>
-> = (args) => (
-  <Box
-    css={{ height: '300px', alignItems: 'center', justifyContent: 'center' }}
-  >
+export const Customizable: StoryFn<React.ComponentPropsWithRef<typeof Tooltip.Content>> = (args) => (
+  <Box className="h-[300px] items-center justify-center">
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>

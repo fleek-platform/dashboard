@@ -1,14 +1,11 @@
 import { MouseEventHandler, useRef, useState } from 'react';
 
 import { Form, SettingsModal } from '@/components';
-import { LoadingProps } from '@/types/Props';
-import { Box, Button, FormField, Icon, Input, RadioGroup, Text } from '@/ui';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { Box, Button, FormField, Icon, Input, RadioGroup, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
-import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
-import {
-  BaseDirectoryRadioGroup,
-  BaseDirectoryRadioGroupProps,
-} from './BaseDirectoryRadioGroup';
+import { BaseDirectoryRadioGroup, BaseDirectoryRadioGroupProps } from './BaseDirectoryRadioGroup';
 
 const PATH = Symbol('path');
 const LABEL = 'Base Directory';
@@ -18,30 +15,16 @@ type BaseDirectoryFieldProps = {
   isDisabled?: boolean;
 } & BaseDirectoryRadioGroupProps;
 
-export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
-  props,
-) => {
+export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (props) => {
   const field = Form.useField<string>(props.fieldName);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const initialValue = useRef<string>(field.value);
   const fieldValue = useRef<string>(field.value);
 
-  const isLoading =
-    !props.gitProviderId ||
-    !props.sourceRepositoryOwner ||
-    !props.sourceRepositoryName ||
-    !props.sourceBranch;
+  const isLoading = !props.gitProviderId || !props.sourceRepositoryOwner || !props.sourceRepositoryName || !props.sourceBranch;
 
   if (isLoading) {
-    return (
-      <Form.InputField
-        name={props.fieldName}
-        label={LABEL}
-        placeholder="./"
-        isLoading={isLoading}
-        disableValidMessage
-      />
-    );
+    return <Form.InputField name={props.fieldName} label={LABEL} placeholder="./" isLoading={isLoading} disableValidMessage />;
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -88,19 +71,15 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
       trigger={
         <FormField.Root>
           <FormField.Label>{LABEL}</FormField.Label>
-          <S.Trigger.RowWrapper>
+          <Box className="flex-row gap-2.5">
             <Input.Root disabled={props.isDisabled}>
-              <Input.Field
-                readOnly
-                value={field.value || './'}
-                disabled={props.isDisabled}
-              />
+              <Input.Field readOnly value={field.value || './'} disabled={props.isDisabled} />
             </Input.Root>
 
-            <Button intent="neutral" disabled={props.isDisabled} size="sm">
+            <Button intent="neutral" variant="outline" disabled={props.isDisabled} size="sm">
               Select
             </Button>
-          </S.Trigger.RowWrapper>
+          </Box>
         </FormField.Root>
       }
     >
@@ -118,10 +97,7 @@ export const BaseDirectoryField: React.FC<BaseDirectoryFieldProps> = (
         </SettingsModal.Close>
 
         <SettingsModal.Close asChild>
-          <SettingsModal.ConfirmButton
-            onClick={handleConfirm}
-            className="flex-1"
-          >
+          <SettingsModal.ConfirmButton onClick={handleConfirm} className="flex-1">
             Continue
           </SettingsModal.ConfirmButton>
         </SettingsModal.Close>
@@ -137,24 +113,18 @@ type RecursiveFoldersProps = LoadingProps<{
   selected: string;
 }>;
 
-const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
-  folders,
-  selected,
-  isLoading,
-}) => {
+const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, isLoading }) => {
   if (isLoading) {
     return <RecursiveFoldersSkeleton />;
   }
 
   return (
-    <S.RecursiveFolders.Wrapper>
+    <Box className="gap-3">
       {Object.entries(folders).map(([key, value]) => {
         const folderPath = value[PATH];
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [showNested, setShowNested] = useState(
-          selected.startsWith(folderPath),
-        );
+        const [showNested, setShowNested] = useState(selected.startsWith(folderPath));
 
         const hasNested = Object.keys(value).length > 0;
 
@@ -168,43 +138,44 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
 
         return (
           <Box key={key}>
-            <S.RecursiveFolders.Row onClick={handleShowNested}>
-              <S.RecursiveFolders.Indicator
-                hasNested={hasNested}
-                showNested={showNested && hasNested}
-              >
+            <RecursiveFoldersRow onClick={handleShowNested}>
+              <Box className={cn('transition-all duration-75', { 'opacity-[0.1]': !hasNested, 'rotate-90': showNested && hasNested })}>
                 <Icon name="chevron-right" />
-              </S.RecursiveFolders.Indicator>
+              </Box>
               <RadioGroup.Item value={folderPath} onClick={handleSelect} />
               <Text>{key}</Text>
-            </S.RecursiveFolders.Row>
+            </RecursiveFoldersRow>
 
             {hasNested && showNested && (
-              <S.RecursiveFolders.Nested>
+              <Box className="py-3 pl-6">
                 <RecursiveFolders folders={value} selected={selected} />
-              </S.RecursiveFolders.Nested>
+              </Box>
             )}
           </Box>
         );
       })}
-    </S.RecursiveFolders.Wrapper>
+    </Box>
   );
 };
 
-const RecursiveFoldersSkeleton = () => {
+export const RecursiveFoldersRow: React.FC<ChildrenProps<React.ComponentPropsWithRef<typeof Box>>> = ({ children }) => (
+  <Box className="flex-row gap-2.5 items-center cursor-pointer border-b-neutral-7 border-t-neutral-7 py-3 px-0">{children}</Box>
+);
+
+export const RecursiveFoldersSkeleton = () => {
   const Line = () => (
-    <S.RecursiveFolders.Row>
-      <S.RecursiveFolders.Skeleton variant="radio" />
-      <S.RecursiveFolders.Skeleton variant="text" />
-    </S.RecursiveFolders.Row>
+    <RecursiveFoldersRow>
+      <Skeleton variant="avatar" />
+      <Skeleton variant="text" />
+    </RecursiveFoldersRow>
   );
 
   return (
-    <S.RecursiveFolders.Wrapper>
+    <Box className="gap-3">
       <Line />
       <Line />
       <Line />
       <Line />
-    </S.RecursiveFolders.Wrapper>
+    </Box>
   );
 };

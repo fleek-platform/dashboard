@@ -1,27 +1,28 @@
 import { DateTime } from 'luxon';
+import React from 'react';
 
 import { BadgeText, ExternalLink } from '@/components';
 import { useUploadContext } from '@/providers/UploadProvider';
-import { LoadingProps } from '@/types/Props';
+import { TEST_ID } from '@/test/testId';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Folder, Pin } from '@/types/StorageProviders';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 import { dateFormat } from '@/utils/dateFormats';
 import { shortStringFormat } from '@/utils/stringFormat';
 
 import { RightMenu } from './RightMenu';
-import {
-  StorageRowStyles as RS,
-  StorageTableStyles as S,
-} from './StorageTable.styles';
 import { useStorageTableUtils } from './storageTableUtils';
+
+type StorageCellProps = React.TdHTMLAttributes<HTMLTableCellElement> & ChildrenProps;
+
+const StorageCell: React.FC<StorageCellProps> = ({ children, className }) => {
+  return <td className={cn('border-t border-neutral-6 pl-6 text-left h-8 whitespace-nowrap', className)}>{children}</td>;
+};
 
 type StorageRowProps = LoadingProps<{ pin?: Pin; folder?: Folder }>;
 
-export const StorageRow: React.FC<StorageRowProps> = ({
-  isLoading,
-  pin,
-  folder,
-}) => {
+export const StorageRow: React.FC<StorageRowProps> = ({ isLoading, pin, folder }) => {
   const { setParentFolderId, setFolderHistory } = useUploadContext();
   const {
     isIpfsFolder,
@@ -36,10 +37,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
 
   const onClickFolder = () => {
     if (folder) {
-      setFolderHistory((prev) => [
-        ...prev,
-        { folderId: folder.id, path: folder.path },
-      ]);
+      setFolderHistory((prev) => [...prev, { folderId: folder.id, path: folder.path }]);
       setParentFolderId(folder.id, folder.path, true);
     }
   };
@@ -51,21 +49,17 @@ export const StorageRow: React.FC<StorageRowProps> = ({
   const publicUrl = getLink();
 
   return (
-    <S.Table.Row>
-      <S.Table.Cell>
-        <RS.NameRow>
+    <tr data-testid={TEST_ID.TABLE_ROW_STORAGE} className="overflow-hidden">
+      <StorageCell>
+        <Box className="flex-row gap-2 items-center">
           {folder || isIpfsFolder ? (
-            <Icon name="archive" />
+            <Icon name="archive" className="text-sm text-neutral-11" />
           ) : (
-            <Image alt="preview" />
+            <Image alt="preview" className="p-0 text-sm" />
           )}
-          <Box className="lg:w-4/5">
+          <Box className="w-full max-w-[12rem]">
             {folder ? (
-              <Text
-                variant="primary"
-                className="truncate cursor-pointer"
-                onClick={onClickFolder}
-              >
+              <Text variant="primary" className="truncate cursor-pointer" onClick={onClickFolder}>
                 {folder.name}
               </Text>
             ) : publicUrl ? (
@@ -73,103 +67,82 @@ export const StorageRow: React.FC<StorageRowProps> = ({
                 <Text variant="primary" className="truncate">
                   {pin?.filename}
                 </Text>
-                <Text variant="primary">
-                  {pin?.extension && `.${pin?.extension}`}
-                </Text>
+                <Text variant="primary">{pin?.extension && `.${pin?.extension}`}</Text>
               </ExternalLink>
             ) : (
               <>
                 <Text variant="primary" className="truncate">
                   {pin?.filename}
                 </Text>
-                <Text variant="primary">
-                  {pin?.extension && `.${pin?.extension}`}
-                </Text>
+                <Text variant="primary">{pin?.extension && `.${pin?.extension}`}</Text>
               </>
             )}
           </Box>
-        </RS.NameRow>
-      </S.Table.Cell>
-      <S.Table.Cell>
+        </Box>
+      </StorageCell>
+      <StorageCell>
         <Text variant="primary">{getSize()}</Text>
-      </S.Table.Cell>
-      <S.Table.Cell>
-        <Text variant="primary">
-          {dateFormat({
-            dateISO: pin?.createdAt || folder?.createdAt,
-            format: DateTime.DATE_MED,
-          })}
-        </Text>
-      </S.Table.Cell>
-      <S.Table.Cell>
+      </StorageCell>
+      <StorageCell>
+        <Text variant="primary">{dateFormat({ dateISO: pin?.createdAt || folder?.createdAt, format: DateTime.DATE_MED })}</Text>
+      </StorageCell>
+      <StorageCell>
         {pin && (
           <BadgeText hoverable colorScheme="slate" onClick={handleCopyCid}>
-            <RS.IconContainer>
+            <Box className="bg-monochrome-reverse rounded-full size-5 items-center justify-center">
               <Icon name="ipfs-colored" />
-            </RS.IconContainer>
+            </Box>
             <Text size="xs">{`${shortStringFormat({ str: pin.cid })}`}</Text>
           </BadgeText>
         )}
-      </S.Table.Cell>
-      <S.Table.Cell>
-        <RS.StorageProviders.Container>
+      </StorageCell>
+      <StorageCell>
+        <Box className="flex-row gap-2.5">
           {pin && pin.storedOnArweave && (
-            <RS.BadgeText
-              colorScheme="slate"
-              onClick={handleCopyArweaveId}
-              className="group"
-            >
+            <BadgeText colorScheme="slate" onClick={handleCopyArweaveId} className="group cursor-pointer p-1">
               <Icon name="arweave" />
               <Text size="xs" className="hidden group-hover:block">
-                {isArweavePending
-                  ? 'Pending...'
-                  : shortStringFormat({ str: pin?.arweavePin?.bundlrId || '' })}
+                {isArweavePending ? 'Pending...' : shortStringFormat({ str: pin?.arweavePin?.bundlrId || '' })}
               </Text>
-            </RS.BadgeText>
+            </BadgeText>
           )}
 
           {pin && pin.storedOnFilecoin && (
-            <RS.BadgeText
-              colorScheme="slate"
-              onClick={handleCopyFilecoinDealId}
-              className="group"
-            >
+            <BadgeText colorScheme="slate" onClick={handleCopyFilecoinDealId} className="group cursor-pointer p-1">
               <Icon name="filecoin" />
               <Text size="xs" className="hidden group-hover:block">{`${
-                isFilecoinDealPending
-                  ? 'Pending...'
-                  : pin?.filecoinPin?.deals[0].dealId
+                isFilecoinDealPending ? 'Pending...' : pin?.filecoinPin?.deals[0].dealId
               }`}</Text>
-            </RS.BadgeText>
+            </BadgeText>
           )}
-        </RS.StorageProviders.Container>
-      </S.Table.Cell>
-      <S.Table.Cell>
+        </Box>
+      </StorageCell>
+      <StorageCell>
         <RightMenu pin={pin} folder={folder} />
-      </S.Table.Cell>
-    </S.Table.Row>
+      </StorageCell>
+    </tr>
   );
 };
 
 const SkeletonRow: React.FC = () => (
-  <S.Table.Row>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-    <S.Table.Cell>
-      <Skeleton />
-    </S.Table.Cell>
-  </S.Table.Row>
+  <tr>
+    <StorageCell>
+      <Skeleton variant="text" />
+    </StorageCell>
+    <StorageCell>
+      <Skeleton variant="text" />
+    </StorageCell>
+    <StorageCell>
+      <Skeleton variant="text" />
+    </StorageCell>
+    <StorageCell>
+      <Skeleton variant="text" />
+    </StorageCell>
+    <StorageCell>
+      <Skeleton variant="text" />
+    </StorageCell>
+    <StorageCell className="pr-6">
+      <Skeleton variant="text" className="size-6 place-self-end" />
+    </StorageCell>
+  </tr>
 );

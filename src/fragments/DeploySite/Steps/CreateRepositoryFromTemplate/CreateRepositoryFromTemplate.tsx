@@ -4,57 +4,23 @@ import { useClient } from 'urql';
 import * as zod from 'zod';
 
 import { Form, SettingsBox } from '@/components';
-import {
-  useCountSitesWithSourceProviderQuery,
-  useCreateRepositoryFromTemplateMutation,
-  useGitInstallationsQuery,
-  useGitIntegrationQuery,
-  useTemplateDeployQuery,
-} from '@/generated/graphqlClient';
+import { useCreateRepositoryFromTemplateMutation, useGitInstallationsQuery, useTemplateDeployQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
-import {
-  Avatar,
-  Box,
-  Checkbox,
-  Combobox,
-  FormField,
-  Icon,
-  Stepper,
-  Text,
-} from '@/ui';
+import { Avatar, Box, Checkbox, Combobox, FormField, Icon, Stepper, Text } from '@/ui';
+import { openPopUpWindow } from '@/utils/openPopUpWindow';
 
 import { sourceProviderIcon } from '../../DeploySite.constants';
-import {
-  GitUser,
-  useDeploySiteContext,
-  useStepSetup,
-} from '../../DeploySite.context';
+import { GitUser, useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 import { CreateRepositoryFromTemplateStyles as S } from './CreateRepositoryFromTemplate.styles';
 
 export const CreateTemplateFromRepositoryStep: React.FC = () => {
-  const {
-    gitProviderId,
-    gitUser,
-    gitRepository,
-    templateId,
-    setSourceProvider,
-    setGitRepository,
-  } = useDeploySiteContext();
+  const { gitProviderId, gitUser, gitRepository, templateId, setSourceProvider, setGitRepository } = useDeploySiteContext();
 
-  const [templateDeployQuery] = useTemplateDeployQuery({
-    variables: { where: { id: templateId! } },
-    requestPolicy: 'network-only',
-  });
-  const [, createRepositoryFromTemplate] =
-    useCreateRepositoryFromTemplateMutation();
-
-  const [gitIntegrationQuery] = useGitIntegrationQuery({
-    variables: { where: { gitProviderId: gitProviderId! } },
-    pause: !gitProviderId,
-  });
+  const [templateDeployQuery] = useTemplateDeployQuery({ variables: { where: { id: templateId! } }, requestPolicy: 'network-only' });
+  const [, createRepositoryFromTemplate] = useCreateRepositoryFromTemplateMutation();
 
   const createSiteForm = Form.useContext();
   const toast = useToast();
@@ -83,29 +49,25 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
     },
     schema: zod.object({ repositoryName: siteName }),
     extraValidations: {
-      repositoryName: Form.createExtraValidation.siteName(client),
+      repositoryName:
+        gitProviderId && gitUser?.name ? Form.createExtraValidation.repositoryName(client, gitProviderId, gitUser.name) : undefined,
     },
     onSubmit: async (values) => {
       try {
         if (!gitUser || !templateGit.slug || !templateGit.repository) {
-          toast.error({
-            message:
-              'It is not possible to use this template. Please contact the support.',
-          });
+          toast.error({ message: 'It is not possible to use this template. Please contact the support.' });
 
           return;
         }
 
         setIsLoading(true);
 
-        const gitIntegrationId = gitIntegrationQuery.data?.gitIntegration.id;
-
-        if (!gitIntegrationId || !gitUser.installationId) {
+        if (!gitUser.gitIntegrationId || !gitUser.installationId) {
           toast.error({ message: 'Failed to find git provider installation' });
         }
 
         const createResponse = await createRepositoryFromTemplate({
-          where: { gitIntegrationId: gitIntegrationId! },
+          where: { gitIntegrationId: gitUser.gitIntegrationId },
           data: {
             templateOwner: templateGit.slug,
             templateRepo: templateGit.repository,
@@ -116,10 +78,7 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
         });
 
         if (!createResponse.data || createResponse.error) {
-          throw (
-            createResponse.error ||
-            new Error('Failed to create repository from template')
-          );
+          throw createResponse.error || new Error('Failed to create repository from template');
         }
 
         const repository = createResponse.data.createGithubRepoFromTemplate;
@@ -138,28 +97,21 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
   });
 
   useEffect(() => {
+    if (gitProviderId && gitUser?.name) {
+      form.validate();
+    }
+  }, [form, gitProviderId, gitUser?.name]);
+
+  useEffect(() => {
     if (templateGit.repository) {
-      form.fields.repositoryName.setValue(templateGit.repository, true);
       form.fields.repositoryName.setValue(templateGit.repository, true);
     }
 
     // null is not allowed as value
-    createSiteForm.fields.buildCommand.setValue(
-      templateGit.buildCommand ?? undefined,
-      true,
-    );
-    createSiteForm.fields.distDirectory.setValue(
-      templateGit.distDirectory ?? undefined,
-      true,
-    );
-    createSiteForm.fields.dockerImage.setValue(
-      templateGit.dockerImage ?? undefined,
-      true,
-    );
-    createSiteForm.fields.baseDirectory.setValue(
-      templateGit.baseDirectory ?? undefined,
-      true,
-    );
+    createSiteForm.fields.buildCommand.setValue(templateGit.buildCommand ?? undefined, true);
+    createSiteForm.fields.distDirectory.setValue(templateGit.distDirectory ?? undefined, true);
+    createSiteForm.fields.dockerImage.setValue(templateGit.dockerImage ?? undefined, true);
+    createSiteForm.fields.baseDirectory.setValue(templateGit.baseDirectory ?? undefined, true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateGit]);
@@ -212,15 +164,9 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
   }, [form.isSubmitting, isLoading]);
 
   return (
-    <S.Container>
-      <Text
-        as="h2"
-        variant="primary"
-        size="xl"
-        weight={700}
-        className="self-start"
-      >
-        Create Repository For Template
+    <Box variant="container">
+      <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+        Create repository for template
       </Text>
 
       <TitleRow
@@ -242,29 +188,25 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
         />
         <PrivateRepositoryField />
         {showSkeleton ? (
-          <SettingsBox.Skeleton />
+          <SettingsBox.Skeleton variant="button" />
         ) : (
-          <S.SubmitButton>Create and deploy template</S.SubmitButton>
+          <Box className="child:w-full">
+            <Form.SubmitButton>Create and deploy template</Form.SubmitButton>
+          </Box>
         )}
       </Form.Provider>
-    </S.Container>
+    </Box>
   );
 };
 
 const AccountField: React.FC = () => {
-  const { sourceProvider, gitUser, setGitUser, gitProviderId } =
-    useDeploySiteContext();
+  const toast = useToast();
+  const { sourceProvider, gitUser, setGitUser, gitProviderId, providerState, refetchGitProviderRequirements } = useDeploySiteContext();
 
-  const [countSitesWithSourceProviderQuery] =
-    useCountSitesWithSourceProviderQuery();
-  const [gitInstallationsQuery] = useGitInstallationsQuery({
+  const [gitInstallationsQuery, refetchGitInstallationsQuery] = useGitInstallationsQuery({
     variables: { where: { gitProviderId: gitProviderId! } },
     pause: !gitProviderId,
   });
-
-  const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching ||
-    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const users = useMemo(() => {
     const data = gitInstallationsQuery.data?.gitApiInstallations;
@@ -274,22 +216,19 @@ const AccountField: React.FC = () => {
     }
 
     if (!gitUser && data.length > 0) {
-      const { name, installationId, avatar } = data[0];
+      const { name, installationId, gitIntegrationId, avatar } = data[0];
 
       setGitUser({
         name,
+        gitIntegrationId,
         installationId: installationId.toString(),
         avatar,
       });
     }
 
     return data.map(
-      ({ name, installationId, avatar }) =>
-        ({
-          name,
-          installationId: installationId.toString(),
-          avatar,
-        }) as GitUser,
+      ({ name, installationId, gitIntegrationId, avatar }) =>
+        ({ name, installationId: installationId.toString(), gitIntegrationId, avatar } as GitUser)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gitInstallationsQuery.data]);
@@ -299,8 +238,26 @@ const AccountField: React.FC = () => {
     setGitUser(user);
   };
 
+  const handleRefetch = () => {
+    refetchGitInstallationsQuery({ requestPolicy: 'network-only' });
+
+    if (refetchGitProviderRequirements) {
+      refetchGitProviderRequirements();
+    }
+  };
+
   const handleAddGHAccount = async () => {
-    // TODO: handle add acount
+    if (!providerState?.requirements?.installationUrl) {
+      toast.error({ message: 'Unexpected error finding installation url, please contact support' });
+
+      return;
+    }
+
+    openPopUpWindow({
+      width: 1200, // special case where it opens github settings page
+      url: providerState.requirements.installationUrl,
+      onClose: handleRefetch,
+    });
   };
 
   return (
@@ -316,28 +273,12 @@ const AccountField: React.FC = () => {
             label: 'Add GitHub Organization',
             onClick: handleAddGHAccount,
             iconName: 'add-circle',
-            disabled: shouldDisableAddOrganization,
-            tooltip: shouldDisableAddOrganization
-              ? {
-                  content:
-                    'You already have sites that depend on the current GitHub installation.',
-                  side: 'left',
-                }
-              : undefined,
           },
         ]}
       >
         {({ Field, Options }) => (
           <>
-            <Field
-              placeholder={
-                <>
-                  {<Icon name={sourceProviderIcon[sourceProvider!]} />} Select
-                </>
-              }
-            >
-              {UserItem}
-            </Field>
+            <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
 
             <Options>{UserItem}</Options>
           </>
@@ -360,10 +301,9 @@ const PrivateRepositoryField: React.FC = () => {
   const field = form.fields.privateRepo;
 
   return (
-    <S.CheckboxWrapper onClick={() => field.setValue(!field.value, true)}>
-      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create
-      private Git repository
-    </S.CheckboxWrapper>
+    <Box className="flex-row items-center gap-3 cursor-pointer" onClick={() => field.setValue(!field.value, true)}>
+      <Checkbox checked={field.value} disabled={form.isSubmitting} /> Create private Git repository
+    </Box>
   );
 };
 
@@ -374,34 +314,30 @@ type TitleRowProps = LoadingProps<{
   repository: string;
 }>;
 
-const TitleRow: React.FC<TitleRowProps> = ({
-  isLoading,
-  image,
-  templateName,
-  gitUserName,
-  repository,
-}) => {
+const TitleRow: React.FC<TitleRowProps> = ({ isLoading, image, templateName, gitUserName, repository }) => {
   if (isLoading) {
     return (
-      <S.TemplateHeader.TitleRow>
+      <Box className="flex-row gap-4 items-center">
         <S.TemplateHeader.Skeleton variant="avatar" />
         <Box>
           <S.TemplateHeader.Skeleton variant="title" />
           <S.TemplateHeader.Skeleton variant="text" />
         </Box>
-      </S.TemplateHeader.TitleRow>
+      </Box>
     );
   }
 
   return (
-    <S.TemplateHeader.TitleRow>
-      <S.TemplateHeader.Avatar src={image} enableIcon icon="gear" />
+    <Box className="flex-row gap-4 items-center">
+      <Avatar src={image} enableIcon icon="gear" className="text-2xl" />
       <Box>
-        <Text as="h3">{templateName}</Text>
-        <S.TemplateHeader.OwnerText>
+        <Text size="md" variant="primary" as="h3">
+          {templateName}
+        </Text>
+        <Text>
           {gitUserName}/{repository}
-        </S.TemplateHeader.OwnerText>
+        </Text>
       </Box>
-    </S.TemplateHeader.TitleRow>
+    </Box>
   );
 };

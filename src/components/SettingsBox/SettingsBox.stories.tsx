@@ -13,15 +13,14 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryFn<SettingsBox.ContainerProps>;
+type Story = StoryFn<typeof SettingsBox.Container>;
 
 export const Default: Story = (args) => {
   return (
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.ActionRow>
@@ -32,9 +31,7 @@ export const Default: Story = (args) => {
 };
 
 Default.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithActionButton: Story = (args) => {
@@ -42,8 +39,7 @@ export const WithActionButton: Story = (args) => {
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.ActionRow>
@@ -55,9 +51,7 @@ export const WithActionButton: Story = (args) => {
 };
 
 WithActionButton.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WitLogoUpload: Story = (args) => {
@@ -77,8 +71,7 @@ export const WitLogoUpload: Story = (args) => {
         <SettingsBox.Column>
           <SettingsBox.Title>Title</SettingsBox.Title>
           <SettingsBox.Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
           </SettingsBox.Text>
         </SettingsBox.Column>
 
@@ -89,9 +82,7 @@ export const WitLogoUpload: Story = (args) => {
 };
 
 WitLogoUpload.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithInputLoading: Story = (args) => {
@@ -99,8 +90,7 @@ export const WithInputLoading: Story = (args) => {
     <SettingsBox.Container {...args}>
       <SettingsBox.Title>Title</SettingsBox.Title>
       <SettingsBox.Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
       </SettingsBox.Text>
 
       <SettingsBox.Skeleton variant="input" />
@@ -114,9 +104,7 @@ export const WithInputLoading: Story = (args) => {
 };
 
 WithInputLoading.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithLogoLoading: Story = (args) => {
@@ -126,8 +114,7 @@ export const WithLogoLoading: Story = (args) => {
         <SettingsBox.Column>
           <SettingsBox.Title>Title</SettingsBox.Title>
           <SettingsBox.Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
           </SettingsBox.Text>
         </SettingsBox.Column>
 
@@ -138,7 +125,5 @@ export const WithLogoLoading: Story = (args) => {
 };
 
 WithLogoLoading.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };

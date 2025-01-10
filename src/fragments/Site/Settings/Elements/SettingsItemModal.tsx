@@ -25,22 +25,16 @@ const Root: React.FC<SettingsItemModal.RootProps> = ({ children }) => {
   );
 };
 
-const CloseButton: React.FC<SettingsItemModal.CloseButtonProps> = ({
-  children = 'Cancel',
-}) => (
+const CloseButton: React.FC<SettingsItemModal.CloseButtonProps> = ({ children = 'Cancel' }) => (
   <Dialog.Close asChild>
-    <Button intent="neutral" className="flex-1">
+    <Button intent="ghost" className="flex-1">
       {children}
     </Button>
   </Dialog.Close>
 );
 
-const SubmitButton: React.FC<SettingsItemModal.SubmitButtonProps> = ({
-  children = 'Confirm',
-  disabled,
-}) => {
-  const { selectedId, withDnsLink, onSubmitVerification, closeModal } =
-    useSettingsItemContext();
+const SubmitButton: React.FC<SettingsItemModal.SubmitButtonProps> = ({ children = 'Confirm', disabled }) => {
+  const { selectedId, withDnsLink, onSubmitVerification, closeModal } = useSettingsItemContext();
   const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
 
@@ -48,10 +42,7 @@ const SubmitButton: React.FC<SettingsItemModal.SubmitButtonProps> = ({
     const isSiteDomain = route.pathname.includes('sites');
 
     setIsLoading(true);
-    const shouldClose = await onSubmitVerification(
-      selectedId,
-      isSiteDomain ? withDnsLink : false,
-    );
+    const shouldClose = await onSubmitVerification(selectedId, isSiteDomain ? withDnsLink : false);
     setIsLoading(false);
 
     if (shouldClose) {
@@ -60,12 +51,7 @@ const SubmitButton: React.FC<SettingsItemModal.SubmitButtonProps> = ({
   };
 
   return (
-    <Button
-      loading={isLoading}
-      disabled={disabled || isLoading}
-      onClick={handleSubmit}
-      className="flex-1"
-    >
+    <Button loading={isLoading} disabled={disabled || isLoading} onClick={handleSubmit} className="flex-1">
       {children}
     </Button>
   );

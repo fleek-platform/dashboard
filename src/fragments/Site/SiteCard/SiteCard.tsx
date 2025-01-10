@@ -1,25 +1,14 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { Link } from '@/components';
 import { SourceProvider } from '@/generated/graphqlClient';
+import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { LoadingProps } from '@/types/Props';
 import { Site } from '@/types/Site';
-import {
-  Avatar,
-  Box,
-  Icon,
-  IconName,
-  Image,
-  ImageProps,
-  Skeleton,
-  Text,
-} from '@/ui';
+import { Avatar, Box, Icon, IconName, Image, ImageProps, LinkBox, Skeleton, Text } from '@/ui';
 import { AvatarMarble } from '@/ui/AvatarMarble/AvatarMarble';
 import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
-
-import { SiteCardStyles as S } from './SiteCard.styles';
 
 export type SiteCardProps = LoadingProps<{
   id: string;
@@ -31,83 +20,55 @@ export type SiteCardProps = LoadingProps<{
   deployment?: Site['currentDeployment'];
 }>;
 
-export const SiteCard: React.FC<SiteCardProps> = ({
-  id,
-  name,
-  avatar,
-  projectId,
-  siteLink,
-  isLoading,
-  deployment,
-  sourceProvider,
-}) => {
+export const SiteCard: React.FC<SiteCardProps> = ({ id, name, avatar, projectId, siteLink, isLoading, deployment, sourceProvider }) => {
   if (isLoading) {
     return <SiteSkeleton />;
   }
 
-  const footerText = deployment
-    ? getDurationUntilNow({
-        isoDateString: deployment.createdAt,
-        shortFormat: true,
-      })
-    : 'No deployments yet';
+  const footerText = deployment ? getDurationUntilNow({ isoDateString: deployment.createdAt, shortFormat: true }) : 'No deployments yet';
 
   return (
-    <S.Container>
-      <Link href={routes.project.site.overview({ projectId, siteId: id })}>
-        <SiteImage src={deployment?.previewImageUrl} />
-        <S.Details>
-          <S.DetailsRow>
-            <S.TextContainer>
-              <Text variant="primary" weight={700} size="md">
-                {name}
-              </Text>
-              <Text
-                className={cn('truncate', { 'text-warning-11': !deployment })}
-              >
-                {siteLink || <Skeleton />}
-              </Text>
-            </S.TextContainer>
-            <S.SiteIconWrapper>
-              {avatar ? (
-                <Image src={avatar} alt="site logo" />
-              ) : (
-                <AvatarMarble name={id} rounded={false} />
-              )}
-            </S.SiteIconWrapper>
-          </S.DetailsRow>
-          <S.DetailsFooter>
-            <Text size="xs">{footerText}</Text>
-            <Avatar icon={getUploadIcon(sourceProvider)} enableIcon />
-          </S.DetailsFooter>
-        </S.Details>
-      </Link>
-    </S.Container>
+    <LinkBox href={routes.project.site.overview({ projectId, siteId: id })} className="p-0 gap-0">
+      <SiteImage src={deployment?.previewImageUrl} />
+      <Box className="py-3 px-4 gap-3">
+        <Box className="flex-row justify-between gap-4">
+          <Box className="overflow-hidden">
+            <Text data-testid={TEST_ID.CARD_SITE_NAME} variant="primary" weight={700}>
+              {name}
+            </Text>
+            <Text className={cn('truncate', { 'text-warning-11': !deployment })}>{siteLink || <Skeleton />}</Text>
+          </Box>
+          <Box>
+            {avatar ? (
+              <Image src={avatar} alt="site logo" className="rounded-sm size-6" />
+            ) : (
+              <AvatarMarble name={id} className="rounded-sm size-6" />
+            )}
+          </Box>
+        </Box>
+        <Box className="flex-row gap-1 items-center">
+          <Text size="xs">{footerText}</Text>
+          <Avatar icon={getUploadIcon(sourceProvider)} className="text-2xs" enableIcon />
+        </Box>
+      </Box>
+    </LinkBox>
   );
 };
 
 const SiteSkeleton: React.FC = () => (
-  <S.Container isLoading>
+  <Box variant="container" className="p-0 gap-0">
     <SiteImage isLoading />
-    <S.Details>
-      <S.DetailsRow>
-        <Box>
-          <S.SiteName>
-            <Skeleton />
-          </S.SiteName>
-          <S.SiteUrl>
-            <Skeleton />
-          </S.SiteUrl>
+    <Box className="py-3 px-4 gap-5">
+      <Box className="flex-row justify-between gap-4">
+        <Box className="flex-1 gap-2 h-[40px]">
+          <Skeleton variant="text" className="w-1/2 h-3" />
+          <Skeleton variant="text" className="w-[80%] h-3" />
         </Box>
-        <S.SiteIconWrapper isLoading>
-          <Skeleton />
-        </S.SiteIconWrapper>
-      </S.DetailsRow>
-      <S.DetailsFooter>
-        <Skeleton />
-      </S.DetailsFooter>
-    </S.Details>
-  </S.Container>
+        <Skeleton variant="avatar" className="rounded-sm size-6 shrink-0" />
+      </Box>
+      <Skeleton variant="text" className="w-1/4 h-3" />
+    </Box>
+  </Box>
 );
 
 type SiteImageProps = {
@@ -117,22 +78,24 @@ type SiteImageProps = {
 
 const SiteImage: React.FC<SiteImageProps> = ({ src, isLoading }) => {
   return (
-    <S.Image src={src || ''}>
+    <Image
+      src={src || ''}
+      alt="Site image"
+      className="flex-1 max-h-[6.125rem] object-cover object-top aspect-[4.4083_/_1.225] p-0 bg-neutral-3"
+    >
       {isLoading ? (
-        <Skeleton />
+        <Skeleton variant="text" className="w-full h-full rounded-b-none" />
       ) : (
-        <>
+        <Box className="gap-1">
           <Icon name="image" />
-          <Text>No preview available</Text>
-        </>
+          <Text size="xs">No preview available</Text>
+        </Box>
       )}
-    </S.Image>
+    </Image>
   );
 };
 
-const getUploadIcon = (
-  sourceProvider: Deployment['sourceProvider'],
-): IconName => {
+const getUploadIcon = (sourceProvider: Deployment['sourceProvider']): IconName => {
   switch (sourceProvider) {
     case SourceProvider.GITHUB:
       return 'github';

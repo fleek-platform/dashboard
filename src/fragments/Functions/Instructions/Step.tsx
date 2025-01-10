@@ -1,9 +1,7 @@
 import { LearnMoreMessage } from '@/components';
 import { constants } from '@/constants';
 import { ChildrenProps } from '@/types/Props';
-import { Button, Stepper, Text } from '@/ui';
-
-import { InstructionsStyles as S } from './Instructions.styles';
+import { Box, Button, Stepper, Text } from '@/ui';
 
 type StepProps = ChildrenProps<{
   title: string;
@@ -11,7 +9,7 @@ type StepProps = ChildrenProps<{
 }>;
 
 export const Step: React.FC<StepProps> = ({ title, description, children }) => (
-  <S.StepContainer>
+  <Box className="gap-6">
     <Stepper.Indicator />
     <Text as="h2" variant="primary" size="xl" weight={700}>
       {title}
@@ -19,7 +17,7 @@ export const Step: React.FC<StepProps> = ({ title, description, children }) => (
     {description && <Text>{description}</Text>}
     {children}
     <FooterRow />
-  </S.StepContainer>
+  </Box>
 );
 
 const FooterRow = () => {
@@ -36,22 +34,16 @@ const FooterRow = () => {
   };
 
   return (
-    <S.LearnMoreRow>
-      <LearnMoreMessage
-        href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
-      >
-        functions
-      </LearnMoreMessage>
-      <S.ButtonContainer>
+    <Box className="flex-row justify-between items-center">
+      <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>functions</LearnMoreMessage>
+      <Box className="flex-row gap-4">
         {currentStep !== 0 && (
           <Button intent="neutral" onClick={prevStep}>
             Previous step
           </Button>
         )}
-        <Button onClick={handleNextStep}>
-          {currentStep === 3 ? 'Start over' : 'Next step'}
-        </Button>
-      </S.ButtonContainer>
-    </S.LearnMoreRow>
+        <Button onClick={handleNextStep}>{currentStep === 3 ? 'Start over' : 'Next step'}</Button>
+      </Box>
+    </Box>
   );
 };

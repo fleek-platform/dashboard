@@ -2,37 +2,33 @@ import '@/styles/globals.css';
 
 import LogRocket from 'logrocket';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import Script from 'next/script';
+import { useMemo } from 'react';
 
-import { Auth } from '@/components/Auth';
 import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
-import { AppProps } from '@/types/App';
+import { AppContext, AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
+import { isServerSide } from '@/utils/isServerSide';
 
-const App = ({ Component, pageProps, requestCookies }: AppProps) => {
+const App = ({ Component, pageProps, requestCookies, maintenanceMode, environment, noCanonical }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
-  const [noCanonical, setNoCanonical] = useState(false);
-  const [maintenanceMode, setMaintenanceMode] = useState(false);
 
-  useEffect(() => {
+  useMemo(() => {
+    // Initialize client side
+
     if (secrets.TEST_MODE) {
-      const environment = getMutableSecrets();
       // Override secrets with environment variables on test mode
       Object.assign(secrets, environment);
-    } else {
-      LogRocket.init(secrets.NEXT_PUBLIC_UI__LOG_ROCKET_ID);
+
+      return;
     }
 
-    setMaintenanceMode(getMaintenanceMode());
-
-    const pathname = window.location.pathname;
-    setNoCanonical(
-      ['/templates', '/templates/[templateId]'].includes(pathname),
-    );
+    LogRocket.init(secrets.NEXT_PUBLIC_UI__LOG_ROCKET_ID);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (maintenanceMode) {
@@ -43,23 +39,33 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     <>
       {!noCanonical && (
         <Head>
-          <link
-            rel="canonical"
-            href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
-            key="canonical"
-          />
+          <link rel="canonical" href="https://app.fleek.xyz/" key="canonical" />
         </Head>
       )}
+      <Script async src="https://cdn.promotekit.com/promotekit.js" data-promotekit="1d44aef1-870e-4899-a017-3fd29ed3f6cf"></Script>
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
-        <Auth>
-          <h1>{noCanonical}</h1>
-          {getLayout(<Component {...pageProps} />)}
-          <ToastsContainer />
-          <FeedbackModal />
-        </Auth>
+        <h1>{noCanonical}</h1>
+        {getLayout(<Component {...pageProps} />)}
+        <ToastsContainer />
+        <FeedbackModal />
       </Providers>
     </>
   );
+};
+
+App.getInitialProps = async ({ Component, ctx }: AppContext) => {
+  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const environment = getMutableSecrets();
+  const maintenanceMode = getMaintenanceMode();
+  const noCanonical = ['/templates', '/templates/[templateId]'].includes(ctx.pathname);
+
+  return {
+    pageProps,
+    requestCookies: isServerSide() && ctx.req?.cookies,
+    maintenanceMode,
+    environment,
+    noCanonical,
+  };
 };
 
 export default App;

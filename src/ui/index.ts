@@ -1,6 +1,5 @@
 export * from './Accordion/Accordion';
 export * from './Avatar/Avatar';
-export * from './Box/Box';
 export * from './Card/Card';
 export * from './Checkbox/Checkbox';
 export * from './Combobox/Combobox';
@@ -21,6 +20,8 @@ export * from './RadioGroup/RadioGroup';
 export * from './AvatarMarble/AvatarMarble';
 
 // Fleek Tailwind migrated components
+export * from './ftw/Box/Box';
+export * from './ftw/LinkBox/LinkBox';
 export * from './ftw/Button/Button';
 export * from './ftw/Input/Input';
 export * from './ftw/Text/Text';

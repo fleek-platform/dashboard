@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { secrets } from '@/secrets';
 
+import { useCookies } from './CookiesProvider';
+
 type LaunchDarklyProviderProps = React.PropsWithChildren<{}>;
 
-export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({
-  children,
-}) => {
+export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({ children }) => {
   return (
     <LDProvider clientSideID={secrets.NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID}>
       <Identifier />
@@ -18,7 +18,8 @@ export const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({
 };
 
 const Identifier: React.FC = () => {
-  const [meQuery] = useMeQuery();
+  const cookies = useCookies();
+  const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
   const ldClient = useLDClient();
 
   useEffect(() => {

@@ -3,13 +3,10 @@ import { useMemo } from 'react';
 import { Form } from '@/components';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
 import { Box, Icon, IconName, Image, Stepper, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
-import {
-  sourceProviderIcon,
-  sourceProviderLabel,
-} from './DeploySite.constants';
+import { sourceProviderIcon, sourceProviderLabel } from './DeploySite.constants';
 import { useDeploySiteContext } from './DeploySite.context';
-import { DeploySiteStyles as S } from './DeploySite.styles';
 
 type StatusItemProps = React.PropsWithChildren<{
   title: string;
@@ -17,32 +14,24 @@ type StatusItemProps = React.PropsWithChildren<{
   image?: string;
   fullSize?: boolean;
 }> &
-  React.ComponentPropsWithoutRef<typeof S.StatusBox.Item>;
+  React.ComponentPropsWithoutRef<typeof Box>;
 
-const StatusItem: React.FC<StatusItemProps> = ({
-  title,
-  icon = 'gear',
-  image,
-  children = 'Pending...',
-  fullSize = false,
-}) => (
-  <S.StatusBox.Item fullSize={fullSize}>
+const StatusItem: React.FC<StatusItemProps> = ({ title, icon = 'gear', image, children = 'Pending...', fullSize = false }) => (
+  <Box className="flex-1 gap-2 text-xs">
     <Text as="h3" size="xs">
       {title}
     </Text>
-    <Box>
-      <Image src={image} alt={title}>
-        <Icon name={icon} />
+    <Box className="flex-row gap-2 items-center">
+      <Image src={image} alt={title} className={cn('p-1 size-5 text-2xs bg-neutral-4 rounded-full text-neutral-11', { 'p-0': fullSize })}>
+        <Icon name={icon} className="p-0" />
       </Image>
 
       {children}
     </Box>
-  </S.StatusBox.Item>
+  </Box>
 );
 
-const StatusSeparator: React.FC = () => (
-  <S.StatusBox.Separator name="arrow-right" />
-);
+const StatusSeparator: React.FC = () => <Icon name="arrow-right" className="text-neutral-11" />;
 
 const StatusBox: React.FC = () => {
   const { sourceProvider, mode, providerState } = useDeploySiteContext();
@@ -57,28 +46,21 @@ const StatusBox: React.FC = () => {
       };
     }
 
-    const providerAuthenticated =
-      !providerState?.requirements?.shouldAuthenticate &&
-      sourceProvider !== undefined;
+    const providerAuthenticated = !providerState?.requirements?.shouldAuthenticate && sourceProvider !== undefined;
 
     return {
-      icon: providerAuthenticated
-        ? sourceProviderIcon[sourceProvider]
-        : undefined,
-      text: providerAuthenticated
-        ? sourceProviderLabel[sourceProvider]
-        : undefined,
+      icon: providerAuthenticated ? sourceProviderIcon[sourceProvider] : undefined,
+      text: providerAuthenticated ? sourceProviderLabel[sourceProvider] : undefined,
     };
   }, [providerState?.requirements?.shouldAuthenticate, sourceProvider, mode]);
 
-  const framework = useMemo(
-    () =>
-      siteFrameworks.data?.find((framework) => framework.id === field.value),
-    [siteFrameworks, field.value],
-  );
+  const framework = useMemo(() => siteFrameworks.data?.find((framework) => framework.id === field.value), [siteFrameworks, field.value]);
 
   return (
-    <S.StatusBox.Container wrapped={mode === 'template'}>
+    <Box
+      variant="container"
+      className={cn('hidden md:flex flex-row flex-wrap justify-between rounded-xl', { 'w-[70%]': mode === 'template' })}
+    >
       <StatusItem title="Type" icon={typeStatus.icon}>
         {typeStatus.text}
       </StatusItem>
@@ -95,7 +77,7 @@ const StatusBox: React.FC = () => {
           <StatusItem title="Details" />
         </>
       )}
-    </S.StatusBox.Container>
+    </Box>
   );
 };
 

@@ -6,14 +6,8 @@ import { useClient } from 'urql';
 import { Form } from '@/components';
 import { constants } from '@/constants';
 import { DeploySite } from '@/fragments';
+import { GitRepository, GitUser } from '@/fragments/DeploySite/DeploySite.context';
 import {
-  GitRepository,
-  GitUser,
-} from '@/fragments/DeploySite/DeploySite.context';
-import {
-  GitIntegrationDocument,
-  GitIntegrationQuery,
-  GitIntegrationQueryVariables,
   SecretVisibility,
   useCountSitesWithSourceProviderQuery,
   useCreateSecretMutation,
@@ -32,8 +26,7 @@ import { withAccess } from '@/utils/withAccess';
 const NewSitePage: Page = () => {
   const [title, setTitle] = useState<string>();
   const [sourceProvider, setSourceProvider] = useState<SiteSourceProvider>();
-  const [handleBackClick, setHandleBackClick] =
-    useState<MouseEventHandler<HTMLButtonElement>>();
+  const [handleBackClick, setHandleBackClick] = useState<MouseEventHandler<HTMLButtonElement>>();
   const [gitUser, setGitUser] = useState<GitUser>();
   const [gitBranch, setGitBranch] = useState<string>();
   const [gitRepository, setGitRepository] = useState<GitRepository>();
@@ -68,8 +61,6 @@ const NewSitePage: Page = () => {
     },
     onSubmit: async (values) => {
       try {
-        let gitIntegrationId;
-
         if (mode !== 'self') {
           if (!gitProviderId) {
             // eslint-disable-next-line fleek-custom/no-default-error
@@ -81,16 +72,7 @@ const NewSitePage: Page = () => {
             throw new Error('Failed to find installation id');
           }
 
-          const gitIntegrationResult = await client.query<
-            GitIntegrationQuery,
-            GitIntegrationQueryVariables
-          >(GitIntegrationDocument, {
-            where: { gitProviderId },
-          });
-
-          gitIntegrationId = gitIntegrationResult.data?.gitIntegration.id;
-
-          if (!gitIntegrationId) {
+          if (!gitUser?.gitIntegrationId) {
             // eslint-disable-next-line fleek-custom/no-default-error
             throw new Error('Failed to find git integration id');
           }
@@ -109,15 +91,12 @@ const NewSitePage: Page = () => {
             sourceRepositoryName: gitRepository?.name,
             sourceRepositoryOwner: gitRepository?.owner,
             sourceBranch: gitBranch ?? gitRepository?.defaultBranch,
-            githubInstallationId:
-              mode === 'self'
-                ? undefined
-                : parseInt(gitUser?.installationId as string),
+            gitIntegrationId: mode === 'self' ? undefined : gitUser?.gitIntegrationId,
+            githubInstallationId: mode === 'self' ? undefined : parseInt(gitUser?.installationId as string),
             dockerImage: values?.dockerImage,
 
             frameworkId: values.frameworkId ?? undefined,
             templateId: values.templateId,
-            gitIntegrationId,
           },
         });
 
@@ -129,18 +108,15 @@ const NewSitePage: Page = () => {
 
         // create secrets if present
         if (values.secrets.length > 0 && secretGroupId) {
-          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(
-            async (newSecret: SiteNewSecret) =>
-              createSecret({
-                data: {
-                  groupId: secretGroupId,
-                  key: newSecret.key,
-                  value: newSecret.value,
-                  visibility: newSecret.encrypted
-                    ? SecretVisibility.ENCRYPTED
-                    : SecretVisibility.PUBLIC,
-                },
-              }),
+          const createSecretPromises = (values.secrets as SiteNewSecret[]).map(async (newSecret: SiteNewSecret) =>
+            createSecret({
+              data: {
+                groupId: secretGroupId,
+                key: newSecret.key,
+                value: newSecret.value,
+                visibility: newSecret.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
+              },
+            })
           );
 
           await Promise.all(createSecretPromises).catch((error) => {
@@ -149,19 +125,12 @@ const NewSitePage: Page = () => {
           });
         }
 
-        await triggerDeployment({
-          where: { siteId: createResult.data.createSite.id },
-        }).catch((error) => {
+        await triggerDeployment({ where: { siteId: createResult.data.createSite.id } }).catch((error) => {
           // should not stop the process if trigger deployment fails
           Log.error('Failed to trigger deployment', error);
         });
 
-        await router.push(
-          routes.project.site.overview({
-            projectId: session.project.id,
-            siteId: createResult.data.createSite.id,
-          }),
-        );
+        await router.push(routes.project.site.overview({ projectId: session.project.id, siteId: createResult.data.createSite.id }));
       } catch (error) {
         toast.error({ error, log: 'Create site failed' });
       }
@@ -248,7 +217,4 @@ const NewSitePage: Page = () => {
 
 NewSitePage.getLayout = (page) => <DeploySite.Layout>{page}</DeploySite.Layout>;
 
-export default withAccess({
-  Component: NewSitePage,
-  requiredPermissions: [constants.PERMISSION.SITE.CREATE],
-});
+export default withAccess({ Component: NewSitePage, requiredPermissions: [constants.PERMISSION.SITE.CREATE] });

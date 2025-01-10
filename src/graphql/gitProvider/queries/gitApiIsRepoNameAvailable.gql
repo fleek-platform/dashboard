@@ -1,0 +1,3 @@
+query gitApiIsRepoNameAvailable($where: GitApiIsRepoNameAvailableWhereInput!) {
+  gitApiIsRepoNameAvailable(where: $where)
+}

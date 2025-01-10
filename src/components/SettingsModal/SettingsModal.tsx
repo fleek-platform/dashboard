@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
+import { Box, Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 
 import { SettingsModalStyles as S } from './SettingsModal.styles';
 
-export const SettingsModal = ({
-  trigger,
-  children,
-  ...props
-}: SettingsModal.Props) => {
+export const SettingsModal = ({ trigger, children, ...props }: SettingsModal.Props) => {
   return (
     <Dialog.Root {...props}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
@@ -54,9 +50,7 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
       <S.Table.Header>
         <S.Table.Row>
           {headers.map((header, index) => (
-            <S.Table.HeaderCell key={index}>
-              {header.children}
-            </S.Table.HeaderCell>
+            <S.Table.HeaderCell key={index}>{header.children}</S.Table.HeaderCell>
           ))}
           <S.Table.HeaderCell /> {/* empty cell for checkbox */}
         </S.Table.Row>
@@ -64,10 +58,7 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
 
       <S.Table.Body>
         {rows.map((row, rowIndex) => (
-          <S.Table.Row
-            key={rowIndex}
-            onClick={() => handleChange(rowIndex, !values[rowIndex])}
-          >
+          <S.Table.Row key={rowIndex} onClick={() => handleChange(rowIndex, !values[rowIndex])}>
             {row.map((cell, columnIndex) => (
               <S.Table.Cell key={columnIndex}>{cell}</S.Table.Cell>
             ))}
@@ -104,14 +95,9 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
   );
 }) as React.FC<SettingsModal.TableProps>; // explicite cast for rules of hooks
 
-SettingsModal.Footer = S.Modal.CTARow;
+SettingsModal.Footer = withProps(Box, { className: 'flex-row gap-4 child:flex-1' });
 
-export const Heading = withProps(Text, {
-  as: 'h1',
-  variant: 'primary',
-  size: 'xl',
-  weight: 700,
-});
+export const Heading = withProps(Text, { as: 'h1', variant: 'primary', size: 'xl', weight: 700 });
 SettingsModal.Heading = Heading;
 
 SettingsModal.ConfirmButton = Button;

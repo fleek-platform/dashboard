@@ -1,51 +1,39 @@
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import { useSystemStatus } from '@/hooks/useSystemStatus';
-import { forwardStyledRef } from '@/theme';
-import { Icon, Text } from '@/ui';
+import { Box, Icon, Text } from '@/ui';
 
-import { StatusChipStyles as S } from './StatusChip.styles';
+export type StatusChipProps = React.ComponentProps<typeof Box>;
 
-export type StatusChipProps = React.ComponentProps<typeof S.Container>;
+export const StatusChip = forwardRef<HTMLDivElement, StatusChipProps>((props, ref) => {
+  const systemStatus = useSystemStatus();
 
-export const StatusChip = forwardStyledRef<HTMLDivElement, StatusChipProps>(
-  S.Container,
-  (props, ref) => {
-    const systemStatus = useSystemStatus();
+  const text = useMemo(() => {
+    if (systemStatus.isLoading) {
+      return 'Loading...';
+    }
 
-    const text = useMemo(() => {
-      if (systemStatus.isLoading) {
-        return 'Loading...';
-      }
+    return systemStatus.data?.status.description || 'Could not fetch status';
+  }, [systemStatus]);
 
-      return systemStatus.data?.status.description || 'Could not fetch status';
-    }, [systemStatus]);
+  const color = useMemo(() => {
+    return parseStatusToColor(systemStatus.data?.status.indicator);
+  }, [systemStatus]);
 
-    const color = useMemo(() => {
-      return parseStatusToColor(systemStatus.data?.status.indicator);
-    }, [systemStatus]);
-
-    return (
-      <S.Container variant="container" {...props} ref={ref}>
-        <Text>Status:</Text>
-        {systemStatus.isLoading ? (
-          <Icon name="spinner" />
-        ) : (
-          <span
-            className="size-2.5 shrink-0 rounded-full"
-            style={{ backgroundColor: `rgb(var(--color-ftw-${color}-11))` }}
-          />
-        )}
-        <span
-          className="truncate font-medium"
-          style={{ color: `rgb(var(--color-ftw-${color}-11))` }}
-        >
-          {text}
-        </span>
-      </S.Container>
-    );
-  },
-);
+  return (
+    <Box className="flex-row items-center gap-2 bg-neutral-3 rounded py-2 px-3 text-sm" {...props} ref={ref}>
+      <Text>Status:</Text>
+      {systemStatus.isLoading ? (
+        <Icon name="spinner" />
+      ) : (
+        <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: `rgb(var(--color-ftw-${color}-11))` }} />
+      )}
+      <span className="truncate font-medium" style={{ color: `rgb(var(--color-ftw-${color}-11))` }}>
+        {text}
+      </span>
+    </Box>
+  );
+});
 
 const parseStatusToColor = (status?: string) => {
   switch (status) {

@@ -14,5 +14,6 @@ query project($where: ProjectWhereInput!) {
         permissions
       }
     }
+    updatedAt
   }
 }

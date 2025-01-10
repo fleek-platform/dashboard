@@ -29,28 +29,21 @@ export const UserMenu: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const session = useSessionContext();
   const projectId = session.project.id;
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !session.auth.accessToken });
 
   const handleCreateProjectClick = (): void => {
     projectContext.setIsCreateProjectModalOpen(true);
   };
 
   const isLoading = useMemo(
-    () =>
-      (meQuery.fetching && !meQuery.data) ||
-      projectContext.loading ||
-      isAvatarLoading,
-    [meQuery, projectContext, isAvatarLoading],
+    () => (meQuery.fetching && !meQuery.data) || projectContext.loading || isAvatarLoading,
+    [meQuery, projectContext, isAvatarLoading]
   );
 
   return (
     <S.Menu.Root>
       <S.Menu.Trigger>
-        <MenuAvatar
-          isLoading={isLoading as true}
-          avatarSrc={meQuery.data?.user.avatar || avatar}
-          userId={meQuery?.data?.user.id}
-        />
+        <MenuAvatar isLoading={isLoading as true} avatarSrc={meQuery.data?.user.avatar || avatar} userId={meQuery?.data?.user.id} />
       </S.Menu.Trigger>
       <Menu.Content align="end">
         <Link href={routes.project.home({ projectId })}>
@@ -91,11 +84,7 @@ type MenuAvatarProps = LoadingProps<{
   userId: string;
 }>;
 
-const MenuAvatar: React.FC<MenuAvatarProps> = ({
-  isLoading,
-  avatarSrc,
-  userId,
-}) => {
+const MenuAvatar: React.FC<MenuAvatarProps> = ({ isLoading, avatarSrc, userId }) => {
   if (isLoading) {
     return <Skeleton variant="avatar" />;
   }

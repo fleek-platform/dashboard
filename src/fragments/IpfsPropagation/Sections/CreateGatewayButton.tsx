@@ -7,24 +7,15 @@ import { useSessionContext } from '@/providers/SessionProvider';
 export const CreateGatewayButton: React.FC = () => {
   const session = useSessionContext();
 
-  const hasToken = Boolean(session.auth.token);
+  const hasToken = Boolean(session.auth.accessToken);
 
   const handleClick = () => {
     if (!hasToken) {
-      session.auth.login(
-        'dynamic',
-        routes.project.settings.privateGateways({ projectId: 'project' }),
-      );
+      session.auth.login('dynamic', routes.project.settings.privateGateways({ projectId: 'project' }));
     }
   };
 
-  const href = useMemo(
-    () =>
-      hasToken
-        ? routes.project.settings.privateGateways({ projectId: 'project' })
-        : '#',
-    [hasToken],
-  );
+  const href = useMemo(() => (hasToken ? routes.project.settings.privateGateways({ projectId: 'project' }) : '#'), [hasToken]);
 
   return (
     <ActionBox

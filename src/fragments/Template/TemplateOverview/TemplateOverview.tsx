@@ -2,7 +2,7 @@ import { ExternalLink } from '@/components';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { LoadingProps } from '@/types/Props';
 import { Template } from '@/types/Template';
-import { Avatar, Icon, Image, Skeleton, Text } from '@/ui';
+import { Avatar, Box, Icon, Image, Skeleton, Text } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { getLinkForSiteSlug } from '@/utils/siteSlugLinks';
 
@@ -10,16 +10,13 @@ import { TemplateOverviewStyles as S } from './TemplateOverview.styles';
 
 export type TemplateOverviewProps = LoadingProps<{ template: Template }>;
 
-export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
-  isLoading,
-  template,
-}) => {
+export const TemplateOverview: React.FC<TemplateOverviewProps> = ({ isLoading, template }) => {
   if (isLoading) {
     return <TemplateOverviewSkeleton />;
   }
 
   return (
-    <S.Container>
+    <Box className="[grid-area:overview] overflow-hidden w-full">
       <S.ImagePreview src={template.banner} alt="Template preview" />
       <S.Wrapper>
         <S.Header>
@@ -34,7 +31,7 @@ export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
         </S.Header>
         <TemplateProperties template={template} />
       </S.Wrapper>
-    </S.Container>
+    </Box>
   );
 };
 
@@ -59,10 +56,7 @@ const TemplateOverviewSkeleton: React.FC = () => (
 
 type TemplatePropertiesProps = LoadingProps<{ template: Template }>;
 
-const TemplateProperties: React.FC<TemplatePropertiesProps> = ({
-  isLoading,
-  template,
-}) => {
+const TemplateProperties: React.FC<TemplatePropertiesProps> = ({ isLoading, template }) => {
   const templateData = useTemplateGitData(template);
 
   if (isLoading) {
@@ -124,19 +118,12 @@ type AuthorAvatarProps = {
   creator: NonNullable<Template['creator']>;
 };
 
-const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
-  creator = {} as AuthorAvatarProps['creator'],
-}) => {
-  const isFleekAuthored =
-    creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
+const AuthorAvatar: React.FC<AuthorAvatarProps> = ({ creator = {} as AuthorAvatarProps['creator'] }) => {
+  const isFleekAuthored = creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
     <S.Property.Item variant="monochrome">
-      <Avatar
-        enableIcon
-        icon={isFleekAuthored ? 'fleek' : 'person'}
-        src={creator.avatar}
-      />
+      <Avatar enableIcon icon={isFleekAuthored ? 'fleek' : 'person'} src={creator.avatar} />
       <span>Added by&nbsp;</span> {isFleekAuthored ? 'Fleek' : creator.username}
     </S.Property.Item>
   );

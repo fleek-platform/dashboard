@@ -6,23 +6,16 @@ import { createContext } from '@/utils/createContext';
 import { AuthContext, AuthProvider, useAuthContext } from './AuthProvider';
 import { BillingProvider, useBillingContext } from './BillingProvider';
 import { useCookies } from './CookiesProvider';
-import {
-  PermissionsContext,
-  PermissionsProvider,
-  usePermissionsContext,
-} from './PermissionsProvider';
-import {
-  ProjectContext,
-  ProjectProvider,
-  useProjectContext,
-} from './ProjectProvider';
+import { PermissionsContext, PermissionsProvider, usePermissionsContext } from './PermissionsProvider';
+import { ProjectContext, ProjectProvider, useProjectContext } from './ProjectProvider';
 
 type SessionContext = {
   loading: boolean;
   error?: any;
 
-  auth: Pick<AuthContext, 'login' | 'logout' | 'token'>;
+  auth: Pick<AuthContext, 'login' | 'logout' | 'accessToken'>;
   project: ProjectContext['project'];
+  accesTokenProjectId: ProjectContext['accessTokenProjectId'];
   permissions: PermissionsContext['permissions'];
 
   setProject: (newProjectId: string) => void;
@@ -44,15 +37,11 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const cookies = useCookies();
 
   const loading = useMemo(
-    () =>
-      auth.loading || project.loading || permissions.loading || billing.loading,
-    [auth.loading, billing.loading, permissions.loading, project.loading],
+    () => auth.loading || project.loading || permissions.loading || billing.loading,
+    [auth.loading, billing.loading, permissions.loading, project.loading]
   );
 
-  const error = useMemo(
-    () => auth.error || project.error,
-    [auth.error, project.error],
-  );
+  const error = useMemo(() => auth.error || project.error, [auth.error, project.error]);
 
   useEffect(() => {
     if (error) {
@@ -75,6 +64,7 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         project: project.project,
         permissions: permissions.permissions,
         setProject,
+        accesTokenProjectId: project.accessTokenProjectId,
       }}
     >
       {children}
@@ -82,9 +72,7 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   );
 };
 
-export const SessionProvider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
+export const SessionProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   return (
     <AuthProvider>
       <ProjectProvider>

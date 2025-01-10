@@ -24,6 +24,6 @@ export const Default: Story = {
     }
     `,
     title: 'cache-advance.config.js',
-    css: { width: '600px' },
+    className: 'w-[600px]',
   },
 };

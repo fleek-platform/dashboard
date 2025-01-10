@@ -11,7 +11,6 @@ import { SiteSecret } from '@/types/Site';
 import { Box, FormField, Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
-import { EnvironmentVariablesStyles as S } from './EnvironmentVariables.styles';
 import { ValueField } from './Fields/ValueField';
 import { VisibilityField } from './Fields/VisibilityField';
 import {
@@ -20,22 +19,12 @@ import {
   useManageEnvironmentVariablesContext,
 } from './ManageEnvironmentVariables.context';
 
-export type ManageEnvironmentVariablesProps =
-  ManageEnvironmentVariablesContext & ContentProps;
+export type ManageEnvironmentVariablesProps = ManageEnvironmentVariablesContext & ContentProps;
 
-export const ManageEnvironmentVariables: React.FC<
-  ManageEnvironmentVariablesProps
-> = ({ onSubmitDelete, onSubmitUpdate, ...props }) => {
+export const ManageEnvironmentVariables: React.FC<ManageEnvironmentVariablesProps> = ({ onSubmitDelete, onSubmitUpdate, ...props }) => {
   return (
-    <ManageEnvironmentVariablesProvider
-      value={{ onSubmitDelete, onSubmitUpdate }}
-    >
-      <SettingsBox.Container>
-        <SettingsBox.Title>Environment Variables</SettingsBox.Title>
-        <SettingsBox.Text>
-          Edit or remove existing environment variables.
-        </SettingsBox.Text>
-
+    <ManageEnvironmentVariablesProvider value={{ onSubmitDelete, onSubmitUpdate }}>
+      <SettingsBox.Container className="p-0 gap-0">
         <Content {...props} />
       </SettingsBox.Container>
     </ManageEnvironmentVariablesProvider>
@@ -58,12 +47,7 @@ const Content: React.FC<ContentProps> = ({ secrets, isLoading }) => {
   }
 
   if (secrets.length === 0) {
-    return (
-      <SettingsBox.EmptyContent
-        title="No Variables"
-        description="Once you add variables, they will appear here."
-      />
-    );
+    return <SettingsBox.EmptyContent title="No Variables" description="Once you add variables, they will appear here." />;
   }
 
   return (
@@ -83,9 +67,7 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
   const { onSubmitDelete } = useManageEnvironmentVariablesContext();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const hasEditPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
-  });
+  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.SITE.EDIT_ENV_VARIABLES] });
 
   if (isLoading) {
     return (
@@ -98,9 +80,7 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
   }
 
   if (isEditing) {
-    return (
-      <EditingListItem secret={secret} onFinish={() => setIsEditing(false)} />
-    );
+    return <EditingListItem secret={secret} onFinish={() => setIsEditing(false)} />;
   }
 
   const handleDelete = async () => {
@@ -108,6 +88,8 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
     await onSubmitDelete(secret.id);
     setIsDeleting(false);
   };
+
+  console.log('secret.visibility', secret.visibility);
 
   return (
     <SettingsListItem.FlatRow>
@@ -119,13 +101,7 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
         title="Value"
         subtitle={
           <>
-            <Icon
-              name={
-                secret.visibility === SecretVisibility.ENCRYPTED
-                  ? 'lock-closed'
-                  : 'lock-open'
-              }
-            />
+            <Icon name={secret.visibility === SecretVisibility.ENCRYPTED ? 'eye-closed' : 'eye-open'} />
             <Text as="span" className="truncate">
               {secret.value}
             </Text>
@@ -133,16 +109,9 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
         }
       />
 
-      <SettingsListItem.DropdownMenu
-        isLoading={isDeleting}
-        isDisabled={!hasEditPermission}
-        hasAccess={hasEditPermission}
-      >
+      <SettingsListItem.DropdownMenu isLoading={isDeleting} isDisabled={!hasEditPermission} hasAccess={hasEditPermission}>
         {secret.visibility === SecretVisibility.PUBLIC && (
-          <SettingsListItem.DropdownMenuItem
-            icon="pencil"
-            onClick={() => setIsEditing(true)}
-          >
+          <SettingsListItem.DropdownMenuItem icon="pencil" onClick={() => setIsEditing(true)}>
             Edit
           </SettingsListItem.DropdownMenuItem>
         )}
@@ -159,18 +128,14 @@ type EditingListItemProps = {
   onFinish: () => void;
 };
 
-const EditingListItem: React.FC<EditingListItemProps> = ({
-  secret,
-  onFinish,
-}) => {
+const EditingListItem: React.FC<EditingListItemProps> = ({ secret, onFinish }) => {
   const { onSubmitUpdate } = useManageEnvironmentVariablesContext();
 
   const editForm = Form.useForm({
     options: { partial: true },
     values: {
       key: secret.key,
-      value:
-        secret.visibility === SecretVisibility.ENCRYPTED ? '' : secret.value,
+      value: secret.visibility === SecretVisibility.ENCRYPTED ? '' : secret.value,
       encrypted: secret.visibility === SecretVisibility.ENCRYPTED,
     },
     schema: zod.object({
@@ -184,9 +149,7 @@ const EditingListItem: React.FC<EditingListItemProps> = ({
         },
         data: {
           value: values.value,
-          visibility: values.encrypted
-            ? SecretVisibility.ENCRYPTED
-            : SecretVisibility.PUBLIC,
+          visibility: values.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
         },
       });
       onFinish();
@@ -195,7 +158,7 @@ const EditingListItem: React.FC<EditingListItemProps> = ({
 
   return (
     <Form.Provider value={editForm}>
-      <S.Editing.FlatRow>
+      <SettingsListItem.FlatRow>
         <SettingsListItem.Data
           title={secret.key}
           subtitle={`Created ${getDurationUntilNow({ isoDateString: secret.updatedAt, shortFormat: true })}`}
@@ -208,20 +171,17 @@ const EditingListItem: React.FC<EditingListItemProps> = ({
           {editForm.isSubmitting ? (
             <Icon name="spinner" />
           ) : (
-            <S.Editing.ActionsBox>
-              <S.Editing.ActionText
-                colorScheme="yellow"
-                onClick={editForm.submit}
-              >
+            <Box className="items-end gap-1">
+              <span className="text-accent-11 text-sm cursor-pointer" onClick={editForm.submit}>
                 Save
-              </S.Editing.ActionText>
-              <S.Editing.ActionText colorScheme="slate" onClick={onFinish}>
+              </span>
+              <span className="text-neutral-11 text-sm cursor-pointer" onClick={onFinish}>
                 Cancel
-              </S.Editing.ActionText>
-            </S.Editing.ActionsBox>
+              </span>
+            </Box>
           )}
         </FormField.Root>
-      </S.Editing.FlatRow>
+      </SettingsListItem.FlatRow>
     </Form.Provider>
   );
 };

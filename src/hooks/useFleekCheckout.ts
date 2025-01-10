@@ -1,3 +1,4 @@
+/* eslint-disable fleek-custom/no-interface */
 /* eslint-disable fleek-custom/no-default-error */
 import { useMutation } from '@tanstack/react-query';
 
@@ -7,13 +8,17 @@ import { CheckoutResponse, PlanResponse } from '@/types/Billing';
 
 import { useRouter } from './useRouter';
 
+declare global {
+  interface Window {
+    promotekit_referral: unknown;
+  }
+}
+
 export const useFleekCheckout = () => {
   const router = useRouter();
   const projectId = router.query.projectId!;
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
-  });
+  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
 
   const checkout = async () => {
     try {
@@ -28,9 +33,7 @@ export const useFleekCheckout = () => {
       const PlansResponse: PlanResponse[] = await plan.json();
 
       // always keep the plan name aligned with what's on stripe plan name
-      const planId = PlansResponse.find(
-        (plan) => plan.name.toUpperCase() === 'PRO',
-      )?.id;
+      const planId = PlansResponse.find((plan) => plan.name.toUpperCase() === 'PRO')?.id;
 
       if (!planId) {
         throw new Error('Plan not found');
@@ -43,13 +46,14 @@ export const useFleekCheckout = () => {
         body: JSON.stringify({
           projectId,
           planId,
+          metadata: {
+            referralId: window.promotekit_referral,
+          },
         }),
       });
 
       if (!response.ok) {
-        throw new Error(
-          'There was an error trying to upgrade your plan. Please try again.',
-        );
+        throw new Error('There was an error trying to upgrade your plan. Please try again.');
       }
 
       const result: CheckoutResponse = await response.json();

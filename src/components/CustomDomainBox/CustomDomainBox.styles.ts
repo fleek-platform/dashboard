@@ -1,7 +1,7 @@
 import { styled } from '@/theme';
 import { Box, Skeleton } from '@/ui';
 
-import { Link } from '..';
+import { Link } from '../ftw/Link/Link';
 
 export const CustomDomainBoxStyles = {
   Container: styled(Box, {

@@ -6,18 +6,11 @@ import { useEnsAvatar, useEnsName } from 'wagmi';
 import { constants } from '@/constants';
 import { MeQuery, useMeQuery } from '@/generated/graphqlClient';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
+import { useAuthContext } from '@/providers/AuthProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
-import {
-  Avatar,
-  AvatarMarble,
-  Box,
-  Icon,
-  SidebarDropdown,
-  Skeleton,
-  Text,
-} from '@/ui';
+import { Avatar, AvatarMarble, Box, Icon, SidebarDropdown, Skeleton, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 type AccountDropdownAvatarProps = {
@@ -26,11 +19,7 @@ type AccountDropdownAvatarProps = {
   className: string;
 };
 
-const AccountDropdownAvatar: React.FC<AccountDropdownAvatarProps> = ({
-  userId,
-  avatarSrc,
-  className,
-}) => {
+const AccountDropdownAvatar: React.FC<AccountDropdownAvatarProps> = ({ userId, avatarSrc, className }) => {
   if (!avatarSrc && !userId) {
     return (
       <Box className="size-6 justify-center items-center">
@@ -43,20 +32,13 @@ const AccountDropdownAvatar: React.FC<AccountDropdownAvatarProps> = ({
     return <AvatarMarble name={userId} className={cn('shrink-0', className)} />;
   }
 
-  return (
-    <Avatar
-      enableIcon
-      icon="image"
-      title={userId}
-      src={avatarSrc}
-      className={cn('shrink-0', className)}
-    />
-  );
+  return <Avatar enableIcon icon="image" title={userId} src={avatarSrc} className={cn('shrink-0', className)} />;
 };
 
 export const AccountDropdown: React.FC = () => {
-  const { primaryWallet } = useDynamicContext();
+  const auth = useAuthContext();
   const projectContext = useProjectContext();
+  const { primaryWallet } = useDynamicContext();
 
   const { data: ensName } = useEnsName({
     address: primaryWallet?.address as `0x${string}`,
@@ -67,7 +49,7 @@ export const AccountDropdown: React.FC = () => {
   });
 
   const { theme, toggleTheme } = useTheme();
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !auth.accessToken });
 
   const session = useSessionContext();
   const projectId = session.project.id;
@@ -75,11 +57,8 @@ export const AccountDropdown: React.FC = () => {
   const isMobile = useMediaQueryWindow('(max-width: 830px)');
 
   const isLoading = useMemo(
-    () =>
-      (meQuery.fetching && !meQuery.data) ||
-      projectContext.loading ||
-      isAvatarLoading,
-    [meQuery, projectContext, isAvatarLoading],
+    () => (meQuery.fetching && !meQuery.data) || projectContext.loading || isAvatarLoading,
+    [meQuery, projectContext, isAvatarLoading]
   );
 
   if (isLoading) {
@@ -105,10 +84,7 @@ export const AccountDropdown: React.FC = () => {
           </Text>
         </Box>
         <Box className="group-hover:bg-neutral-3 items-center justify-center size-[1.75rem] rounded transition-colors shrink-0">
-          <Icon
-            name={isMobile ? 'chevron-up' : 'chevron-right'}
-            className="group-data-[state=open]:rotate-180 transition-all size-4"
-          />
+          <Icon name={isMobile ? 'chevron-up' : 'chevron-right'} className="group-data-[state=open]:rotate-180 transition-all size-4" />
         </Box>
       </SidebarDropdown.Trigger>
       <SidebarDropdown.Content
@@ -118,29 +94,16 @@ export const AccountDropdown: React.FC = () => {
         className="data-[state=open]:animate-fade-in-top rounded w-[14.438rem] flex flex-col gap-2.5 p-2.5 bg-neutral-1 border border-neutral-6 shadow-xl z-20"
       >
         <Box className="gap-2">
-          <SidebarDropdown.Item
-            href={routes.project.home({ projectId })}
-            iconRight="home"
-          >
+          <SidebarDropdown.Item href={routes.project.home({ projectId })} iconRight="home">
             Home
           </SidebarDropdown.Item>
-          <SidebarDropdown.Item
-            href={routes.profile.settings.general()}
-            iconRight="gear"
-          >
+          <SidebarDropdown.Item href={routes.profile.settings.general()} iconRight="gear">
             Account settings
           </SidebarDropdown.Item>
-          <SidebarDropdown.Item
-            onClick={toggleTheme}
-            iconRight={theme === 'dark' ? 'moon' : 'sun'}
-          >
+          <SidebarDropdown.Item onClick={toggleTheme} iconRight={theme === 'dark' ? 'moon' : 'sun'}>
             Toggle theme
           </SidebarDropdown.Item>
-          <SidebarDropdown.Item
-            href={constants.EXTERNAL_LINK.FLEEK_HOME}
-            iconRight="arrow-up-right"
-            isExternalLink
-          >
+          <SidebarDropdown.Item href={constants.EXTERNAL_LINK.FLEEK_HOME} iconRight="arrow-up-right" isExternalLink>
             Fleek homepage
           </SidebarDropdown.Item>
           <SidebarDropdown.Separator />

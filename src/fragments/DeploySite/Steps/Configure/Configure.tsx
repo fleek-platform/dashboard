@@ -1,28 +1,19 @@
-import {
-  SiteBuildSettings,
-  SiteBuildSettingsData,
-} from '@fleek-platform/utils-sites';
+import { SiteBuildSettings, SiteBuildSettingsData } from '@fleek-platform/utils-sites';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { Form } from '@/components';
-import {
-  type SiteFramework,
-  useGitSiteBuildSettingsQuery,
-} from '@/generated/graphqlClient';
+import { type SiteFramework, useGitSiteBuildSettingsQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
 import { LoadingProps } from '@/types/Props';
-import { Avatar, Combobox, FormField, Stepper, Text } from '@/ui';
+import { Avatar, Box, Combobox, FormField, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
-import { DeploySiteStepsStyles as S } from '../Steps.styles';
 import { Advanced } from './Advanced';
 import { BranchField } from './BranchField';
-import { ConfigureStepStyles as CS } from './Configure.styles';
 
 export const ConfigureStep: React.FC = () => {
-  const { mode, gitProviderId, gitRepository, gitBranch } =
-    useDeploySiteContext();
+  const { mode, gitProviderId, gitRepository, gitBranch } = useDeploySiteContext();
   const stepper = Stepper.useContext();
   const router = useRouter();
   const form = Form.useContext();
@@ -33,19 +24,12 @@ export const ConfigureStep: React.FC = () => {
       where: {
         gitProviderId: gitProviderId as string,
         sourceBranch: gitBranch || (gitRepository?.defaultBranch as string),
-        baseDirectory:
-          mode === 'managed' ? form.fields.baseDirectory.value : '',
+        baseDirectory: mode === 'managed' ? form.fields.baseDirectory.value : '',
         sourceRepositoryName: gitRepository?.name as string,
         sourceRepositoryOwner: gitRepository?.owner as string,
       },
     },
-    pause:
-      !gitProviderId ||
-      !gitBranch ||
-      !gitRepository?.defaultBranch ||
-      !mode ||
-      !gitRepository.owner ||
-      !gitRepository.name,
+    pause: !gitProviderId || !gitBranch || !gitRepository?.defaultBranch || !mode || !gitRepository.owner || !gitRepository.name,
   });
 
   useStepSetup({
@@ -76,7 +60,7 @@ export const ConfigureStep: React.FC = () => {
         form.fields.dockerImage.setValue(settings.dockerImage, true);
       }
     },
-    [mode, form],
+    [mode, form]
   );
 
   useEffect(() => {
@@ -87,44 +71,25 @@ export const ConfigureStep: React.FC = () => {
 
   useEffect(() => {
     if (gitSiteBuildSettingsQuery.data?.siteBuildSettings) {
-      setBuildSettings(
-        gitSiteBuildSettingsQuery.data
-          .siteBuildSettings as SiteBuildSettingsData,
-      );
+      setBuildSettings(gitSiteBuildSettingsQuery.data.siteBuildSettings as SiteBuildSettingsData);
     } else if (gitSiteBuildSettingsQuery.error) {
-      console.error(
-        'Error fetching site build settings:',
-        gitSiteBuildSettingsQuery.error,
-      );
+      console.error('Error fetching site build settings:', gitSiteBuildSettingsQuery.error);
     }
-  }, [
-    gitSiteBuildSettingsQuery.data?.siteBuildSettings,
-    gitSiteBuildSettingsQuery.error,
-    setBuildSettings,
-  ]);
+  }, [gitSiteBuildSettingsQuery.data?.siteBuildSettings, gitSiteBuildSettingsQuery.error, setBuildSettings]);
 
   return (
-    <S.Container>
-      <Text
-        as="h2"
-        variant="primary"
-        size="xl"
-        weight={700}
-        className="self-start"
-      >
-        Configure Site
+    <Box variant="container" className="relative gap-6 rounded-xl">
+      <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+        Configure site
       </Text>
 
-      <CS.Form.Wrapper>
-        <CS.Form.Row>
+      <Box className="gap-4 text-sm">
+        <Box className="flex-row gap-3">
           <FormField.Root className="flex-1">
             <Form.InputField name="name" label="Site Name" placeholder="Name" />
           </FormField.Root>
-          <FrameworkField
-            setBuildSettings={setBuildSettings}
-            isLoading={effect.current}
-          />
-        </CS.Form.Row>
+          <FrameworkField setBuildSettings={setBuildSettings} isLoading={effect.current} />
+        </Box>
 
         {mode === 'managed' && <BranchField />}
 
@@ -147,20 +112,14 @@ export const ConfigureStep: React.FC = () => {
         />
 
         {mode === 'self' && (
-          <Form.InputField
-            name="baseDirectory"
-            label="Base Directory"
-            placeholder="./"
-            disableValidMessage
-            disableValidationDebounce
-          />
+          <Form.InputField name="baseDirectory" label="Base Directory" placeholder="./" disableValidMessage disableValidationDebounce />
         )}
 
         {mode !== 'self' && <Advanced />}
 
         <Form.SubmitButton className="w-full">Deploy site</Form.SubmitButton>
-      </CS.Form.Wrapper>
-    </S.Container>
+      </Box>
+    </Box>
   );
 };
 
@@ -168,18 +127,14 @@ type FrameworkFieldProps = LoadingProps & {
   setBuildSettings: (settings: SiteBuildSettingsData) => void;
 };
 
-const FrameworkField: React.FC<FrameworkFieldProps> = ({
-  isLoading,
-  setBuildSettings,
-}) => {
+const FrameworkField: React.FC<FrameworkFieldProps> = ({ isLoading, setBuildSettings }) => {
   const field = Form.useField<string | null>('frameworkId');
 
   const siteFrameworks = useSiteFrameworks();
 
   const framework = useMemo(
-    () =>
-      siteFrameworks.data?.find((framework) => framework.id === field.value),
-    [field.value, siteFrameworks.data],
+    () => siteFrameworks.data?.find((framework) => framework.id === field.value),
+    [field.value, siteFrameworks.data]
   );
 
   // eslint-disable-next-line fleek-custom/valid-argument-types
@@ -196,18 +151,10 @@ const FrameworkField: React.FC<FrameworkFieldProps> = ({
   return (
     <FormField.Root className="flex-1">
       <FormField.Label>Framework</FormField.Label>
-      <Combobox
-        items={items}
-        selected={[framework as SiteFramework, handleSelect]}
-        queryKey="name"
-        isLoading={isLoading}
-      >
+      <Combobox items={items} selected={[framework as SiteFramework, handleSelect]} queryKey="name" isLoading={isLoading}>
         {({ Field, Options }) => (
           <>
-            <Field
-              placeholder="Select a framework"
-              css={{ minHeight: '2rem', borderRadius: '0.5rem' }}
-            >
+            <Field placeholder="Select a framework" css={{ minHeight: '2rem', borderRadius: '0.5rem' }}>
               {FrameworkItem}
             </Field>
 

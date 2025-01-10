@@ -14,7 +14,7 @@ export default meta;
 
 export const Default: StoryObj<TemplateOverviewProps> = {
   render: (args: TemplateOverviewProps) => (
-    <Box css={{ maxWidth: '80%' }}>
+    <Box className="max-w-[80%]">
       <TemplateOverview {...args} />
     </Box>
   ),
@@ -23,8 +23,7 @@ export const Default: StoryObj<TemplateOverviewProps> = {
       id: 'template-id',
       name: 'React',
       description: 'Template description',
-      banner:
-        'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
+      banner: 'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
       siteId: 'site-id',
       siteAvatar: 'https://avatars.githubusercontent.com/u/44036562?s=200&v=4',
       siteSlug: 'fleek',
@@ -47,7 +46,7 @@ export const Default: StoryObj<TemplateOverviewProps> = {
 
 export const Skeleton: StoryObj<TemplateOverviewProps> = {
   render: (args: TemplateOverviewProps) => (
-    <Box css={{ maxWidth: '80%' }}>
+    <Box className="max-w-[15.125rem]">
       <TemplateOverview {...args} />
     </Box>
   ),

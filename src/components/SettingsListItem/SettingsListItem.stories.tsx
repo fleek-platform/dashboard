@@ -27,13 +27,9 @@ export const WithDropdown: Story = {
     subtitle: 'Now I have a dropdown',
     children: (
       <SettingsListItem.DropdownMenu>
-        <SettingsListItem.DropdownMenuItem icon="refresh">
-          Refresh
-        </SettingsListItem.DropdownMenuItem>
+        <SettingsListItem.DropdownMenuItem icon="refresh">Refresh</SettingsListItem.DropdownMenuItem>
         <SettingsListItem.DropdownMenuSeparator />
-        <SettingsListItem.DropdownMenuItem icon="trash">
-          Delete
-        </SettingsListItem.DropdownMenuItem>
+        <SettingsListItem.DropdownMenuItem icon="trash">Delete</SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>
     ),
   },
@@ -47,13 +43,9 @@ export const WithBadge: Story = {
       <>
         <BadgeText colorScheme="green">Active</BadgeText>
         <SettingsListItem.DropdownMenu>
-          <SettingsListItem.DropdownMenuItem icon="refresh">
-            Refresh
-          </SettingsListItem.DropdownMenuItem>
+          <SettingsListItem.DropdownMenuItem icon="refresh">Refresh</SettingsListItem.DropdownMenuItem>
           <SettingsListItem.DropdownMenuSeparator />
-          <SettingsListItem.DropdownMenuItem icon="trash">
-            Delete
-          </SettingsListItem.DropdownMenuItem>
+          <SettingsListItem.DropdownMenuItem icon="trash">Delete</SettingsListItem.DropdownMenuItem>
         </SettingsListItem.DropdownMenu>
       </>
     ),
@@ -78,7 +70,7 @@ export const WithIconAvatar: Story = {
 
 export const WithLoading: Story = {
   render: () => (
-    <Box css={{ gap: '$spacing-3' }}>
+    <Box className="gap-3">
       <SettingsListItem.Skeleton />
       <SettingsListItem.Skeleton enableAvatar />
     </Box>

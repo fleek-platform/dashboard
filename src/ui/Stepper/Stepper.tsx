@@ -1,11 +1,10 @@
 /* eslint-disable fleek-custom/no-default-error */
-import React, { useMemo, useState } from 'react';
+import React, { forwardRef, useMemo, useState } from 'react';
 
-import { forwardStyledRef } from '@/theme';
+import { cn } from '@/utils/cn';
 import { createContext } from '@/utils/createContext';
 
-import { Box } from '../Box/Box';
-import { StepperStyles } from './Stepper.styles';
+import { Box, BoxProps } from '../ftw/Box/Box';
 
 export type SelectContext = {
   totalSteps: number;
@@ -60,11 +59,7 @@ const Root: React.FC<Stepper.RootProps> = ({ children, initialStep = 1 }) => {
     }
   };
 
-  return (
-    <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>
-      {children}
-    </Provider>
-  );
+  return <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>{children}</Provider>;
 };
 
 const Container = (props: Stepper.ContainerProps): JSX.Element => {
@@ -75,15 +70,11 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
     () =>
       React.Children.toArray(children).map((child, index) => {
         if (!React.isValidElement(child)) {
-          throw new Error(
-            'Stepper.Container children must be a valid React element',
-          );
+          throw new Error('Stepper.Container children must be a valid React element');
         }
 
         if (child.type !== Stepper.Step) {
-          throw new Error(
-            'Stepper.Container children must be a Stepper.Step component',
-          );
+          throw new Error('Stepper.Container children must be a Stepper.Step component');
         }
 
         if (index === currentStep) {
@@ -92,7 +83,7 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
 
         return null;
       }),
-    [children, currentStep],
+    [children, currentStep]
   );
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -104,29 +95,26 @@ const Step = ({
 }: // eslint-disable-next-line react/jsx-no-useless-fragment
 Stepper.StepProps): JSX.Element => <>{children}</>;
 
-const Indicator = forwardStyledRef<HTMLDivElement, Stepper.IndicatorProps>(
-  StepperStyles.Container,
-  (props, ref) => {
-    const { currentStep, totalSteps } = useContext();
-    const steps = Array.from(Array(totalSteps).keys());
+const Indicator = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
+  const { currentStep, totalSteps } = useContext();
+  const steps = Array.from(Array(totalSteps).keys());
 
-    return (
-      <StepperStyles.Container ref={ref} {...props}>
-        <StepperStyles.Rail>
-          {steps.map((step) => (
-            <StepperStyles.RailDivision
-              key={step}
-              data-active={step <= currentStep}
-            />
-          ))}
-        </StepperStyles.Rail>
-        <StepperStyles.RailDivisionLabel>
-          Step {currentStep + 1}
-        </StepperStyles.RailDivisionLabel>
-      </StepperStyles.Container>
-    );
-  },
-);
+  return (
+    <Box className="gap-3" ref={ref} {...props}>
+      <Box className="relative flex-row items-center gap-3 w-full">
+        {steps.map((step) => (
+          <Box
+            key={step}
+            className={cn('bg-neutral-4 w-8 h-2.5 rounded-full', {
+              'bg-accent-11': step <= currentStep,
+            })}
+          />
+        ))}
+      </Box>
+      <span className="text-accent-11">Step {currentStep + 1}</span>
+    </Box>
+  );
+});
 
 export const Stepper = {
   useContext,

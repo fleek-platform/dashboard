@@ -1,15 +1,10 @@
-import {
-  DynamicMultiWalletPromptsWidget,
-  useDynamicContext,
-  useUserWallets,
-} from '@dynamic-labs/sdk-react-core';
+import { DynamicMultiWalletPromptsWidget, useDynamicContext, useUserWallets } from '@dynamic-labs/sdk-react-core';
 import { useState } from 'react';
 
 import { Form, LearnMoreMessage, SettingsBox } from '@/components';
 import { constants } from '@/constants';
-import { Button } from '@/ui';
+import { Box, Button } from '@/ui';
 
-import { LoginConnectionStyles as S } from './ManageConnection.style';
 import { UserEmailModal } from './UserEmailModal';
 
 export const LoginConnections: React.FC = () => {
@@ -32,11 +27,10 @@ export const LoginConnections: React.FC = () => {
         <SettingsBox.Title>Login Connections</SettingsBox.Title>
 
         <SettingsBox.Text>
-          Choose your preferred login method below to seamlessly access your
-          account in the way that works best for you.
+          Choose your preferred login method below to seamlessly access your account in the way that works best for you.
         </SettingsBox.Text>
 
-        <S.ButtonContainer>
+        <Box className="flex-row gap-2.5">
           {sdkHasLoaded ? (
             <>
               <AddWalletButton />
@@ -48,23 +42,16 @@ export const LoginConnections: React.FC = () => {
               <SettingsBox.Skeleton variant="button" />
             </>
           )}
-        </S.ButtonContainer>
+        </Box>
 
         <SettingsBox.ActionRow>
-          <LearnMoreMessage
-            href={constants.EXTERNAL_LINK.FLEEK_DOCS_LOGIN_CONNECTIONS}
-          >
-            login connections
-          </LearnMoreMessage>
+          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_LOGIN_CONNECTIONS}>login connections</LearnMoreMessage>
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
 
       <DynamicMultiWalletPromptsWidget />
 
-      <UserEmailModal
-        isOpen={isAddEmailModalOpen}
-        closeModal={handleOpenModalChange}
-      />
+      <UserEmailModal isOpen={isAddEmailModalOpen} closeModal={handleOpenModalChange} />
     </>
   );
 };
@@ -78,11 +65,7 @@ const AddWalletButton: React.FC = () => {
   };
 
   return (
-    <Button
-      iconLeft="wallet"
-      onClick={handleLogIn}
-      disabled={userWallets.length > 0}
-    >
+    <Button iconLeft="wallet" onClick={handleLogIn} disabled={userWallets.length > 0}>
       Add Ethereum wallet
     </Button>
   );

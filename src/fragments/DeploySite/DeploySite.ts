@@ -1,12 +1,8 @@
 import { AsideContent } from './AsideContent';
 import { BackButton } from './BackButton';
 import { sourceProviderLabel } from './DeploySite.constants';
-import {
-  DeploySiteContext,
-  DeploySiteProvider,
-  useDeploySiteContext,
-} from './DeploySite.context';
-import { DeploySiteStyles as S } from './DeploySite.styles';
+import { DeploySiteContext, DeploySiteProvider, useDeploySiteContext } from './DeploySite.context';
+import { Grid } from './Grid';
 import { Layout } from './Layout';
 import { ProjectChangeGuard } from './ProjectChangeGuard';
 import { ConfigureStep } from './Steps/Configure/Configure';
@@ -17,7 +13,7 @@ import { RepositoryStep } from './Steps/Repository/Repository';
 export const DeploySite = {
   // layout
   Layout,
-  Grid: S.Grid,
+  Grid,
   BackButton,
 
   // fragments

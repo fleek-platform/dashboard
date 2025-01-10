@@ -3,6 +3,7 @@ query gitRepositories($where: GitApiInstallationsWhereInput!) {
     avatar
     installationId
     isOrganization
+    gitIntegrationId
     name
     repos {
       id

@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
-import { Box } from '../Box/Box';
 import { FormField } from '../FormField/FormField';
+import { Box } from '../ftw/Box/Box';
 import { Button } from '../ftw/Button/Button';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
@@ -29,13 +29,10 @@ export const Default: Story = (args) => {
         </Dialog.Title>
         <Dialog.Description asChild>
           <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+            sunt in culpa qui officia deserunt mollit anim id est laborum.
           </Text>
         </Dialog.Description>
         <Dialog.Close asChild>
@@ -58,17 +55,17 @@ export const CreateProject: Story = (args) => {
           Create Project
         </Text>
         <Text>
-          Create a new project to host sites and store files. You can further
-          customize your project in settings, including inviting collaborators.
+          Create a new project to host sites and store files. You can further customize your project in settings, including inviting
+          collaborators.
         </Text>
-        <Box css={{ gap: '$xs' }}>
+        <Box className="gap-4">
           <FormField.Label>Project name</FormField.Label>
           <Input.Root>
             <Input.Field placeholder="Project name" />
           </Input.Root>
         </Box>
         <Text>Learn more about Projects</Text>
-        <Box css={{ flexDirection: 'row', gap: '$sm', fontSize: '0.875rem' }}>
+        <Box className="flex-row items-center gap-2 text-xs">
           <Dialog.Close asChild>
             <Button intent="neutral">Cancel</Button>
           </Dialog.Close>

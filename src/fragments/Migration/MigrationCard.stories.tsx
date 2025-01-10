@@ -15,7 +15,7 @@ export default meta;
 export const Fetching: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>
@@ -32,7 +32,7 @@ export const Fetching: StoryObj<MigrationCardProps> = {
 export const InProgress: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>
@@ -107,7 +107,7 @@ export const InProgress: StoryObj<MigrationCardProps> = {
 export const Completed: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>
@@ -182,7 +182,7 @@ export const Completed: StoryObj<MigrationCardProps> = {
 export const PartiallyComplete: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>
@@ -257,7 +257,7 @@ export const PartiallyComplete: StoryObj<MigrationCardProps> = {
 export const Failed: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>
@@ -332,7 +332,7 @@ export const Failed: StoryObj<MigrationCardProps> = {
 export const WithChildren: StoryObj<MigrationCardProps> = {
   render: (args) => {
     return (
-      <Box css={{ maxWidth: '26.5rem' }}>
+      <Box className="max-w-[26.5rem]">
         <MigrationStyles.Content.Container>
           <MigrationCard {...args} />
         </MigrationStyles.Content.Container>

@@ -30,11 +30,7 @@ const getFoldersObject = (absolutePath: string): FolderItem[] => {
   });
 };
 
-export const FolderNavigation: React.FC<FolderNavigationProps> = ({
-  absolutePath,
-  isLoading = false,
-  onFolderClick,
-}) => {
+export const FolderNavigation: React.FC<FolderNavigationProps> = ({ absolutePath, isLoading = false, onFolderClick }) => {
   const getFoldersToDisplay = () => {
     if (!absolutePath) {
       return null;
@@ -49,20 +45,10 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
 
       return (
         <>
-          <FolderItem
-            onClickFolder={() => onFolderClick(firstFolder[0].pathToFolder)}
-          >
-            {firstFolder[0].label}
-          </FolderItem>
-          <ThreeDotsMenu
-            folders={theeDotsFolders}
-            onClickFolder={onFolderClick}
-          />
+          <FolderItem onClickFolder={() => onFolderClick(firstFolder[0].pathToFolder)}>{firstFolder[0].label}</FolderItem>
+          <ThreeDotsMenu folders={theeDotsFolders} onClickFolder={onFolderClick} />
           {lastTwoFolders.map((folder, index) => (
-            <FolderItem
-              key={index}
-              onClickFolder={() => onFolderClick(folder.pathToFolder)}
-            >
+            <FolderItem key={index} onClickFolder={() => onFolderClick(folder.pathToFolder)}>
               {folder.label}
             </FolderItem>
           ))}
@@ -71,10 +57,7 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
     }
 
     return folderItems.map((folder, index) => (
-      <FolderItem
-        key={index}
-        onClickFolder={() => onFolderClick(folder.pathToFolder)}
-      >
+      <FolderItem key={index} onClickFolder={() => onFolderClick(folder.pathToFolder)}>
         {folder.label}
       </FolderItem>
     ));
@@ -91,7 +74,7 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
 };
 
 const FolderNavigationSkeleton: React.FC = () => (
-  <Box className="flex-row gap-2.5" css={{ color: '$icon-slate' }}>
+  <Box className="flex-row gap-2.5">
     <Icon name="chevron-right" />
     <Box className="flex-row gap-2.5 items-center">
       <Skeleton variant="text" className="w-[4rem]" />
@@ -104,10 +87,7 @@ type ThreeDotsMenuProps = {
   onClickFolder: (pathToFolder: string) => void;
 };
 
-const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({
-  folders,
-  onClickFolder,
-}) => (
+const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ folders, onClickFolder }) => (
   <>
     <Icon name="chevron-right" />
     <Menu.Root>
@@ -117,11 +97,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({
       <Menu.Portal>
         <Menu.Content align="start">
           {folders.map((folder, index) => (
-            <Menu.Item
-              key={index}
-              className="justify-start gap-2.5"
-              onClick={() => onClickFolder(folder.pathToFolder)}
-            >
+            <Menu.Item key={index} className="justify-start gap-2.5" onClick={() => onClickFolder(folder.pathToFolder)}>
               <Icon name="archive" css={{ color: '$icon-slate-actionable' }} />
               {folder.label}
             </Menu.Item>
@@ -138,7 +114,7 @@ type FolderItemProps = ChildrenProps<{
 
 const FolderItem: React.FC<FolderItemProps> = ({ children, onClickFolder }) => {
   return (
-    <Box className="flex-row gap-2.5" css={{ color: '$icon-slate' }}>
+    <Box className="flex-row gap-2.5">
       <Icon name="chevron-right" />
       <Box className="flex-row gap-2.5 cursor-pointer" onClick={onClickFolder}>
         <Icon name="archive" />

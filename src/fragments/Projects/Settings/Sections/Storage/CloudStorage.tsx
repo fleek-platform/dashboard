@@ -15,18 +15,11 @@ export const CloudStorage: React.FC = () => {
   const { selectedStorage, setSelectedStorage } = useStorageSettingsContext();
   const session = useSessionContext();
   const toast = useToast();
-  const hasEditPermission = usePermissions({
-    action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS],
-  });
+  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS] });
 
-  const [projectQuery] = useProjectQuery({
-    variables: { where: { id: session.project.id } },
-  });
+  const [projectQuery] = useProjectQuery({ variables: { where: { id: session.project.id } } });
 
-  const isLoading = useMemo(
-    () => session.loading || projectQuery.fetching,
-    [projectQuery.fetching, session.loading],
-  );
+  const isLoading = useMemo(() => session.loading || projectQuery.fetching, [projectQuery.fetching, session.loading]);
 
   useEffect(() => {
     if (projectQuery.data?.project) {
@@ -69,8 +62,7 @@ export const CloudStorage: React.FC = () => {
     <SettingsBox.Container>
       <SettingsBox.Title>Default Storage</SettingsBox.Title>
       <SettingsBox.Text>
-        Select what decentralized storage layer your files are stored by
-        default. Filecoin is selected by default.
+        Select what decentralized storage layer your files are stored by default. Filecoin is selected by default.
       </SettingsBox.Text>
 
       <PermissionsTooltip hasAccess={hasEditPermission} isLoading={isLoading}>
@@ -97,7 +89,7 @@ export const CloudStorage: React.FC = () => {
                 {(item) => (
                   <CompoundOption
                     header={item.icons.map((icon) => (
-                      <Icon key={icon} name={icon} />
+                      <Icon key={icon} name={icon} className="size-4" />
                     ))}
                     content={`When this option is selected all files will be stored on ${item.label}. ${
                       item.disclaimer ? item.disclaimer : ''
@@ -111,16 +103,8 @@ export const CloudStorage: React.FC = () => {
       </PermissionsTooltip>
 
       <SettingsBox.ActionRow>
-        <LearnMoreMessage
-          href={constants.EXTERNAL_LINK.FLEEK_DOCS_CLOUD_STORAGE}
-        >
-          default cloud storage
-        </LearnMoreMessage>
-        {isLoading ? (
-          <SettingsBox.Skeleton variant="button" />
-        ) : (
-          <SaveChangesButton />
-        )}
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_CLOUD_STORAGE}>default cloud storage</LearnMoreMessage>
+        {isLoading ? <SettingsBox.Skeleton variant="button" /> : <SaveChangesButton />}
       </SettingsBox.ActionRow>
     </SettingsBox.Container>
   );
@@ -129,9 +113,7 @@ export const CloudStorage: React.FC = () => {
 const SaveChangesButton: React.FC = () => {
   const { onSaveSubmit, selectedStorage } = useStorageSettingsContext();
   const [isLoading, setIsLoading] = useState(false);
-  const hasEditPermission = usePermissions({
-    action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS],
-  });
+  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.STORAGE.EDIT_SETTINGS] });
 
   const handleSaveChanges = async () => {
     if (!selectedStorage) {
@@ -144,13 +126,7 @@ const SaveChangesButton: React.FC = () => {
   };
 
   return (
-    <Button
-      loading={isLoading}
-      disabled={isLoading || !hasEditPermission}
-      onClick={handleSaveChanges}
-      role="button"
-      aria-label="Save storage layer changes"
-    >
+    <Button loading={isLoading} disabled={isLoading || !hasEditPermission} onClick={handleSaveChanges}>
       Save changes
     </Button>
   );

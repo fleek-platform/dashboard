@@ -1,0 +1,6 @@
+mutation generateUserSessionDetails($data: GenerateUserSessionDetailsDataInput!) {
+  generateUserSessionDetails(data: $data) {
+    accessToken
+    projectId
+  }
+}

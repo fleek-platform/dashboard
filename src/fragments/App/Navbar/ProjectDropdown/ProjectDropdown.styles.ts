@@ -1,25 +1,12 @@
 import { styled } from '@/theme';
-import { Avatar, AvatarMarble, Box, Icon, Menu, Scrollable } from '@/ui';
+import { AvatarMarble, Icon, Menu, Scrollable } from '@/ui';
 
 export const ProjectDropdownStyles = {
   MenuItem: {
     Wrapper: styled(Menu.CheckboxItem, {
       zIndex: '$dropdown',
     }),
-    Container: styled(Box, {
-      flexDirection: 'row',
-      gap: '$spacing-2-5',
-      alignItems: 'center',
-      textSize: '$sm',
 
-      [`>${Avatar}`]: {
-        fontSize: '$2xs',
-      },
-
-      [`>${AvatarMarble}`]: {
-        fontSize: '$2xs',
-      },
-    }),
     AvatarMarble: styled(AvatarMarble, {}),
   },
 
@@ -35,40 +22,6 @@ export const ProjectDropdownStyles = {
     }),
   },
 
-  ProjectSelected: styled(Box, {
-    flexDirection: 'row',
-    gap: '$spacing-2-5',
-    alignItems: 'center',
-    textSize: '$sm',
-    textCategory: '$tertiary',
-    padding: '$spacing-2 $spacing-2',
-    borderRadius: '$sm',
-
-    '&:hover': {
-      backgroundColor: `$surface-actionable`,
-    },
-
-    [`${Avatar}`]: {
-      fontSize: '$xs',
-    },
-
-    [`${AvatarMarble}`]: {
-      width: '1.5rem',
-      height: '1.5rem',
-    },
-
-    [`${Menu.Trigger}`]: {
-      padding: '$spacing-1 0',
-      borderRadius: '$full',
-      cursor: 'pointer',
-      transition: '$all-200',
-
-      '&:hover': {
-        backgroundColor: '$button-slate-secondary-hover',
-      },
-    },
-  }),
-
   Scrollable: {
     Root: styled(Scrollable.Root, {}),
     Viewport: styled(Scrollable.Viewport, {
@@ -82,6 +35,5 @@ export const ProjectDropdownStyles = {
       },
     }),
     Bar: styled(Scrollable.VerticalBar, { zIndex: 1 }),
-    Content: styled(Box, { gap: '$spacing-2-5' }),
   },
 };

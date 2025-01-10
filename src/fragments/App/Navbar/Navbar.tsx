@@ -2,12 +2,12 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { FleekLogo, FleekLogoProps, Link } from '@/components';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { TEST_ID } from '@/test/testId';
 import { forwardStyledRef } from '@/theme';
 import { ChildrenProps } from '@/types/Props';
-import { Button, ButtonProps, Input } from '@/ui';
+import { Box, Button, ButtonProps, Input } from '@/ui';
 
 import { NavbarStyles as S } from './Navbar.styles';
-import { Navigation } from './Navigation';
 
 const Search: React.FC = () => {
   const handleSearch = (/* e: React.ChangeEvent<HTMLInputElement> */) => {
@@ -15,11 +15,11 @@ const Search: React.FC = () => {
   };
 
   return (
-    <S.Search.Root>
+    <Input.Root>
       <Input.Icon name="magnify" />
       <Input.Field placeholder="Search or jump to..." onChange={handleSearch} />
       <Input.Tag>ctrl+k</Input.Tag>
-    </S.Search.Root>
+    </Input.Root>
   );
 };
 
@@ -30,35 +30,30 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   const projectId = session.project.id;
 
   return (
-    <S.Logo.Container>
+    <Box className="flex-row gap-3 items-center">
       {projectId ? (
-        <Link href={routes.project.home({ projectId })}>
+        <Link href={routes.project.home({ projectId })} data-testid={TEST_ID.NAV_LINK_PROJECT}>
           <FleekLogo showTypography={false} {...props} />
         </Link>
       ) : (
         <FleekLogo showTypography={false} {...props} />
       )}
       {children}
-    </S.Logo.Container>
+    </Box>
   );
 };
 
-type ContainerProps = ChildrenProps<
-  React.ComponentPropsWithRef<typeof S.Content>
->;
+type ContainerProps = ChildrenProps<React.ComponentPropsWithRef<typeof S.Content>>;
 
-const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(
-  S.Content,
-  ({ children, ...props }, ref) => {
-    return (
-      <S.Layout>
-        <S.Content {...props} ref={ref}>
-          {children}
-        </S.Content>
-      </S.Layout>
-    );
-  },
-);
+const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(S.Content, ({ children, ...props }, ref) => {
+  return (
+    <S.Layout>
+      <S.Content {...props} ref={ref}>
+        {children}
+      </S.Content>
+    </S.Layout>
+  );
+});
 
 type LoginButtonProps = {
   title: string;
@@ -77,7 +72,6 @@ const LoginButton: React.FC<LoginButtonProps> = ({ title, intent }) => {
 export const Navbar = {
   Container,
   Logo,
-  Navigation,
   Search,
   LoginButton,
 };

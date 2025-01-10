@@ -24,6 +24,9 @@ import {
   FolderNameAvailabilityInParentFolderDocument,
   FolderNameAvailabilityInParentFolderQuery,
   FolderNameAvailabilityInParentFolderQueryVariables,
+  GitApiIsRepoNameAvailableDocument,
+  GitApiIsRepoNameAvailableQuery,
+  GitApiIsRepoNameAvailableQueryVariables,
   PersonalAccessTokensDocument,
   PersonalAccessTokensQuery,
   PersonalAccessTokensQueryVariables,
@@ -52,7 +55,7 @@ import {
   UsernameAvailabilityQuery,
   UsernameAvailabilityQueryVariables,
 } from '@/generated/graphqlClient';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { isUniqueName } from '@/utils/isUniqueName';
 
 import { FormController } from './FormController';
@@ -64,20 +67,15 @@ export const createExtraValidation = {
         .query<UsernameAvailabilityQuery, UsernameAvailabilityQueryVariables>(
           UsernameAvailabilityDocument,
           { where: { username } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error('There was an error trying to validate the username')
-        );
+        throw result.error || new Error('There was an error trying to validate the username');
       }
 
-      return result.data?.usernameAvailability
-        ? { status: 'valid' }
-        : { status: 'invalid' };
+      return result.data?.usernameAvailability ? { status: 'valid' } : { status: 'invalid' };
     } catch (error) {
       return { status: 'invalid', error: 'Could not validate username' };
     }
@@ -89,17 +87,12 @@ export const createExtraValidation = {
         .query<EnsNameAvailabilityQuery, EnsNameAvailabilityQueryVariables>(
           EnsNameAvailabilityDocument,
           { where: { name, siteId } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error(
-            'There was an error trying to validate the ens name availability',
-          )
-        );
+        throw result.error || new Error('There was an error trying to validate the ens name availability');
       }
 
       const viemClient = createPublicClient({
@@ -133,16 +126,13 @@ export const createExtraValidation = {
         return {
           status: 'other',
           message: (
-            <>
+            <Box className="flex-row gap-1 text-xs">
               <Icon name="domain" />
               {`${name} is available for sale,`}
-              <ExternalLink
-                href={`${constants.EXTERNAL_LINK.ENS_DOMAIN}/${name}/register`}
-                variant="accent"
-              >
+              <ExternalLink href={`${constants.EXTERNAL_LINK.ENS_DOMAIN}/${name}/register`} variant="accent">
                 purchase it from ENS here.
               </ExternalLink>
-            </>
+            </Box>
           ),
         };
       }
@@ -157,17 +147,10 @@ export const createExtraValidation = {
     try {
       // TODO we need to add a query to get ProjectByName
       const result = await client
-        .query<ProjectsQuery, ProjectsQueryVariables>(
-          ProjectsDocument,
-          {},
-          { requestPolicy: 'network-only' },
-        )
+        .query<ProjectsQuery, ProjectsQueryVariables>(ProjectsDocument, {}, { requestPolicy: 'network-only' })
         .toPromise();
 
-      const isUnique = isUniqueName({
-        name: projectName,
-        list: result.data?.projects.data || [],
-      });
+      const isUnique = isUniqueName({ name: projectName, list: result.data?.projects.data || [] });
 
       return { status: isUnique ? 'valid' : 'invalid' };
     } catch (error) {
@@ -181,15 +164,12 @@ export const createExtraValidation = {
         .query<DomainAvailabilityQuery, DomainAvailabilityQueryVariables>(
           DomainAvailabilityDocument,
           { where: { hostname } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error('There was an error trying to validate the domain hostname')
-        );
+        throw result.error || new Error('There was an error trying to validate the domain hostname');
       }
 
       return { status: result.data?.domainAvailability ? 'valid' : 'invalid' };
@@ -204,15 +184,12 @@ export const createExtraValidation = {
         .query<EmailAvailabilityQuery, EmailAvailabilityQueryVariables>(
           EmailAvailabilityDocument,
           { where: { email } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error('There was an error trying to validate the email')
-        );
+        throw result.error || new Error('There was an error trying to validate the email');
       }
 
       return { status: result.data?.emailAvailability ? 'valid' : 'invalid' };
@@ -227,14 +204,11 @@ export const createExtraValidation = {
         .query<PersonalAccessTokensQuery, PersonalAccessTokensQueryVariables>(
           PersonalAccessTokensDocument,
           {},
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
-      const isUnique = isUniqueName({
-        name: patName,
-        list: result.data?.personalAccessTokens.data || [],
-      });
+      const isUnique = isUniqueName({ name: patName, list: result.data?.personalAccessTokens.data || [] });
 
       return { status: isUnique ? 'valid' : 'invalid' };
     } catch (error) {
@@ -248,7 +222,7 @@ export const createExtraValidation = {
         .query<FleekFunctionDetailQuery, FleekFunctionDetailQueryVariables>(
           FleekFunctionDetailDocument,
           { where: { name: functionName } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
@@ -258,141 +232,91 @@ export const createExtraValidation = {
     }
   },
 
-  privateGatewayName:
-    (client: Client) => async (privateGatewayName: string) => {
-      try {
-        const result = await client
-          .query<
-            PrivateGatewayNameAvailabilityQuery,
-            PrivateGatewayNameAvailabilityQueryVariables
-          >(
-            PrivateGatewayNameAvailabilityDocument,
-            {
-              where: { name: privateGatewayName },
-            },
-            { requestPolicy: 'network-only' },
-          )
-          .toPromise();
+  privateGatewayName: (client: Client) => async (privateGatewayName: string) => {
+    try {
+      const result = await client
+        .query<PrivateGatewayNameAvailabilityQuery, PrivateGatewayNameAvailabilityQueryVariables>(
+          PrivateGatewayNameAvailabilityDocument,
+          {
+            where: { name: privateGatewayName },
+          },
+          { requestPolicy: 'network-only' }
+        )
+        .toPromise();
 
-        if (result.error) {
-          throw (
-            result.error ||
-            new Error(
-              'There was an error trying to validate the private gateway name',
-            )
-          );
-        }
-
-        return {
-          status: result.data?.privateGatewayNameAvailability
-            ? 'valid'
-            : 'invalid',
-        };
-      } catch (error) {
-        return {
-          status: 'invalid',
-          message: 'Could not validate private gateway name',
-        };
+      if (result.error) {
+        throw result.error || new Error('There was an error trying to validate the private gateway name');
       }
-    },
+
+      return { status: result.data?.privateGatewayNameAvailability ? 'valid' : 'invalid' };
+    } catch (error) {
+      return { status: 'invalid', message: 'Could not validate private gateway name' };
+    }
+  },
 
   templateName:
     (client: Client) =>
     async (name = '') => {
       try {
         const result = await client
-          .query<
-            TemplateNameAvailabilityQuery,
-            TemplateNameAvailabilityQueryVariables
-          >(
+          .query<TemplateNameAvailabilityQuery, TemplateNameAvailabilityQueryVariables>(
             TemplateNameAvailabilityDocument,
             { where: { name } },
-            { requestPolicy: 'network-only' },
+            { requestPolicy: 'network-only' }
           )
           .toPromise();
 
-        return {
-          status: result.data?.templateNameAvailability ? 'valid' : 'invalid',
-        };
+        return { status: result.data?.templateNameAvailability ? 'valid' : 'invalid' };
       } catch (error) {
-        return {
-          status: 'invalid',
-          message: 'Could not validate template name',
-        };
+        return { status: 'invalid', message: 'Could not validate template name' };
       }
     },
 
-  pinName:
-    (client: Client, parentId?: string, extension?: string) =>
-    async (filename: string) => {
-      try {
-        if (!parentId) {
-          // we don't check pin names in the root folder
+  pinName: (client: Client, parentId?: string, extension?: string) => async (filename: string) => {
+    try {
+      if (!parentId) {
+        // we don't check pin names in the root folder
 
-          return { status: 'valid' };
-        }
-
-        const result = await client
-          .query<
-            PinNameAvailabilityInParentFolderQuery,
-            PinNameAvailabilityInParentFolderQueryVariables
-          >(
-            PinNameAvailabilityInParentFolderDocument,
-            {
-              where: { parentFolderId: parentId },
-              data: { filename, extension },
-            },
-            { requestPolicy: 'network-only' },
-          )
-          .toPromise();
-
-        if (result.error) {
-          throw (
-            result.error ||
-            new Error('There was an error trying to validate the pin name')
-          );
-        }
-
-        return {
-          status: result.data?.pinNameAvailabilityInParentFolder
-            ? 'valid'
-            : 'invalid',
-        };
-      } catch (error) {
-        return { status: 'invalid', message: 'Could not validate pin name' };
+        return { status: 'valid' };
       }
-    },
 
-  folderName:
-    (client: Client, parentId?: string) => async (folderName: string) => {
-      try {
-        const result = await client
-          .query<
-            FolderNameAvailabilityInParentFolderQuery,
-            FolderNameAvailabilityInParentFolderQueryVariables
-          >(
-            FolderNameAvailabilityInParentFolderDocument,
-            { where: { parentFolderId: parentId }, data: { name: folderName } },
-            { requestPolicy: 'network-only' },
-          )
-          .toPromise();
+      const result = await client
+        .query<PinNameAvailabilityInParentFolderQuery, PinNameAvailabilityInParentFolderQueryVariables>(
+          PinNameAvailabilityInParentFolderDocument,
+          { where: { parentFolderId: parentId }, data: { filename, extension } },
+          { requestPolicy: 'network-only' }
+        )
+        .toPromise();
 
-        if (result.error) {
-          throw (
-            result.error ||
-            new Error('There was an error trying to validate the folder name')
-          );
-        }
-
-        return {
-          status: result.data?.folderNameAvailabilityInParentFolder
-            ? 'valid'
-            : 'invalid',
-        };
-      } catch (error) {
-        return { status: 'invalid', message: 'Could not validate folder name' };
+      if (result.error) {
+        throw result.error || new Error('There was an error trying to validate the pin name');
       }
-    },
+
+      return { status: result.data?.pinNameAvailabilityInParentFolder ? 'valid' : 'invalid' };
+    } catch (error) {
+      return { status: 'invalid', message: 'Could not validate pin name' };
+    }
+  },
+
+  folderName: (client: Client, parentId?: string) => async (folderName: string) => {
+    try {
+      const result = await client
+        .query<FolderNameAvailabilityInParentFolderQuery, FolderNameAvailabilityInParentFolderQueryVariables>(
+          FolderNameAvailabilityInParentFolderDocument,
+          { where: { parentFolderId: parentId }, data: { name: folderName } },
+          { requestPolicy: 'network-only' }
+        )
+        .toPromise();
+
+      if (result.error) {
+        throw result.error || new Error('There was an error trying to validate the folder name');
+      }
+
+      return { status: result.data?.folderNameAvailabilityInParentFolder ? 'valid' : 'invalid' };
+    } catch (error) {
+      return { status: 'invalid', message: 'Could not validate folder name' };
+    }
+  },
 
   siteName: (client: Client) => async (siteName: string) => {
     try {
@@ -400,22 +324,39 @@ export const createExtraValidation = {
         .query<SiteNameAvailabilityQuery, SiteNameAvailabilityQueryVariables>(
           SiteNameAvailabilityDocument,
           { where: { name: siteName } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error('There was an error trying to validate the site name')
-        );
+        throw result.error || new Error('There was an error trying to validate the site name');
       }
 
-      return {
-        status: result.data?.siteNameAvailability ? 'valid' : 'invalid',
-      };
+      return { status: result.data?.siteNameAvailability ? 'valid' : 'invalid' };
     } catch (error) {
       return { status: 'invalid', message: 'Could not validate site name' };
+    }
+  },
+
+  repositoryName: (client: Client, gitProviderId: string, owner: string) => async (repo: string) => {
+    try {
+      const result = await client
+        .query<GitApiIsRepoNameAvailableQuery, GitApiIsRepoNameAvailableQueryVariables>(
+          GitApiIsRepoNameAvailableDocument,
+          {
+            where: { gitProviderId, owner, repo },
+          },
+          { requestPolicy: 'network-only' }
+        )
+        .toPromise();
+
+      if (result.error) {
+        throw result.error || new Error('Unable to verify repository availability');
+      }
+
+      return { status: result.data?.gitApiIsRepoNameAvailable ? 'valid' : 'invalid' };
+    } catch (error) {
+      return { status: 'invalid', message: 'Unable to verify repository availability' };
     }
   },
 
@@ -425,7 +366,7 @@ export const createExtraValidation = {
         .query<SlugAvailabilityQuery, SlugAvailabilityQueryVariables>(
           SlugAvailabilityDocument,
           { where: { slug } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
@@ -443,63 +384,40 @@ export const createExtraValidation = {
           .query<SecretAvailabilityQuery, SecretAvailabilityQueryVariables>(
             SecretAvailabilityDocument,
             { where: { siteId, key } },
-            { requestPolicy: 'network-only' },
+            { requestPolicy: 'network-only' }
           )
           .toPromise();
 
         if (result.error) {
-          throw (
-            result.error ||
-            new Error('There was an error trying to validate the variable name')
-          );
+          throw result.error || new Error('There was an error trying to validate the variable name');
         }
 
-        return {
-          status: result.data?.secretAvailability ? 'valid' : 'invalid',
-        };
+        return { status: result.data?.secretAvailability ? 'valid' : 'invalid' };
       } catch (error) {
-        return {
-          status: 'invalid',
-          message: 'Could not validate variable name',
-        };
+        return { status: 'invalid', message: 'Could not validate variable name' };
       }
     },
 
   applicationName: (client: Client) => async (name: string) => {
     try {
       const result = await client
-        .query<
-          ApplicationNameAvailabilityQuery,
-          ApplicationNameAvailabilityQueryVariables
-        >(
+        .query<ApplicationNameAvailabilityQuery, ApplicationNameAvailabilityQueryVariables>(
           ApplicationNameAvailabilityDocument,
           { where: { name } },
-          { requestPolicy: 'network-only' },
+          { requestPolicy: 'network-only' }
         )
         .toPromise();
 
       if (result.error) {
-        throw (
-          result.error ||
-          new Error(
-            'There was an error trying to validate the application name',
-          )
-        );
+        throw result.error || new Error('There was an error trying to validate the application name');
       }
 
-      return {
-        status: result.data?.applicationNameAvailability ? 'valid' : 'invalid',
-      };
+      return { status: result.data?.applicationNameAvailability ? 'valid' : 'invalid' };
     } catch (error) {
-      return {
-        status: 'invalid',
-        message: 'Could not validate application name',
-      };
+      return { status: 'invalid', message: 'Could not validate application name' };
     }
   },
 } as const satisfies Record<string, ExtraValidationFactory>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ExtraValidationFactory = (
-  ...args: any[]
-) => (value: string) => Promise<FormController.ExtraValidationResult>;
+type ExtraValidationFactory = (...args: any[]) => (value: string) => Promise<FormController.ExtraValidationResult>;

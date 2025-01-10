@@ -1,8 +1,8 @@
-import { Link } from '@/components';
+import { LinkButton } from '@/components';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
 import { forwardStyledRef } from '@/theme';
 import { LoadingProps } from '@/types/Props';
-import { Button, IconName, Skeleton } from '@/ui';
+import { Box, Button, IconName, Skeleton } from '@/ui';
 
 import { PageNavStyles as S } from './PageNavigation.styles';
 
@@ -14,33 +14,13 @@ type NavigationButtonProps = {
   hasAccess?: boolean;
 } & Omit<React.ComponentPropsWithoutRef<typeof Button>, 'href'>;
 
-const NavigationButton: React.FC<NavigationButtonProps> = ({
-  icon,
-  label,
-  path,
-  isExact = false,
-  disabled,
-}) => {
+const NavigationButton: React.FC<NavigationButtonProps> = ({ icon, label, path, isExact = false, disabled }) => {
   const isActivePage = useIsActivePage({ path, isExact });
 
-  const btn = (
-    <Button
-      iconLeft={icon}
-      intent={isActivePage ? 'accent' : 'ghost'}
-      disabled={disabled}
-    >
-      {label}
-    </Button>
-  );
-
-  if (disabled) {
-    return btn;
-  }
-
   return (
-    <Link href={path} tabIndex={-1}>
-      {btn}
-    </Link>
+    <LinkButton href={path} iconLeft={icon} intent={isActivePage ? 'accent' : 'ghost'} disabled={disabled}>
+      {label}
+    </LinkButton>
   );
 };
 
@@ -50,29 +30,27 @@ export type PageNavigationProps = LoadingProps<
   }
 >;
 
-export const PageNavigation = forwardStyledRef<
-  HTMLDivElement,
-  PageNavigationProps
->(S.Wrapper, ({ children, isLoading, items, ...props }, ref) => {
-  if (isLoading) {
+export const PageNavigation = forwardStyledRef<HTMLDivElement, PageNavigationProps>(
+  S.Wrapper,
+  ({ children, isLoading, items, ...props }, ref) => {
+    if (isLoading) {
+      return (
+        <Box className="flex-row justify-between items-center" ref={ref} {...props}>
+          <S.Content>
+            <Skeleton variant="button" />
+            <Skeleton variant="button" />
+            <Skeleton variant="button" />
+            <Skeleton variant="button" />
+            <Skeleton variant="button" />
+          </S.Content>
+
+          {children && <S.SpacedContent>{children}</S.SpacedContent>}
+        </Box>
+      );
+    }
+
     return (
-      <S.Wrapper ref={ref} {...props}>
-        <S.Content>
-          <Skeleton variant="button" />
-          <Skeleton variant="button" />
-          <Skeleton variant="button" />
-          <Skeleton variant="button" />
-          <Skeleton variant="button" />
-        </S.Content>
-
-        {children && <S.SpacedContent>{children}</S.SpacedContent>}
-      </S.Wrapper>
-    );
-  }
-
-  return (
-    <S.Wrapper ref={ref} {...props}>
-      <S.Content>
+      <Box className="flex-row justify-between items-center" ref={ref} {...props}>
         {items
           .filter((item) => item.hasAccess)
           .map((item) => (
@@ -86,9 +64,9 @@ export const PageNavigation = forwardStyledRef<
               disabled={item.disabled}
             />
           ))}
-      </S.Content>
 
-      {children && <S.SpacedContent>{children}</S.SpacedContent>}
-    </S.Wrapper>
-  );
-});
+        {children && <S.SpacedContent>{children}</S.SpacedContent>}
+      </Box>
+    );
+  }
+);
