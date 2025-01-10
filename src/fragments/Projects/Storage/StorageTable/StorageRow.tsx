@@ -3,7 +3,6 @@ import React from 'react';
 
 import { BadgeText, ExternalLink } from '@/components';
 import { useUploadContext } from '@/providers/UploadProvider';
-import { TEST_ID } from '@/test/testId';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Folder, Pin } from '@/types/StorageProviders';
 import { Box, Icon, Image, Skeleton, Text } from '@/ui';
@@ -66,7 +65,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
   const publicUrl = getLink();
 
   return (
-    <tr data-testid={TEST_ID.TABLE_ROW_STORAGE} className="overflow-hidden">
+    <tr className="overflow-hidden">
       <StorageCell>
         <Box className="flex-row gap-2 items-center">
           {folder || isIpfsFolder ? (
