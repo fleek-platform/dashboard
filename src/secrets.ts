@@ -22,6 +22,15 @@ export const secrets = {
   COMMIT_HASH: process.env.NEXT_PUBLIC_UI__COMMIT_HASH,
   ZENDESK_PROXY_API: process.env.NEXT_PUBLIC_UI__ZENDESK_PROXY_API,
   FLEEK_REST_API_URL: process.env.NEXT_PUBLIC_UI_FLEEK_REST_API_URL,
+  NEXT_PUBLIC_UI__POSTHOG_KEY: process.env.NEXT_PUBLIC_UI__POSTHOG_KEY,	
+  NEXT_PUBLIC_UI__POSTHOG_HOST: process.env.NEXT_PUBLIC_UI__POSTHOG_HOST,
+  NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL:	
+    process.env.NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL,	
+  NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME:	
+    process.env.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,	
+  // TODO: Switch to app.fleek.xyz or whichever address	
+  // is decided as client facing. At the moment using *.on-fleek.app for prd	
+  NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
 };
 
 export const getMutableSecrets = () => {

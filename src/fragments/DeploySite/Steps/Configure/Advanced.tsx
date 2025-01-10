@@ -9,6 +9,7 @@ import { Box, Button, Divider, FormField, Icon, Input, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { useDeploySiteContext } from '../../DeploySite.context';
+import { SafeParseError } from 'zod';
 
 export const Advanced: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
@@ -138,7 +139,10 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
     const envVarNameValidation = envVarName.safeParse(event.currentTarget.value);
 
     if (!envVarNameValidation.success) {
-      setEnvVarNameError(envVarNameValidation.error.issues.map((issue) => issue.message).join('. '));
+      setEnvVarNameError(
+        (envVarNameValidation as SafeParseError<string>).error.issues	
+          .map((issue) => issue.message)
+          .join('. '));
     } else if (!isNameDuplicated) {
       // clean the previous formik error message
       setEnvVarNameError('');
@@ -168,7 +172,11 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
     const envVarValueValidation = envVarValue.safeParse(event.currentTarget.value);
 
     if (!envVarValueValidation.success) {
-      setEnvVarValueError(envVarValueValidation.error.issues.map((issue) => issue.message).join('. '));
+      setEnvVarValueError(
+        (envVarValueValidation as SafeParseError<string>).error.issues
+          .map((issue) => issue.message)
+          .join('. ')
+      );
     } else {
       // clean the previous error message
       setEnvVarValueError('');

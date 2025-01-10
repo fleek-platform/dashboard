@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Form, SettingsBox } from '@/components';
 import { LoadingProps } from '@/types/Props';
 import { Box, Button, FormField, Icon, Input } from '@/ui';
+import { z } from 'zod';
 
 type WhitelistDomainsProps = LoadingProps<{
   whiteListedDomains?: string[];
@@ -88,7 +89,7 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
       setError(false);
     } else {
       const timeout = setTimeout(() => {
-        setError(validation.error.issues[0].message);
+        setError((validation as z.SafeParseError<string>).error.issues[0].message);
       }, 700);
 
       return () => clearTimeout(timeout);

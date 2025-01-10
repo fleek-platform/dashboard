@@ -3,7 +3,6 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
 import { useRouter } from '@/hooks/useRouter';
-import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Skeleton, Text } from '@/ui';
@@ -50,7 +49,7 @@ export const Deploy: React.FC<DeployProps> = ({
   const environment = deployment?.previewOnly ? 'Preview' : 'Production';
 
   return (
-    <ItemRow testId={TEST_ID.DEPLOYMENT_CONTAINER} className={className}>
+    <ItemRow className={className}>
       <Link
         href={routes.project.site.deployments.detail({
           projectId,

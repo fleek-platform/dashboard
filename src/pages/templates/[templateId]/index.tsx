@@ -1,12 +1,10 @@
 import { routes } from '@fleek-platform/utils-routes';
-import type { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
 
 import { RestrictionModal } from '@/components';
 import { constants } from '@/constants';
 import { Template } from '@/fragments';
 import {
-  TemplateDocument,
   TemplateReviewStatus,
   useTemplateQuery,
 } from '@/generated/graphqlClient';
@@ -14,7 +12,6 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { useIsTemplateOwner } from '@/hooks/useIsTemplateOwner';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
-import { createUrqlClient } from '@/integrations';
 import { useSessionContext } from '@/providers/SessionProvider';
 import type { Page } from '@/types/App';
 import { Button } from '@/ui';
@@ -112,43 +109,12 @@ const PageNavContent: React.FC = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { templateId } = context.query;
-
-  const urqlClient = createUrqlClient({
-    logout: () => {},
-  });
-
-  const result = await urqlClient
-    .query(TemplateDocument, { where: { id: templateId } })
-    .toPromise();
-
-  if (
-    result.error ||
-    result.data.template.reviewStatus !== TemplateReviewStatus.APPROVED
-  ) {
-    return {
-      redirect: {
-        destination: routes.template.list(),
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      templateId,
-      templateData: result.data.template,
-    },
-  };
-};
-
 TemplatePage.getLayout = (page) => {
   const templateData = page.props.templateData;
 
   return (
     <Template.Details.Layout
-      title={templateData.name}
+      title={templateData?.name}
       description={templateData.description}
       nav={<PageNavContent />}
     >

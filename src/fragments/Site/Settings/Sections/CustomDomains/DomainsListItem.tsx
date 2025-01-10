@@ -17,7 +17,6 @@ import {
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
-import { TEST_ID } from '@/test/testId';
 import { SiteDomain } from '@/types/Site';
 import { Box, Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -116,14 +115,12 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
 
   return (
     <SettingsListItem.FlatRow
-      testId={TEST_ID.DOMAINS_LIST_ITEM}
       className="grid-cols-1"
     >
       <SettingsListItem
         subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
         title={hostname}
         titleSuffix={hostnameSuffix}
-        testId={TEST_ID.DOMAINS_LIST_ITEM}
         className="p-0 border-none w-full"
       >
         <Box className="flex-row gap-3 items-center">

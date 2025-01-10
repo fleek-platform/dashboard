@@ -1,7 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { SourceProvider } from '@/generated/graphqlClient';
-import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { LoadingProps } from '@/types/Props';
 import { Site } from '@/types/Site';
@@ -61,7 +60,6 @@ export const SiteCard: React.FC<SiteCardProps> = ({
         <Box className="flex-row justify-between gap-4">
           <Box className="overflow-hidden">
             <Text
-              data-testid={TEST_ID.CARD_SITE_NAME}
               variant="primary"
               weight={700}
             >

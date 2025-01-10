@@ -36,9 +36,11 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const auth = useAuthContext();
   const router = useRouter();
   const cookies = useCookies();
-  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
-    pause: !auth.accessToken,
-  });
+  // TODO: Missing types for obj.pause
+  // const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
+  //   pause: !auth.accessToken,
+  // });
+  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery();
   const [, createProject] = useCreateProjectMutation();
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
