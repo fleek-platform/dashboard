@@ -15,12 +15,23 @@ type MenuItemProps = {
   onClick: () => void;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ project, selectedProject, onClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  project,
+  selectedProject,
+  onClick,
+}) => {
   return (
-    <S.MenuItem.Wrapper checked={selectedProject?.id === project.id} onClick={onClick}>
+    <S.MenuItem.Wrapper
+      checked={selectedProject?.id === project.id}
+      onClick={onClick}
+    >
       <Box className="flex-row items-center text-sm gap-2.5">
         {project.avatar ? (
-          <Avatar title={project.id} src={project.avatar} className="text-2xs" />
+          <Avatar
+            title={project.id}
+            src={project.avatar}
+            className="text-2xs"
+          />
         ) : (
           <AvatarMarble name={project.id} rounded className="text-2xs" />
         )}{' '}
@@ -41,7 +52,11 @@ export type ProjectDropdownProps = {
   onProjectChange: (project: Project) => void;
 };
 
-export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({ projects, selectedProject, onProjectChange }) => {
+export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
+  projects,
+  selectedProject,
+  onProjectChange,
+}) => {
   const session = useSessionContext();
   const projectId = session.project.id;
   // eslint-disable-next-line fleek-custom/valid-argument-types
@@ -60,9 +75,17 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({ projects, sele
     <Menu.Root>
       <Menu.Trigger>
         <Box className="flex-row gap-2.5 items-center text-sm p-2 rounded hover:bg-neutral-3">
-          <Link href={routes.project.home({ projectId })} className="flex gap-2.5 items-center text-neutral-12">
+          <Link
+            href={routes.project.home({ projectId })}
+            className="flex gap-2.5 items-center text-neutral-12"
+          >
             {selectedProject?.avatar ? (
-              <Avatar enableIcon icon="image" title={selectedProject?.id} src={selectedProject?.avatar} />
+              <Avatar
+                enableIcon
+                icon="image"
+                title={selectedProject?.id}
+                src={selectedProject?.avatar}
+              />
             ) : (
               <AvatarMarble name={selectedProject?.id} rounded />
             )}

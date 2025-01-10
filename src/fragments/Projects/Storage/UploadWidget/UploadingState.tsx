@@ -6,8 +6,11 @@ import { cn } from '@/utils/cn';
 import { convertToReadableTime } from '@/utils/getDurationUntilNow';
 
 export const UploadingSate: React.FC = () => {
-  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } = useUploadContext();
-  const failedFiles = uploads.filter((upload) => upload.status === 'error').length;
+  const { uploads, remainingTime, uploadStatus, retryUpload, cancelAll } =
+    useUploadContext();
+  const failedFiles = uploads.filter(
+    (upload) => upload.status === 'error',
+  ).length;
 
   const isSuccessWithFailed = uploadStatus === 'success' && failedFiles;
 
@@ -37,9 +40,12 @@ export const UploadingSate: React.FC = () => {
 
   return (
     <Box
-      className={cn('bg-neutral-2 flex-row gap-2 items-center p-3 justify-between border-b border-neutral-6', {
-        'bg-danger-2': isSuccessWithFailed || uploadStatus === 'error',
-      })}
+      className={cn(
+        'bg-neutral-2 flex-row gap-2 items-center p-3 justify-between border-b border-neutral-6',
+        {
+          'bg-danger-2': isSuccessWithFailed || uploadStatus === 'error',
+        },
+      )}
     >
       {uploadStatus === 'uploading' ? (
         <Text>{`${remainingText}`}</Text>
@@ -50,7 +56,9 @@ export const UploadingSate: React.FC = () => {
         </Box>
       )}
       <Box className="flex-row items-center gap-2">
-        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && <Button onClick={retryUpload}>Retry all</Button>}
+        {(uploadStatus === 'error' || isSuccessWithFailed) && !hideRetryAll && (
+          <Button onClick={retryUpload}>Retry all</Button>
+        )}
         {uploadStatus !== 'uploading' && (
           <Button intent="neutral" onClick={cancelAll}>
             Cancel all

@@ -32,7 +32,10 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   return (
     <Box className="flex-row gap-3 items-center">
       {projectId ? (
-        <Link href={routes.project.home({ projectId })} data-testid={TEST_ID.NAV_LINK_PROJECT}>
+        <Link
+          href={routes.project.home({ projectId })}
+          data-testid={TEST_ID.NAV_LINK_PROJECT}
+        >
           <FleekLogo showTypography={false} {...props} />
         </Link>
       ) : (
@@ -43,17 +46,22 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   );
 };
 
-type ContainerProps = ChildrenProps<React.ComponentPropsWithRef<typeof S.Content>>;
+type ContainerProps = ChildrenProps<
+  React.ComponentPropsWithRef<typeof S.Content>
+>;
 
-const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(S.Content, ({ children, ...props }, ref) => {
-  return (
-    <S.Layout>
-      <S.Content {...props} ref={ref}>
-        {children}
-      </S.Content>
-    </S.Layout>
-  );
-});
+const Container = forwardStyledRef<HTMLDivElement, ContainerProps>(
+  S.Content,
+  ({ children, ...props }, ref) => {
+    return (
+      <S.Layout>
+        <S.Content {...props} ref={ref}>
+          {children}
+        </S.Content>
+      </S.Layout>
+    );
+  },
+);
 
 type LoginButtonProps = {
   title: string;

@@ -1,7 +1,14 @@
 import { DateTime } from 'luxon';
 import { useEffect, useMemo, useState } from 'react';
 
-import { AlertBox, Billing, ExternalLink, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
+import {
+  AlertBox,
+  Billing,
+  ExternalLink,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+} from '@/components';
 import { constants } from '@/constants';
 import { useCancelMockedMutation } from '@/hooks/useCancelSubscription';
 import { useFleekCheckout } from '@/hooks/useFleekCheckout';
@@ -25,11 +32,15 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
   const checkout = useFleekCheckout();
   // eslint-disable-next-line fleek-custom/valid-gql-hooks-destructuring
-  const cancelPlanMutation = useCancelMockedMutation({ subscriptionId: subscription.data?.id ?? undefined });
+  const cancelPlanMutation = useCancelMockedMutation({
+    subscriptionId: subscription.data?.id ?? undefined,
+  });
 
   useEffect(() => {
     if (subscription.error) {
-      toast.error({ message: 'Error fetching subscription data. Please try again' });
+      toast.error({
+        message: 'Error fetching subscription data. Please try again',
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subscription.error]);
@@ -62,7 +73,10 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
   const endPlanDate = useMemo(() => {
     if (subscription.data?.endDate) {
-      return dateFormat({ dateISO: subscription.data.endDate, format: DateTime.DATE_FULL });
+      return dateFormat({
+        dateISO: subscription.data.endDate,
+        format: DateTime.DATE_FULL,
+      });
     }
 
     return '';
@@ -70,7 +84,10 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
   const endPeriodDate = useMemo(() => {
     if (subscription.data?.periodEndDate) {
-      return dateFormat({ dateISO: subscription.data.periodEndDate, format: DateTime.DATE_FULL });
+      return dateFormat({
+        dateISO: subscription.data.periodEndDate,
+        format: DateTime.DATE_FULL,
+      });
     }
 
     return '';
@@ -91,8 +108,11 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const { title, description, price } = planData;
 
   const auxDescription = useMemo(
-    () => (endPlanDate ? `${description} Your Pro Plan expires on ${endPlanDate}.` : description),
-    [endPlanDate, description]
+    () =>
+      endPlanDate
+        ? `${description} Your Pro Plan expires on ${endPlanDate}.`
+        : description,
+    [endPlanDate, description],
   );
 
   return (
@@ -105,15 +125,26 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
       />
       {shouldShowCancellationBanner && !isLoading && (
         <AlertBox size="sm" className="font-medium">
-          Your Pro Plan is expiring. You will be converted to a Free plan on {endPlanDate}.
+          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
+          {endPlanDate}.
         </AlertBox>
       )}
-      <Billing.HorizontalPlanCard isLoading={isLoading} title={title} description={auxDescription} price={price}>
+      <Billing.HorizontalPlanCard
+        isLoading={isLoading}
+        title={title}
+        description={auxDescription}
+        price={price}
+      >
         <SettingsBox.ActionRow>
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_PRICING}>plans</LearnMoreMessage>
+          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_PRICING}>
+            plans
+          </LearnMoreMessage>
           <Box className="flex-row gap-3">
             {isLoading ? (
-              <SettingsBox.Skeleton variant="button" className="h-[2rem] w-[7rem] rounded-lg" />
+              <SettingsBox.Skeleton
+                variant="button"
+                className="h-[2rem] w-[7rem] rounded-lg"
+              />
             ) : (
               <ButtonsContainer
                 currentPlan={currentPlan}
@@ -136,9 +167,16 @@ type ButtonsContainerProps = {
   onCancelPlan: () => void;
 };
 
-const ButtonsContainer: React.FC<ButtonsContainerProps> = ({ currentPlan, isCanceled, onUpgradePlan, onCancelPlan }) => {
+const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
+  currentPlan,
+  isCanceled,
+  onUpgradePlan,
+  onCancelPlan,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
+  const hasManageBillingPermission = usePermissions({
+    action: [constants.PERMISSION.BILLING.MANAGE],
+  });
 
   const handleUpgradePlan = async () => {
     setIsLoading(true);
@@ -149,7 +187,13 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({ currentPlan, isCanc
   if (currentPlan === 'pro') {
     return (
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
-        <Button intent="neutral" size="sm" onClick={onCancelPlan} loading={isLoading} disabled={!hasManageBillingPermission || isCanceled}>
+        <Button
+          intent="neutral"
+          size="sm"
+          onClick={onCancelPlan}
+          loading={isLoading}
+          disabled={!hasManageBillingPermission || isCanceled}
+        >
           Cancel plan
         </Button>
       </PermissionsTooltip>
@@ -160,13 +204,22 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({ currentPlan, isCanc
     <>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
         <ExternalLink href="https://fleek.typeform.com/fleekinterest?typeform-source=fleek.xyz">
-          <Button intent="neutral" size="sm" disabled={!hasManageBillingPermission}>
+          <Button
+            intent="neutral"
+            size="sm"
+            disabled={!hasManageBillingPermission}
+          >
             Contact Sales
           </Button>
         </ExternalLink>
       </PermissionsTooltip>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
-        <Button size="sm" onClick={handleUpgradePlan} loading={isLoading} disabled={!hasManageBillingPermission}>
+        <Button
+          size="sm"
+          onClick={handleUpgradePlan}
+          loading={isLoading}
+          disabled={!hasManageBillingPermission}
+        >
           Upgrade to Pro
         </Button>
       </PermissionsTooltip>

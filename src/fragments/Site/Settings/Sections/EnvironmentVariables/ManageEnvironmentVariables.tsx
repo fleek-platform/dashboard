@@ -19,11 +19,16 @@ import {
   useManageEnvironmentVariablesContext,
 } from './ManageEnvironmentVariables.context';
 
-export type ManageEnvironmentVariablesProps = ManageEnvironmentVariablesContext & ContentProps;
+export type ManageEnvironmentVariablesProps =
+  ManageEnvironmentVariablesContext & ContentProps;
 
-export const ManageEnvironmentVariables: React.FC<ManageEnvironmentVariablesProps> = ({ onSubmitDelete, onSubmitUpdate, ...props }) => {
+export const ManageEnvironmentVariables: React.FC<
+  ManageEnvironmentVariablesProps
+> = ({ onSubmitDelete, onSubmitUpdate, ...props }) => {
   return (
-    <ManageEnvironmentVariablesProvider value={{ onSubmitDelete, onSubmitUpdate }}>
+    <ManageEnvironmentVariablesProvider
+      value={{ onSubmitDelete, onSubmitUpdate }}
+    >
       <SettingsBox.Container className="p-0 gap-0">
         <Content {...props} />
       </SettingsBox.Container>
@@ -47,7 +52,12 @@ const Content: React.FC<ContentProps> = ({ secrets, isLoading }) => {
   }
 
   if (secrets.length === 0) {
-    return <SettingsBox.EmptyContent title="No Variables" description="Once you add variables, they will appear here." />;
+    return (
+      <SettingsBox.EmptyContent
+        title="No Variables"
+        description="Once you add variables, they will appear here."
+      />
+    );
   }
 
   return (
@@ -67,7 +77,9 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
   const { onSubmitDelete } = useManageEnvironmentVariablesContext();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.SITE.EDIT_ENV_VARIABLES] });
+  const hasEditPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.EDIT_ENV_VARIABLES],
+  });
 
   if (isLoading) {
     return (
@@ -80,7 +92,9 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
   }
 
   if (isEditing) {
-    return <EditingListItem secret={secret} onFinish={() => setIsEditing(false)} />;
+    return (
+      <EditingListItem secret={secret} onFinish={() => setIsEditing(false)} />
+    );
   }
 
   const handleDelete = async () => {
@@ -101,7 +115,13 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
         title="Value"
         subtitle={
           <>
-            <Icon name={secret.visibility === SecretVisibility.ENCRYPTED ? 'eye-closed' : 'eye-open'} />
+            <Icon
+              name={
+                secret.visibility === SecretVisibility.ENCRYPTED
+                  ? 'eye-closed'
+                  : 'eye-open'
+              }
+            />
             <Text as="span" className="truncate">
               {secret.value}
             </Text>
@@ -109,9 +129,16 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
         }
       />
 
-      <SettingsListItem.DropdownMenu isLoading={isDeleting} isDisabled={!hasEditPermission} hasAccess={hasEditPermission}>
+      <SettingsListItem.DropdownMenu
+        isLoading={isDeleting}
+        isDisabled={!hasEditPermission}
+        hasAccess={hasEditPermission}
+      >
         {secret.visibility === SecretVisibility.PUBLIC && (
-          <SettingsListItem.DropdownMenuItem icon="pencil" onClick={() => setIsEditing(true)}>
+          <SettingsListItem.DropdownMenuItem
+            icon="pencil"
+            onClick={() => setIsEditing(true)}
+          >
             Edit
           </SettingsListItem.DropdownMenuItem>
         )}
@@ -128,14 +155,18 @@ type EditingListItemProps = {
   onFinish: () => void;
 };
 
-const EditingListItem: React.FC<EditingListItemProps> = ({ secret, onFinish }) => {
+const EditingListItem: React.FC<EditingListItemProps> = ({
+  secret,
+  onFinish,
+}) => {
   const { onSubmitUpdate } = useManageEnvironmentVariablesContext();
 
   const editForm = Form.useForm({
     options: { partial: true },
     values: {
       key: secret.key,
-      value: secret.visibility === SecretVisibility.ENCRYPTED ? '' : secret.value,
+      value:
+        secret.visibility === SecretVisibility.ENCRYPTED ? '' : secret.value,
       encrypted: secret.visibility === SecretVisibility.ENCRYPTED,
     },
     schema: zod.object({
@@ -149,7 +180,9 @@ const EditingListItem: React.FC<EditingListItemProps> = ({ secret, onFinish }) =
         },
         data: {
           value: values.value,
-          visibility: values.encrypted ? SecretVisibility.ENCRYPTED : SecretVisibility.PUBLIC,
+          visibility: values.encrypted
+            ? SecretVisibility.ENCRYPTED
+            : SecretVisibility.PUBLIC,
         },
       });
       onFinish();
@@ -172,10 +205,16 @@ const EditingListItem: React.FC<EditingListItemProps> = ({ secret, onFinish }) =
             <Icon name="spinner" />
           ) : (
             <Box className="items-end gap-1">
-              <span className="text-accent-11 text-sm cursor-pointer" onClick={editForm.submit}>
+              <span
+                className="text-accent-11 text-sm cursor-pointer"
+                onClick={editForm.submit}
+              >
                 Save
               </span>
-              <span className="text-neutral-11 text-sm cursor-pointer" onClick={onFinish}>
+              <span
+                className="text-neutral-11 text-sm cursor-pointer"
+                onClick={onFinish}
+              >
                 Cancel
               </span>
             </Box>

@@ -12,7 +12,11 @@ export type FleekLogoProps = {
   className?: string;
 };
 
-export const FleekLogo: React.FC<FleekLogoProps> = ({ showBolt = true, showTypography = true, className }) => {
+export const FleekLogo: React.FC<FleekLogoProps> = ({
+  showBolt = true,
+  showTypography = true,
+  className,
+}) => {
   const { theme } = useTheme();
   const logoSrc = theme === 'light' ? lightBolt : darkBolt;
 

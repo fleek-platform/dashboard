@@ -14,7 +14,12 @@ type FilterProps = {
   setCategoryId: (id?: string | null) => void;
 };
 
-export const Filter: React.FC<FilterProps> = ({ frameworkId, setFrameworkId, categoryId, setCategoryId }) => {
+export const Filter: React.FC<FilterProps> = ({
+  frameworkId,
+  setFrameworkId,
+  categoryId,
+  setCategoryId,
+}) => {
   const siteFrameworks = useSiteFrameworks();
   const [templateCategoriesQuery] = useTemplateCategoriesQuery();
 
@@ -103,7 +108,14 @@ type FilterCollapsibleProps = LoadingProps & {
   toggleActiveCategory: (item: FilterItem) => void;
 };
 
-const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, toggleActiveCategory, enableAvatar, activeId, isLoading }) => {
+const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({
+  title,
+  items,
+  toggleActiveCategory,
+  enableAvatar,
+  activeId,
+  isLoading,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -112,20 +124,49 @@ const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, tog
         <Box className="px-2.5 flex-row justify-between">
           <Text weight={500}>{title}</Text>
           <Collapsible.Trigger asChild>
-            <Icon name="chevron-down" rotate={isOpen} className="text-neutral-8" />
+            <Icon
+              name="chevron-down"
+              rotate={isOpen}
+              className="text-neutral-8"
+            />
           </Collapsible.Trigger>
         </Box>
         <Collapsible.Content asChild>
           <Box className="gap-3 pt-4">
             {isLoading
-              ? new Array(4).fill(null).map((_, index) => <FilterRowSkeleton enableAvatar={enableAvatar} key={index} />)
+              ? new Array(4)
+                  .fill(null)
+                  .map((_, index) => (
+                    <FilterRowSkeleton
+                      enableAvatar={enableAvatar}
+                      key={index}
+                    />
+                  ))
               : items.map((item) => (
-                  <label htmlFor={String(item.id)} className="flex gap-2.5 items-center px-2.5 cursor-pointer" key={item.id}>
-                    <Checkbox id={String(item.id)} checked={item.id === activeId} onCheckedChange={() => toggleActiveCategory(item)} />
-                    {enableAvatar && <Avatar src={item.avatar} enableIcon icon="gear" className="text-2xs" />}
+                  <label
+                    htmlFor={String(item.id)}
+                    className="flex gap-2.5 items-center px-2.5 cursor-pointer"
+                    key={item.id}
+                  >
+                    <Checkbox
+                      id={String(item.id)}
+                      checked={item.id === activeId}
+                      onCheckedChange={() => toggleActiveCategory(item)}
+                    />
+                    {enableAvatar && (
+                      <Avatar
+                        src={item.avatar}
+                        enableIcon
+                        icon="gear"
+                        className="text-2xs"
+                      />
+                    )}
                     <Text>{item.label}</Text>
                     {item.badge && (
-                      <BadgeText colorScheme="slate" className="text-2xs pointer-events-none">
+                      <BadgeText
+                        colorScheme="slate"
+                        className="text-2xs pointer-events-none"
+                      >
                         {item.badge}
                       </BadgeText>
                     )}
@@ -138,7 +179,9 @@ const CollapsibleFilter: React.FC<FilterCollapsibleProps> = ({ title, items, tog
   );
 };
 
-const FilterRowSkeleton: React.FC<Pick<FilterCollapsibleProps, 'enableAvatar'>> = ({ enableAvatar }) => {
+const FilterRowSkeleton: React.FC<
+  Pick<FilterCollapsibleProps, 'enableAvatar'>
+> = ({ enableAvatar }) => {
   return (
     <Box className="flex-row gap-2.5 items-center px-2.5">
       <Skeleton variant="avatar" className="rounded-sm size-5" />

@@ -17,8 +17,13 @@ type StepProps = {
 type Step3Props = StepProps;
 type Step4Props = StepProps;
 
-export const Instructions = ({ initialStep, functionName = '<fleek_function_name>' }: InstructionsProps) => {
-  const hasDeployFunctionPermission = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.DEPLOY] });
+export const Instructions = ({
+  initialStep,
+  functionName = '<fleek_function_name>',
+}: InstructionsProps) => {
+  const hasDeployFunctionPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.DEPLOY],
+  });
 
   if (hasDeployFunctionPermission) {
     return (
@@ -71,8 +76,14 @@ const Step2 = () => {
   const session = useSessionContext();
 
   return (
-    <Step title="Select Project" description="Start off by selecting the Fleek project you want your function to be located.">
-      <CodeSnippet title="Select Project" code={`fleek projects switch --id=${session.project.id}`} />
+    <Step
+      title="Select Project"
+      description="Start off by selecting the Fleek project you want your function to be located."
+    >
+      <CodeSnippet
+        title="Select Project"
+        code={`fleek projects switch --id=${session.project.id}`}
+      />
     </Step>
   );
 };
@@ -80,11 +91,13 @@ const Step2 = () => {
 const Step3 = ({ functionName }: Step3Props) => (
   <Step title="Create Function">
     <Text>
-      Write the code which the function will run, start by creating a file called{' '}
+      Write the code which the function will run, start by creating a file
+      called{' '}
       <Text as="span" className="text-accent-11">
         function.js
       </Text>{' '}
-      and input the following code. After this, you can create the function running the command below.
+      and input the following code. After this, you can create the function
+      running the command below.
     </Text>
     <CodeSnippet
       title="function.js"
@@ -94,12 +107,22 @@ const Step3 = ({ functionName }: Step3Props) => (
     />
     <AlertBox size="sm" variant="bulb">
       <Box className="flex-row justify-between items-center">
-        <Text weight={500}>For more details on how to structure your code and get ready for deployment.</Text>
-        <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>Go to Docs</ExternalLink>
+        <Text weight={500}>
+          For more details on how to structure your code and get ready for
+          deployment.
+        </Text>
+        <ExternalLink
+          href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+        >
+          Go to Docs
+        </ExternalLink>
       </Box>
     </AlertBox>
     <DividerContainer divider="AND" />
-    <CodeSnippet title="Create Function" code={`fleek functions create  --name ${functionName}`} />
+    <CodeSnippet
+      title="Create Function"
+      code={`fleek functions create  --name ${functionName}`}
+    />
   </Step>
 );
 
@@ -108,6 +131,9 @@ const Step4 = ({ functionName }: Step4Props) => (
     title="Deploy Function"
     description="To create a new function deployment, run the following command. After this, you will be given the URL of your function within the CLI output where you can make a request to the function."
   >
-    <CodeSnippet title="Deploy Function" code={`fleek functions deploy --name ${functionName} --path <code_path>`} />
+    <CodeSnippet
+      title="Deploy Function"
+      code={`fleek functions deploy --name ${functionName} --path <code_path>`}
+    />
   </Step>
 );

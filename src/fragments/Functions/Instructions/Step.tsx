@@ -35,14 +35,20 @@ const FooterRow = () => {
 
   return (
     <Box className="flex-row justify-between items-center">
-      <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>functions</LearnMoreMessage>
+      <LearnMoreMessage
+        href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+      >
+        functions
+      </LearnMoreMessage>
       <Box className="flex-row gap-4">
         {currentStep !== 0 && (
           <Button intent="neutral" onClick={prevStep}>
             Previous step
           </Button>
         )}
-        <Button onClick={handleNextStep}>{currentStep === 3 ? 'Start over' : 'Next step'}</Button>
+        <Button onClick={handleNextStep}>
+          {currentStep === 3 ? 'Start over' : 'Next step'}
+        </Button>
       </Box>
     </Box>
   );

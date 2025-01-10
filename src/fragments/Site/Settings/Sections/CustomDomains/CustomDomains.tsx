@@ -1,4 +1,11 @@
-import { DomainField, Form, LearnMoreMessage, PermissionsTooltip, SettingsBox, ThreeDNSBuyDomainButton } from '@/components';
+import {
+  DomainField,
+  Form,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+  ThreeDNSBuyDomainButton,
+} from '@/components';
 import { constants } from '@/constants';
 import { useSiteQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -7,7 +14,11 @@ import { useBillingContext } from '@/providers/BillingProvider';
 import { Button } from '@/ui';
 import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 
-import { SettingsItemContext, SettingsItemProvider, useSettingsItemContext } from '../../Elements/SettingsItem.context';
+import {
+  SettingsItemContext,
+  SettingsItemProvider,
+  useSettingsItemContext,
+} from '../../Elements/SettingsItem.context';
 import { DeletePrimaryDomainModal } from './DeletePrimaryDomainModal';
 import { DeleteSiteDomainModal } from './DeleteSiteDomainModal';
 import { DomainsList } from './DomainsList';
@@ -15,20 +26,34 @@ import { VerifyDomainModal } from './VerifyDomainModal/VerifyDomainModal';
 
 export type CustomDomainsProps = Pick<
   SettingsItemContext,
-  'onSubmitVerification' | 'onSubmitDelete' | 'onSubmitPrimaryDomain' | 'refetchQuery'
+  | 'onSubmitVerification'
+  | 'onSubmitDelete'
+  | 'onSubmitPrimaryDomain'
+  | 'refetchQuery'
 >;
 
-export const CustomDomains: React.FC<CustomDomainsProps> = ({ onSubmitVerification, onSubmitDelete, onSubmitPrimaryDomain }) => {
+export const CustomDomains: React.FC<CustomDomainsProps> = ({
+  onSubmitVerification,
+  onSubmitDelete,
+  onSubmitPrimaryDomain,
+}) => {
   const router = useRouter();
-  const hasAddDomainPermission = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN] });
+  const hasAddDomainPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN],
+  });
   const billing = useBillingContext();
 
-  const [siteQuery, refetchSiteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
+  const [siteQuery, refetchSiteQuery] = useSiteQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
 
   const siteName = siteQuery.data?.site.name || '';
   const domains = filterDeletedDomains(siteQuery.data?.site.domains || []);
 
-  const billingRestriction = billing.hasReachedLimit('customDomains', domains.length);
+  const billingRestriction = billing.hasReachedLimit(
+    'customDomains',
+    domains.length,
+  );
 
   return (
     <SettingsItemProvider
@@ -46,20 +71,34 @@ export const CustomDomains: React.FC<CustomDomainsProps> = ({ onSubmitVerificati
           <SettingsBox.Column>
             <SettingsBox.Title>Custom Domains</SettingsBox.Title>
             <SettingsBox.Text>
-              Add a DNS domain or subdomain to your site, allowing anyone to access your site via traditional https endpoint.
+              Add a DNS domain or subdomain to your site, allowing anyone to
+              access your site via traditional https endpoint.
             </SettingsBox.Text>
           </SettingsBox.Column>
           <ThreeDNSBuyDomainButton />
         </SettingsBox.TitleRow>
 
         <PermissionsTooltip hasAccess={hasAddDomainPermission}>
-          <DomainField isLoading={siteQuery.fetching} isDisabled={!hasAddDomainPermission || billingRestriction.hasReachedLimit} />
+          <DomainField
+            isLoading={siteQuery.fetching}
+            isDisabled={
+              !hasAddDomainPermission || billingRestriction.hasReachedLimit
+            }
+          />
         </PermissionsTooltip>
 
         <SettingsBox.ActionRow>
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_CUSTOM_DOMAIN}>custom domains</LearnMoreMessage>
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_CUSTOM_DOMAIN}
+          >
+            custom domains
+          </LearnMoreMessage>
 
-          {siteQuery.fetching ? <SettingsBox.Skeleton variant="button" /> : <SubmitButton />}
+          {siteQuery.fetching ? (
+            <SettingsBox.Skeleton variant="button" />
+          ) : (
+            <SubmitButton />
+          )}
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
 
@@ -89,7 +128,12 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit}>
+    <Button
+      type="submit"
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmit}
+    >
       Add custom domain
     </Button>
   );

@@ -14,13 +14,22 @@ type UserComboboxProps = LoadingProps<{
   onRefetch?: () => void;
 }>;
 
-export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoading, currentUser, setCurrentUser, onRefetch }) => {
+export const UserCombobox: React.FC<UserComboboxProps> = ({
+  users = [],
+  isLoading,
+  currentUser,
+  setCurrentUser,
+  onRefetch,
+}) => {
   const toast = useToast();
   const { sourceProvider, providerState } = useDeploySiteContext();
 
   const handleAddGHAccount = async () => {
     if (!providerState?.requirements?.installationUrl) {
-      toast.error({ message: 'Unexpected error finding installation url, please contact support' });
+      toast.error({
+        message:
+          'Unexpected error finding installation url, please contact support',
+      });
 
       return;
     }
@@ -59,7 +68,13 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({ users = [], isLoadin
     >
       {({ Field, Options }) => (
         <>
-          <Field placeholder={<>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>}>{UserItem}</Field>
+          <Field
+            placeholder={
+              <>{<Icon name={sourceProviderIcon[sourceProvider!]} />} Select</>
+            }
+          >
+            {UserItem}
+          </Field>
 
           <Options align="start">{UserItem}</Options>
         </>

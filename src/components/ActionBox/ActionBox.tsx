@@ -14,7 +14,19 @@ type ActionBoxProps = DisabledProps<
 >;
 
 export const ActionBox = forwardRef<HTMLAnchorElement, ActionBoxProps>(
-  ({ title, description, icon, isDisabled, isRestricted = false, isExternalLink = false, className, ...props }, ref) => {
+  (
+    {
+      title,
+      description,
+      icon,
+      isDisabled,
+      isRestricted = false,
+      isExternalLink = false,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     if (isDisabled || isRestricted) {
       props.href = '#';
     }
@@ -36,9 +48,12 @@ export const ActionBox = forwardRef<HTMLAnchorElement, ActionBoxProps>(
             </Text>
             <Text>{description}</Text>
           </Box>
-          <Icon name="arrow-right" className="ml-auto self-start text-neutral-11" />
+          <Icon
+            name="arrow-right"
+            className="ml-auto self-start text-neutral-11"
+          />
         </Box>
       </LinkBox>
     );
-  }
+  },
 );

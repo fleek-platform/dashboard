@@ -13,7 +13,11 @@ type RepositoryListProps = {
   owner?: string;
 };
 
-export const RepositoryList: React.FC<RepositoryListProps> = ({ loading, repos, owner }) => {
+export const RepositoryList: React.FC<RepositoryListProps> = ({
+  loading,
+  repos,
+  owner,
+}) => {
   if (loading) {
     return <Icon name="spinner" className="text-xl" />;
   }
@@ -39,18 +43,26 @@ const NoRepositories: React.FC = () => (
   <Box className="justify-center items-center text-center gap-2.5">
     <Icon name="question" />
     <Text variant="primary">No repositories</Text>
-    <Text>We were unable to find any repositories, make sure you are on the correct account.</Text>
+    <Text>
+      We were unable to find any repositories, make sure you are on the correct
+      account.
+    </Text>
   </Box>
 );
 
-const Repository: React.FC<{ repo: Repository; owner?: string }> = ({ repo, owner }) => {
+const Repository: React.FC<{ repo: Repository; owner?: string }> = ({
+  repo,
+  owner,
+}) => {
   const { setGitRepository, gitProviderId } = useDeploySiteContext();
   const toast = useToast();
   const stepper = Stepper.useContext();
 
   const handleRepositoryClick = () => {
     if (!gitProviderId || !owner) {
-      toast.error({ message: 'Unexpected error happened when selecting repository' });
+      toast.error({
+        message: 'Unexpected error happened when selecting repository',
+      });
       stepper.prevStep();
 
       return;

@@ -5,7 +5,17 @@ import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { LoadingProps } from '@/types/Props';
 import { Site } from '@/types/Site';
-import { Avatar, Box, Icon, IconName, Image, ImageProps, LinkBox, Skeleton, Text } from '@/ui';
+import {
+  Avatar,
+  Box,
+  Icon,
+  IconName,
+  Image,
+  ImageProps,
+  LinkBox,
+  Skeleton,
+  Text,
+} from '@/ui';
 import { AvatarMarble } from '@/ui/AvatarMarble/AvatarMarble';
 import { cn } from '@/utils/cn';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
@@ -20,27 +30,56 @@ export type SiteCardProps = LoadingProps<{
   deployment?: Site['currentDeployment'];
 }>;
 
-export const SiteCard: React.FC<SiteCardProps> = ({ id, name, avatar, projectId, siteLink, isLoading, deployment, sourceProvider }) => {
+export const SiteCard: React.FC<SiteCardProps> = ({
+  id,
+  name,
+  avatar,
+  projectId,
+  siteLink,
+  isLoading,
+  deployment,
+  sourceProvider,
+}) => {
   if (isLoading) {
     return <SiteSkeleton />;
   }
 
-  const footerText = deployment ? getDurationUntilNow({ isoDateString: deployment.createdAt, shortFormat: true }) : 'No deployments yet';
+  const footerText = deployment
+    ? getDurationUntilNow({
+        isoDateString: deployment.createdAt,
+        shortFormat: true,
+      })
+    : 'No deployments yet';
 
   return (
-    <LinkBox href={routes.project.site.overview({ projectId, siteId: id })} className="p-0 gap-0">
+    <LinkBox
+      href={routes.project.site.overview({ projectId, siteId: id })}
+      className="p-0 gap-0"
+    >
       <SiteImage src={deployment?.previewImageUrl} />
       <Box className="py-3 px-4 gap-3">
         <Box className="flex-row justify-between gap-4">
           <Box className="overflow-hidden">
-            <Text data-testid={TEST_ID.CARD_SITE_NAME} variant="primary" weight={700}>
+            <Text
+              data-testid={TEST_ID.CARD_SITE_NAME}
+              variant="primary"
+              weight={700}
+            >
               {name}
             </Text>
-            <Text className={cn('truncate', { 'text-warning-11': !deployment })}>{siteLink || <Skeleton />}</Text>
+            <Text
+              className={cn('truncate', { 'text-warning-11': !deployment })}
+            >
+              {siteLink || <Skeleton />}
+            </Text>
           </Box>
           <Box>
             {avatar ? (
-              <Image src={avatar} alt="site logo" className="rounded-sm size-6" />
+              <Image
+                src={avatar}
+                alt="site logo"
+                className="rounded-sm size-6"
+              />
             ) : (
               <AvatarMarble name={id} className="rounded-sm size-6" />
             )}
@@ -48,7 +87,11 @@ export const SiteCard: React.FC<SiteCardProps> = ({ id, name, avatar, projectId,
         </Box>
         <Box className="flex-row gap-1 items-center">
           <Text size="xs">{footerText}</Text>
-          <Avatar icon={getUploadIcon(sourceProvider)} className="text-2xs" enableIcon />
+          <Avatar
+            icon={getUploadIcon(sourceProvider)}
+            className="text-2xs"
+            enableIcon
+          />
         </Box>
       </Box>
     </LinkBox>
@@ -95,7 +138,9 @@ const SiteImage: React.FC<SiteImageProps> = ({ src, isLoading }) => {
   );
 };
 
-const getUploadIcon = (sourceProvider: Deployment['sourceProvider']): IconName => {
+const getUploadIcon = (
+  sourceProvider: Deployment['sourceProvider'],
+): IconName => {
   switch (sourceProvider) {
     case SourceProvider.GITHUB:
       return 'github';

@@ -12,11 +12,19 @@ const Wrapper: React.FC<ChildrenProps> = ({ children }) => {
 };
 
 const Aside: React.FC<ChildrenProps> = ({ children }) => {
-  return <Box className="[grid-area:aside] md:sticky items-strech justify-center gap-7 top-[4.5rem]">{children}</Box>;
+  return (
+    <Box className="[grid-area:aside] md:sticky items-strech justify-center gap-7 top-[4.5rem]">
+      {children}
+    </Box>
+  );
 };
 
 const Content: React.FC<ChildrenProps> = ({ children }) => {
-  return <Box className="[grid-area:content] gap-4 items-stretch justify-center">{children}</Box>;
+  return (
+    <Box className="[grid-area:content] gap-4 items-stretch justify-center">
+      {children}
+    </Box>
+  );
 };
 
 export const Grid = {

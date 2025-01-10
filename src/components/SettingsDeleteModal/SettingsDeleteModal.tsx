@@ -8,7 +8,11 @@ import { AlertBox } from '../AlertBox/AlertBox';
 import { Heading } from '../SettingsModal/SettingsModal';
 import { SettingsDeleteModalStyles as S } from './SettingsDeleteModal.styles';
 
-export const SettingsDeleteModal = ({ trigger, children, ...props }: SettingsDeleteModal.Props) => {
+export const SettingsDeleteModal = ({
+  trigger,
+  children,
+  ...props
+}: SettingsDeleteModal.Props) => {
   return (
     <Dialog.Root {...props}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
@@ -19,7 +23,13 @@ export const SettingsDeleteModal = ({ trigger, children, ...props }: SettingsDel
   );
 };
 
-SettingsDeleteModal.Table = (({ title, headers, rows, isLoading, onValidationChange }) => {
+SettingsDeleteModal.Table = (({
+  title,
+  headers,
+  rows,
+  isLoading,
+  onValidationChange,
+}) => {
   const [values, setValues] = useState(rows.map(() => false));
 
   const handleChange = (index: number, checked: boolean) => {
@@ -57,7 +67,9 @@ SettingsDeleteModal.Table = (({ title, headers, rows, isLoading, onValidationCha
         <S.Table.Header>
           <S.Table.Row>
             {headers.map((header, index) => (
-              <S.Table.HeaderCell key={index}>{header.children}</S.Table.HeaderCell>
+              <S.Table.HeaderCell key={index}>
+                {header.children}
+              </S.Table.HeaderCell>
             ))}
             <S.Table.HeaderCell /> {/* empty cell for checkbox */}
           </S.Table.Row>
@@ -65,7 +77,10 @@ SettingsDeleteModal.Table = (({ title, headers, rows, isLoading, onValidationCha
 
         <S.Table.Body>
           {rows.map((row, rowIndex) => (
-            <S.Table.Row key={rowIndex} onClick={() => handleChange(rowIndex, !values[rowIndex])}>
+            <S.Table.Row
+              key={rowIndex}
+              onClick={() => handleChange(rowIndex, !values[rowIndex])}
+            >
               {row.map((cell, columnIndex) => (
                 <S.Table.Cell key={columnIndex}>{cell}</S.Table.Cell>
               ))}
@@ -107,7 +122,9 @@ SettingsDeleteModal.Footer = withProps(Box, { className: 'flex-row gap-4' });
 
 SettingsDeleteModal.Heading = Heading;
 
-SettingsDeleteModal.Warning = ({ children = 'Warning: This action is irreversible.' }: SettingsDeleteModal.WarningProps) => (
+SettingsDeleteModal.Warning = ({
+  children = 'Warning: This action is irreversible.',
+}: SettingsDeleteModal.WarningProps) => (
   <AlertBox variant="danger" size="sm">
     {children}
   </AlertBox>

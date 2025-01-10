@@ -8,11 +8,20 @@ import { Invitation } from '@/types/TeamProject';
 import { Box, Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
-import { TeamProjectContext, TeamProjectProvider, useTeamProjectContext } from './TeamProject.context';
+import {
+  TeamProjectContext,
+  TeamProjectProvider,
+  useTeamProjectContext,
+} from './TeamProject.context';
 
-export type TeamInvitationsListProps = Pick<TeamProjectContext, 'onSubmitDelete'>;
+export type TeamInvitationsListProps = Pick<
+  TeamProjectContext,
+  'onSubmitDelete'
+>;
 
-export const TeamInvitationsList: React.FC<TeamInvitationsListProps> = ({ onSubmitDelete }) => {
+export const TeamInvitationsList: React.FC<TeamInvitationsListProps> = ({
+  onSubmitDelete,
+}) => {
   const session = useSessionContext();
 
   const [invitationsQuery] = useInvitationsQuery();
@@ -27,12 +36,17 @@ export const TeamInvitationsList: React.FC<TeamInvitationsListProps> = ({ onSubm
     <TeamProjectProvider onSubmitDelete={onSubmitDelete}>
       <SettingsBox.Container>
         <SettingsBox.Title>Manage Invitations</SettingsBox.Title>
-        <SettingsBox.Text>Manage pending invitations for this project.</SettingsBox.Text>
+        <SettingsBox.Text>
+          Manage pending invitations for this project.
+        </SettingsBox.Text>
         {!session.loading &&
           invitations
             .filter((invitation) => invitation.email)
             .map((invitation) => (
-              <Box key={invitation.id} className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none">
+              <Box
+                key={invitation.id}
+                className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none"
+              >
                 <MemberItem invitation={invitation} />
               </Box>
             ))}
@@ -50,7 +64,13 @@ const MemberItem: React.FC<MemberItemProps> = ({ invitation }) => {
     <Box className="flex-row justify-between items-center">
       <Box className="gap-1">
         <Text variant="primary">{invitation.email || ''}</Text>
-        <Text size="xs">Invited {getDurationUntilNow({ isoDateString: invitation.createdAt, shortFormat: true })}</Text>
+        <Text size="xs">
+          Invited{' '}
+          {getDurationUntilNow({
+            isoDateString: invitation.createdAt,
+            shortFormat: true,
+          })}
+        </Text>
       </Box>
       <Box className="flex-row items-center gap-3">
         <BadgeText colorScheme="slate">Pending invite</BadgeText>

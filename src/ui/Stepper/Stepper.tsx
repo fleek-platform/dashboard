@@ -59,7 +59,11 @@ const Root: React.FC<Stepper.RootProps> = ({ children, initialStep = 1 }) => {
     }
   };
 
-  return <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>{children}</Provider>;
+  return (
+    <Provider value={{ totalSteps, currentStep, nextStep, prevStep, setStep }}>
+      {children}
+    </Provider>
+  );
 };
 
 const Container = (props: Stepper.ContainerProps): JSX.Element => {
@@ -70,11 +74,15 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
     () =>
       React.Children.toArray(children).map((child, index) => {
         if (!React.isValidElement(child)) {
-          throw new Error('Stepper.Container children must be a valid React element');
+          throw new Error(
+            'Stepper.Container children must be a valid React element',
+          );
         }
 
         if (child.type !== Stepper.Step) {
-          throw new Error('Stepper.Container children must be a Stepper.Step component');
+          throw new Error(
+            'Stepper.Container children must be a Stepper.Step component',
+          );
         }
 
         if (index === currentStep) {
@@ -83,7 +91,7 @@ const Container = (props: Stepper.ContainerProps): JSX.Element => {
 
         return null;
       }),
-    [children, currentStep]
+    [children, currentStep],
   );
 
   // eslint-disable-next-line react/jsx-no-useless-fragment

@@ -7,9 +7,13 @@ import { getLinkPartsForSiteSlug } from '@/utils/siteSlugLinks';
 
 export const SiteSlug: React.FC<LoadingProps> = ({ isLoading }) => {
   const field = Form.useField<string>('slug');
-  const hasEditSlugPermission = usePermissions({ action: [constants.PERMISSION.SITE.EDIT_SLUG] });
+  const hasEditSlugPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.EDIT_SLUG],
+  });
 
-  const { protocol, slug, domain } = getLinkPartsForSiteSlug({ slug: field.value });
+  const { protocol, slug, domain } = getLinkPartsForSiteSlug({
+    slug: field.value,
+  });
 
   return (
     <SettingsBox.Container>
@@ -30,13 +34,24 @@ export const SiteSlug: React.FC<LoadingProps> = ({ isLoading }) => {
       </SettingsBox.Column>
 
       <PermissionsTooltip hasAccess={hasEditSlugPermission}>
-        <Form.InputField name="slug" placeholder="" isLoading={isLoading} isDisabled={!hasEditSlugPermission} />
+        <Form.InputField
+          name="slug"
+          placeholder=""
+          isLoading={isLoading}
+          isDisabled={!hasEditSlugPermission}
+        />
       </PermissionsTooltip>
 
       <SettingsBox.ActionRow>
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_SITE_NAME}>site slug</LearnMoreMessage>
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_SITE_NAME}>
+          site slug
+        </LearnMoreMessage>
 
-        {isLoading ? <SettingsBox.Skeleton variant="button" /> : <Form.SubmitButton>Save changes</Form.SubmitButton>}
+        {isLoading ? (
+          <SettingsBox.Skeleton variant="button" />
+        ) : (
+          <Form.SubmitButton>Save changes</Form.SubmitButton>
+        )}
       </SettingsBox.ActionRow>
     </SettingsBox.Container>
   );

@@ -13,18 +13,23 @@ const key = 'accessToken';
 // to allow it to work cross-domain
 // https://nextjs.org/docs/app/api-reference/functions/cookies#options
 // OBS: The application fails to provide enviroment hostname settings. Thus, using the runtime URL but this can change in the future.
-const domain = !isServerSide()
-  ? getTopLevelDomain(window.location.href)
-  : '';
+const domain = !isServerSide() ? getTopLevelDomain(window.location.href) : '';
 
-export const useAuthCookie = (): [string | undefined, (value: string) => void, () => void] => {
+export const useAuthCookie = (): [
+  string | undefined,
+  (value: string) => void,
+  () => void,
+] => {
   const cookies = useCookies();
 
   const set = (jwt: string) => {
     try {
       const parsed = decodeAccessToken({ token: jwt });
 
-      cookies.set(key, jwt, { expires: DateTime.fromSeconds(parsed.exp).toJSDate(), domain });
+      cookies.set(key, jwt, {
+        expires: DateTime.fromSeconds(parsed.exp).toJSDate(),
+        domain,
+      });
     } catch (error) {
       Log.error('Failed to set access token', error);
     }

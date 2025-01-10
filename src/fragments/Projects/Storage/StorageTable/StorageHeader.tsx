@@ -3,7 +3,8 @@ import { Box, Button, Combobox, Icon } from '@/ui';
 import { useStorageContext } from '../Storage.context';
 
 export const StorageHeader: React.FC = () => {
-  const { storageProviders, setSelectedStorage, selectedStorage } = useStorageContext();
+  const { storageProviders, setSelectedStorage, selectedStorage } =
+    useStorageContext();
 
   return (
     <Box className="border border-neutral-6 bg-neutral-2 rounded">

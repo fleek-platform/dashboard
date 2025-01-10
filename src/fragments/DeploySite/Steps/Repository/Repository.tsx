@@ -12,12 +12,20 @@ import { GitUser, UserCombobox } from './UserCombobox';
 
 export const RepositoryStep: React.FC = () => {
   const stepper = Stepper.useContext();
-  const { providerState, setSourceProvider, setGitUser, refetchGitProviderRequirements } = useDeploySiteContext();
+  const {
+    providerState,
+    setSourceProvider,
+    setGitUser,
+    refetchGitProviderRequirements,
+  } = useDeploySiteContext();
 
-  const [gitRepositoriesQuery, refetchGitRepositoriesQuery] = useGitRepositoriesQuery({
-    variables: { where: { gitProviderId: providerState?.gitProviderId as string } },
-    pause: !providerState?.gitProviderId,
-  });
+  const [gitRepositoriesQuery, refetchGitRepositoriesQuery] =
+    useGitRepositoriesQuery({
+      variables: {
+        where: { gitProviderId: providerState?.gitProviderId as string },
+      },
+      pause: !providerState?.gitProviderId,
+    });
 
   const [currentUser, setCurrentUser] = useState<GitUser>();
   const [searchValue, setSearchValue] = useState('');
@@ -39,11 +47,14 @@ export const RepositoryStep: React.FC = () => {
         installationId: currentUser.installationId.toString(),
       });
     },
-    [setCurrentUser, setGitUser]
+    [setCurrentUser, setGitUser],
   );
 
   useEffect(() => {
-    if (gitRepositoriesQuery.fetching || !gitRepositoriesQuery.data?.gitApiInstallations) {
+    if (
+      gitRepositoriesQuery.fetching ||
+      !gitRepositoriesQuery.data?.gitApiInstallations
+    ) {
       return;
     }
 
@@ -68,7 +79,9 @@ export const RepositoryStep: React.FC = () => {
     },
   });
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => setSearchValue(event.target.value);
+  const handleSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => setSearchValue(event.target.value);
 
   const handleRefetch = () => {
     refetchGitRepositoriesQuery({ requestPolicy: 'network-only' });
@@ -85,7 +98,9 @@ export const RepositoryStep: React.FC = () => {
       return [];
     }
 
-    return repos.filter((repo) => repo.name.toLowerCase().includes(searchValue.toLowerCase()));
+    return repos.filter((repo) =>
+      repo.name.toLowerCase().includes(searchValue.toLowerCase()),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, searchValue]);
 
@@ -93,11 +108,18 @@ export const RepositoryStep: React.FC = () => {
     <Box
       variant="container"
       className={cn('h-[28rem] relative gap-6 rounded-xl', {
-        'absolute inset-0 h-full transition-all ease-in-out duration-200': isRepoListExpanded,
+        'absolute inset-0 h-full transition-all ease-in-out duration-200':
+          isRepoListExpanded,
       })}
     >
       <Box className="flex-row justify-between">
-        <Text as="h2" variant="primary" size="xl" weight={700} className="self-start">
+        <Text
+          as="h2"
+          variant="primary"
+          size="xl"
+          weight={700}
+          className="self-start"
+        >
           Select repository
         </Text>
         <Button
@@ -118,15 +140,28 @@ export const RepositoryStep: React.FC = () => {
 
         <Input.Root className="flex-1 h-[2rem]">
           <Input.Icon name="magnify" />
-          <Input.Field ref={inputRef} placeholder="Search" value={searchValue} onChange={handleSearchChange} />
+          <Input.Field
+            ref={inputRef}
+            placeholder="Search"
+            value={searchValue}
+            onChange={handleSearchChange}
+          />
         </Input.Root>
       </Box>
 
       <S.List.Scrollable.Root type="auto">
-        <RepositoryList repos={repos} owner={currentUser?.name} loading={gitRepositoriesQuery.fetching} />
+        <RepositoryList
+          repos={repos}
+          owner={currentUser?.name}
+          loading={gitRepositoriesQuery.fetching}
+        />
       </S.List.Scrollable.Root>
 
-      <ProviderInstallationMessage onRefetch={() => refetchGitRepositoriesQuery({ requestPolicy: 'network-only' })} />
+      <ProviderInstallationMessage
+        onRefetch={() =>
+          refetchGitRepositoriesQuery({ requestPolicy: 'network-only' })
+        }
+      />
     </Box>
   );
 };

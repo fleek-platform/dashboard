@@ -2,9 +2,20 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useState } from 'react';
 import { match } from 'ts-pattern';
 
-import { BadgeText, CustomTooltip, Link, SettingsBox, SettingsListItem } from '@/components';
+import {
+  BadgeText,
+  CustomTooltip,
+  Link,
+  SettingsBox,
+  SettingsListItem,
+} from '@/components';
 import { Template } from '@/fragments/Template/Template';
-import { TemplateReviewStatus, useDeleteTemplateMutation, useMeQuery, useTemplatesQuery } from '@/generated/graphqlClient';
+import {
+  TemplateReviewStatus,
+  useDeleteTemplateMutation,
+  useMeQuery,
+  useTemplatesQuery,
+} from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
 import { Templates } from '@/types/Template';
@@ -15,15 +26,21 @@ import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 export const ManageTemplates = () => {
   const [meQuery] = useMeQuery();
   const userId = meQuery.data?.user.id!;
-  const [templatesQuery] = useTemplatesQuery({ variables: { where: { createdById: userId } }, pause: !userId });
+  const [templatesQuery] = useTemplatesQuery({
+    variables: { where: { createdById: userId } },
+    pause: !userId,
+  });
 
-  const isLoading = (meQuery.fetching || templatesQuery.fetching) && !templatesQuery.data;
+  const isLoading =
+    (meQuery.fetching || templatesQuery.fetching) && !templatesQuery.data;
   const templates = templatesQuery.data?.templates.data || [];
 
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Manage Templates</SettingsBox.Title>
-      <SettingsBox.Text>Remove or modify templates from your collection.</SettingsBox.Text>
+      <SettingsBox.Text>
+        Remove or modify templates from your collection.
+      </SettingsBox.Text>
       <TemplatesList templates={templates} isLoading={isLoading} />
     </SettingsBox.Container>
   );
@@ -33,7 +50,10 @@ type TemplatesListProps = LoadingProps<{
   templates: Templates;
 }>;
 
-const TemplatesList: React.FC<TemplatesListProps> = ({ templates, isLoading }) => {
+const TemplatesList: React.FC<TemplatesListProps> = ({
+  templates,
+  isLoading,
+}) => {
   if (isLoading) {
     return (
       <>
@@ -45,7 +65,12 @@ const TemplatesList: React.FC<TemplatesListProps> = ({ templates, isLoading }) =
   }
 
   if (templates.length === 0) {
-    return <SettingsBox.EmptyContent title="No Templates" description="Once you create a template, they will appear here." />;
+    return (
+      <SettingsBox.EmptyContent
+        title="No Templates"
+        description="Once you create a template, they will appear here."
+      />
+    );
   }
 
   return (
@@ -61,20 +86,31 @@ const TemplatesList: React.FC<TemplatesListProps> = ({ templates, isLoading }) =
           <Box className="flex-row gap-2 items-center">
             {match(template.reviewStatus)
               .with(TemplateReviewStatus.REJECTED, () => (
-                <CustomTooltip side="top" content={template.reviewComment!} delayDuration={0}>
+                <CustomTooltip
+                  side="top"
+                  content={template.reviewComment!}
+                  delayDuration={0}
+                >
                   <BadgeText colorScheme="red">
                     Rejected
                     <Icon name="question" />
                   </BadgeText>
                 </CustomTooltip>
               ))
-              .with(TemplateReviewStatus.PENDING, () => <BadgeText colorScheme="amber">Review pending</BadgeText>)
+              .with(TemplateReviewStatus.PENDING, () => (
+                <BadgeText colorScheme="amber">Review pending</BadgeText>
+              ))
               .with(TemplateReviewStatus.APPROVED, () => (
-                <BadgeText colorScheme="green">{`${template.usageCount} Deployment${template.usageCount > 1 ? 's' : ''}`} </BadgeText>
+                <BadgeText colorScheme="green">
+                  {`${template.usageCount} Deployment${template.usageCount > 1 ? 's' : ''}`}{' '}
+                </BadgeText>
               ))
               .exhaustive()}
 
-            <Dropdown templateId={template.id} reviewStatus={template.reviewStatus} />
+            <Dropdown
+              templateId={template.id}
+              reviewStatus={template.reviewStatus}
+            />
           </Box>
         </SettingsListItem>
       ))}
@@ -95,7 +131,8 @@ const Dropdown: React.FC<DropdownProps> = ({ templateId, reviewStatus }) => {
 
   const handleCopyTemplateUrl = () => {
     try {
-      const url = window?.location.origin + routes.template.indexed({ templateId });
+      const url =
+        window?.location.origin + routes.template.indexed({ templateId });
       copyToClipboard(url);
       toast.success({ message: 'Template url copied to clipboard' });
     } catch (error) {
@@ -118,30 +155,47 @@ const Dropdown: React.FC<DropdownProps> = ({ templateId, reviewStatus }) => {
 
   return (
     <>
-      <SettingsListItem.DropdownMenu isLoading={deleteTemplateMutation.fetching}>
+      <SettingsListItem.DropdownMenu
+        isLoading={deleteTemplateMutation.fetching}
+      >
         {reviewStatus === TemplateReviewStatus.APPROVED && (
           <Link href={routes.template.indexed({ templateId })}>
-            <SettingsListItem.DropdownMenuItem icon="arrow-up-right">View Template</SettingsListItem.DropdownMenuItem>
+            <SettingsListItem.DropdownMenuItem icon="arrow-up-right">
+              View Template
+            </SettingsListItem.DropdownMenuItem>
           </Link>
         )}
-        <SettingsListItem.DropdownMenuItem icon="pencil" onSelect={handleEditTemplate}>
+        <SettingsListItem.DropdownMenuItem
+          icon="pencil"
+          onSelect={handleEditTemplate}
+        >
           Edit Template
         </SettingsListItem.DropdownMenuItem>
         <SettingsListItem.DropdownMenuSeparator />
         {reviewStatus === TemplateReviewStatus.APPROVED && (
           <>
-            <SettingsListItem.DropdownMenuItem icon="copy" onClick={handleCopyTemplateUrl}>
+            <SettingsListItem.DropdownMenuItem
+              icon="copy"
+              onClick={handleCopyTemplateUrl}
+            >
               Copy URL
             </SettingsListItem.DropdownMenuItem>
             <SettingsListItem.DropdownMenuSeparator />
           </>
         )}
-        <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDeleteTemplate}>
+        <SettingsListItem.DropdownMenuItem
+          icon="trash"
+          onClick={handleDeleteTemplate}
+        >
           Delete
         </SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>
 
-      <Template.UpdateModal templateId={templateId} open={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
+      <Template.UpdateModal
+        templateId={templateId}
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+      />
     </>
   );
 };

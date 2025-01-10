@@ -9,7 +9,9 @@ type OutsideLink = {
   onClick?: () => void;
 };
 
-const generateOutsideLinks = (openModalWithTab: (tab: TAB) => void): OutsideLink[] => [
+const generateOutsideLinks = (
+  openModalWithTab: (tab: TAB) => void,
+): OutsideLink[] => [
   {
     title: 'Read the docs',
     description: 'Explore our guides, API references and code examples.',
@@ -43,17 +45,25 @@ export const OutsideLinks: React.FC = () => {
         Become a Fleek power user
       </Text>
       <Box className="grid grid-cols-2 gap-4 h-full">
-        {generateOutsideLinks(openModalWithTab).map(({ title, href, description, onClick }) => (
-          <LinkBox key={title} href={href || '#'} onClick={onClick} isExternalLink={Boolean(href)} className="justify-between gap-2.5">
-            <Box className="flex-row justify-between">
-              <Text as="h3" size="md" variant="primary" weight={700}>
-                {title}
-              </Text>
-              <Icon name="arrow-right" className="text-neutral-11" />
-            </Box>
-            <Text>{description}</Text>
-          </LinkBox>
-        ))}
+        {generateOutsideLinks(openModalWithTab).map(
+          ({ title, href, description, onClick }) => (
+            <LinkBox
+              key={title}
+              href={href || '#'}
+              onClick={onClick}
+              isExternalLink={Boolean(href)}
+              className="justify-between gap-2.5"
+            >
+              <Box className="flex-row justify-between">
+                <Text as="h3" size="md" variant="primary" weight={700}>
+                  {title}
+                </Text>
+                <Icon name="arrow-right" className="text-neutral-11" />
+              </Box>
+              <Text>{description}</Text>
+            </LinkBox>
+          ),
+        )}
       </Box>
     </Box>
   );

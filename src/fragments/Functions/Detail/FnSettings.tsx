@@ -2,16 +2,29 @@ import { routes } from '@fleek-platform/utils-routes';
 import { isEmpty } from 'lodash';
 import React, { type PropsWithChildren, useCallback, useState } from 'react';
 
-import { AlertBox, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
+import {
+  AlertBox,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+} from '@/components';
 import { constants } from '@/constants';
-import { FleekFunctionStatus, UpdateFleekFunctionDataInput, useUpdateFleekFunctionMutation } from '@/generated/graphqlClient';
+import {
+  FleekFunctionStatus,
+  UpdateFleekFunctionDataInput,
+  useUpdateFleekFunctionMutation,
+} from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Box, Button, Skeleton, Switch } from '@/ui';
 
-import { type FunctionDetailContext, useDeleteFunction, useFunctionDetailContext } from './Context';
+import {
+  type FunctionDetailContext,
+  useDeleteFunction,
+  useFunctionDetailContext,
+} from './Context';
 import { FnDeleteModal } from './FnDeleteModal';
 import { UpdateForm } from './UpdateForm';
 
@@ -19,7 +32,11 @@ const { ACTIVE, INACTIVE } = FleekFunctionStatus;
 
 export const FnSettings = () => {
   const ctxt = useFunctionDetailContext(true);
-  const content = ctxt ? <FnSettingsContent {...ctxt} /> : <FnSettingsSkeleton />;
+  const content = ctxt ? (
+    <FnSettingsContent {...ctxt} />
+  ) : (
+    <FnSettingsSkeleton />
+  );
 
   return content;
 };
@@ -66,9 +83,12 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [deleteFleekFunctionMutation] = useDeleteFunction(fn);
-  const [updateFleekFunctionMutation, updateFleekFunction] = useUpdateFleekFunctionMutation();
+  const [updateFleekFunctionMutation, updateFleekFunction] =
+    useUpdateFleekFunctionMutation();
 
-  const hasDeleteFunctionPermission = usePermissions({ action: [constants.PERMISSION.FUNCTIONS.DELETE] });
+  const hasDeleteFunctionPermission = usePermissions({
+    action: [constants.PERMISSION.FUNCTIONS.DELETE],
+  });
 
   const toast = useToast();
   const router = useRouter();
@@ -84,13 +104,13 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
           routes.project.function.settings({
             fnName: newName!,
             projectId: session.project.id,
-          })
+          }),
         );
       }
 
       toast.success({ message: 'Settings saved!' });
     },
-    [updateFleekFunction, id, toast, router, session.project.id]
+    [updateFleekFunction, id, toast, router, session.project.id],
   );
 
   const [statusChanging, setStatusChanging] = useState(false);
@@ -122,28 +142,64 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
         }
       >
         <AlertBox size="sm" variant="primary" className="bg-transparent">
-          Stopping a function will not remove it from IPFS. Functions that have been stopped can be run by users who know the function&#39;s
-          CID.
+          Stopping a function will not remove it from IPFS. Functions that have
+          been stopped can be run by users who know the function&#39;s CID.
         </AlertBox>
       </SettingCard>
 
       <SettingCard title="Function name" subtitle="The name of your function.">
-        <UpdateForm type="name" value={name} onSubmit={handleUpdate} isLoading={isLoading}>
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>function names</LearnMoreMessage>
+        <UpdateForm
+          type="name"
+          value={name}
+          onSubmit={handleUpdate}
+          isLoading={isLoading}
+        >
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
+            function names
+          </LearnMoreMessage>
         </UpdateForm>
       </SettingCard>
 
-      <SettingCard title="Function slug" subtitle="The URL the function will operate on.">
-        <UpdateForm type="slug" value={slug} onSubmit={handleUpdate} isLoading={isLoading}>
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>function slugs</LearnMoreMessage>
+      <SettingCard
+        title="Function slug"
+        subtitle="The URL the function will operate on."
+      >
+        <UpdateForm
+          type="slug"
+          value={slug}
+          onSubmit={handleUpdate}
+          isLoading={isLoading}
+        >
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
+            function slugs
+          </LearnMoreMessage>
         </UpdateForm>
       </SettingCard>
 
-      <SettingCard title="Delete this function" subtitle="Deleting a function is an irreversible action, so proceed with caution.">
+      <SettingCard
+        title="Delete this function"
+        subtitle="Deleting a function is an irreversible action, so proceed with caution."
+      >
         <Box className="flex-row items-center justify-between gap-4">
-          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}>deleting a function</LearnMoreMessage>
-          <FnDeleteModal fnId={id} fnName={name} isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
-          <PermissionsTooltip hasAccess={hasDeleteFunctionPermission} isLoading={isLoading}>
+          <LearnMoreMessage
+            href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
+          >
+            deleting a function
+          </LearnMoreMessage>
+          <FnDeleteModal
+            fnId={id}
+            fnName={name}
+            isOpen={isModalOpen}
+            onOpenChange={setIsModalOpen}
+          />
+          <PermissionsTooltip
+            hasAccess={hasDeleteFunctionPermission}
+            isLoading={isLoading}
+          >
             <Button
               intent="neutral"
               loading={deleteFleekFunctionMutation.fetching}
@@ -165,7 +221,12 @@ type SettingCardProps = PropsWithChildren<{
   rightContent?: React.ReactNode;
 }>;
 
-const SettingCard = ({ title, subtitle, rightContent, children }: SettingCardProps) => {
+const SettingCard = ({
+  title,
+  subtitle,
+  rightContent,
+  children,
+}: SettingCardProps) => {
   return (
     <SettingsBox.Container>
       <SettingsBox.TitleRow>

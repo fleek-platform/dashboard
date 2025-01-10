@@ -13,10 +13,10 @@ export const getTopLevelDomain = (url: string) => {
     // staging -> staging.fleeksandbox.xyz
     // production -> app.fleek.xyz
     const topLevelDomain = hostname.split('.').slice(-2).join('.');
-    
+
     return topLevelDomain;
   } catch (e) {
     // eslint-disable-next-line fleek-custom/no-default-error
     throw Error('Oops! Failed to parse the URL');
   }
-}
+};

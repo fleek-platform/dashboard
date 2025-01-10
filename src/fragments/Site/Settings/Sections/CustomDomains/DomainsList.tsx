@@ -17,15 +17,29 @@ type DomainsListProps = {
   siteName: string;
 };
 
-export const DomainsList: React.FC<DomainsListProps> = ({ isLoading, domains = [], primaryDomainId, siteName }) => {
+export const DomainsList: React.FC<DomainsListProps> = ({
+  isLoading,
+  domains = [],
+  primaryDomainId,
+  siteName,
+}) => {
   const { setActiveDomains } = useSettingsItemContext();
 
-  const hasVerifyDomainPermission = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN] });
-  const hasRemoveDomainPermission = usePermissions({ action: [constants.PERMISSION.SITE.DELETE_DOMAIN] });
-  const hasChangePrimaryDomainPermission = usePermissions({ action: [constants.PERMISSION.SITE.CHANGE_PRIMARY_DOMAIN] });
+  const hasVerifyDomainPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_DOMAIN],
+  });
+  const hasRemoveDomainPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.DELETE_DOMAIN],
+  });
+  const hasChangePrimaryDomainPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.CHANGE_PRIMARY_DOMAIN],
+  });
 
   useEffect(() => {
-    setActiveDomains(domains.filter((domain) => isActiveDomain({ domain, primaryDomainId })) || []);
+    setActiveDomains(
+      domains.filter((domain) => isActiveDomain({ domain, primaryDomainId })) ||
+        [],
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [domains]);
 
@@ -40,7 +54,12 @@ export const DomainsList: React.FC<DomainsListProps> = ({ isLoading, domains = [
   }
 
   if (domains.length === 0) {
-    return <SettingsBox.EmptyContent title="No Domains" description="Once you add domains, they will appear here." />;
+    return (
+      <SettingsBox.EmptyContent
+        title="No Domains"
+        description="Once you add domains, they will appear here."
+      />
+    );
   }
 
   return (

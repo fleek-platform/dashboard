@@ -10,7 +10,10 @@ import { TemplateOverviewStyles as S } from './TemplateOverview.styles';
 
 export type TemplateOverviewProps = LoadingProps<{ template: Template }>;
 
-export const TemplateOverview: React.FC<TemplateOverviewProps> = ({ isLoading, template }) => {
+export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
+  isLoading,
+  template,
+}) => {
   if (isLoading) {
     return <TemplateOverviewSkeleton />;
   }
@@ -56,7 +59,10 @@ const TemplateOverviewSkeleton: React.FC = () => (
 
 type TemplatePropertiesProps = LoadingProps<{ template: Template }>;
 
-const TemplateProperties: React.FC<TemplatePropertiesProps> = ({ isLoading, template }) => {
+const TemplateProperties: React.FC<TemplatePropertiesProps> = ({
+  isLoading,
+  template,
+}) => {
   const templateData = useTemplateGitData(template);
 
   if (isLoading) {
@@ -118,12 +124,19 @@ type AuthorAvatarProps = {
   creator: NonNullable<Template['creator']>;
 };
 
-const AuthorAvatar: React.FC<AuthorAvatarProps> = ({ creator = {} as AuthorAvatarProps['creator'] }) => {
-  const isFleekAuthored = creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
+const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
+  creator = {} as AuthorAvatarProps['creator'],
+}) => {
+  const isFleekAuthored =
+    creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
     <S.Property.Item variant="monochrome">
-      <Avatar enableIcon icon={isFleekAuthored ? 'fleek' : 'person'} src={creator.avatar} />
+      <Avatar
+        enableIcon
+        icon={isFleekAuthored ? 'fleek' : 'person'}
+        src={creator.avatar}
+      />
       <span>Added by&nbsp;</span> {isFleekAuthored ? 'Fleek' : creator.username}
     </S.Property.Item>
   );

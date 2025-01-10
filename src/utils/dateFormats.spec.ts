@@ -29,7 +29,7 @@ describe('Utils dateFormats', () => {
     const date = new Date();
     expect(date.getTimezoneOffset()).toBe(0);
   });
-      
+
   it('should format date using DateTime.DATE_MED', () => {
     const result = dateFormat({
       dateISO: testDate,

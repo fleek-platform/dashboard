@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { BadgeText, CreateProject, ExternalLink, Link } from '@/components';
 import { constants } from '@/constants';
-import { useDeploymentStatusQuery, useProjectsQuery, useSiteQuery } from '@/generated/graphqlClient';
+import {
+  useDeploymentStatusQuery,
+  useProjectsQuery,
+  useSiteQuery,
+} from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
 import { useRouter } from '@/hooks/useRouter';
@@ -32,9 +36,17 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const siteId = router.query.siteId!;
   const deploymentId = router.query.deploymentId!;
 
-  const [projectsQuery] = useProjectsQuery({ pause: !projectContext.accessTokenProjectId });
-  const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } }, pause: !siteId });
-  const [deploymentStatusQuery] = useDeploymentStatusQuery({ variables: { where: { id: deploymentId } }, pause: !deploymentId });
+  const [projectsQuery] = useProjectsQuery({
+    pause: !projectContext.accessTokenProjectId,
+  });
+  const [siteQuery] = useSiteQuery({
+    variables: { where: { id: siteId } },
+    pause: !siteId,
+  });
+  const [deploymentStatusQuery] = useDeploymentStatusQuery({
+    variables: { where: { id: deploymentId } },
+    pause: !deploymentId,
+  });
   // eslint-disable-next-line fleek-custom/valid-argument-types
   const handleProjectChange = (project: Project): void => {
     session.setProject(project.id);
@@ -45,7 +57,10 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   }, [setEnableNavigation, isDesktop]);
 
   const projects = projectsQuery.data?.projects.data;
-  const shouldShowSkeleton = projectContext.loading || siteQuery.fetching || deploymentStatusQuery.fetching;
+  const shouldShowSkeleton =
+    projectContext.loading ||
+    siteQuery.fetching ||
+    deploymentStatusQuery.fetching;
 
   return (
     <Navbar.Container layout="project" mobile={!enableNavigation}>
@@ -55,7 +70,11 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
           <Skeleton variant="text" className="w-[8.75rem] h-6" />
         ) : (
           <>
-            <ProjectDropdown projects={projects || []} selectedProject={projectContext.project} onProjectChange={handleProjectChange} />
+            <ProjectDropdown
+              projects={projects || []}
+              selectedProject={projectContext.project}
+              onProjectChange={handleProjectChange}
+            />
             {children}
           </>
         )}
@@ -63,9 +82,15 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
 
       {enableNavigation && (
         <Box className="flex-row gap-3 text-sm font-medium">
-          {flags.isInternalUser && <BadgeText colorScheme="yellow">Internal User</BadgeText>}
-          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>Docs</ExternalLink>
-          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>Help</ExternalLink>
+          {flags.isInternalUser && (
+            <BadgeText colorScheme="yellow">Internal User</BadgeText>
+          )}
+          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
+            Docs
+          </ExternalLink>
+          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>
+            Help
+          </ExternalLink>
           <Link href="#" onClick={() => openModalWithTab('FEEDBACK')}>
             Feedback
           </Link>

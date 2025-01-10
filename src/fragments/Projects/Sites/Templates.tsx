@@ -23,7 +23,9 @@ export const Templates: React.FC = () => (
 );
 
 export const TemplatesList: React.FC = () => {
-  const [templatesQuery] = useTemplatesQuery({ variables: { where: {}, filter: { take: 3 } } });
+  const [templatesQuery] = useTemplatesQuery({
+    variables: { where: {}, filter: { take: 3 } },
+  });
   const templates = templatesQuery.data?.templates.data || [];
 
   if (templatesQuery.fetching) {

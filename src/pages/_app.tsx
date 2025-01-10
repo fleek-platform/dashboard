@@ -13,7 +13,14 @@ import { AppContext, AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { isServerSide } from '@/utils/isServerSide';
 
-const App = ({ Component, pageProps, requestCookies, maintenanceMode, environment, noCanonical }: AppProps) => {
+const App = ({
+  Component,
+  pageProps,
+  requestCookies,
+  maintenanceMode,
+  environment,
+  noCanonical,
+}: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
 
@@ -42,7 +49,11 @@ const App = ({ Component, pageProps, requestCookies, maintenanceMode, environmen
           <link rel="canonical" href="https://app.fleek.xyz/" key="canonical" />
         </Head>
       )}
-      <Script async src="https://cdn.promotekit.com/promotekit.js" data-promotekit="1d44aef1-870e-4899-a017-3fd29ed3f6cf"></Script>
+      <Script
+        async
+        src="https://cdn.promotekit.com/promotekit.js"
+        data-promotekit="1d44aef1-870e-4899-a017-3fd29ed3f6cf"
+      ></Script>
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         <h1>{noCanonical}</h1>
         {getLayout(<Component {...pageProps} />)}
@@ -54,10 +65,14 @@ const App = ({ Component, pageProps, requestCookies, maintenanceMode, environmen
 };
 
 App.getInitialProps = async ({ Component, ctx }: AppContext) => {
-  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const pageProps = Component.getInitialProps
+    ? await Component.getInitialProps(ctx)
+    : {};
   const environment = getMutableSecrets();
   const maintenanceMode = getMaintenanceMode();
-  const noCanonical = ['/templates', '/templates/[templateId]'].includes(ctx.pathname);
+  const noCanonical = ['/templates', '/templates/[templateId]'].includes(
+    ctx.pathname,
+  );
 
   return {
     pageProps,

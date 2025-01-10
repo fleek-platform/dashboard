@@ -44,7 +44,9 @@ describe('getTopLevelDomain', () => {
   });
 
   it('should throw error for invalid URL', () => {
-    expect(() => getTopLevelDomain('invalid-url')).toThrow('Oops! Failed to parse the URL');
+    expect(() => getTopLevelDomain('invalid-url')).toThrow(
+      'Oops! Failed to parse the URL',
+    );
   });
 
   it('should work with URLs containing ports', () => {

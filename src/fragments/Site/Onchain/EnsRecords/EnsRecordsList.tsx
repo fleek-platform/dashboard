@@ -9,7 +9,10 @@ type EnsRecordsListProps = {
   ensRecords?: SiteENSRecord[];
 };
 
-export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({ isLoading, ensRecords = [] }) => {
+export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({
+  isLoading,
+  ensRecords = [],
+}) => {
   if (isLoading) {
     return (
       <SettingsListItem.FlatRow>
@@ -21,7 +24,12 @@ export const EnsRecordsList: React.FC<EnsRecordsListProps> = ({ isLoading, ensRe
   }
 
   if (ensRecords.length === 0) {
-    return <SettingsBox.EmptyContent title="No ENS" description="Once you add domains, they will appear here." />;
+    return (
+      <SettingsBox.EmptyContent
+        title="No ENS"
+        description="Once you add domains, they will appear here."
+      />
+    );
   }
 
   return (

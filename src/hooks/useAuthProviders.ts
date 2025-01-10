@@ -1,6 +1,9 @@
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 
-import { useGenerateUserSessionDetailsMutation, useLoginWithDynamicMutation } from '@/generated/graphqlClient';
+import {
+  useGenerateUserSessionDetailsMutation,
+  useLoginWithDynamicMutation,
+} from '@/generated/graphqlClient';
 import { useCookies } from '@/providers/CookiesProvider';
 import { secrets } from '@/secrets';
 
@@ -27,7 +30,8 @@ const useAuthWithDynamic = (): AuthWith => {
   const cookies = useCookies();
 
   const [, loginWithDynamic] = useLoginWithDynamicMutation();
-  const [, generateUserSessionDetails] = useGenerateUserSessionDetailsMutation();
+  const [, generateUserSessionDetails] =
+    useGenerateUserSessionDetailsMutation();
 
   const handleLogin = async () => {
     // handle dynamic being authenticated
@@ -46,7 +50,9 @@ const useAuthWithDynamic = (): AuthWith => {
     }
 
     if (!projectId) {
-      const { data, error } = await generateUserSessionDetails({ data: { authToken: cookies.values.authToken } });
+      const { data, error } = await generateUserSessionDetails({
+        data: { authToken: cookies.values.authToken },
+      });
 
       if (data && data.generateUserSessionDetails) {
         if (data.generateUserSessionDetails.projectId) {
@@ -59,7 +65,9 @@ const useAuthWithDynamic = (): AuthWith => {
       throw error;
     }
 
-    const { data, error } = await loginWithDynamic({ data: { authToken: cookies.values.authToken, projectId } });
+    const { data, error } = await loginWithDynamic({
+      data: { authToken: cookies.values.authToken, projectId },
+    });
 
     if (data && data.loginWithDynamic) {
       return data.loginWithDynamic;

@@ -134,7 +134,10 @@ export const WithCheckedStatus: Story = (args) => {
         </Menu.Trigger>
         <Menu.Portal>
           <Menu.Content sideOffset={6}>
-            <Menu.CheckboxItem checked={checked === 1} onCheckedChange={() => setChecked(1)}>
+            <Menu.CheckboxItem
+              checked={checked === 1}
+              onCheckedChange={() => setChecked(1)}
+            >
               Menu Item 1
               {checked === 1 && (
                 <Menu.ItemIndicator>
@@ -142,7 +145,10 @@ export const WithCheckedStatus: Story = (args) => {
                 </Menu.ItemIndicator>
               )}
             </Menu.CheckboxItem>
-            <Menu.CheckboxItem checked={checked === 2} onCheckedChange={() => setChecked(2)}>
+            <Menu.CheckboxItem
+              checked={checked === 2}
+              onCheckedChange={() => setChecked(2)}
+            >
               Menu Item 2
               {checked === 2 && (
                 <Menu.ItemIndicator>
@@ -150,7 +156,10 @@ export const WithCheckedStatus: Story = (args) => {
                 </Menu.ItemIndicator>
               )}
             </Menu.CheckboxItem>
-            <Menu.CheckboxItem checked={checked === 3} onCheckedChange={() => setChecked(3)}>
+            <Menu.CheckboxItem
+              checked={checked === 3}
+              onCheckedChange={() => setChecked(3)}
+            >
               Menu Item 3
               {checked === 3 && (
                 <Menu.ItemIndicator>
@@ -177,7 +186,8 @@ export const WithAvatar: Story = (args) => {
         <Menu.Content sideOffset={6}>
           <Menu.CheckboxItem checked>
             <Box className="flex-row gap-4 items-center">
-              <Avatar title="Royce Moroch" css={{ fontSize: '1.25rem ' }} /> rollsmorr.eth
+              <Avatar title="Royce Moroch" css={{ fontSize: '1.25rem ' }} />{' '}
+              rollsmorr.eth
             </Box>
             <Menu.ItemIndicator>
               <Icon name="check" />
@@ -185,17 +195,20 @@ export const WithAvatar: Story = (args) => {
           </Menu.CheckboxItem>
           <Menu.CheckboxItem>
             <Box className="flex-row gap-4 items-center">
-              <Avatar title="Camila Sosa" css={{ fontSize: '1.25rem ' }} /> camisosa.eth
+              <Avatar title="Camila Sosa" css={{ fontSize: '1.25rem ' }} />{' '}
+              camisosa.eth
             </Box>
           </Menu.CheckboxItem>
           <Menu.CheckboxItem>
             <Box className="flex-row gap-4 items-center">
-              <Avatar title="Felipe Mendes" css={{ fontSize: '1.25rem ' }} /> zoruka.eth
+              <Avatar title="Felipe Mendes" css={{ fontSize: '1.25rem ' }} />{' '}
+              zoruka.eth
             </Box>
           </Menu.CheckboxItem>
           <Menu.Separator />
           <Menu.Item>
-            Create Project <Icon name="plus-circle" css={{ color: '$blue10' }} />
+            Create Project{' '}
+            <Icon name="plus-circle" css={{ color: '$blue10' }} />
           </Menu.Item>
         </Menu.Content>
       </Menu.Portal>

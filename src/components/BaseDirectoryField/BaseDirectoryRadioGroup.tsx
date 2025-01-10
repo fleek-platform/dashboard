@@ -14,7 +14,9 @@ export type BaseDirectoryRadioGroupProps = {
   sourceBranch: string;
 };
 
-export const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = ({
+export const BaseDirectoryRadioGroup: React.FC<
+  BaseDirectoryRadioGroupProps
+> = ({
   gitProviderId,
   sourceRepositoryOwner,
   sourceRepositoryName,
@@ -31,7 +33,11 @@ export const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = (
         sourceBranch: sourceBranch!,
       },
     },
-    pause: !gitProviderId || !sourceRepositoryOwner || !sourceRepositoryName || !sourceBranch,
+    pause:
+      !gitProviderId ||
+      !sourceRepositoryOwner ||
+      !sourceRepositoryName ||
+      !sourceBranch,
   });
 
   const folders = useMemo<Folders | undefined>(() => {
@@ -65,7 +71,10 @@ export const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = (
   }, [gitTreeQuery]);
 
   return (
-    <RadioGroup.Root value={field.value} onValueChange={(value) => field.setValue(value, true)}>
+    <RadioGroup.Root
+      value={field.value}
+      onValueChange={(value) => field.setValue(value, true)}
+    >
       <RecursiveFoldersRow className="border-y border-y-neutral-7 py-3 px-0">
         <RadioGroup.Item value="" />
         <Text>{sourceRepositoryName}</Text>
@@ -75,7 +84,11 @@ export const BaseDirectoryRadioGroup: React.FC<BaseDirectoryRadioGroupProps> = (
       <Scrollable.Root>
         <Scrollable.VerticalBar />
         <Scrollable.Viewport className="max-h-[30vh]">
-          <RecursiveFolders isLoading={gitTreeQuery.fetching as true} folders={folders} selected={field.value} />
+          <RecursiveFolders
+            isLoading={gitTreeQuery.fetching as true}
+            folders={folders}
+            selected={field.value}
+          />
         </Scrollable.Viewport>
       </Scrollable.Root>
     </RadioGroup.Root>
@@ -91,7 +104,11 @@ type RecursiveFoldersProps = LoadingProps<{
   selected: string;
 }>;
 
-const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, isLoading }) => {
+const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
+  folders,
+  selected,
+  isLoading,
+}) => {
   if (isLoading || !folders) {
     return <RecursiveFoldersSkeleton />;
   }
@@ -102,7 +119,9 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         const folderPath = value[PATH];
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [showNested, setShowNested] = useState(selected.startsWith(folderPath));
+        const [showNested, setShowNested] = useState(
+          selected.startsWith(folderPath),
+        );
 
         const hasNested = Object.keys(value).length > 0;
 
@@ -117,7 +136,12 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
         return (
           <Box key={key}>
             <RecursiveFoldersRow onClick={handleShowNested}>
-              <Box className={cn('transition-all duration-75', { 'opacity-0': !hasNested, 'rotate-90': showNested && hasNested })}>
+              <Box
+                className={cn('transition-all duration-75', {
+                  'opacity-0': !hasNested,
+                  'rotate-90': showNested && hasNested,
+                })}
+              >
                 <Icon name="chevron-right" />
               </Box>
               <RadioGroup.Item value={folderPath} onClick={handleSelect} />
@@ -136,12 +160,13 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({ folders, selected, 
   );
 };
 
-export const RecursiveFoldersRow: React.FC<ChildrenProps<React.ComponentPropsWithRef<typeof Box>>> = ({
-  children,
-  className,
-  ...props
-}) => (
-  <Box className={cn('flex-row gap-2.5 items-center cursor-pointer', className)} {...props}>
+export const RecursiveFoldersRow: React.FC<
+  ChildrenProps<React.ComponentPropsWithRef<typeof Box>>
+> = ({ children, className, ...props }) => (
+  <Box
+    className={cn('flex-row gap-2.5 items-center cursor-pointer', className)}
+    {...props}
+  >
     {children}
   </Box>
 );

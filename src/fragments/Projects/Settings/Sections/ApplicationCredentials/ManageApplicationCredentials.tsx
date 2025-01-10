@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { BadgeText, CustomTooltip, SettingsBox, SettingsListItem } from '@/components';
+import {
+  BadgeText,
+  CustomTooltip,
+  SettingsBox,
+  SettingsListItem,
+} from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
@@ -24,7 +29,9 @@ export type ManageApplicationCredentialsProps = LoadingProps<
   } & Pick<ApplicationCredentialsContext, 'onSubmitDelete'>
 >;
 
-export const ManageApplicationCredentials: React.FC<ManageApplicationCredentialsProps> = ({ isLoading, credentials, onSubmitDelete }) => {
+export const ManageApplicationCredentials: React.FC<
+  ManageApplicationCredentialsProps
+> = ({ isLoading, credentials, onSubmitDelete }) => {
   if (isLoading) {
     return <CredentialsSkeleton />;
   }
@@ -34,7 +41,10 @@ export const ManageApplicationCredentials: React.FC<ManageApplicationCredentials
       <SettingsBox.Container>
         <Header />
         {credentials?.length === 0 ? (
-          <SettingsBox.EmptyContent title="Credentials" description="Once you add credentials, they will appear here." />
+          <SettingsBox.EmptyContent
+            title="Credentials"
+            description="Once you add credentials, they will appear here."
+          />
         ) : (
           credentials?.map((credential, index) => {
             return (
@@ -55,7 +65,9 @@ export const ManageApplicationCredentials: React.FC<ManageApplicationCredentials
 const Header: React.FC = () => (
   <>
     <SettingsBox.Title>Manage Credentials</SettingsBox.Title>
-    <SettingsBox.Text>Remove or edit the information associated with an application token.</SettingsBox.Text>
+    <SettingsBox.Text>
+      Remove or edit the information associated with an application token.
+    </SettingsBox.Text>
   </>
 );
 
@@ -86,7 +98,9 @@ type ApplicationCredentialItemProps = {
   credential: Credential;
 };
 
-const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ credential }) => {
+const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
+  credential,
+}) => {
   const toast = useToast();
 
   // Warning: The reason why of parsing is related
@@ -107,9 +121,13 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ c
   const handleCopyToClipboard = () => {
     try {
       copyToClipboard(credential.clientId);
-      toast.success({ message: 'Application Credential ID copied to clipboard' });
+      toast.success({
+        message: 'Application Credential ID copied to clipboard',
+      });
     } catch {
-      toast.error({ message: 'Failed to copy Application Credential ID to clipboard' });
+      toast.error({
+        message: 'Failed to copy Application Credential ID to clipboard',
+      });
     }
   };
 
@@ -119,7 +137,12 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ c
         <Text variant="primary" weight={700}>
           {credential.name}
         </Text>
-        <Text size="xs">{getDurationUntilNow({ isoDateString: credential.createdAt, shortFormat: true })}</Text>
+        <Text size="xs">
+          {getDurationUntilNow({
+            isoDateString: credential.createdAt,
+            shortFormat: true,
+          })}
+        </Text>
       </Box>
       <Box className="col-span-4">
         <Text variant="primary" weight={700}>
@@ -130,8 +153,15 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ c
             {whitelistDomains}
           </Text>
           {applicationData.length > 2 && (
-            <CustomTooltip content={applicationData.map((domain) => domain.hostname).join(', ')} side="bottom">
-              <BadgeText colorScheme="slate">+{applicationData.length - 2} more</BadgeText>
+            <CustomTooltip
+              content={applicationData
+                .map((domain) => domain.hostname)
+                .join(', ')}
+              side="bottom"
+            >
+              <BadgeText colorScheme="slate">
+                +{applicationData.length - 2} more
+              </BadgeText>
             </CustomTooltip>
           )}
         </Box>
@@ -140,7 +170,11 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({ c
         <Text variant="primary" weight={700}>
           ID
         </Text>
-        <Text size="xs" onClick={handleCopyToClipboard} className="flex items-center gap-2 hover:text-neutral-12 cursor-pointer">
+        <Text
+          size="xs"
+          onClick={handleCopyToClipboard}
+          className="flex items-center gap-2 hover:text-neutral-12 cursor-pointer"
+        >
           {credential.clientId}
           <Icon name="copy" color="slate" />
         </Text>
@@ -159,7 +193,9 @@ type DropdownMenuProps = {
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ id }) => {
   const { openModal, onSubmitDelete } = useApplicationCredentialsContext();
   const [isLoading, setIsLoading] = useState(false);
-  const hasEditPermission = usePermissions({ action: [constants.PERMISSION.APPLICATION_CREDENTIALS.EDIT] });
+  const hasEditPermission = usePermissions({
+    action: [constants.PERMISSION.APPLICATION_CREDENTIALS.EDIT],
+  });
 
   if (isLoading) {
     // needed cause the forwardStyledRef
@@ -177,7 +213,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ id }) => {
   };
 
   return (
-    <SettingsListItem.DropdownMenu isLoading={isLoading} isDisabled={!hasEditPermission} hasAccess={hasEditPermission}>
+    <SettingsListItem.DropdownMenu
+      isLoading={isLoading}
+      isDisabled={!hasEditPermission}
+      hasAccess={hasEditPermission}
+    >
       <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDelete}>
         Delete
       </SettingsListItem.DropdownMenuItem>

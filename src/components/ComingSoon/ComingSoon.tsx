@@ -11,11 +11,19 @@ import { ComingSoonOverlay, ComingSoonOverlayProps } from './ComingSoonOverlay';
 const Container = withProps(BoxComponent, { className: 'gap-6' });
 
 const Row: React.FC<BoxProps & { small?: boolean }> = ({ small, children }) => (
-  <BoxComponent className={cn('flex-row gap-6', { 'gap-4': small })}>{children}</BoxComponent>
+  <BoxComponent className={cn('flex-row gap-6', { 'gap-4': small })}>
+    {children}
+  </BoxComponent>
 );
 
-const Box: React.FC<BoxProps & { width?: 'column' }> = ({ width, children }) => (
-  <BoxComponent variant="container" className={cn('gap-4 w-full', { 'w-[13.75rem]': width === 'column' })}>
+const Box: React.FC<BoxProps & { width?: 'column' }> = ({
+  width,
+  children,
+}) => (
+  <BoxComponent
+    variant="container"
+    className={cn('gap-4 w-full', { 'w-[13.75rem]': width === 'column' })}
+  >
     {children}
   </BoxComponent>
 );

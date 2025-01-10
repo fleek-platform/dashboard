@@ -1,7 +1,12 @@
 import { createEnsRecordSchema } from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 
-import { Form, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
+import {
+  Form,
+  LearnMoreMessage,
+  PermissionsTooltip,
+  SettingsBox,
+} from '@/components';
 import { constants } from '@/constants';
 import {
   useCreateEnsRecordMutation,
@@ -18,7 +23,10 @@ import { Button } from '@/ui';
 
 import { EnsMethodSetupModal } from './EnsMethodSetupModal';
 import { EnsRecordsList } from './EnsRecordsList';
-import { EnsSettingsProvider, useEnsSettingsContext } from './EnsSettings.context';
+import {
+  EnsSettingsProvider,
+  useEnsSettingsContext,
+} from './EnsSettings.context';
 import { EnsSetupAutomaticModal } from './EnsSetupAutomaticModal';
 import { VerifyEnsRecordManuallyModal } from './VerifyEnsRecordManuallyModal';
 
@@ -26,19 +34,28 @@ export const EnsRecords: React.FC = () => {
   const router = useRouter();
   const client = useClient();
 
-  const hasAddEnsPermission = usePermissions({ action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS] });
-  const [siteEnsRecordsQuery] = useSiteEnsRecordsQuery({ variables: { where: { id: router.query.siteId! } } });
+  const hasAddEnsPermission = usePermissions({
+    action: [constants.PERMISSION.SITE.ADD_AND_VERIFY_ENS],
+  });
+  const [siteEnsRecordsQuery] = useSiteEnsRecordsQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
 
   const toast = useToast();
 
-  const [siteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
+  const [siteQuery] = useSiteQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
 
   const [, createIpnsRecordForSite] = useCreateIpnsRecordForSiteMutation();
   const [, createEnsRecord] = useCreateEnsRecordMutation();
   const [, verifyEnsRecord] = useVerifyEnsRecordMutation();
   const [, deleteEnsRecord] = useDeleteEnsRecordMutation();
 
-  const [, refetchSiteEnsRecordsQuery] = useSiteEnsRecordsQuery({ variables: { where: { id: router.query.siteId! } }, pause: true });
+  const [, refetchSiteEnsRecordsQuery] = useSiteEnsRecordsQuery({
+    variables: { where: { id: router.query.siteId! } },
+    pause: true,
+  });
 
   const newEnsRecordForm = Form.useForm({
     values: {
@@ -55,7 +72,9 @@ export const EnsRecords: React.FC = () => {
             return siteQuery.data?.site.ipnsRecords[0].id;
           }
 
-          const createIpnsResult = await createIpnsRecordForSite({ where: { siteId: router.query.siteId! } });
+          const createIpnsResult = await createIpnsRecordForSite({
+            where: { siteId: router.query.siteId! },
+          });
 
           const ipnsId = createIpnsResult.data?.createIpnsRecordForSite.id;
 
@@ -122,11 +141,15 @@ export const EnsRecords: React.FC = () => {
 
   return (
     <Form.Provider value={newEnsRecordForm}>
-      <EnsSettingsProvider onSubmitVerification={handleSubmitEnsRecordVerification} onSubmitDelete={handleSubmitEnsRecordDelete}>
+      <EnsSettingsProvider
+        onSubmitVerification={handleSubmitEnsRecordVerification}
+        onSubmitDelete={handleSubmitEnsRecordDelete}
+      >
         <SettingsBox.Container className="bg-transparent">
           <SettingsBox.Title>ENS</SettingsBox.Title>
           <SettingsBox.Text>
-            Add an ENS name to your site, this allows you to use your ENS name as a domain access point for the site deployed.
+            Add an ENS name to your site, this allows you to use your ENS name
+            as a domain access point for the site deployed.
           </SettingsBox.Text>
 
           <PermissionsTooltip hasAccess={hasAddEnsPermission}>
@@ -139,14 +162,25 @@ export const EnsRecords: React.FC = () => {
           </PermissionsTooltip>
 
           <SettingsBox.ActionRow>
-            <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_ENS_NAME}>custom ENS</LearnMoreMessage>
+            <LearnMoreMessage
+              href={constants.EXTERNAL_LINK.FLEEK_DOCS_ENS_NAME}
+            >
+              custom ENS
+            </LearnMoreMessage>
 
-            {siteEnsRecordsQuery.fetching ? <SettingsBox.Skeleton variant="button" /> : <SubmitButton />}
+            {siteEnsRecordsQuery.fetching ? (
+              <SettingsBox.Skeleton variant="button" />
+            ) : (
+              <SubmitButton />
+            )}
           </SettingsBox.ActionRow>
         </SettingsBox.Container>
 
         <SettingsBox.Container className="p-0 gap-0">
-          <EnsRecordsList isLoading={siteEnsRecordsQuery.fetching} ensRecords={siteEnsRecordsQuery.data} />
+          <EnsRecordsList
+            isLoading={siteEnsRecordsQuery.fetching}
+            ensRecords={siteEnsRecordsQuery.data}
+          />
         </SettingsBox.Container>
 
         <VerifyEnsRecordManuallyModal />
@@ -158,7 +192,8 @@ export const EnsRecords: React.FC = () => {
 };
 
 const SubmitButton: React.FC = () => {
-  const { isSubmitting, shouldDisableSubmit, submit, fields } = Form.useContext();
+  const { isSubmitting, shouldDisableSubmit, submit, fields } =
+    Form.useContext();
   const { openModal } = useEnsSettingsContext();
 
   const handleSubmit = async () => {
@@ -170,7 +205,12 @@ const SubmitButton: React.FC = () => {
   };
 
   return (
-    <Button type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmit}>
+    <Button
+      type="submit"
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmit}
+    >
       Add ENS name
     </Button>
   );

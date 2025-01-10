@@ -12,7 +12,9 @@ type UseGetTeamArgs = {
 
 export const useGetTeam = ({ pause }: UseGetTeamArgs) => {
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
+  const backendApi = new BackendApiClient({
+    accessToken: cookies.values.accessToken,
+  });
 
   const getTeam = useCallback(async () => {
     if (pause || !cookies.values.projectId) {

@@ -10,7 +10,11 @@ import { Box, Icon, Skeleton, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import { RoleCombobox } from './AddTeamMember';
-import { TeamProjectContext, TeamProjectProvider, useTeamProjectContext } from './TeamProject.context';
+import {
+  TeamProjectContext,
+  TeamProjectProvider,
+  useTeamProjectContext,
+} from './TeamProject.context';
 
 export type TeamProjectListProps = LoadingProps<
   {
@@ -26,7 +30,9 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
   onUpdateRole,
   onSubmitDelete,
 }) => {
-  const hasEditRolePermission = usePermissions({ action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS] });
+  const hasEditRolePermission = usePermissions({
+    action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS],
+  });
 
   if (isLoading) {
     return (
@@ -38,30 +44,48 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
     );
   }
 
-  const hasOtherMembers = projectMembers.filter((member) => member.user.id !== userId).length > 0;
+  const hasOtherMembers =
+    projectMembers.filter((member) => member.user.id !== userId).length > 0;
 
   return (
-    <TeamProjectProvider onSubmitDelete={onSubmitDelete} onUpdateRole={onUpdateRole}>
+    <TeamProjectProvider
+      onSubmitDelete={onSubmitDelete}
+      onUpdateRole={onUpdateRole}
+    >
       <SettingsBox.Container>
         {hasEditRolePermission ? (
           <>
             <SettingsBox.Title>Manage Members</SettingsBox.Title>
-            <SettingsBox.Text>Edit roles or remove members from this project.</SettingsBox.Text>
+            <SettingsBox.Text>
+              Edit roles or remove members from this project.
+            </SettingsBox.Text>
           </>
         ) : (
           <>
             <SettingsBox.Title>Team Members</SettingsBox.Title>
-            <SettingsBox.Text>View roles and membership of this project.</SettingsBox.Text>
+            <SettingsBox.Text>
+              View roles and membership of this project.
+            </SettingsBox.Text>
           </>
         )}
         {hasOtherMembers ? (
           projectMembers.map((projectMember) => (
-            <Box key={projectMember.id} className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none">
-              <MemberItem projectMember={projectMember} onUpdateRole={onUpdateRole} isCurrentUser={projectMember.user.id === userId} />
+            <Box
+              key={projectMember.id}
+              className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none"
+            >
+              <MemberItem
+                projectMember={projectMember}
+                onUpdateRole={onUpdateRole}
+                isCurrentUser={projectMember.user.id === userId}
+              />
             </Box>
           ))
         ) : (
-          <SettingsBox.EmptyContent title="No Members" description="Once members are added, they will appear here." />
+          <SettingsBox.EmptyContent
+            title="No Members"
+            description="Once members are added, they will appear here."
+          />
         )}
       </SettingsBox.Container>
     </TeamProjectProvider>
@@ -75,17 +99,30 @@ type MemberItemProps = {
   isCurrentUser: boolean;
 } & Pick<TeamProjectContext, 'onUpdateRole'>;
 
-const MemberItem: React.FC<MemberItemProps> = ({ projectMember, isCurrentUser, onUpdateRole }) => {
-  const [selectedRole, setSelectedRole] = useState(projectMember.permissionGroup);
+const MemberItem: React.FC<MemberItemProps> = ({
+  projectMember,
+  isCurrentUser,
+  onUpdateRole,
+}) => {
+  const [selectedRole, setSelectedRole] = useState(
+    projectMember.permissionGroup,
+  );
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const hasEditRolePermission = usePermissions({ action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS] });
+  const hasEditRolePermission = usePermissions({
+    action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS],
+  });
 
-  const handleRoleChange = async (selectedRole: PermissionGroup | undefined) => {
+  const handleRoleChange = async (
+    selectedRole: PermissionGroup | undefined,
+  ) => {
     if (selectedRole && onUpdateRole) {
       setSelectedRole(selectedRole);
       setIsUpdating(true);
-      const updateResponse = await onUpdateRole({ user: projectMember.user, permissionGroup: selectedRole });
+      const updateResponse = await onUpdateRole({
+        user: projectMember.user,
+        permissionGroup: selectedRole,
+      });
 
       if (!updateResponse) {
         setSelectedRole(projectMember.permissionGroup);
@@ -99,15 +136,29 @@ const MemberItem: React.FC<MemberItemProps> = ({ projectMember, isCurrentUser, o
     <Box className="flex-row justify-between items-center">
       <Box className="gap-1">
         <Box className="flex-row items-center gap-2">
-          <Text variant="primary">{projectMember.user.username || projectMember.user.email || projectMember.user.id}</Text>
+          <Text variant="primary">
+            {projectMember.user.username ||
+              projectMember.user.email ||
+              projectMember.user.id}
+          </Text>
           {isCurrentUser && <BadgeText colorScheme="slate">You</BadgeText>}
         </Box>
-        <Text size="xs">Added {getDurationUntilNow({ isoDateString: projectMember.createdAt, shortFormat: true })}</Text>
+        <Text size="xs">
+          Added{' '}
+          {getDurationUntilNow({
+            isoDateString: projectMember.createdAt,
+            shortFormat: true,
+          })}
+        </Text>
       </Box>
 
       <Box className="flex-row gap-3">
         <PermissionsTooltip hasAccess={hasEditRolePermission} side="top">
-          <RoleCombobox selectedRole={selectedRole} onChange={handleRoleChange} isDisabled={!hasEditRolePermission || isUpdating} />
+          <RoleCombobox
+            selectedRole={selectedRole}
+            onChange={handleRoleChange}
+            isDisabled={!hasEditRolePermission || isUpdating}
+          />
         </PermissionsTooltip>
         <DropdownMenu memberId={projectMember.user.id} />
       </Box>
@@ -123,7 +174,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ memberId }) => {
   const { onSubmitDelete } = useTeamProjectContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  const hasDeleteMemberPermission = usePermissions({ action: [constants.PERMISSION.TEAM.DELETE_EXCEPT_OWNER] });
+  const hasDeleteMemberPermission = usePermissions({
+    action: [constants.PERMISSION.TEAM.DELETE_EXCEPT_OWNER],
+  });
 
   if (isLoading) {
     // needed cause the forwardStyledRef
@@ -137,7 +190,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ memberId }) => {
   };
 
   return (
-    <SettingsListItem.DropdownMenu isLoading={isLoading} isDisabled={!hasDeleteMemberPermission} hasAccess={hasDeleteMemberPermission}>
+    <SettingsListItem.DropdownMenu
+      isLoading={isLoading}
+      isDisabled={!hasDeleteMemberPermission}
+      hasAccess={hasDeleteMemberPermission}
+    >
       <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDelete}>
         Delete
       </SettingsListItem.DropdownMenuItem>
