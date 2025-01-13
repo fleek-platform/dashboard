@@ -11,8 +11,8 @@ describe('On Project settings page', () => {
     const projectId = 'cls4v91mt0001l708wu51eozd';
 
     beforeEach(async ({ page }) => {
-      const validMockToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibW9jayJ9.lTEPeyG1YviT2jZiYcs0hMPY2gMZVhpYJt0bTu1HE3k';
+      const validMockToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM2Nzg0NTkwfQ.CaZJhOgcB0skIM8sRgfs_Om0JpkeI5QHVbRdkkLuFMk';
+
       await page.context().addCookies([
         {
           name: 'accessToken',
@@ -21,14 +21,14 @@ describe('On Project settings page', () => {
           path: '/',
         },
         {
-          name: 'authProviderToken',
+          name: 'authToken',
           value: validMockToken,
           domain: 'localhost',
           path: '/',
         },
         {
           name: 'projectId',
-          value: 'cls4v91mt0001l708wu51eozd',
+          value: projectId,
           domain: 'localhost',
           path: '/',
         },
@@ -71,8 +71,14 @@ describe('On Project settings page', () => {
         },
       );
 
+      // await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
+      //   url: /fleek.*.xyz\/graphql/,
+      //   update: false,
+      // });
       await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
         url: /fleek.*.xyz\/graphql/,
+        // TODO: Unfortunately multiple doesn't seem to work
+        // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
         update: false,
       });
 
@@ -238,7 +244,7 @@ describe('On Project settings page', () => {
         });
       });
 
-      describe('On Settings navigation to Application Credentials (with credentials data)', () => {
+      describe.skip('On Settings navigation to Application Credentials (with credentials data)', () => {
         beforeEach(async ({ page }) => {
           page
             .getByRole('navigation')

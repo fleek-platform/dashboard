@@ -50,11 +50,10 @@ const HomePage: Page = () => {
     pause: !session.accesTokenProjectId,
   });
 
-  // TODO: Verify missig type for obj.pause
-  // const [, refetchProjectsQuery] = useProjectsQuery({
-  //   pause: !auth.accessToken,
-  // });
-  const [, refetchProjectsQuery] = useProjectsQuery();
+  const [, refetchProjectsQuery] = useProjectsQuery({
+    pause: !auth.accessToken,
+    variables: {},
+  });
 
   const [, acceptInvitation] = useAcceptInvitationMutation();
   const [, declineInvitation] = useDeclineInvitationMutation();

@@ -1,35 +1,34 @@
+import { useEffect } from 'react';
 import { routes } from '@fleek-platform/utils-routes';
-
 import { useCookies } from '@/providers/CookiesProvider';
-
 import { useRouter } from './useRouter';
 
 export const useLogout = () => {
   const cookies = useCookies();
   const router = useRouter();
 
-  const handleLogout = () => {
-    // If logout cookie is present it's waiting for the middleware and can safely return
-    if (cookies.values.logout) {
-      return;
-    }
+  useEffect(() => {
+    if (router.pathname === routes.home()) return;
 
-    if (router.pathname !== routes.home()) {
-      const invitationHash = router.query.invitation;
-      cookies.set('logout', 'true');
-      router.replace(routes.home(), {
-        query: invitationHash ? `invitation=${invitationHash}` : undefined,
+    if (!cookies.values.accessToken && !cookies.values.projectId && !cookies.values.authToken) {
+      router.push({
+        pathname: routes.home(),
+        query: router.query.invitation 
+          ? { invitation: router.query.invitation }
+          : undefined
       });
-
-      return;
     }
+  }, [cookies.values.accessToken, cookies.values.projectId, cookies.values.authToken]);
 
+  const logout = () => {
+    console.log('[debug] useLogout: 1')
     cookies.remove('authToken');
     cookies.remove('accessToken');
     cookies.remove('projectId');
+    console.log('[debug] useLogout: end')
   };
 
   return {
-    logout: handleLogout,
+    logout,
   };
 };

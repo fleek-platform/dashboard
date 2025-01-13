@@ -6,12 +6,12 @@ const harBasePath = path.resolve(__project_root, 'tests/e2e/HAR');
 export const harFilePaths = {
   page: {
     projects: {
-      home: `${harBasePath}/projects_home.har`,
+      home: `${harBasePath}/projects_home_3.har`,
       settings: {
         general: `${harBasePath}/projects_settings.har`,
         private_gateways: `${harBasePath}/projects_settings_private_gateways.har`,
         application_credentials: `${harBasePath}/projects_settings_application_credentials.har`,
-        all: `${harBasePath}/all_dashboard.har`,
+        all: `${harBasePath}/all_dashboard_v6.har`,
       },
     },
   },

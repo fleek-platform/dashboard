@@ -36,11 +36,10 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const siteId = router.query.siteId!;
   const deploymentId = router.query.deploymentId!;
 
-  // TODO: Investigate missing type obj.pause
-  // const [projectsQuery] = useProjectsQuery({
-  //   pause: !projectContext.accessTokenProjectId,
-  // });
-  const [projectsQuery] = useProjectsQuery();
+  const [projectsQuery] = useProjectsQuery({
+    pause: !projectContext.accessTokenProjectId,
+    variables: {},
+  });
   const [siteQuery] = useSiteQuery({
     variables: { where: { id: siteId } },
     pause: !siteId,

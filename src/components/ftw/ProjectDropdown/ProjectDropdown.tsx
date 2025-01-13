@@ -45,11 +45,10 @@ export const ProjectDropdown: React.FC = () => {
   const session = useSessionContext(true);
   const projectContext = useProjectContext();
 
-  // TODO: Investigate, missing typoe for obj.pause
-  // const [projectsQuery] = useProjectsQuery({
-  //   // pause: !session.accesTokenProjectId,
-  // });
-  const [projectsQuery] = useProjectsQuery();
+  const [projectsQuery] = useProjectsQuery({
+    pause: !session.accesTokenProjectId,
+    variables: {},
+  });
 
   const { setIsCreateProjectModalOpen } = useProjectContext();
 

@@ -31,6 +31,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ navItem }) => {
       href={navItem.path}
       intent={isActivePage ? 'accent' : 'ghost'}
       className="px-3"
+      role="menuitem"
+      aria-label={navItem.label}
     >
       {navItem.label}
     </LinkButton>
@@ -52,7 +54,7 @@ export const SubNavigationLayout: React.FC<
         className="max-w-[calc(100vw-48px)] w-full lg:max-w-[calc(100vw-300px)] overflow-hidden"
       >
         <Scrollable.HorizontalBar className="peer" />
-        <Scrollable.Viewport className="w-full h-full peer-data-[state=visible]:pb-4">
+        <Scrollable.Viewport className="w-full h-full peer-data-[state=visible]:pb-4" role="navigation">
           <Box className="flex-row gap-2 flex-nowrap overflow-auto">
             {isNavigationLoading ? (
               <>

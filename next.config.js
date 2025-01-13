@@ -1,6 +1,17 @@
+// Simplest method to generate a single index.html
+// WARNING: This has been deprecated
+// https://nextjs.org/docs/pages/api-reference/config/next-config-js/exportPathMap
+const exportPathMap = async () => {
+  return {
+    '/': { page: '/' }
+  };
+};
+
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  exportPathMap,
   // TODO: replace instances of next/image'
   // or do image optimization on build
   // by utilizing a different method

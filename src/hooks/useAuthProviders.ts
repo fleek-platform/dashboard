@@ -45,10 +45,12 @@ const useAuthWithDynamic = (): AuthWith => {
   const handleLogout = () => dynamic.handleLogOut();
 
   const requestAccessToken = async (projectId?: string): Promise<string> => {
+    console.log('[debug] useAuthProviders: requestAccessToken: 1')
     if (!cookies.values.authToken) {
+      console.log('[debug] useAuthProviders: requestAccessToken: authToken: return')
       return '';
     }
-
+    console.log(`[debug] useAuthProviders: requestAccessToken: projectId = ${projectId}`)
     if (!projectId) {
       const { data, error } = await generateUserSessionDetails({
         data: { authToken: cookies.values.authToken },
@@ -56,6 +58,7 @@ const useAuthWithDynamic = (): AuthWith => {
 
       if (data && data.generateUserSessionDetails) {
         if (data.generateUserSessionDetails.projectId) {
+          cookies.set('accessToken', data.generateUserSessionDetails.accessToken);
           cookies.set('projectId', data.generateUserSessionDetails.projectId);
         }
 

@@ -52,7 +52,7 @@ describe('On Home page', () => {
           path: '/',
         },
         {
-          name: 'authProviderToken',
+          name: 'authToken',
           value: invalidToken,
           domain: 'localhost',
           path: '/',
@@ -95,8 +95,9 @@ describe('On Home page', () => {
 
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
-      const validMockToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibW9jayJ9.lTEPeyG1YviT2jZiYcs0hMPY2gMZVhpYJt0bTu1HE3k';
+      // const validMockToken =
+      //   'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibW9jayJ9.lTEPeyG1YviT2jZiYcs0hMPY2gMZVhpYJt0bTu1HE3k';
+      const validMockToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM2Nzg0NTkwfQ.CaZJhOgcB0skIM8sRgfs_Om0JpkeI5QHVbRdkkLuFMk';
       await page.context().addCookies([
         {
           name: 'accessToken',
@@ -105,7 +106,7 @@ describe('On Home page', () => {
           path: '/',
         },
         {
-          name: 'authProviderToken',
+          name: 'authToken',
           value: validMockToken,
           domain: 'localhost',
           path: '/',
