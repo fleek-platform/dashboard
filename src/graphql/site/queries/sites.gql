@@ -80,31 +80,6 @@ query sites($where: SitesWhereInput!, $filter: SitesPaginationInput) {
       }
 
       # we need this to get the link site
-      domains {
-        __typename
-        id
-        hostname
-        status
-        errorMessage
-        zone {
-          id
-        }
-        dnsConfigs {
-          __typename
-          createdAt
-          id
-          name
-          type
-          updatedAt
-          value
-        }
-        isVerified
-        createdAt
-        updatedAt
-        dnslinkStatus
-      }
-
-      # we need this to get the link site
       primaryDomain {
         id
         hostname
