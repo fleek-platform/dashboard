@@ -21,12 +21,22 @@ type LinkBoxProps =
       });
 
 export const LinkBox = React.forwardRef<HTMLAnchorElement, LinkBoxProps>(
-  ({ children, href, className, isExternalLink = false, isDisabled = false, ...props }, ref) => {
+  (
+    {
+      children,
+      href,
+      className,
+      isExternalLink = false,
+      isDisabled = false,
+      ...props
+    },
+    ref,
+  ) => {
     const classNames = cn(
       boxVariants({ variant: 'container' }),
       'hover:border-neutral-8 transition-colors',
       { 'pointer-events-none opacity-60': isDisabled },
-      className
+      className,
     );
 
     if (isExternalLink) {
@@ -42,5 +52,5 @@ export const LinkBox = React.forwardRef<HTMLAnchorElement, LinkBoxProps>(
         {children}
       </Link>
     );
-  }
+  },
 );

@@ -16,8 +16,13 @@ const BuildSettingsPage: Page = () => {
   const router = useRouter();
   const toast = useToast();
 
-  const [siteQuery, refetchSiteQuery] = useSiteQuery({ variables: { where: { id: router.query.siteId! } } });
-  const buildSettingsGuard = useSiteBuildSettingsGuard({ siteQuery, refetchSiteQuery });
+  const [siteQuery, refetchSiteQuery] = useSiteQuery({
+    variables: { where: { id: router.query.siteId! } },
+  });
+  const buildSettingsGuard = useSiteBuildSettingsGuard({
+    siteQuery,
+    refetchSiteQuery,
+  });
   const isSelfManaged = isSiteSelfManaged(siteQuery?.data?.site);
 
   const { update: updateSite } = useUpdateSite();
@@ -56,7 +61,10 @@ const BuildSettingsPage: Page = () => {
           updateSiteArgs.baseDirectory = values.baseDirectory;
         }
 
-        await updateSite({ updateSiteArgs, successMessage: 'Site build settings updated successfully' });
+        await updateSite({
+          updateSiteArgs,
+          successMessage: 'Site build settings updated successfully',
+        });
       } catch (error) {
         toast.error({ error, log: 'Error updating site build settings' });
       }
@@ -97,7 +105,10 @@ const BuildSettingsPage: Page = () => {
           updateSiteArgs.deployOnBranchUpdate = values.deployOnBranchUpdate;
         }
 
-        await updateSite({ updateSiteArgs, successMessage: 'Site deploy contexts updated successfully' });
+        await updateSite({
+          updateSiteArgs,
+          successMessage: 'Site deploy contexts updated successfully',
+        });
       } catch (error) {
         toast.error({ error, log: 'Error updating site deploy contexts' });
       }
@@ -123,10 +134,18 @@ const BuildSettingsPage: Page = () => {
       <Form.Provider value={siteBuildForm}>
         <Site.Settings.Sections.SiteBuild
           isSelfManaged={isSelfManaged}
-          gitProviderId={siteQuery.data?.site.gitIntegration?.gitProvider.id ?? undefined}
-          isLoading={buildSettingsGuard.isLoading || (siteQuery.fetching as true)}
-          sourceRepositoryOwner={siteQuery.data?.site.sourceRepositoryOwner ?? undefined}
-          sourceRepositoryName={siteQuery.data?.site.sourceRepositoryName ?? undefined}
+          gitProviderId={
+            siteQuery.data?.site.gitIntegration?.gitProvider.id ?? undefined
+          }
+          isLoading={
+            buildSettingsGuard.isLoading || (siteQuery.fetching as true)
+          }
+          sourceRepositoryOwner={
+            siteQuery.data?.site.sourceRepositoryOwner ?? undefined
+          }
+          sourceRepositoryName={
+            siteQuery.data?.site.sourceRepositoryName ?? undefined
+          }
           sourceBranch={siteQuery.data?.site.sourceBranch ?? undefined}
         />
       </Form.Provider>
@@ -135,8 +154,12 @@ const BuildSettingsPage: Page = () => {
         <Form.Provider value={deployContextsForm}>
           <Site.Settings.Sections.DeployContexts
             site={siteQuery.data.site}
-            sourceRepositoryName={siteQuery.data?.site.sourceRepositoryName ?? undefined}
-            sourceRepositoryOwner={siteQuery.data?.site.sourceRepositoryOwner ?? undefined}
+            sourceRepositoryName={
+              siteQuery.data?.site.sourceRepositoryName ?? undefined
+            }
+            sourceRepositoryOwner={
+              siteQuery.data?.site.sourceRepositoryOwner ?? undefined
+            }
           />
         </Form.Provider>
       )}
@@ -144,9 +167,14 @@ const BuildSettingsPage: Page = () => {
   );
 };
 
-BuildSettingsPage.getLayout = (page) => <Site.Settings.Layout>{page}</Site.Settings.Layout>;
+BuildSettingsPage.getLayout = (page) => (
+  <Site.Settings.Layout>{page}</Site.Settings.Layout>
+);
 
-export default withAccess({ Component: BuildSettingsPage, requiredPermissions: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS] });
+export default withAccess({
+  Component: BuildSettingsPage,
+  requiredPermissions: [constants.PERMISSION.SITE.VIEW_BUILD_SETTINGS],
+});
 
 class UpdateSiteBuildError extends Error {}
 

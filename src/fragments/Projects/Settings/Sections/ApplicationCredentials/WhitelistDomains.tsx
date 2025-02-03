@@ -89,7 +89,9 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
       setError(false);
     } else {
       const timeout = setTimeout(() => {
-        setError((validation as z.SafeParseError<string>).error.issues[0].message);
+        setError(
+          (validation as z.SafeParseError<string>).error.issues[0].message,
+        );
       }, 700);
 
       return () => clearTimeout(timeout);

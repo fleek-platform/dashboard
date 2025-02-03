@@ -31,9 +31,7 @@ const Logo: React.FC<LogoProps> = ({ children, ...props }) => {
   return (
     <Box className="flex-row gap-3 items-center">
       {projectId ? (
-        <Link
-          href={routes.project.home({ projectId })}
-        >
+        <Link href={routes.project.home({ projectId })}>
           <FleekLogo showTypography={false} {...props} />
         </Link>
       ) : (

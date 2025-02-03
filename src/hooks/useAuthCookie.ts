@@ -8,7 +8,11 @@ import { useCookies } from '../providers/CookiesProvider';
 
 const key = 'accessToken';
 
-export const useAuthCookie = (): [string | undefined, (value: string) => void, () => void] => {
+export const useAuthCookie = (): [
+  string | undefined,
+  (value: string) => void,
+  () => void,
+] => {
   const cookies = useCookies();
 
   const set = (jwt: string) => {
@@ -16,7 +20,7 @@ export const useAuthCookie = (): [string | undefined, (value: string) => void, (
       const parsed = decodeAccessToken({ token: jwt });
 
       cookies.set(key, jwt, {
-        expires: DateTime.fromSeconds(parsed.exp).toJSDate(), 
+        expires: DateTime.fromSeconds(parsed.exp).toJSDate(),
         // Required for cross-domain cookies
         domain: cookieDomain,
       });

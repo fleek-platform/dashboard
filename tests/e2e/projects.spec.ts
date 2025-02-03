@@ -11,7 +11,8 @@ describe('On Project settings page', () => {
     const projectId = 'cls4v91mt0001l708wu51eozd';
 
     beforeEach(async ({ page }) => {
-      const validMockToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM2Nzg0NTkwfQ.CaZJhOgcB0skIM8sRgfs_Om0JpkeI5QHVbRdkkLuFMk';
+      const validMockToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM2Nzg0NTkwfQ.CaZJhOgcB0skIM8sRgfs_Om0JpkeI5QHVbRdkkLuFMk';
 
       await page.context().addCookies([
         {

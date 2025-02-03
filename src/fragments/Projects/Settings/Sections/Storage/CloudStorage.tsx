@@ -148,7 +148,7 @@ const SaveChangesButton: React.FC = () => {
       loading={isLoading}
       disabled={isLoading || !hasEditPermission}
       onClick={handleSaveChanges}
-      role="button"	
+      role="button"
       aria-label="Save storage layer changes"
     >
       Save changes

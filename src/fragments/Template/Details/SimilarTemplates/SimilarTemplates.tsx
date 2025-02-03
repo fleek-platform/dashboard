@@ -12,7 +12,10 @@ type SimilarTemplatesProps = {
   count?: number;
 };
 
-export const SimilarTemplates: React.FC<SimilarTemplatesProps> = ({ templateId, count = 3 }) => {
+export const SimilarTemplates: React.FC<SimilarTemplatesProps> = ({
+  templateId,
+  count = 3,
+}) => {
   return (
     <S.Details.SimilarTemplates.Container>
       <S.Details.SimilarTemplates.Header className="flex-row">
@@ -31,8 +34,13 @@ type SimilarTemplatesListProps = {
   templateId?: string;
 };
 
-const SimilarTemplatesList: React.FC<SimilarTemplatesListProps> = ({ templateId, count }) => {
-  const [templatesQuery] = useTemplatesQuery({ variables: { where: {}, filter: { take: count + 1 } } });
+const SimilarTemplatesList: React.FC<SimilarTemplatesListProps> = ({
+  templateId,
+  count,
+}) => {
+  const [templatesQuery] = useTemplatesQuery({
+    variables: { where: {}, filter: { take: count + 1 } },
+  });
 
   if (templatesQuery.fetching) {
     return <SimilarTemplatesListLoading count={count} />;
@@ -40,7 +48,9 @@ const SimilarTemplatesList: React.FC<SimilarTemplatesListProps> = ({ templateId,
 
   const templates = templatesQuery.data?.templates.data || [];
 
-  const displayedTemplates = templates.filter((template) => !templateId || template.id !== templateId).slice(0, count);
+  const displayedTemplates = templates
+    .filter((template) => !templateId || template.id !== templateId)
+    .slice(0, count);
 
   return (
     <S.Details.SimilarTemplates.Grid className="grid">
@@ -51,7 +61,9 @@ const SimilarTemplatesList: React.FC<SimilarTemplatesListProps> = ({ templateId,
   );
 };
 
-const SimilarTemplatesListLoading: React.FC<SimilarTemplatesListProps> = ({ count }) => (
+const SimilarTemplatesListLoading: React.FC<SimilarTemplatesListProps> = ({
+  count,
+}) => (
   <S.Details.SimilarTemplates.Grid className="grid">
     {Array.from({ length: count }).map((_, idx) => (
       <TemplateCard key={idx} isLoading />

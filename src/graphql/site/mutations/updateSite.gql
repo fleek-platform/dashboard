@@ -1,4 +1,7 @@
-mutation updateSite($data: UpdateSiteDataInput!, $where: UpdateSiteWhereInput!) {
+mutation updateSite(
+  $data: UpdateSiteDataInput!
+  $where: UpdateSiteWhereInput!
+) {
   updateSite(data: $data, where: $where) {
     id
     name

@@ -7,7 +7,12 @@ type DateFormatArgs = {
   stringFormat?: string; // i.e 'HH:mm:ss.SSS' to show 15:30:45.123
 };
 
-export const dateFormat = ({ dateISO, dateTimestamp, format, stringFormat }: DateFormatArgs) => {
+export const dateFormat = ({
+  dateISO,
+  dateTimestamp,
+  format,
+  stringFormat,
+}: DateFormatArgs) => {
   let dateTime: DateTime | null = null;
 
   if (dateTimestamp) {
