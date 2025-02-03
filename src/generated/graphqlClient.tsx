@@ -2,15 +2,9 @@ import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -45,6 +39,7 @@ export type Application = {
   whiteLabelDomainsPaginated: ApplicationWhiteLabelDomainsWithNestedAggregation;
   whitelistDomains: Array<ApplicationWhitelistDomain>;
 };
+
 
 export type ApplicationWhiteLabelDomainsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -131,7 +126,7 @@ export enum BillingCycleStatus {
   FAILED_EXTERNAL = 'FAILED_EXTERNAL',
   FAILED_INTERNAL = 'FAILED_INTERNAL',
   PAID = 'PAID',
-  PAYMENT_FAILED = 'PAYMENT_FAILED',
+  PAYMENT_FAILED = 'PAYMENT_FAILED'
 }
 
 export type BillingCycleUsage = {
@@ -199,14 +194,14 @@ export enum BillingPlanEnablementRuleType {
   FILECOIN_BACKUP = 'FILECOIN_BACKUP',
   FLEEK_DOMAINS = 'FLEEK_DOMAINS',
   SDK_INTEGRATIONS = 'SDK_INTEGRATIONS',
-  SITE_STORAGE_ANALYTICS = 'SITE_STORAGE_ANALYTICS',
+  SITE_STORAGE_ANALYTICS = 'SITE_STORAGE_ANALYTICS'
 }
 
 export enum BillingPlanLevel {
   BASIC = 'BASIC',
   ENTERPRISE = 'ENTERPRISE',
   FREE = 'FREE',
-  PRO = 'PRO',
+  PRO = 'PRO'
 }
 
 export type BillingPlanOverageRule = {
@@ -230,20 +225,20 @@ export enum BillingPlanOverageRuleType {
   FLEEK_FUNCTIONS_RUNTIME_MINUTES = 'FLEEK_FUNCTIONS_RUNTIME_MINUTES',
   IPFS_STORAGE = 'IPFS_STORAGE',
   PROJECT_MEMBERS_COUNT = 'PROJECT_MEMBERS_COUNT',
-  TOTAL_BANDWIDTH = 'TOTAL_BANDWIDTH',
+  TOTAL_BANDWIDTH = 'TOTAL_BANDWIDTH'
 }
 
 export enum BillingPlanOverageType {
   CAPPED = 'CAPPED',
   MAX = 'MAX',
   TOTAL = 'TOTAL',
-  UNLIMITED = 'UNLIMITED',
+  UNLIMITED = 'UNLIMITED'
 }
 
 export enum BillingPlanStatus {
   ACTIVE = 'ACTIVE',
   DEPRECATED = 'DEPRECATED',
-  DRAFT = 'DRAFT',
+  DRAFT = 'DRAFT'
 }
 
 export type BillingPlanTierRule = {
@@ -258,7 +253,7 @@ export type BillingPlanTierRule = {
 };
 
 export enum BillingPlanTierRuleType {
-  CUSTOMER_SUPPORT_TIER = 'CUSTOMER_SUPPORT_TIER',
+  CUSTOMER_SUPPORT_TIER = 'CUSTOMER_SUPPORT_TIER'
 }
 
 export type BillingPlanWhereInput = {
@@ -309,6 +304,7 @@ export type Build = {
   status: BuildStatus;
 };
 
+
 export type BuildLogsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -340,13 +336,13 @@ export enum BuildStatus {
   FAILED = 'FAILED',
   INITIALISED = 'INITIALISED',
   QUEUED = 'QUEUED',
-  RUNNING = 'RUNNING',
+  RUNNING = 'RUNNING'
 }
 
 /** The client application type making the request */
 export enum ClientAppType {
   CLI = 'CLI',
-  UI = 'UI',
+  UI = 'UI'
 }
 
 export type CreateApplicationDataInput = {
@@ -510,6 +506,7 @@ export type CreateSecretDataInput = {
 export type CreateSiteDataInput = {
   baseDirectory?: InputMaybe<Scalars['String']>;
   buildCommand?: InputMaybe<Scalars['String']>;
+  deployOnBranchUpdate?: InputMaybe<Scalars['Boolean']>;
   distDirectory?: InputMaybe<Scalars['String']>;
   dockerImage?: InputMaybe<Scalars['String']>;
   enablePreviews?: InputMaybe<Scalars['Boolean']>;
@@ -646,7 +643,7 @@ export type Deployment = {
 
 export enum DeploymentMode {
   PREVIEW_ONLY = 'PREVIEW_ONLY',
-  PRODUCTION = 'PRODUCTION',
+  PRODUCTION = 'PRODUCTION'
 }
 
 export enum DeploymentStatus {
@@ -670,7 +667,7 @@ export enum DeploymentStatus {
   SOURCE_CLONE_IN_PROGRESS = 'SOURCE_CLONE_IN_PROGRESS',
   UPLOAD_COMPLETED = 'UPLOAD_COMPLETED',
   UPLOAD_FAILED = 'UPLOAD_FAILED',
-  UPLOAD_IN_PROGRESS = 'UPLOAD_IN_PROGRESS',
+  UPLOAD_IN_PROGRESS = 'UPLOAD_IN_PROGRESS'
 }
 
 export type DeploymentWhereInput = {
@@ -739,13 +736,13 @@ export type DnsConfig = {
 
 export enum DnsConfigType {
   A = 'A',
-  CNAME = 'CNAME',
+  CNAME = 'CNAME'
 }
 
 export enum DnslinkStatus {
   CREATED = 'CREATED',
   VERIFICATION_FAILED = 'VERIFICATION_FAILED',
-  VERIFIED = 'VERIFIED',
+  VERIFIED = 'VERIFIED'
 }
 
 export type Domain = {
@@ -780,7 +777,7 @@ export enum DomainStatus {
   DELETING = 'DELETING',
   DELETING_FAILED = 'DELETING_FAILED',
   VERIFYING = 'VERIFYING',
-  VERIFYING_FAILED = 'VERIFYING_FAILED',
+  VERIFYING_FAILED = 'VERIFYING_FAILED'
 }
 
 export type DomainWhereInput = {
@@ -874,7 +871,7 @@ export enum EnsRecordStatus {
   ACTIVE = 'ACTIVE',
   CREATED = 'CREATED',
   VERIFYING = 'VERIFYING',
-  VERIFYING_FAILED = 'VERIFYING_FAILED',
+  VERIFYING_FAILED = 'VERIFYING_FAILED'
 }
 
 export type EnsRecordWhereInput = {
@@ -990,6 +987,7 @@ export type FilecoinPin = {
   dealsPaginated: FilecoinDealsWithNestedAggregation;
 };
 
+
 export type FilecoinPinDealsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -1057,7 +1055,7 @@ export type FleekFunctionDeploymentsWithAggregation = {
 
 export enum FleekFunctionStatus {
   ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
+  INACTIVE = 'INACTIVE'
 }
 
 export type FleekFunctionsPaginationInput = {
@@ -1203,7 +1201,7 @@ export type GitProvider = {
 
 export enum GitProviderTags {
   sites = 'sites',
-  templates = 'templates',
+  templates = 'templates'
 }
 
 export type GitProviderWhereInput = {
@@ -1307,6 +1305,7 @@ export type IpnsRecord = {
   name: Scalars['String'];
   updatedAt: Scalars['Date'];
 };
+
 
 export type IpnsRecordEnsRecordsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -1445,7 +1444,7 @@ export enum MigrationFailedEntityType {
   STORAGE_PIN = 'STORAGE_PIN',
   STRIPE_BILLING = 'STRIPE_BILLING',
   USER = 'USER',
-  ZONE = 'ZONE',
+  ZONE = 'ZONE'
 }
 
 export type MigrationLog = {
@@ -1478,6 +1477,7 @@ export type MigrationRequest = {
   teamInfo?: Maybe<MigrationTeamInfo>;
   updatedAt: Scalars['Date'];
 };
+
 
 export type MigrationRequestLogsArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -1525,7 +1525,7 @@ export type MigrationScheduledRequestWhereInput = {
 export enum MigrationStatus {
   COMPLETED = 'COMPLETED',
   FAILED = 'FAILED',
-  IN_PROGRESS = 'IN_PROGRESS',
+  IN_PROGRESS = 'IN_PROGRESS'
 }
 
 export type MigrationStatusByTeamIdWhereInput = {
@@ -1661,368 +1661,454 @@ export type Mutation = {
   verifyTwoFactorSecretKey: SecretKey;
 };
 
+
 export type MutationAcceptInvitationArgs = {
   where: AcceptInvitationWhereInput;
 };
+
 
 export type MutationCreateApplicationArgs = {
   data: CreateApplicationDataInput;
 };
 
+
 export type MutationCreateBillingCycleUsageArgs = {
   data: CreateBillingCycleUsageDataInput;
 };
+
 
 export type MutationCreateBillingPlanArgs = {
   data: CreateBillingPlanDataInput;
 };
 
+
 export type MutationCreateCustomIpfsDeploymentArgs = {
   data: CreateCustomIpfsDeploymentDataInput;
 };
+
 
 export type MutationCreateDnsConfigArgs = {
   data: CreateDnsConfigDataInput;
   where: CreateDnsConfigWhereInput;
 };
 
+
 export type MutationCreateDomainArgs = {
   data: CreateDomainDataInput;
   where: CreateDomainWhereInput;
 };
+
 
 export type MutationCreateEnsRecordArgs = {
   data: CreateEnsRecordDataInput;
   where: CreateEnsRecordWhereInput;
 };
 
+
 export type MutationCreateFleekFunctionArgs = {
   data: CreateFleekFunctionDataInput;
 };
+
 
 export type MutationCreateFolderArgs = {
   data: CreateFolderDataInput;
   where: CreateFolderWhereInput;
 };
 
+
 export type MutationCreateGithubAppAuthorizationUrlArgs = {
   where: CreateGithubAppAuthorizationUrlWhereInput;
 };
+
 
 export type MutationCreateGithubAppInstallationUrlArgs = {
   where: CreateGithubAppInstallationUrlWhereInput;
 };
 
+
 export type MutationCreateGithubIntegrationForProjectArgs = {
   data: CreateGithubIntegrationForProjectDataInput;
 };
+
 
 export type MutationCreateGithubRepoFromTemplateArgs = {
   data: CreateGithubRepoFromTemplateDataInput;
   where: CreateGithubRepoFromTemplateWhereInput;
 };
 
+
 export type MutationCreateInvitationArgs = {
   data: CreateInvitationDataInput;
 };
+
 
 export type MutationCreateIpnsRecordForSiteArgs = {
   where: CreateIpnsRecordForSiteWhereInput;
 };
 
+
 export type MutationCreateLoginVerificationSessionArgs = {
   where: CreateLoginVerificationSessionWhereInput;
 };
+
 
 export type MutationCreateMigrationRequestsFromTokenArgs = {
   data: CreateMigrationRequestsFromTokenDataInput;
 };
 
+
 export type MutationCreateMigrationTokenArgs = {
   data: CreateMigrationTokenDataInput;
 };
+
 
 export type MutationCreatePersonalAccessTokenFromVerificationSessionArgs = {
   data: CreatePersonalAccessTokenFromVerificationSessionDataInput;
   where: CreatePersonalAccessTokenFromVerificationSessionWhereInput;
 };
 
+
 export type MutationCreatePrivateGatewayArgs = {
   data: CreatePrivateGatewayDataInput;
   where: CreatePrivateGatewayWhereInput;
 };
 
+
 export type MutationCreateProjectArgs = {
   data: CreateProjectDataInput;
 };
+
 
 export type MutationCreateSalesContactRequestArgs = {
   data: CreateSalesContactRequestDataInput;
 };
 
+
 export type MutationCreateSecretArgs = {
   data: CreateSecretDataInput;
 };
+
 
 export type MutationCreateSiteArgs = {
   data: CreateSiteDataInput;
 };
 
+
 export type MutationCreateTemplateArgs = {
   data: CreateTemplateDataInput;
 };
+
 
 export type MutationCreateZoneForSiteArgs = {
   where: CreateZoneForSiteWhereInput;
 };
 
+
 export type MutationDeclineInvitationArgs = {
   where: DeclineInvitationWhereInput;
 };
+
 
 export type MutationDeleteApplicationArgs = {
   where: DeleteApplicationWhereInput;
 };
 
+
 export type MutationDeleteDomainArgs = {
   where: DeleteDomainWhereInput;
 };
+
 
 export type MutationDeleteEnsRecordArgs = {
   where: DeleteEnsRecordWhereInput;
 };
 
+
 export type MutationDeleteFleekFunctionArgs = {
   where: DeleteFleekFunctionWhereInput;
 };
+
 
 export type MutationDeleteFolderArgs = {
   where: DeleteFolderWhereInput;
 };
 
+
 export type MutationDeleteInvitationArgs = {
   where: DeleteInvitationWhereInput;
 };
+
 
 export type MutationDeleteIpnsRecordArgs = {
   where: DeleteIpnsRecordWhereInput;
 };
 
+
 export type MutationDeleteMembershipArgs = {
   where: DeleteMembershipWhereInput;
 };
+
 
 export type MutationDeletePersonalAccessTokenArgs = {
   where: DeletePersonalAccessTokenWhereInput;
 };
 
+
 export type MutationDeletePinArgs = {
   where: DeletePinWhereInput;
 };
+
 
 export type MutationDeletePrivateGatewayArgs = {
   where: DeletePrivateGatewayWhereInput;
 };
 
+
 export type MutationDeleteProjectArgs = {
   where: DeleteProjectWhereInput;
 };
+
 
 export type MutationDeleteRecoveryCodesArgs = {
   where: DeleteRecoveryCodesWhereInput;
 };
 
+
 export type MutationDeleteSecretArgs = {
   where: DeleteSecretWhereInput;
 };
+
 
 export type MutationDeleteSecretKeyArgs = {
   where: DeleteSecretKeyWhereInput;
 };
 
+
 export type MutationDeleteSiteArgs = {
   where: DeleteSiteWhereInput;
 };
+
 
 export type MutationDeleteTemplateArgs = {
   where: DeleteTemplateWhereInput;
 };
 
+
 export type MutationDeleteUserArgs = {
   where: DeleteUserWhereInput;
 };
+
 
 export type MutationDeleteZoneArgs = {
   where: DeleteZoneWhereInput;
 };
 
+
 export type MutationDisableTwoFactorProtectedActionArgs = {
   where: DisableTwoFactorProtectedActionWhereInput;
 };
+
 
 export type MutationEnableTwoFactorProtectedActionArgs = {
   where: EnableTwoFactorProtectedActionWhereInput;
 };
 
+
 export type MutationGenerateRecoveryCodesArgs = {
   where: GenerateRecoveryCodesWhereInput;
 };
+
 
 export type MutationGenerateUserSessionDetailsArgs = {
   data: GenerateUserSessionDetailsDataInput;
 };
 
+
 export type MutationLeaveProjectArgs = {
   where: LeaveProjectWhereInput;
 };
+
 
 export type MutationLinkPublicKeyArgs = {
   data: LinkPublicKeyDataInput;
 };
 
+
 export type MutationLoginWithAdminAccessTokenArgs = {
   data: LoginWithAdminAccessTokenDataInput;
 };
+
 
 export type MutationLoginWithDynamicArgs = {
   data: LoginWithDynamicDataInput;
 };
 
+
 export type MutationLoginWithPersonalAccessTokenArgs = {
   data: LoginWithPersonalAccessTokenDataInput;
 };
+
 
 export type MutationMarkNotificationsAsReadArgs = {
   where: MarkNotificationsAsReadWhereInput;
 };
 
+
 export type MutationPromoteDeploymentArgs = {
   where: PromoteDeploymentWhereInput;
 };
+
 
 export type MutationPublishIpnsRecordArgs = {
   data: PublishIpnsRecordDataInput;
   where: PublishIpnsRecordWhereInput;
 };
 
+
 export type MutationPublishSignedIpnsNameArgs = {
   data: PublishSignedIpnsNameDataInput;
 };
+
 
 export type MutationPurgeSiteCacheArgs = {
   where: PurgeSiteCacheWhereInput;
 };
 
+
 export type MutationRetryDeploymentArgs = {
   where: RetryDeploymentWhereInput;
 };
+
 
 export type MutationRetryMigrationRequestArgs = {
   data: RetryMigrationRequestDataInput;
   where: RetryMigrationRequestWhereInput;
 };
 
+
 export type MutationSelectPrimaryDomainArgs = {
   where: SelectPrimaryDomainWhereInput;
 };
+
 
 export type MutationSiteDeploymentRequirementsArgs = {
   where: SiteDeploymentRequirementsWhereInput;
 };
 
+
 export type MutationStopDeploymentArgs = {
   where: StopDeploymentWhereInput;
 };
 
+
 export type MutationTriggerDeploymentArgs = {
   where: TriggerDeploymentWhereInput;
 };
+
 
 export type MutationTriggerFleekFunctionDeploymentArgs = {
   data?: InputMaybe<TriggerFleekFunctionDeploymentDataInput>;
   where: TriggerFleekFunctionDeploymentWhereInput;
 };
 
+
 export type MutationUpdateApplicationArgs = {
   data: UpdateApplicationDataInput;
   where: UpdateApplicationWhereInput;
 };
+
 
 export type MutationUpdateBillingPlanArgs = {
   data: UpdateBillingPlanDataInput;
   where: UpdateBillingPlanWhereInput;
 };
 
+
 export type MutationUpdateFleekFunctionArgs = {
   data: UpdateFleekFunctionDataInput;
   where: UpdateFleekFunctionWhereInput;
 };
+
 
 export type MutationUpdateFolderArgs = {
   data: UpdateFolderDataInput;
   where: UpdateFolderWhereInput;
 };
 
+
 export type MutationUpdateMembershipArgs = {
   data: UpdateMembershipDataInput;
   where: UpdateMembershipWhereInput;
 };
 
+
 export type MutationUpdateNotificationSettingsArgs = {
   data: UpdateNotificationSettingsDataInput;
 };
+
 
 export type MutationUpdatePinArgs = {
   data: UpdatePinDataInput;
   where: UpdatePinWhereInput;
 };
 
+
 export type MutationUpdatePrivateGatewayArgs = {
   data: UpdatePrivateGatewayDataInput;
   where: UpdatePrivateGatewayWhereInput;
 };
+
 
 export type MutationUpdateProjectArgs = {
   data: UpdateProjectDataInput;
   where: UpdateProjectWhereInput;
 };
 
+
 export type MutationUpdateSecretArgs = {
   data: UpdateSecretDataInput;
   where: UpdateSecretWhereInput;
 };
+
 
 export type MutationUpdateSiteArgs = {
   data: UpdateSiteDataInput;
   where: UpdateSiteWhereInput;
 };
 
+
 export type MutationUpdateTemplateArgs = {
   data: UpdateTemplateDataInput;
   where: UpdateTemplateWhereInput;
 };
+
 
 export type MutationUpdateTwoFactorSecretKeyArgs = {
   data: UpdateTwoFactorSecretKeyDataInput;
   where: UpdateTwoFactorSecretKeyWhereInput;
 };
 
+
 export type MutationUpdateUserArgs = {
   data: UpdateUserDataInput;
 };
 
+
 export type MutationVerifyDnslinkArgs = {
   where: VerifyDnslinkWhereInput;
 };
+
 
 export type MutationVerifyDomainArgs = {
   data?: InputMaybe<VerifyDomainDataInput>;
   where: VerifyDomainWhereInput;
 };
 
+
 export type MutationVerifyEnsRecordArgs = {
   where: VerifyEnsRecordWhereInput;
 };
+
 
 export type MutationVerifyTwoFactorSecretKeyArgs = {
   data: VerifyTwoFactorSecretKeyDataInput;
@@ -2043,7 +2129,7 @@ export type Notification = {
 
 export enum NotificationChannel {
   EMAIL = 'EMAIL',
-  IN_APP = 'IN_APP',
+  IN_APP = 'IN_APP'
 }
 
 export type NotificationSettings = {
@@ -2061,7 +2147,7 @@ export enum NotificationType {
   DOMAIN_CREATED = 'DOMAIN_CREATED',
   DOMAIN_DELETED = 'DOMAIN_DELETED',
   DOMAIN_MISCONFIGURED = 'DOMAIN_MISCONFIGURED',
-  MEMBER_INVITE = 'MEMBER_INVITE',
+  MEMBER_INVITE = 'MEMBER_INVITE'
 }
 
 export type NotificationsPaginationInput = {
@@ -2165,6 +2251,7 @@ export type Pin = {
   storedOnS3: Scalars['Boolean'];
 };
 
+
 export type PinDeploymentsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -2246,6 +2333,7 @@ export type PrivateGateway = {
   zone?: Maybe<Zone>;
 };
 
+
 export type PrivateGatewayDomainsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -2295,6 +2383,7 @@ export type Project = {
   name: Scalars['String'];
   updatedAt: Scalars['Date'];
 };
+
 
 export type ProjectMembershipsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -2482,326 +2571,404 @@ export type Query = {
   zones: ZonesWithAggregation;
 };
 
+
 export type QueryApplicationArgs = {
   where: ApplicationWhereInput;
 };
+
 
 export type QueryApplicationNameAvailabilityArgs = {
   where: ApplicationNameAvailabilityWhereInput;
 };
 
+
 export type QueryApplicationsArgs = {
   filter?: InputMaybe<ApplicationsPaginationInput>;
 };
+
 
 export type QueryBillingCycleUsagesArgs = {
   filter?: InputMaybe<BillingCycleUsagesPaginationInput>;
 };
 
+
 export type QueryBillingPlanArgs = {
   where: BillingPlanWhereInput;
 };
+
 
 export type QueryBillingPlansArgs = {
   filter?: InputMaybe<BillingPlansPaginationInput>;
 };
 
+
 export type QueryDeploymentArgs = {
   where: DeploymentWhereInput;
 };
+
 
 export type QueryDeploymentsArgs = {
   filter?: InputMaybe<DeploymentsPaginationInput>;
   where: DeploymentsWhereInput;
 };
 
+
 export type QueryDeploymentsQueueLimitArgs = {
   where: DeploymentsQueueLimitWhereInput;
 };
+
 
 export type QueryDomainArgs = {
   where: DomainWhereInput;
 };
 
+
 export type QueryDomainAvailabilityArgs = {
   where: DomainAvailabilityWhereInput;
 };
+
 
 export type QueryDomainByHostnameArgs = {
   where: DomainByHostnameWhereInput;
 };
 
+
 export type QueryDomainsArgs = {
   filter?: InputMaybe<DomainsPaginationInput>;
 };
+
 
 export type QueryDomainsByZoneIdArgs = {
   filter?: InputMaybe<DomainsByZoneIdPaginationInput>;
   where: DomainsByZoneIdWhereInput;
 };
 
+
 export type QueryEmailAvailabilityArgs = {
   where: EmailAvailabilityWhereInput;
 };
+
 
 export type QueryEnsNameAvailabilityArgs = {
   where: EnsNameAvailabilityWhereInput;
 };
 
+
 export type QueryEnsRecordArgs = {
   where: EnsRecordWhereInput;
 };
+
 
 export type QueryEnsRecordByNameArgs = {
   where: EnsRecordByNameWhereInput;
 };
 
+
 export type QueryEnsRecordsArgs = {
   filter?: InputMaybe<EnsRecordsPaginationInput>;
 };
+
 
 export type QueryEnsRecordsByIpnsIdArgs = {
   filter?: InputMaybe<EnsRecordsByIpnsIdPaginationInput>;
   where: EnsRecordsByIpnsIdWhereInput;
 };
 
+
 export type QueryFilecoinDealsArgs = {
   filter?: InputMaybe<FilecoinDealsPaginationInput>;
   where: FilecoinDealsWhereInput;
 };
 
+
 export type QueryFleekFunctionByNameArgs = {
   where: FleekFunctionByNameWhereInput;
 };
 
+
 export type QueryFleekFunctionDeploymentArgs = {
   where: FleekFunctionDeploymentWhereInput;
 };
+
 
 export type QueryFleekFunctionDeploymentsArgs = {
   filter?: InputMaybe<FleekFunctionDeploymentsPaginationInput>;
   where: FleekFunctionDeploymentsWhereInput;
 };
 
+
 export type QueryFleekFunctionsArgs = {
   filter?: InputMaybe<FleekFunctionsPaginationInput>;
   where?: InputMaybe<FleekFunctionsWhereInput>;
 };
 
+
 export type QueryFolderArgs = {
   where: FolderWhereInput;
 };
+
 
 export type QueryFolderNameAvailabilityInParentFolderArgs = {
   data: FolderNameAvailabilityInParentFolderDataInput;
   where: FolderNameAvailabilityInParentFolderWhereInput;
 };
 
+
 export type QueryGitApiBranchesArgs = {
   where: GitApiBranchesWhereInput;
 };
+
 
 export type QueryGitApiInstallationsArgs = {
   where: GitApiInstallationsWhereInput;
 };
 
+
 export type QueryGitApiIsRepoNameAvailableArgs = {
   where: GitApiIsRepoNameAvailableWhereInput;
 };
+
 
 export type QueryGitApiTreeArgs = {
   where: GitApiTreeWhereInput;
 };
 
+
 export type QueryGitIntegrationArgs = {
   where: GitIntegrationWhereInput;
 };
+
 
 export type QueryGitProviderArgs = {
   where: GitProviderWhereInput;
 };
 
+
 export type QueryGithubAppInstallationsArgs = {
   where: GithubAppInstallationsWhereInput;
 };
+
 
 export type QueryInvitationArgs = {
   where: InvitationWhereInput;
 };
 
+
 export type QueryInvitationsArgs = {
   filter?: InputMaybe<InvitationsPaginationInput>;
 };
+
 
 export type QueryIpnsRecordArgs = {
   where: IpnsRecordWhereInput;
 };
 
+
 export type QueryIpnsRecordsArgs = {
   filter?: InputMaybe<IpnsRecordsPaginationInput>;
 };
 
+
 export type QueryListDeploymentBranchesArgs = {
   where: ListDeploymentBranchesWhereInput;
 };
+
 
 export type QueryListFolderArgs = {
   filter?: InputMaybe<ListFolderPaginationInput>;
   where: ListFolderWhereInput;
 };
 
+
 export type QueryMigrationRequestArgs = {
   where: MigrationRequestWhereInput;
 };
+
 
 export type QueryMigrationRequestsArgs = {
   filter?: InputMaybe<MigrationRequestsPaginationInput>;
 };
 
+
 export type QueryMigrationRequestsByTokenArgs = {
   where: MigrationRequestsByTokenWhereInput;
 };
+
 
 export type QueryMigrationScheduledRequestArgs = {
   where: MigrationScheduledRequestWhereInput;
 };
 
+
 export type QueryMigrationStatusByTeamIdArgs = {
   where: MigrationStatusByTeamIdWhereInput;
 };
+
 
 export type QueryMigrationTeamInfosFromTokenArgs = {
   where: MigrationTeamInfosFromTokenWhereInput;
 };
 
+
 export type QueryNotificationsArgs = {
   filter?: InputMaybe<NotificationsPaginationInput>;
 };
+
 
 export type QueryPermissionGroupsArgs = {
   filter?: InputMaybe<PermissionGroupsPaginationInput>;
 };
 
+
 export type QueryPersonalAccessTokensArgs = {
   filter?: InputMaybe<PersonalAccessTokensPaginationInput>;
 };
 
+
 export type QueryPinArgs = {
   where: PinWhereInput;
 };
+
 
 export type QueryPinNameAvailabilityInParentFolderArgs = {
   data: PinNameAvailabilityInParentFolderDataInput;
   where: PinNameAvailabilityInParentFolderWhereInput;
 };
 
+
 export type QueryPinsArgs = {
   filter?: InputMaybe<PinsPaginationInput>;
   where?: InputMaybe<PinsWhereInput>;
 };
+
 
 export type QueryPinsByFilenameArgs = {
   filter?: InputMaybe<PinsByFilenamePaginationInput>;
   where: PinsByFilenameWhereInput;
 };
 
+
 export type QueryPrivateGatewayArgs = {
   where: PrivateGatewayWhereInput;
 };
+
 
 export type QueryPrivateGatewayBySlugArgs = {
   where: PrivateGatewayBySlugWhereInput;
 };
 
+
 export type QueryPrivateGatewayNameAvailabilityArgs = {
   where: PrivateGatewayNameAvailabilityWhereInput;
 };
+
 
 export type QueryPrivateGatewaysArgs = {
   filter?: InputMaybe<PrivateGatewaysPaginationInput>;
 };
 
+
 export type QueryProjectArgs = {
   where: ProjectWhereInput;
 };
+
 
 export type QueryProjectsArgs = {
   filter?: InputMaybe<ProjectsPaginationInput>;
 };
 
+
 export type QueryResolveIpnsNameArgs = {
   where: ResolveIpnsNameWhereInput;
 };
+
 
 export type QuerySecretAvailabilityArgs = {
   where: SecretAvailabilityWhereInput;
 };
 
+
 export type QuerySiteArgs = {
   where: SiteWhereInput;
 };
+
 
 export type QuerySiteBuildSettingsArgs = {
   where: SiteBuildSettingsWhereInput;
 };
 
+
 export type QuerySiteBySlugArgs = {
   where: SiteBySlugWhereInput;
 };
+
 
 export type QuerySiteFrameworkArgs = {
   where: SiteFrameworkWhereInput;
 };
 
+
 export type QuerySiteNameAvailabilityArgs = {
   where: SiteNameAvailabilityWhereInput;
 };
 
+
 export type QuerySiteQuotaArgs = {
   where: SiteQuotaWhereInput;
 };
+
 
 export type QuerySitesArgs = {
   filter?: InputMaybe<SitesPaginationInput>;
   where: SitesWhereInput;
 };
 
+
 export type QuerySlugAvailabilityArgs = {
   where: SlugAvailabilityWhereInput;
 };
+
 
 export type QueryTemplateArgs = {
   where: TemplateWhereInput;
 };
 
+
 export type QueryTemplateCategoriesArgs = {
   filter?: InputMaybe<TemplateCategoriesPaginationInput>;
 };
+
 
 export type QueryTemplateCategoryArgs = {
   where: TemplateCategoryWhereInput;
 };
 
+
 export type QueryTemplateNameAvailabilityArgs = {
   where: TemplateNameAvailabilityWhereInput;
 };
+
 
 export type QueryTemplatesArgs = {
   filter?: InputMaybe<TemplatesPaginationInput>;
   where: TemplatesWhereInput;
 };
 
+
 export type QueryTwoFactorProtectedActionsArgs = {
   filter?: InputMaybe<TwoFactorProtectedActionsPaginationInput>;
 };
+
 
 export type QueryUsernameAvailabilityArgs = {
   where: UsernameAvailabilityWhereInput;
 };
 
+
 export type QueryZoneArgs = {
   where: ZoneWhereInput;
 };
+
 
 export type QueryZonesArgs = {
   filter?: InputMaybe<ZonesPaginationInput>;
@@ -2846,7 +3013,7 @@ export type RetryMigrationRequestWhereInput = {
 
 export enum Role {
   MEMBER = 'MEMBER',
-  OWNER = 'OWNER',
+  OWNER = 'OWNER'
 }
 
 export type SalesContactRequest = {
@@ -2885,6 +3052,7 @@ export type SecretGroup = {
   updatedAt: Scalars['Date'];
 };
 
+
 export type SecretGroupSecretsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -2908,16 +3076,16 @@ export type SecretKey = {
 export enum SecretKeyAlgorithm {
   SHA1 = 'SHA1',
   SHA256 = 'SHA256',
-  SHA512 = 'SHA512',
+  SHA512 = 'SHA512'
 }
 
 export enum SecretKeyType {
-  TWO_FACTOR_AUTH = 'TWO_FACTOR_AUTH',
+  TWO_FACTOR_AUTH = 'TWO_FACTOR_AUTH'
 }
 
 export enum SecretVisibility {
   ENCRYPTED = 'ENCRYPTED',
-  PUBLIC = 'PUBLIC',
+  PUBLIC = 'PUBLIC'
 }
 
 export type SecretsWithNestedAggregation = {
@@ -2953,6 +3121,7 @@ export type Site = {
   buildDurationLimitSeconds?: Maybe<Scalars['Int']>;
   cpuLimit?: Maybe<Scalars['String']>;
   currentDeployment?: Maybe<Deployment>;
+  deployOnBranchUpdate: Scalars['Boolean'];
   deployments: Array<Deployment>;
   deploymentsPaginated: DeploymentsWithNestedAggregation;
   distDirectory?: Maybe<Scalars['String']>;
@@ -2981,17 +3150,21 @@ export type Site = {
   zonesPaginated: SiteZonesWithNestedAggregation;
 };
 
+
 export type SiteDeploymentsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
+
 
 export type SiteDomainsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
 
+
 export type SiteIpnsRecordsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
+
 
 export type SiteZonesPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -3049,7 +3222,7 @@ export type SiteFramework = {
 export enum SiteFrameworkRecognitionStrategy {
   FILES = 'FILES',
   NEXTJS = 'NEXTJS',
-  NODEJS = 'NODEJS',
+  NODEJS = 'NODEJS'
 }
 
 export type SiteFrameworkWhereInput = {
@@ -3127,13 +3300,13 @@ export type SlugAvailabilityWhereInput = {
 
 export enum SortOrder {
   asc = 'asc',
-  desc = 'desc',
+  desc = 'desc'
 }
 
 export enum SourceProvider {
   BITBUCKET = 'BITBUCKET',
   GITHUB = 'GITHUB',
-  GITLAB = 'GITLAB',
+  GITLAB = 'GITLAB'
 }
 
 export type StopDeploymentWhereInput = {
@@ -3141,12 +3314,12 @@ export type StopDeploymentWhereInput = {
 };
 
 export enum StorageType {
-  IPFS = 'IPFS',
+  IPFS = 'IPFS'
 }
 
 export enum SubscriptionType {
   CRYPTO = 'CRYPTO',
-  FIAT = 'FIAT',
+  FIAT = 'FIAT'
 }
 
 export type Template = {
@@ -3202,6 +3375,7 @@ export type TemplateCategory = {
   templatesPaginated: TemplatesWithNestedAggregation;
 };
 
+
 export type TemplateCategoryTemplatesPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
@@ -3217,7 +3391,7 @@ export type TemplateNameAvailabilityWhereInput = {
 export enum TemplateReviewStatus {
   APPROVED = 'APPROVED',
   PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
+  REJECTED = 'REJECTED'
 }
 
 export type TemplateWhereInput = {
@@ -3292,7 +3466,7 @@ export enum TwoFactorProtectedActionType {
   DELETE_PROJECT = 'DELETE_PROJECT',
   DELETE_SITE = 'DELETE_SITE',
   DELETE_USER = 'DELETE_USER',
-  INVITE_MEMBER = 'INVITE_MEMBER',
+  INVITE_MEMBER = 'INVITE_MEMBER'
 }
 
 export type TwoFactorProtectedActionsPaginationInput = {
@@ -3409,6 +3583,7 @@ export type UpdateSiteDataInput = {
   avatar?: InputMaybe<Scalars['File']>;
   baseDirectory?: InputMaybe<Scalars['String']>;
   buildCommand?: InputMaybe<Scalars['String']>;
+  deployOnBranchUpdate?: InputMaybe<Scalars['Boolean']>;
   distDirectory?: InputMaybe<Scalars['String']>;
   dockerImage?: InputMaybe<Scalars['String']>;
   enablePreviews?: InputMaybe<Scalars['Boolean']>;
@@ -3481,9 +3656,11 @@ export type User = {
   walletChain?: Maybe<Scalars['String']>;
 };
 
+
 export type UserPendingInvitationsPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
 };
+
 
 export type UserPublicKeysPaginatedArgs = {
   filter?: InputMaybe<PaginationInput>;
@@ -3546,12 +3723,12 @@ export enum ZoneStatus {
   CREATING = 'CREATING',
   CREATING_FAILED = 'CREATING_FAILED',
   DELETING = 'DELETING',
-  DELETING_FAILED = 'DELETING_FAILED',
+  DELETING_FAILED = 'DELETING_FAILED'
 }
 
 export enum ZoneType {
   PRIVATE_GATEWAY = 'PRIVATE_GATEWAY',
-  SITE = 'SITE',
+  SITE = 'SITE'
 }
 
 export type ZoneWhereInput = {
@@ -3578,2941 +3755,1081 @@ export type ZonesWithAggregation = {
 
 export enum DeploymentsSortableFields {
   createdAt = 'createdAt',
-  updatedAt = 'updatedAt',
+  updatedAt = 'updatedAt'
 }
 
 export enum FilecoinDealsSortableFields {
-  createdAt = 'createdAt',
+  createdAt = 'createdAt'
 }
 
 export enum FleekFunctionsSortableFields {
   createdAt = 'createdAt',
   name = 'name',
-  updatedAt = 'updatedAt',
+  updatedAt = 'updatedAt'
 }
 
 export enum InvitationsSortableFields {
-  createdAt = 'createdAt',
+  createdAt = 'createdAt'
 }
 
 export enum ListFolderSortableFields {
   createdAt = 'createdAt',
   name = 'name',
   size = 'size',
-  type = 'type',
+  type = 'type'
 }
 
 export enum MigrationRequestsSortableFields {
-  createdAt = 'createdAt',
+  createdAt = 'createdAt'
 }
 
 export enum PersonalAccessTokensSortableFields {
-  createdAt = 'createdAt',
+  createdAt = 'createdAt'
 }
 
 export enum PinsByFilenameSortableFields {
   createdAt = 'createdAt',
-  filename = 'filename',
+  filename = 'filename'
 }
 
 export enum PinsSortableFields {
   createdAt = 'createdAt',
-  filename = 'filename',
+  filename = 'filename'
 }
 
 export enum ProjectsSortableFields {
   createdAt = 'createdAt',
-  name = 'name',
+  name = 'name'
 }
 
 export enum SitesSortableFields {
   createdAt = 'createdAt',
   name = 'name',
-  updatedAt = 'updatedAt',
+  updatedAt = 'updatedAt'
 }
 
 export enum TemplateCategoriesSortableFields {
   createdAt = 'createdAt',
-  name = 'name',
+  name = 'name'
 }
 
 export enum TemplatesSortableFields {
   createdAt = 'createdAt',
-  name = 'name',
+  name = 'name'
 }
 
 export type DeleteRecoveryCodesMutationVariables = Exact<{
   where: DeleteRecoveryCodesWhereInput;
 }>;
 
-export type DeleteRecoveryCodesMutation = {
-  __typename?: 'Mutation';
-  deleteRecoveryCodes: boolean;
-};
+
+export type DeleteRecoveryCodesMutation = { __typename?: 'Mutation', deleteRecoveryCodes: boolean };
 
 export type DeleteSecretKeyMutationVariables = Exact<{
   where: DeleteSecretKeyWhereInput;
 }>;
 
-export type DeleteSecretKeyMutation = {
-  __typename?: 'Mutation';
-  deleteSecretKey: boolean;
-};
+
+export type DeleteSecretKeyMutation = { __typename?: 'Mutation', deleteSecretKey: boolean };
 
 export type DisableProtectedActionMutationVariables = Exact<{
   where: DisableTwoFactorProtectedActionWhereInput;
 }>;
 
-export type DisableProtectedActionMutation = {
-  __typename?: 'Mutation';
-  disableTwoFactorProtectedAction: boolean;
-};
+
+export type DisableProtectedActionMutation = { __typename?: 'Mutation', disableTwoFactorProtectedAction: boolean };
 
 export type EnableProtectedActionMutationVariables = Exact<{
   where: EnableTwoFactorProtectedActionWhereInput;
 }>;
 
-export type EnableProtectedActionMutation = {
-  __typename?: 'Mutation';
-  enableTwoFactorProtectedAction: boolean;
-};
+
+export type EnableProtectedActionMutation = { __typename?: 'Mutation', enableTwoFactorProtectedAction: boolean };
 
 export type GenerateRecoveryCodesMutationVariables = Exact<{
   where: GenerateRecoveryCodesWhereInput;
 }>;
 
-export type GenerateRecoveryCodesMutation = {
-  __typename?: 'Mutation';
-  generateRecoveryCodes: {
-    __typename?: 'RecoveryCodes';
-    recoveryCodes: Array<string>;
-  };
-};
 
-export type GenerateTwoFactorSecretKeyMutationVariables = Exact<{
-  [key: string]: never;
-}>;
+export type GenerateRecoveryCodesMutation = { __typename?: 'Mutation', generateRecoveryCodes: { __typename?: 'RecoveryCodes', recoveryCodes: Array<string> } };
 
-export type GenerateTwoFactorSecretKeyMutation = {
-  __typename?: 'Mutation';
-  generateTwoFactorSecretKey: {
-    __typename?: 'SecretKey';
-    id: string;
-    algorithm: SecretKeyAlgorithm;
-    key: string;
-    digits: number;
-    period: number;
-    isActive: boolean;
-    isVerified: boolean;
-    verifiedAt?: any | null;
-  };
-};
+export type GenerateTwoFactorSecretKeyMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenerateTwoFactorSecretKeyMutation = { __typename?: 'Mutation', generateTwoFactorSecretKey: { __typename?: 'SecretKey', id: string, algorithm: SecretKeyAlgorithm, key: string, digits: number, period: number, isActive: boolean, isVerified: boolean, verifiedAt?: any | null } };
 
 export type UpdateSecretKeyMutationVariables = Exact<{
   where: UpdateTwoFactorSecretKeyWhereInput;
   data: UpdateTwoFactorSecretKeyDataInput;
 }>;
 
-export type UpdateSecretKeyMutation = {
-  __typename?: 'Mutation';
-  updateTwoFactorSecretKey: {
-    __typename?: 'SecretKey';
-    id: string;
-    algorithm: SecretKeyAlgorithm;
-    key: string;
-    digits: number;
-    period: number;
-    isActive: boolean;
-    isVerified: boolean;
-    verifiedAt?: any | null;
-  };
-};
+
+export type UpdateSecretKeyMutation = { __typename?: 'Mutation', updateTwoFactorSecretKey: { __typename?: 'SecretKey', id: string, algorithm: SecretKeyAlgorithm, key: string, digits: number, period: number, isActive: boolean, isVerified: boolean, verifiedAt?: any | null } };
 
 export type VerifySecretKeyMutationVariables = Exact<{
   where: VerifyTwoFactorSecretKeyWhereInput;
   data: VerifyTwoFactorSecretKeyDataInput;
 }>;
 
-export type VerifySecretKeyMutation = {
-  __typename?: 'Mutation';
-  verifyTwoFactorSecretKey: {
-    __typename?: 'SecretKey';
-    id: string;
-    algorithm: SecretKeyAlgorithm;
-    key: string;
-    digits: number;
-    period: number;
-    isActive: boolean;
-    isVerified: boolean;
-    verifiedAt?: any | null;
-  };
-};
+
+export type VerifySecretKeyMutation = { __typename?: 'Mutation', verifyTwoFactorSecretKey: { __typename?: 'SecretKey', id: string, algorithm: SecretKeyAlgorithm, key: string, digits: number, period: number, isActive: boolean, isVerified: boolean, verifiedAt?: any | null } };
 
 export type ProtectedActionsQueryVariables = Exact<{
   filter?: InputMaybe<TwoFactorProtectedActionsPaginationInput>;
 }>;
 
-export type ProtectedActionsQuery = {
-  __typename?: 'Query';
-  twoFactorProtectedActions: {
-    __typename?: 'TwoFactorProtectedActionsWithAggregation';
-    data: Array<{
-      __typename?: 'TwoFactorProtectedAction';
-      id: string;
-      type: TwoFactorProtectedActionType;
-      name: string;
-      enabled: boolean;
-    }>;
-  };
-};
 
-export type GetSecretKeysQueryVariables = Exact<{ [key: string]: never }>;
+export type ProtectedActionsQuery = { __typename?: 'Query', twoFactorProtectedActions: { __typename?: 'TwoFactorProtectedActionsWithAggregation', data: Array<{ __typename?: 'TwoFactorProtectedAction', id: string, type: TwoFactorProtectedActionType, name: string, enabled: boolean }> } };
 
-export type GetSecretKeysQuery = {
-  __typename?: 'Query';
-  user: {
-    __typename?: 'User';
-    secretKeys: Array<{
-      __typename?: 'SecretKey';
-      id: string;
-      algorithm: SecretKeyAlgorithm;
-      key: string;
-      digits: number;
-      period: number;
-      isActive: boolean;
-      isVerified: boolean;
-      verifiedAt?: any | null;
-    }>;
-  };
-};
+export type GetSecretKeysQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSecretKeysQuery = { __typename?: 'Query', user: { __typename?: 'User', secretKeys: Array<{ __typename?: 'SecretKey', id: string, algorithm: SecretKeyAlgorithm, key: string, digits: number, period: number, isActive: boolean, isVerified: boolean, verifiedAt?: any | null }> } };
 
 export type CreateApplicationMutationVariables = Exact<{
   data: CreateApplicationDataInput;
 }>;
 
-export type CreateApplicationMutation = {
-  __typename?: 'Mutation';
-  createApplication: {
-    __typename?: 'Application';
-    clientId: string;
-    createdAt: any;
-    id: string;
-    name: string;
-    updatedAt: any;
-    whitelistDomains: Array<{
-      __typename?: 'ApplicationWhitelistDomain';
-      hostname: string;
-    }>;
-    whiteLabelDomains: Array<{
-      __typename?: 'ApplicationWhiteLabelDomain';
-      hostname: string;
-    }>;
-  };
-};
+
+export type CreateApplicationMutation = { __typename?: 'Mutation', createApplication: { __typename?: 'Application', clientId: string, createdAt: any, id: string, name: string, updatedAt: any, whitelistDomains: Array<{ __typename?: 'ApplicationWhitelistDomain', hostname: string }>, whiteLabelDomains: Array<{ __typename?: 'ApplicationWhiteLabelDomain', hostname: string }> } };
 
 export type DeleteApplicationMutationVariables = Exact<{
   where: DeleteApplicationWhereInput;
 }>;
 
-export type DeleteApplicationMutation = {
-  __typename?: 'Mutation';
-  deleteApplication: { __typename?: 'Application'; id: string };
-};
+
+export type DeleteApplicationMutation = { __typename?: 'Mutation', deleteApplication: { __typename?: 'Application', id: string } };
 
 export type UpdateApplicationMutationVariables = Exact<{
   data: UpdateApplicationDataInput;
   where: UpdateApplicationWhereInput;
 }>;
 
-export type UpdateApplicationMutation = {
-  __typename?: 'Mutation';
-  updateApplication: {
-    __typename?: 'Application';
-    id: string;
-    name: string;
-    whitelistDomains: Array<{
-      __typename?: 'ApplicationWhitelistDomain';
-      hostname: string;
-    }>;
-    whiteLabelDomains: Array<{
-      __typename?: 'ApplicationWhiteLabelDomain';
-      hostname: string;
-    }>;
-  };
-};
+
+export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: { __typename?: 'Application', id: string, name: string, whitelistDomains: Array<{ __typename?: 'ApplicationWhitelistDomain', hostname: string }>, whiteLabelDomains: Array<{ __typename?: 'ApplicationWhiteLabelDomain', hostname: string }> } };
 
 export type ApplicationQueryVariables = Exact<{
   where: ApplicationWhereInput;
 }>;
 
-export type ApplicationQuery = {
-  __typename?: 'Query';
-  application: {
-    __typename?: 'Application';
-    clientId: string;
-    createdAt: any;
-    id: string;
-    name: string;
-    updatedAt: any;
-    whitelistDomains: Array<{
-      __typename?: 'ApplicationWhitelistDomain';
-      hostname: string;
-    }>;
-    whiteLabelDomains: Array<{
-      __typename?: 'ApplicationWhiteLabelDomain';
-      hostname: string;
-    }>;
-  };
-};
+
+export type ApplicationQuery = { __typename?: 'Query', application: { __typename?: 'Application', clientId: string, createdAt: any, id: string, name: string, updatedAt: any, whitelistDomains: Array<{ __typename?: 'ApplicationWhitelistDomain', hostname: string }>, whiteLabelDomains: Array<{ __typename?: 'ApplicationWhiteLabelDomain', hostname: string }> } };
 
 export type ApplicationNameAvailabilityQueryVariables = Exact<{
   where: ApplicationNameAvailabilityWhereInput;
 }>;
 
-export type ApplicationNameAvailabilityQuery = {
-  __typename?: 'Query';
-  applicationNameAvailability: boolean;
-};
+
+export type ApplicationNameAvailabilityQuery = { __typename?: 'Query', applicationNameAvailability: boolean };
 
 export type ApplicationsQueryVariables = Exact<{
   filter?: InputMaybe<ApplicationsPaginationInput>;
 }>;
 
-export type ApplicationsQuery = {
-  __typename?: 'Query';
-  applications: {
-    __typename?: 'ApplicationsWithAggregation';
-    data: Array<{
-      __typename?: 'Application';
-      clientId: string;
-      createdAt: any;
-      id: string;
-      name: string;
-      updatedAt: any;
-      whitelistDomains: Array<{
-        __typename?: 'ApplicationWhitelistDomain';
-        hostname: string;
-      }>;
-      whiteLabelDomains: Array<{
-        __typename?: 'ApplicationWhiteLabelDomain';
-        hostname: string;
-      }>;
-    }>;
-  };
-};
+
+export type ApplicationsQuery = { __typename?: 'Query', applications: { __typename?: 'ApplicationsWithAggregation', data: Array<{ __typename?: 'Application', clientId: string, createdAt: any, id: string, name: string, updatedAt: any, whitelistDomains: Array<{ __typename?: 'ApplicationWhitelistDomain', hostname: string }>, whiteLabelDomains: Array<{ __typename?: 'ApplicationWhiteLabelDomain', hostname: string }> }> } };
 
 export type CreateLoginVerificationSessionMutationVariables = Exact<{
   where: CreateLoginVerificationSessionWhereInput;
 }>;
 
-export type CreateLoginVerificationSessionMutation = {
-  __typename?: 'Mutation';
-  createLoginVerificationSession: boolean;
-};
 
-export type CreatePersonalAccessTokenFromVerificationSessionMutationVariables =
-  Exact<{
-    where: CreatePersonalAccessTokenFromVerificationSessionWhereInput;
-    data: CreatePersonalAccessTokenFromVerificationSessionDataInput;
-  }>;
+export type CreateLoginVerificationSessionMutation = { __typename?: 'Mutation', createLoginVerificationSession: boolean };
 
-export type CreatePersonalAccessTokenFromVerificationSessionMutation = {
-  __typename?: 'Mutation';
-  createPersonalAccessTokenFromVerificationSession: string;
-};
-
-export type CreatePublicKeyChallengeMutationVariables = Exact<{
-  [key: string]: never;
+export type CreatePersonalAccessTokenFromVerificationSessionMutationVariables = Exact<{
+  where: CreatePersonalAccessTokenFromVerificationSessionWhereInput;
+  data: CreatePersonalAccessTokenFromVerificationSessionDataInput;
 }>;
 
-export type CreatePublicKeyChallengeMutation = {
-  __typename?: 'Mutation';
-  createPublicKeyChallenge: string;
-};
+
+export type CreatePersonalAccessTokenFromVerificationSessionMutation = { __typename?: 'Mutation', createPersonalAccessTokenFromVerificationSession: string };
+
+export type CreatePublicKeyChallengeMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreatePublicKeyChallengeMutation = { __typename?: 'Mutation', createPublicKeyChallenge: string };
 
 export type DeletePersonalAccessTokenMutationVariables = Exact<{
   where: DeletePersonalAccessTokenWhereInput;
 }>;
 
-export type DeletePersonalAccessTokenMutation = {
-  __typename?: 'Mutation';
-  deletePersonalAccessToken: { __typename?: 'PersonalAccessToken'; id: string };
-};
+
+export type DeletePersonalAccessTokenMutation = { __typename?: 'Mutation', deletePersonalAccessToken: { __typename?: 'PersonalAccessToken', id: string } };
 
 export type GenerateUserSessionDetailsMutationVariables = Exact<{
   data: GenerateUserSessionDetailsDataInput;
 }>;
 
-export type GenerateUserSessionDetailsMutation = {
-  __typename?: 'Mutation';
-  generateUserSessionDetails: {
-    __typename?: 'SessionDetails';
-    accessToken: string;
-    projectId?: string | null;
-  };
-};
+
+export type GenerateUserSessionDetailsMutation = { __typename?: 'Mutation', generateUserSessionDetails: { __typename?: 'SessionDetails', accessToken: string, projectId?: string | null } };
 
 export type LinkPublicKeyMutationVariables = Exact<{
   data: LinkPublicKeyDataInput;
 }>;
 
-export type LinkPublicKeyMutation = {
-  __typename?: 'Mutation';
-  linkPublicKey: { __typename?: 'PublicKey'; id: string };
-};
+
+export type LinkPublicKeyMutation = { __typename?: 'Mutation', linkPublicKey: { __typename?: 'PublicKey', id: string } };
 
 export type LoginWithDynamicMutationVariables = Exact<{
   data: LoginWithDynamicDataInput;
 }>;
 
-export type LoginWithDynamicMutation = {
-  __typename?: 'Mutation';
-  loginWithDynamic: string;
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type LoginWithDynamicMutation = { __typename?: 'Mutation', loginWithDynamic: string };
 
-export type MeQuery = {
-  __typename?: 'Query';
-  user: {
-    __typename?: 'User';
-    id: string;
-    avatar?: any | null;
-    username?: string | null;
-    firstName?: string | null;
-    email?: string | null;
-    githubUserAccessToken?: string | null;
-    walletAddress?: string | null;
-    project?: {
-      __typename?: 'Project';
-      id: string;
-      name: string;
-      currentUserMembership: {
-        __typename?: 'Membership';
-        permissionGroup: {
-          __typename?: 'PermissionGroup';
-          id: string;
-          name: string;
-          permissions: Array<string>;
-        };
-      };
-    } | null;
-    secretKeys: Array<{
-      __typename?: 'SecretKey';
-      id: string;
-      algorithm: SecretKeyAlgorithm;
-      key: string;
-      digits: number;
-      period: number;
-      isActive: boolean;
-      isVerified: boolean;
-      verifiedAt?: any | null;
-    }>;
-    pendingInvitations?: Array<{
-      __typename?: 'InvitationDetail';
-      hash: string;
-      projectAvatar?: any | null;
-      projectId: string;
-      projectName: string;
-    }> | null;
-  };
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, avatar?: any | null, username?: string | null, firstName?: string | null, email?: string | null, githubUserAccessToken?: string | null, walletAddress?: string | null, project?: { __typename?: 'Project', id: string, name: string, currentUserMembership: { __typename?: 'Membership', permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, permissions: Array<string> } } } | null, secretKeys: Array<{ __typename?: 'SecretKey', id: string, algorithm: SecretKeyAlgorithm, key: string, digits: number, period: number, isActive: boolean, isVerified: boolean, verifiedAt?: any | null }>, pendingInvitations?: Array<{ __typename?: 'InvitationDetail', hash: string, projectAvatar?: any | null, projectId: string, projectName: string }> | null } };
 
 export type PersonalAccessTokensQueryVariables = Exact<{
   filter?: InputMaybe<PersonalAccessTokensPaginationInput>;
 }>;
 
-export type PersonalAccessTokensQuery = {
-  __typename?: 'Query';
-  personalAccessTokens: {
-    __typename?: 'PersonalAccessTokensWithAggregation';
-    data: Array<{
-      __typename?: 'PersonalAccessToken';
-      id: string;
-      name?: string | null;
-      maskedToken: string;
-      createdAt: any;
-      updatedAt: any;
-    }>;
-  };
-};
+
+export type PersonalAccessTokensQuery = { __typename?: 'Query', personalAccessTokens: { __typename?: 'PersonalAccessTokensWithAggregation', data: Array<{ __typename?: 'PersonalAccessToken', id: string, name?: string | null, maskedToken: string, createdAt: any, updatedAt: any }> } };
 
 export type ProjectMembershipsQueryVariables = Exact<{
   where: ProjectWhereInput;
 }>;
 
-export type ProjectMembershipsQuery = {
-  __typename?: 'Query';
-  project: {
-    __typename?: 'Project';
-    id: string;
-    memberships: Array<{
-      __typename?: 'Membership';
-      id: string;
-      role?: Role | null;
-      user: { __typename?: 'User'; id: string };
-    }>;
-  };
-};
+
+export type ProjectMembershipsQuery = { __typename?: 'Query', project: { __typename?: 'Project', id: string, memberships: Array<{ __typename?: 'Membership', id: string, role?: Role | null, user: { __typename?: 'User', id: string } }> } };
 
 export type ProjectsQueryVariables = Exact<{
   filter?: InputMaybe<ProjectsPaginationInput>;
 }>;
 
-export type ProjectsQuery = {
-  __typename?: 'Query';
-  projects: {
-    __typename?: 'ProjectsWithAggregation';
-    data: Array<{
-      __typename?: 'Project';
-      id: string;
-      name: string;
-      backupStorageOnArweave?: boolean | null;
-      backupStorageOnFilecoin?: boolean | null;
-      avatar?: any | null;
-      updatedAt: any;
-      currentUserMembership: {
-        __typename?: 'Membership';
-        permissionGroup: {
-          __typename?: 'PermissionGroup';
-          id: string;
-          name: string;
-          permissions: Array<string>;
-        };
-      };
-    }>;
-  };
-};
+
+export type ProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectsWithAggregation', data: Array<{ __typename?: 'Project', id: string, name: string, backupStorageOnArweave?: boolean | null, backupStorageOnFilecoin?: boolean | null, avatar?: any | null, updatedAt: any, currentUserMembership: { __typename?: 'Membership', permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, permissions: Array<string> } } }> } };
 
 export type RetryDeploymentMutationVariables = Exact<{
   where: RetryDeploymentWhereInput;
 }>;
 
-export type RetryDeploymentMutation = {
-  __typename?: 'Mutation';
-  retryDeployment: {
-    __typename?: 'Deployment';
-    cid?: string | null;
-    id: string;
-    siteId: string;
-    sourceProvider?: SourceProvider | null;
-    sourceAuthor?: string | null;
-    sourceMessage?: string | null;
-    sourceBranch?: string | null;
-    storageType: StorageType;
-    sourceRepositoryName?: string | null;
-    sourceRepositoryOwner?: string | null;
-    previewImageUrl?: string | null;
-    createdAt: any;
-    startedAt?: any | null;
-    updatedAt: any;
-    sourceRef?: string | null;
-    status: DeploymentStatus;
-    previewOnly: boolean;
-    build?: {
-      __typename?: 'Build';
-      id: string;
-      status: BuildStatus;
-      logs?: Array<{
-        __typename?: 'BuildLog';
-        id: string;
-        createdAt: any;
-        text: string;
-      }> | null;
-    } | null;
-  };
-};
+
+export type RetryDeploymentMutation = { __typename?: 'Mutation', retryDeployment: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, storageType: StorageType, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, createdAt: any, startedAt?: any | null, updatedAt: any, sourceRef?: string | null, status: DeploymentStatus, previewOnly: boolean, build?: { __typename?: 'Build', id: string, status: BuildStatus, logs?: Array<{ __typename?: 'BuildLog', id: string, createdAt: any, text: string }> | null } | null } };
 
 export type StopDeploymentMutationVariables = Exact<{
   where: StopDeploymentWhereInput;
 }>;
 
-export type StopDeploymentMutation = {
-  __typename?: 'Mutation';
-  stopDeployment: boolean;
-};
+
+export type StopDeploymentMutation = { __typename?: 'Mutation', stopDeployment: boolean };
 
 export type DeploymentQueryVariables = Exact<{
   where: DeploymentWhereInput;
 }>;
 
-export type DeploymentQuery = {
-  __typename?: 'Query';
-  deployment: {
-    __typename?: 'Deployment';
-    cid?: string | null;
-    id: string;
-    sourceProvider?: SourceProvider | null;
-    sourceAuthor?: string | null;
-    sourceMessage?: string | null;
-    sourceBranch?: string | null;
-    sourceRepositoryName?: string | null;
-    sourceRepositoryOwner?: string | null;
-    previewImageUrl?: string | null;
-    previewOnly: boolean;
-    createdAt: any;
-    startedAt?: any | null;
-    updatedAt: any;
-    sourceRef?: string | null;
-    previewUrlSlug?: string | null;
-    status: DeploymentStatus;
-    build?: {
-      __typename?: 'Build';
-      id: string;
-      status: BuildStatus;
-      logs?: Array<{
-        __typename?: 'BuildLog';
-        id: string;
-        createdAt: any;
-        text: string;
-      }> | null;
-    } | null;
-  };
-};
+
+export type DeploymentQuery = { __typename?: 'Query', deployment: { __typename?: 'Deployment', cid?: string | null, id: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, createdAt: any, startedAt?: any | null, updatedAt: any, sourceRef?: string | null, previewUrlSlug?: string | null, status: DeploymentStatus, build?: { __typename?: 'Build', id: string, status: BuildStatus, logs?: Array<{ __typename?: 'BuildLog', id: string, createdAt: any, text: string }> | null } | null } };
 
 export type DeploymentStatusQueryVariables = Exact<{
   where: DeploymentWhereInput;
 }>;
 
-export type DeploymentStatusQuery = {
-  __typename?: 'Query';
-  deployment: {
-    __typename?: 'Deployment';
-    id: string;
-    status: DeploymentStatus;
-    createdAt: any;
-    updatedAt: any;
-  };
-};
+
+export type DeploymentStatusQuery = { __typename?: 'Query', deployment: { __typename?: 'Deployment', id: string, status: DeploymentStatus, createdAt: any, updatedAt: any } };
 
 export type DeploymentsQueryVariables = Exact<{
   where: DeploymentsWhereInput;
   filter?: InputMaybe<DeploymentsPaginationInput>;
 }>;
 
-export type DeploymentsQuery = {
-  __typename?: 'Query';
-  deployments: {
-    __typename?: 'DeploymentsWithAggregation';
-    pageCount: number;
-    totalCount: number;
-    data: Array<{
-      __typename?: 'Deployment';
-      cid?: string | null;
-      id: string;
-      status: DeploymentStatus;
-      createdAt: any;
-      startedAt?: any | null;
-      sourceProvider?: SourceProvider | null;
-      sourceAuthor?: string | null;
-      sourceMessage?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceRepositoryOwner?: string | null;
-      previewImageUrl?: string | null;
-      previewOnly: boolean;
-      storageType: StorageType;
-      sourceBranch?: string | null;
-      updatedAt: any;
-      sourceRef?: string | null;
-      previewUrlSlug?: string | null;
-    }>;
-  };
-};
+
+export type DeploymentsQuery = { __typename?: 'Query', deployments: { __typename?: 'DeploymentsWithAggregation', pageCount: number, totalCount: number, data: Array<{ __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, startedAt?: any | null, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, previewUrlSlug?: string | null }> } };
 
 export type CreateDnsConfigMutationVariables = Exact<{
   data: CreateDnsConfigDataInput;
   where: CreateDnsConfigWhereInput;
 }>;
 
-export type CreateDnsConfigMutation = {
-  __typename?: 'Mutation';
-  createDnsConfig: {
-    __typename: 'DnsConfig';
-    id: string;
-    type: DnsConfigType;
-    name: string;
-    value: string;
-    createdAt: any;
-    updatedAt: any;
-  };
-};
+
+export type CreateDnsConfigMutation = { __typename?: 'Mutation', createDnsConfig: { __typename: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string, createdAt: any, updatedAt: any } };
 
 export type CreateDomainMutationVariables = Exact<{
   where: CreateDomainWhereInput;
   data: CreateDomainDataInput;
 }>;
 
-export type CreateDomainMutation = {
-  __typename?: 'Mutation';
-  createDomain: { __typename?: 'Domain'; id: string; status: DomainStatus };
-};
+
+export type CreateDomainMutation = { __typename?: 'Mutation', createDomain: { __typename?: 'Domain', id: string, status: DomainStatus } };
 
 export type DeleteDomainMutationVariables = Exact<{
   where: DeleteDomainWhereInput;
 }>;
 
-export type DeleteDomainMutation = {
-  __typename?: 'Mutation';
-  deleteDomain: {
-    __typename?: 'Domain';
-    id: string;
-    status: DomainStatus;
-    hostname: string;
-    zone?: { __typename?: 'Zone'; id: string } | null;
-  };
-};
+
+export type DeleteDomainMutation = { __typename?: 'Mutation', deleteDomain: { __typename?: 'Domain', id: string, status: DomainStatus, hostname: string, zone?: { __typename?: 'Zone', id: string } | null } };
 
 export type SelectPrimaryDomainMutationVariables = Exact<{
   where: SelectPrimaryDomainWhereInput;
 }>;
 
-export type SelectPrimaryDomainMutation = {
-  __typename?: 'Mutation';
-  selectPrimaryDomain: { __typename: 'Domain'; id: string; hostname: string };
-};
+
+export type SelectPrimaryDomainMutation = { __typename?: 'Mutation', selectPrimaryDomain: { __typename: 'Domain', id: string, hostname: string } };
 
 export type VerifyDnslinkMutationVariables = Exact<{
   where: VerifyDnslinkWhereInput;
 }>;
 
-export type VerifyDnslinkMutation = {
-  __typename?: 'Mutation';
-  verifyDnslink: {
-    __typename?: 'Domain';
-    id: string;
-    hostname: string;
-    createdAt: any;
-    status: DomainStatus;
-    isVerified: boolean;
-    errorMessage?: string | null;
-    dnslinkStatus?: DnslinkStatus | null;
-    dnsConfigs: Array<{
-      __typename?: 'DnsConfig';
-      id: string;
-      type: DnsConfigType;
-      name: string;
-      value: string;
-    }>;
-  };
-};
+
+export type VerifyDnslinkMutation = { __typename?: 'Mutation', verifyDnslink: { __typename?: 'Domain', id: string, hostname: string, createdAt: any, status: DomainStatus, isVerified: boolean, errorMessage?: string | null, dnslinkStatus?: DnslinkStatus | null, dnsConfigs: Array<{ __typename?: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string }> } };
 
 export type VerifyDomainMutationVariables = Exact<{
   where: VerifyDomainWhereInput;
 }>;
 
-export type VerifyDomainMutation = {
-  __typename?: 'Mutation';
-  verifyDomain: {
-    __typename?: 'Domain';
-    id: string;
-    hostname: string;
-    createdAt: any;
-    status: DomainStatus;
-    isVerified: boolean;
-    errorMessage?: string | null;
-    dnslinkStatus?: DnslinkStatus | null;
-    dnsConfigs: Array<{
-      __typename?: 'DnsConfig';
-      id: string;
-      type: DnsConfigType;
-      name: string;
-      value: string;
-    }>;
-  };
-};
+
+export type VerifyDomainMutation = { __typename?: 'Mutation', verifyDomain: { __typename?: 'Domain', id: string, hostname: string, createdAt: any, status: DomainStatus, isVerified: boolean, errorMessage?: string | null, dnslinkStatus?: DnslinkStatus | null, dnsConfigs: Array<{ __typename?: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string }> } };
 
 export type DomainQueryVariables = Exact<{
   where: DomainWhereInput;
 }>;
 
-export type DomainQuery = {
-  __typename?: 'Query';
-  domain: {
-    __typename?: 'Domain';
-    id: string;
-    hostname: string;
-    createdAt: any;
-    status: DomainStatus;
-    isVerified: boolean;
-    errorMessage?: string | null;
-    dnslinkStatus?: DnslinkStatus | null;
-    dnsConfigs: Array<{
-      __typename?: 'DnsConfig';
-      id: string;
-      type: DnsConfigType;
-      name: string;
-      value: string;
-    }>;
-  };
-};
+
+export type DomainQuery = { __typename?: 'Query', domain: { __typename?: 'Domain', id: string, hostname: string, createdAt: any, status: DomainStatus, isVerified: boolean, errorMessage?: string | null, dnslinkStatus?: DnslinkStatus | null, dnsConfigs: Array<{ __typename?: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string }> } };
 
 export type DomainAvailabilityQueryVariables = Exact<{
   where: DomainAvailabilityWhereInput;
 }>;
 
-export type DomainAvailabilityQuery = {
-  __typename?: 'Query';
-  domainAvailability: boolean;
-};
+
+export type DomainAvailabilityQuery = { __typename?: 'Query', domainAvailability: boolean };
 
 export type DomainByHostnameQueryVariables = Exact<{
   where: DomainByHostnameWhereInput;
 }>;
 
-export type DomainByHostnameQuery = {
-  __typename?: 'Query';
-  domainByHostname: {
-    __typename?: 'Domain';
-    id: string;
-    hostname: string;
-    errorMessage?: string | null;
-    createdAt: any;
-    status: DomainStatus;
-  };
-};
+
+export type DomainByHostnameQuery = { __typename?: 'Query', domainByHostname: { __typename?: 'Domain', id: string, hostname: string, errorMessage?: string | null, createdAt: any, status: DomainStatus } };
 
 export type DomainDnsLinkStatusQueryVariables = Exact<{
   where: DomainWhereInput;
 }>;
 
-export type DomainDnsLinkStatusQuery = {
-  __typename?: 'Query';
-  domain: {
-    __typename?: 'Domain';
-    id: string;
-    dnslinkStatus?: DnslinkStatus | null;
-    errorMessage?: string | null;
-    dnsConfigs: Array<{
-      __typename?: 'DnsConfig';
-      id: string;
-      type: DnsConfigType;
-      name: string;
-      value: string;
-    }>;
-  };
-};
+
+export type DomainDnsLinkStatusQuery = { __typename?: 'Query', domain: { __typename?: 'Domain', id: string, dnslinkStatus?: DnslinkStatus | null, errorMessage?: string | null, dnsConfigs: Array<{ __typename?: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string }> } };
 
 export type DomainStatusQueryVariables = Exact<{
   where: DomainWhereInput;
 }>;
 
-export type DomainStatusQuery = {
-  __typename?: 'Query';
-  domain: {
-    __typename?: 'Domain';
-    id: string;
-    status: DomainStatus;
-    errorMessage?: string | null;
-    dnsConfigs: Array<{
-      __typename?: 'DnsConfig';
-      id: string;
-      type: DnsConfigType;
-      name: string;
-      value: string;
-    }>;
-  };
-};
+
+export type DomainStatusQuery = { __typename?: 'Query', domain: { __typename?: 'Domain', id: string, status: DomainStatus, errorMessage?: string | null, dnsConfigs: Array<{ __typename?: 'DnsConfig', id: string, type: DnsConfigType, name: string, value: string }> } };
 
 export type DomainsQueryVariables = Exact<{
   filter?: InputMaybe<DomainsPaginationInput>;
 }>;
 
-export type DomainsQuery = {
-  __typename?: 'Query';
-  domains: {
-    __typename?: 'DomainsWithAggregation';
-    data: Array<{
-      __typename?: 'Domain';
-      id: string;
-      errorMessage?: string | null;
-      hostname: string;
-      createdAt: any;
-      status: DomainStatus;
-    }>;
-  };
-};
+
+export type DomainsQuery = { __typename?: 'Query', domains: { __typename?: 'DomainsWithAggregation', data: Array<{ __typename?: 'Domain', id: string, errorMessage?: string | null, hostname: string, createdAt: any, status: DomainStatus }> } };
 
 export type DomainsByZoneIdQueryVariables = Exact<{
   where: DomainsByZoneIdWhereInput;
   filter?: InputMaybe<DomainsByZoneIdPaginationInput>;
 }>;
 
-export type DomainsByZoneIdQuery = {
-  __typename?: 'Query';
-  domainsByZoneId: {
-    __typename?: 'DomainsByZoneIdWithAggregation';
-    data: Array<{
-      __typename: 'Domain';
-      id: string;
-      hostname: string;
-      status: DomainStatus;
-      errorMessage?: string | null;
-      isVerified: boolean;
-      createdAt: any;
-      updatedAt: any;
-      zone?: { __typename?: 'Zone'; id: string } | null;
-      dnsConfigs: Array<{
-        __typename: 'DnsConfig';
-        createdAt: any;
-        id: string;
-        name: string;
-        type: DnsConfigType;
-        updatedAt: any;
-        value: string;
-      }>;
-    }>;
-  };
-};
+
+export type DomainsByZoneIdQuery = { __typename?: 'Query', domainsByZoneId: { __typename?: 'DomainsByZoneIdWithAggregation', data: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }> } };
 
 export type CreateEnsRecordMutationVariables = Exact<{
   where: CreateEnsRecordWhereInput;
   data: CreateEnsRecordDataInput;
 }>;
 
-export type CreateEnsRecordMutation = {
-  __typename?: 'Mutation';
-  createEnsRecord: {
-    __typename?: 'EnsRecord';
-    id: string;
-    status: EnsRecordStatus;
-  };
-};
+
+export type CreateEnsRecordMutation = { __typename?: 'Mutation', createEnsRecord: { __typename?: 'EnsRecord', id: string, status: EnsRecordStatus } };
 
 export type DeleteEnsRecordMutationVariables = Exact<{
   where: DeleteEnsRecordWhereInput;
 }>;
 
-export type DeleteEnsRecordMutation = {
-  __typename?: 'Mutation';
-  deleteEnsRecord: {
-    __typename?: 'EnsRecord';
-    id: string;
-    status: EnsRecordStatus;
-  };
-};
+
+export type DeleteEnsRecordMutation = { __typename?: 'Mutation', deleteEnsRecord: { __typename?: 'EnsRecord', id: string, status: EnsRecordStatus } };
 
 export type VerifyEnsRecordMutationVariables = Exact<{
   where: VerifyEnsRecordWhereInput;
 }>;
 
-export type VerifyEnsRecordMutation = {
-  __typename?: 'Mutation';
-  verifyEnsRecord: {
-    __typename?: 'EnsRecord';
-    id: string;
-    status: EnsRecordStatus;
-  };
-};
+
+export type VerifyEnsRecordMutation = { __typename?: 'Mutation', verifyEnsRecord: { __typename?: 'EnsRecord', id: string, status: EnsRecordStatus } };
 
 export type EnsNameAvailabilityQueryVariables = Exact<{
   where: EnsNameAvailabilityWhereInput;
 }>;
 
-export type EnsNameAvailabilityQuery = {
-  __typename?: 'Query';
-  ensNameAvailability: boolean;
-};
+
+export type EnsNameAvailabilityQuery = { __typename?: 'Query', ensNameAvailability: boolean };
 
 export type EnsRecordQueryVariables = Exact<{
   where: EnsRecordWhereInput;
 }>;
 
-export type EnsRecordQuery = {
-  __typename?: 'Query';
-  ensRecord: {
-    __typename?: 'EnsRecord';
-    id: string;
-    name: string;
-    createdAt: any;
-    status: EnsRecordStatus;
-    ipnsRecord: {
-      __typename?: 'IpnsRecord';
-      id: string;
-      hash?: string | null;
-      name: string;
-    };
-  };
-};
+
+export type EnsRecordQuery = { __typename?: 'Query', ensRecord: { __typename?: 'EnsRecord', id: string, name: string, createdAt: any, status: EnsRecordStatus, ipnsRecord: { __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string } } };
 
 export type EnsRecordByNameQueryVariables = Exact<{
   where: EnsRecordByNameWhereInput;
 }>;
 
-export type EnsRecordByNameQuery = {
-  __typename?: 'Query';
-  ensRecordByName: {
-    __typename?: 'EnsRecord';
-    id: string;
-    name: string;
-    createdAt: any;
-    status: EnsRecordStatus;
-  };
-};
+
+export type EnsRecordByNameQuery = { __typename?: 'Query', ensRecordByName: { __typename?: 'EnsRecord', id: string, name: string, createdAt: any, status: EnsRecordStatus } };
 
 export type EnsRecordsByIpnsIdQueryVariables = Exact<{
   where: EnsRecordsByIpnsIdWhereInput;
   filter?: InputMaybe<EnsRecordsByIpnsIdPaginationInput>;
 }>;
 
-export type EnsRecordsByIpnsIdQuery = {
-  __typename?: 'Query';
-  ensRecordsByIpnsId: {
-    __typename?: 'EnsRecordsByIpnsIdWithAggregation';
-    data: Array<{
-      __typename?: 'EnsRecord';
-      id: string;
-      name: string;
-      createdAt: any;
-      status: EnsRecordStatus;
-    }>;
-  };
-};
+
+export type EnsRecordsByIpnsIdQuery = { __typename?: 'Query', ensRecordsByIpnsId: { __typename?: 'EnsRecordsByIpnsIdWithAggregation', data: Array<{ __typename?: 'EnsRecord', id: string, name: string, createdAt: any, status: EnsRecordStatus }> } };
 
 export type EnsRecordStatusQueryVariables = Exact<{
   where: EnsRecordWhereInput;
 }>;
 
-export type EnsRecordStatusQuery = {
-  __typename?: 'Query';
-  ensRecord: { __typename?: 'EnsRecord'; id: string; status: EnsRecordStatus };
-};
+
+export type EnsRecordStatusQuery = { __typename?: 'Query', ensRecord: { __typename?: 'EnsRecord', id: string, status: EnsRecordStatus } };
 
 export type SiteDeploymentRequirementsMutationVariables = Exact<{
   where: SiteDeploymentRequirementsWhereInput;
 }>;
 
-export type SiteDeploymentRequirementsMutation = {
-  __typename?: 'Mutation';
-  siteDeploymentRequirements: {
-    __typename?: 'SiteDeploymentRequirements';
-    authorizationUrl?: string | null;
-    installationUrl?: string | null;
-    shouldAuthenticate: boolean;
-    shouldInstall: boolean;
-  };
-};
+
+export type SiteDeploymentRequirementsMutation = { __typename?: 'Mutation', siteDeploymentRequirements: { __typename?: 'SiteDeploymentRequirements', authorizationUrl?: string | null, installationUrl?: string | null, shouldAuthenticate: boolean, shouldInstall: boolean } };
 
 export type GitApiIsRepoNameAvailableQueryVariables = Exact<{
   where: GitApiIsRepoNameAvailableWhereInput;
 }>;
 
-export type GitApiIsRepoNameAvailableQuery = {
-  __typename?: 'Query';
-  gitApiIsRepoNameAvailable: boolean;
-};
+
+export type GitApiIsRepoNameAvailableQuery = { __typename?: 'Query', gitApiIsRepoNameAvailable: boolean };
 
 export type GitBranchesQueryVariables = Exact<{
   where: GitApiBranchesWhereInput;
 }>;
 
-export type GitBranchesQuery = {
-  __typename?: 'Query';
-  gitApiBranches: Array<{ __typename?: 'GitApiBranch'; name: string }>;
-};
+
+export type GitBranchesQuery = { __typename?: 'Query', gitApiBranches: Array<{ __typename?: 'GitApiBranch', name: string }> };
 
 export type GitInstallationsQueryVariables = Exact<{
   where: GitApiInstallationsWhereInput;
 }>;
 
-export type GitInstallationsQuery = {
-  __typename?: 'Query';
-  gitApiInstallations: Array<{
-    __typename?: 'GitApiInsatallation';
-    avatar: string;
-    installationId: number;
-    gitIntegrationId: string;
-    name: string;
-  }>;
-};
+
+export type GitInstallationsQuery = { __typename?: 'Query', gitApiInstallations: Array<{ __typename?: 'GitApiInsatallation', avatar: string, installationId: number, gitIntegrationId: string, name: string }> };
 
 export type GitIntegrationQueryVariables = Exact<{
   where: GitIntegrationWhereInput;
 }>;
 
-export type GitIntegrationQuery = {
-  __typename?: 'Query';
-  gitIntegration: { __typename?: 'GitIntegration'; id: string };
-};
+
+export type GitIntegrationQuery = { __typename?: 'Query', gitIntegration: { __typename?: 'GitIntegration', id: string } };
 
 export type GitProviderQueryVariables = Exact<{
   where: GitProviderWhereInput;
 }>;
 
-export type GitProviderQuery = {
-  __typename?: 'Query';
-  gitProvider: {
-    __typename?: 'GitProvider';
-    id: string;
-    name: string;
-    tags: any;
-    enabled: boolean;
-    sourceProvider: SourceProvider;
-    createdAt: any;
-  };
-};
 
-export type GitProvidersQueryVariables = Exact<{ [key: string]: never }>;
+export type GitProviderQuery = { __typename?: 'Query', gitProvider: { __typename?: 'GitProvider', id: string, name: string, tags: any, enabled: boolean, sourceProvider: SourceProvider, createdAt: any } };
 
-export type GitProvidersQuery = {
-  __typename?: 'Query';
-  gitProviders: Array<{
-    __typename?: 'GitProvider';
-    id: string;
-    name: string;
-    tags: any;
-    enabled: boolean;
-    sourceProvider: SourceProvider;
-    createdAt: any;
-  }>;
-};
+export type GitProvidersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GitProvidersQuery = { __typename?: 'Query', gitProviders: Array<{ __typename?: 'GitProvider', id: string, name: string, tags: any, enabled: boolean, sourceProvider: SourceProvider, createdAt: any }> };
 
 export type GitRepositoriesQueryVariables = Exact<{
   where: GitApiInstallationsWhereInput;
 }>;
 
-export type GitRepositoriesQuery = {
-  __typename?: 'Query';
-  gitApiInstallations: Array<{
-    __typename?: 'GitApiInsatallation';
-    avatar: string;
-    installationId: number;
-    isOrganization: boolean;
-    gitIntegrationId: string;
-    name: string;
-    repos: Array<{
-      __typename?: 'GitApiRepo';
-      id: number;
-      defaultBranch: string;
-      name: string;
-    }>;
-  }>;
-};
+
+export type GitRepositoriesQuery = { __typename?: 'Query', gitApiInstallations: Array<{ __typename?: 'GitApiInsatallation', avatar: string, installationId: number, isOrganization: boolean, gitIntegrationId: string, name: string, repos: Array<{ __typename?: 'GitApiRepo', id: number, defaultBranch: string, name: string }> }> };
 
 export type GitSiteBuildSettingsQueryVariables = Exact<{
   where: SiteBuildSettingsWhereInput;
 }>;
 
-export type GitSiteBuildSettingsQuery = {
-  __typename?: 'Query';
-  siteBuildSettings: {
-    __typename?: 'SiteBuildSettings';
-    buildCommand: string;
-    dockerImage: string;
-    publishDirectory: string;
-    envVars: any;
-    frameworkId?: string | null;
-  };
-};
+
+export type GitSiteBuildSettingsQuery = { __typename?: 'Query', siteBuildSettings: { __typename?: 'SiteBuildSettings', buildCommand: string, dockerImage: string, publishDirectory: string, envVars: any, frameworkId?: string | null } };
 
 export type GitTreeQueryVariables = Exact<{
   where: GitApiTreeWhereInput;
 }>;
 
-export type GitTreeQuery = {
-  __typename?: 'Query';
-  gitApiTree: Array<{
-    __typename?: 'GitApiTree';
-    path?: string | null;
-    mode?: string | null;
-    type?: string | null;
-    sha?: string | null;
-    size?: number | null;
-    url?: string | null;
-  }>;
-};
+
+export type GitTreeQuery = { __typename?: 'Query', gitApiTree: Array<{ __typename?: 'GitApiTree', path?: string | null, mode?: string | null, type?: string | null, sha?: string | null, size?: number | null, url?: string | null }> };
 
 export type CreateRepositoryFromTemplateMutationVariables = Exact<{
   where: CreateGithubRepoFromTemplateWhereInput;
   data: CreateGithubRepoFromTemplateDataInput;
 }>;
 
-export type CreateRepositoryFromTemplateMutation = {
-  __typename?: 'Mutation';
-  createGithubRepoFromTemplate: {
-    __typename?: 'GithubRepo';
-    url: string;
-    name: string;
-    isPrivate: boolean;
-    defaultBranch: string;
-    repositoryId: number;
-  };
-};
+
+export type CreateRepositoryFromTemplateMutation = { __typename?: 'Mutation', createGithubRepoFromTemplate: { __typename?: 'GithubRepo', url: string, name: string, isPrivate: boolean, defaultBranch: string, repositoryId: number } };
 
 export type CreateIpnsRecordForSiteMutationVariables = Exact<{
   where: CreateIpnsRecordForSiteWhereInput;
 }>;
 
-export type CreateIpnsRecordForSiteMutation = {
-  __typename?: 'Mutation';
-  createIpnsRecordForSite: {
-    __typename?: 'IpnsRecord';
-    id: string;
-    name: string;
-    hash?: string | null;
-    createdAt: any;
-  };
-};
+
+export type CreateIpnsRecordForSiteMutation = { __typename?: 'Mutation', createIpnsRecordForSite: { __typename?: 'IpnsRecord', id: string, name: string, hash?: string | null, createdAt: any } };
 
 export type IpnsRecordQueryVariables = Exact<{
   where: IpnsRecordWhereInput;
 }>;
 
-export type IpnsRecordQuery = {
-  __typename?: 'Query';
-  ipnsRecord: {
-    __typename?: 'IpnsRecord';
-    id: string;
-    name: string;
-    hash?: string | null;
-    createdAt: any;
-  };
-};
+
+export type IpnsRecordQuery = { __typename?: 'Query', ipnsRecord: { __typename?: 'IpnsRecord', id: string, name: string, hash?: string | null, createdAt: any } };
 
 export type CreateMigrationRequestsFromTokenMutationVariables = Exact<{
   data: CreateMigrationRequestsFromTokenDataInput;
 }>;
 
-export type CreateMigrationRequestsFromTokenMutation = {
-  __typename?: 'Mutation';
-  createMigrationRequestsFromToken: Array<{
-    __typename?: 'MigrationRequest';
-    id: string;
-    status: MigrationStatus;
-    teamId: string;
-    createdAt: any;
-    teamInfo?: {
-      __typename?: 'MigrationTeamInfo';
-      sitesCount: number;
-      filesCount: number;
-      usersCount: number;
-      name: string;
-      id: string;
-    } | null;
-  }>;
-};
+
+export type CreateMigrationRequestsFromTokenMutation = { __typename?: 'Mutation', createMigrationRequestsFromToken: Array<{ __typename?: 'MigrationRequest', id: string, status: MigrationStatus, teamId: string, createdAt: any, teamInfo?: { __typename?: 'MigrationTeamInfo', sitesCount: number, filesCount: number, usersCount: number, name: string, id: string } | null }> };
 
 export type CreateMigrationTokenMutationVariables = Exact<{
   data: CreateMigrationTokenDataInput;
 }>;
 
-export type CreateMigrationTokenMutation = {
-  __typename?: 'Mutation';
-  createMigrationToken: string;
-};
 
-export type MigrationRequestsQueryVariables = Exact<{ [key: string]: never }>;
+export type CreateMigrationTokenMutation = { __typename?: 'Mutation', createMigrationToken: string };
 
-export type MigrationRequestsQuery = {
-  __typename?: 'Query';
-  migrationRequests: {
-    __typename?: 'MigrationRequestsWithAggregation';
-    data: Array<{
-      __typename?: 'MigrationRequest';
-      id: string;
-      status: MigrationStatus;
-      teamId: string;
-      createdAt: any;
-      teamInfo?: {
-        __typename?: 'MigrationTeamInfo';
-        sitesCount: number;
-        filesCount: number;
-        usersCount: number;
-        name: string;
-        id: string;
-      } | null;
-    }>;
-  };
-};
+export type MigrationRequestsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MigrationRequestsQuery = { __typename?: 'Query', migrationRequests: { __typename?: 'MigrationRequestsWithAggregation', data: Array<{ __typename?: 'MigrationRequest', id: string, status: MigrationStatus, teamId: string, createdAt: any, teamInfo?: { __typename?: 'MigrationTeamInfo', sitesCount: number, filesCount: number, usersCount: number, name: string, id: string } | null }> } };
 
 export type MigrationTeamInfosFromTokenQueryVariables = Exact<{
   where: MigrationTeamInfosFromTokenWhereInput;
 }>;
 
-export type MigrationTeamInfosFromTokenQuery = {
-  __typename?: 'Query';
-  migrationTeamInfosFromToken: Array<{
-    __typename?: 'MigrationTeamInfo';
-    id: string;
-    name: string;
-    filesCount: number;
-    sitesCount: number;
-    usersCount: number;
-  }>;
-};
+
+export type MigrationTeamInfosFromTokenQuery = { __typename?: 'Query', migrationTeamInfosFromToken: Array<{ __typename?: 'MigrationTeamInfo', id: string, name: string, filesCount: number, sitesCount: number, usersCount: number }> };
 
 export type DeletePinMutationVariables = Exact<{
   where: DeletePinWhereInput;
 }>;
 
-export type DeletePinMutation = {
-  __typename?: 'Mutation';
-  deletePin: { __typename?: 'Pin'; id: string };
-};
+
+export type DeletePinMutation = { __typename?: 'Mutation', deletePin: { __typename?: 'Pin', id: string } };
 
 export type UpdatePinMutationVariables = Exact<{
   data: UpdatePinDataInput;
   where: UpdatePinWhereInput;
 }>;
 
-export type UpdatePinMutation = {
-  __typename?: 'Mutation';
-  updatePin: {
-    __typename?: 'Pin';
-    id: string;
-    cid: string;
-    size: number;
-    extension: string;
-    createdAt: any;
-    filename: string;
-  };
-};
 
-export type PinFragmentFragment = {
-  __typename: 'Pin';
-  id: string;
-  cid: string;
-  size: number;
-  sizeBigInt: any;
-  extension: string;
-  createdAt: any;
-  filename: string;
-  storedOnArweave: boolean;
-  storedOnFilecoin: boolean;
-  pathInFolder?: string | null;
-  arweavePin?: { __typename?: 'ArweavePin'; bundlrId: string } | null;
-  filecoinPin?: {
-    __typename?: 'FilecoinPin';
-    cid: string;
-    deals: Array<{ __typename?: 'FilecoinDeal'; dealId: number }>;
-  } | null;
-};
+export type UpdatePinMutation = { __typename?: 'Mutation', updatePin: { __typename?: 'Pin', id: string, cid: string, size: number, extension: string, createdAt: any, filename: string } };
 
-export type FolderFragmentFragment = {
-  __typename: 'Folder';
-  id: string;
-  createdAt: any;
-  name: string;
-  path: string;
-  sizeBigInt: any;
-};
+export type PinFragmentFragment = { __typename: 'Pin', id: string, cid: string, size: number, sizeBigInt: any, extension: string, createdAt: any, filename: string, storedOnArweave: boolean, storedOnFilecoin: boolean, pathInFolder?: string | null, arweavePin?: { __typename?: 'ArweavePin', bundlrId: string } | null, filecoinPin?: { __typename?: 'FilecoinPin', cid: string, deals: Array<{ __typename?: 'FilecoinDeal', dealId: number }> } | null };
+
+export type FolderFragmentFragment = { __typename: 'Folder', id: string, createdAt: any, name: string, path: string, sizeBigInt: any };
 
 export type ListFolderQueryVariables = Exact<{
   where: ListFolderWhereInput;
   filter?: InputMaybe<ListFolderPaginationInput>;
 }>;
 
-export type ListFolderQuery = {
-  __typename?: 'Query';
-  listFolder: {
-    __typename?: 'ListFolderWithAggregation';
-    pageCount: number;
-    data: Array<
-      | {
-          __typename: 'Folder';
-          id: string;
-          createdAt: any;
-          name: string;
-          path: string;
-          sizeBigInt: any;
-        }
-      | {
-          __typename: 'Pin';
-          id: string;
-          cid: string;
-          size: number;
-          sizeBigInt: any;
-          extension: string;
-          createdAt: any;
-          filename: string;
-          storedOnArweave: boolean;
-          storedOnFilecoin: boolean;
-          pathInFolder?: string | null;
-          arweavePin?: { __typename?: 'ArweavePin'; bundlrId: string } | null;
-          filecoinPin?: {
-            __typename?: 'FilecoinPin';
-            cid: string;
-            deals: Array<{ __typename?: 'FilecoinDeal'; dealId: number }>;
-          } | null;
-        }
-    >;
-  };
-};
+
+export type ListFolderQuery = { __typename?: 'Query', listFolder: { __typename?: 'ListFolderWithAggregation', pageCount: number, data: Array<{ __typename: 'Folder', id: string, createdAt: any, name: string, path: string, sizeBigInt: any } | { __typename: 'Pin', id: string, cid: string, size: number, sizeBigInt: any, extension: string, createdAt: any, filename: string, storedOnArweave: boolean, storedOnFilecoin: boolean, pathInFolder?: string | null, arweavePin?: { __typename?: 'ArweavePin', bundlrId: string } | null, filecoinPin?: { __typename?: 'FilecoinPin', cid: string, deals: Array<{ __typename?: 'FilecoinDeal', dealId: number }> } | null }> } };
 
 export type PinsQueryVariables = Exact<{
   filter?: InputMaybe<PinsPaginationInput>;
 }>;
 
-export type PinsQuery = {
-  __typename?: 'Query';
-  pins: {
-    __typename?: 'PinsWithAggregation';
-    pageCount: number;
-    data: Array<{
-      __typename: 'Pin';
-      id: string;
-      cid: string;
-      size: number;
-      sizeBigInt: any;
-      extension: string;
-      createdAt: any;
-      filename: string;
-      storedOnArweave: boolean;
-      storedOnFilecoin: boolean;
-      pathInFolder?: string | null;
-      arweavePin?: { __typename?: 'ArweavePin'; bundlrId: string } | null;
-      filecoinPin?: {
-        __typename?: 'FilecoinPin';
-        cid: string;
-        deals: Array<{ __typename?: 'FilecoinDeal'; dealId: number }>;
-      } | null;
-    }>;
-  };
-};
+
+export type PinsQuery = { __typename?: 'Query', pins: { __typename?: 'PinsWithAggregation', pageCount: number, data: Array<{ __typename: 'Pin', id: string, cid: string, size: number, sizeBigInt: any, extension: string, createdAt: any, filename: string, storedOnArweave: boolean, storedOnFilecoin: boolean, pathInFolder?: string | null, arweavePin?: { __typename?: 'ArweavePin', bundlrId: string } | null, filecoinPin?: { __typename?: 'FilecoinPin', cid: string, deals: Array<{ __typename?: 'FilecoinDeal', dealId: number }> } | null }> } };
 
 export type PinQueryVariables = Exact<{
   where: PinWhereInput;
 }>;
 
-export type PinQuery = {
-  __typename?: 'Query';
-  pin: {
-    __typename: 'Pin';
-    id: string;
-    cid: string;
-    size: number;
-    sizeBigInt: any;
-    extension: string;
-    createdAt: any;
-    filename: string;
-    storedOnArweave: boolean;
-    storedOnFilecoin: boolean;
-    pathInFolder?: string | null;
-    arweavePin?: { __typename?: 'ArweavePin'; bundlrId: string } | null;
-    filecoinPin?: {
-      __typename?: 'FilecoinPin';
-      cid: string;
-      deals: Array<{ __typename?: 'FilecoinDeal'; dealId: number }>;
-    } | null;
-  };
-};
+
+export type PinQuery = { __typename?: 'Query', pin: { __typename: 'Pin', id: string, cid: string, size: number, sizeBigInt: any, extension: string, createdAt: any, filename: string, storedOnArweave: boolean, storedOnFilecoin: boolean, pathInFolder?: string | null, arweavePin?: { __typename?: 'ArweavePin', bundlrId: string } | null, filecoinPin?: { __typename?: 'FilecoinPin', cid: string, deals: Array<{ __typename?: 'FilecoinDeal', dealId: number }> } | null } };
 
 export type PinNameAvailabilityInParentFolderQueryVariables = Exact<{
   data: PinNameAvailabilityInParentFolderDataInput;
   where: PinNameAvailabilityInParentFolderWhereInput;
 }>;
 
-export type PinNameAvailabilityInParentFolderQuery = {
-  __typename?: 'Query';
-  pinNameAvailabilityInParentFolder: boolean;
-};
+
+export type PinNameAvailabilityInParentFolderQuery = { __typename?: 'Query', pinNameAvailabilityInParentFolder: boolean };
 
 export type CreatePrivateGatewayMutationVariables = Exact<{
   where: CreatePrivateGatewayWhereInput;
   data: CreatePrivateGatewayDataInput;
 }>;
 
-export type CreatePrivateGatewayMutation = {
-  __typename?: 'Mutation';
-  createPrivateGateway: {
-    __typename?: 'PrivateGateway';
-    id: string;
-    name: string;
-    createdAt: any;
-    zone?: { __typename?: 'Zone'; id: string } | null;
-  };
-};
+
+export type CreatePrivateGatewayMutation = { __typename?: 'Mutation', createPrivateGateway: { __typename?: 'PrivateGateway', id: string, name: string, createdAt: any, zone?: { __typename?: 'Zone', id: string } | null } };
 
 export type DeletePrivateGatewayMutationVariables = Exact<{
   where: DeletePrivateGatewayWhereInput;
 }>;
 
-export type DeletePrivateGatewayMutation = {
-  __typename?: 'Mutation';
-  deletePrivateGateway: {
-    __typename?: 'PrivateGateway';
-    id: string;
-    name: string;
-  };
-};
+
+export type DeletePrivateGatewayMutation = { __typename?: 'Mutation', deletePrivateGateway: { __typename?: 'PrivateGateway', id: string, name: string } };
 
 export type DeletePrivateGatewayDependenciesQueryVariables = Exact<{
   where: PrivateGatewayWhereInput;
 }>;
 
-export type DeletePrivateGatewayDependenciesQuery = {
-  __typename?: 'Query';
-  privateGateway: {
-    __typename?: 'PrivateGateway';
-    name: string;
-    primaryDomain?: {
-      __typename?: 'Domain';
-      id: string;
-      hostname: string;
-      status: DomainStatus;
-      isVerified: boolean;
-    } | null;
-    zone?: {
-      __typename?: 'Zone';
-      id: string;
-      status: ZoneStatus;
-      type: ZoneType;
-    } | null;
-    domains: Array<{
-      __typename: 'Domain';
-      id: string;
-      status: DomainStatus;
-      hostname: string;
-      isVerified: boolean;
-    }>;
-  };
-};
+
+export type DeletePrivateGatewayDependenciesQuery = { __typename?: 'Query', privateGateway: { __typename?: 'PrivateGateway', name: string, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, status: DomainStatus, isVerified: boolean } | null, zone?: { __typename?: 'Zone', id: string, status: ZoneStatus, type: ZoneType } | null, domains: Array<{ __typename: 'Domain', id: string, status: DomainStatus, hostname: string, isVerified: boolean }> } };
 
 export type PrivateGatewayNameAvailabilityQueryVariables = Exact<{
   where: PrivateGatewayNameAvailabilityWhereInput;
 }>;
 
-export type PrivateGatewayNameAvailabilityQuery = {
-  __typename?: 'Query';
-  privateGatewayNameAvailability: boolean;
-};
+
+export type PrivateGatewayNameAvailabilityQuery = { __typename?: 'Query', privateGatewayNameAvailability: boolean };
 
 export type PrivateGatewaysQueryVariables = Exact<{
   filter?: InputMaybe<PrivateGatewaysPaginationInput>;
 }>;
 
-export type PrivateGatewaysQuery = {
-  __typename?: 'Query';
-  privateGateways: {
-    __typename?: 'PrivateGatewaysWithAggregation';
-    data: Array<{
-      __typename?: 'PrivateGateway';
-      id: string;
-      name: string;
-      createdAt: any;
-      zone?: { __typename?: 'Zone'; id: string } | null;
-      domains: Array<{
-        __typename: 'Domain';
-        id: string;
-        hostname: string;
-        status: DomainStatus;
-        errorMessage?: string | null;
-        isVerified: boolean;
-        createdAt: any;
-        updatedAt: any;
-        zone?: { __typename?: 'Zone'; id: string } | null;
-        dnsConfigs: Array<{
-          __typename: 'DnsConfig';
-          createdAt: any;
-          id: string;
-          name: string;
-          type: DnsConfigType;
-          updatedAt: any;
-          value: string;
-        }>;
-      }>;
-      primaryDomain?: {
-        __typename?: 'Domain';
-        id: string;
-        hostname: string;
-        isVerified: boolean;
-      } | null;
-    }>;
-  };
-};
+
+export type PrivateGatewaysQuery = { __typename?: 'Query', privateGateways: { __typename?: 'PrivateGatewaysWithAggregation', data: Array<{ __typename?: 'PrivateGateway', id: string, name: string, createdAt: any, zone?: { __typename?: 'Zone', id: string } | null, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null }> } };
 
 export type CreateProjectMutationVariables = Exact<{
   data: CreateProjectDataInput;
 }>;
 
-export type CreateProjectMutation = {
-  __typename?: 'Mutation';
-  createProject: {
-    __typename?: 'Project';
-    id: string;
-    name: string;
-    backupStorageOnArweave?: boolean | null;
-    backupStorageOnFilecoin?: boolean | null;
-    avatar?: any | null;
-    currentUserMembership: {
-      __typename?: 'Membership';
-      permissionGroup: {
-        __typename?: 'PermissionGroup';
-        id: string;
-        name: string;
-        permissions: Array<string>;
-      };
-    };
-  };
-};
+
+export type CreateProjectMutation = { __typename?: 'Mutation', createProject: { __typename?: 'Project', id: string, name: string, backupStorageOnArweave?: boolean | null, backupStorageOnFilecoin?: boolean | null, avatar?: any | null, currentUserMembership: { __typename?: 'Membership', permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, permissions: Array<string> } } } };
 
 export type DeleteMembershipMutationVariables = Exact<{
   where: DeleteMembershipWhereInput;
 }>;
 
-export type DeleteMembershipMutation = {
-  __typename?: 'Mutation';
-  deleteMembership: { __typename?: 'Membership'; id: string };
-};
+
+export type DeleteMembershipMutation = { __typename?: 'Mutation', deleteMembership: { __typename?: 'Membership', id: string } };
 
 export type DeleteProjectMutationVariables = Exact<{
   where: DeleteProjectWhereInput;
 }>;
 
-export type DeleteProjectMutation = {
-  __typename?: 'Mutation';
-  deleteProject: { __typename?: 'Project'; id: string; name: string };
-};
+
+export type DeleteProjectMutation = { __typename?: 'Mutation', deleteProject: { __typename?: 'Project', id: string, name: string } };
 
 export type CreateFleekFunctionMutationVariables = Exact<{
   data: CreateFleekFunctionDataInput;
 }>;
 
-export type CreateFleekFunctionMutation = {
-  __typename?: 'Mutation';
-  createFleekFunction: {
-    __typename?: 'FleekFunction';
-    id: string;
-    name: string;
-    slug: string;
-    invokeUrl: string;
-    status: FleekFunctionStatus;
-    createdAt: any;
-    updatedAt: any;
-    site?: { __typename?: 'Site'; id: string; name: string } | null;
-    currentDeployment?: {
-      __typename?: 'FleekFunctionDeployment';
-      id: string;
-      cid: string;
-      createdAt: any;
-    } | null;
-  };
-};
+
+export type CreateFleekFunctionMutation = { __typename?: 'Mutation', createFleekFunction: { __typename?: 'FleekFunction', id: string, name: string, slug: string, invokeUrl: string, status: FleekFunctionStatus, createdAt: any, updatedAt: any, site?: { __typename?: 'Site', id: string, name: string } | null, currentDeployment?: { __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any } | null } };
 
 export type DeleteFleekFunctionMutationVariables = Exact<{
   where: DeleteFleekFunctionWhereInput;
 }>;
 
-export type DeleteFleekFunctionMutation = {
-  __typename?: 'Mutation';
-  deleteFleekFunction: { __typename?: 'FleekFunction'; id: string };
-};
+
+export type DeleteFleekFunctionMutation = { __typename?: 'Mutation', deleteFleekFunction: { __typename?: 'FleekFunction', id: string } };
 
 export type UpdateFleekFunctionMutationVariables = Exact<{
   where: UpdateFleekFunctionWhereInput;
   data: UpdateFleekFunctionDataInput;
 }>;
 
-export type UpdateFleekFunctionMutation = {
-  __typename?: 'Mutation';
-  updateFleekFunction: {
-    __typename?: 'FleekFunction';
-    id: string;
-    name: string;
-    slug: string;
-    invokeUrl: string;
-    status: FleekFunctionStatus;
-    createdAt: any;
-    updatedAt: any;
-    site?: { __typename?: 'Site'; id: string; name: string } | null;
-    currentDeployment?: {
-      __typename?: 'FleekFunctionDeployment';
-      id: string;
-      cid: string;
-      createdAt: any;
-    } | null;
-  };
-};
+
+export type UpdateFleekFunctionMutation = { __typename?: 'Mutation', updateFleekFunction: { __typename?: 'FleekFunction', id: string, name: string, slug: string, invokeUrl: string, status: FleekFunctionStatus, createdAt: any, updatedAt: any, site?: { __typename?: 'Site', id: string, name: string } | null, currentDeployment?: { __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any } | null } };
 
 export type LeaveProjectMutationVariables = Exact<{
   where: LeaveProjectWhereInput;
 }>;
 
-export type LeaveProjectMutation = {
-  __typename?: 'Mutation';
-  leaveProject: { __typename?: 'Membership'; id: string };
-};
+
+export type LeaveProjectMutation = { __typename?: 'Mutation', leaveProject: { __typename?: 'Membership', id: string } };
 
 export type UpdateProjectMutationVariables = Exact<{
   data: UpdateProjectDataInput;
   where: UpdateProjectWhereInput;
 }>;
 
-export type UpdateProjectMutation = {
-  __typename?: 'Mutation';
-  updateProject: {
-    __typename?: 'Project';
-    id: string;
-    name: string;
-    backupStorageOnArweave?: boolean | null;
-    backupStorageOnFilecoin?: boolean | null;
-    allowAccessFromOfacCountries?: boolean | null;
-    avatar?: any | null;
-  };
-};
 
-export type FleekFunctionFragmentFragment = {
-  __typename?: 'FleekFunction';
-  id: string;
-  name: string;
-  slug: string;
-  invokeUrl: string;
-  status: FleekFunctionStatus;
-  createdAt: any;
-  updatedAt: any;
-  site?: { __typename?: 'Site'; id: string; name: string } | null;
-  currentDeployment?: {
-    __typename?: 'FleekFunctionDeployment';
-    id: string;
-    cid: string;
-    createdAt: any;
-  } | null;
-};
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject: { __typename?: 'Project', id: string, name: string, backupStorageOnArweave?: boolean | null, backupStorageOnFilecoin?: boolean | null, allowAccessFromOfacCountries?: boolean | null, avatar?: any | null } };
+
+export type FleekFunctionFragmentFragment = { __typename?: 'FleekFunction', id: string, name: string, slug: string, invokeUrl: string, status: FleekFunctionStatus, createdAt: any, updatedAt: any, site?: { __typename?: 'Site', id: string, name: string } | null, currentDeployment?: { __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any } | null };
 
 export type FleekFunctionsQueryVariables = Exact<{
   filter?: InputMaybe<FleekFunctionsPaginationInput>;
   where?: InputMaybe<FleekFunctionsWhereInput>;
 }>;
 
-export type FleekFunctionsQuery = {
-  __typename?: 'Query';
-  fleekFunctions: {
-    __typename?: 'FleekFunctionsWithAggregation';
-    pageCount: number;
-    currentPage: number;
-    data: Array<{
-      __typename?: 'FleekFunction';
-      id: string;
-      name: string;
-      slug: string;
-      invokeUrl: string;
-      status: FleekFunctionStatus;
-      createdAt: any;
-      updatedAt: any;
-      site?: { __typename?: 'Site'; id: string; name: string } | null;
-      currentDeployment?: {
-        __typename?: 'FleekFunctionDeployment';
-        id: string;
-        cid: string;
-        createdAt: any;
-      } | null;
-    }>;
-  };
-};
+
+export type FleekFunctionsQuery = { __typename?: 'Query', fleekFunctions: { __typename?: 'FleekFunctionsWithAggregation', pageCount: number, currentPage: number, data: Array<{ __typename?: 'FleekFunction', id: string, name: string, slug: string, invokeUrl: string, status: FleekFunctionStatus, createdAt: any, updatedAt: any, site?: { __typename?: 'Site', id: string, name: string } | null, currentDeployment?: { __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any } | null }> } };
 
 export type FleekFunctionDetailQueryVariables = Exact<{
   where: FleekFunctionByNameWhereInput;
 }>;
 
-export type FleekFunctionDetailQuery = {
-  __typename?: 'Query';
-  fleekFunctionByName: {
-    __typename?: 'FleekFunction';
-    id: string;
-    name: string;
-    slug: string;
-    invokeUrl: string;
-    status: FleekFunctionStatus;
-    createdAt: any;
-    updatedAt: any;
-    site?: { __typename?: 'Site'; id: string; name: string } | null;
-    currentDeployment?: {
-      __typename?: 'FleekFunctionDeployment';
-      id: string;
-      cid: string;
-      createdAt: any;
-    } | null;
-  };
-};
+
+export type FleekFunctionDetailQuery = { __typename?: 'Query', fleekFunctionByName: { __typename?: 'FleekFunction', id: string, name: string, slug: string, invokeUrl: string, status: FleekFunctionStatus, createdAt: any, updatedAt: any, site?: { __typename?: 'Site', id: string, name: string } | null, currentDeployment?: { __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any } | null } };
 
 export type FleekFunctionDeploymentsQueryVariables = Exact<{
   fleekFunctionId: Scalars['ID'];
   page?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type FleekFunctionDeploymentsQuery = {
-  __typename?: 'Query';
-  fleekFunctionDeployments: {
-    __typename?: 'FleekFunctionDeploymentsWithAggregation';
-    pageCount: number;
-    currentPage: number;
-    data: Array<{
-      __typename?: 'FleekFunctionDeployment';
-      id: string;
-      cid: string;
-      createdAt: any;
-      updatedAt: any;
-    }>;
-  };
-};
+
+export type FleekFunctionDeploymentsQuery = { __typename?: 'Query', fleekFunctionDeployments: { __typename?: 'FleekFunctionDeploymentsWithAggregation', pageCount: number, currentPage: number, data: Array<{ __typename?: 'FleekFunctionDeployment', id: string, cid: string, createdAt: any, updatedAt: any }> } };
 
 export type ProjectQueryVariables = Exact<{
   where: ProjectWhereInput;
 }>;
 
-export type ProjectQuery = {
-  __typename?: 'Query';
-  project: {
-    __typename?: 'Project';
-    id: string;
-    name: string;
-    backupStorageOnArweave?: boolean | null;
-    backupStorageOnFilecoin?: boolean | null;
-    allowAccessFromOfacCountries?: boolean | null;
-    avatar?: any | null;
-    updatedAt: any;
-    currentUserMembership: {
-      __typename?: 'Membership';
-      permissionGroup: {
-        __typename?: 'PermissionGroup';
-        id: string;
-        name: string;
-        permissions: Array<string>;
-      };
-    };
-  };
-};
+
+export type ProjectQuery = { __typename?: 'Query', project: { __typename?: 'Project', id: string, name: string, backupStorageOnArweave?: boolean | null, backupStorageOnFilecoin?: boolean | null, allowAccessFromOfacCountries?: boolean | null, avatar?: any | null, updatedAt: any, currentUserMembership: { __typename?: 'Membership', permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, permissions: Array<string> } } } };
 
 export type CreateSalesContactRequestMutationVariables = Exact<{
   data: CreateSalesContactRequestDataInput;
 }>;
 
-export type CreateSalesContactRequestMutation = {
-  __typename?: 'Mutation';
-  createSalesContactRequest: {
-    __typename?: 'SalesContactRequest';
-    id: string;
-    email: string;
-    description: string;
-    createdAt: any;
-  };
-};
+
+export type CreateSalesContactRequestMutation = { __typename?: 'Mutation', createSalesContactRequest: { __typename?: 'SalesContactRequest', id: string, email: string, description: string, createdAt: any } };
 
 export type CreateSecretMutationVariables = Exact<{
   data: CreateSecretDataInput;
 }>;
 
-export type CreateSecretMutation = {
-  __typename?: 'Mutation';
-  createSecret: { __typename?: 'Secret'; id: string };
-};
+
+export type CreateSecretMutation = { __typename?: 'Mutation', createSecret: { __typename?: 'Secret', id: string } };
 
 export type DeleteSecretMutationVariables = Exact<{
   where: DeleteSecretWhereInput;
 }>;
 
-export type DeleteSecretMutation = {
-  __typename?: 'Mutation';
-  deleteSecret: { __typename?: 'Secret'; id: string };
-};
+
+export type DeleteSecretMutation = { __typename?: 'Mutation', deleteSecret: { __typename?: 'Secret', id: string } };
 
 export type UpdateSecretMutationVariables = Exact<{
   where: UpdateSecretWhereInput;
   data: UpdateSecretDataInput;
 }>;
 
-export type UpdateSecretMutation = {
-  __typename?: 'Mutation';
-  updateSecret: {
-    __typename?: 'Secret';
-    id: string;
-    value: string;
-    visibility: SecretVisibility;
-  };
-};
+
+export type UpdateSecretMutation = { __typename?: 'Mutation', updateSecret: { __typename?: 'Secret', id: string, value: string, visibility: SecretVisibility } };
 
 export type CreateSiteMutationVariables = Exact<{
   data: CreateSiteDataInput;
 }>;
 
-export type CreateSiteMutation = {
-  __typename?: 'Mutation';
-  createSite: {
-    __typename: 'Site';
-    id: string;
-    name: string;
-    sourceProvider?: SourceProvider | null;
-    sourceRepositoryId?: string | null;
-    sourceRepositoryOwner?: string | null;
-    sourceRepositoryName?: string | null;
-    sourceBranch?: string | null;
-    enablePreviews: boolean;
-    baseDirectory?: string | null;
-    buildCommand?: string | null;
-    distDirectory?: string | null;
-    dockerImage?: string | null;
-    cpuLimit?: string | null;
-    memoryLimit?: string | null;
-    buildDurationLimitSeconds?: number | null;
-    secretGroup?: { __typename?: 'SecretGroup'; id: string } | null;
-  };
-};
+
+export type CreateSiteMutation = { __typename?: 'Mutation', createSite: { __typename: 'Site', id: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, secretGroup?: { __typename?: 'SecretGroup', id: string } | null } };
 
 export type DeleteSiteMutationVariables = Exact<{
   where: DeleteSiteWhereInput;
 }>;
 
-export type DeleteSiteMutation = {
-  __typename?: 'Mutation';
-  deleteSite: { __typename?: 'Site'; id: string };
-};
+
+export type DeleteSiteMutation = { __typename?: 'Mutation', deleteSite: { __typename?: 'Site', id: string } };
 
 export type PurgeSiteCacheMutationVariables = Exact<{
   where: PurgeSiteCacheWhereInput;
 }>;
 
-export type PurgeSiteCacheMutation = {
-  __typename?: 'Mutation';
-  purgeSiteCache: { __typename?: 'Site'; id: string };
-};
+
+export type PurgeSiteCacheMutation = { __typename?: 'Mutation', purgeSiteCache: { __typename?: 'Site', id: string } };
 
 export type TriggerDeploymentMutationVariables = Exact<{
   where: TriggerDeploymentWhereInput;
 }>;
 
-export type TriggerDeploymentMutation = {
-  __typename?: 'Mutation';
-  triggerDeployment: {
-    __typename?: 'Deployment';
-    cid?: string | null;
-    id: string;
-    siteId: string;
-    sourceProvider?: SourceProvider | null;
-    sourceAuthor?: string | null;
-    sourceMessage?: string | null;
-    sourceBranch?: string | null;
-    storageType: StorageType;
-    sourceRepositoryName?: string | null;
-    sourceRepositoryOwner?: string | null;
-    previewImageUrl?: string | null;
-    createdAt: any;
-    startedAt?: any | null;
-    updatedAt: any;
-    sourceRef?: string | null;
-    status: DeploymentStatus;
-    previewOnly: boolean;
-    build?: {
-      __typename?: 'Build';
-      id: string;
-      status: BuildStatus;
-      logs?: Array<{
-        __typename?: 'BuildLog';
-        id: string;
-        createdAt: any;
-        text: string;
-      }> | null;
-    } | null;
-  };
-};
+
+export type TriggerDeploymentMutation = { __typename?: 'Mutation', triggerDeployment: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, storageType: StorageType, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, createdAt: any, startedAt?: any | null, updatedAt: any, sourceRef?: string | null, status: DeploymentStatus, previewOnly: boolean, build?: { __typename?: 'Build', id: string, status: BuildStatus, logs?: Array<{ __typename?: 'BuildLog', id: string, createdAt: any, text: string }> | null } | null } };
 
 export type UpdateSiteMutationVariables = Exact<{
   data: UpdateSiteDataInput;
   where: UpdateSiteWhereInput;
 }>;
 
-export type UpdateSiteMutation = {
-  __typename?: 'Mutation';
-  updateSite: {
-    __typename?: 'Site';
-    id: string;
-    name: string;
-    slug: string;
-    sourceProvider?: SourceProvider | null;
-    sourceRepositoryId?: string | null;
-    sourceRepositoryOwner?: string | null;
-    sourceRepositoryName?: string | null;
-    sourceBranch?: string | null;
-    enablePreviews: boolean;
-    baseDirectory?: string | null;
-    buildCommand?: string | null;
-    distDirectory?: string | null;
-    dockerImage?: string | null;
-    cpuLimit?: string | null;
-    memoryLimit?: string | null;
-    buildDurationLimitSeconds?: number | null;
-  };
-};
+
+export type UpdateSiteMutation = { __typename?: 'Mutation', updateSite: { __typename?: 'Site', id: string, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null } };
 
 export type SiteQuotaQueryVariables = Exact<{
   where: SiteQuotaWhereInput;
 }>;
 
-export type SiteQuotaQuery = {
-  __typename?: 'Query';
-  siteQuota: {
-    __typename?: 'SiteQuota';
-    maxDeploymentQueue: {
-      __typename?: 'ResourceQuota';
-      total: number;
-      remaining: number;
-    };
-  };
-};
+
+export type SiteQuotaQuery = { __typename?: 'Query', siteQuota: { __typename?: 'SiteQuota', maxDeploymentQueue: { __typename?: 'ResourceQuota', total: number, remaining: number } } };
 
 export type SecretAvailabilityQueryVariables = Exact<{
   where: SecretAvailabilityWhereInput;
 }>;
 
-export type SecretAvailabilityQuery = {
-  __typename?: 'Query';
-  secretAvailability: boolean;
-};
+
+export type SecretAvailabilityQuery = { __typename?: 'Query', secretAvailability: boolean };
 
 export type SiteQueryVariables = Exact<{
   where: SiteWhereInput;
 }>;
 
-export type SiteQuery = {
-  __typename?: 'Query';
-  site: {
-    __typename?: 'Site';
-    id: string;
-    avatar?: any | null;
-    slug: string;
-    name: string;
-    sourceProvider?: SourceProvider | null;
-    sourceRepositoryId?: string | null;
-    sourceRepositoryOwner?: string | null;
-    sourceRepositoryName?: string | null;
-    sourceBranch?: string | null;
-    githubInstallationId?: number | null;
-    enablePreviews: boolean;
-    baseDirectory?: string | null;
-    buildCommand?: string | null;
-    distDirectory?: string | null;
-    dockerImage?: string | null;
-    cpuLimit?: string | null;
-    memoryLimit?: string | null;
-    buildDurationLimitSeconds?: number | null;
-    currentDeployment?: {
-      __typename?: 'Deployment';
-      cid?: string | null;
-      id: string;
-      status: DeploymentStatus;
-      createdAt: any;
-      sourceProvider?: SourceProvider | null;
-      sourceAuthor?: string | null;
-      sourceMessage?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceRepositoryOwner?: string | null;
-      previewImageUrl?: string | null;
-      previewOnly: boolean;
-      storageType: StorageType;
-      sourceBranch?: string | null;
-      updatedAt: any;
-      sourceRef?: string | null;
-      startedAt?: any | null;
-      functionDeployments: Array<{
-        __typename?: 'FleekFunctionDeployment';
-        id: string;
-      }>;
-    } | null;
-    lastDeployment?: {
-      __typename?: 'Deployment';
-      cid?: string | null;
-      id: string;
-      siteId: string;
-      sourceProvider?: SourceProvider | null;
-      sourceAuthor?: string | null;
-      sourceMessage?: string | null;
-      sourceBranch?: string | null;
-      storageType: StorageType;
-      sourceRepositoryName?: string | null;
-      sourceRepositoryOwner?: string | null;
-      previewImageUrl?: string | null;
-      createdAt: any;
-      updatedAt: any;
-      startedAt?: any | null;
-      sourceRef?: string | null;
-      status: DeploymentStatus;
-      previewOnly: boolean;
-    } | null;
-    ipnsRecords: Array<{
-      __typename?: 'IpnsRecord';
-      id: string;
-      hash?: string | null;
-      name: string;
-      ensRecords: Array<{
-        __typename: 'EnsRecord';
-        createdAt: any;
-        id: string;
-        name: string;
-        status: EnsRecordStatus;
-        updatedAt: any;
-      }>;
-    }>;
-    zones: Array<{ __typename?: 'SiteZone'; id: string; status: ZoneStatus }>;
-    secretGroup?: {
-      __typename?: 'SecretGroup';
-      id: string;
-      name?: string | null;
-      secrets: Array<{
-        __typename?: 'Secret';
-        id: string;
-        key: string;
-        value: string;
-        visibility: SecretVisibility;
-        updatedAt: any;
-      }>;
-    } | null;
-    domains: Array<{
-      __typename: 'Domain';
-      id: string;
-      hostname: string;
-      status: DomainStatus;
-      errorMessage?: string | null;
-      isVerified: boolean;
-      createdAt: any;
-      updatedAt: any;
-      dnslinkStatus?: DnslinkStatus | null;
-      zone?: { __typename?: 'Zone'; id: string } | null;
-      dnsConfigs: Array<{
-        __typename: 'DnsConfig';
-        createdAt: any;
-        id: string;
-        name: string;
-        type: DnsConfigType;
-        updatedAt: any;
-        value: string;
-      }>;
-    }>;
-    primaryDomain?: {
-      __typename?: 'Domain';
-      id: string;
-      hostname: string;
-      isVerified: boolean;
-    } | null;
-    framework?: {
-      __typename?: 'SiteFramework';
-      id: string;
-      name: string;
-      avatar: any;
-    } | null;
-    gitIntegration?: {
-      __typename: 'GitIntegration';
-      id: string;
-      gitProvider: {
-        __typename?: 'GitProvider';
-        id: string;
-        name: string;
-        tags: any;
-        enabled: boolean;
-        sourceProvider: SourceProvider;
-      };
-      githubAppInstallation: {
-        __typename?: 'GithubAppInstallation';
-        id: string;
-        installationId?: string | null;
-      };
-    } | null;
-  };
-};
 
-export type SiteFrameworksQueryVariables = Exact<{ [key: string]: never }>;
+export type SiteQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, avatar?: any | null, slug: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, startedAt?: any | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, storageType: StorageType, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, createdAt: any, updatedAt: any, startedAt?: any | null, sourceRef?: string | null, status: DeploymentStatus, previewOnly: boolean } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }>, secretGroup?: { __typename?: 'SecretGroup', id: string, name?: string | null, secrets: Array<{ __typename?: 'Secret', id: string, key: string, value: string, visibility: SecretVisibility, updatedAt: any }> } | null, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, gitIntegration?: { __typename: 'GitIntegration', id: string, gitProvider: { __typename?: 'GitProvider', id: string, name: string, tags: any, enabled: boolean, sourceProvider: SourceProvider }, githubAppInstallation: { __typename?: 'GithubAppInstallation', id: string, installationId?: string | null } } | null } };
 
-export type SiteFrameworksQuery = {
-  __typename?: 'Query';
-  siteFrameworks: Array<{
-    __typename?: 'SiteFramework';
-    id: string;
-    name: string;
-    slug: string;
-    avatar: any;
-    dockerImage: string;
-    publishDirectory: string;
-    buildScript: string;
-    recognitionStrategy: SiteFrameworkRecognitionStrategy;
-    recognitionArgument: string;
-    templatesCount: number;
-    createdAt: any;
-    updatedAt: any;
-  }>;
-};
+export type SiteFrameworksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SiteFrameworksQuery = { __typename?: 'Query', siteFrameworks: Array<{ __typename?: 'SiteFramework', id: string, name: string, slug: string, avatar: any, dockerImage: string, publishDirectory: string, buildScript: string, recognitionStrategy: SiteFrameworkRecognitionStrategy, recognitionArgument: string, templatesCount: number, createdAt: any, updatedAt: any }> };
 
 export type SiteIpnsRecordsQueryVariables = Exact<{
   where: SiteWhereInput;
 }>;
 
-export type SiteIpnsRecordsQuery = {
-  __typename?: 'Query';
-  site: {
-    __typename?: 'Site';
-    id: string;
-    ipnsRecords: Array<{
-      __typename?: 'IpnsRecord';
-      id: string;
-      hash?: string | null;
-    }>;
-  };
-};
+
+export type SiteIpnsRecordsQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null }> } };
 
 export type SiteNameAvailabilityQueryVariables = Exact<{
   where: SiteNameAvailabilityWhereInput;
 }>;
 
-export type SiteNameAvailabilityQuery = {
-  __typename?: 'Query';
-  siteNameAvailability: boolean;
-};
+
+export type SiteNameAvailabilityQuery = { __typename?: 'Query', siteNameAvailability: boolean };
 
 export type SiteZonesQueryVariables = Exact<{
   where: SiteWhereInput;
 }>;
 
-export type SiteZonesQuery = {
-  __typename?: 'Query';
-  site: {
-    __typename?: 'Site';
-    id: string;
-    zones: Array<{ __typename?: 'SiteZone'; id: string }>;
-  };
-};
+
+export type SiteZonesQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, zones: Array<{ __typename?: 'SiteZone', id: string }> } };
 
 export type SitesQueryVariables = Exact<{
   where: SitesWhereInput;
   filter?: InputMaybe<SitesPaginationInput>;
 }>;
 
-export type SitesQuery = {
-  __typename?: 'Query';
-  sites: {
-    __typename?: 'SitesWithAggregation';
-    pageCount: number;
-    totalCount: number;
-    data: Array<{
-      __typename: 'Site';
-      id: string;
-      avatar?: any | null;
-      name: string;
-      slug: string;
-      sourceProvider?: SourceProvider | null;
-      sourceRepositoryId?: string | null;
-      sourceRepositoryOwner?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceBranch?: string | null;
-      githubInstallationId?: number | null;
-      enablePreviews: boolean;
-      baseDirectory?: string | null;
-      buildCommand?: string | null;
-      distDirectory?: string | null;
-      dockerImage?: string | null;
-      cpuLimit?: string | null;
-      memoryLimit?: string | null;
-      buildDurationLimitSeconds?: number | null;
-      lastDeployment?: {
-        __typename?: 'Deployment';
-        cid?: string | null;
-        id: string;
-        siteId: string;
-        status: DeploymentStatus;
-        createdAt: any;
-        sourceProvider?: SourceProvider | null;
-        sourceAuthor?: string | null;
-        sourceMessage?: string | null;
-        sourceRepositoryName?: string | null;
-        sourceRepositoryOwner?: string | null;
-        previewImageUrl?: string | null;
-        previewOnly: boolean;
-        storageType: StorageType;
-        sourceBranch?: string | null;
-        updatedAt: any;
-        sourceRef?: string | null;
-      } | null;
-      currentDeployment?: {
-        __typename?: 'Deployment';
-        cid?: string | null;
-        id: string;
-        status: DeploymentStatus;
-        createdAt: any;
-        sourceProvider?: SourceProvider | null;
-        sourceAuthor?: string | null;
-        sourceMessage?: string | null;
-        sourceRepositoryName?: string | null;
-        sourceRepositoryOwner?: string | null;
-        previewImageUrl?: string | null;
-        previewOnly: boolean;
-        storageType: StorageType;
-        sourceBranch?: string | null;
-        updatedAt: any;
-        sourceRef?: string | null;
-        functionDeployments: Array<{
-          __typename?: 'FleekFunctionDeployment';
-          id: string;
-        }>;
-      } | null;
-      ipnsRecords: Array<{
-        __typename?: 'IpnsRecord';
-        id: string;
-        hash?: string | null;
-        name: string;
-        ensRecords: Array<{
-          __typename: 'EnsRecord';
-          createdAt: any;
-          id: string;
-          name: string;
-          status: EnsRecordStatus;
-          updatedAt: any;
-        }>;
-      }>;
-      domains: Array<{
-        __typename: 'Domain';
-        id: string;
-        hostname: string;
-        status: DomainStatus;
-        errorMessage?: string | null;
-        isVerified: boolean;
-        createdAt: any;
-        updatedAt: any;
-        dnslinkStatus?: DnslinkStatus | null;
-        zone?: { __typename?: 'Zone'; id: string } | null;
-        dnsConfigs: Array<{
-          __typename: 'DnsConfig';
-          createdAt: any;
-          id: string;
-          name: string;
-          type: DnsConfigType;
-          updatedAt: any;
-          value: string;
-        }>;
-      }>;
-      primaryDomain?: {
-        __typename?: 'Domain';
-        id: string;
-        hostname: string;
-        isVerified: boolean;
-      } | null;
-      zones: Array<{ __typename?: 'SiteZone'; id: string; status: ZoneStatus }>;
-    }>;
-  };
-};
+
+export type SitesQuery = { __typename?: 'Query', sites: { __typename?: 'SitesWithAggregation', pageCount: number, totalCount: number, data: Array<{ __typename: 'Site', id: string, avatar?: any | null, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null } | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }> }> } };
 
 export type SlugAvailabilityQueryVariables = Exact<{
   where: SlugAvailabilityWhereInput;
 }>;
 
-export type SlugAvailabilityQuery = {
-  __typename?: 'Query';
-  slugAvailability: boolean;
-};
+
+export type SlugAvailabilityQuery = { __typename?: 'Query', slugAvailability: boolean };
 
 export type CreateFolderMutationVariables = Exact<{
   data: CreateFolderDataInput;
   where: CreateFolderWhereInput;
 }>;
 
-export type CreateFolderMutation = {
-  __typename?: 'Mutation';
-  createFolder: {
-    __typename: 'Folder';
-    id: string;
-    createdAt: any;
-    name: string;
-    path: string;
-    sizeBigInt: any;
-  };
-};
+
+export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename: 'Folder', id: string, createdAt: any, name: string, path: string, sizeBigInt: any } };
 
 export type DeleteFolderMutationVariables = Exact<{
   where: DeleteFolderWhereInput;
 }>;
 
-export type DeleteFolderMutation = {
-  __typename?: 'Mutation';
-  deleteFolder: {
-    __typename: 'Folder';
-    id: string;
-    createdAt: any;
-    name: string;
-    path: string;
-  };
-};
+
+export type DeleteFolderMutation = { __typename?: 'Mutation', deleteFolder: { __typename: 'Folder', id: string, createdAt: any, name: string, path: string } };
 
 export type UpdateFolderMutationVariables = Exact<{
   data: UpdateFolderDataInput;
   where: UpdateFolderWhereInput;
 }>;
 
-export type UpdateFolderMutation = {
-  __typename?: 'Mutation';
-  updateFolder: {
-    __typename: 'Folder';
-    id: string;
-    createdAt: any;
-    name: string;
-    path: string;
-  };
-};
+
+export type UpdateFolderMutation = { __typename?: 'Mutation', updateFolder: { __typename: 'Folder', id: string, createdAt: any, name: string, path: string } };
 
 export type FolderDetailsQueryVariables = Exact<{
   where: FolderWhereInput;
 }>;
 
-export type FolderDetailsQuery = {
-  __typename?: 'Query';
-  folder: {
-    __typename?: 'Folder';
-    id: string;
-    path: string;
-    name: string;
-    folderCount: number;
-    pinCount: number;
-  };
-};
+
+export type FolderDetailsQuery = { __typename?: 'Query', folder: { __typename?: 'Folder', id: string, path: string, name: string, folderCount: number, pinCount: number } };
 
 export type FolderNameAvailabilityInParentFolderQueryVariables = Exact<{
   data: FolderNameAvailabilityInParentFolderDataInput;
   where: FolderNameAvailabilityInParentFolderWhereInput;
 }>;
 
-export type FolderNameAvailabilityInParentFolderQuery = {
-  __typename?: 'Query';
-  folderNameAvailabilityInParentFolder: boolean;
-};
+
+export type FolderNameAvailabilityInParentFolderQuery = { __typename?: 'Query', folderNameAvailabilityInParentFolder: boolean };
 
 export type AcceptInvitationMutationVariables = Exact<{
   where: AcceptInvitationWhereInput;
 }>;
 
-export type AcceptInvitationMutation = {
-  __typename?: 'Mutation';
-  acceptInvitation: { __typename?: 'Membership'; id: string };
-};
+
+export type AcceptInvitationMutation = { __typename?: 'Mutation', acceptInvitation: { __typename?: 'Membership', id: string } };
 
 export type CreateInvitationMutationVariables = Exact<{
   data: CreateInvitationDataInput;
 }>;
 
-export type CreateInvitationMutation = {
-  __typename?: 'Mutation';
-  createInvitation: string;
-};
+
+export type CreateInvitationMutation = { __typename?: 'Mutation', createInvitation: string };
 
 export type DeclineInvitationMutationVariables = Exact<{
   where: DeclineInvitationWhereInput;
 }>;
 
-export type DeclineInvitationMutation = {
-  __typename?: 'Mutation';
-  declineInvitation: boolean;
-};
+
+export type DeclineInvitationMutation = { __typename?: 'Mutation', declineInvitation: boolean };
 
 export type DeleteInvitationMutationVariables = Exact<{
   where: DeleteInvitationWhereInput;
 }>;
 
-export type DeleteInvitationMutation = {
-  __typename?: 'Mutation';
-  deleteInvitation: {
-    __typename?: 'Invitation';
-    id: string;
-    email?: string | null;
-    role?: Role | null;
-    createdAt: any;
-  };
-};
+
+export type DeleteInvitationMutation = { __typename?: 'Mutation', deleteInvitation: { __typename?: 'Invitation', id: string, email?: string | null, role?: Role | null, createdAt: any } };
 
 export type UpdateMembershipMutationVariables = Exact<{
   data: UpdateMembershipDataInput;
   where: UpdateMembershipWhereInput;
 }>;
 
-export type UpdateMembershipMutation = {
-  __typename?: 'Mutation';
-  updateMembership: {
-    __typename?: 'Membership';
-    id: string;
-    role?: Role | null;
-    createdAt: any;
-    permissionGroup: {
-      __typename?: 'PermissionGroup';
-      id: string;
-      name: string;
-      description: string;
-    };
-    user: {
-      __typename?: 'User';
-      id: string;
-      email?: string | null;
-      username?: string | null;
-    };
-  };
-};
 
-export type CountSitesWithSourceProviderQueryVariables = Exact<{
-  [key: string]: never;
-}>;
+export type UpdateMembershipMutation = { __typename?: 'Mutation', updateMembership: { __typename?: 'Membership', id: string, role?: Role | null, createdAt: any, permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, description: string }, user: { __typename?: 'User', id: string, email?: string | null, username?: string | null } } };
 
-export type CountSitesWithSourceProviderQuery = {
-  __typename?: 'Query';
-  sites: { __typename?: 'SitesWithAggregation'; totalCount: number };
-};
+export type CountSitesWithSourceProviderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountSitesWithSourceProviderQuery = { __typename?: 'Query', sites: { __typename?: 'SitesWithAggregation', totalCount: number } };
 
 export type InvitationQueryVariables = Exact<{
   where: InvitationWhereInput;
 }>;
 
-export type InvitationQuery = {
-  __typename?: 'Query';
-  invitation: {
-    __typename?: 'InvitationDetail';
-    hash: string;
-    projectAvatar?: any | null;
-    projectId: string;
-    projectName: string;
-  };
-};
+
+export type InvitationQuery = { __typename?: 'Query', invitation: { __typename?: 'InvitationDetail', hash: string, projectAvatar?: any | null, projectId: string, projectName: string } };
 
 export type PermissionGroupsQueryVariables = Exact<{
   filter?: InputMaybe<PermissionGroupsPaginationInput>;
 }>;
 
-export type PermissionGroupsQuery = {
-  __typename?: 'Query';
-  permissionGroups: {
-    __typename?: 'PermissionGroupsWithAggregation';
-    data: Array<{
-      __typename?: 'PermissionGroup';
-      id: string;
-      name: string;
-      description: string;
-    }>;
-  };
-};
+
+export type PermissionGroupsQuery = { __typename?: 'Query', permissionGroups: { __typename?: 'PermissionGroupsWithAggregation', data: Array<{ __typename?: 'PermissionGroup', id: string, name: string, description: string }> } };
 
 export type InvitationsQueryVariables = Exact<{
   filter?: InputMaybe<InvitationsPaginationInput>;
 }>;
 
-export type InvitationsQuery = {
-  __typename?: 'Query';
-  invitations: {
-    __typename?: 'InvitationsWithAggregation';
-    data: Array<{
-      __typename?: 'Invitation';
-      id: string;
-      email?: string | null;
-      role?: Role | null;
-      createdAt: any;
-    }>;
-  };
-};
+
+export type InvitationsQuery = { __typename?: 'Query', invitations: { __typename?: 'InvitationsWithAggregation', data: Array<{ __typename?: 'Invitation', id: string, email?: string | null, role?: Role | null, createdAt: any }> } };
 
 export type ProjectMembersQueryVariables = Exact<{
   where: ProjectWhereInput;
 }>;
 
-export type ProjectMembersQuery = {
-  __typename?: 'Query';
-  project: {
-    __typename?: 'Project';
-    memberships: Array<{
-      __typename?: 'Membership';
-      id: string;
-      role?: Role | null;
-      createdAt: any;
-      permissionGroup: {
-        __typename?: 'PermissionGroup';
-        id: string;
-        name: string;
-        description: string;
-      };
-      user: {
-        __typename?: 'User';
-        id: string;
-        email?: string | null;
-        username?: string | null;
-      };
-    }>;
-  };
-};
+
+export type ProjectMembersQuery = { __typename?: 'Query', project: { __typename?: 'Project', memberships: Array<{ __typename?: 'Membership', id: string, role?: Role | null, createdAt: any, permissionGroup: { __typename?: 'PermissionGroup', id: string, name: string, description: string }, user: { __typename?: 'User', id: string, email?: string | null, username?: string | null } }> } };
 
 export type CreateTemplateMutationVariables = Exact<{
   data: CreateTemplateDataInput;
 }>;
 
-export type CreateTemplateMutation = {
-  __typename?: 'Mutation';
-  createTemplate: {
-    __typename?: 'Template';
-    id: string;
-    name: string;
-    banner: any;
-    description: string;
-    siteId: string;
-    siteAvatar?: any | null;
-    siteSlug: string;
-    usageCount: number;
-    reviewStatus: TemplateReviewStatus;
-    reviewComment?: string | null;
-    createdAt: any;
-    updatedAt: any;
-    framework?: {
-      __typename?: 'SiteFramework';
-      id: string;
-      name: string;
-      avatar: any;
-    } | null;
-    deployment: {
-      __typename?: 'Deployment';
-      id: string;
-      previewImageUrl?: string | null;
-      sourceProvider?: SourceProvider | null;
-      sourceRepositoryOwner?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceBranch?: string | null;
-      sourceRef?: string | null;
-      build?: {
-        __typename?: 'Build';
-        id: string;
-        baseDirectory?: string | null;
-        buildCommand?: string | null;
-        distDirectory?: string | null;
-        dockerImage?: string | null;
-      } | null;
-    };
-    creator?: {
-      __typename?: 'User';
-      id: string;
-      username?: string | null;
-      avatar?: any | null;
-    } | null;
-    category: {
-      __typename?: 'TemplateCategory';
-      id: string;
-      name: string;
-      slug: string;
-    };
-  };
-};
+
+export type CreateTemplateMutation = { __typename?: 'Mutation', createTemplate: { __typename?: 'Template', id: string, name: string, banner: any, description: string, siteId: string, siteAvatar?: any | null, siteSlug: string, usageCount: number, reviewStatus: TemplateReviewStatus, reviewComment?: string | null, createdAt: any, updatedAt: any, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, deployment: { __typename?: 'Deployment', id: string, previewImageUrl?: string | null, sourceProvider?: SourceProvider | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, sourceRef?: string | null, build?: { __typename?: 'Build', id: string, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null } | null }, creator?: { __typename?: 'User', id: string, username?: string | null, avatar?: any | null } | null, category: { __typename?: 'TemplateCategory', id: string, name: string, slug: string } } };
 
 export type DeleteTemplateMutationVariables = Exact<{
   where: DeleteTemplateWhereInput;
 }>;
 
-export type DeleteTemplateMutation = {
-  __typename?: 'Mutation';
-  deleteTemplate: {
-    __typename?: 'Template';
-    id: string;
-    creator?: { __typename?: 'User'; id: string } | null;
-  };
-};
+
+export type DeleteTemplateMutation = { __typename?: 'Mutation', deleteTemplate: { __typename?: 'Template', id: string, creator?: { __typename?: 'User', id: string } | null } };
 
 export type UpdateTemplateMutationVariables = Exact<{
   data: UpdateTemplateDataInput;
   where: UpdateTemplateWhereInput;
 }>;
 
-export type UpdateTemplateMutation = {
-  __typename?: 'Mutation';
-  updateTemplate: {
-    __typename?: 'Template';
-    id: string;
-    name: string;
-    banner: any;
-    description: string;
-    reviewStatus: TemplateReviewStatus;
-    createdAt: any;
-    updatedAt: any;
-    deployment: {
-      __typename?: 'Deployment';
-      previewImageUrl?: string | null;
-      sourceProvider?: SourceProvider | null;
-      sourceRepositoryOwner?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceBranch?: string | null;
-      build?: {
-        __typename?: 'Build';
-        id: string;
-        baseDirectory?: string | null;
-        buildCommand?: string | null;
-        distDirectory?: string | null;
-        dockerImage?: string | null;
-      } | null;
-    };
-    creator?: { __typename?: 'User'; id: string } | null;
-    category: {
-      __typename?: 'TemplateCategory';
-      id: string;
-      name: string;
-      slug: string;
-    };
-  };
-};
+
+export type UpdateTemplateMutation = { __typename?: 'Mutation', updateTemplate: { __typename?: 'Template', id: string, name: string, banner: any, description: string, reviewStatus: TemplateReviewStatus, createdAt: any, updatedAt: any, deployment: { __typename?: 'Deployment', previewImageUrl?: string | null, sourceProvider?: SourceProvider | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, build?: { __typename?: 'Build', id: string, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null } | null }, creator?: { __typename?: 'User', id: string } | null, category: { __typename?: 'TemplateCategory', id: string, name: string, slug: string } } };
 
 export type TemplateQueryVariables = Exact<{
   where: TemplateWhereInput;
 }>;
 
-export type TemplateQuery = {
-  __typename?: 'Query';
-  template: {
-    __typename?: 'Template';
-    id: string;
-    name: string;
-    description: string;
-    banner: any;
-    siteId: string;
-    siteAvatar?: any | null;
-    siteSlug: string;
-    usageCount: number;
-    reviewStatus: TemplateReviewStatus;
-    createdAt: any;
-    updatedAt: any;
-    framework?: {
-      __typename?: 'SiteFramework';
-      id: string;
-      name: string;
-      avatar: any;
-    } | null;
-    deployment: {
-      __typename?: 'Deployment';
-      id: string;
-      previewImageUrl?: string | null;
-      sourceProvider?: SourceProvider | null;
-      sourceRepositoryOwner?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceBranch?: string | null;
-      sourceRef?: string | null;
-      build?: {
-        __typename?: 'Build';
-        id: string;
-        baseDirectory?: string | null;
-        buildCommand?: string | null;
-        distDirectory?: string | null;
-        dockerImage?: string | null;
-      } | null;
-    };
-    creator?: {
-      __typename?: 'User';
-      id: string;
-      username?: string | null;
-      avatar?: any | null;
-    } | null;
-    category: {
-      __typename?: 'TemplateCategory';
-      id: string;
-      name: string;
-      slug: string;
-      templatesCount: number;
-    };
-  };
-};
+
+export type TemplateQuery = { __typename?: 'Query', template: { __typename?: 'Template', id: string, name: string, description: string, banner: any, siteId: string, siteAvatar?: any | null, siteSlug: string, usageCount: number, reviewStatus: TemplateReviewStatus, createdAt: any, updatedAt: any, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, deployment: { __typename?: 'Deployment', id: string, previewImageUrl?: string | null, sourceProvider?: SourceProvider | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, sourceRef?: string | null, build?: { __typename?: 'Build', id: string, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null } | null }, creator?: { __typename?: 'User', id: string, username?: string | null, avatar?: any | null } | null, category: { __typename?: 'TemplateCategory', id: string, name: string, slug: string, templatesCount: number } } };
 
 export type TemplateCategoriesQueryVariables = Exact<{
   filter?: InputMaybe<TemplateCategoriesPaginationInput>;
 }>;
 
-export type TemplateCategoriesQuery = {
-  __typename?: 'Query';
-  templateCategories: {
-    __typename?: 'TemplateCategoriesWithAggregation';
-    data: Array<{
-      __typename?: 'TemplateCategory';
-      id: string;
-      name: string;
-      slug: string;
-      templatesCount: number;
-    }>;
-  };
-};
+
+export type TemplateCategoriesQuery = { __typename?: 'Query', templateCategories: { __typename?: 'TemplateCategoriesWithAggregation', data: Array<{ __typename?: 'TemplateCategory', id: string, name: string, slug: string, templatesCount: number }> } };
 
 export type TemplateDeployQueryVariables = Exact<{
   where: TemplateWhereInput;
 }>;
 
-export type TemplateDeployQuery = {
-  __typename?: 'Query';
-  template: {
-    __typename?: 'Template';
-    id: string;
-    name: string;
-    description: string;
-    siteId: string;
-    siteAvatar?: any | null;
-    framework?: {
-      __typename?: 'SiteFramework';
-      id: string;
-      name: string;
-      avatar: any;
-    } | null;
-    deployment: {
-      __typename?: 'Deployment';
-      id: string;
-      sourceProvider?: SourceProvider | null;
-      sourceRepositoryOwner?: string | null;
-      sourceRepositoryName?: string | null;
-      sourceBranch?: string | null;
-      sourceRef?: string | null;
-      build?: {
-        __typename?: 'Build';
-        id: string;
-        baseDirectory?: string | null;
-        buildCommand?: string | null;
-        distDirectory?: string | null;
-        dockerImage?: string | null;
-      } | null;
-    };
-  };
-};
+
+export type TemplateDeployQuery = { __typename?: 'Query', template: { __typename?: 'Template', id: string, name: string, description: string, siteId: string, siteAvatar?: any | null, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, deployment: { __typename?: 'Deployment', id: string, sourceProvider?: SourceProvider | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, sourceRef?: string | null, build?: { __typename?: 'Build', id: string, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null } | null } } };
 
 export type TemplateNameAvailabilityQueryVariables = Exact<{
   where: TemplateNameAvailabilityWhereInput;
 }>;
 
-export type TemplateNameAvailabilityQuery = {
-  __typename?: 'Query';
-  templateNameAvailability: boolean;
-};
+
+export type TemplateNameAvailabilityQuery = { __typename?: 'Query', templateNameAvailability: boolean };
 
 export type TemplatesQueryVariables = Exact<{
   where: TemplatesWhereInput;
   filter?: InputMaybe<TemplatesPaginationInput>;
 }>;
 
-export type TemplatesQuery = {
-  __typename?: 'Query';
-  templates: {
-    __typename?: 'TemplatesWithAggregation';
-    currentPage: number;
-    nextPage?: number | null;
-    isLastPage: boolean;
-    totalCount: number;
-    data: Array<{
-      __typename?: 'Template';
-      id: string;
-      name: string;
-      description: string;
-      usageCount: number;
-      banner: any;
-      siteId: string;
-      siteAvatar?: any | null;
-      siteSlug: string;
-      reviewStatus: TemplateReviewStatus;
-      reviewComment?: string | null;
-      createdAt: any;
-      updatedAt: any;
-      framework?: {
-        __typename?: 'SiteFramework';
-        id: string;
-        name: string;
-        avatar: any;
-      } | null;
-      deployment: {
-        __typename?: 'Deployment';
-        id: string;
-        previewImageUrl?: string | null;
-        sourceRepositoryOwner?: string | null;
-      };
-      creator?: {
-        __typename?: 'User';
-        id: string;
-        username?: string | null;
-        avatar?: any | null;
-      } | null;
-      category: {
-        __typename?: 'TemplateCategory';
-        id: string;
-        name: string;
-        slug: string;
-      };
-    }>;
-  };
-};
+
+export type TemplatesQuery = { __typename?: 'Query', templates: { __typename?: 'TemplatesWithAggregation', currentPage: number, nextPage?: number | null, isLastPage: boolean, totalCount: number, data: Array<{ __typename?: 'Template', id: string, name: string, description: string, usageCount: number, banner: any, siteId: string, siteAvatar?: any | null, siteSlug: string, reviewStatus: TemplateReviewStatus, reviewComment?: string | null, createdAt: any, updatedAt: any, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, deployment: { __typename?: 'Deployment', id: string, previewImageUrl?: string | null, sourceRepositoryOwner?: string | null }, creator?: { __typename?: 'User', id: string, username?: string | null, avatar?: any | null } | null, category: { __typename?: 'TemplateCategory', id: string, name: string, slug: string } }> } };
 
 export type UpdateNotificationSettingsMutationVariables = Exact<{
   data: UpdateNotificationSettingsDataInput;
 }>;
 
-export type UpdateNotificationSettingsMutation = {
-  __typename?: 'Mutation';
-  updateNotificationSettings: boolean;
-};
+
+export type UpdateNotificationSettingsMutation = { __typename?: 'Mutation', updateNotificationSettings: boolean };
 
 export type UpdateUserMutationVariables = Exact<{
   data: UpdateUserDataInput;
 }>;
 
-export type UpdateUserMutation = {
-  __typename?: 'Mutation';
-  updateUser: {
-    __typename?: 'User';
-    id: string;
-    email?: string | null;
-    avatar?: any | null;
-    username?: string | null;
-    githubUserAccessToken?: string | null;
-    walletAddress?: string | null;
-    project?: { __typename?: 'Project'; id: string; name: string } | null;
-  };
-};
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, email?: string | null, avatar?: any | null, username?: string | null, githubUserAccessToken?: string | null, walletAddress?: string | null, project?: { __typename?: 'Project', id: string, name: string } | null } };
 
 export type EmailAvailabilityQueryVariables = Exact<{
   where: EmailAvailabilityWhereInput;
 }>;
 
-export type EmailAvailabilityQuery = {
-  __typename?: 'Query';
-  emailAvailability: boolean;
-};
 
-export type NotificationsQueryVariables = Exact<{ [key: string]: never }>;
+export type EmailAvailabilityQuery = { __typename?: 'Query', emailAvailability: boolean };
 
-export type NotificationsQuery = {
-  __typename?: 'Query';
-  notificationSettings: Array<{
-    __typename?: 'NotificationSettings';
-    notificationType: NotificationType;
-    notificationChannel: NotificationChannel;
-    isEnabled: boolean;
-  }>;
-};
+export type NotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NotificationsQuery = { __typename?: 'Query', notificationSettings: Array<{ __typename?: 'NotificationSettings', notificationType: NotificationType, notificationChannel: NotificationChannel, isEnabled: boolean }> };
 
 export type UsernameAvailabilityQueryVariables = Exact<{
   where: UsernameAvailabilityWhereInput;
 }>;
 
-export type UsernameAvailabilityQuery = {
-  __typename?: 'Query';
-  usernameAvailability: boolean;
-};
 
-export type VersionQueryVariables = Exact<{ [key: string]: never }>;
+export type UsernameAvailabilityQuery = { __typename?: 'Query', usernameAvailability: boolean };
 
-export type VersionQuery = {
-  __typename?: 'Query';
-  version: { __typename?: 'Version'; commitHash: string };
-};
+export type VersionQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type CreateZoneForPrivateGatewayMutationVariables = Exact<{
-  [key: string]: never;
-}>;
 
-export type CreateZoneForPrivateGatewayMutation = {
-  __typename?: 'Mutation';
-  createZoneForPrivateGateway: {
-    __typename?: 'Zone';
-    id: string;
-    type: ZoneType;
-  };
-};
+export type VersionQuery = { __typename?: 'Query', version: { __typename?: 'Version', commitHash: string } };
+
+export type CreateZoneForPrivateGatewayMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateZoneForPrivateGatewayMutation = { __typename?: 'Mutation', createZoneForPrivateGateway: { __typename?: 'Zone', id: string, type: ZoneType } };
 
 export type CreateZoneForSiteMutationVariables = Exact<{
   where: CreateZoneForSiteWhereInput;
 }>;
 
-export type CreateZoneForSiteMutation = {
-  __typename?: 'Mutation';
-  createZoneForSite: { __typename?: 'Zone'; id: string };
-};
+
+export type CreateZoneForSiteMutation = { __typename?: 'Mutation', createZoneForSite: { __typename?: 'Zone', id: string } };
 
 export type ZoneQueryVariables = Exact<{
   where: ZoneWhereInput;
 }>;
 
-export type ZoneQuery = {
-  __typename?: 'Query';
-  zone: { __typename?: 'Zone'; id: string; status: ZoneStatus };
-};
+
+export type ZoneQuery = { __typename?: 'Query', zone: { __typename?: 'Zone', id: string, status: ZoneStatus } };
 
 export const PinFragmentFragmentDoc = gql`
     fragment PinFragment on Pin {
@@ -6575,11 +4892,8 @@ export const DeleteRecoveryCodesDocument = gql`
     `;
 
 export function useDeleteRecoveryCodesMutation() {
-  return Urql.useMutation<
-    DeleteRecoveryCodesMutation,
-    DeleteRecoveryCodesMutationVariables
-  >(DeleteRecoveryCodesDocument);
-}
+  return Urql.useMutation<DeleteRecoveryCodesMutation, DeleteRecoveryCodesMutationVariables>(DeleteRecoveryCodesDocument);
+};
 export const DeleteSecretKeyDocument = gql`
     mutation deleteSecretKey($where: DeleteSecretKeyWhereInput!) {
   deleteSecretKey(where: $where)
@@ -6587,11 +4901,8 @@ export const DeleteSecretKeyDocument = gql`
     `;
 
 export function useDeleteSecretKeyMutation() {
-  return Urql.useMutation<
-    DeleteSecretKeyMutation,
-    DeleteSecretKeyMutationVariables
-  >(DeleteSecretKeyDocument);
-}
+  return Urql.useMutation<DeleteSecretKeyMutation, DeleteSecretKeyMutationVariables>(DeleteSecretKeyDocument);
+};
 export const DisableProtectedActionDocument = gql`
     mutation disableProtectedAction($where: DisableTwoFactorProtectedActionWhereInput!) {
   disableTwoFactorProtectedAction(where: $where)
@@ -6599,11 +4910,8 @@ export const DisableProtectedActionDocument = gql`
     `;
 
 export function useDisableProtectedActionMutation() {
-  return Urql.useMutation<
-    DisableProtectedActionMutation,
-    DisableProtectedActionMutationVariables
-  >(DisableProtectedActionDocument);
-}
+  return Urql.useMutation<DisableProtectedActionMutation, DisableProtectedActionMutationVariables>(DisableProtectedActionDocument);
+};
 export const EnableProtectedActionDocument = gql`
     mutation enableProtectedAction($where: EnableTwoFactorProtectedActionWhereInput!) {
   enableTwoFactorProtectedAction(where: $where)
@@ -6611,11 +4919,8 @@ export const EnableProtectedActionDocument = gql`
     `;
 
 export function useEnableProtectedActionMutation() {
-  return Urql.useMutation<
-    EnableProtectedActionMutation,
-    EnableProtectedActionMutationVariables
-  >(EnableProtectedActionDocument);
-}
+  return Urql.useMutation<EnableProtectedActionMutation, EnableProtectedActionMutationVariables>(EnableProtectedActionDocument);
+};
 export const GenerateRecoveryCodesDocument = gql`
     mutation generateRecoveryCodes($where: GenerateRecoveryCodesWhereInput!) {
   generateRecoveryCodes(where: $where) {
@@ -6625,11 +4930,8 @@ export const GenerateRecoveryCodesDocument = gql`
     `;
 
 export function useGenerateRecoveryCodesMutation() {
-  return Urql.useMutation<
-    GenerateRecoveryCodesMutation,
-    GenerateRecoveryCodesMutationVariables
-  >(GenerateRecoveryCodesDocument);
-}
+  return Urql.useMutation<GenerateRecoveryCodesMutation, GenerateRecoveryCodesMutationVariables>(GenerateRecoveryCodesDocument);
+};
 export const GenerateTwoFactorSecretKeyDocument = gql`
     mutation generateTwoFactorSecretKey {
   generateTwoFactorSecretKey {
@@ -6646,11 +4948,8 @@ export const GenerateTwoFactorSecretKeyDocument = gql`
     `;
 
 export function useGenerateTwoFactorSecretKeyMutation() {
-  return Urql.useMutation<
-    GenerateTwoFactorSecretKeyMutation,
-    GenerateTwoFactorSecretKeyMutationVariables
-  >(GenerateTwoFactorSecretKeyDocument);
-}
+  return Urql.useMutation<GenerateTwoFactorSecretKeyMutation, GenerateTwoFactorSecretKeyMutationVariables>(GenerateTwoFactorSecretKeyDocument);
+};
 export const UpdateSecretKeyDocument = gql`
     mutation updateSecretKey($where: UpdateTwoFactorSecretKeyWhereInput!, $data: UpdateTwoFactorSecretKeyDataInput!) {
   updateTwoFactorSecretKey(where: $where, data: $data) {
@@ -6667,11 +4966,8 @@ export const UpdateSecretKeyDocument = gql`
     `;
 
 export function useUpdateSecretKeyMutation() {
-  return Urql.useMutation<
-    UpdateSecretKeyMutation,
-    UpdateSecretKeyMutationVariables
-  >(UpdateSecretKeyDocument);
-}
+  return Urql.useMutation<UpdateSecretKeyMutation, UpdateSecretKeyMutationVariables>(UpdateSecretKeyDocument);
+};
 export const VerifySecretKeyDocument = gql`
     mutation verifySecretKey($where: VerifyTwoFactorSecretKeyWhereInput!, $data: VerifyTwoFactorSecretKeyDataInput!) {
   verifyTwoFactorSecretKey(where: $where, data: $data) {
@@ -6688,11 +4984,8 @@ export const VerifySecretKeyDocument = gql`
     `;
 
 export function useVerifySecretKeyMutation() {
-  return Urql.useMutation<
-    VerifySecretKeyMutation,
-    VerifySecretKeyMutationVariables
-  >(VerifySecretKeyDocument);
-}
+  return Urql.useMutation<VerifySecretKeyMutation, VerifySecretKeyMutationVariables>(VerifySecretKeyDocument);
+};
 export const ProtectedActionsDocument = gql`
     query protectedActions($filter: TwoFactorProtectedActionsPaginationInput) {
   twoFactorProtectedActions(filter: $filter) {
@@ -6706,14 +4999,9 @@ export const ProtectedActionsDocument = gql`
 }
     `;
 
-export function useProtectedActionsQuery(
-  options?: Omit<Urql.UseQueryArgs<ProtectedActionsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProtectedActionsQuery, ProtectedActionsQueryVariables>({
-    query: ProtectedActionsDocument,
-    ...options,
-  });
-}
+export function useProtectedActionsQuery(options?: Omit<Urql.UseQueryArgs<ProtectedActionsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProtectedActionsQuery, ProtectedActionsQueryVariables>({ query: ProtectedActionsDocument, ...options });
+};
 export const GetSecretKeysDocument = gql`
     query getSecretKeys {
   user {
@@ -6731,14 +5019,9 @@ export const GetSecretKeysDocument = gql`
 }
     `;
 
-export function useGetSecretKeysQuery(
-  options?: Omit<Urql.UseQueryArgs<GetSecretKeysQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({
-    query: GetSecretKeysDocument,
-    ...options,
-  });
-}
+export function useGetSecretKeysQuery(options?: Omit<Urql.UseQueryArgs<GetSecretKeysQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetSecretKeysQuery, GetSecretKeysQueryVariables>({ query: GetSecretKeysDocument, ...options });
+};
 export const CreateApplicationDocument = gql`
     mutation createApplication($data: CreateApplicationDataInput!) {
   createApplication(data: $data) {
@@ -6758,11 +5041,8 @@ export const CreateApplicationDocument = gql`
     `;
 
 export function useCreateApplicationMutation() {
-  return Urql.useMutation<
-    CreateApplicationMutation,
-    CreateApplicationMutationVariables
-  >(CreateApplicationDocument);
-}
+  return Urql.useMutation<CreateApplicationMutation, CreateApplicationMutationVariables>(CreateApplicationDocument);
+};
 export const DeleteApplicationDocument = gql`
     mutation deleteApplication($where: DeleteApplicationWhereInput!) {
   deleteApplication(where: $where) {
@@ -6772,11 +5052,8 @@ export const DeleteApplicationDocument = gql`
     `;
 
 export function useDeleteApplicationMutation() {
-  return Urql.useMutation<
-    DeleteApplicationMutation,
-    DeleteApplicationMutationVariables
-  >(DeleteApplicationDocument);
-}
+  return Urql.useMutation<DeleteApplicationMutation, DeleteApplicationMutationVariables>(DeleteApplicationDocument);
+};
 export const UpdateApplicationDocument = gql`
     mutation updateApplication($data: UpdateApplicationDataInput!, $where: UpdateApplicationWhereInput!) {
   updateApplication(data: $data, where: $where) {
@@ -6793,11 +5070,8 @@ export const UpdateApplicationDocument = gql`
     `;
 
 export function useUpdateApplicationMutation() {
-  return Urql.useMutation<
-    UpdateApplicationMutation,
-    UpdateApplicationMutationVariables
-  >(UpdateApplicationDocument);
-}
+  return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
+};
 export const ApplicationDocument = gql`
     query application($where: ApplicationWhereInput!) {
   application(where: $where) {
@@ -6816,31 +5090,18 @@ export const ApplicationDocument = gql`
 }
     `;
 
-export function useApplicationQuery(
-  options: Omit<Urql.UseQueryArgs<ApplicationQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ApplicationQuery, ApplicationQueryVariables>({
-    query: ApplicationDocument,
-    ...options,
-  });
-}
+export function useApplicationQuery(options: Omit<Urql.UseQueryArgs<ApplicationQueryVariables>, 'query'>) {
+  return Urql.useQuery<ApplicationQuery, ApplicationQueryVariables>({ query: ApplicationDocument, ...options });
+};
 export const ApplicationNameAvailabilityDocument = gql`
     query applicationNameAvailability($where: ApplicationNameAvailabilityWhereInput!) {
   applicationNameAvailability(where: $where)
 }
     `;
 
-export function useApplicationNameAvailabilityQuery(
-  options: Omit<
-    Urql.UseQueryArgs<ApplicationNameAvailabilityQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    ApplicationNameAvailabilityQuery,
-    ApplicationNameAvailabilityQueryVariables
-  >({ query: ApplicationNameAvailabilityDocument, ...options });
-}
+export function useApplicationNameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<ApplicationNameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<ApplicationNameAvailabilityQuery, ApplicationNameAvailabilityQueryVariables>({ query: ApplicationNameAvailabilityDocument, ...options });
+};
 export const ApplicationsDocument = gql`
     query applications($filter: ApplicationsPaginationInput) {
   applications(filter: $filter) {
@@ -6861,14 +5122,9 @@ export const ApplicationsDocument = gql`
 }
     `;
 
-export function useApplicationsQuery(
-  options?: Omit<Urql.UseQueryArgs<ApplicationsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ApplicationsQuery, ApplicationsQueryVariables>({
-    query: ApplicationsDocument,
-    ...options,
-  });
-}
+export function useApplicationsQuery(options?: Omit<Urql.UseQueryArgs<ApplicationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ApplicationsQuery, ApplicationsQueryVariables>({ query: ApplicationsDocument, ...options });
+};
 export const CreateLoginVerificationSessionDocument = gql`
     mutation createLoginVerificationSession($where: CreateLoginVerificationSessionWhereInput!) {
   createLoginVerificationSession(where: $where)
@@ -6876,11 +5132,8 @@ export const CreateLoginVerificationSessionDocument = gql`
     `;
 
 export function useCreateLoginVerificationSessionMutation() {
-  return Urql.useMutation<
-    CreateLoginVerificationSessionMutation,
-    CreateLoginVerificationSessionMutationVariables
-  >(CreateLoginVerificationSessionDocument);
-}
+  return Urql.useMutation<CreateLoginVerificationSessionMutation, CreateLoginVerificationSessionMutationVariables>(CreateLoginVerificationSessionDocument);
+};
 export const CreatePersonalAccessTokenFromVerificationSessionDocument = gql`
     mutation createPersonalAccessTokenFromVerificationSession($where: CreatePersonalAccessTokenFromVerificationSessionWhereInput!, $data: CreatePersonalAccessTokenFromVerificationSessionDataInput!) {
   createPersonalAccessTokenFromVerificationSession(where: $where, data: $data)
@@ -6888,11 +5141,8 @@ export const CreatePersonalAccessTokenFromVerificationSessionDocument = gql`
     `;
 
 export function useCreatePersonalAccessTokenFromVerificationSessionMutation() {
-  return Urql.useMutation<
-    CreatePersonalAccessTokenFromVerificationSessionMutation,
-    CreatePersonalAccessTokenFromVerificationSessionMutationVariables
-  >(CreatePersonalAccessTokenFromVerificationSessionDocument);
-}
+  return Urql.useMutation<CreatePersonalAccessTokenFromVerificationSessionMutation, CreatePersonalAccessTokenFromVerificationSessionMutationVariables>(CreatePersonalAccessTokenFromVerificationSessionDocument);
+};
 export const CreatePublicKeyChallengeDocument = gql`
     mutation createPublicKeyChallenge {
   createPublicKeyChallenge
@@ -6900,11 +5150,8 @@ export const CreatePublicKeyChallengeDocument = gql`
     `;
 
 export function useCreatePublicKeyChallengeMutation() {
-  return Urql.useMutation<
-    CreatePublicKeyChallengeMutation,
-    CreatePublicKeyChallengeMutationVariables
-  >(CreatePublicKeyChallengeDocument);
-}
+  return Urql.useMutation<CreatePublicKeyChallengeMutation, CreatePublicKeyChallengeMutationVariables>(CreatePublicKeyChallengeDocument);
+};
 export const DeletePersonalAccessTokenDocument = gql`
     mutation deletePersonalAccessToken($where: DeletePersonalAccessTokenWhereInput!) {
   deletePersonalAccessToken(where: $where) {
@@ -6914,11 +5161,8 @@ export const DeletePersonalAccessTokenDocument = gql`
     `;
 
 export function useDeletePersonalAccessTokenMutation() {
-  return Urql.useMutation<
-    DeletePersonalAccessTokenMutation,
-    DeletePersonalAccessTokenMutationVariables
-  >(DeletePersonalAccessTokenDocument);
-}
+  return Urql.useMutation<DeletePersonalAccessTokenMutation, DeletePersonalAccessTokenMutationVariables>(DeletePersonalAccessTokenDocument);
+};
 export const GenerateUserSessionDetailsDocument = gql`
     mutation generateUserSessionDetails($data: GenerateUserSessionDetailsDataInput!) {
   generateUserSessionDetails(data: $data) {
@@ -6929,11 +5173,8 @@ export const GenerateUserSessionDetailsDocument = gql`
     `;
 
 export function useGenerateUserSessionDetailsMutation() {
-  return Urql.useMutation<
-    GenerateUserSessionDetailsMutation,
-    GenerateUserSessionDetailsMutationVariables
-  >(GenerateUserSessionDetailsDocument);
-}
+  return Urql.useMutation<GenerateUserSessionDetailsMutation, GenerateUserSessionDetailsMutationVariables>(GenerateUserSessionDetailsDocument);
+};
 export const LinkPublicKeyDocument = gql`
     mutation linkPublicKey($data: LinkPublicKeyDataInput!) {
   linkPublicKey(data: $data) {
@@ -6943,11 +5184,8 @@ export const LinkPublicKeyDocument = gql`
     `;
 
 export function useLinkPublicKeyMutation() {
-  return Urql.useMutation<
-    LinkPublicKeyMutation,
-    LinkPublicKeyMutationVariables
-  >(LinkPublicKeyDocument);
-}
+  return Urql.useMutation<LinkPublicKeyMutation, LinkPublicKeyMutationVariables>(LinkPublicKeyDocument);
+};
 export const LoginWithDynamicDocument = gql`
     mutation loginWithDynamic($data: LoginWithDynamicDataInput!) {
   loginWithDynamic(data: $data)
@@ -6955,11 +5193,8 @@ export const LoginWithDynamicDocument = gql`
     `;
 
 export function useLoginWithDynamicMutation() {
-  return Urql.useMutation<
-    LoginWithDynamicMutation,
-    LoginWithDynamicMutationVariables
-  >(LoginWithDynamicDocument);
-}
+  return Urql.useMutation<LoginWithDynamicMutation, LoginWithDynamicMutationVariables>(LoginWithDynamicDocument);
+};
 export const MeDocument = gql`
     query me {
   user {
@@ -7001,14 +5236,9 @@ export const MeDocument = gql`
 }
     `;
 
-export function useMeQuery(
-  options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<MeQuery, MeQueryVariables>({
-    query: MeDocument,
-    ...options,
-  });
-}
+export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
+  return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
 export const PersonalAccessTokensDocument = gql`
     query personalAccessTokens($filter: PersonalAccessTokensPaginationInput) {
   personalAccessTokens(filter: $filter) {
@@ -7023,17 +5253,9 @@ export const PersonalAccessTokensDocument = gql`
 }
     `;
 
-export function usePersonalAccessTokensQuery(
-  options?: Omit<
-    Urql.UseQueryArgs<PersonalAccessTokensQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    PersonalAccessTokensQuery,
-    PersonalAccessTokensQueryVariables
-  >({ query: PersonalAccessTokensDocument, ...options });
-}
+export function usePersonalAccessTokensQuery(options?: Omit<Urql.UseQueryArgs<PersonalAccessTokensQueryVariables>, 'query'>) {
+  return Urql.useQuery<PersonalAccessTokensQuery, PersonalAccessTokensQueryVariables>({ query: PersonalAccessTokensDocument, ...options });
+};
 export const ProjectMembershipsDocument = gql`
     query projectMemberships($where: ProjectWhereInput!) {
   project(where: $where) {
@@ -7049,14 +5271,9 @@ export const ProjectMembershipsDocument = gql`
 }
     `;
 
-export function useProjectMembershipsQuery(
-  options: Omit<Urql.UseQueryArgs<ProjectMembershipsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    ProjectMembershipsQuery,
-    ProjectMembershipsQueryVariables
-  >({ query: ProjectMembershipsDocument, ...options });
-}
+export function useProjectMembershipsQuery(options: Omit<Urql.UseQueryArgs<ProjectMembershipsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProjectMembershipsQuery, ProjectMembershipsQueryVariables>({ query: ProjectMembershipsDocument, ...options });
+};
 export const ProjectsDocument = gql`
     query projects($filter: ProjectsPaginationInput) {
   projects(filter: $filter) {
@@ -7079,14 +5296,9 @@ export const ProjectsDocument = gql`
 }
     `;
 
-export function useProjectsQuery(
-  options?: Omit<Urql.UseQueryArgs<ProjectsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProjectsQuery, ProjectsQueryVariables>({
-    query: ProjectsDocument,
-    ...options,
-  });
-}
+export function useProjectsQuery(options?: Omit<Urql.UseQueryArgs<ProjectsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProjectsQuery, ProjectsQueryVariables>({ query: ProjectsDocument, ...options });
+};
 export const RetryDeploymentDocument = gql`
     mutation retryDeployment($where: RetryDeploymentWhereInput!) {
   retryDeployment(where: $where) {
@@ -7121,11 +5333,8 @@ export const RetryDeploymentDocument = gql`
     `;
 
 export function useRetryDeploymentMutation() {
-  return Urql.useMutation<
-    RetryDeploymentMutation,
-    RetryDeploymentMutationVariables
-  >(RetryDeploymentDocument);
-}
+  return Urql.useMutation<RetryDeploymentMutation, RetryDeploymentMutationVariables>(RetryDeploymentDocument);
+};
 export const StopDeploymentDocument = gql`
     mutation stopDeployment($where: StopDeploymentWhereInput!) {
   stopDeployment(where: $where)
@@ -7133,11 +5342,8 @@ export const StopDeploymentDocument = gql`
     `;
 
 export function useStopDeploymentMutation() {
-  return Urql.useMutation<
-    StopDeploymentMutation,
-    StopDeploymentMutationVariables
-  >(StopDeploymentDocument);
-}
+  return Urql.useMutation<StopDeploymentMutation, StopDeploymentMutationVariables>(StopDeploymentDocument);
+};
 export const DeploymentDocument = gql`
     query deployment($where: DeploymentWhereInput!) {
   deployment(where: $where) {
@@ -7170,14 +5376,9 @@ export const DeploymentDocument = gql`
 }
     `;
 
-export function useDeploymentQuery(
-  options: Omit<Urql.UseQueryArgs<DeploymentQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DeploymentQuery, DeploymentQueryVariables>({
-    query: DeploymentDocument,
-    ...options,
-  });
-}
+export function useDeploymentQuery(options: Omit<Urql.UseQueryArgs<DeploymentQueryVariables>, 'query'>) {
+  return Urql.useQuery<DeploymentQuery, DeploymentQueryVariables>({ query: DeploymentDocument, ...options });
+};
 export const DeploymentStatusDocument = gql`
     query deploymentStatus($where: DeploymentWhereInput!) {
   deployment(where: $where) {
@@ -7189,14 +5390,9 @@ export const DeploymentStatusDocument = gql`
 }
     `;
 
-export function useDeploymentStatusQuery(
-  options: Omit<Urql.UseQueryArgs<DeploymentStatusQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DeploymentStatusQuery, DeploymentStatusQueryVariables>({
-    query: DeploymentStatusDocument,
-    ...options,
-  });
-}
+export function useDeploymentStatusQuery(options: Omit<Urql.UseQueryArgs<DeploymentStatusQueryVariables>, 'query'>) {
+  return Urql.useQuery<DeploymentStatusQuery, DeploymentStatusQueryVariables>({ query: DeploymentStatusDocument, ...options });
+};
 export const DeploymentsDocument = gql`
     query deployments($where: DeploymentsWhereInput!, $filter: DeploymentsPaginationInput) {
   deployments(where: $where, filter: $filter) {
@@ -7225,14 +5421,9 @@ export const DeploymentsDocument = gql`
 }
     `;
 
-export function useDeploymentsQuery(
-  options: Omit<Urql.UseQueryArgs<DeploymentsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DeploymentsQuery, DeploymentsQueryVariables>({
-    query: DeploymentsDocument,
-    ...options,
-  });
-}
+export function useDeploymentsQuery(options: Omit<Urql.UseQueryArgs<DeploymentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<DeploymentsQuery, DeploymentsQueryVariables>({ query: DeploymentsDocument, ...options });
+};
 export const CreateDnsConfigDocument = gql`
     mutation createDnsConfig($data: CreateDnsConfigDataInput!, $where: CreateDnsConfigWhereInput!) {
   createDnsConfig(data: $data, where: $where) {
@@ -7248,11 +5439,8 @@ export const CreateDnsConfigDocument = gql`
     `;
 
 export function useCreateDnsConfigMutation() {
-  return Urql.useMutation<
-    CreateDnsConfigMutation,
-    CreateDnsConfigMutationVariables
-  >(CreateDnsConfigDocument);
-}
+  return Urql.useMutation<CreateDnsConfigMutation, CreateDnsConfigMutationVariables>(CreateDnsConfigDocument);
+};
 export const CreateDomainDocument = gql`
     mutation createDomain($where: CreateDomainWhereInput!, $data: CreateDomainDataInput!) {
   createDomain(where: $where, data: $data) {
@@ -7263,10 +5451,8 @@ export const CreateDomainDocument = gql`
     `;
 
 export function useCreateDomainMutation() {
-  return Urql.useMutation<CreateDomainMutation, CreateDomainMutationVariables>(
-    CreateDomainDocument,
-  );
-}
+  return Urql.useMutation<CreateDomainMutation, CreateDomainMutationVariables>(CreateDomainDocument);
+};
 export const DeleteDomainDocument = gql`
     mutation deleteDomain($where: DeleteDomainWhereInput!) {
   deleteDomain(where: $where) {
@@ -7281,10 +5467,8 @@ export const DeleteDomainDocument = gql`
     `;
 
 export function useDeleteDomainMutation() {
-  return Urql.useMutation<DeleteDomainMutation, DeleteDomainMutationVariables>(
-    DeleteDomainDocument,
-  );
-}
+  return Urql.useMutation<DeleteDomainMutation, DeleteDomainMutationVariables>(DeleteDomainDocument);
+};
 export const SelectPrimaryDomainDocument = gql`
     mutation selectPrimaryDomain($where: SelectPrimaryDomainWhereInput!) {
   selectPrimaryDomain(where: $where) {
@@ -7296,11 +5480,8 @@ export const SelectPrimaryDomainDocument = gql`
     `;
 
 export function useSelectPrimaryDomainMutation() {
-  return Urql.useMutation<
-    SelectPrimaryDomainMutation,
-    SelectPrimaryDomainMutationVariables
-  >(SelectPrimaryDomainDocument);
-}
+  return Urql.useMutation<SelectPrimaryDomainMutation, SelectPrimaryDomainMutationVariables>(SelectPrimaryDomainDocument);
+};
 export const VerifyDnslinkDocument = gql`
     mutation verifyDnslink($where: VerifyDnslinkWhereInput!) {
   verifyDnslink(where: $where) {
@@ -7322,11 +5503,8 @@ export const VerifyDnslinkDocument = gql`
     `;
 
 export function useVerifyDnslinkMutation() {
-  return Urql.useMutation<
-    VerifyDnslinkMutation,
-    VerifyDnslinkMutationVariables
-  >(VerifyDnslinkDocument);
-}
+  return Urql.useMutation<VerifyDnslinkMutation, VerifyDnslinkMutationVariables>(VerifyDnslinkDocument);
+};
 export const VerifyDomainDocument = gql`
     mutation verifyDomain($where: VerifyDomainWhereInput!) {
   verifyDomain(where: $where) {
@@ -7348,10 +5526,8 @@ export const VerifyDomainDocument = gql`
     `;
 
 export function useVerifyDomainMutation() {
-  return Urql.useMutation<VerifyDomainMutation, VerifyDomainMutationVariables>(
-    VerifyDomainDocument,
-  );
-}
+  return Urql.useMutation<VerifyDomainMutation, VerifyDomainMutationVariables>(VerifyDomainDocument);
+};
 export const DomainDocument = gql`
     query domain($where: DomainWhereInput!) {
   domain(where: $where) {
@@ -7372,28 +5548,18 @@ export const DomainDocument = gql`
 }
     `;
 
-export function useDomainQuery(
-  options: Omit<Urql.UseQueryArgs<DomainQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DomainQuery, DomainQueryVariables>({
-    query: DomainDocument,
-    ...options,
-  });
-}
+export function useDomainQuery(options: Omit<Urql.UseQueryArgs<DomainQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainQuery, DomainQueryVariables>({ query: DomainDocument, ...options });
+};
 export const DomainAvailabilityDocument = gql`
     query domainAvailability($where: DomainAvailabilityWhereInput!) {
   domainAvailability(where: $where)
 }
     `;
 
-export function useDomainAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<DomainAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    DomainAvailabilityQuery,
-    DomainAvailabilityQueryVariables
-  >({ query: DomainAvailabilityDocument, ...options });
-}
+export function useDomainAvailabilityQuery(options: Omit<Urql.UseQueryArgs<DomainAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainAvailabilityQuery, DomainAvailabilityQueryVariables>({ query: DomainAvailabilityDocument, ...options });
+};
 export const DomainByHostnameDocument = gql`
     query domainByHostname($where: DomainByHostnameWhereInput!) {
   domainByHostname(where: $where) {
@@ -7406,14 +5572,9 @@ export const DomainByHostnameDocument = gql`
 }
     `;
 
-export function useDomainByHostnameQuery(
-  options: Omit<Urql.UseQueryArgs<DomainByHostnameQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DomainByHostnameQuery, DomainByHostnameQueryVariables>({
-    query: DomainByHostnameDocument,
-    ...options,
-  });
-}
+export function useDomainByHostnameQuery(options: Omit<Urql.UseQueryArgs<DomainByHostnameQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainByHostnameQuery, DomainByHostnameQueryVariables>({ query: DomainByHostnameDocument, ...options });
+};
 export const DomainDnsLinkStatusDocument = gql`
     query domainDnsLinkStatus($where: DomainWhereInput!) {
   domain(where: $where) {
@@ -7430,14 +5591,9 @@ export const DomainDnsLinkStatusDocument = gql`
 }
     `;
 
-export function useDomainDnsLinkStatusQuery(
-  options: Omit<Urql.UseQueryArgs<DomainDnsLinkStatusQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    DomainDnsLinkStatusQuery,
-    DomainDnsLinkStatusQueryVariables
-  >({ query: DomainDnsLinkStatusDocument, ...options });
-}
+export function useDomainDnsLinkStatusQuery(options: Omit<Urql.UseQueryArgs<DomainDnsLinkStatusQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainDnsLinkStatusQuery, DomainDnsLinkStatusQueryVariables>({ query: DomainDnsLinkStatusDocument, ...options });
+};
 export const DomainStatusDocument = gql`
     query domainStatus($where: DomainWhereInput!) {
   domain(where: $where) {
@@ -7454,14 +5610,9 @@ export const DomainStatusDocument = gql`
 }
     `;
 
-export function useDomainStatusQuery(
-  options: Omit<Urql.UseQueryArgs<DomainStatusQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DomainStatusQuery, DomainStatusQueryVariables>({
-    query: DomainStatusDocument,
-    ...options,
-  });
-}
+export function useDomainStatusQuery(options: Omit<Urql.UseQueryArgs<DomainStatusQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainStatusQuery, DomainStatusQueryVariables>({ query: DomainStatusDocument, ...options });
+};
 export const DomainsDocument = gql`
     query domains($filter: DomainsPaginationInput) {
   domains(filter: $filter) {
@@ -7476,14 +5627,9 @@ export const DomainsDocument = gql`
 }
     `;
 
-export function useDomainsQuery(
-  options?: Omit<Urql.UseQueryArgs<DomainsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DomainsQuery, DomainsQueryVariables>({
-    query: DomainsDocument,
-    ...options,
-  });
-}
+export function useDomainsQuery(options?: Omit<Urql.UseQueryArgs<DomainsQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainsQuery, DomainsQueryVariables>({ query: DomainsDocument, ...options });
+};
 export const DomainsByZoneIdDocument = gql`
     query domainsByZoneId($where: DomainsByZoneIdWhereInput!, $filter: DomainsByZoneIdPaginationInput) {
   domainsByZoneId(where: $where, filter: $filter) {
@@ -7513,14 +5659,9 @@ export const DomainsByZoneIdDocument = gql`
 }
     `;
 
-export function useDomainsByZoneIdQuery(
-  options: Omit<Urql.UseQueryArgs<DomainsByZoneIdQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<DomainsByZoneIdQuery, DomainsByZoneIdQueryVariables>({
-    query: DomainsByZoneIdDocument,
-    ...options,
-  });
-}
+export function useDomainsByZoneIdQuery(options: Omit<Urql.UseQueryArgs<DomainsByZoneIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<DomainsByZoneIdQuery, DomainsByZoneIdQueryVariables>({ query: DomainsByZoneIdDocument, ...options });
+};
 export const CreateEnsRecordDocument = gql`
     mutation createEnsRecord($where: CreateEnsRecordWhereInput!, $data: CreateEnsRecordDataInput!) {
   createEnsRecord(where: $where, data: $data) {
@@ -7531,11 +5672,8 @@ export const CreateEnsRecordDocument = gql`
     `;
 
 export function useCreateEnsRecordMutation() {
-  return Urql.useMutation<
-    CreateEnsRecordMutation,
-    CreateEnsRecordMutationVariables
-  >(CreateEnsRecordDocument);
-}
+  return Urql.useMutation<CreateEnsRecordMutation, CreateEnsRecordMutationVariables>(CreateEnsRecordDocument);
+};
 export const DeleteEnsRecordDocument = gql`
     mutation deleteEnsRecord($where: DeleteEnsRecordWhereInput!) {
   deleteEnsRecord(where: $where) {
@@ -7546,11 +5684,8 @@ export const DeleteEnsRecordDocument = gql`
     `;
 
 export function useDeleteEnsRecordMutation() {
-  return Urql.useMutation<
-    DeleteEnsRecordMutation,
-    DeleteEnsRecordMutationVariables
-  >(DeleteEnsRecordDocument);
-}
+  return Urql.useMutation<DeleteEnsRecordMutation, DeleteEnsRecordMutationVariables>(DeleteEnsRecordDocument);
+};
 export const VerifyEnsRecordDocument = gql`
     mutation verifyEnsRecord($where: VerifyEnsRecordWhereInput!) {
   verifyEnsRecord(where: $where) {
@@ -7561,25 +5696,17 @@ export const VerifyEnsRecordDocument = gql`
     `;
 
 export function useVerifyEnsRecordMutation() {
-  return Urql.useMutation<
-    VerifyEnsRecordMutation,
-    VerifyEnsRecordMutationVariables
-  >(VerifyEnsRecordDocument);
-}
+  return Urql.useMutation<VerifyEnsRecordMutation, VerifyEnsRecordMutationVariables>(VerifyEnsRecordDocument);
+};
 export const EnsNameAvailabilityDocument = gql`
     query ensNameAvailability($where: EnsNameAvailabilityWhereInput!) {
   ensNameAvailability(where: $where)
 }
     `;
 
-export function useEnsNameAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<EnsNameAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    EnsNameAvailabilityQuery,
-    EnsNameAvailabilityQueryVariables
-  >({ query: EnsNameAvailabilityDocument, ...options });
-}
+export function useEnsNameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<EnsNameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<EnsNameAvailabilityQuery, EnsNameAvailabilityQueryVariables>({ query: EnsNameAvailabilityDocument, ...options });
+};
 export const EnsRecordDocument = gql`
     query ensRecord($where: EnsRecordWhereInput!) {
   ensRecord(where: $where) {
@@ -7596,14 +5723,9 @@ export const EnsRecordDocument = gql`
 }
     `;
 
-export function useEnsRecordQuery(
-  options: Omit<Urql.UseQueryArgs<EnsRecordQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<EnsRecordQuery, EnsRecordQueryVariables>({
-    query: EnsRecordDocument,
-    ...options,
-  });
-}
+export function useEnsRecordQuery(options: Omit<Urql.UseQueryArgs<EnsRecordQueryVariables>, 'query'>) {
+  return Urql.useQuery<EnsRecordQuery, EnsRecordQueryVariables>({ query: EnsRecordDocument, ...options });
+};
 export const EnsRecordByNameDocument = gql`
     query ensRecordByName($where: EnsRecordByNameWhereInput!) {
   ensRecordByName(where: $where) {
@@ -7615,14 +5737,9 @@ export const EnsRecordByNameDocument = gql`
 }
     `;
 
-export function useEnsRecordByNameQuery(
-  options: Omit<Urql.UseQueryArgs<EnsRecordByNameQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<EnsRecordByNameQuery, EnsRecordByNameQueryVariables>({
-    query: EnsRecordByNameDocument,
-    ...options,
-  });
-}
+export function useEnsRecordByNameQuery(options: Omit<Urql.UseQueryArgs<EnsRecordByNameQueryVariables>, 'query'>) {
+  return Urql.useQuery<EnsRecordByNameQuery, EnsRecordByNameQueryVariables>({ query: EnsRecordByNameDocument, ...options });
+};
 export const EnsRecordsByIpnsIdDocument = gql`
     query ensRecordsByIpnsId($where: EnsRecordsByIpnsIdWhereInput!, $filter: EnsRecordsByIpnsIdPaginationInput) {
   ensRecordsByIpnsId(where: $where, filter: $filter) {
@@ -7636,14 +5753,9 @@ export const EnsRecordsByIpnsIdDocument = gql`
 }
     `;
 
-export function useEnsRecordsByIpnsIdQuery(
-  options: Omit<Urql.UseQueryArgs<EnsRecordsByIpnsIdQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    EnsRecordsByIpnsIdQuery,
-    EnsRecordsByIpnsIdQueryVariables
-  >({ query: EnsRecordsByIpnsIdDocument, ...options });
-}
+export function useEnsRecordsByIpnsIdQuery(options: Omit<Urql.UseQueryArgs<EnsRecordsByIpnsIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<EnsRecordsByIpnsIdQuery, EnsRecordsByIpnsIdQueryVariables>({ query: EnsRecordsByIpnsIdDocument, ...options });
+};
 export const EnsRecordStatusDocument = gql`
     query ensRecordStatus($where: EnsRecordWhereInput!) {
   ensRecord(where: $where) {
@@ -7653,14 +5765,9 @@ export const EnsRecordStatusDocument = gql`
 }
     `;
 
-export function useEnsRecordStatusQuery(
-  options: Omit<Urql.UseQueryArgs<EnsRecordStatusQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<EnsRecordStatusQuery, EnsRecordStatusQueryVariables>({
-    query: EnsRecordStatusDocument,
-    ...options,
-  });
-}
+export function useEnsRecordStatusQuery(options: Omit<Urql.UseQueryArgs<EnsRecordStatusQueryVariables>, 'query'>) {
+  return Urql.useQuery<EnsRecordStatusQuery, EnsRecordStatusQueryVariables>({ query: EnsRecordStatusDocument, ...options });
+};
 export const SiteDeploymentRequirementsDocument = gql`
     mutation siteDeploymentRequirements($where: SiteDeploymentRequirementsWhereInput!) {
   siteDeploymentRequirements(where: $where) {
@@ -7673,28 +5780,17 @@ export const SiteDeploymentRequirementsDocument = gql`
     `;
 
 export function useSiteDeploymentRequirementsMutation() {
-  return Urql.useMutation<
-    SiteDeploymentRequirementsMutation,
-    SiteDeploymentRequirementsMutationVariables
-  >(SiteDeploymentRequirementsDocument);
-}
+  return Urql.useMutation<SiteDeploymentRequirementsMutation, SiteDeploymentRequirementsMutationVariables>(SiteDeploymentRequirementsDocument);
+};
 export const GitApiIsRepoNameAvailableDocument = gql`
     query gitApiIsRepoNameAvailable($where: GitApiIsRepoNameAvailableWhereInput!) {
   gitApiIsRepoNameAvailable(where: $where)
 }
     `;
 
-export function useGitApiIsRepoNameAvailableQuery(
-  options: Omit<
-    Urql.UseQueryArgs<GitApiIsRepoNameAvailableQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    GitApiIsRepoNameAvailableQuery,
-    GitApiIsRepoNameAvailableQueryVariables
-  >({ query: GitApiIsRepoNameAvailableDocument, ...options });
-}
+export function useGitApiIsRepoNameAvailableQuery(options: Omit<Urql.UseQueryArgs<GitApiIsRepoNameAvailableQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitApiIsRepoNameAvailableQuery, GitApiIsRepoNameAvailableQueryVariables>({ query: GitApiIsRepoNameAvailableDocument, ...options });
+};
 export const GitBranchesDocument = gql`
     query gitBranches($where: GitApiBranchesWhereInput!) {
   gitApiBranches(where: $where) {
@@ -7703,14 +5799,9 @@ export const GitBranchesDocument = gql`
 }
     `;
 
-export function useGitBranchesQuery(
-  options: Omit<Urql.UseQueryArgs<GitBranchesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitBranchesQuery, GitBranchesQueryVariables>({
-    query: GitBranchesDocument,
-    ...options,
-  });
-}
+export function useGitBranchesQuery(options: Omit<Urql.UseQueryArgs<GitBranchesQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitBranchesQuery, GitBranchesQueryVariables>({ query: GitBranchesDocument, ...options });
+};
 export const GitInstallationsDocument = gql`
     query gitInstallations($where: GitApiInstallationsWhereInput!) {
   gitApiInstallations(where: $where) {
@@ -7722,14 +5813,9 @@ export const GitInstallationsDocument = gql`
 }
     `;
 
-export function useGitInstallationsQuery(
-  options: Omit<Urql.UseQueryArgs<GitInstallationsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitInstallationsQuery, GitInstallationsQueryVariables>({
-    query: GitInstallationsDocument,
-    ...options,
-  });
-}
+export function useGitInstallationsQuery(options: Omit<Urql.UseQueryArgs<GitInstallationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitInstallationsQuery, GitInstallationsQueryVariables>({ query: GitInstallationsDocument, ...options });
+};
 export const GitIntegrationDocument = gql`
     query gitIntegration($where: GitIntegrationWhereInput!) {
   gitIntegration(where: $where) {
@@ -7738,14 +5824,9 @@ export const GitIntegrationDocument = gql`
 }
     `;
 
-export function useGitIntegrationQuery(
-  options: Omit<Urql.UseQueryArgs<GitIntegrationQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitIntegrationQuery, GitIntegrationQueryVariables>({
-    query: GitIntegrationDocument,
-    ...options,
-  });
-}
+export function useGitIntegrationQuery(options: Omit<Urql.UseQueryArgs<GitIntegrationQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitIntegrationQuery, GitIntegrationQueryVariables>({ query: GitIntegrationDocument, ...options });
+};
 export const GitProviderDocument = gql`
     query gitProvider($where: GitProviderWhereInput!) {
   gitProvider(where: $where) {
@@ -7759,14 +5840,9 @@ export const GitProviderDocument = gql`
 }
     `;
 
-export function useGitProviderQuery(
-  options: Omit<Urql.UseQueryArgs<GitProviderQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitProviderQuery, GitProviderQueryVariables>({
-    query: GitProviderDocument,
-    ...options,
-  });
-}
+export function useGitProviderQuery(options: Omit<Urql.UseQueryArgs<GitProviderQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitProviderQuery, GitProviderQueryVariables>({ query: GitProviderDocument, ...options });
+};
 export const GitProvidersDocument = gql`
     query gitProviders {
   gitProviders {
@@ -7780,14 +5856,9 @@ export const GitProvidersDocument = gql`
 }
     `;
 
-export function useGitProvidersQuery(
-  options?: Omit<Urql.UseQueryArgs<GitProvidersQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitProvidersQuery, GitProvidersQueryVariables>({
-    query: GitProvidersDocument,
-    ...options,
-  });
-}
+export function useGitProvidersQuery(options?: Omit<Urql.UseQueryArgs<GitProvidersQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitProvidersQuery, GitProvidersQueryVariables>({ query: GitProvidersDocument, ...options });
+};
 export const GitRepositoriesDocument = gql`
     query gitRepositories($where: GitApiInstallationsWhereInput!) {
   gitApiInstallations(where: $where) {
@@ -7805,14 +5876,9 @@ export const GitRepositoriesDocument = gql`
 }
     `;
 
-export function useGitRepositoriesQuery(
-  options: Omit<Urql.UseQueryArgs<GitRepositoriesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitRepositoriesQuery, GitRepositoriesQueryVariables>({
-    query: GitRepositoriesDocument,
-    ...options,
-  });
-}
+export function useGitRepositoriesQuery(options: Omit<Urql.UseQueryArgs<GitRepositoriesQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitRepositoriesQuery, GitRepositoriesQueryVariables>({ query: GitRepositoriesDocument, ...options });
+};
 export const GitSiteBuildSettingsDocument = gql`
     query gitSiteBuildSettings($where: SiteBuildSettingsWhereInput!) {
   siteBuildSettings(where: $where) {
@@ -7825,14 +5891,9 @@ export const GitSiteBuildSettingsDocument = gql`
 }
     `;
 
-export function useGitSiteBuildSettingsQuery(
-  options: Omit<Urql.UseQueryArgs<GitSiteBuildSettingsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    GitSiteBuildSettingsQuery,
-    GitSiteBuildSettingsQueryVariables
-  >({ query: GitSiteBuildSettingsDocument, ...options });
-}
+export function useGitSiteBuildSettingsQuery(options: Omit<Urql.UseQueryArgs<GitSiteBuildSettingsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitSiteBuildSettingsQuery, GitSiteBuildSettingsQueryVariables>({ query: GitSiteBuildSettingsDocument, ...options });
+};
 export const GitTreeDocument = gql`
     query gitTree($where: GitApiTreeWhereInput!) {
   gitApiTree(where: $where) {
@@ -7846,14 +5907,9 @@ export const GitTreeDocument = gql`
 }
     `;
 
-export function useGitTreeQuery(
-  options: Omit<Urql.UseQueryArgs<GitTreeQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<GitTreeQuery, GitTreeQueryVariables>({
-    query: GitTreeDocument,
-    ...options,
-  });
-}
+export function useGitTreeQuery(options: Omit<Urql.UseQueryArgs<GitTreeQueryVariables>, 'query'>) {
+  return Urql.useQuery<GitTreeQuery, GitTreeQueryVariables>({ query: GitTreeDocument, ...options });
+};
 export const CreateRepositoryFromTemplateDocument = gql`
     mutation createRepositoryFromTemplate($where: CreateGithubRepoFromTemplateWhereInput!, $data: CreateGithubRepoFromTemplateDataInput!) {
   createGithubRepoFromTemplate(where: $where, data: $data) {
@@ -7867,11 +5923,8 @@ export const CreateRepositoryFromTemplateDocument = gql`
     `;
 
 export function useCreateRepositoryFromTemplateMutation() {
-  return Urql.useMutation<
-    CreateRepositoryFromTemplateMutation,
-    CreateRepositoryFromTemplateMutationVariables
-  >(CreateRepositoryFromTemplateDocument);
-}
+  return Urql.useMutation<CreateRepositoryFromTemplateMutation, CreateRepositoryFromTemplateMutationVariables>(CreateRepositoryFromTemplateDocument);
+};
 export const CreateIpnsRecordForSiteDocument = gql`
     mutation createIpnsRecordForSite($where: CreateIpnsRecordForSiteWhereInput!) {
   createIpnsRecordForSite(where: $where) {
@@ -7884,11 +5937,8 @@ export const CreateIpnsRecordForSiteDocument = gql`
     `;
 
 export function useCreateIpnsRecordForSiteMutation() {
-  return Urql.useMutation<
-    CreateIpnsRecordForSiteMutation,
-    CreateIpnsRecordForSiteMutationVariables
-  >(CreateIpnsRecordForSiteDocument);
-}
+  return Urql.useMutation<CreateIpnsRecordForSiteMutation, CreateIpnsRecordForSiteMutationVariables>(CreateIpnsRecordForSiteDocument);
+};
 export const IpnsRecordDocument = gql`
     query ipnsRecord($where: IpnsRecordWhereInput!) {
   ipnsRecord(where: $where) {
@@ -7900,14 +5950,9 @@ export const IpnsRecordDocument = gql`
 }
     `;
 
-export function useIpnsRecordQuery(
-  options: Omit<Urql.UseQueryArgs<IpnsRecordQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<IpnsRecordQuery, IpnsRecordQueryVariables>({
-    query: IpnsRecordDocument,
-    ...options,
-  });
-}
+export function useIpnsRecordQuery(options: Omit<Urql.UseQueryArgs<IpnsRecordQueryVariables>, 'query'>) {
+  return Urql.useQuery<IpnsRecordQuery, IpnsRecordQueryVariables>({ query: IpnsRecordDocument, ...options });
+};
 export const CreateMigrationRequestsFromTokenDocument = gql`
     mutation createMigrationRequestsFromToken($data: CreateMigrationRequestsFromTokenDataInput!) {
   createMigrationRequestsFromToken(data: $data) {
@@ -7927,11 +5972,8 @@ export const CreateMigrationRequestsFromTokenDocument = gql`
     `;
 
 export function useCreateMigrationRequestsFromTokenMutation() {
-  return Urql.useMutation<
-    CreateMigrationRequestsFromTokenMutation,
-    CreateMigrationRequestsFromTokenMutationVariables
-  >(CreateMigrationRequestsFromTokenDocument);
-}
+  return Urql.useMutation<CreateMigrationRequestsFromTokenMutation, CreateMigrationRequestsFromTokenMutationVariables>(CreateMigrationRequestsFromTokenDocument);
+};
 export const CreateMigrationTokenDocument = gql`
     mutation createMigrationToken($data: CreateMigrationTokenDataInput!) {
   createMigrationToken(data: $data)
@@ -7939,11 +5981,8 @@ export const CreateMigrationTokenDocument = gql`
     `;
 
 export function useCreateMigrationTokenMutation() {
-  return Urql.useMutation<
-    CreateMigrationTokenMutation,
-    CreateMigrationTokenMutationVariables
-  >(CreateMigrationTokenDocument);
-}
+  return Urql.useMutation<CreateMigrationTokenMutation, CreateMigrationTokenMutationVariables>(CreateMigrationTokenDocument);
+};
 export const MigrationRequestsDocument = gql`
     query migrationRequests {
   migrationRequests {
@@ -7964,13 +6003,9 @@ export const MigrationRequestsDocument = gql`
 }
     `;
 
-export function useMigrationRequestsQuery(
-  options?: Omit<Urql.UseQueryArgs<MigrationRequestsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<MigrationRequestsQuery, MigrationRequestsQueryVariables>(
-    { query: MigrationRequestsDocument, ...options },
-  );
-}
+export function useMigrationRequestsQuery(options?: Omit<Urql.UseQueryArgs<MigrationRequestsQueryVariables>, 'query'>) {
+  return Urql.useQuery<MigrationRequestsQuery, MigrationRequestsQueryVariables>({ query: MigrationRequestsDocument, ...options });
+};
 export const MigrationTeamInfosFromTokenDocument = gql`
     query migrationTeamInfosFromToken($where: MigrationTeamInfosFromTokenWhereInput!) {
   migrationTeamInfosFromToken(where: $where) {
@@ -7983,17 +6018,9 @@ export const MigrationTeamInfosFromTokenDocument = gql`
 }
     `;
 
-export function useMigrationTeamInfosFromTokenQuery(
-  options: Omit<
-    Urql.UseQueryArgs<MigrationTeamInfosFromTokenQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    MigrationTeamInfosFromTokenQuery,
-    MigrationTeamInfosFromTokenQueryVariables
-  >({ query: MigrationTeamInfosFromTokenDocument, ...options });
-}
+export function useMigrationTeamInfosFromTokenQuery(options: Omit<Urql.UseQueryArgs<MigrationTeamInfosFromTokenQueryVariables>, 'query'>) {
+  return Urql.useQuery<MigrationTeamInfosFromTokenQuery, MigrationTeamInfosFromTokenQueryVariables>({ query: MigrationTeamInfosFromTokenDocument, ...options });
+};
 export const DeletePinDocument = gql`
     mutation deletePin($where: DeletePinWhereInput!) {
   deletePin(where: $where) {
@@ -8003,10 +6030,8 @@ export const DeletePinDocument = gql`
     `;
 
 export function useDeletePinMutation() {
-  return Urql.useMutation<DeletePinMutation, DeletePinMutationVariables>(
-    DeletePinDocument,
-  );
-}
+  return Urql.useMutation<DeletePinMutation, DeletePinMutationVariables>(DeletePinDocument);
+};
 export const UpdatePinDocument = gql`
     mutation updatePin($data: UpdatePinDataInput!, $where: UpdatePinWhereInput!) {
   updatePin(data: $data, where: $where) {
@@ -8021,10 +6046,8 @@ export const UpdatePinDocument = gql`
     `;
 
 export function useUpdatePinMutation() {
-  return Urql.useMutation<UpdatePinMutation, UpdatePinMutationVariables>(
-    UpdatePinDocument,
-  );
-}
+  return Urql.useMutation<UpdatePinMutation, UpdatePinMutationVariables>(UpdatePinDocument);
+};
 export const ListFolderDocument = gql`
     query listFolder($where: ListFolderWhereInput!, $filter: ListFolderPaginationInput) {
   listFolder(where: $where, filter: $filter) {
@@ -8038,14 +6061,9 @@ export const ListFolderDocument = gql`
     ${PinFragmentFragmentDoc}
 ${FolderFragmentFragmentDoc}`;
 
-export function useListFolderQuery(
-  options: Omit<Urql.UseQueryArgs<ListFolderQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ListFolderQuery, ListFolderQueryVariables>({
-    query: ListFolderDocument,
-    ...options,
-  });
-}
+export function useListFolderQuery(options: Omit<Urql.UseQueryArgs<ListFolderQueryVariables>, 'query'>) {
+  return Urql.useQuery<ListFolderQuery, ListFolderQueryVariables>({ query: ListFolderDocument, ...options });
+};
 export const PinsDocument = gql`
     query pins($filter: PinsPaginationInput) {
   pins(filter: $filter) {
@@ -8057,14 +6075,9 @@ export const PinsDocument = gql`
 }
     ${PinFragmentFragmentDoc}`;
 
-export function usePinsQuery(
-  options?: Omit<Urql.UseQueryArgs<PinsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PinsQuery, PinsQueryVariables>({
-    query: PinsDocument,
-    ...options,
-  });
-}
+export function usePinsQuery(options?: Omit<Urql.UseQueryArgs<PinsQueryVariables>, 'query'>) {
+  return Urql.useQuery<PinsQuery, PinsQueryVariables>({ query: PinsDocument, ...options });
+};
 export const PinDocument = gql`
     query pin($where: PinWhereInput!) {
   pin(where: $where) {
@@ -8073,31 +6086,18 @@ export const PinDocument = gql`
 }
     ${PinFragmentFragmentDoc}`;
 
-export function usePinQuery(
-  options: Omit<Urql.UseQueryArgs<PinQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PinQuery, PinQueryVariables>({
-    query: PinDocument,
-    ...options,
-  });
-}
+export function usePinQuery(options: Omit<Urql.UseQueryArgs<PinQueryVariables>, 'query'>) {
+  return Urql.useQuery<PinQuery, PinQueryVariables>({ query: PinDocument, ...options });
+};
 export const PinNameAvailabilityInParentFolderDocument = gql`
     query pinNameAvailabilityInParentFolder($data: PinNameAvailabilityInParentFolderDataInput!, $where: PinNameAvailabilityInParentFolderWhereInput!) {
   pinNameAvailabilityInParentFolder(data: $data, where: $where)
 }
     `;
 
-export function usePinNameAvailabilityInParentFolderQuery(
-  options: Omit<
-    Urql.UseQueryArgs<PinNameAvailabilityInParentFolderQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    PinNameAvailabilityInParentFolderQuery,
-    PinNameAvailabilityInParentFolderQueryVariables
-  >({ query: PinNameAvailabilityInParentFolderDocument, ...options });
-}
+export function usePinNameAvailabilityInParentFolderQuery(options: Omit<Urql.UseQueryArgs<PinNameAvailabilityInParentFolderQueryVariables>, 'query'>) {
+  return Urql.useQuery<PinNameAvailabilityInParentFolderQuery, PinNameAvailabilityInParentFolderQueryVariables>({ query: PinNameAvailabilityInParentFolderDocument, ...options });
+};
 export const CreatePrivateGatewayDocument = gql`
     mutation createPrivateGateway($where: CreatePrivateGatewayWhereInput!, $data: CreatePrivateGatewayDataInput!) {
   createPrivateGateway(where: $where, data: $data) {
@@ -8112,11 +6112,8 @@ export const CreatePrivateGatewayDocument = gql`
     `;
 
 export function useCreatePrivateGatewayMutation() {
-  return Urql.useMutation<
-    CreatePrivateGatewayMutation,
-    CreatePrivateGatewayMutationVariables
-  >(CreatePrivateGatewayDocument);
-}
+  return Urql.useMutation<CreatePrivateGatewayMutation, CreatePrivateGatewayMutationVariables>(CreatePrivateGatewayDocument);
+};
 export const DeletePrivateGatewayDocument = gql`
     mutation deletePrivateGateway($where: DeletePrivateGatewayWhereInput!) {
   deletePrivateGateway(where: $where) {
@@ -8127,11 +6124,8 @@ export const DeletePrivateGatewayDocument = gql`
     `;
 
 export function useDeletePrivateGatewayMutation() {
-  return Urql.useMutation<
-    DeletePrivateGatewayMutation,
-    DeletePrivateGatewayMutationVariables
-  >(DeletePrivateGatewayDocument);
-}
+  return Urql.useMutation<DeletePrivateGatewayMutation, DeletePrivateGatewayMutationVariables>(DeletePrivateGatewayDocument);
+};
 export const DeletePrivateGatewayDependenciesDocument = gql`
     query deletePrivateGatewayDependencies($where: PrivateGatewayWhereInput!) {
   privateGateway(where: $where) {
@@ -8158,34 +6152,18 @@ export const DeletePrivateGatewayDependenciesDocument = gql`
 }
     `;
 
-export function useDeletePrivateGatewayDependenciesQuery(
-  options: Omit<
-    Urql.UseQueryArgs<DeletePrivateGatewayDependenciesQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    DeletePrivateGatewayDependenciesQuery,
-    DeletePrivateGatewayDependenciesQueryVariables
-  >({ query: DeletePrivateGatewayDependenciesDocument, ...options });
-}
+export function useDeletePrivateGatewayDependenciesQuery(options: Omit<Urql.UseQueryArgs<DeletePrivateGatewayDependenciesQueryVariables>, 'query'>) {
+  return Urql.useQuery<DeletePrivateGatewayDependenciesQuery, DeletePrivateGatewayDependenciesQueryVariables>({ query: DeletePrivateGatewayDependenciesDocument, ...options });
+};
 export const PrivateGatewayNameAvailabilityDocument = gql`
     query privateGatewayNameAvailability($where: PrivateGatewayNameAvailabilityWhereInput!) {
   privateGatewayNameAvailability(where: $where)
 }
     `;
 
-export function usePrivateGatewayNameAvailabilityQuery(
-  options: Omit<
-    Urql.UseQueryArgs<PrivateGatewayNameAvailabilityQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    PrivateGatewayNameAvailabilityQuery,
-    PrivateGatewayNameAvailabilityQueryVariables
-  >({ query: PrivateGatewayNameAvailabilityDocument, ...options });
-}
+export function usePrivateGatewayNameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<PrivateGatewayNameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<PrivateGatewayNameAvailabilityQuery, PrivateGatewayNameAvailabilityQueryVariables>({ query: PrivateGatewayNameAvailabilityDocument, ...options });
+};
 export const PrivateGatewaysDocument = gql`
     query privateGateways($filter: PrivateGatewaysPaginationInput) {
   privateGateways(filter: $filter) {
@@ -8228,14 +6206,9 @@ export const PrivateGatewaysDocument = gql`
 }
     `;
 
-export function usePrivateGatewaysQuery(
-  options?: Omit<Urql.UseQueryArgs<PrivateGatewaysQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PrivateGatewaysQuery, PrivateGatewaysQueryVariables>({
-    query: PrivateGatewaysDocument,
-    ...options,
-  });
-}
+export function usePrivateGatewaysQuery(options?: Omit<Urql.UseQueryArgs<PrivateGatewaysQueryVariables>, 'query'>) {
+  return Urql.useQuery<PrivateGatewaysQuery, PrivateGatewaysQueryVariables>({ query: PrivateGatewaysDocument, ...options });
+};
 export const CreateProjectDocument = gql`
     mutation createProject($data: CreateProjectDataInput!) {
   createProject(data: $data) {
@@ -8256,11 +6229,8 @@ export const CreateProjectDocument = gql`
     `;
 
 export function useCreateProjectMutation() {
-  return Urql.useMutation<
-    CreateProjectMutation,
-    CreateProjectMutationVariables
-  >(CreateProjectDocument);
-}
+  return Urql.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument);
+};
 export const DeleteMembershipDocument = gql`
     mutation deleteMembership($where: DeleteMembershipWhereInput!) {
   deleteMembership(where: $where) {
@@ -8270,11 +6240,8 @@ export const DeleteMembershipDocument = gql`
     `;
 
 export function useDeleteMembershipMutation() {
-  return Urql.useMutation<
-    DeleteMembershipMutation,
-    DeleteMembershipMutationVariables
-  >(DeleteMembershipDocument);
-}
+  return Urql.useMutation<DeleteMembershipMutation, DeleteMembershipMutationVariables>(DeleteMembershipDocument);
+};
 export const DeleteProjectDocument = gql`
     mutation deleteProject($where: DeleteProjectWhereInput!) {
   deleteProject(where: $where) {
@@ -8285,11 +6252,8 @@ export const DeleteProjectDocument = gql`
     `;
 
 export function useDeleteProjectMutation() {
-  return Urql.useMutation<
-    DeleteProjectMutation,
-    DeleteProjectMutationVariables
-  >(DeleteProjectDocument);
-}
+  return Urql.useMutation<DeleteProjectMutation, DeleteProjectMutationVariables>(DeleteProjectDocument);
+};
 export const CreateFleekFunctionDocument = gql`
     mutation createFleekFunction($data: CreateFleekFunctionDataInput!) {
   createFleekFunction(data: $data) {
@@ -8299,11 +6263,8 @@ export const CreateFleekFunctionDocument = gql`
     ${FleekFunctionFragmentFragmentDoc}`;
 
 export function useCreateFleekFunctionMutation() {
-  return Urql.useMutation<
-    CreateFleekFunctionMutation,
-    CreateFleekFunctionMutationVariables
-  >(CreateFleekFunctionDocument);
-}
+  return Urql.useMutation<CreateFleekFunctionMutation, CreateFleekFunctionMutationVariables>(CreateFleekFunctionDocument);
+};
 export const DeleteFleekFunctionDocument = gql`
     mutation deleteFleekFunction($where: DeleteFleekFunctionWhereInput!) {
   deleteFleekFunction(where: $where) {
@@ -8313,11 +6274,8 @@ export const DeleteFleekFunctionDocument = gql`
     `;
 
 export function useDeleteFleekFunctionMutation() {
-  return Urql.useMutation<
-    DeleteFleekFunctionMutation,
-    DeleteFleekFunctionMutationVariables
-  >(DeleteFleekFunctionDocument);
-}
+  return Urql.useMutation<DeleteFleekFunctionMutation, DeleteFleekFunctionMutationVariables>(DeleteFleekFunctionDocument);
+};
 export const UpdateFleekFunctionDocument = gql`
     mutation updateFleekFunction($where: UpdateFleekFunctionWhereInput!, $data: UpdateFleekFunctionDataInput!) {
   updateFleekFunction(where: $where, data: $data) {
@@ -8327,11 +6285,8 @@ export const UpdateFleekFunctionDocument = gql`
     ${FleekFunctionFragmentFragmentDoc}`;
 
 export function useUpdateFleekFunctionMutation() {
-  return Urql.useMutation<
-    UpdateFleekFunctionMutation,
-    UpdateFleekFunctionMutationVariables
-  >(UpdateFleekFunctionDocument);
-}
+  return Urql.useMutation<UpdateFleekFunctionMutation, UpdateFleekFunctionMutationVariables>(UpdateFleekFunctionDocument);
+};
 export const LeaveProjectDocument = gql`
     mutation leaveProject($where: LeaveProjectWhereInput!) {
   leaveProject(where: $where) {
@@ -8341,10 +6296,8 @@ export const LeaveProjectDocument = gql`
     `;
 
 export function useLeaveProjectMutation() {
-  return Urql.useMutation<LeaveProjectMutation, LeaveProjectMutationVariables>(
-    LeaveProjectDocument,
-  );
-}
+  return Urql.useMutation<LeaveProjectMutation, LeaveProjectMutationVariables>(LeaveProjectDocument);
+};
 export const UpdateProjectDocument = gql`
     mutation updateProject($data: UpdateProjectDataInput!, $where: UpdateProjectWhereInput!) {
   updateProject(data: $data, where: $where) {
@@ -8359,11 +6312,8 @@ export const UpdateProjectDocument = gql`
     `;
 
 export function useUpdateProjectMutation() {
-  return Urql.useMutation<
-    UpdateProjectMutation,
-    UpdateProjectMutationVariables
-  >(UpdateProjectDocument);
-}
+  return Urql.useMutation<UpdateProjectMutation, UpdateProjectMutationVariables>(UpdateProjectDocument);
+};
 export const FleekFunctionsDocument = gql`
     query fleekFunctions($filter: FleekFunctionsPaginationInput, $where: FleekFunctionsWhereInput) {
   fleekFunctions(filter: $filter, where: $where) {
@@ -8376,14 +6326,9 @@ export const FleekFunctionsDocument = gql`
 }
     ${FleekFunctionFragmentFragmentDoc}`;
 
-export function useFleekFunctionsQuery(
-  options?: Omit<Urql.UseQueryArgs<FleekFunctionsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<FleekFunctionsQuery, FleekFunctionsQueryVariables>({
-    query: FleekFunctionsDocument,
-    ...options,
-  });
-}
+export function useFleekFunctionsQuery(options?: Omit<Urql.UseQueryArgs<FleekFunctionsQueryVariables>, 'query'>) {
+  return Urql.useQuery<FleekFunctionsQuery, FleekFunctionsQueryVariables>({ query: FleekFunctionsDocument, ...options });
+};
 export const FleekFunctionDetailDocument = gql`
     query fleekFunctionDetail($where: FleekFunctionByNameWhereInput!) {
   fleekFunctionByName(where: $where) {
@@ -8392,14 +6337,9 @@ export const FleekFunctionDetailDocument = gql`
 }
     ${FleekFunctionFragmentFragmentDoc}`;
 
-export function useFleekFunctionDetailQuery(
-  options: Omit<Urql.UseQueryArgs<FleekFunctionDetailQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    FleekFunctionDetailQuery,
-    FleekFunctionDetailQueryVariables
-  >({ query: FleekFunctionDetailDocument, ...options });
-}
+export function useFleekFunctionDetailQuery(options: Omit<Urql.UseQueryArgs<FleekFunctionDetailQueryVariables>, 'query'>) {
+  return Urql.useQuery<FleekFunctionDetailQuery, FleekFunctionDetailQueryVariables>({ query: FleekFunctionDetailDocument, ...options });
+};
 export const FleekFunctionDeploymentsDocument = gql`
     query fleekFunctionDeployments($fleekFunctionId: ID!, $page: Int) {
   fleekFunctionDeployments(
@@ -8418,17 +6358,9 @@ export const FleekFunctionDeploymentsDocument = gql`
 }
     `;
 
-export function useFleekFunctionDeploymentsQuery(
-  options: Omit<
-    Urql.UseQueryArgs<FleekFunctionDeploymentsQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    FleekFunctionDeploymentsQuery,
-    FleekFunctionDeploymentsQueryVariables
-  >({ query: FleekFunctionDeploymentsDocument, ...options });
-}
+export function useFleekFunctionDeploymentsQuery(options: Omit<Urql.UseQueryArgs<FleekFunctionDeploymentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<FleekFunctionDeploymentsQuery, FleekFunctionDeploymentsQueryVariables>({ query: FleekFunctionDeploymentsDocument, ...options });
+};
 export const ProjectDocument = gql`
     query project($where: ProjectWhereInput!) {
   project(where: $where) {
@@ -8450,14 +6382,9 @@ export const ProjectDocument = gql`
 }
     `;
 
-export function useProjectQuery(
-  options: Omit<Urql.UseQueryArgs<ProjectQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProjectQuery, ProjectQueryVariables>({
-    query: ProjectDocument,
-    ...options,
-  });
-}
+export function useProjectQuery(options: Omit<Urql.UseQueryArgs<ProjectQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProjectQuery, ProjectQueryVariables>({ query: ProjectDocument, ...options });
+};
 export const CreateSalesContactRequestDocument = gql`
     mutation createSalesContactRequest($data: CreateSalesContactRequestDataInput!) {
   createSalesContactRequest(data: $data) {
@@ -8470,11 +6397,8 @@ export const CreateSalesContactRequestDocument = gql`
     `;
 
 export function useCreateSalesContactRequestMutation() {
-  return Urql.useMutation<
-    CreateSalesContactRequestMutation,
-    CreateSalesContactRequestMutationVariables
-  >(CreateSalesContactRequestDocument);
-}
+  return Urql.useMutation<CreateSalesContactRequestMutation, CreateSalesContactRequestMutationVariables>(CreateSalesContactRequestDocument);
+};
 export const CreateSecretDocument = gql`
     mutation createSecret($data: CreateSecretDataInput!) {
   createSecret(data: $data) {
@@ -8484,10 +6408,8 @@ export const CreateSecretDocument = gql`
     `;
 
 export function useCreateSecretMutation() {
-  return Urql.useMutation<CreateSecretMutation, CreateSecretMutationVariables>(
-    CreateSecretDocument,
-  );
-}
+  return Urql.useMutation<CreateSecretMutation, CreateSecretMutationVariables>(CreateSecretDocument);
+};
 export const DeleteSecretDocument = gql`
     mutation deleteSecret($where: DeleteSecretWhereInput!) {
   deleteSecret(where: $where) {
@@ -8497,10 +6419,8 @@ export const DeleteSecretDocument = gql`
     `;
 
 export function useDeleteSecretMutation() {
-  return Urql.useMutation<DeleteSecretMutation, DeleteSecretMutationVariables>(
-    DeleteSecretDocument,
-  );
-}
+  return Urql.useMutation<DeleteSecretMutation, DeleteSecretMutationVariables>(DeleteSecretDocument);
+};
 export const UpdateSecretDocument = gql`
     mutation updateSecret($where: UpdateSecretWhereInput!, $data: UpdateSecretDataInput!) {
   updateSecret(where: $where, data: $data) {
@@ -8512,10 +6432,8 @@ export const UpdateSecretDocument = gql`
     `;
 
 export function useUpdateSecretMutation() {
-  return Urql.useMutation<UpdateSecretMutation, UpdateSecretMutationVariables>(
-    UpdateSecretDocument,
-  );
-}
+  return Urql.useMutation<UpdateSecretMutation, UpdateSecretMutationVariables>(UpdateSecretDocument);
+};
 export const CreateSiteDocument = gql`
     mutation createSite($data: CreateSiteDataInput!) {
   createSite(data: $data) {
@@ -8528,6 +6446,7 @@ export const CreateSiteDocument = gql`
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -8543,10 +6462,8 @@ export const CreateSiteDocument = gql`
     `;
 
 export function useCreateSiteMutation() {
-  return Urql.useMutation<CreateSiteMutation, CreateSiteMutationVariables>(
-    CreateSiteDocument,
-  );
-}
+  return Urql.useMutation<CreateSiteMutation, CreateSiteMutationVariables>(CreateSiteDocument);
+};
 export const DeleteSiteDocument = gql`
     mutation deleteSite($where: DeleteSiteWhereInput!) {
   deleteSite(where: $where) {
@@ -8556,10 +6473,8 @@ export const DeleteSiteDocument = gql`
     `;
 
 export function useDeleteSiteMutation() {
-  return Urql.useMutation<DeleteSiteMutation, DeleteSiteMutationVariables>(
-    DeleteSiteDocument,
-  );
-}
+  return Urql.useMutation<DeleteSiteMutation, DeleteSiteMutationVariables>(DeleteSiteDocument);
+};
 export const PurgeSiteCacheDocument = gql`
     mutation purgeSiteCache($where: PurgeSiteCacheWhereInput!) {
   purgeSiteCache(where: $where) {
@@ -8569,11 +6484,8 @@ export const PurgeSiteCacheDocument = gql`
     `;
 
 export function usePurgeSiteCacheMutation() {
-  return Urql.useMutation<
-    PurgeSiteCacheMutation,
-    PurgeSiteCacheMutationVariables
-  >(PurgeSiteCacheDocument);
-}
+  return Urql.useMutation<PurgeSiteCacheMutation, PurgeSiteCacheMutationVariables>(PurgeSiteCacheDocument);
+};
 export const TriggerDeploymentDocument = gql`
     mutation triggerDeployment($where: TriggerDeploymentWhereInput!) {
   triggerDeployment(where: $where) {
@@ -8609,11 +6521,8 @@ export const TriggerDeploymentDocument = gql`
     `;
 
 export function useTriggerDeploymentMutation() {
-  return Urql.useMutation<
-    TriggerDeploymentMutation,
-    TriggerDeploymentMutationVariables
-  >(TriggerDeploymentDocument);
-}
+  return Urql.useMutation<TriggerDeploymentMutation, TriggerDeploymentMutationVariables>(TriggerDeploymentDocument);
+};
 export const UpdateSiteDocument = gql`
     mutation updateSite($data: UpdateSiteDataInput!, $where: UpdateSiteWhereInput!) {
   updateSite(data: $data, where: $where) {
@@ -8626,6 +6535,7 @@ export const UpdateSiteDocument = gql`
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -8638,10 +6548,8 @@ export const UpdateSiteDocument = gql`
     `;
 
 export function useUpdateSiteMutation() {
-  return Urql.useMutation<UpdateSiteMutation, UpdateSiteMutationVariables>(
-    UpdateSiteDocument,
-  );
-}
+  return Urql.useMutation<UpdateSiteMutation, UpdateSiteMutationVariables>(UpdateSiteDocument);
+};
 export const SiteQuotaDocument = gql`
     query siteQuota($where: SiteQuotaWhereInput!) {
   siteQuota(where: $where) {
@@ -8653,28 +6561,18 @@ export const SiteQuotaDocument = gql`
 }
     `;
 
-export function useSiteQuotaQuery(
-  options: Omit<Urql.UseQueryArgs<SiteQuotaQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SiteQuotaQuery, SiteQuotaQueryVariables>({
-    query: SiteQuotaDocument,
-    ...options,
-  });
-}
+export function useSiteQuotaQuery(options: Omit<Urql.UseQueryArgs<SiteQuotaQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteQuotaQuery, SiteQuotaQueryVariables>({ query: SiteQuotaDocument, ...options });
+};
 export const SecretAvailabilityDocument = gql`
     query secretAvailability($where: SecretAvailabilityWhereInput!) {
   secretAvailability(where: $where)
 }
     `;
 
-export function useSecretAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<SecretAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    SecretAvailabilityQuery,
-    SecretAvailabilityQueryVariables
-  >({ query: SecretAvailabilityDocument, ...options });
-}
+export function useSecretAvailabilityQuery(options: Omit<Urql.UseQueryArgs<SecretAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<SecretAvailabilityQuery, SecretAvailabilityQueryVariables>({ query: SecretAvailabilityDocument, ...options });
+};
 export const SiteDocument = gql`
     query site($where: SiteWhereInput!) {
   site(where: $where) {
@@ -8689,6 +6587,7 @@ export const SiteDocument = gql`
     sourceBranch
     githubInstallationId
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -8816,14 +6715,9 @@ export const SiteDocument = gql`
 }
     `;
 
-export function useSiteQuery(
-  options: Omit<Urql.UseQueryArgs<SiteQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SiteQuery, SiteQueryVariables>({
-    query: SiteDocument,
-    ...options,
-  });
-}
+export function useSiteQuery(options: Omit<Urql.UseQueryArgs<SiteQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteQuery, SiteQueryVariables>({ query: SiteDocument, ...options });
+};
 export const SiteFrameworksDocument = gql`
     query siteFrameworks {
   siteFrameworks {
@@ -8843,14 +6737,9 @@ export const SiteFrameworksDocument = gql`
 }
     `;
 
-export function useSiteFrameworksQuery(
-  options?: Omit<Urql.UseQueryArgs<SiteFrameworksQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SiteFrameworksQuery, SiteFrameworksQueryVariables>({
-    query: SiteFrameworksDocument,
-    ...options,
-  });
-}
+export function useSiteFrameworksQuery(options?: Omit<Urql.UseQueryArgs<SiteFrameworksQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteFrameworksQuery, SiteFrameworksQueryVariables>({ query: SiteFrameworksDocument, ...options });
+};
 export const SiteIpnsRecordsDocument = gql`
     query siteIpnsRecords($where: SiteWhereInput!) {
   site(where: $where) {
@@ -8863,28 +6752,18 @@ export const SiteIpnsRecordsDocument = gql`
 }
     `;
 
-export function useSiteIpnsRecordsQuery(
-  options: Omit<Urql.UseQueryArgs<SiteIpnsRecordsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SiteIpnsRecordsQuery, SiteIpnsRecordsQueryVariables>({
-    query: SiteIpnsRecordsDocument,
-    ...options,
-  });
-}
+export function useSiteIpnsRecordsQuery(options: Omit<Urql.UseQueryArgs<SiteIpnsRecordsQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteIpnsRecordsQuery, SiteIpnsRecordsQueryVariables>({ query: SiteIpnsRecordsDocument, ...options });
+};
 export const SiteNameAvailabilityDocument = gql`
     query siteNameAvailability($where: SiteNameAvailabilityWhereInput!) {
   siteNameAvailability(where: $where)
 }
     `;
 
-export function useSiteNameAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<SiteNameAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    SiteNameAvailabilityQuery,
-    SiteNameAvailabilityQueryVariables
-  >({ query: SiteNameAvailabilityDocument, ...options });
-}
+export function useSiteNameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<SiteNameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteNameAvailabilityQuery, SiteNameAvailabilityQueryVariables>({ query: SiteNameAvailabilityDocument, ...options });
+};
 export const SiteZonesDocument = gql`
     query siteZones($where: SiteWhereInput!) {
   site(where: $where) {
@@ -8896,14 +6775,9 @@ export const SiteZonesDocument = gql`
 }
     `;
 
-export function useSiteZonesQuery(
-  options: Omit<Urql.UseQueryArgs<SiteZonesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SiteZonesQuery, SiteZonesQueryVariables>({
-    query: SiteZonesDocument,
-    ...options,
-  });
-}
+export function useSiteZonesQuery(options: Omit<Urql.UseQueryArgs<SiteZonesQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteZonesQuery, SiteZonesQueryVariables>({ query: SiteZonesDocument, ...options });
+};
 export const SitesDocument = gql`
     query sites($where: SitesWhereInput!, $filter: SitesPaginationInput) {
   sites(where: $where, filter: $filter) {
@@ -8922,6 +6796,7 @@ export const SitesDocument = gql`
       sourceBranch
       githubInstallationId
       enablePreviews
+      deployOnBranchUpdate
       baseDirectory
       buildCommand
       distDirectory
@@ -9017,28 +6892,18 @@ export const SitesDocument = gql`
 }
     `;
 
-export function useSitesQuery(
-  options: Omit<Urql.UseQueryArgs<SitesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SitesQuery, SitesQueryVariables>({
-    query: SitesDocument,
-    ...options,
-  });
-}
+export function useSitesQuery(options: Omit<Urql.UseQueryArgs<SitesQueryVariables>, 'query'>) {
+  return Urql.useQuery<SitesQuery, SitesQueryVariables>({ query: SitesDocument, ...options });
+};
 export const SlugAvailabilityDocument = gql`
     query slugAvailability($where: SlugAvailabilityWhereInput!) {
   slugAvailability(where: $where)
 }
     `;
 
-export function useSlugAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<SlugAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<SlugAvailabilityQuery, SlugAvailabilityQueryVariables>({
-    query: SlugAvailabilityDocument,
-    ...options,
-  });
-}
+export function useSlugAvailabilityQuery(options: Omit<Urql.UseQueryArgs<SlugAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<SlugAvailabilityQuery, SlugAvailabilityQueryVariables>({ query: SlugAvailabilityDocument, ...options });
+};
 export const CreateFolderDocument = gql`
     mutation createFolder($data: CreateFolderDataInput!, $where: CreateFolderWhereInput!) {
   createFolder(data: $data, where: $where) {
@@ -9053,10 +6918,8 @@ export const CreateFolderDocument = gql`
     `;
 
 export function useCreateFolderMutation() {
-  return Urql.useMutation<CreateFolderMutation, CreateFolderMutationVariables>(
-    CreateFolderDocument,
-  );
-}
+  return Urql.useMutation<CreateFolderMutation, CreateFolderMutationVariables>(CreateFolderDocument);
+};
 export const DeleteFolderDocument = gql`
     mutation deleteFolder($where: DeleteFolderWhereInput!) {
   deleteFolder(where: $where) {
@@ -9070,10 +6933,8 @@ export const DeleteFolderDocument = gql`
     `;
 
 export function useDeleteFolderMutation() {
-  return Urql.useMutation<DeleteFolderMutation, DeleteFolderMutationVariables>(
-    DeleteFolderDocument,
-  );
-}
+  return Urql.useMutation<DeleteFolderMutation, DeleteFolderMutationVariables>(DeleteFolderDocument);
+};
 export const UpdateFolderDocument = gql`
     mutation updateFolder($data: UpdateFolderDataInput!, $where: UpdateFolderWhereInput!) {
   updateFolder(data: $data, where: $where) {
@@ -9087,10 +6948,8 @@ export const UpdateFolderDocument = gql`
     `;
 
 export function useUpdateFolderMutation() {
-  return Urql.useMutation<UpdateFolderMutation, UpdateFolderMutationVariables>(
-    UpdateFolderDocument,
-  );
-}
+  return Urql.useMutation<UpdateFolderMutation, UpdateFolderMutationVariables>(UpdateFolderDocument);
+};
 export const FolderDetailsDocument = gql`
     query folderDetails($where: FolderWhereInput!) {
   folder(where: $where) {
@@ -9103,31 +6962,18 @@ export const FolderDetailsDocument = gql`
 }
     `;
 
-export function useFolderDetailsQuery(
-  options: Omit<Urql.UseQueryArgs<FolderDetailsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<FolderDetailsQuery, FolderDetailsQueryVariables>({
-    query: FolderDetailsDocument,
-    ...options,
-  });
-}
+export function useFolderDetailsQuery(options: Omit<Urql.UseQueryArgs<FolderDetailsQueryVariables>, 'query'>) {
+  return Urql.useQuery<FolderDetailsQuery, FolderDetailsQueryVariables>({ query: FolderDetailsDocument, ...options });
+};
 export const FolderNameAvailabilityInParentFolderDocument = gql`
     query folderNameAvailabilityInParentFolder($data: FolderNameAvailabilityInParentFolderDataInput!, $where: FolderNameAvailabilityInParentFolderWhereInput!) {
   folderNameAvailabilityInParentFolder(data: $data, where: $where)
 }
     `;
 
-export function useFolderNameAvailabilityInParentFolderQuery(
-  options: Omit<
-    Urql.UseQueryArgs<FolderNameAvailabilityInParentFolderQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    FolderNameAvailabilityInParentFolderQuery,
-    FolderNameAvailabilityInParentFolderQueryVariables
-  >({ query: FolderNameAvailabilityInParentFolderDocument, ...options });
-}
+export function useFolderNameAvailabilityInParentFolderQuery(options: Omit<Urql.UseQueryArgs<FolderNameAvailabilityInParentFolderQueryVariables>, 'query'>) {
+  return Urql.useQuery<FolderNameAvailabilityInParentFolderQuery, FolderNameAvailabilityInParentFolderQueryVariables>({ query: FolderNameAvailabilityInParentFolderDocument, ...options });
+};
 export const AcceptInvitationDocument = gql`
     mutation acceptInvitation($where: AcceptInvitationWhereInput!) {
   acceptInvitation(where: $where) {
@@ -9137,11 +6983,8 @@ export const AcceptInvitationDocument = gql`
     `;
 
 export function useAcceptInvitationMutation() {
-  return Urql.useMutation<
-    AcceptInvitationMutation,
-    AcceptInvitationMutationVariables
-  >(AcceptInvitationDocument);
-}
+  return Urql.useMutation<AcceptInvitationMutation, AcceptInvitationMutationVariables>(AcceptInvitationDocument);
+};
 export const CreateInvitationDocument = gql`
     mutation createInvitation($data: CreateInvitationDataInput!) {
   createInvitation(data: $data)
@@ -9149,11 +6992,8 @@ export const CreateInvitationDocument = gql`
     `;
 
 export function useCreateInvitationMutation() {
-  return Urql.useMutation<
-    CreateInvitationMutation,
-    CreateInvitationMutationVariables
-  >(CreateInvitationDocument);
-}
+  return Urql.useMutation<CreateInvitationMutation, CreateInvitationMutationVariables>(CreateInvitationDocument);
+};
 export const DeclineInvitationDocument = gql`
     mutation declineInvitation($where: DeclineInvitationWhereInput!) {
   declineInvitation(where: $where)
@@ -9161,11 +7001,8 @@ export const DeclineInvitationDocument = gql`
     `;
 
 export function useDeclineInvitationMutation() {
-  return Urql.useMutation<
-    DeclineInvitationMutation,
-    DeclineInvitationMutationVariables
-  >(DeclineInvitationDocument);
-}
+  return Urql.useMutation<DeclineInvitationMutation, DeclineInvitationMutationVariables>(DeclineInvitationDocument);
+};
 export const DeleteInvitationDocument = gql`
     mutation deleteInvitation($where: DeleteInvitationWhereInput!) {
   deleteInvitation(where: $where) {
@@ -9178,11 +7015,8 @@ export const DeleteInvitationDocument = gql`
     `;
 
 export function useDeleteInvitationMutation() {
-  return Urql.useMutation<
-    DeleteInvitationMutation,
-    DeleteInvitationMutationVariables
-  >(DeleteInvitationDocument);
-}
+  return Urql.useMutation<DeleteInvitationMutation, DeleteInvitationMutationVariables>(DeleteInvitationDocument);
+};
 export const UpdateMembershipDocument = gql`
     mutation updateMembership($data: UpdateMembershipDataInput!, $where: UpdateMembershipWhereInput!) {
   updateMembership(data: $data, where: $where) {
@@ -9204,11 +7038,8 @@ export const UpdateMembershipDocument = gql`
     `;
 
 export function useUpdateMembershipMutation() {
-  return Urql.useMutation<
-    UpdateMembershipMutation,
-    UpdateMembershipMutationVariables
-  >(UpdateMembershipDocument);
-}
+  return Urql.useMutation<UpdateMembershipMutation, UpdateMembershipMutationVariables>(UpdateMembershipDocument);
+};
 export const CountSitesWithSourceProviderDocument = gql`
     query countSitesWithSourceProvider {
   sites(where: {hasSourceProvider: true}) {
@@ -9217,17 +7048,9 @@ export const CountSitesWithSourceProviderDocument = gql`
 }
     `;
 
-export function useCountSitesWithSourceProviderQuery(
-  options?: Omit<
-    Urql.UseQueryArgs<CountSitesWithSourceProviderQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    CountSitesWithSourceProviderQuery,
-    CountSitesWithSourceProviderQueryVariables
-  >({ query: CountSitesWithSourceProviderDocument, ...options });
-}
+export function useCountSitesWithSourceProviderQuery(options?: Omit<Urql.UseQueryArgs<CountSitesWithSourceProviderQueryVariables>, 'query'>) {
+  return Urql.useQuery<CountSitesWithSourceProviderQuery, CountSitesWithSourceProviderQueryVariables>({ query: CountSitesWithSourceProviderDocument, ...options });
+};
 export const InvitationDocument = gql`
     query invitation($where: InvitationWhereInput!) {
   invitation(where: $where) {
@@ -9239,14 +7062,9 @@ export const InvitationDocument = gql`
 }
     `;
 
-export function useInvitationQuery(
-  options: Omit<Urql.UseQueryArgs<InvitationQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<InvitationQuery, InvitationQueryVariables>({
-    query: InvitationDocument,
-    ...options,
-  });
-}
+export function useInvitationQuery(options: Omit<Urql.UseQueryArgs<InvitationQueryVariables>, 'query'>) {
+  return Urql.useQuery<InvitationQuery, InvitationQueryVariables>({ query: InvitationDocument, ...options });
+};
 export const PermissionGroupsDocument = gql`
     query permissionGroups($filter: PermissionGroupsPaginationInput) {
   permissionGroups(filter: $filter) {
@@ -9259,14 +7077,9 @@ export const PermissionGroupsDocument = gql`
 }
     `;
 
-export function usePermissionGroupsQuery(
-  options?: Omit<Urql.UseQueryArgs<PermissionGroupsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PermissionGroupsQuery, PermissionGroupsQueryVariables>({
-    query: PermissionGroupsDocument,
-    ...options,
-  });
-}
+export function usePermissionGroupsQuery(options?: Omit<Urql.UseQueryArgs<PermissionGroupsQueryVariables>, 'query'>) {
+  return Urql.useQuery<PermissionGroupsQuery, PermissionGroupsQueryVariables>({ query: PermissionGroupsDocument, ...options });
+};
 export const InvitationsDocument = gql`
     query invitations($filter: InvitationsPaginationInput) {
   invitations(filter: $filter) {
@@ -9280,14 +7093,9 @@ export const InvitationsDocument = gql`
 }
     `;
 
-export function useInvitationsQuery(
-  options?: Omit<Urql.UseQueryArgs<InvitationsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<InvitationsQuery, InvitationsQueryVariables>({
-    query: InvitationsDocument,
-    ...options,
-  });
-}
+export function useInvitationsQuery(options?: Omit<Urql.UseQueryArgs<InvitationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<InvitationsQuery, InvitationsQueryVariables>({ query: InvitationsDocument, ...options });
+};
 export const ProjectMembersDocument = gql`
     query projectMembers($where: ProjectWhereInput!) {
   project(where: $where) {
@@ -9310,14 +7118,9 @@ export const ProjectMembersDocument = gql`
 }
     `;
 
-export function useProjectMembersQuery(
-  options: Omit<Urql.UseQueryArgs<ProjectMembersQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProjectMembersQuery, ProjectMembersQueryVariables>({
-    query: ProjectMembersDocument,
-    ...options,
-  });
-}
+export function useProjectMembersQuery(options: Omit<Urql.UseQueryArgs<ProjectMembersQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProjectMembersQuery, ProjectMembersQueryVariables>({ query: ProjectMembersDocument, ...options });
+};
 export const CreateTemplateDocument = gql`
     mutation createTemplate($data: CreateTemplateDataInput!) {
   createTemplate(data: $data) {
@@ -9369,11 +7172,8 @@ export const CreateTemplateDocument = gql`
     `;
 
 export function useCreateTemplateMutation() {
-  return Urql.useMutation<
-    CreateTemplateMutation,
-    CreateTemplateMutationVariables
-  >(CreateTemplateDocument);
-}
+  return Urql.useMutation<CreateTemplateMutation, CreateTemplateMutationVariables>(CreateTemplateDocument);
+};
 export const DeleteTemplateDocument = gql`
     mutation deleteTemplate($where: DeleteTemplateWhereInput!) {
   deleteTemplate(where: $where) {
@@ -9386,11 +7186,8 @@ export const DeleteTemplateDocument = gql`
     `;
 
 export function useDeleteTemplateMutation() {
-  return Urql.useMutation<
-    DeleteTemplateMutation,
-    DeleteTemplateMutationVariables
-  >(DeleteTemplateDocument);
-}
+  return Urql.useMutation<DeleteTemplateMutation, DeleteTemplateMutationVariables>(DeleteTemplateDocument);
+};
 export const UpdateTemplateDocument = gql`
     mutation updateTemplate($data: UpdateTemplateDataInput!, $where: UpdateTemplateWhereInput!) {
   updateTemplate(data: $data, where: $where) {
@@ -9428,11 +7225,8 @@ export const UpdateTemplateDocument = gql`
     `;
 
 export function useUpdateTemplateMutation() {
-  return Urql.useMutation<
-    UpdateTemplateMutation,
-    UpdateTemplateMutationVariables
-  >(UpdateTemplateDocument);
-}
+  return Urql.useMutation<UpdateTemplateMutation, UpdateTemplateMutationVariables>(UpdateTemplateDocument);
+};
 export const TemplateDocument = gql`
     query Template($where: TemplateWhereInput!) {
   template(where: $where) {
@@ -9483,14 +7277,9 @@ export const TemplateDocument = gql`
 }
     `;
 
-export function useTemplateQuery(
-  options: Omit<Urql.UseQueryArgs<TemplateQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<TemplateQuery, TemplateQueryVariables>({
-    query: TemplateDocument,
-    ...options,
-  });
-}
+export function useTemplateQuery(options: Omit<Urql.UseQueryArgs<TemplateQueryVariables>, 'query'>) {
+  return Urql.useQuery<TemplateQuery, TemplateQueryVariables>({ query: TemplateDocument, ...options });
+};
 export const TemplateCategoriesDocument = gql`
     query templateCategories($filter: TemplateCategoriesPaginationInput) {
   templateCategories(filter: $filter) {
@@ -9504,14 +7293,9 @@ export const TemplateCategoriesDocument = gql`
 }
     `;
 
-export function useTemplateCategoriesQuery(
-  options?: Omit<Urql.UseQueryArgs<TemplateCategoriesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    TemplateCategoriesQuery,
-    TemplateCategoriesQueryVariables
-  >({ query: TemplateCategoriesDocument, ...options });
-}
+export function useTemplateCategoriesQuery(options?: Omit<Urql.UseQueryArgs<TemplateCategoriesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TemplateCategoriesQuery, TemplateCategoriesQueryVariables>({ query: TemplateCategoriesDocument, ...options });
+};
 export const TemplateDeployDocument = gql`
     query templateDeploy($where: TemplateWhereInput!) {
   template(where: $where) {
@@ -9544,31 +7328,18 @@ export const TemplateDeployDocument = gql`
 }
     `;
 
-export function useTemplateDeployQuery(
-  options: Omit<Urql.UseQueryArgs<TemplateDeployQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<TemplateDeployQuery, TemplateDeployQueryVariables>({
-    query: TemplateDeployDocument,
-    ...options,
-  });
-}
+export function useTemplateDeployQuery(options: Omit<Urql.UseQueryArgs<TemplateDeployQueryVariables>, 'query'>) {
+  return Urql.useQuery<TemplateDeployQuery, TemplateDeployQueryVariables>({ query: TemplateDeployDocument, ...options });
+};
 export const TemplateNameAvailabilityDocument = gql`
     query templateNameAvailability($where: TemplateNameAvailabilityWhereInput!) {
   templateNameAvailability(where: $where)
 }
     `;
 
-export function useTemplateNameAvailabilityQuery(
-  options: Omit<
-    Urql.UseQueryArgs<TemplateNameAvailabilityQueryVariables>,
-    'query'
-  >,
-) {
-  return Urql.useQuery<
-    TemplateNameAvailabilityQuery,
-    TemplateNameAvailabilityQueryVariables
-  >({ query: TemplateNameAvailabilityDocument, ...options });
-}
+export function useTemplateNameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<TemplateNameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<TemplateNameAvailabilityQuery, TemplateNameAvailabilityQueryVariables>({ query: TemplateNameAvailabilityDocument, ...options });
+};
 export const TemplatesDocument = gql`
     query templates($where: TemplatesWhereInput!, $filter: TemplatesPaginationInput) {
   templates(where: $where, filter: $filter) {
@@ -9614,14 +7385,9 @@ export const TemplatesDocument = gql`
 }
     `;
 
-export function useTemplatesQuery(
-  options: Omit<Urql.UseQueryArgs<TemplatesQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<TemplatesQuery, TemplatesQueryVariables>({
-    query: TemplatesDocument,
-    ...options,
-  });
-}
+export function useTemplatesQuery(options: Omit<Urql.UseQueryArgs<TemplatesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TemplatesQuery, TemplatesQueryVariables>({ query: TemplatesDocument, ...options });
+};
 export const UpdateNotificationSettingsDocument = gql`
     mutation updateNotificationSettings($data: UpdateNotificationSettingsDataInput!) {
   updateNotificationSettings(data: $data)
@@ -9629,11 +7395,8 @@ export const UpdateNotificationSettingsDocument = gql`
     `;
 
 export function useUpdateNotificationSettingsMutation() {
-  return Urql.useMutation<
-    UpdateNotificationSettingsMutation,
-    UpdateNotificationSettingsMutationVariables
-  >(UpdateNotificationSettingsDocument);
-}
+  return Urql.useMutation<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>(UpdateNotificationSettingsDocument);
+};
 export const UpdateUserDocument = gql`
     mutation updateUser($data: UpdateUserDataInput!) {
   updateUser(data: $data) {
@@ -9652,23 +7415,17 @@ export const UpdateUserDocument = gql`
     `;
 
 export function useUpdateUserMutation() {
-  return Urql.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
-    UpdateUserDocument,
-  );
-}
+  return Urql.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument);
+};
 export const EmailAvailabilityDocument = gql`
     query emailAvailability($where: EmailAvailabilityWhereInput!) {
   emailAvailability(where: $where)
 }
     `;
 
-export function useEmailAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<EmailAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<EmailAvailabilityQuery, EmailAvailabilityQueryVariables>(
-    { query: EmailAvailabilityDocument, ...options },
-  );
-}
+export function useEmailAvailabilityQuery(options: Omit<Urql.UseQueryArgs<EmailAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<EmailAvailabilityQuery, EmailAvailabilityQueryVariables>({ query: EmailAvailabilityDocument, ...options });
+};
 export const NotificationsDocument = gql`
     query notifications {
   notificationSettings {
@@ -9679,28 +7436,18 @@ export const NotificationsDocument = gql`
 }
     `;
 
-export function useNotificationsQuery(
-  options?: Omit<Urql.UseQueryArgs<NotificationsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<NotificationsQuery, NotificationsQueryVariables>({
-    query: NotificationsDocument,
-    ...options,
-  });
-}
+export function useNotificationsQuery(options?: Omit<Urql.UseQueryArgs<NotificationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<NotificationsQuery, NotificationsQueryVariables>({ query: NotificationsDocument, ...options });
+};
 export const UsernameAvailabilityDocument = gql`
     query usernameAvailability($where: UsernameAvailabilityWhereInput!) {
   usernameAvailability(where: $where)
 }
     `;
 
-export function useUsernameAvailabilityQuery(
-  options: Omit<Urql.UseQueryArgs<UsernameAvailabilityQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<
-    UsernameAvailabilityQuery,
-    UsernameAvailabilityQueryVariables
-  >({ query: UsernameAvailabilityDocument, ...options });
-}
+export function useUsernameAvailabilityQuery(options: Omit<Urql.UseQueryArgs<UsernameAvailabilityQueryVariables>, 'query'>) {
+  return Urql.useQuery<UsernameAvailabilityQuery, UsernameAvailabilityQueryVariables>({ query: UsernameAvailabilityDocument, ...options });
+};
 export const VersionDocument = gql`
     query version {
   version {
@@ -9709,14 +7456,9 @@ export const VersionDocument = gql`
 }
     `;
 
-export function useVersionQuery(
-  options?: Omit<Urql.UseQueryArgs<VersionQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<VersionQuery, VersionQueryVariables>({
-    query: VersionDocument,
-    ...options,
-  });
-}
+export function useVersionQuery(options?: Omit<Urql.UseQueryArgs<VersionQueryVariables>, 'query'>) {
+  return Urql.useQuery<VersionQuery, VersionQueryVariables>({ query: VersionDocument, ...options });
+};
 export const CreateZoneForPrivateGatewayDocument = gql`
     mutation createZoneForPrivateGateway {
   createZoneForPrivateGateway {
@@ -9727,11 +7469,8 @@ export const CreateZoneForPrivateGatewayDocument = gql`
     `;
 
 export function useCreateZoneForPrivateGatewayMutation() {
-  return Urql.useMutation<
-    CreateZoneForPrivateGatewayMutation,
-    CreateZoneForPrivateGatewayMutationVariables
-  >(CreateZoneForPrivateGatewayDocument);
-}
+  return Urql.useMutation<CreateZoneForPrivateGatewayMutation, CreateZoneForPrivateGatewayMutationVariables>(CreateZoneForPrivateGatewayDocument);
+};
 export const CreateZoneForSiteDocument = gql`
     mutation createZoneForSite($where: CreateZoneForSiteWhereInput!) {
   createZoneForSite(where: $where) {
@@ -9741,11 +7480,8 @@ export const CreateZoneForSiteDocument = gql`
     `;
 
 export function useCreateZoneForSiteMutation() {
-  return Urql.useMutation<
-    CreateZoneForSiteMutation,
-    CreateZoneForSiteMutationVariables
-  >(CreateZoneForSiteDocument);
-}
+  return Urql.useMutation<CreateZoneForSiteMutation, CreateZoneForSiteMutationVariables>(CreateZoneForSiteDocument);
+};
 export const ZoneDocument = gql`
     query zone($where: ZoneWhereInput!) {
   zone(where: $where) {
@@ -9755,11 +7491,6 @@ export const ZoneDocument = gql`
 }
     `;
 
-export function useZoneQuery(
-  options: Omit<Urql.UseQueryArgs<ZoneQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ZoneQuery, ZoneQueryVariables>({
-    query: ZoneDocument,
-    ...options,
-  });
-}
+export function useZoneQuery(options: Omit<Urql.UseQueryArgs<ZoneQueryVariables>, 'query'>) {
+  return Urql.useQuery<ZoneQuery, ZoneQueryVariables>({ query: ZoneDocument, ...options });
+};
