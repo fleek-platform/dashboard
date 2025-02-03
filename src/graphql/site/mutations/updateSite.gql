@@ -1,7 +1,4 @@
-mutation updateSite(
-  $data: UpdateSiteDataInput!
-  $where: UpdateSiteWhereInput!
-) {
+mutation updateSite($data: UpdateSiteDataInput!, $where: UpdateSiteWhereInput!) {
   updateSite(data: $data, where: $where) {
     id
     name
@@ -12,6 +9,7 @@ mutation updateSite(
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory

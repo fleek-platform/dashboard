@@ -4,6 +4,11 @@ import { Box, Icon, Skeleton } from '@/ui';
 
 export const TemplateDetailsStyles = {
   Container: styled(Box, {
+    baseBorder: '$border-slate',
+    borderRadius: '$lg',
+    padding: '$spacing-4',
+    backgroundColor: '$surface-primary',
+
     variants: {
       variant: {
         container: {

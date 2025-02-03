@@ -1,3 +1,7 @@
-import { AuthenticationCallback } from '@/fragments';
+import { Callback } from '@/fragments';
 
-export default AuthenticationCallback.Page;
+const AuthenticationCallbackPage = () => (
+  <Callback.Page title="Authentication Complete" description="Your authentication was successful." />
+);
+
+export default AuthenticationCallbackPage;

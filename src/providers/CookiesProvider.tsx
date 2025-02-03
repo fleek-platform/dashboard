@@ -2,6 +2,7 @@ import { deleteCookie, getCookies, setCookie } from 'cookies-next';
 import { OptionsType } from 'cookies-next/lib/types';
 import { useEffect, useState } from 'react';
 
+import { hostname as cookieDomain } from '@/utils/cookie';
 import { createContext } from '@/utils/createContext';
 import { isServerSide } from '@/utils/isServerSide';
 
@@ -26,20 +27,17 @@ const [Provider, useContext] = createContext<CookiesContext>({
   providerName: 'CookiesProvider',
 });
 
-export const CookiesProvider: React.FC<
-  React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>
-> = ({ requestCookies = {}, children }) => {
+export const CookiesProvider: React.FC<React.PropsWithChildren<{ requestCookies?: CookiesContext['values'] }>> = ({
+  requestCookies = {},
+  children,
+}) => {
   const [cookies, setCookies] = useState<CookiesContext['values']>(
-    isServerSide()
-      ? requestCookies
-      : (getCookies() as CookiesContext['values']),
+    isServerSide() ? requestCookies : (getCookies() as CookiesContext['values'])
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const documentCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('authToken'));
+      const documentCookie = document.cookie.split('; ').find((row) => row.startsWith('authToken'));
 
       if (!documentCookie && cookies.authToken) {
         // update app state
@@ -58,7 +56,11 @@ export const CookiesProvider: React.FC<
     }
 
     setCookies((prev) => ({ ...prev, [key]: value }));
-    setCookie(key, value, options);
+    setCookie(key, value, {
+      // Required for cross-domain cookies
+      domain: cookieDomain,
+      ...options,
+    });
   };
 
   const remove: CookiesContext['remove'] = (key) => {
@@ -67,12 +69,13 @@ export const CookiesProvider: React.FC<
 
       return rest;
     });
-    deleteCookie(key);
+    deleteCookie(key, {
+      domain: cookieDomain,
+      path: '/',
+    });
   };
 
-  return (
-    <Provider value={{ values: cookies, set, remove }}>{children}</Provider>
-  );
+  return <Provider value={{ values: cookies, set, remove }}>{children}</Provider>;
 };
 
 export const useCookies = useContext;

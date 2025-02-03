@@ -2,7 +2,7 @@ import { ExternalLink } from '@/components';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { LoadingProps } from '@/types/Props';
 import { Template } from '@/types/Template';
-import { Avatar, Box, Icon, Image, Skeleton, Text } from '@/ui';
+import { Avatar, Icon, Image, Skeleton, Text } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { getLinkForSiteSlug } from '@/utils/siteSlugLinks';
 
@@ -10,20 +10,17 @@ import { TemplateOverviewStyles as S } from './TemplateOverview.styles';
 
 export type TemplateOverviewProps = LoadingProps<{ template: Template }>;
 
-export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
-  isLoading,
-  template,
-}) => {
+export const TemplateOverview: React.FC<TemplateOverviewProps> = ({ isLoading, template }) => {
   if (isLoading) {
     return <TemplateOverviewSkeleton />;
   }
 
   return (
-    <Box className="[grid-area:overview] overflow-hidden w-full">
+    <S.Container className="flex-row">
       <S.ImagePreview src={template.banner} alt="Template preview" />
       <S.Wrapper>
         <S.Header>
-          <S.TitleRow>
+          <S.TitleRow className="flex-row">
             <Text as="h1" variant="primary" size="2xl" weight={700}>
               {template.name}
             </Text>
@@ -34,18 +31,18 @@ export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
         </S.Header>
         <TemplateProperties template={template} />
       </S.Wrapper>
-    </Box>
+    </S.Container>
   );
 };
 
 const TemplateOverviewSkeleton: React.FC = () => (
-  <S.Container>
+  <S.Container className="flex-row">
     <S.ImagePreview alt="Template preview">
       <Skeleton />
     </S.ImagePreview>
     <S.Wrapper>
       <S.Header>
-        <S.TitleRow>
+        <S.TitleRow className="flex-row">
           <S.TitleSkeleton>
             <Skeleton />
           </S.TitleSkeleton>
@@ -59,24 +56,21 @@ const TemplateOverviewSkeleton: React.FC = () => (
 
 type TemplatePropertiesProps = LoadingProps<{ template: Template }>;
 
-const TemplateProperties: React.FC<TemplatePropertiesProps> = ({
-  isLoading,
-  template,
-}) => {
+const TemplateProperties: React.FC<TemplatePropertiesProps> = ({ isLoading, template }) => {
   const templateData = useTemplateGitData(template);
 
   if (isLoading) {
     return (
       <S.Property.Container>
-        <S.Property.Item>
+        <S.Property.Item className="flex-row">
           <S.Property.Skeleton variant="avatar" />
           <S.Property.Skeleton variant="line" />
         </S.Property.Item>
-        <S.Property.Item>
+        <S.Property.Item className="flex-row">
           <S.Property.Skeleton variant="avatar" />
           <S.Property.Skeleton variant="line" />
         </S.Property.Item>
-        <S.Property.Item>
+        <S.Property.Item className="flex-row">
           <S.Property.Skeleton variant="avatar" />
           <S.Property.Skeleton variant="line" />
         </S.Property.Item>
@@ -93,7 +87,7 @@ const TemplateProperties: React.FC<TemplatePropertiesProps> = ({
   return (
     <S.Property.Container>
       <ExternalLink href={link}>
-        <S.Property.Item variant="monochrome">
+        <S.Property.Item variant="monochrome" className="flex-row">
           <Avatar enableIcon icon="github" />
           {templateData.slug} / {templateData.repository}
         </S.Property.Item>
@@ -112,7 +106,7 @@ type DemoPropertyProps = {
 const DemoProperty: React.FC<DemoPropertyProps> = ({ siteSlug }) => {
   return (
     <ExternalLink href={getLinkForSiteSlug(siteSlug)}>
-      <S.Property.Item>
+      <S.Property.Item className="flex-row">
         <Avatar enableIcon icon="arrow-up-right" />
         View Demo
       </S.Property.Item>
@@ -124,19 +118,12 @@ type AuthorAvatarProps = {
   creator: NonNullable<Template['creator']>;
 };
 
-const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
-  creator = {} as AuthorAvatarProps['creator'],
-}) => {
-  const isFleekAuthored =
-    creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
+const AuthorAvatar: React.FC<AuthorAvatarProps> = ({ creator = {} as AuthorAvatarProps['creator'] }) => {
+  const isFleekAuthored = creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
-    <S.Property.Item variant="monochrome">
-      <Avatar
-        enableIcon
-        icon={isFleekAuthored ? 'fleek' : 'person'}
-        src={creator.avatar}
-      />
+    <S.Property.Item variant="monochrome" className="flex-row">
+      <Avatar enableIcon icon={isFleekAuthored ? 'fleek' : 'person'} src={creator.avatar} />
       <span>Added by&nbsp;</span> {isFleekAuthored ? 'Fleek' : creator.username}
     </S.Property.Item>
   );

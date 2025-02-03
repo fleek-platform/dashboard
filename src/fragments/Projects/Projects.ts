@@ -1,3 +1,4 @@
+import { AgentsList } from './Agents/AgentsList';
 import { AddNewDropdown } from './Home/AddNewDropdown';
 import { HomeStyles } from './Home/Home.styles';
 import { Articles } from './Home/Sections/Articles';
@@ -36,6 +37,10 @@ export const Projects = {
 
     //context
     Provider: StorageProvider,
+  },
+
+  Agents: {
+    List: AgentsList,
   },
 
   Home: {

@@ -9,6 +9,7 @@ mutation createSite($data: CreateSiteDataInput!) {
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
