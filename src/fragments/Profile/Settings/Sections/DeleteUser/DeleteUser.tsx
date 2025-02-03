@@ -32,7 +32,7 @@ export const DeleteUser: React.FC<DeleteUserProps> = ({
           {isLoading ? (
             <SettingsBox.Skeleton variant="button" />
           ) : (
-            <Button intent="danger" disabled>
+            <Button intent="neutral" disabled>
               Delete account
             </Button>
           )}

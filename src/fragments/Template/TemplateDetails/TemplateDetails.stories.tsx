@@ -15,7 +15,7 @@ export default meta;
 export const Default: StoryObj<TemplateDetailsProps> = {
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '15.125rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -51,7 +51,7 @@ export const Default: StoryObj<TemplateDetailsProps> = {
 export const Skeleton: StoryObj<TemplateDetailsProps> = {
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '15.125rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),

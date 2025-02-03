@@ -8,7 +8,7 @@ const HomePage: Page = () => {
   const session = useSessionContext();
 
   const handleLogIn = () => {
-    if (!session.error && !session.loading && !session.auth.token) {
+    if (!session.error && !session.loading && !session.auth.accessToken) {
       session.auth.login('dynamic');
     }
   };

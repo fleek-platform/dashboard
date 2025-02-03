@@ -12,13 +12,11 @@ import {
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteFrameworks } from '@/hooks/useSiteFrameworks';
 import { LoadingProps } from '@/types/Props';
-import { Avatar, Combobox, FormField, Stepper, Text } from '@/ui';
+import { Avatar, Box, Combobox, FormField, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
-import { DeploySiteStepsStyles as S } from '../Steps.styles';
 import { Advanced } from './Advanced';
 import { BranchField } from './BranchField';
-import { ConfigureStepStyles as CS } from './Configure.styles';
 
 export const ConfigureStep: React.FC = () => {
   const { mode, gitProviderId, gitRepository, gitBranch } =
@@ -104,7 +102,7 @@ export const ConfigureStep: React.FC = () => {
   ]);
 
   return (
-    <S.Container>
+    <Box variant="container" className="relative gap-6 rounded-xl">
       <Text
         as="h2"
         variant="primary"
@@ -112,11 +110,11 @@ export const ConfigureStep: React.FC = () => {
         weight={700}
         className="self-start"
       >
-        Configure Site
+        Configure site
       </Text>
 
-      <CS.Form.Wrapper>
-        <CS.Form.Row>
+      <Box className="gap-4 text-sm">
+        <Box className="flex-row gap-3">
           <FormField.Root className="flex-1">
             <Form.InputField name="name" label="Site Name" placeholder="Name" />
           </FormField.Root>
@@ -124,7 +122,7 @@ export const ConfigureStep: React.FC = () => {
             setBuildSettings={setBuildSettings}
             isLoading={effect.current}
           />
-        </CS.Form.Row>
+        </Box>
 
         {mode === 'managed' && <BranchField />}
 
@@ -159,8 +157,8 @@ export const ConfigureStep: React.FC = () => {
         {mode !== 'self' && <Advanced />}
 
         <Form.SubmitButton className="w-full">Deploy site</Form.SubmitButton>
-      </CS.Form.Wrapper>
-    </S.Container>
+      </Box>
+    </Box>
   );
 };
 

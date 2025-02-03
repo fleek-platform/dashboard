@@ -21,7 +21,7 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     const checkAuth = () => {
       const authToken = document.cookie
         .split('; ')
-        .find((row) => row.startsWith('authProviderToken='))
+        .find((row) => row.startsWith('authToken='))
         ?.split('=')[1];
       const projectId =
         document.cookie

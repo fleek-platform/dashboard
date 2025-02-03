@@ -1,8 +1,6 @@
-import { AlertBox, Form } from '@/components';
+import { AlertBox, Form, Modal } from '@/components';
 import { ChildrenProps } from '@/types/Props';
 import { Button, Dialog, Text } from '@/ui';
-
-import { ProfileStyles as S } from '../../../Profile.styles';
 
 export type DeleteSiteModalProps = ChildrenProps<{
   username?: string;
@@ -17,7 +15,7 @@ export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Overlay />
 
-      <S.Settings.Modal.Content>
+      <Modal.Content>
         <Text as="h1" variant="primary" size="xl" weight={700}>
           Delete Account
         </Text>
@@ -42,11 +40,11 @@ export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({
           disableValidMessage
         />
 
-        <S.Settings.Modal.CTARow>
+        <Modal.CTARow>
           <CloseButton />
           <Form.SubmitButton intent="danger">Delete account</Form.SubmitButton>
-        </S.Settings.Modal.CTARow>
-      </S.Settings.Modal.Content>
+        </Modal.CTARow>
+      </Modal.Content>
     </Dialog.Root>
   );
 };

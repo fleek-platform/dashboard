@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 
 import { Step } from '@/components';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Button } from '../ftw/Button/Button';
 import { Text } from '../ftw/Text/Text';
 import { Stepper } from './Stepper';
@@ -17,7 +17,7 @@ const StepperButton: React.FC = () => {
   const { nextStep, prevStep } = Stepper.useContext();
 
   return (
-    <Box css={{ gap: '$spacing-8' }}>
+    <Box className="gap-8">
       <Button onClick={prevStep}>Prev</Button>
       <Button onClick={nextStep}>Next</Button>
     </Box>

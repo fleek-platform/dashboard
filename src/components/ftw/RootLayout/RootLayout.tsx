@@ -43,7 +43,7 @@ export type NavigationItem = {
   showNewTag?: boolean;
 };
 
-const Container: React.FC<ChildrenProps> = ({ children }) => {
+const BillingBanner: React.FC = () => {
   const session = useSessionContext();
   const paymentMethodExpired = usePaymentExpiration();
   const { subscription } = useBillingContext();
@@ -53,23 +53,29 @@ const Container: React.FC<ChildrenProps> = ({ children }) => {
     (paymentMethodExpired.hasExpired || paymentMethodExpired.isAboutToExpire) &&
     !subscription.data?.endDate;
 
+  if (!shouldShowBanner) {
+    return null;
+  }
+
+  return (
+    <Box className="bg-danger-3 py-1 flex items-center">
+      <Text className="text-danger-11">
+        Your billing method{' '}
+        {paymentMethodExpired.isAboutToExpire && 'is expiring soon.'}
+        {paymentMethodExpired.hasExpired && 'has expired.'} You can update
+        it&nbsp;
+        <Link href={routes.project.billing({ projectId: session.project.id })}>
+          <u>here.</u>
+        </Link>
+      </Text>
+    </Box>
+  );
+};
+
+const Container: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <Box className="bg-surface-app min-h-dvh">
-      {shouldShowBanner && (
-        <Box className="bg-danger-3 py-1 flex items-center">
-          <Text className="text-danger-11">
-            Your billing method{' '}
-            {paymentMethodExpired.isAboutToExpire && 'is expiring soon.'}
-            {paymentMethodExpired.hasExpired && 'has expired.'} You can update
-            it&nbsp;
-            <Link
-              href={routes.project.billing({ projectId: session.project.id })}
-            >
-              <u>here.</u>
-            </Link>
-          </Text>
-        </Box>
-      )}
+      <BillingBanner />
       {children}
     </Box>
   );
@@ -149,20 +155,17 @@ const ExternalLinkWrapper: React.FC<
   );
 };
 
-type SidebarProps = {
-  slotSidebar: React.ReactNode;
-  navigation: NavigationItem[];
-  isNavigationLoading: boolean;
+const FeedbackModalLink: React.FC = () => {
+  const { openModalWithTab } = useFeedbackModal();
+
+  return (
+    <ExternalLinkWrapper onClick={() => openModalWithTab('FEEDBACK')}>
+      Help & Feedback
+    </ExternalLinkWrapper>
+  );
 };
 
-const Sidebar: React.FC<SidebarProps> = ({
-  slotSidebar,
-  navigation,
-  isNavigationLoading,
-}) => {
-  const { openModalWithTab } = useFeedbackModal();
-  const version = `Beta v${constants.VERSION}`;
-
+const VersionTagsWrapper: React.FC = () => {
   const [showVersions, setShowVersion] = useState(false);
   const flags = useFeatureFlags();
 
@@ -176,6 +179,26 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   }, [flags]);
 
+  if (!showVersions) {
+    return null;
+  }
+
+  return <VersionTags />;
+};
+
+type SidebarProps = {
+  slotSidebar: React.ReactNode;
+  navigation: NavigationItem[];
+  isNavigationLoading: boolean;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({
+  slotSidebar,
+  navigation,
+  isNavigationLoading,
+}) => {
+  const version = `Beta v${constants.VERSION}`;
+
   return (
     <Box
       className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
@@ -184,9 +207,9 @@ const Sidebar: React.FC<SidebarProps> = ({
     >
       <Box className="gap-3">
         <Box className="gap-4">
-          <Box className="flex-row justify-between">
+          <Box className="flex-row justify-between items-center">
             <Link href="/">
-              <FleekLogo size="sm" />
+              <FleekLogo className="text-sm" />
             </Link>
             <BadgeText colorScheme="slate">{version}</BadgeText>
           </Box>
@@ -200,7 +223,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <Box
                   key={i}
                   variant="container"
-                  className="border-0 flex-row gap-3 py-2 px-3 h-[2rem] items-center"
+                  className="border-0 flex-row gap-3 py-2 px-3 h-[2rem] items-center rounded"
                 >
                   <Skeleton variant="text" className="size-4 shrink-0" />
                   <Skeleton variant="text" className="w-1/2 h-2.5" />
@@ -224,12 +247,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       </Box>
 
       <Box className="gap-2.5">
-        {showVersions && <VersionTags />}
+        <VersionTagsWrapper />
         <Announcement />
         <Box className="border border-neutral-6 py-2 pt-2.5 rounded-lg">
-          <ExternalLinkWrapper onClick={() => openModalWithTab('FEEDBACK')}>
-            Help & Feedback
-          </ExternalLinkWrapper>
+          <FeedbackModalLink />
           <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
             Documentation
           </ExternalLinkWrapper>
@@ -257,7 +278,7 @@ const SidebarWrapper: React.FC<SidebarProps> = ({
         <SidebarSidepanel.Root>
           <SidebarSidepanel.Trigger asChild>
             <Button iconLeft="menu" intent="neutral" className="pr-4">
-              <FleekLogo size="xs" />
+              <FleekLogo className="text-xs" />
             </Button>
           </SidebarSidepanel.Trigger>
           <SidebarSidepanel.Content>

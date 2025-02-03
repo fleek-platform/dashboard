@@ -1,12 +1,10 @@
 import { createApplicationSchemaNext } from '@fleek-platform/utils-validation';
 import { useEffect, useState } from 'react';
-import { z } from 'zod';
 
 import { Form, SettingsBox } from '@/components';
 import { LoadingProps } from '@/types/Props';
 import { Box, Button, FormField, Icon, Input } from '@/ui';
-
-import { ApplicationCredentialsStyles as S } from './ApplicationCredentials.styles';
+import { z } from 'zod';
 
 type WhitelistDomainsProps = LoadingProps<{
   whiteListedDomains?: string[];
@@ -38,9 +36,9 @@ export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({
 
   return (
     <>
-      <S.Whitelist.Container>
+      <Box className="gap-[0.375em]">
         <FormField.Label>Whitelist domains</FormField.Label>
-        <Box>
+        <Box className="gap-3">
           {field.value.map((domain, index) => (
             <WhitelistedDomain
               key={index}
@@ -51,7 +49,7 @@ export const WhitelistDomains: React.FC<WhitelistDomainsProps> = ({
             />
           ))}
         </Box>
-      </S.Whitelist.Container>
+      </Box>
 
       <Button iconLeft="add-circle" onClick={handleAddDomain}>
         Add another domain
@@ -91,9 +89,7 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
       setError(false);
     } else {
       const timeout = setTimeout(() => {
-        setError(
-          (validation as z.SafeParseError<string>).error.issues[0].message,
-        );
+        setError((validation as z.SafeParseError<string>).error.issues[0].message);
       }, 700);
 
       return () => clearTimeout(timeout);
@@ -101,7 +97,7 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
   }, [value, touched]);
 
   return (
-    <S.Domain.Container>
+    <Box className="flex-row gap-3">
       <FormField.Root error={Boolean(error)} className="flex-1">
         <Input.Root error={Boolean(error)}>
           <Input.Field
@@ -115,8 +111,12 @@ const WhitelistedDomain: React.FC<WhitelistedDomainProps> = ({
       </FormField.Root>
 
       {index !== 0 && (
-        <Icon name="close-circle" onClick={() => onRemove(index)} />
+        <Icon
+          name="close-circle"
+          onClick={() => onRemove(index)}
+          className="text-neutral-8"
+        />
       )}
-    </S.Domain.Container>
+    </Box>
   );
 };

@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   AlertBox,
   Billing,
+  ExternalLink,
   LearnMoreMessage,
-  Link,
   PermissionsTooltip,
   SettingsBox,
 } from '@/components';
@@ -18,10 +18,9 @@ import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { Plan } from '@/types/Billing';
 import { LoadingProps } from '@/types/Props';
-import { Button } from '@/ui';
+import { Box, Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 
-import { BillingPlanStyles as S } from './BillingPlan.styles';
 import { CancelPlanModal } from './CancelPlanModal';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
@@ -72,6 +71,17 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
   const planData = plansData[currentPlan as Plan];
 
+  const endPlanDate = useMemo(() => {
+    if (subscription.data?.endDate) {
+      return dateFormat({
+        dateISO: subscription.data.endDate,
+        format: DateTime.DATE_FULL,
+      });
+    }
+
+    return '';
+  }, [subscription.data?.endDate]);
+
   const endPeriodDate = useMemo(() => {
     if (subscription.data?.periodEndDate) {
       return dateFormat({
@@ -83,6 +93,28 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     return '';
   }, [subscription.data?.periodEndDate]);
 
+  const shouldShowCancellationBanner = useMemo(() => {
+    if (subscription.data?.endDate) {
+      const targetTime = DateTime.fromISO(subscription.data.endDate);
+      const currentTime = DateTime.now();
+      const diff = targetTime.diff(currentTime);
+
+      return Math.floor(diff.as('months')) <= 1;
+    }
+
+    return null;
+  }, [subscription.data?.endDate]);
+
+  const { title, description, price } = planData;
+
+  const auxDescription = useMemo(
+    () =>
+      endPlanDate
+        ? `${description} Your Pro Plan expires on ${endPlanDate}.`
+        : description,
+    [endPlanDate, description],
+  );
+
   return (
     <>
       <CancelPlanModal
@@ -91,24 +123,23 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
         onCancelPlan={handleCancelPlan}
         dueDate={endPeriodDate}
       />
-      {subscription.data?.endDate && !isLoading && (
+      {shouldShowCancellationBanner && !isLoading && (
         <AlertBox size="sm" className="font-medium">
-          Your plan has been canceled. You will be converted to a Free plan on{' '}
-          {endPeriodDate}.
+          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
+          {endPlanDate}.
         </AlertBox>
       )}
       <Billing.HorizontalPlanCard
         isLoading={isLoading}
-        title={planData?.title}
-        description={planData?.description}
-        price={planData?.price}
+        title={title}
+        description={auxDescription}
+        price={price}
       >
         <SettingsBox.ActionRow>
           <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_PRICING}>
             plans
           </LearnMoreMessage>
-
-          <S.ActionsWrapper>
+          <Box className="flex-row gap-3">
             {isLoading ? (
               <SettingsBox.Skeleton
                 variant="button"
@@ -122,7 +153,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
                 isCanceled={Boolean(subscription.data?.endDate)}
               />
             )}
-          </S.ActionsWrapper>
+          </Box>
         </SettingsBox.ActionRow>
       </Billing.HorizontalPlanCard>
     </>
@@ -142,7 +173,6 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
   onUpgradePlan,
   onCancelPlan,
 }) => {
-  const className = 'py-0 px-2-5 text-sm h-[2rem]';
   const [isLoading, setIsLoading] = useState(false);
   const hasManageBillingPermission = usePermissions({
     action: [constants.PERMISSION.BILLING.MANAGE],
@@ -160,7 +190,6 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
         <Button
           intent="neutral"
           size="sm"
-          className={className}
           onClick={onCancelPlan}
           loading={isLoading}
           disabled={!hasManageBillingPermission || isCanceled}
@@ -174,21 +203,19 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
   return (
     <>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
-        <Link href="mailto:business@fleek.xyz">
+        <ExternalLink href="https://fleek.typeform.com/fleekinterest?typeform-source=fleek.xyz">
           <Button
             intent="neutral"
             size="sm"
-            className={className}
             disabled={!hasManageBillingPermission}
           >
             Contact Sales
           </Button>
-        </Link>
+        </ExternalLink>
       </PermissionsTooltip>
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
         <Button
           size="sm"
-          className={className}
           onClick={handleUpgradePlan}
           loading={isLoading}
           disabled={!hasManageBillingPermission}

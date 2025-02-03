@@ -2,10 +2,9 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { ExternalLink, FleekLogo, Link } from '@/components';
 import { constants } from '@/constants';
-import { Button } from '@/ui';
+import { Box, Button } from '@/ui';
 
 import { Navbar } from './Navbar';
-import { NavbarStyles as S } from './Navbar.styles';
 
 export const NavbarUnauthenticated: React.FC = () => {
   return (
@@ -14,12 +13,12 @@ export const NavbarUnauthenticated: React.FC = () => {
         <FleekLogo showTypography />
       </Link>
 
-      <S.LoginAreaContainer>
+      <Box className="flex-row gap-3 [grid-area:login]">
         <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
           <Button intent="neutral">Read docs</Button>
         </ExternalLink>
         <Navbar.LoginButton title="Sign in" />
-      </S.LoginAreaContainer>
+      </Box>
     </Navbar.Container>
   );
 };

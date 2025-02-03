@@ -1,17 +1,15 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
-import { Button, Text } from '@/ui';
-
-import { TemplateStyles as S } from '../Template.styles';
+import { Box, Button, Text } from '@/ui';
 
 export const SubmitFooter: React.FC = () => (
-  <S.SubmitFooter.Container>
-    <S.SubmitFooter.Wrapper>
+  <Box className="bg-neutral-2 border-t border-neutral-6">
+    <Box className="w-full max-w-[75rem] self-center sm:flex-row gap-4 justify-content sm:justify-between items-center p-7">
       <Text>Submit a Template to Fleek</Text>
       <Link href={routes.profile.settings.templates()}>
         <Button>Submit template</Button>
       </Link>
-    </S.SubmitFooter.Wrapper>
-  </S.SubmitFooter.Container>
+    </Box>
+  </Box>
 );

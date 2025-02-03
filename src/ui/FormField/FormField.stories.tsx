@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import { Box } from '../Box/Box';
 import { Combobox } from '../Combobox/Combobox';
+import { Box } from '../ftw/Box/Box';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
 import { Icon } from '../Icon/Icon';
@@ -35,7 +35,7 @@ export const WithInput: Story = {
     );
 
     return (
-      <Box css={{ gap: '$lg' }}>
+      <Box className="gap-8">
         <FormField.Root>
           <Content />
         </FormField.Root>
@@ -83,7 +83,7 @@ export const WithCombobox: Story = {
     );
 
     return (
-      <Box css={{ gap: '$lg' }}>
+      <Box className="gap-8">
         <FormField.Root>
           <Content />
         </FormField.Root>

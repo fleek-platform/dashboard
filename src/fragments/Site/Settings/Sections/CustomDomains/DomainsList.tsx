@@ -4,6 +4,7 @@ import { SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { SiteDomain } from '@/types/Site';
+import { Box } from '@/ui';
 import { isActiveDomain } from '@/utils/isActiveDomain';
 
 import { useSettingsItemContext } from '../../Elements/SettingsItem.context';
@@ -43,17 +44,21 @@ export const DomainsList: React.FC<DomainsListProps> = ({
   }, [domains]);
 
   if (isLoading) {
-    return <SettingsListItem.Skeleton />;
+    return (
+      <SettingsListItem.FlatRow>
+        <SettingsListItem.DataSkeleton />
+        <SettingsListItem.DataSkeleton />
+        <Box />
+      </SettingsListItem.FlatRow>
+    );
   }
 
   if (domains.length === 0) {
     return (
-      <SettingsBox.Container>
-        <SettingsBox.EmptyContent
-          title="No Domains"
-          description="Once you add domains, they will appear here."
-        />
-      </SettingsBox.Container>
+      <SettingsBox.EmptyContent
+        title="No Domains"
+        description="Once you add domains, they will appear here."
+      />
     );
   }
 

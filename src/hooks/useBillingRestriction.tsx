@@ -11,6 +11,7 @@ import { filterDeletedDomains } from '@/utils/filterDeletedDomains';
 import { useRouter } from './useRouter';
 
 export const useSiteRestriction = () => {
+  const session = useSessionContext();
   const billing = useBillingContext();
 
   const [sitesQuery] = useSitesQuery({
@@ -18,6 +19,7 @@ export const useSiteRestriction = () => {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !session.accesTokenProjectId,
   });
 
   return billing.hasReachedLimit(
@@ -31,8 +33,8 @@ export const useTeamRestriction = () => {
   const billing = useBillingContext();
 
   const [projectMembersQuery] = useProjectMembersQuery({
-    variables: { where: { id: session.project.id } },
-    pause: !session.project.id,
+    variables: { where: { id: session.accesTokenProjectId! } },
+    pause: !session.accesTokenProjectId,
   });
 
   return billing.hasReachedLimit(

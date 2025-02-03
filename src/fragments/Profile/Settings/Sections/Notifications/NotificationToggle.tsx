@@ -6,9 +6,9 @@ import {
   useUpdateNotificationSettingsMutation,
 } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { Checkbox } from '@/ui';
+import { Checkbox, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
-import { ManageNotificationsStyles as S } from './ManageNotifications.style';
 import { useNotificationsContext } from './NotificationsContext';
 
 type NotificationToggleProps = {
@@ -68,17 +68,24 @@ export const NotificationToggle = ({
   const { EMAIL } = NotificationChannel;
 
   return (
-    <S.Item>
-      {typeof enabled[EMAIL] === 'undefined' ? (
-        <span />
-      ) : (
+    <label
+      htmlFor={label}
+      className={cn(
+        'flex-1 flex gap-2 justify-between items-center cursor-pointer',
+        { 'cursor-not-allowed': disabled },
+      )}
+    >
+      <Text variant="primary" weight={500}>
+        {label || type}
+      </Text>
+      {typeof enabled[EMAIL] !== 'undefined' && (
         <Checkbox
           checked={enabled[EMAIL]}
           onClick={clickHandler(EMAIL)}
           disabled={disabled}
+          id={label}
         />
       )}
-      <span>{label || type}</span>
-    </S.Item>
+    </label>
   );
 };

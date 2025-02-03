@@ -12,7 +12,8 @@ import { useQueryPagination } from '@/hooks/useQueryPagination';
 import { useCookies } from '@/providers/CookiesProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useUploadContext } from '@/providers/UploadProvider';
-import { Pagination } from '@/ui';
+import { Box, Pagination } from '@/ui';
+import { cn } from '@/utils/cn';
 import { Log } from '@/utils/log';
 
 import { DeletePinModal } from '../Modals/DeletePinModal';
@@ -21,7 +22,6 @@ import { EditPinNameModal } from './EditPinName';
 import { EmptyFiles } from './EmptyFiles';
 import { StorageRow } from './StorageRow';
 import { StorageSubheader } from './StorageSubheader';
-import { StorageTableStyles as S } from './StorageTable.styles';
 
 export const StorageTable: React.FC = () => {
   const session = useSessionContext();
@@ -139,12 +139,14 @@ export const StorageTable: React.FC = () => {
         onFolderClick={handleFolderNavigation}
         isLoading={isFetchingFolderDetails}
       />
-      <S.Container>
-        {/* <StorageHeader /> */}
-        <S.Table.Container>
-          <S.Table.Root>
+      <Box variant="container" className="gap-0 p-0 bg-transparent">
+        <Box
+          className={cn('overflow-auto', {
+            'min-h-[33rem]': !isLoading && pins.length === 0,
+          })}
+        >
+          <table className="w-full border-collapse relative border-spacing-0">
             <colgroup>
-              {/* <col span={1} style={{ width: '5%' }} /> */}
               <col span={1} style={{ width: '25%' }} />
               <col span={1} style={{ width: '12%' }} />
               <col span={1} style={{ width: '13%' }} />
@@ -152,10 +154,10 @@ export const StorageTable: React.FC = () => {
               <col span={1} style={{ width: '18%' }} />
               <col span={1} style={{ width: '20%' }} />
             </colgroup>
-            <S.Table.Header>
+            <thead className="bg-neutral-2 border-b border-neutral-6">
               <StorageSubheader />
-            </S.Table.Header>
-            <S.Table.Body>
+            </thead>
+            <tbody>
               {!isLoading && listFolderQuery.data
                 ? pins.map((pinOrFolder, index) => {
                     const pin =
@@ -178,20 +180,20 @@ export const StorageTable: React.FC = () => {
                 : Array.from(Array(10).keys()).map((_, index) => (
                     <StorageRow key={index} isLoading />
                   ))}
-            </S.Table.Body>
-          </S.Table.Root>
+            </tbody>
+          </table>
           {!isLoading && pins.length === 0 && <EmptyFiles />}
-        </S.Table.Container>
-      </S.Container>
+        </Box>
+      </Box>
 
       {!isLoading && pins.length > 0 && totalPages && totalPages > 1 && (
-        <S.PaginationContainer>
+        <Box className="mx-auto">
           <Pagination
             totalPages={totalPages}
             currentPage={page}
             onPageChange={handlePageChange}
           />
-        </S.PaginationContainer>
+        </Box>
       )}
     </>
   );

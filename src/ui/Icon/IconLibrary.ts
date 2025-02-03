@@ -19,6 +19,7 @@ import {
   DotsHorizontalIcon,
   DotsVerticalIcon,
   ExclamationTriangleIcon,
+  ExitFullScreenIcon,
   ExitIcon,
   ExternalLinkIcon,
   FileIcon,
@@ -68,6 +69,8 @@ import { EmailIcon } from './Custom/EmailIcon';
 import { EnsColoredIcon } from './Custom/ENSColoredIcon';
 import { EthereumIcon } from './Custom/EthereumIcon';
 import { ExpandIcon } from './Custom/ExpandIcon';
+import { EyeClosedIcon } from './Custom/EyeClosedIcon';
+import { EyeOpenIcon } from './Custom/EyeOpenIcon';
 import { FilecoinColoredIcon } from './Custom/FilecoinColoredIcon';
 import { FleekIcon } from './Custom/FleekIcon';
 import { FleekName } from './Custom/FleekName';
@@ -155,8 +158,11 @@ export const IconLibrary = Object.freeze({
   ethereum: EthereumIcon,
   'exclamation-triangle': ExclamationTriangleIcon,
   exit: ExitIcon,
+  'exit-fullscreen': ExitFullScreenIcon,
   expand: ExpandIcon,
   'external-link': ExternalLinkIcon,
+  'eye-closed': EyeClosedIcon,
+  'eye-open': EyeOpenIcon,
   file: FileIcon,
   filecoin: FilecoinColoredIcon,
   fleek: FleekIcon,

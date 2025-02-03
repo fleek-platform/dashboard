@@ -11,9 +11,6 @@ import {
   GitUser,
 } from '@/fragments/DeploySite/DeploySite.context';
 import {
-  GitIntegrationDocument,
-  GitIntegrationQuery,
-  GitIntegrationQueryVariables,
   SecretVisibility,
   useCountSitesWithSourceProviderQuery,
   useCreateSecretMutation,
@@ -68,8 +65,6 @@ const NewSitePage: Page = () => {
     },
     onSubmit: async (values) => {
       try {
-        let gitIntegrationId;
-
         if (mode !== 'self') {
           if (!gitProviderId) {
             // eslint-disable-next-line fleek-custom/no-default-error
@@ -81,16 +76,7 @@ const NewSitePage: Page = () => {
             throw new Error('Failed to find installation id');
           }
 
-          const gitIntegrationResult = await client.query<
-            GitIntegrationQuery,
-            GitIntegrationQueryVariables
-          >(GitIntegrationDocument, {
-            where: { gitProviderId },
-          });
-
-          gitIntegrationId = gitIntegrationResult.data?.gitIntegration.id;
-
-          if (!gitIntegrationId) {
+          if (!gitUser?.gitIntegrationId) {
             // eslint-disable-next-line fleek-custom/no-default-error
             throw new Error('Failed to find git integration id');
           }
@@ -109,6 +95,8 @@ const NewSitePage: Page = () => {
             sourceRepositoryName: gitRepository?.name,
             sourceRepositoryOwner: gitRepository?.owner,
             sourceBranch: gitBranch ?? gitRepository?.defaultBranch,
+            gitIntegrationId:
+              mode === 'self' ? undefined : gitUser?.gitIntegrationId,
             githubInstallationId:
               mode === 'self'
                 ? undefined
@@ -117,7 +105,6 @@ const NewSitePage: Page = () => {
 
             frameworkId: values.frameworkId ?? undefined,
             templateId: values.templateId,
-            gitIntegrationId,
           },
         });
 

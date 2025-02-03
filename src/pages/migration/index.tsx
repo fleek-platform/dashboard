@@ -12,7 +12,7 @@ const MigrationPage: Page = () => {
 
   return (
     <>
-      {session.auth.token && (
+      {session.auth.accessToken && (
         <Link href={routes.home()}>
           <Button intent="neutral" iconLeft="arrow-left">
             Go back

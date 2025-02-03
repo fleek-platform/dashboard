@@ -1,3 +1,4 @@
+/* eslint-disable fleek-custom/no-interface */
 /* eslint-disable fleek-custom/no-default-error */
 import { useMutation } from '@tanstack/react-query';
 
@@ -6,6 +7,12 @@ import { useCookies } from '@/providers/CookiesProvider';
 import { CheckoutResponse, PlanResponse } from '@/types/Billing';
 
 import { useRouter } from './useRouter';
+
+declare global {
+  interface Window {
+    promotekit_referral: unknown;
+  }
+}
 
 export const useFleekCheckout = () => {
   const router = useRouter();
@@ -43,6 +50,9 @@ export const useFleekCheckout = () => {
         body: JSON.stringify({
           projectId,
           planId,
+          metadata: {
+            referralId: window.promotekit_referral,
+          },
         }),
       });
 

@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { SettingsBox } from '@/components';
 import { useTemplatesQuery } from '@/generated/graphqlClient';
 import { useDebounce } from '@/hooks/useDebounce';
-import { Input } from '@/ui';
+import { Box, Input } from '@/ui';
 
-import { TemplateStyles as S } from '../../Template.styles';
 import { TemplateCard } from '../../TemplateCard/TemplateCard';
 
 const ITEMS_PER_PAGE = 12;
@@ -69,17 +68,15 @@ export const Explorer: React.FC<ExplorerProps> = ({
   };
 
   return (
-    <S.List.Explorer.Container ref={containerRef}>
-      <S.List.Explorer.Controls>
-        <Input.Root>
-          <Input.Icon name="magnify" />
-          <Input.Field
-            onChange={handleSearchChange}
-            value={search}
-            placeholder="Search Templates"
-          />
-        </Input.Root>
-      </S.List.Explorer.Controls>
+    <Box className="[grid-area:explorer] gap-6" ref={containerRef}>
+      <Input.Root>
+        <Input.Icon name="magnify" />
+        <Input.Field
+          onChange={handleSearchChange}
+          value={search}
+          placeholder="Search Templates"
+        />
+      </Input.Root>
 
       {isEmpty ? (
         <SettingsBox.EmptyContent
@@ -87,7 +84,7 @@ export const Explorer: React.FC<ExplorerProps> = ({
           description="We found no template results."
         />
       ) : (
-        <S.List.Explorer.Grid>
+        <Box className="grid md:grid-cols-3 gap-5">
           {pages.map((page) => (
             <Grid
               key={page}
@@ -99,9 +96,9 @@ export const Explorer: React.FC<ExplorerProps> = ({
               setIsEmpty={setIsEmpty}
             />
           ))}
-        </S.List.Explorer.Grid>
+        </Box>
       )}
-    </S.List.Explorer.Container>
+    </Box>
   );
 };
 

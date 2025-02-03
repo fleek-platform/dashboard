@@ -44,7 +44,7 @@ export const Default: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -60,7 +60,7 @@ export const Pending: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -73,7 +73,7 @@ export const Skeleton: StoryObj<SiteCardProps> = {
   },
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),

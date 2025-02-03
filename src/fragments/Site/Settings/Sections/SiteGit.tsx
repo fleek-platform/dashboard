@@ -1,4 +1,5 @@
 import { SettingsBox, SettingsListItem } from '@/components';
+import { constants } from '@/constants';
 import { useSiteQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { GitProvider } from '@/integrations/git';
@@ -19,10 +20,12 @@ export const SiteGit: React.FC = () => {
 
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Connected Git Repo</SettingsBox.Title>
-      <SettingsBox.Text>
-        This is the current repository associated with your Fleek site.
-      </SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Connected git repository</SettingsBox.Title>
+        <SettingsBox.Text>
+          This is the current repository associated with your Fleek site.
+        </SettingsBox.Text>
+      </SettingsBox.Column>
 
       <RepositoryField
         provider={provider}
@@ -59,8 +62,10 @@ const RepositoryField: React.FC<RepositoryFieldProps> = ({
   const name = site?.sourceRepositoryName!;
   const branch = site?.sourceBranch!;
 
+  // TODO: add more icons based on git provider
   return (
     <SettingsListItem
+      avatarSrc={constants.ASSET_URL.GITHUB}
       avatarIcon={provider}
       title={`${slug}/${name}`}
       subtitle={branch}

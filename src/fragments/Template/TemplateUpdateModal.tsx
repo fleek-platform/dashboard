@@ -133,7 +133,7 @@ export const TemplateUpdateModal: React.FC<TemplateUpdateModalProps> = ({
 
         <SettingsModal.Footer>
           <SettingsModal.Close asChild>
-            <Button intent="neutral">Cancel</Button>
+            <Button intent="ghost">Cancel</Button>
           </SettingsModal.Close>
 
           <Form.SubmitButton partial>Save changes</Form.SubmitButton>

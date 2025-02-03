@@ -201,7 +201,7 @@ export const FnSettingsContent = (fn: FnSettingsContentProps) => {
             isLoading={isLoading}
           >
             <Button
-              intent="danger"
+              intent="neutral"
               loading={deleteFleekFunctionMutation.fetching}
               disabled={!hasDeleteFunctionPermission}
               onClick={() => setIsModalOpen(true)}

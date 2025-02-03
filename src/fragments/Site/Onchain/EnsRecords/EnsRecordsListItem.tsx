@@ -10,7 +10,7 @@ import {
 } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
 import { EnsRecord } from '@/types/EnsRecord';
-import { Box, Icon, Text } from '@/ui';
+import { Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 
@@ -59,21 +59,14 @@ export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({
   });
 
   return (
-    // TODO refactor SettingsListItem component across the platform
-    <Box className="flex flex-row items-center gap-3 py-3 px-4 bg-transparent">
-      <Box className="gap-1 flex-1">
-        <Text as="h3" variant="primary" weight={500}>
-          {name}
-        </Text>
-        <Text
-          size="xs"
-          weight={500}
-          className="flex gap-2"
-        >{`Added ${getDurationUntilNow({
+    <SettingsListItem.FlatRow>
+      <SettingsListItem.Data
+        subtitle={`Added ${getDurationUntilNow({
           isoDateString: createdAt,
           shortFormat: true,
-        })}`}</Text>
-      </Box>
+        })}`}
+        title={name}
+      />
       {match(status)
         .with(EnsRecordStatus.ACTIVE, () => (
           <BadgeText colorScheme="green">Active</BadgeText>
@@ -108,8 +101,7 @@ export const EnsRecordsListItem: React.FC<EnsRecordItemProps> = ({
         handleOpenEnsModal={handleOpenEnsModal}
         isBuyable={!ensAddressOwner}
       />
-    </Box>
-    // </SettingsListItem>
+    </SettingsListItem.FlatRow>
   );
 };
 

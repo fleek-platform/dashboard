@@ -1,5 +1,6 @@
+import { forwardRef } from 'react';
+
 import { useToast } from '@/hooks/useToast';
-import { forwardStyledRef } from '@/theme';
 import { LoadingProps } from '@/types/Props';
 import { Box, Button, Skeleton, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
@@ -10,11 +11,10 @@ export type CodeSnippetProps = LoadingProps<
   {
     code?: string;
     title: string;
-  } & Omit<React.ComponentPropsWithRef<typeof S.Root>, 'children'>
+  } & Omit<React.ComponentPropsWithRef<typeof Box>, 'children'>
 >;
 
-export const CodeSnippet = forwardStyledRef<HTMLDivElement, CodeSnippetProps>(
-  S.Root,
+export const CodeSnippet = forwardRef<HTMLDivElement, CodeSnippetProps>(
   ({ code, title, isLoading, ...props }, ref) => {
     const toast = useToast();
 
@@ -30,8 +30,8 @@ export const CodeSnippet = forwardStyledRef<HTMLDivElement, CodeSnippetProps>(
     };
 
     return (
-      <S.Root {...props} ref={ref}>
-        <S.Header>
+      <Box {...props} ref={ref} variant="container" className="p-0 gap-0">
+        <Box className="flex-row justify-between items-center border-b border-neutral-6 px-4 py-2.5">
           <Text variant="primary" weight={500}>
             {title}
           </Text>
@@ -42,11 +42,11 @@ export const CodeSnippet = forwardStyledRef<HTMLDivElement, CodeSnippetProps>(
               </Button>
             )}
           </Box>
-        </S.Header>
+        </Box>
         <S.Body>
           {isLoading ? <Skeleton /> : code || <i>Not Available</i>}
         </S.Body>
-      </S.Root>
+      </Box>
     );
   },
 );

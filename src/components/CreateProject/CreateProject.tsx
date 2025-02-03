@@ -2,10 +2,7 @@ import { createProjectSchema } from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 
 import { constants } from '@/constants';
-import {
-  useCreateProjectGithubIntegrationMutation,
-  useCreateProjectMutation,
-} from '@/generated/graphqlClient';
+import { useCreateProjectMutation } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { useCookies } from '@/providers/CookiesProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
@@ -25,8 +22,6 @@ export const CreateProject: React.FC = () => {
   const client = useClient();
 
   const [, createProject] = useCreateProjectMutation();
-  const [, createProjectGithubIntegration] =
-    useCreateProjectGithubIntegrationMutation();
 
   const createProjectForm = Form.useForm({
     values: {
@@ -47,20 +42,6 @@ export const CreateProject: React.FC = () => {
             throw (
               error || new Error('There was an error creating the new project')
             );
-          }
-
-          const ghIntegrationResult = await createProjectGithubIntegration({
-            data: { projectId: data.createProject.id },
-          });
-
-          if (
-            ghIntegrationResult.error ||
-            !ghIntegrationResult.data?.createGithubIntegrationForProject
-          ) {
-            toast.error({
-              error: ghIntegrationResult.error,
-              log: `There was an error creating GitHub integration for the new project ${values.name}`,
-            });
           }
 
           cookies.set('projectId', data.createProject.id);

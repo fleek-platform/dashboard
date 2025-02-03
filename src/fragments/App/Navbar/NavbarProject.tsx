@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { BadgeText, CreateProject } from '@/components';
+import { BadgeText, CreateProject, ExternalLink, Link } from '@/components';
 import { constants } from '@/constants';
 import {
   useDeploymentStatusQuery,
@@ -15,21 +15,20 @@ import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Project } from '@/types/Project';
 import { ChildrenProps } from '@/types/Props';
+import { Box, Skeleton } from '@/ui';
 
 import { Navbar } from '../Navbar/Navbar';
-import { NavbarStyles as S } from './Navbar.styles';
 import { ProjectDropdown } from './ProjectDropdown/ProjectDropdown';
 import { UserMenu } from './UserMenu/UserMenu';
 
 type NavbarProjectProps = ChildrenProps;
 
 export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
-  const [projectsQuery] = useProjectsQuery();
   const router = useRouter();
   const projectContext = useProjectContext();
   const session = useSessionContext();
   const flags = useFeatureFlags();
-  const { openModal } = useFeedbackModal();
+  const { openModalWithTab } = useFeedbackModal();
 
   const [enableNavigation, setEnableNavigation] = useState(true);
   const isDesktop = useMediaQueryWindow('(min-width: 768px)');
@@ -37,6 +36,10 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const siteId = router.query.siteId!;
   const deploymentId = router.query.deploymentId!;
 
+  const [projectsQuery] = useProjectsQuery({
+    pause: !projectContext.accessTokenProjectId,
+    variables: {},
+  });
   const [siteQuery] = useSiteQuery({
     variables: { where: { id: siteId } },
     pause: !siteId,
@@ -65,7 +68,7 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
       <CreateProject />
       <Navbar.Logo>
         {shouldShowSkeleton ? (
-          <S.Skeleton.Projects />
+          <Skeleton variant="text" className="w-[8.75rem] h-6" />
         ) : (
           <>
             <ProjectDropdown
@@ -79,26 +82,20 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
       </Navbar.Logo>
 
       {enableNavigation && (
-        <S.Navigation.Container>
+        <Box className="flex-row gap-3 text-sm font-medium">
           {flags.isInternalUser && (
             <BadgeText colorScheme="yellow">Internal User</BadgeText>
           )}
-          <S.Navigation.Link
-            href={constants.EXTERNAL_LINK.FLEEK_DOCS}
-            target={constants.EXTERNAL_LINK.FLEEK_DOCS}
-          >
+          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
             Docs
-          </S.Navigation.Link>
-          <S.Navigation.Link
-            href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}
-            target={constants.EXTERNAL_LINK.FLEEK_SUPPORT}
-          >
+          </ExternalLink>
+          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>
             Help
-          </S.Navigation.Link>
-          <S.Navigation.Link href={'#'} onClick={openModal}>
+          </ExternalLink>
+          <Link href="#" onClick={() => openModalWithTab('FEEDBACK')}>
             Feedback
-          </S.Navigation.Link>
-        </S.Navigation.Container>
+          </Link>
+        </Box>
       )}
 
       <UserMenu />

@@ -1,7 +1,4 @@
-import {
-  GitRepositoriesQuery,
-  useCountSitesWithSourceProviderQuery,
-} from '@/generated/graphqlClient';
+import { GitRepositoriesQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
 import { Avatar, Combobox, Icon } from '@/ui';
@@ -26,12 +23,6 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
 }) => {
   const toast = useToast();
   const { sourceProvider, providerState } = useDeploySiteContext();
-  const [countSitesWithSourceProviderQuery] =
-    useCountSitesWithSourceProviderQuery();
-
-  const shouldDisableAddOrganization =
-    countSitesWithSourceProviderQuery.fetching ||
-    (countSitesWithSourceProviderQuery.data?.sites?.totalCount ?? 0) > 1;
 
   const handleAddGHAccount = async () => {
     if (!providerState?.requirements?.installationUrl) {
@@ -72,14 +63,6 @@ export const UserCombobox: React.FC<UserComboboxProps> = ({
           label: 'Add GitHub Organization',
           onClick: handleAddGHAccount,
           iconName: 'add-circle',
-          disabled: shouldDisableAddOrganization,
-          tooltip: shouldDisableAddOrganization
-            ? {
-                content:
-                  'You already have sites that depend on the current GitHub installation.',
-                side: 'left',
-              }
-            : undefined,
         },
       ]}
     >

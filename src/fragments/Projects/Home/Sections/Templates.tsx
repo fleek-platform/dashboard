@@ -14,10 +14,10 @@ export const HomeTemplates: React.FC = () => {
         </Text>
         <Link
           href={routes.template.list()}
-          className="flex flex-row gap-1 text-neutral-11"
+          className="flex flex-row gap-1 text-neutral-11 group"
         >
           View all templates
-          <Icon name="arrow-right" />
+          <Icon name="arrow-right" className="group-hover:text-neutral-12" />
         </Link>
       </Box>
       <TemplatesList />

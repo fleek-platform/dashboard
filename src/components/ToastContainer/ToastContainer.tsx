@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { useToastContext } from '@/providers/ToastProvider';
 import { Toast as ToastType } from '@/types/Toast';
-import { Button } from '@/ui';
+import { Box, Button } from '@/ui';
 
 import { DismissTimeout, ToastStyles as S } from './ToastContainer.styles';
 
@@ -57,10 +57,10 @@ const Toast: React.FC<ToastProps> = ({
       variant={type}
       onOpenChange={handleOpenChange}
     >
-      <S.Layout>
-        <S.Content>
+      <Box>
+        <Box>
           <S.Body>{message}</S.Body>
-        </S.Content>
+        </Box>
         <S.Close asChild>
           {withCloseButton && (
             <Button intent="neutral" onClick={onDismiss}>
@@ -68,7 +68,7 @@ const Toast: React.FC<ToastProps> = ({
             </Button>
           )}
         </S.Close>
-      </S.Layout>
+      </Box>
     </S.Root>
   );
 };

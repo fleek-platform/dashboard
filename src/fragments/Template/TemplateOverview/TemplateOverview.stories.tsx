@@ -14,7 +14,7 @@ export default meta;
 
 export const Default: StoryObj<TemplateOverviewProps> = {
   render: (args: TemplateOverviewProps) => (
-    <Box css={{ maxWidth: '80%' }}>
+    <Box className="max-w-[80%]">
       <TemplateOverview {...args} />
     </Box>
   ),
@@ -47,7 +47,7 @@ export const Default: StoryObj<TemplateOverviewProps> = {
 
 export const Skeleton: StoryObj<TemplateOverviewProps> = {
   render: (args: TemplateOverviewProps) => (
-    <Box css={{ maxWidth: '80%' }}>
+    <Box className="max-w-[15.125rem]">
       <TemplateOverview {...args} />
     </Box>
   ),

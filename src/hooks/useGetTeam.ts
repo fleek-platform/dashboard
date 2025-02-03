@@ -17,7 +17,7 @@ export const useGetTeam = ({ pause }: UseGetTeamArgs) => {
   });
 
   const getTeam = useCallback(async () => {
-    if (pause) {
+    if (pause || !cookies.values.projectId) {
       return null;
     }
 

@@ -2,8 +2,6 @@ import { Form, ToggleButton } from '@/components';
 import { DisabledProps, LoadingProps } from '@/types/Props';
 import { FormField } from '@/ui';
 
-import { EnvironmentVariablesStyles as S } from '../EnvironmentVariables.styles';
-
 type VisibilityFieldProps = LoadingProps<
   DisabledProps<{
     disableLabel?: boolean;
@@ -22,7 +20,7 @@ export const VisibilityField: React.FC<VisibilityFieldProps> = ({
   };
 
   return (
-    <S.VisibilityField.Root>
+    <FormField.Root className="flex-grow-0">
       {!disableLabel && <FormField.Label>Encrypt</FormField.Label>}
       <ToggleButton
         value={field.value}
@@ -30,6 +28,6 @@ export const VisibilityField: React.FC<VisibilityFieldProps> = ({
         isLoading={isLoading}
         isDisabled={isDisabled}
       />
-    </S.VisibilityField.Root>
+    </FormField.Root>
   );
 };

@@ -18,7 +18,7 @@ export const Customizable: Story = {
   render: (args: TemplateCardProps) => <TemplateCard {...args} />,
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),
@@ -55,7 +55,7 @@ export const Skeleton: Story = {
   render: (args: TemplateCardProps) => <TemplateCard {...args} />,
   decorators: [
     (Story: React.FC) => (
-      <Box css={{ maxWidth: '17.875rem' }}>
+      <Box className="max-w-[15.125rem]">
         <Story />
       </Box>
     ),

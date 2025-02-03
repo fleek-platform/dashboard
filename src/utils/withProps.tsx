@@ -1,12 +1,20 @@
 import { forwardRef } from 'react';
 
-type WithPropsProps<P> = Partial<P>;
+import { cn } from './cn';
+
+type ClassName = { className?: string };
+type WithPropsProps<P> = Partial<P> & ClassName;
 
 export const withProps = <P extends object>(
   Component: React.ComponentType<P>,
-  additionalProps: WithPropsProps<P>,
+  initialProps: WithPropsProps<P>,
 ) => {
-  return forwardRef((props: P, ref) => (
-    <Component {...additionalProps} {...props} ref={ref} />
+  return forwardRef((additionalProps: P & ClassName, ref) => (
+    <Component
+      {...initialProps}
+      {...additionalProps}
+      className={cn(initialProps.className, additionalProps.className)}
+      ref={ref}
+    />
   ));
 };

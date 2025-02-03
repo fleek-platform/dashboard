@@ -88,7 +88,7 @@ const ComingSoonPage: React.FC = () => {
     >
       <ComingSoon.Skeleton.Container>
         <ComingSoon.Skeleton.Box>
-          <ComingSoon.Skeleton.Row variant="small">
+          <ComingSoon.Skeleton.Row small>
             <ComingSoon.Skeleton.TextSkeleton />
             <ComingSoon.Skeleton.TextSkeleton />
           </ComingSoon.Skeleton.Row>
@@ -96,7 +96,7 @@ const ComingSoonPage: React.FC = () => {
           <ComingSoon.Skeleton.TextSkeleton />
         </ComingSoon.Skeleton.Box>
         <ComingSoon.Skeleton.Box>
-          <ComingSoon.Skeleton.Row variant="small">
+          <ComingSoon.Skeleton.Row small>
             <ComingSoon.Skeleton.TextSkeleton />
             <ComingSoon.Skeleton.TextSkeleton />
           </ComingSoon.Skeleton.Row>

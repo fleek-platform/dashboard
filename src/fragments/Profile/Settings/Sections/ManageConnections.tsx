@@ -11,11 +11,10 @@ import { constants } from '@/constants';
 import { useToast } from '@/hooks/useToast';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Box, IconName } from '@/ui';
+import { Box, IconName, Menu, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { shortStringFormat } from '@/utils/stringFormat';
 
-import { ManageConnectionStyles as S } from './ManageConnection.style';
 import { UserEmailModal } from './UserEmailModal';
 
 export const ManageConnections: React.FC<LoadingProps> = () => {
@@ -118,13 +117,15 @@ const VerifiedCredential: React.FC<VerifiedCredentialProps> = ({
       avatarSrc={avatarSrc}
       avatarIcon={avatarIcon}
     >
-      {isActive && <BadgeText colorScheme="green">Active</BadgeText>}
-      <SettingsListItem.DropdownMenu
-        isDisabled={isLoading}
-        isLoading={isLoading}
-      >
-        {children}
-      </SettingsListItem.DropdownMenu>
+      <Box className="flex-row gap-3 items-center">
+        {isActive && <BadgeText colorScheme="green">Active</BadgeText>}
+        <SettingsListItem.DropdownMenu
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        >
+          {children}
+        </SettingsListItem.DropdownMenu>
+      </Box>
     </SettingsListItem>
   );
 };
@@ -195,16 +196,16 @@ const BlockchainCredential: React.FC<BlockchainCredentialProps> = ({
       )}
       <SettingsListItem.DropdownMenuSeparator />
       {primaryWallet ? (
-        <S.MenuItem disabled>
+        <Menu.Item disabled>
           <Box>
             Unlink Wallet
-            <S.Subtitle>
+            <Text>
               {user?.email
                 ? 'You must be signed in with your email to unlink this wallet.'
                 : 'You must add an email address to unlink this wallet.'}
-            </S.Subtitle>
+            </Text>
           </Box>
-        </S.MenuItem>
+        </Menu.Item>
       ) : (
         <SettingsListItem.DropdownMenuItem
           icon="exit"
@@ -262,16 +263,16 @@ const EmailCredential: React.FC<EmailCredentialProps> = ({
         Change Email
       </SettingsListItem.DropdownMenuItem>
       {userWallets.length === 0 || !primaryWallet ? (
-        <S.MenuItem disabled>
+        <Menu.Item disabled>
           <Box>
             Remove Email
-            <S.Subtitle>
+            <Text>
               {userWallets.length === 0
                 ? 'You must add an ethereum wallet to remove this email.'
                 : 'You must be signed in with your wallet to remove this email.'}
-            </S.Subtitle>
+            </Text>
           </Box>
-        </S.MenuItem>
+        </Menu.Item>
       ) : (
         <SettingsListItem.DropdownMenuItem
           icon="trash"

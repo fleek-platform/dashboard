@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
+import { Box, Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
+import { withProps } from '@/utils/withProps';
 
 import { AlertBox } from '../AlertBox/AlertBox';
 import { Heading } from '../SettingsModal/SettingsModal';
@@ -117,7 +118,7 @@ SettingsDeleteModal.Table = (({
   );
 }) as React.FC<SettingsDeleteModal.TableProps>; // explicite cast for rules of hooks
 
-SettingsDeleteModal.Footer = S.Modal.CTARow;
+SettingsDeleteModal.Footer = withProps(Box, { className: 'flex-row gap-4' });
 
 SettingsDeleteModal.Heading = Heading;
 

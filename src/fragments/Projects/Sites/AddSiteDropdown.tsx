@@ -27,6 +27,7 @@ export const AddSiteDropdown: React.FC = () => {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !session.accesTokenProjectId,
   });
 
   if (sitesQuery.fetching) {

@@ -2,9 +2,8 @@ import { AlertBox, CodeSnippet, ExternalLink } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Divider, Stepper, Text } from '@/ui';
+import { Box, Divider, Stepper, Text } from '@/ui';
 
-import { InstructionsStyles as S } from './Instructions.styles';
 import { Step } from './Step';
 
 type InstructionsProps = {
@@ -28,7 +27,7 @@ export const Instructions = ({
 
   if (hasDeployFunctionPermission) {
     return (
-      <S.MainContainer variant="container">
+      <Box variant="container" className="bg-transparent">
         <Stepper.Root initialStep={initialStep}>
           <Stepper.Container>
             <Stepper.Step>
@@ -45,7 +44,7 @@ export const Instructions = ({
             </Stepper.Step>
           </Stepper.Container>
         </Stepper.Root>
-      </S.MainContainer>
+      </Box>
     );
   }
 
@@ -53,11 +52,11 @@ export const Instructions = ({
 };
 
 const DividerContainer = ({ divider = 'OR' }: { divider?: string }) => (
-  <S.DividerContainer>
+  <Box className="flex-row gap-2 items-center">
     <Divider />
-    <span>{divider}</span>
+    <Text>{divider}</Text>
     <Divider />
-  </S.DividerContainer>
+  </Box>
 );
 
 const Step1 = () => {
@@ -107,7 +106,7 @@ const Step3 = ({ functionName }: Step3Props) => (
 }`}
     />
     <AlertBox size="sm" variant="bulb">
-      <S.DocsText>
+      <Box className="flex-row justify-between items-center">
         <Text weight={500}>
           For more details on how to structure your code and get ready for
           deployment.
@@ -117,7 +116,7 @@ const Step3 = ({ functionName }: Step3Props) => (
         >
           Go to Docs
         </ExternalLink>
-      </S.DocsText>
+      </Box>
     </AlertBox>
     <DividerContainer divider="AND" />
     <CodeSnippet

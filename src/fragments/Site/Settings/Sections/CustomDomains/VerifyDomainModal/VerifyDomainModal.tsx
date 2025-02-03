@@ -7,13 +7,12 @@ import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { DnsConfig } from '@/types/Domain';
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Divider, FormField, Icon, Text } from '@/ui';
+import { Box, Divider, FormField, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDomainOrSubdomain } from '@/utils/getDomainOrSubdomain';
 
 import { useSettingsItemContext } from '../../../Elements/SettingsItem.context';
 import { SettingsItemModal } from '../../../Elements/SettingsItemModal';
-import { VerifyDomainModalStyles as S } from './VerifyDomainModal.styles';
 
 export const VerifyDomainModal: React.FC = () => {
   const { selectedId, isModalOpen, withDnsLink, closeModal } =
@@ -153,7 +152,7 @@ const DataSection: React.FC<DataSectionProps> = ({
 
   return (
     <Modal.Inner.Container>
-      <Modal.Inner.Row>
+      <Modal.Inner.Row className="justify-between">
         <DataSectionItem label="Type">{config.type}</DataSectionItem>
         <DataSectionItem label="Name">{hostname}</DataSectionItem>
       </Modal.Inner.Row>
@@ -167,7 +166,7 @@ const DataSection: React.FC<DataSectionProps> = ({
 
 const DataSectionSkeleton: React.FC = () => (
   <Modal.Inner.Container>
-    <Modal.Inner.Row>
+    <Modal.Inner.Row className="justify-between">
       <DataSectionItem label="Type" isLoading />
       <DataSectionItem label="Name" isLoading />
     </Modal.Inner.Row>
@@ -193,14 +192,23 @@ const DataSectionItem: React.FC<DataSectionItemProps> = ({
     return <DataSectionItemSkeleton label={label} />;
   }
 
+  if (onCopy) {
+    return (
+      <FormField.Root onClick={onCopy} className="cursor-pointer group">
+        <FormField.Label>{label}</FormField.Label>
+        <Box className="flex-row justify-between">
+          <Text className="truncate">{children}</Text>
+          <Icon name="copy" className="group-hover:text-white" />
+        </Box>
+      </FormField.Root>
+    );
+  }
+
   return (
-    <S.FormRoot onClick={onCopy} clickable={!!onCopy}>
+    <FormField.Root>
       <FormField.Label>{label}</FormField.Label>
-      <S.DataSectionValueContainer>
-        <Text className="truncate">{children}</Text>
-        {onCopy && <Icon name="copy" color="slate" />}
-      </S.DataSectionValueContainer>
-    </S.FormRoot>
+      <Text className="truncate ml-auto">{children}</Text>
+    </FormField.Root>
   );
 };
 

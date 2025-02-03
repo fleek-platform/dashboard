@@ -18,16 +18,17 @@ export const PurgeCache: React.FC<PurgeCacheProps> = ({
 }) => {
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Purge Cache</SettingsBox.Title>
-      <SettingsBox.Text>
-        If your website is not reflecting the latest changes, you might have a
-        cache-refresh issue. Use the Purge Cache button to manually fix this
-        issue.
-      </SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Purge cache</SettingsBox.Title>
+        <SettingsBox.Text>
+          If your website is not reflecting the latest changes, you might have a
+          cache-refresh issue.
+        </SettingsBox.Text>
+      </SettingsBox.Column>
 
       <SettingsBox.ActionRow>
         <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PURGE_CACHE}>
-          purging the cache
+          purge the cache
         </LearnMoreMessage>
         {isLoading ? (
           <SettingsBox.Skeleton variant="button" />

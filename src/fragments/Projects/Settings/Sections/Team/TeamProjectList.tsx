@@ -6,7 +6,7 @@ import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { LoadingProps } from '@/types/Props';
 import { PermissionGroup, ProjectMember } from '@/types/TeamProject';
-import { Box, Icon, Skeleton } from '@/ui';
+import { Box, Icon, Skeleton, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import { RoleCombobox } from './AddTeamMember';
@@ -15,7 +15,6 @@ import {
   TeamProjectProvider,
   useTeamProjectContext,
 } from './TeamProject.context';
-import { TeamSettingsStyles as S } from './TeamSettings.styles';
 
 export type TeamProjectListProps = LoadingProps<
   {
@@ -39,7 +38,6 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
     return (
       <SettingsBox.Container>
         <Skeleton variant="text" className="w-1/3" />
-
         <Skeleton variant="text" className="w-1/2" />
         <MembersSkeleton />
       </SettingsBox.Container>
@@ -94,11 +92,7 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
   );
 };
 
-const MembersSkeleton: React.FC = () => (
-  <S.Item.Container>
-    <Skeleton />
-  </S.Item.Container>
-);
+const MembersSkeleton: React.FC = () => <Skeleton variant="text" />;
 
 type MemberItemProps = {
   projectMember: ProjectMember;
@@ -139,35 +133,36 @@ const MemberItem: React.FC<MemberItemProps> = ({
   };
 
   return (
-    <S.Item.Container>
-      <Box>
-        <S.Item.Text>
-          <span>
+    <Box className="flex-row justify-between items-center">
+      <Box className="gap-1">
+        <Box className="flex-row items-center gap-2">
+          <Text variant="primary">
             {projectMember.user.username ||
               projectMember.user.email ||
               projectMember.user.id}
-          </span>
+          </Text>
           {isCurrentUser && <BadgeText colorScheme="slate">You</BadgeText>}
-        </S.Item.Text>
-
-        <S.Item.Label>
+        </Box>
+        <Text size="xs">
           Added{' '}
           {getDurationUntilNow({
             isoDateString: projectMember.createdAt,
             shortFormat: true,
           })}
-        </S.Item.Label>
+        </Text>
       </Box>
 
-      <PermissionsTooltip hasAccess={hasEditRolePermission} side="top">
-        <RoleCombobox
-          selectedRole={selectedRole}
-          onChange={handleRoleChange}
-          isDisabled={!hasEditRolePermission || isUpdating}
-        />
-      </PermissionsTooltip>
-      <DropdownMenu memberId={projectMember.user.id} />
-    </S.Item.Container>
+      <Box className="flex-row gap-3">
+        <PermissionsTooltip hasAccess={hasEditRolePermission} side="top">
+          <RoleCombobox
+            selectedRole={selectedRole}
+            onChange={handleRoleChange}
+            isDisabled={!hasEditRolePermission || isUpdating}
+          />
+        </PermissionsTooltip>
+        <DropdownMenu memberId={projectMember.user.id} />
+      </Box>
+    </Box>
   );
 };
 

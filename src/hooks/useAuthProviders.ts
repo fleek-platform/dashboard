@@ -1,6 +1,9 @@
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 
-import { useLoginWithDynamicMutation } from '@/generated/graphqlClient';
+import {
+  useGenerateUserSessionDetailsMutation,
+  useLoginWithDynamicMutation,
+} from '@/generated/graphqlClient';
 import { useCookies } from '@/providers/CookiesProvider';
 import { secrets } from '@/secrets';
 
@@ -10,7 +13,7 @@ export type AuthWith = {
   handleLogin: () => void;
   handleLogout: () => void;
   requestAccessToken: (projectId?: string) => Promise<string>;
-  token: string | undefined;
+  authToken: string | undefined;
 };
 
 export const useAuthProviders = (): Record<AuthProviders, AuthWith> => {
@@ -24,20 +27,49 @@ export const useAuthProviders = (): Record<AuthProviders, AuthWith> => {
 
 const useAuthWithDynamic = (): AuthWith => {
   const dynamic = useDynamicContext();
+  const cookies = useCookies();
 
   const [, loginWithDynamic] = useLoginWithDynamicMutation();
+  const [, generateUserSessionDetails] =
+    useGenerateUserSessionDetailsMutation();
 
-  const handleLogin = () => dynamic.setShowAuthFlow(true);
+  const handleLogin = async () => {
+    // handle dynamic being authenticated
+    if (dynamic.authToken) {
+      await dynamic.handleLogOut();
+    }
+
+    dynamic.setShowAuthFlow(true);
+  };
 
   const handleLogout = () => dynamic.handleLogOut();
 
   const requestAccessToken = async (projectId?: string): Promise<string> => {
-    if (!dynamic.authToken) {
+    console.log('[debug] useAuthProviders: requestAccessToken: 1')
+    if (!cookies.values.authToken) {
+      console.log('[debug] useAuthProviders: requestAccessToken: authToken: return')
       return '';
+    }
+    console.log(`[debug] useAuthProviders: requestAccessToken: projectId = ${projectId}`)
+    if (!projectId) {
+      const { data, error } = await generateUserSessionDetails({
+        data: { authToken: cookies.values.authToken },
+      });
+
+      if (data && data.generateUserSessionDetails) {
+        if (data.generateUserSessionDetails.projectId) {
+          cookies.set('accessToken', data.generateUserSessionDetails.accessToken);
+          cookies.set('projectId', data.generateUserSessionDetails.projectId);
+        }
+
+        return data.generateUserSessionDetails.accessToken;
+      }
+
+      throw error;
     }
 
     const { data, error } = await loginWithDynamic({
-      data: { authToken: dynamic.authToken, projectId },
+      data: { authToken: cookies.values.authToken, projectId },
     });
 
     if (data && data.loginWithDynamic) {
@@ -51,7 +83,7 @@ const useAuthWithDynamic = (): AuthWith => {
     handleLogin,
     handleLogout,
     requestAccessToken,
-    token: dynamic.authToken,
+    authToken: cookies.values.authToken,
   };
 };
 
@@ -62,7 +94,7 @@ const getMockedProvider: () => AuthWith = () => {
   return {
     handleLogin: () => {},
     handleLogout: () => {},
-    requestAccessToken: async () => 'mocked-token',
-    token: cookies.values.authProviderToken,
+    requestAccessToken: async () => 'mocked-accessToken',
+    authToken: cookies.values.authToken,
   };
 };

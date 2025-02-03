@@ -97,7 +97,7 @@ export const CloudStorage: React.FC = () => {
                 {(item) => (
                   <CompoundOption
                     header={item.icons.map((icon) => (
-                      <Icon key={icon} name={icon} />
+                      <Icon key={icon} name={icon} className="size-4" />
                     ))}
                     content={`When this option is selected all files will be stored on ${item.label}. ${
                       item.disclaimer ? item.disclaimer : ''
@@ -148,7 +148,7 @@ const SaveChangesButton: React.FC = () => {
       loading={isLoading}
       disabled={isLoading || !hasEditPermission}
       onClick={handleSaveChanges}
-      role="button"
+      role="button"	
       aria-label="Save storage layer changes"
     >
       Save changes

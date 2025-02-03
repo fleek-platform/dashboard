@@ -57,6 +57,7 @@ type BaseDeploySiteContext = {
   setGitRepository: Dispatch<SetStateAction<GitRepository | undefined>>;
   gitProviderId?: string;
   setGitProviderId: Dispatch<SetStateAction<string | undefined>>;
+  refetchGitProviderRequirements?: () => Promise<void>;
 
   sourceProvider?: SourceProvider;
   setSourceProvider: (sourceProvider?: SourceProvider) => void;
@@ -254,6 +255,20 @@ export const DeploySiteProvider: React.FC<
     [client, session.project.id],
   );
 
+  const refetchGitProviderRequirements = async () => {
+    if (
+      !pendingRequirementsRef.current?.gitProviderId ||
+      !pendingRequirementsRef.current?.sourceProvider
+    ) {
+      return;
+    }
+
+    await fetchGitProviderRequirements(
+      pendingRequirementsRef.current.gitProviderId,
+      pendingRequirementsRef.current.sourceProvider,
+    );
+  };
+
   const fetchGitProvider = useCallback(
     async (prefetchSourceProvider?: SourceProvider) => {
       const sourceProvider = prefetchSourceProvider
@@ -449,6 +464,7 @@ export const DeploySiteProvider: React.FC<
         checkProviderRequirements,
         handleGitProviderSelection,
         handleInstallation,
+        refetchGitProviderRequirements,
       }}
     >
       {children}
@@ -479,6 +495,7 @@ export const useStepSetup = ({ title, handleBackClick }: UseStepSetupProps) => {
 
 export type GitUser = {
   name: string;
+  gitIntegrationId: string;
   avatar?: string;
   installationId?: string;
 };

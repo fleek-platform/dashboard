@@ -15,9 +15,9 @@ export type DynamicProviderProps = React.PropsWithChildren<{}>;
 export const DynamicProvider: React.FC<DynamicProviderProps> = ({
   children,
 }) => {
-  const [, updateUser] = useUpdateUserMutation();
-  const [meQuery] = useMeQuery();
   const cookies = useCookies();
+  const [, updateUser] = useUpdateUserMutation();
+  const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
 
   return (
     <DynamicContextProvider
@@ -25,9 +25,8 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         environmentId: secrets.NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID,
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
-          onLogout: () => {
-            cookies.remove('authProviderToken');
-            cookies.remove('accessToken');
+          onAuthSuccess: (data) => {
+            cookies.set('authToken', data.authToken);
           },
           onLinkSuccess: async (args) => {
             // for now we want to save the first wallet linked

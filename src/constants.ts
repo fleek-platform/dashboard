@@ -120,6 +120,7 @@ export const constants = {
       ASTRO: '/assets/framework-logos/astro.svg',
     },
     ETHEREUM_LOGO: '/assets/ethereum.svg',
+    GITHUB: '/assets/github.svg',
     MAIL_LOGO: '/assets/mail.svg',
     VIDEOS: {
       FLASH_HEADER_SAFARI: '/assets/videos/flash-header-safari.mp4',

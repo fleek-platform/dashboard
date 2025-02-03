@@ -1,6 +1,6 @@
 import { GitRepositoriesQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
-import { Button, Icon, Stepper, Text } from '@/ui';
+import { Box, Button, Icon, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext } from '../../DeploySite.context';
 import { RepositoryStyles as S } from './Repository.styles';
@@ -19,7 +19,7 @@ export const RepositoryList: React.FC<RepositoryListProps> = ({
   owner,
 }) => {
   if (loading) {
-    return <S.List.Spinner name="spinner" />;
+    return <Icon name="spinner" className="text-xl" />;
   }
 
   if (repos.length === 0) {
@@ -28,11 +28,11 @@ export const RepositoryList: React.FC<RepositoryListProps> = ({
 
   return (
     <S.List.Scrollable.Viewport>
-      <S.List.Content>
+      <Box className="py-6">
         {repos.map((repo) => (
           <Repository key={repo?.name} repo={repo} owner={owner} />
         ))}
-      </S.List.Content>
+      </Box>
 
       <S.List.Scrollable.Bar />
     </S.List.Scrollable.Viewport>
@@ -40,14 +40,14 @@ export const RepositoryList: React.FC<RepositoryListProps> = ({
 };
 
 const NoRepositories: React.FC = () => (
-  <S.NoRepositories.Container>
+  <Box className="justify-center items-center text-center gap-2.5">
     <Icon name="question" />
-    <S.NoRepositories.Title>No Repositories</S.NoRepositories.Title>
+    <Text variant="primary">No repositories</Text>
     <Text>
       We were unable to find any repositories, make sure you are on the correct
       account.
     </Text>
-  </S.NoRepositories.Container>
+  </Box>
 );
 
 const Repository: React.FC<{ repo: Repository; owner?: string }> = ({
@@ -79,14 +79,14 @@ const Repository: React.FC<{ repo: Repository; owner?: string }> = ({
   };
 
   return (
-    <S.Repository.Container>
-      <S.Repository.LeftColumn>
+    <Box className="flex-row justify-between items-center border-b border-neutral-6 last:border-none py-4 first:pt-0 last:pb-0">
+      <Box className="flex-row gap-2.5">
         <Icon name="git-branch" />
         {repo?.name}
-      </S.Repository.LeftColumn>
+      </Box>
       <Button size="sm" onClick={handleRepositoryClick}>
         Deploy
       </Button>
-    </S.Repository.Container>
+    </Box>
   );
 };

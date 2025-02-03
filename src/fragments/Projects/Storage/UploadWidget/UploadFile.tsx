@@ -2,7 +2,6 @@ import { BadgeText, CustomTooltip, IconTooltip } from '@/components';
 import { Upload, UploadStatus } from '@/types/Upload';
 import { Box, Icon, Image, Text } from '@/ui';
 
-import { UploadFileStyles as S } from './UploadWidget.styles';
 import { bytesToSize } from './UploadWidget.utils';
 
 type UploadFileProps = {
@@ -11,22 +10,24 @@ type UploadFileProps = {
 
 export const UploadFile: React.FC<UploadFileProps> = ({ upload }) => {
   return (
-    <S.Container>
-      <S.NameContainer>
-        {upload.type === 'folder' ? (
-          <Icon name="archive" />
-        ) : (
-          <Image src={upload.thumbnail} alt="preview" />
-        )}
-        <Text className="truncate">{upload.name}</Text>
-      </S.NameContainer>
-      <S.DetailsContainer withErrorTooltip={Boolean(upload.errorMessage)}>
-        {bytesToSize(upload.size)}
-        <Box>
-          <Status status={upload.status} errorMessage={upload.errorMessage} />
+    <Box className="flex-row items-center justify-between gap-2 py-3 px-4 border-b border-neutral-6 last:border-none">
+      <Box className="flex-row justify-between w-full max-w-[70%]">
+        <Box className="flex-row items-center gap-2 max-w-[10rem]">
+          {upload.type === 'folder' ? (
+            <Icon name="archive" className="text-sm text-neutral-11" />
+          ) : (
+            <Image
+              src={upload.thumbnail}
+              alt="preview"
+              className="text-sm p-0"
+            />
+          )}
+          <Text className="truncate">{upload.name}</Text>
         </Box>
-      </S.DetailsContainer>
-    </S.Container>
+        <Text>{bytesToSize(upload.size)}</Text>
+      </Box>
+      <Status status={upload.status} errorMessage={upload.errorMessage} />
+    </Box>
   );
 };
 
@@ -57,9 +58,9 @@ const StatusMap: Record<
       return <IconTooltip side="left">{errorMessage}</IconTooltip>;
     }
 
-    return <S.Icon name="alert-circled" status="error" />;
+    return <Icon name="alert-circled" className="text-danger-11" />;
   },
-  success: <S.Icon name="check-circled" status="success" />,
+  success: <Icon name="check-circled" className="text-success-11" />,
   duplicate: (
     <CustomTooltip side="left" content="This file/folder is uploaded already">
       <BadgeText colorScheme="slate">

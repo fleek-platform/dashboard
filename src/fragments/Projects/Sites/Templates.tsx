@@ -3,13 +3,11 @@ import { routes } from '@fleek-platform/utils-routes';
 import { Link } from '@/components';
 import { Template } from '@/fragments';
 import { useTemplatesQuery } from '@/generated/graphqlClient';
-import { Button, Text } from '@/ui';
-
-import { SitesStyles as S } from './Sites.styles';
+import { Box, Button, Text } from '@/ui';
 
 export const Templates: React.FC = () => (
-  <S.Templates.Wrapper>
-    <S.Templates.Heading.Wrapper>
+  <Box className="gap-5">
+    <Box className="flex-row justify-between items-center">
       <Text as="h3" variant="primary" size="xl" weight={700}>
         Use a template
       </Text>
@@ -18,10 +16,10 @@ export const Templates: React.FC = () => (
           Browse all templates
         </Button>
       </Link>
-    </S.Templates.Heading.Wrapper>
+    </Box>
 
     <TemplatesList />
-  </S.Templates.Wrapper>
+  </Box>
 );
 
 export const TemplatesList: React.FC = () => {
@@ -32,19 +30,19 @@ export const TemplatesList: React.FC = () => {
 
   if (templatesQuery.fetching) {
     return (
-      <S.Templates.CardsGrid>
+      <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <Template.Elements.Card isLoading />
         <Template.Elements.Card isLoading />
         <Template.Elements.Card isLoading />
-      </S.Templates.CardsGrid>
+      </Box>
     );
   }
 
   return (
-    <S.Templates.CardsGrid>
+    <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {templates.map((template) => (
         <Template.Elements.Card key={template.name} template={template} />
       ))}
-    </S.Templates.CardsGrid>
+    </Box>
   );
 };

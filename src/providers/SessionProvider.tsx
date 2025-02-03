@@ -21,8 +21,9 @@ type SessionContext = {
   loading: boolean;
   error?: any;
 
-  auth: Pick<AuthContext, 'login' | 'logout' | 'token'>;
+  auth: Pick<AuthContext, 'login' | 'logout' | 'accessToken'>;
   project: ProjectContext['project'];
+  accesTokenProjectId: ProjectContext['accessTokenProjectId'];
   permissions: PermissionsContext['permissions'];
 
   setProject: (newProjectId: string) => void;
@@ -75,6 +76,7 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         project: project.project,
         permissions: permissions.permissions,
         setProject,
+        accesTokenProjectId: project.accessTokenProjectId,
       }}
     >
       {children}

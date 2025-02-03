@@ -13,7 +13,7 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryFn<SettingsBox.ContainerProps>;
+type Story = StoryFn<typeof SettingsBox.Container>;
 
 export const Default: Story = (args) => {
   return (
@@ -32,9 +32,7 @@ export const Default: Story = (args) => {
 };
 
 Default.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithActionButton: Story = (args) => {
@@ -55,9 +53,7 @@ export const WithActionButton: Story = (args) => {
 };
 
 WithActionButton.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WitLogoUpload: Story = (args) => {
@@ -89,9 +85,7 @@ export const WitLogoUpload: Story = (args) => {
 };
 
 WitLogoUpload.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithInputLoading: Story = (args) => {
@@ -114,9 +108,7 @@ export const WithInputLoading: Story = (args) => {
 };
 
 WithInputLoading.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };
 
 export const WithLogoLoading: Story = (args) => {
@@ -138,7 +130,5 @@ export const WithLogoLoading: Story = (args) => {
 };
 
 WithLogoLoading.args = {
-  css: {
-    maxWidth: '41.625rem',
-  },
+  className: 'max-w-[41.625rem]',
 };

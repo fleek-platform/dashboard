@@ -24,6 +24,9 @@ import {
   FolderNameAvailabilityInParentFolderDocument,
   FolderNameAvailabilityInParentFolderQuery,
   FolderNameAvailabilityInParentFolderQueryVariables,
+  GitApiIsRepoNameAvailableDocument,
+  GitApiIsRepoNameAvailableQuery,
+  GitApiIsRepoNameAvailableQueryVariables,
   PersonalAccessTokensDocument,
   PersonalAccessTokensQuery,
   PersonalAccessTokensQueryVariables,
@@ -52,7 +55,7 @@ import {
   UsernameAvailabilityQuery,
   UsernameAvailabilityQueryVariables,
 } from '@/generated/graphqlClient';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { isUniqueName } from '@/utils/isUniqueName';
 
 import { FormController } from './FormController';
@@ -133,7 +136,7 @@ export const createExtraValidation = {
         return {
           status: 'other',
           message: (
-            <>
+            <Box className="flex-row gap-1 text-xs">
               <Icon name="domain" />
               {`${name} is available for sale,`}
               <ExternalLink
@@ -142,7 +145,7 @@ export const createExtraValidation = {
               >
                 purchase it from ENS here.
               </ExternalLink>
-            </>
+            </Box>
           ),
         };
       }
@@ -418,6 +421,41 @@ export const createExtraValidation = {
       return { status: 'invalid', message: 'Could not validate site name' };
     }
   },
+
+  repositoryName:
+    (client: Client, gitProviderId: string, owner: string) =>
+    async (repo: string) => {
+      try {
+        const result = await client
+          .query<
+            GitApiIsRepoNameAvailableQuery,
+            GitApiIsRepoNameAvailableQueryVariables
+          >(
+            GitApiIsRepoNameAvailableDocument,
+            {
+              where: { gitProviderId, owner, repo },
+            },
+            { requestPolicy: 'network-only' },
+          )
+          .toPromise();
+
+        if (result.error) {
+          throw (
+            result.error ||
+            new Error('Unable to verify repository availability')
+          );
+        }
+
+        return {
+          status: result.data?.gitApiIsRepoNameAvailable ? 'valid' : 'invalid',
+        };
+      } catch (error) {
+        return {
+          status: 'invalid',
+          message: 'Unable to verify repository availability',
+        };
+      }
+    },
 
   slug: (client: Client) => async (slug: string) => {
     try {

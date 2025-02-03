@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Form, SettingsBox, SettingsListItem } from '@/components';
 import { PersonalAccessToken } from '@/generated/graphqlClient';
 import { LoadingProps } from '@/types/Props';
-import { Box } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import { DeletePATModal } from './DeletePAT';
@@ -91,10 +90,9 @@ const PATItem: React.FC<PATItemProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <SettingsListItem.FlatRow>
+      <SettingsListItem.FlatRow className="border-b border-neutral-6 pb-4 last:border-none last:pb-0">
         <SettingsListItem.DataSkeleton />
         <SettingsListItem.DataSkeleton />
-        <Box />
       </SettingsListItem.FlatRow>
     );
   }
@@ -104,7 +102,7 @@ const PATItem: React.FC<PATItemProps> = ({
   };
 
   return (
-    <SettingsListItem.FlatRow>
+    <SettingsListItem.FlatRow className="border-b border-neutral-6 pb-4 pr-2.5 last:border-none last:pb-0">
       <SettingsListItem.Data
         title={pat.name || 'Unnamed'}
         subtitle={getDurationUntilNow({

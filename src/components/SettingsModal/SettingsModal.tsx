@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
+import { Box, Button, Checkbox, Dialog, Skeleton, Text } from '@/ui';
 import { withProps } from '@/utils/withProps';
 
 import { SettingsModalStyles as S } from './SettingsModal.styles';
@@ -104,7 +104,9 @@ SettingsModal.Table = (({ headers, rows, isLoading, onSelected }) => {
   );
 }) as React.FC<SettingsModal.TableProps>; // explicite cast for rules of hooks
 
-SettingsModal.Footer = S.Modal.CTARow;
+SettingsModal.Footer = withProps(Box, {
+  className: 'flex-row gap-4 child:flex-1',
+});
 
 export const Heading = withProps(Text, {
   as: 'h1',

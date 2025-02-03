@@ -5,10 +5,8 @@ import { ExternalLink, FleekLogo, StatusChip } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';
 import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
-import { Icon, Text } from '@/ui';
+import { Box, Icon, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
-
-import { FooterStyles as S } from './Footer.styles';
 
 type Link = {
   title: string;
@@ -121,22 +119,25 @@ const Sections: SectionsType = [
 
 const Section: React.FC<SectionType> = ({ title, links }) => {
   return (
-    <S.Section.Container css={{ gridArea: `${title.toLowerCase()}` }}>
+    <Box
+      className="gap-3 text-sm"
+      style={{ gridArea: `${title.toLowerCase()}` }}
+    >
       <Text variant="primary" weight={500}>
         {title}
       </Text>
       {links.map((link) => (
-        <S.Section.Link key={link.title} href={link.url}>
+        <ExternalLink key={link.title} href={link.url}>
           {link.title}
-        </S.Section.Link>
+        </ExternalLink>
       ))}
-    </S.Section.Container>
+    </Box>
   );
 };
 
 const SectionsFragment: React.FC = () => {
   return (
-    <S.Sections.Container>
+    <Box className="grid [grid-template-areas:'product_developers_resources_company'] gap-6 md:gap-9">
       {Sections.map((section) => (
         <Section
           key={section.title}
@@ -144,13 +145,13 @@ const SectionsFragment: React.FC = () => {
           links={section.links}
         />
       ))}
-    </S.Sections.Container>
+    </Box>
   );
 };
 
 const SocialLinks: React.FC = () => {
   return (
-    <S.SocialLinks.Container>
+    <Box className="flex-row gap-4 items-center">
       <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_GITHUB}>
         <Icon name="github" />
       </ExternalLink>
@@ -160,7 +161,7 @@ const SocialLinks: React.FC = () => {
       <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DISCORD}>
         <Icon name="discord" />
       </ExternalLink>
-    </S.SocialLinks.Container>
+    </Box>
   );
 };
 
@@ -179,24 +180,22 @@ const LeftFragment: React.FC = () => {
   }, [flags]);
 
   return (
-    <S.LeftFragment.Wrapper>
-      <S.LeftFragment.TopBox>
-        <S.LeftFragment.Row>
-          <S.LeftFragment.LogoWrapper>
-            <FleekLogo />
-          </S.LeftFragment.LogoWrapper>
+    <Box className="gap-6">
+      <Box className="gap-5 max-w-[14rem]">
+        <Box className="flex-row gap-4 items-center">
+          <FleekLogo />
           {showVersions && <VersionTags />}
-        </S.LeftFragment.Row>
+        </Box>
 
         <Text>The edge-optimized cloud platform</Text>
 
         <SocialLinks />
-      </S.LeftFragment.TopBox>
+      </Box>
 
       <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_STATUS}>
         <StatusChip />
       </ExternalLink>
-    </S.LeftFragment.Wrapper>
+    </Box>
   );
 };
 
@@ -230,11 +229,11 @@ export const Footer: React.FC = () => {
   }, []);
 
   return (
-    <S.Layout ref={footerRef}>
-      <S.Content>
+    <footer className="border-t border-neutral-6 bg-neutral-1" ref={footerRef}>
+      <Box className="flex-row flex-wrap gap-8 sm:gap-0 justify-between max-w-[75rem] mx-auto py-9 px-4 sm:px-7">
         <LeftFragment />
         <SectionsFragment />
-      </S.Content>
-    </S.Layout>
+      </Box>
+    </footer>
   );
 };

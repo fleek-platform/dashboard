@@ -66,21 +66,23 @@ export const PaymentMethod: React.FC<LoadingProps> = ({ isLoading }) => {
           subtitle={`Expires ${expirationDate}`}
           avatarIcon="credit-card"
         >
-          <BadgeText colorScheme={hasExpired ? 'red' : 'green'}>
-            {hasExpired ? 'Expired' : 'Active'}
-          </BadgeText>
-          <SettingsListItem.DropdownMenu
-            isLoading={isUpdatingPlan}
-            isDisabled={!hasManageBillingPermission}
-            hasAccess={hasManageBillingPermission}
-          >
-            <SettingsListItem.DropdownMenuItem
-              icon="pencil"
-              onClick={onUpdatePayment}
+          <Box className="flex-row gap-3 items-center">
+            <BadgeText colorScheme={hasExpired ? 'red' : 'green'}>
+              {hasExpired ? 'Expired' : 'Active'}
+            </BadgeText>
+            <SettingsListItem.DropdownMenu
+              isLoading={isUpdatingPlan}
+              isDisabled={!hasManageBillingPermission}
+              hasAccess={hasManageBillingPermission}
             >
-              Update card details
-            </SettingsListItem.DropdownMenuItem>
-          </SettingsListItem.DropdownMenu>
+              <SettingsListItem.DropdownMenuItem
+                icon="pencil"
+                onClick={onUpdatePayment}
+              >
+                Update card details
+              </SettingsListItem.DropdownMenuItem>
+            </SettingsListItem.DropdownMenu>
+          </Box>
         </SettingsListItem>
       </SettingsBox.Container>
     );

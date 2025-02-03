@@ -27,7 +27,7 @@ export const SiteLogo: React.FC<SiteLogoProps> = ({
     <SettingsBox.Container>
       <SettingsBox.ActionRow>
         <SettingsBox.Column>
-          <SettingsBox.Title>Site Avatar</SettingsBox.Title>
+          <SettingsBox.Title>Site logo</SettingsBox.Title>
           <SettingsBox.Text>
             Click on the avatar to upload a custom one.
           </SettingsBox.Text>

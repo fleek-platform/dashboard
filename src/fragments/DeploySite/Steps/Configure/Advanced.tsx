@@ -1,60 +1,20 @@
 import { envVarName, envVarValue } from '@fleek-platform/utils-validation';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BaseDirectoryField, Form, ToggleButton } from '@/components';
 import { constants } from '@/constants';
 import { useDebounce } from '@/hooks/useDebounce';
-import { space } from '@/theme/foundations/space';
 import { SiteNewSecret } from '@/types/Site';
-import { Button, Divider, FormField, Icon, Input, Text } from '@/ui';
+import { Box, Button, Divider, FormField, Icon, Input, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 import { useDeploySiteContext } from '../../DeploySite.context';
-import { ConfigureStepStyles as S } from './Configure.styles';
 import { SafeParseError } from 'zod';
 
 export const Advanced: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const variables = useState<SiteNewSecret[]>([getNewEmptySecret()]);
   const { gitProviderId, gitBranch, gitRepository } = useDeploySiteContext();
-
-  useEffect(() => {
-    const { current: ref } = containerRef;
-
-    if (!ref) {
-      return;
-    }
-
-    if (enabled) {
-      ref.style.maxHeight = '0px';
-      ref.style.height =
-        ref.style.height === '0px'
-          ? `calc(${ref.scrollHeight}px + ${space['spacing-6']} * 2)`
-          : `${ref.scrollHeight}px`;
-      ref.style.maxHeight = '';
-
-      const observer = new MutationObserver(() => {
-        ref.style.maxHeight = '0px';
-        ref.style.height =
-          ref.style.height === '0px'
-            ? `calc(${ref.scrollHeight}px + ${space['spacing-6']} * 2)`
-            : `${ref.scrollHeight}px`;
-        ref.style.maxHeight = '';
-      });
-
-      observer.observe(ref, {
-        childList: true,
-        subtree: true,
-        attributeFilter: ['children'],
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    } else {
-      ref.style.height = '0px';
-    }
-  }, [containerRef, enabled]);
 
   const handleToggleAdvanced = () => {
     setEnabled((prev) => !prev);
@@ -62,7 +22,11 @@ export const Advanced: React.FC = () => {
 
   return (
     <>
-      <S.Advanced.Container ref={containerRef} enabled={enabled}>
+      <Box
+        className={cn('max-h-0 gap-4 -mx-4 px-4 border-y border-transparent transition-all duration-300 overflow-hidden', {
+          'max-h-[100rem] border-neutral-6 py-4': enabled,
+        })}
+      >
         <Form.InputField
           name="dockerImage"
           label="Docker Image"
@@ -83,13 +47,9 @@ export const Advanced: React.FC = () => {
         <Divider />
 
         <EnvironmentVariables variables={variables} />
-      </S.Advanced.Container>
+      </Box>
 
-      <Button
-        intent="neutral"
-        className="w-full"
-        onClick={handleToggleAdvanced}
-      >
+      <Button intent="neutral" className="w-full" onClick={handleToggleAdvanced}>
         {enabled ? 'Hide' : 'Show'}&nbsp;advanced options
       </Button>
     </>
@@ -97,25 +57,16 @@ export const Advanced: React.FC = () => {
 };
 
 type EnvironmentVariablesProps = {
-  variables: [
-    SiteNewSecret[],
-    React.Dispatch<React.SetStateAction<SiteNewSecret[]>>,
-  ];
+  variables: [SiteNewSecret[], React.Dispatch<React.SetStateAction<SiteNewSecret[]>>];
 };
 
-const EnvironmentVariables: React.FC<EnvironmentVariablesProps> = ({
-  variables: [variables, setVariables],
-}) => {
+const EnvironmentVariables: React.FC<EnvironmentVariablesProps> = ({ variables: [variables, setVariables] }) => {
   const field = Form.useField('secrets');
 
   useEffect(() => {
     field.setValue(
-      variables.filter(
-        (variable) =>
-          envVarName.safeParse(variable.key).success &&
-          envVarValue.safeParse(variable.value).success,
-      ),
-      true,
+      variables.filter((variable) => envVarName.safeParse(variable.key).success && envVarValue.safeParse(variable.value).success),
+      true
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variables]);
@@ -129,11 +80,7 @@ const EnvironmentVariables: React.FC<EnvironmentVariablesProps> = ({
   };
 
   // eslint-disable-next-line fleek-custom/valid-argument-types
-  const handleChangeVariable = <Key extends keyof SiteNewSecret>(
-    index: number,
-    key: Key,
-    value: SiteNewSecret[Key],
-  ) => {
+  const handleChangeVariable = <Key extends keyof SiteNewSecret>(index: number, key: Key, value: SiteNewSecret[Key]) => {
     setVariables((prev) => {
       const newVariables = [...prev];
       newVariables[index][key] = value;
@@ -144,12 +91,7 @@ const EnvironmentVariables: React.FC<EnvironmentVariablesProps> = ({
 
   return (
     <>
-      <Text
-        variant="primary"
-        size="md"
-        weight={500}
-        className="flex items-center justify-between"
-      >
+      <Text variant="primary" size="md" weight={500} className="flex items-center justify-between">
         Environment Variables
         <Button onClick={handleAddVariable} size="sm">
           Add
@@ -174,11 +116,7 @@ type EnvironmentVariableProps = {
   variable: SiteNewSecret;
   index: number;
   variables: SiteNewSecret[];
-  onChange: <Key extends keyof SiteNewSecret>(
-    index: number,
-    key: Key,
-    value: SiteNewSecret[Key],
-  ) => void;
+  onChange: <Key extends keyof SiteNewSecret>(index: number, key: Key, value: SiteNewSecret[Key]) => void;
   onRemove: (index: number) => void;
 };
 
@@ -197,19 +135,14 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
 
   const isLastVariable = variables.length === 1;
 
-  const handleEnvNameValidation = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const envVarNameValidation = envVarName.safeParse(
-      event.currentTarget.value,
-    );
+  const handleEnvNameValidation = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const envVarNameValidation = envVarName.safeParse(event.currentTarget.value);
 
     if (!envVarNameValidation.success) {
       setEnvVarNameError(
-        (envVarNameValidation as SafeParseError<string>).error.issues
+        (envVarNameValidation as SafeParseError<string>).error.issues	
           .map((issue) => issue.message)
-          .join('. '),
-      );
+          .join('. '));
     } else if (!isNameDuplicated) {
       // clean the previous formik error message
       setEnvVarNameError('');
@@ -219,10 +152,7 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
   const validateInUse = useDebounce((key) => {
     variables.splice(index, 1);
 
-    const isInUse = variables.some(
-      ({ key: keySecret }) =>
-        keySecret.toLocaleUpperCase() === key.toLocaleUpperCase(),
-    );
+    const isInUse = variables.some(({ key: keySecret }) => keySecret.toLocaleUpperCase() === key.toLocaleUpperCase());
 
     if (isInUse) {
       setIsNameDuplicated(true);
@@ -238,18 +168,14 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
     onChange(index, 'key', event.currentTarget.value);
   };
 
-  const handleEnvValueValidation = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const envVarValueValidation = envVarValue.safeParse(
-      event.currentTarget.value,
-    );
+  const handleEnvValueValidation = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const envVarValueValidation = envVarValue.safeParse(event.currentTarget.value);
 
     if (!envVarValueValidation.success) {
       setEnvVarValueError(
         (envVarValueValidation as SafeParseError<string>).error.issues
           .map((issue) => issue.message)
-          .join('. '),
+          .join('. ')
       );
     } else {
       // clean the previous error message
@@ -261,21 +187,12 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
   const valueError = Boolean(envVarValueError) && shouldValidate;
 
   return (
-    <S.Advanced.Row key={index}>
+    <Box key={index} className="flex-row gap-3">
       <FormField.Root error={nameError} className="flex-1">
         <Input.Root error={nameError}>
-          <Input.Field
-            placeholder="EXAMPLE_NAME"
-            value={key}
-            onChange={handleEnvNameChange}
-            onBlur={handleEnvNameValidation}
-          />
+          <Input.Field placeholder="EXAMPLE_NAME" value={key} onChange={handleEnvNameChange} onBlur={handleEnvNameValidation} />
         </Input.Root>
-        {envVarNameError && shouldValidate && (
-          <FormField.Hint className="text-[0.625rem]">
-            {envVarNameError}
-          </FormField.Hint>
-        )}
+        {envVarNameError && shouldValidate && <FormField.Hint className="text-[0.625rem]">{envVarNameError}</FormField.Hint>}
       </FormField.Root>
 
       <FormField.Root error={valueError} className="flex-1">
@@ -283,28 +200,19 @@ const EnvironmentVariable: React.FC<EnvironmentVariableProps> = ({
           <Input.Field
             placeholder="someValue"
             value={value}
-            onChange={(event) =>
-              onChange(index, 'value', event.currentTarget.value)
-            }
+            onChange={(event) => onChange(index, 'value', event.currentTarget.value)}
             onBlur={handleEnvValueValidation}
           />
         </Input.Root>
-        {envVarValueError && shouldValidate && (
-          <FormField.Hint className="text-[0.625rem]">
-            {envVarValueError}
-          </FormField.Hint>
-        )}
+        {envVarValueError && shouldValidate && <FormField.Hint className="text-[0.625rem]">{envVarValueError}</FormField.Hint>}
       </FormField.Root>
 
-      <ToggleButton
-        value={encrypted}
-        onChange={(eventValue) => onChange(index, 'encrypted', eventValue)}
-      />
+      <ToggleButton value={encrypted} onChange={(eventValue) => onChange(index, 'encrypted', eventValue)} />
 
       {!isLastVariable && (
-        <Icon name="close-circle" onClick={() => onRemove(index)} />
+        <Icon name="close-circle" className="cursor-pointer text-neutral-11 hover:text-neutral-12" onClick={() => onRemove(index)} />
       )}
-    </S.Advanced.Row>
+    </Box>
   );
 };
 

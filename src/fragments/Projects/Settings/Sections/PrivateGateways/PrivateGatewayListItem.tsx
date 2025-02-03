@@ -9,7 +9,6 @@ import { getPrivateGatewayHostname } from '@/utils/getPrivateGatewayHostname';
 
 import { useDeletePrivateGatewayContext } from './DeletePrivateGateway.context';
 import { usePrivateGatewayContext } from './PrivateGateway.context';
-import { PrivateGatewaysStyles as S } from './PrivateGateways.styles';
 
 type PrivateGatewayListItemProps = {
   privateGateway: PrivateGateway;
@@ -40,44 +39,46 @@ export const PrivateGatewayListItem: React.FC<PrivateGatewayListItemProps> = ({
 
   return (
     <SettingsBox.Container>
-      <S.PrivateGatewayListItem.Header>
-        <S.PrivateGatewayListItem.TitleWrapper>
+      <SettingsBox.TitleRow>
+        <SettingsBox.Column className="gap-2.5">
           <SettingsBox.Title>{privateGateway.name}</SettingsBox.Title>
           <SettingsBox.Text>{`${domains.length} Domains`}</SettingsBox.Text>
-        </S.PrivateGatewayListItem.TitleWrapper>
+        </SettingsBox.Column>
 
-        <S.PrivateGatewayListItem.ButtonsContainer>
+        <SettingsBox.FieldsRow className="gap-3">
           {hasAddAndVerifyDomainPermission && (
             <Button onClick={handleAddDomain}>Add domain</Button>
           )}
           {hasDeletePGWPermission && (
             <DropdownMenu id={privateGateway.id} name={privateGateway.name} />
           )}
-        </S.PrivateGatewayListItem.ButtonsContainer>
-      </S.PrivateGatewayListItem.Header>
+        </SettingsBox.FieldsRow>
+      </SettingsBox.TitleRow>
 
-      {domains.map((domain) => (
-        <DomainsListItem
-          key={domain.id}
-          {...domain}
-          isPrimaryDomain={privateGateway.primaryDomain?.id === domain.id}
-          hostname={getPrivateGatewayHostname(domain.hostname)}
-          resourceName={privateGateway.name}
-          hostnameSuffix="<ipfs-cid>"
-          primaryDomainTooltipContent="Used as the URL to open all files in Storage, only one Domain can be set as Primary out of all Gateways."
-          primaryDomainSubtitle="Used as the URL to open all files in Storage, only one Domain can be set as Primary out of all Gateways."
-          hideVisitButton
-          hasVerifyDomainPermission={hasAddAndVerifyDomainPermission}
-          hasRemoveDomainPermission={hasRemoveDomainPermission}
-          hasChangePrimaryDomainPermission={hasChangePrimaryDomainPermission}
-        />
-      ))}
-      {domains.length === 0 && (
-        <SettingsBox.EmptyContent
-          title="No Domains Added"
-          description="Once you add a domain, they will appear here."
-        />
-      )}
+      <SettingsBox.Container className="gap-0 p-0">
+        {domains.map((domain) => (
+          <DomainsListItem
+            key={domain.id}
+            {...domain}
+            isPrimaryDomain={privateGateway.primaryDomain?.id === domain.id}
+            hostname={getPrivateGatewayHostname(domain.hostname)}
+            resourceName={privateGateway.name}
+            hostnameSuffix="<ipfs-cid>"
+            primaryDomainTooltipContent="Used as the URL to open all files in Storage, only one Domain can be set as Primary out of all Gateways."
+            primaryDomainSubtitle="Used as the URL to open all files in Storage, only one Domain can be set as Primary out of all Gateways."
+            hideVisitButton
+            hasVerifyDomainPermission={hasAddAndVerifyDomainPermission}
+            hasRemoveDomainPermission={hasRemoveDomainPermission}
+            hasChangePrimaryDomainPermission={hasChangePrimaryDomainPermission}
+          />
+        ))}
+        {domains.length === 0 && (
+          <SettingsBox.EmptyContent
+            title="No Domains Added"
+            description="Once you add a domain, they will appear here."
+          />
+        )}
+      </SettingsBox.Container>
     </SettingsBox.Container>
   );
 };
@@ -118,11 +119,6 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Content align="end">
-          {/* Will add this later */}
-          {/* <Menu.Item onClick={handleEditName} disabled>
-            Edit Name <Icon name="pencil" />
-          </Menu.Item> */}
-
           {!isDeleteDisabled && (
             <Menu.Item onClick={handleDeletePrivateGateway}>
               Delete <Icon name="trash" />

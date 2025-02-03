@@ -91,7 +91,7 @@ export const FolderNavigation: React.FC<FolderNavigationProps> = ({
 };
 
 const FolderNavigationSkeleton: React.FC = () => (
-  <Box className="flex-row gap-2.5" css={{ color: '$icon-slate' }}>
+  <Box className="flex-row gap-2.5">
     <Icon name="chevron-right" />
     <Box className="flex-row gap-2.5 items-center">
       <Skeleton variant="text" className="w-[4rem]" />
@@ -138,7 +138,7 @@ type FolderItemProps = ChildrenProps<{
 
 const FolderItem: React.FC<FolderItemProps> = ({ children, onClickFolder }) => {
   return (
-    <Box className="flex-row gap-2.5" css={{ color: '$icon-slate' }}>
+    <Box className="flex-row gap-2.5">
       <Icon name="chevron-right" />
       <Box className="flex-row gap-2.5 cursor-pointer" onClick={onClickFolder}>
         <Icon name="archive" />

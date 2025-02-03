@@ -45,7 +45,11 @@ export const ProjectDropdown: React.FC = () => {
   const session = useSessionContext(true);
   const projectContext = useProjectContext();
 
-  const [projectsQuery] = useProjectsQuery();
+  const [projectsQuery] = useProjectsQuery({
+    pause: !session.accesTokenProjectId,
+    variables: {},
+  });
+
   const { setIsCreateProjectModalOpen } = useProjectContext();
 
   const handleProjectChange = (project: HandleProjectChangeProps) =>
@@ -62,7 +66,7 @@ export const ProjectDropdown: React.FC = () => {
   if (isLoading) {
     return (
       <Box className="p-2.5 flex-row items-center h-[3.375rem] gap-3 bg-neutral-1 border border-neutral-6 rounded-lg">
-        <Skeleton className="size-[2rem] rounded" />
+        <Skeleton className="size-7 rounded" />
         <Box className="w-1/2 gap-2">
           <Skeleton variant="text" className="h-2.5 w-1/2" />
           <Skeleton variant="text" className="h-2.5" />

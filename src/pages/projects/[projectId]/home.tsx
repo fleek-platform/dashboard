@@ -13,9 +13,13 @@ import {
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from '@/providers/AuthProvider';
+import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
 
 const HomePage: Page = () => {
+  const auth = useAuthContext();
+  const session = useSessionContext();
   const router = useRouter();
   const toast = useToast();
 
@@ -29,24 +33,30 @@ const HomePage: Page = () => {
   });
 
   // fetch invitation data when is invited through email
-  const [meQuery, refetchMeQuery] = useMeQuery();
+  const [meQuery, refetchMeQuery] = useMeQuery({ pause: !auth.accessToken });
 
   useSitesQuery({
     variables: {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !session.accesTokenProjectId,
   });
   useListFolderQuery({
     variables: {
       where: {},
       filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
     },
+    pause: !session.accesTokenProjectId,
+  });
+
+  const [, refetchProjectsQuery] = useProjectsQuery({
+    pause: !auth.accessToken,
+    variables: {},
   });
 
   const [, acceptInvitation] = useAcceptInvitationMutation();
   const [, declineInvitation] = useDeclineInvitationMutation();
-  const [, refetchProjectsQuery] = useProjectsQuery();
 
   const handleAcceptInvitation = async (invitationHash: string) => {
     try {

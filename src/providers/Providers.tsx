@@ -5,7 +5,6 @@ import { DynamicProvider } from './DynamicProvider';
 import { FeedbackModalProvider } from './FeedbackModalProvider';
 import { LaunchDarklyProvider } from './LaunchDarklyProvider';
 import { LogRocketProvider } from './LogRocketProvider';
-import { PHProvider } from './PHProvider';
 import { QueryClientProvider } from './QueryClientProvider';
 import { SessionProvider } from './SessionProvider';
 import { ThemeProvider } from './ThemeProvider';
@@ -34,17 +33,13 @@ export const Providers: React.FC<ProvidersProps> = ({
                 <WagmiProvider>
                   <ThemeProvider forcedTheme={forcedTheme}>
                     <ToastProvider>
-                      <PHProvider>
-                        <SessionProvider>
-                          <UploadProvider>
-                            <PHProvider>
-                              <FeedbackModalProvider>
-                                {children}
-                              </FeedbackModalProvider>
-                            </PHProvider>
-                          </UploadProvider>
-                        </SessionProvider>
-                      </PHProvider>
+                      <SessionProvider>
+                        <UploadProvider>
+                          <FeedbackModalProvider>
+                            {children}
+                          </FeedbackModalProvider>
+                        </UploadProvider>
+                      </SessionProvider>
                     </ToastProvider>
                   </ThemeProvider>
                 </WagmiProvider>

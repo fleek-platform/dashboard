@@ -12,7 +12,7 @@ class CookiesError extends Error {
   }
 }
 
-export type AppCookies = 'authProviderToken' | 'accessToken' | 'projectId';
+export type AppCookies = 'authToken' | 'accessToken' | 'projectId' | 'logout';
 
 export type CookiesContext = {
   values: { [key in AppCookies]?: string };
@@ -39,12 +39,12 @@ export const CookiesProvider: React.FC<
     const interval = setInterval(() => {
       const documentCookie = document.cookie
         .split('; ')
-        .find((row) => row.startsWith('authProviderToken'));
+        .find((row) => row.startsWith('authToken'));
 
-      if (!documentCookie && cookies.authProviderToken) {
+      if (!documentCookie && cookies.authToken) {
         // update app state
 
-        remove('authProviderToken');
+        remove('authToken');
       }
     }, 3000);
 

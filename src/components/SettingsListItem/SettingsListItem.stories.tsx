@@ -78,7 +78,7 @@ export const WithIconAvatar: Story = {
 
 export const WithLoading: Story = {
   render: () => (
-    <Box css={{ gap: '$spacing-3' }}>
+    <Box className="gap-3">
       <SettingsListItem.Skeleton />
       <SettingsListItem.Skeleton enableAvatar />
     </Box>

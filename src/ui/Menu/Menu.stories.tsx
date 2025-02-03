@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
 import { Avatar } from '../Avatar/Avatar';
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Icon } from '../Icon/Icon';
 import { Menu } from './Menu';
 
@@ -185,13 +185,7 @@ export const WithAvatar: Story = (args) => {
       <Menu.Portal>
         <Menu.Content sideOffset={6}>
           <Menu.CheckboxItem checked>
-            <Box
-              css={{
-                flexDirection: 'row',
-                gap: '0.5rem',
-                alignItems: 'center',
-              }}
-            >
+            <Box className="flex-row gap-4 items-center">
               <Avatar title="Royce Moroch" css={{ fontSize: '1.25rem ' }} />{' '}
               rollsmorr.eth
             </Box>
@@ -200,25 +194,13 @@ export const WithAvatar: Story = (args) => {
             </Menu.ItemIndicator>
           </Menu.CheckboxItem>
           <Menu.CheckboxItem>
-            <Box
-              css={{
-                flexDirection: 'row',
-                gap: '0.5rem',
-                alignItems: 'center',
-              }}
-            >
+            <Box className="flex-row gap-4 items-center">
               <Avatar title="Camila Sosa" css={{ fontSize: '1.25rem ' }} />{' '}
               camisosa.eth
             </Box>
           </Menu.CheckboxItem>
           <Menu.CheckboxItem>
-            <Box
-              css={{
-                flexDirection: 'row',
-                gap: '0.5rem',
-                alignItems: 'center',
-              }}
-            >
+            <Box className="flex-row gap-4 items-center">
               <Avatar title="Felipe Mendes" css={{ fontSize: '1.25rem ' }} />{' '}
               zoruka.eth
             </Box>

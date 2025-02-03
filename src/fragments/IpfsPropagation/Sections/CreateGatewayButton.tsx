@@ -7,7 +7,7 @@ import { useSessionContext } from '@/providers/SessionProvider';
 export const CreateGatewayButton: React.FC = () => {
   const session = useSessionContext();
 
-  const hasToken = Boolean(session.auth.token);
+  const hasToken = Boolean(session.auth.accessToken);
 
   const handleClick = () => {
     if (!hasToken) {

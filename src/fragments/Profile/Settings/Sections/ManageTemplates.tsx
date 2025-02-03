@@ -19,7 +19,7 @@ import {
 import { useToast } from '@/hooks/useToast';
 import { LoadingProps } from '@/types/Props';
 import { Templates } from '@/types/Template';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
@@ -83,33 +83,35 @@ const TemplatesList: React.FC<TemplatesListProps> = ({
           subtitle={`Created ${getDurationUntilNow({ isoDateString: template.createdAt, shortFormat: true })}`}
           avatarIcon="image"
         >
-          {match(template.reviewStatus)
-            .with(TemplateReviewStatus.REJECTED, () => (
-              <CustomTooltip
-                side="top"
-                content={template.reviewComment!}
-                delayDuration={0}
-              >
-                <BadgeText colorScheme="red">
-                  Rejected
-                  <Icon name="question" />
+          <Box className="flex-row gap-2 items-center">
+            {match(template.reviewStatus)
+              .with(TemplateReviewStatus.REJECTED, () => (
+                <CustomTooltip
+                  side="top"
+                  content={template.reviewComment!}
+                  delayDuration={0}
+                >
+                  <BadgeText colorScheme="red">
+                    Rejected
+                    <Icon name="question" />
+                  </BadgeText>
+                </CustomTooltip>
+              ))
+              .with(TemplateReviewStatus.PENDING, () => (
+                <BadgeText colorScheme="amber">Review pending</BadgeText>
+              ))
+              .with(TemplateReviewStatus.APPROVED, () => (
+                <BadgeText colorScheme="green">
+                  {`${template.usageCount} Deployment${template.usageCount > 1 ? 's' : ''}`}{' '}
                 </BadgeText>
-              </CustomTooltip>
-            ))
-            .with(TemplateReviewStatus.PENDING, () => (
-              <BadgeText colorScheme="amber">Review Pending</BadgeText>
-            ))
-            .with(TemplateReviewStatus.APPROVED, () => (
-              <BadgeText colorScheme="green">
-                {`${template.usageCount} Deployment${template.usageCount > 1 ? 's' : ''}`}{' '}
-              </BadgeText>
-            ))
-            .exhaustive()}
+              ))
+              .exhaustive()}
 
-          <Dropdown
-            templateId={template.id}
-            reviewStatus={template.reviewStatus}
-          />
+            <Dropdown
+              templateId={template.id}
+              reviewStatus={template.reviewStatus}
+            />
+          </Box>
         </SettingsListItem>
       ))}
     </>

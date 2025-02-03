@@ -129,12 +129,6 @@ export const Layout: React.FC<Layout> = ({ children, nav }) => {
       }),
     },
     {
-      icon: 'pulse',
-      label: 'Audit Log',
-      path: routes.project.site.logs({ projectId, siteId }),
-      hasAccess: true,
-    },
-    {
       icon: 'analytics',
       label: 'Analytics',
       path: routes.project.site.analytics({ projectId, siteId }),

@@ -16,8 +16,10 @@ export const RenameSite: React.FC<LoadingProps> = ({ isLoading }) => {
 
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Site Name</SettingsBox.Title>
-      <SettingsBox.Text>The name of your site.</SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Site name</SettingsBox.Title>
+        <SettingsBox.Text>The name of your site.</SettingsBox.Text>
+      </SettingsBox.Column>
 
       <PermissionsTooltip hasAccess={hasEditPermission}>
         <SiteField isLoading={isLoading} isDisabled={!hasEditPermission} />
@@ -25,7 +27,7 @@ export const RenameSite: React.FC<LoadingProps> = ({ isLoading }) => {
 
       <SettingsBox.ActionRow>
         <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_SITE_NAME}>
-          site names
+          site name
         </LearnMoreMessage>
 
         {isLoading ? (

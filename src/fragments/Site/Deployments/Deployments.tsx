@@ -71,45 +71,41 @@ export const Deployments: React.FC = () => {
   );
 
   return (
-    <S.Container>
-      <>
-        {deploymentsQuery.fetching && deployments.length === 0 ? (
-          <TableSkeleton />
-        ) : (
-          <S.Table>
-            {deploymentsQuery.fetching && (
-              <>
-                <RowSkeleton /> <Divider />
-              </>
-            )}
-            {deployments.map((deployment, index) => (
-              <Box key={deployment.id}>
-                <Deploy
-                  className="p-4"
-                  deployment={deployment}
-                  onRedeploy={handleRedeploy}
-                  isSelfManaged={isSelfManaged ?? false}
-                  canRedeploy={canRedeploySite({
-                    status: lastDeploymentParsedStatus,
-                  })}
-                  isMostRecentDeployment={
-                    currentDeployment?.id === deployment.id
-                  }
-                />
-                {index < deployments.length - 1 && <Divider />}
-              </Box>
-            ))}
-          </S.Table>
-        )}
-        {pageCount && pageCount > 1 && (
-          <Pagination
-            totalPages={pageCount}
-            currentPage={page}
-            onPageChange={handlePageChange}
-          />
-        )}
-      </>
-    </S.Container>
+    <Box variant="container" className="p-0">
+      {deploymentsQuery.fetching && deployments.length === 0 ? (
+        <TableSkeleton />
+      ) : (
+        <S.Table>
+          {deploymentsQuery.fetching && (
+            <>
+              <RowSkeleton /> <Divider />
+            </>
+          )}
+          {deployments.map((deployment, index) => (
+            <Box key={deployment.id}>
+              <Deploy
+                className="p-4"
+                deployment={deployment}
+                onRedeploy={handleRedeploy}
+                isSelfManaged={isSelfManaged ?? false}
+                canRedeploy={canRedeploySite({
+                  status: lastDeploymentParsedStatus,
+                })}
+                isMostRecentDeployment={currentDeployment?.id === deployment.id}
+              />
+              {index < deployments.length - 1 && <Divider />}
+            </Box>
+          ))}
+        </S.Table>
+      )}
+      {pageCount && pageCount > 1 && (
+        <Pagination
+          totalPages={pageCount}
+          currentPage={page}
+          onPageChange={handlePageChange}
+        />
+      )}
+    </Box>
   );
 };
 

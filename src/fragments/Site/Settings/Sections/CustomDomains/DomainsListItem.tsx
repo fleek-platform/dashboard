@@ -18,7 +18,7 @@ import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { SiteDomain } from '@/types/Site';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { getLinkForDomain } from '@/utils/getLinkForDomain';
 
@@ -114,74 +114,82 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
   }
 
   return (
-    <SettingsListItem
-      subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
-      title={hostname}
-      titleSuffix={hostnameSuffix}
+    <SettingsListItem.FlatRow
+      className="grid-cols-1"
     >
-      {flags.enableDnsLink && dnslinkStatus && (
-        <DnsLinkBadge
-          domainId={id}
-          dnsLinkStatus={dnslinkStatus}
-          errorMessage={errorMessage}
-        />
-      )}
-      {isPrimaryDomain && (
-        <CustomTooltip side="top" content={primaryDomainTooltipContent}>
-          <BadgeText colorScheme="yellow" hoverable>
-            Primary <Icon name="question" />
-          </BadgeText>
-        </CustomTooltip>
-      )}
+      <SettingsListItem
+        subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
+        title={hostname}
+        titleSuffix={hostnameSuffix}
+        className="p-0 border-none w-full"
+      >
+        <Box className="flex-row gap-3 items-center">
+          {flags.enableDnsLink && dnslinkStatus && (
+            <DnsLinkBadge
+              domainId={id}
+              dnsLinkStatus={dnslinkStatus}
+              errorMessage={errorMessage}
+            />
+          )}
+          {isPrimaryDomain && (
+            <CustomTooltip side="top" content={primaryDomainTooltipContent}>
+              <BadgeText colorScheme="yellow" hoverable>
+                Primary <Icon name="question" />
+              </BadgeText>
+            </CustomTooltip>
+          )}
+          {match(status)
+            .with(DomainStatus.ACTIVE, () => (
+              <BadgeText colorScheme="green">Active</BadgeText>
+            ))
+            .with(DomainStatus.CREATED, () => (
+              <BadgeText
+                hoverable={hasVerifyDomainPermission}
+                colorScheme="amber"
+                onClick={handleOpenDomainModal}
+              >
+                Set DNS Record
+              </BadgeText>
+            ))
+            .with(DomainStatus.CREATING, () => (
+              <BadgeText colorScheme="slate">
+                Creating <Icon name="spinner" />
+              </BadgeText>
+            ))
+            .with(DomainStatus.VERIFYING, () => (
+              <BadgeText colorScheme="slate">
+                Verifying <Icon name="spinner" />
+              </BadgeText>
+            ))
+            .with(DomainStatus.CREATING_FAILED, () => (
+              <ErrorBadge errorMessage={errorMessage}>
+                Creation Failed
+              </ErrorBadge>
+            ))
+            .with(DomainStatus.VERIFYING_FAILED, () => (
+              <ErrorBadge errorMessage={errorMessage}>
+                Verification Failed
+              </ErrorBadge>
+            ))
+            .otherwise(() => null)}
 
-      {match(status)
-        .with(DomainStatus.ACTIVE, () => (
-          <BadgeText colorScheme="green">Active</BadgeText>
-        ))
-        .with(DomainStatus.CREATED, () => (
-          <BadgeText
-            hoverable={hasVerifyDomainPermission}
-            colorScheme="amber"
-            onClick={handleOpenDomainModal}
-          >
-            Set DNS Record
-          </BadgeText>
-        ))
-        .with(DomainStatus.CREATING, () => (
-          <BadgeText colorScheme="slate">
-            Creating <Icon name="spinner" />
-          </BadgeText>
-        ))
-        .with(DomainStatus.VERIFYING, () => (
-          <BadgeText colorScheme="slate">
-            Verifying <Icon name="spinner" />
-          </BadgeText>
-        ))
-        .with(DomainStatus.CREATING_FAILED, () => (
-          <ErrorBadge errorMessage={errorMessage}>Creation Failed</ErrorBadge>
-        ))
-        .with(DomainStatus.VERIFYING_FAILED, () => (
-          <ErrorBadge errorMessage={errorMessage}>
-            Verification Failed
-          </ErrorBadge>
-        ))
-        .otherwise(() => null)}
-
-      <DropdownMenu
-        hostname={hostname}
-        id={id}
-        status={status}
-        dnsLinkStatus={dnslinkStatus}
-        hideVisitButton={hideVisitButton}
-        isPrimaryDomain={isPrimaryDomain}
-        primaryDomainSubtitle={primaryDomainSubtitle}
-        resourceName={resourceName}
-        handleOpenDomainModal={handleOpenDomainModal} // Pass the function down
-        hasVerifyDomainPermission={hasVerifyDomainPermission}
-        hasRemoveDomainPermission={hasRemoveDomainPermission}
-        hasChangePrimaryDomainPermission={hasChangePrimaryDomainPermission}
-      />
-    </SettingsListItem>
+          <DropdownMenu
+            hostname={hostname}
+            id={id}
+            status={status}
+            dnsLinkStatus={dnslinkStatus}
+            hideVisitButton={hideVisitButton}
+            isPrimaryDomain={isPrimaryDomain}
+            primaryDomainSubtitle={primaryDomainSubtitle}
+            resourceName={resourceName}
+            handleOpenDomainModal={handleOpenDomainModal} // Pass the function down
+            hasVerifyDomainPermission={hasVerifyDomainPermission}
+            hasRemoveDomainPermission={hasRemoveDomainPermission}
+            hasChangePrimaryDomainPermission={hasChangePrimaryDomainPermission}
+          />
+        </Box>
+      </SettingsListItem>
+    </SettingsListItem.FlatRow>
   );
 };
 

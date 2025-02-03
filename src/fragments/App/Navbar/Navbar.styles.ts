@@ -1,6 +1,5 @@
-import { Link } from '@/components';
 import { styled } from '@/theme';
-import { Avatar, Box, Icon, Input, Skeleton } from '@/ui';
+import { Avatar, Icon } from '@/ui';
 
 export const NavbarStyles = {
   Layout: styled('header', {
@@ -64,81 +63,14 @@ export const NavbarStyles = {
   }),
 
   Logo: {
-    Container: styled(Box, {
-      gridArea: 'logo',
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '$spacing-3',
-    }),
     Icon: styled(Icon, {
       fontSize: '$2xl',
-    }),
-  },
-
-  UnauthenticatedLinks: {
-    Container: styled(Box, {
-      flexDirection: 'row',
-      gridArea: 'unauthored-links',
-      alignItems: 'center',
-      gap: '$spacing-5',
-    }),
-  },
-
-  Search: {
-    Root: styled(Input.Root, {
-      gridArea: 'search',
-      maxWidth: '$2xs',
-      textSize: '$xs',
-      padding: '0 $spacing-2',
-      gap: '$spacing-2',
-      height: '$space$spacing-6-5',
     }),
   },
 
   Avatar: styled(Avatar, {
     gridArea: 'login',
   }),
-
-  Navigation: {
-    Container: styled(Box, {
-      flexDirection: 'row',
-      gridArea: 'navigation',
-      gap: '$spacing-3',
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      variants: {
-        stacked: {
-          true: {
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '$spacing-3',
-          },
-        },
-      },
-    }),
-
-    Link: styled(Link, {
-      padding: '0 !important',
-      cursor: 'pointer',
-      color: '$text-secondary',
-      fontSize: '$sm',
-      textCategory: '$primary',
-      fontWeight: '$tertiary',
-
-      '&:hover, &:focus': {
-        color: '$text-primary',
-      },
-
-      variants: {
-        active: {
-          true: {
-            color: '$text-primary !important',
-          },
-        },
-      },
-    }),
-  },
 
   Sidebar: {
     Content: styled('div', {
@@ -189,18 +121,4 @@ export const NavbarStyles = {
 
     MenuIcon: styled(Icon, { gridArea: 'menu', fontSize: '$sm' }),
   },
-
-  Skeleton: {
-    Projects: styled(Skeleton, {
-      alignSelf: 'stretch',
-      width: '8.75rem', // arbitrary width to match the width of the dropdown
-      borderRadius: '$md',
-    }),
-  },
-
-  LoginAreaContainer: styled(Box, {
-    gridArea: 'login',
-    flexDirection: 'row',
-    gap: '$spacing-3',
-  }),
 };

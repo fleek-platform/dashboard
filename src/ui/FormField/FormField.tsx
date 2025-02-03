@@ -3,7 +3,7 @@ import React, { createContext, forwardRef, useContext } from 'react';
 import { ChildrenProps } from '@/types/Props';
 import { cn } from '@/utils/cn';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Input, InputHintProps, InputLabelProps } from '../ftw/Input/Input';
 
 const FormFieldContext = createContext({

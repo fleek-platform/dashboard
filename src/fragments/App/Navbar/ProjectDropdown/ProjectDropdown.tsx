@@ -4,7 +4,7 @@ import { Link } from '@/components';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Project } from '@/types/Project';
-import { Avatar, AvatarMarble, Icon, Menu } from '@/ui';
+import { Avatar, AvatarMarble, Box, Icon, Menu } from '@/ui';
 
 import { ProjectDropdownStyles as S } from './ProjectDropdown.styles';
 import { RenameBadge } from './RenameBadge';
@@ -25,14 +25,18 @@ const MenuItem: React.FC<MenuItemProps> = ({
       checked={selectedProject?.id === project.id}
       onClick={onClick}
     >
-      <S.MenuItem.Container>
+      <Box className="flex-row items-center text-sm gap-2.5">
         {project.avatar ? (
-          <Avatar title={project.id} src={project.avatar} />
+          <Avatar
+            title={project.id}
+            src={project.avatar}
+            className="text-2xs"
+          />
         ) : (
-          <AvatarMarble name={project.id} rounded />
+          <AvatarMarble name={project.id} rounded className="text-2xs" />
         )}{' '}
         {project.name}
-      </S.MenuItem.Container>
+      </Box>
       {project.id === selectedProject?.id && (
         <Menu.ItemIndicator>
           <Icon name="check" />
@@ -70,7 +74,7 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
   return (
     <Menu.Root>
       <Menu.Trigger>
-        <S.ProjectSelected>
+        <Box className="flex-row gap-2.5 items-center text-sm p-2 rounded hover:bg-neutral-3">
           <Link
             href={routes.project.home({ projectId })}
             className="flex gap-2.5 items-center text-neutral-12"
@@ -89,7 +93,7 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
           </Link>
 
           <Icon name="caret-sort" />
-        </S.ProjectSelected>
+        </Box>
       </Menu.Trigger>
 
       <RenameBadge selectedProject={selectedProject} />
@@ -98,7 +102,7 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
         <Menu.Label>Projects</Menu.Label>
         <S.Scrollable.Root type="auto">
           <S.Scrollable.Viewport scrollbarEnabled={projects.length > 5}>
-            <S.Scrollable.Content>
+            <Box className="gap-2.5">
               {projects.map((project) => (
                 <MenuItem
                   key={project.id}
@@ -107,7 +111,7 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
                   onClick={() => handleProjectChange(project)}
                 />
               ))}
-            </S.Scrollable.Content>
+            </Box>
           </S.Scrollable.Viewport>
 
           <S.Scrollable.Bar />

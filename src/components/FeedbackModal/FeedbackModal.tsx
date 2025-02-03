@@ -12,6 +12,7 @@ import * as zod from 'zod';
 import { Form, Link } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from '@/providers/AuthProvider';
 import { TAB, useFeedbackModal } from '@/providers/FeedbackModalProvider';
 import { Box, Button, Dialog, Divider, Icon, Input, Text } from '@/ui';
 import { cn } from '@/utils/cn';
@@ -33,13 +34,14 @@ export const formSchema = zod.object({
 });
 
 export const FeedbackModal: React.FC = () => {
+  const auth = useAuthContext();
   const feedbackModal = useFeedbackModal();
   const [inputValue, setInputValue] = useState('');
   const [view, setView] = useState<'FORM' | 'SUBMITTED'>('FORM');
 
   const [files, setFiles] = useState<File[]>([]);
   const toast = useToast();
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !auth.accessToken });
   const user = meQuery.data?.user;
   const isAuthed = !!user;
 
@@ -389,7 +391,6 @@ export const InnerForm: React.FC<InnerFormProps> = ({
         <Box
           onClick={handleAttachFileClick}
           className="flex flex-row gap-2 mt-3 items-center hover:cursor-pointer hover:opacity-100 opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:opacity-100 "
-          as="button"
           role="button"
           tabIndex={0}
           aria-label="Attach images, files or videos"

@@ -46,10 +46,12 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
 
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Deploy Contexts</SettingsBox.Title>
-      <SettingsBox.Text>
-        Select the branch Fleek should use to deploy your project.
-      </SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Deploy settings</SettingsBox.Title>
+        <SettingsBox.Text>
+          Select the branch Fleek should use to deploy your project.
+        </SettingsBox.Text>
+      </SettingsBox.Column>
 
       {provider && site.sourceRepositoryOwner && site.sourceRepositoryName && (
         <PermissionsTooltip hasAccess={hasBuildSettingsPermission}>
@@ -72,7 +74,6 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
       </PermissionsTooltip>
 
       <PermissionsTooltip hasAccess={hasBuildSettingsPermission}>
-        {/* TODO re add validation once we add the full support for previews on the BE side */}
         <DeployPreviewsField isDisabled={!hasBuildSettingsPermission} />
       </PermissionsTooltip>
 
@@ -80,7 +81,7 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
         <LearnMoreMessage
           href={constants.EXTERNAL_LINK.FLEEK_DOCS_DEPLOY_CONTEXTS}
         >
-          deploy contexts
+          deploy settings
         </LearnMoreMessage>
 
         <Form.SubmitButton>Save changes</Form.SubmitButton>

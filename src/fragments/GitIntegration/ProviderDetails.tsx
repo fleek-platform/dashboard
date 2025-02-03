@@ -178,7 +178,20 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       );
     }
 
-    return <BadgeText colorScheme="green">Active</BadgeText>;
+    return (
+      <>
+        <BadgeText colorScheme="green">Active</BadgeText>
+        <SettingsListItem.DropdownMenu>
+          <SettingsListItem.DropdownMenuItem
+            className="items-center gap-4"
+            icon="pencil"
+            onSelect={handleInstallationButtonClick}
+          >
+            Edit integration permissions
+          </SettingsListItem.DropdownMenuItem>
+        </SettingsListItem.DropdownMenu>
+      </>
+    );
   };
 
   return (

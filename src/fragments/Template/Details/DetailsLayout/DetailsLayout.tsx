@@ -3,9 +3,9 @@ import { routes } from '@fleek-platform/utils-routes';
 import { LayoutHead, PageNavigation } from '@/components';
 import { App } from '@/fragments/App/App';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
+import { Box } from '@/ui';
 
 import { SubmitFooter } from '../../SubmitFooter/SubmitFooter';
-import { TemplateStyles as S } from '../../Template.styles';
 
 export type DetailsLayout = React.PropsWithChildren<{
   nav?: React.ReactNode | React.ReactNode[];
@@ -40,7 +40,9 @@ export const DetailsLayout: React.FC<DetailsLayout> = ({
         >
           {pageNavContent}
         </PageNavigation>
-        <S.Details.Layout>{children}</S.Details.Layout>
+        <Box className="grid grid-cols-1 sm:[grid-template-areas:'overview_overview'_'content_details'_'spacer_spacer'_'similar_similar'] sm:grid-cols-[1fr_15.125rem]">
+          {children}
+        </Box>
       </App.Content>
       {flags.enableTemplateCreation && <SubmitFooter />}
       <App.Footer />

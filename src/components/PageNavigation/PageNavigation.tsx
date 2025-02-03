@@ -1,8 +1,8 @@
-import { Link } from '@/components';
+import { LinkButton } from '@/components';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
 import { forwardStyledRef } from '@/theme';
 import { LoadingProps } from '@/types/Props';
-import { Button, IconName, Skeleton } from '@/ui';
+import { Box, Button, IconName, Skeleton } from '@/ui';
 
 import { PageNavStyles as S } from './PageNavigation.styles';
 
@@ -23,24 +23,15 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
 }) => {
   const isActivePage = useIsActivePage({ path, isExact });
 
-  const btn = (
-    <Button
+  return (
+    <LinkButton
+      href={path}
       iconLeft={icon}
       intent={isActivePage ? 'accent' : 'ghost'}
       disabled={disabled}
     >
       {label}
-    </Button>
-  );
-
-  if (disabled) {
-    return btn;
-  }
-
-  return (
-    <Link href={path} tabIndex={-1}>
-      {btn}
-    </Link>
+    </LinkButton>
   );
 };
 
@@ -56,7 +47,11 @@ export const PageNavigation = forwardStyledRef<
 >(S.Wrapper, ({ children, isLoading, items, ...props }, ref) => {
   if (isLoading) {
     return (
-      <S.Wrapper ref={ref} {...props}>
+      <Box
+        className="flex-row justify-between items-center"
+        ref={ref}
+        {...props}
+      >
         <S.Content>
           <Skeleton variant="button" />
           <Skeleton variant="button" />
@@ -66,29 +61,27 @@ export const PageNavigation = forwardStyledRef<
         </S.Content>
 
         {children && <S.SpacedContent>{children}</S.SpacedContent>}
-      </S.Wrapper>
+      </Box>
     );
   }
 
   return (
-    <S.Wrapper ref={ref} {...props}>
-      <S.Content>
-        {items
-          .filter((item) => item.hasAccess)
-          .map((item) => (
-            <NavigationButton
-              key={item.path}
-              icon={item.icon}
-              label={item.label}
-              path={item.path}
-              isExact={item.isExact}
-              variant={item.variant}
-              disabled={item.disabled}
-            />
-          ))}
-      </S.Content>
+    <Box className="flex-row justify-between items-center" ref={ref} {...props}>
+      {items
+        .filter((item) => item.hasAccess)
+        .map((item) => (
+          <NavigationButton
+            key={item.path}
+            icon={item.icon}
+            label={item.label}
+            path={item.path}
+            isExact={item.isExact}
+            variant={item.variant}
+            disabled={item.disabled}
+          />
+        ))}
 
       {children && <S.SpacedContent>{children}</S.SpacedContent>}
-    </S.Wrapper>
+    </Box>
   );
 });

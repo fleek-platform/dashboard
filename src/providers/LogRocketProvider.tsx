@@ -4,8 +4,11 @@ import { useEffect } from 'react';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { ChildrenProps } from '@/types/Props';
 
+import { useCookies } from './CookiesProvider';
+
 export const LogRocketProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const [meQuery] = useMeQuery();
+  const cookies = useCookies();
+  const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
 
   useEffect(() => {
     if (meQuery.data) {

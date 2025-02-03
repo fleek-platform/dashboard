@@ -2,10 +2,9 @@ import { MouseEventHandler, useMemo, useState } from 'react';
 
 import { BadgeText, Form } from '@/components';
 import { useGitTreeQuery } from '@/generated/graphqlClient';
-import { LoadingProps } from '@/types/Props';
-import { Box, Icon, RadioGroup, Scrollable, Text } from '@/ui';
-
-import { BaseDirectoryFieldStyles as S } from './BaseDirectoryField.styles';
+import { ChildrenProps, LoadingProps } from '@/types/Props';
+import { Box, Icon, RadioGroup, Scrollable, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 export type BaseDirectoryRadioGroupProps = {
   fieldName: string;
@@ -76,21 +75,21 @@ export const BaseDirectoryRadioGroup: React.FC<
       value={field.value}
       onValueChange={(value) => field.setValue(value, true)}
     >
-      <S.RecursiveFolders.Row root>
+      <RecursiveFoldersRow className="border-y border-y-neutral-7 py-3 px-0">
         <RadioGroup.Item value="" />
         <Text>{sourceRepositoryName}</Text>
         <BadgeText colorScheme="yellow">Root</BadgeText>
-      </S.RecursiveFolders.Row>
+      </RecursiveFoldersRow>
 
       <Scrollable.Root>
         <Scrollable.VerticalBar />
-        <S.ScrollableViewport>
+        <Scrollable.Viewport className="max-h-[30vh]">
           <RecursiveFolders
             isLoading={gitTreeQuery.fetching as true}
             folders={folders}
             selected={field.value}
           />
-        </S.ScrollableViewport>
+        </Scrollable.Viewport>
       </Scrollable.Root>
     </RadioGroup.Root>
   );
@@ -115,7 +114,7 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
   }
 
   return (
-    <S.RecursiveFolders.Wrapper>
+    <Box className="gap-3">
       {Object.entries(folders).map(([key, value]) => {
         const folderPath = value[PATH];
 
@@ -136,43 +135,56 @@ const RecursiveFolders: React.FC<RecursiveFoldersProps> = ({
 
         return (
           <Box key={key}>
-            <S.RecursiveFolders.Row onClick={handleShowNested}>
-              <S.RecursiveFolders.Indicator
-                hasNested={hasNested}
-                showNested={showNested && hasNested}
+            <RecursiveFoldersRow onClick={handleShowNested}>
+              <Box
+                className={cn('transition-all duration-75', {
+                  'opacity-0': !hasNested,
+                  'rotate-90': showNested && hasNested,
+                })}
               >
                 <Icon name="chevron-right" />
-              </S.RecursiveFolders.Indicator>
+              </Box>
               <RadioGroup.Item value={folderPath} onClick={handleSelect} />
               <Text>{key}</Text>
-            </S.RecursiveFolders.Row>
+            </RecursiveFoldersRow>
 
             {hasNested && showNested && (
-              <S.RecursiveFolders.Nested>
+              <Box className="py-3 pl-6">
                 <RecursiveFolders folders={value} selected={selected} />
-              </S.RecursiveFolders.Nested>
+              </Box>
             )}
           </Box>
         );
       })}
-    </S.RecursiveFolders.Wrapper>
+    </Box>
   );
 };
 
-const RecursiveFoldersSkeleton = () => {
+export const RecursiveFoldersRow: React.FC<
+  ChildrenProps<React.ComponentPropsWithRef<typeof Box>>
+> = ({ children, className, ...props }) => (
+  <Box
+    className={cn('flex-row gap-2.5 items-center cursor-pointer', className)}
+    {...props}
+  >
+    {children}
+  </Box>
+);
+
+export const RecursiveFoldersSkeleton = () => {
   const Line = () => (
-    <S.RecursiveFolders.Row>
-      <S.RecursiveFolders.Skeleton variant="radio" />
-      <S.RecursiveFolders.Skeleton variant="text" />
-    </S.RecursiveFolders.Row>
+    <RecursiveFoldersRow>
+      <Skeleton variant="avatar" />
+      <Skeleton variant="text" />
+    </RecursiveFoldersRow>
   );
 
   return (
-    <S.RecursiveFolders.Wrapper>
+    <Box className="gap-3">
       <Line />
       <Line />
       <Line />
       <Line />
-    </S.RecursiveFolders.Wrapper>
+    </Box>
   );
 };

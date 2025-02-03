@@ -76,7 +76,7 @@ const LoginWithSessionPage: Page = () => {
   }
 
   if (
-    session.auth.token &&
+    session.auth.accessToken &&
     !createLoginVerificationSessionMutation?.data
       ?.createLoginVerificationSession
   ) {

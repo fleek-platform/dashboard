@@ -14,7 +14,7 @@ export const Step1: React.FC = () => {
     migrationToken,
   } = useMigrationContext();
 
-  const isDisabled = !session.auth.token || isLoading || !migrationToken;
+  const isDisabled = !session.auth.accessToken || isLoading || !migrationToken;
 
   return (
     <S.Content.Container>

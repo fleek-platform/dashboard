@@ -1,8 +1,8 @@
-import { forwardStyledRef } from '@/theme';
-import { DisabledProps } from '@/types/Props';
-import { Box, IconName, Text } from '@/ui';
+import { forwardRef } from 'react';
 
-import { ActionBoxStyles as S } from './ActionBox.styles';
+import { DisabledProps } from '@/types/Props';
+import { Box, Icon, IconName, LinkBox, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 type ActionBoxProps = DisabledProps<
   {
@@ -10,13 +10,21 @@ type ActionBoxProps = DisabledProps<
     description: string;
     icon: IconName;
     isRestricted?: boolean;
-  } & React.ComponentPropsWithRef<typeof S.Root>
+  } & React.ComponentPropsWithRef<typeof LinkBox>
 >;
 
-export const ActionBox = forwardStyledRef<HTMLAnchorElement, ActionBoxProps>(
-  S.Root,
+export const ActionBox = forwardRef<HTMLAnchorElement, ActionBoxProps>(
   (
-    { title, description, icon, isDisabled, isRestricted = false, ...props },
+    {
+      title,
+      description,
+      icon,
+      isDisabled,
+      isRestricted = false,
+      isExternalLink = false,
+      className,
+      ...props
+    },
     ref,
   ) => {
     if (isDisabled || isRestricted) {
@@ -24,16 +32,28 @@ export const ActionBox = forwardStyledRef<HTMLAnchorElement, ActionBoxProps>(
     }
 
     return (
-      <S.Root {...props} ref={ref} disabled={isDisabled}>
-        <S.Icon name={icon} />
-        <Box>
-          <Text variant="primary" size="lg" weight={700}>
-            {title}
-          </Text>
-          <Text>{description}</Text>
+      <LinkBox
+        {...props}
+        ref={ref}
+        href={props.href}
+        isExternalLink={isExternalLink}
+        isDisabled={isDisabled}
+        className={cn('w-full', className)}
+      >
+        <Box className="flex-row gap-4 items-center">
+          <Icon name={icon} className="text-2xl text-neutral-11" />
+          <Box className="gap-2">
+            <Text variant="primary" size="md" weight={700}>
+              {title}
+            </Text>
+            <Text>{description}</Text>
+          </Box>
+          <Icon
+            name="arrow-right"
+            className="ml-auto self-start text-neutral-11"
+          />
         </Box>
-        <S.RightArrow name="arrow-right" />
-      </S.Root>
+      </LinkBox>
     );
   },
 );

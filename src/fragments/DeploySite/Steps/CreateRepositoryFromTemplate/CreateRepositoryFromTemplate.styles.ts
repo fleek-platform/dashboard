@@ -1,14 +1,8 @@
 import { styled } from '@/theme';
 import { Box, Skeleton, Text } from '@/ui';
 
-import { RepositoryStyles } from '../Repository/Repository.styles';
-import { DeploySiteStepsStyles } from '../Steps.styles';
-
 export const CreateRepositoryFromTemplateStyles = {
-  ...DeploySiteStepsStyles,
-
   TemplateHeader: {
-    ...RepositoryStyles.SelectBranch,
     OwnerText: styled(Text, {
       fontSize: '$xs',
       lineHeight: '$lg',

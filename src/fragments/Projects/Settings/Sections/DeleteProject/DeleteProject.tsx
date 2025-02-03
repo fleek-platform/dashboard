@@ -197,7 +197,7 @@ const DeleteProjectButton = forwardRef<
 
   const children = (
     <Button
-      intent="danger"
+      intent="neutral"
       disabled={isOnlyProject || !hasDeleteProjectPermission}
       {...props}
       ref={ref}

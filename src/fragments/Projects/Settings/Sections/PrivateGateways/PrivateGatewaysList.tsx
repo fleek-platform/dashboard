@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 
-import { SettingsBox, SettingsListItem } from '@/components';
+import { SettingsBox } from '@/components';
 import { useSettingsItemContext } from '@/fragments/Site/Settings/Elements/SettingsItem.context';
 import { PrivateGateway } from '@/types/PrivateGateway';
 import { LoadingProps } from '@/types/Props';
 import { SiteDomain } from '@/types/Site'; // TODO unify type between Site Domain and PGW Domain
-import { Box } from '@/ui';
 import { isActiveDomain } from '@/utils/isActiveDomain';
 
 import { PrivateGatewayListItem } from './PrivateGatewayListItem';
-import { PrivateGatewaysStyles as S } from './PrivateGateways.styles';
 
 type PrivateGatewayListProps = LoadingProps<{
   privateGateways: PrivateGateway[];
@@ -70,12 +68,19 @@ const EmptyPrivateGatewaysList: React.FC = () => (
 
 export const CardSkeleton: React.FC = () => (
   <SettingsBox.Container>
-    <Box>
-      <S.DataSkeleton variant="title" />
-    </Box>
-    <Box>
-      <S.DataSkeleton variant="text" />
-    </Box>
-    <SettingsListItem.Skeleton />
+    <SettingsBox.TitleRow>
+      <SettingsBox.Column>
+        <SettingsBox.Skeleton variant="title" className="w-1/4" />
+        <SettingsBox.Skeleton variant="text" className="w-1/3" />
+      </SettingsBox.Column>
+      <SettingsBox.FieldsRow>
+        <SettingsBox.Skeleton variant="button" />
+        <SettingsBox.Skeleton variant="button" />
+      </SettingsBox.FieldsRow>
+    </SettingsBox.TitleRow>
+    <SettingsBox.Container>
+      <SettingsBox.Skeleton variant="text" />
+      <SettingsBox.Skeleton variant="text" />
+    </SettingsBox.Container>
   </SettingsBox.Container>
 );

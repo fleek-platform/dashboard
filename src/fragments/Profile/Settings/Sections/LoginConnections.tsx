@@ -7,9 +7,8 @@ import { useState } from 'react';
 
 import { Form, LearnMoreMessage, SettingsBox } from '@/components';
 import { constants } from '@/constants';
-import { Button } from '@/ui';
+import { Box, Button } from '@/ui';
 
-import { LoginConnectionStyles as S } from './ManageConnection.style';
 import { UserEmailModal } from './UserEmailModal';
 
 export const LoginConnections: React.FC = () => {
@@ -36,7 +35,7 @@ export const LoginConnections: React.FC = () => {
           account in the way that works best for you.
         </SettingsBox.Text>
 
-        <S.ButtonContainer>
+        <Box className="flex-row gap-2.5">
           {sdkHasLoaded ? (
             <>
               <AddWalletButton />
@@ -48,7 +47,7 @@ export const LoginConnections: React.FC = () => {
               <SettingsBox.Skeleton variant="button" />
             </>
           )}
-        </S.ButtonContainer>
+        </Box>
 
         <SettingsBox.ActionRow>
           <LearnMoreMessage

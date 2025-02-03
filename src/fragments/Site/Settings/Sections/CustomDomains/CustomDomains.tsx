@@ -63,18 +63,20 @@ export const CustomDomains: React.FC<CustomDomainsProps> = ({
       refetchQuery={refetchSiteQuery}
     >
       <SettingsBox.Container
+        className="bg-transparent"
         isBillingDisabled={billingRestriction.hasReachedLimit}
         disabledText={billingRestriction.restrictionMessage}
       >
         <SettingsBox.TitleRow>
-          <SettingsBox.Title>Custom Domains</SettingsBox.Title>
+          <SettingsBox.Column>
+            <SettingsBox.Title>Custom Domains</SettingsBox.Title>
+            <SettingsBox.Text>
+              Add a DNS domain or subdomain to your site, allowing anyone to
+              access your site via traditional https endpoint.
+            </SettingsBox.Text>
+          </SettingsBox.Column>
           <ThreeDNSBuyDomainButton />
         </SettingsBox.TitleRow>
-
-        <SettingsBox.Text>
-          Add a DNS domain or subdomain to your site, allowing anyone to access
-          your site via traditional https endpoint.
-        </SettingsBox.Text>
 
         <PermissionsTooltip hasAccess={hasAddDomainPermission}>
           <DomainField
@@ -100,7 +102,7 @@ export const CustomDomains: React.FC<CustomDomainsProps> = ({
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
 
-      <SettingsBox.Container>
+      <SettingsBox.Container className="p-0 gap-0">
         <DomainsList
           isLoading={siteQuery.fetching}
           domains={domains}

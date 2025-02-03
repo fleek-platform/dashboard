@@ -36,12 +36,14 @@ export const SiteBuild: React.FC<SiteBuildProps> = ({
 
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Build Settings</SettingsBox.Title>
-      <SettingsBox.Text>
-        Fleek will attempt to autodetect the site&apos;s framework and apply the
-        correct build parameters. In some cases, you might need to input the
-        parameters manually here.
-      </SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Build settings</SettingsBox.Title>
+        <SettingsBox.Text>
+          Fleek will attempt to autodetect the site&apos;s framework and apply
+          the correct build parameters. In some cases, you might need to input
+          the parameters manually here.
+        </SettingsBox.Text>
+      </SettingsBox.Column>
 
       <FrameworkField isLoading={isLoading} />
 

@@ -1,7 +1,6 @@
 import * as ToastLib from '@radix-ui/react-toast';
 
 import { KeyFrames, styled } from '@/theme';
-import { Box } from '@/ui';
 
 export const ViewportPadding = '$md';
 export const DismissTimeout = 200;
@@ -61,10 +60,4 @@ export const ToastStyles = {
     zIndex: '$toast',
     minWidth: '$2xs',
   }),
-  Layout: styled(Box, {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }),
-  Content: styled(Box),
 };

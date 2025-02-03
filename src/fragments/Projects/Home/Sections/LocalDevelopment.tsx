@@ -1,6 +1,6 @@
 import { CodeSnippet } from '@/components';
 import { constants } from '@/constants';
-import { Text } from '@/ui';
+import { Box, Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';
 
@@ -11,8 +11,8 @@ export const LocalDevelopment: React.FC = () => {
         Local development
       </Text>
 
-      <S.Local.Container variant="container">
-        <Text variant="primary" size="lg" weight={700}>
+      <Box variant="container" className="gap-5">
+        <Text variant="primary" size="md" weight={700}>
           Set up Fleek CLI
         </Text>
         <Text>
@@ -29,7 +29,7 @@ export const LocalDevelopment: React.FC = () => {
           Read the CLI docs
           <S.LinkArrow name="arrow-right" />
         </S.OutsideLink>
-      </S.Local.Container>
+      </Box>
     </S.Local.GridArea>
   );
 };

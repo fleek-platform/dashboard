@@ -37,14 +37,7 @@ export const Combined: Story = {
   render: () => {
     return (
       <Box
-        css={{
-          flexDirection: 'row',
-          gap: '$spacing-5',
-          resize: 'horizontal',
-          background: 'transparent',
-          overflow: 'auto',
-          flexWrap: 'wrap',
-        }}
+        className="flex-row gap-5 resize-x bg-transparent overflow-auto flex-wrap"
         variant="container"
       >
         <VerticalPlanCard

@@ -1,5 +1,4 @@
-import { AlertBox, Form } from '@/components';
-import { ProfileStyles as S } from '@/fragments/Profile/Profile.styles';
+import { AlertBox, Form, Modal } from '@/components';
 import { PersonalAccessToken } from '@/generated/graphqlClient';
 import { Button, Dialog, Text } from '@/ui';
 
@@ -21,7 +20,7 @@ export const DeletePATModal: React.FC<DeletePATModalProps> = ({
     <Dialog.Root {...props}>
       <Dialog.Overlay />
 
-      <S.Settings.Modal.Content>
+      <Modal.Content>
         <Text as="h1" variant="primary" size="xl" weight={700}>
           Delete Personal Access Token
         </Text>
@@ -42,13 +41,13 @@ export const DeletePATModal: React.FC<DeletePATModalProps> = ({
           disableValidMessage
         />
 
-        <S.Settings.Modal.CTARow>
-          <Button intent="neutral" onClick={close}>
+        <Modal.CTARow>
+          <Button intent="ghost" onClick={close}>
             Cancel
           </Button>
           <SubmitButton close={close} />
-        </S.Settings.Modal.CTARow>
-      </S.Settings.Modal.Content>
+        </Modal.CTARow>
+      </Modal.Content>
     </Dialog.Root>
   );
 };

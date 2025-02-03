@@ -6,7 +6,7 @@ import {
   DeploySiteProvider,
   useDeploySiteContext,
 } from './DeploySite.context';
-import { DeploySiteStyles as S } from './DeploySite.styles';
+import { Grid } from './Grid';
 import { Layout } from './Layout';
 import { ProjectChangeGuard } from './ProjectChangeGuard';
 import { ConfigureStep } from './Steps/Configure/Configure';
@@ -17,7 +17,7 @@ import { RepositoryStep } from './Steps/Repository/Repository';
 export const DeploySite = {
   // layout
   Layout,
-  Grid: S.Grid,
+  Grid,
   BackButton,
 
   // fragments

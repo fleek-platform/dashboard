@@ -18,7 +18,7 @@ export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
   const session = useSessionContext();
   const navItems = useMainNavigationItems();
 
-  if (!session.auth.token) {
+  if (!session.auth.accessToken) {
     return (
       <>
         <LayoutHead title={LayoutHead.titles.ipfsPropagation} />
@@ -55,7 +55,7 @@ export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
 const Content: React.FC<ChildrenProps> = ({ children }) => {
   const session = useSessionContext();
 
-  if (session.auth.token) {
+  if (session.auth.accessToken) {
     return <App.Content>{children}</App.Content>;
   }
 

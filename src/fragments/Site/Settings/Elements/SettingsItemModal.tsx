@@ -29,7 +29,7 @@ const CloseButton: React.FC<SettingsItemModal.CloseButtonProps> = ({
   children = 'Cancel',
 }) => (
   <Dialog.Close asChild>
-    <Button intent="neutral" className="flex-1">
+    <Button intent="ghost" className="flex-1">
       {children}
     </Button>
   </Dialog.Close>

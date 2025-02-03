@@ -63,22 +63,6 @@ export const SectionsStyles = {
     GridArea: styled(GridCell, {
       gridArea: 'local',
     }),
-
-    Container: styled(Box, {
-      flex: 1,
-
-      variants: {
-        variant: {
-          container: {
-            padding: '$spacing-6',
-            gap: DEFAULT_GAP,
-            background: '$surface-content-fill',
-          },
-        },
-      },
-
-      defaultVariants: { variant: 'container' },
-    }),
   },
 
   OutsideLinks: {

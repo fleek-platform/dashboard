@@ -1,5 +1,5 @@
 import { styled } from '@/theme';
-import { Box, Button, Dialog, FormField, RadioGroup, Skeleton } from '@/ui';
+import { Box, Dialog, RadioGroup, Skeleton } from '@/ui';
 
 import { BadgeText } from '../BadgeText/BadgeText';
 
@@ -14,35 +14,7 @@ export const ModalStyles = {
     },
   }),
 
-  CTARow: styled(Box, {
-    flexDirection: 'row',
-    gap: '$spacing-4',
-
-    [`${Button}`]: {
-      flex: 1,
-    },
-  }),
-
   Inner: {
-    Container: styled(Box, {
-      [`${FormField.Root}`]: {
-        flex: 1,
-      },
-
-      variants: {
-        variant: {
-          container: {
-            padding: '$spacing-3 $spacing-4',
-            gap: '$spacing-3',
-          },
-        },
-      },
-      defaultVariants: { variant: 'container' },
-    }),
-    Row: styled(Box, {
-      flexDirection: 'row',
-      gap: '$spacing-2',
-    }),
     TextSkeleton: styled(Skeleton, {
       height: '$lineHeights$sm',
     }),

@@ -22,7 +22,6 @@ const TemplatePage: Page = () => {
 
   const [templateQuery] = useTemplateQuery({
     variables: { where: { id: templateId } },
-    pause: !templateId,
   });
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const TemplatePage: Page = () => {
     }
   }, [templateQuery.data, templateQuery.error, router]);
 
-  const template = templateQuery?.data?.template;
+  const template = templateQuery?.data?.template!;
 
   return (
     <>
@@ -72,7 +71,7 @@ const PageNavContent: React.FC = () => {
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
 
   const handleDeploy = () => {
-    if (!session.auth.token) {
+    if (!session.auth.accessToken) {
       session.auth.login(
         'dynamic',
         routes.project.site.newFromTemplate({
@@ -111,7 +110,8 @@ const PageNavContent: React.FC = () => {
 };
 
 TemplatePage.getLayout = (page) => {
-  const { templateData } = page.props;
+  const templateData = page.props.templateData;
+
   return (
     <Template.Details.Layout
       title={templateData?.name}

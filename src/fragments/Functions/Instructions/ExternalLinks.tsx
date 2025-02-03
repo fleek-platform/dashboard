@@ -1,10 +1,9 @@
 import { ActionBox } from '@/components';
 import { constants } from '@/constants';
-
-import { InstructionsStyles as S } from './Instructions.styles';
+import { Box } from '@/ui';
 
 export const ExternalLinks = () => (
-  <S.OutsideLinks.Container>
+  <Box className="sm:flex-row gap-4">
     <ActionBox
       icon="bookmark"
       href={constants.EXTERNAL_LINK.FLEEK_DOCS_FUNCTIONS_LEARN_MORE}
@@ -17,5 +16,5 @@ export const ExternalLinks = () => (
       title="Future of Functions"
       description="Read the post about expanding compute."
     />
-  </S.OutsideLinks.Container>
+  </Box>
 );

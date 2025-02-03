@@ -2,7 +2,7 @@ import { ExternalLink } from '@/components';
 import { useTemplateGitData } from '@/hooks/useTemplateGitData';
 import { LoadingProps } from '@/types/Props';
 import { Template } from '@/types/Template';
-import { Avatar, Icon, Image, Skeleton, Text } from '@/ui';
+import { Avatar, Box, Icon, Image, Skeleton, Text } from '@/ui';
 import { getLinkForRepository } from '@/utils/getLinkForRepository';
 import { getLinkForSiteSlug } from '@/utils/siteSlugLinks';
 
@@ -19,7 +19,7 @@ export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
   }
 
   return (
-    <S.Container>
+    <Box className="[grid-area:overview] overflow-hidden w-full">
       <S.ImagePreview src={template.banner} alt="Template preview" />
       <S.Wrapper>
         <S.Header>
@@ -34,7 +34,7 @@ export const TemplateOverview: React.FC<TemplateOverviewProps> = ({
         </S.Header>
         <TemplateProperties template={template} />
       </S.Wrapper>
-    </S.Container>
+    </Box>
   );
 };
 

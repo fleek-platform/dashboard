@@ -95,7 +95,7 @@ export const NavButtons: React.FC = () => {
             deploymentId={deploymentId}
           />
           <Button
-            intent="danger"
+            intent="neutral"
             disabled={!isCancelable}
             onClick={handleCancelDeploy}
           >

@@ -1,4 +1,5 @@
 import { routes } from '@fleek-platform/utils-routes';
+import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useCallback, useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
@@ -8,7 +9,7 @@ import {
   AuthWith,
   useAuthProviders,
 } from '@/hooks/useAuthProviders';
-import { usePostHog } from '@/hooks/usePostHog';
+import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
 
@@ -17,7 +18,7 @@ import { useCookies } from './CookiesProvider';
 export type AuthContext = {
   loading: boolean;
   error?: unknown;
-  token?: string;
+  accessToken?: string;
   redirectUrl: string | null;
 
   login: (provider: AuthProviders, redirectUrl?: string) => void;
@@ -35,9 +36,9 @@ const [Provider, useContext] = createContext<AuthContext>({
 export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const [accessToken, setAccessToken, clearAccessToken] = useAuthCookie();
-  const posthog = usePostHog();
+  const [accessToken, setAccessToken] = useAuthCookie();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  const { logout } = useLogout();
   const cookies = useCookies();
 
   const [loading, setLoading] = useState(false);
@@ -45,45 +46,30 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
+  const authenticatedProvider = providersValues.find(
+    (provider) => provider.authToken,
+  );
   const router = useRouter();
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
+      console.log('[debug] AutProvider: login: 1');
       if (redirectUrl) {
+        console.log(`[debug] AutProvider: login: redirectUrl = ${redirectUrl}`);
         setRedirectUrl(redirectUrl);
       }
-
+      console.log(`[debug] AutProvider: login: providerName = ${providerName}`);
       const provider = providers[providerName];
       provider.handleLogin();
     },
     [providers],
   );
 
-  const logout = useCallback(async () => {
-    cookies.remove('authProviderToken');
-    const invitationHash = router.query.invitation;
-
-    if (!constants.PUBLIC_ROUTES.includes(router.pathname.toLowerCase())) {
-      await router.replace({
-        pathname: routes.home(),
-        query: invitationHash ? `invitation=${invitationHash}` : undefined,
-      });
-    }
-
-    providersValues.forEach((provider) => {
-      if (provider.token) {
-        provider.handleLogout();
-      }
-    });
-
-    cookies.remove('projectId');
-    clearAccessToken();
-    posthog.reset();
-  }, [cookies, clearAccessToken, router, providersValues]);
-
   const requestAccessToken = useCallback(
     async (provider: AuthWith, projectId?: string) => {
+      console.log(`[debug] AutProvider: login: requestAccessToken: 1`);
       if (loading) {
+        console.log(`[debug] AutProvider: login: requestAccessToken: loading`);
         return;
       }
 
@@ -91,9 +77,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setLoading(true);
         setError(undefined);
 
-        const token = await provider.requestAccessToken(projectId);
-        setAccessToken(token);
+        const accessToken = await provider.requestAccessToken(projectId);
+        console.log(`[debug] AutProvider: login: accessToken = ${accessToken}`);
+        setAccessToken(accessToken);
       } catch (requestError) {
+        console.log(`[debug] AutProvider: login: requestError: logout`);
         logout();
         setError(requestError);
       } finally {
@@ -105,11 +93,14 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
-      const provider = providersValues.find((provider) => provider.token);
+      console.log(`[debug] AutProvider: login: switchProjectAuth: 1`);
+      const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
+        console.log(`[debug] AutProvider: login: switchProjectAuth: provider: 1`);
         // if in site page, redirect to sites list first
         if (router.query.siteId) {
+          console.log(`[debug] AutProvider: login: switchProjectAuth: router.replace: projectId = ${projectId}`);
           await router.replace(routes.project.site.list({ projectId }));
           delete router.query.siteId;
         }
@@ -123,44 +114,70 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
-    const provider = providersValues.find((provider) => provider.token);
+    if (!cookies.values.authToken) {
+      console.log('[debug] AuthProvider: on cookies.values.authToken: return')
+      return;
+    }
+    if (!cookies.values.accessToken) {
+      requestAccessToken(authenticatedProvider);
+    }
+  }, [cookies.values.authToken]);
 
-    if (provider?.token) {
-      // if has a provider token, it means that auth provider is authenticated
-      cookies.set('authProviderToken', provider.token);
+  // useEffect(() => {
+  //   if (!authenticatedProvider && cookies.values.accessToken) {
+  //     console.log(`[debug] AutProvider: login: logout`);
+  //     logout();
 
-      const projectId =
-        cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+  //     return;
+  //   }
 
-      // redirect if is in home page
-      if (router.pathname === routes.home()) {
-        // keep query on redirect
-        router.push({
-          pathname: routes.project.home({ projectId }),
-          query: router.query,
-        });
-      }
+  //   if (!authenticatedProvider) {
+  //     return;
+  //   }
+  //   console.log(`[debug] AuthProvider: json debug: ${JSON.stringify({
+  //     cookiesValuesProjectId: cookies.values.projectId,
+  //     defaultProjectId: constants.DEFAULT_PROJECT_ID,
+  //   })}`);
+  //   const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
 
-      // redirect if has a redirect url pending
-      if (redirectUrl) {
-        router.push(redirectUrl.replace('[projectid]', projectId));
+  //   // redirect if is in home page
+  //   if (router.pathname === routes.home()) {
+  //     console.log(`[debug] AutProvider: login: redirect !home`);
+  //     // keep query on redirect
+  //     router.push({
+  //       pathname: routes.project.home({ projectId }),
+  //       query: router.query,
+  //     });
+  //   }
+  //   console.log(`[debug] AutProvider: login: redirectUrl = ${redirectUrl}`);
 
-        setRedirectUrl(null);
-      }
+  //   // redirect if has a redirect url pending
+  //   if (redirectUrl) {
+  //     router.push(redirectUrl.replace('[projectid]', projectId));
 
-      // uses the auth provider token to request the access token from graphql
+  //     setRedirectUrl(null);
+  //   }
+
+  //   // uses the auth provider accessToken to request the access accessToken from graphql if (!cookies.values.accessToken) { console.log(`[debug] AutProvider: login: requestAccessToken: 1`) requestAccessToken(authenticatedProvider); }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [authenticatedProvider]);
+
+  useEffect(() => {
+    console.log(`[debug] AutProvider: login: accessToken: 1`);
+    const { accessToken } = cookies.values;
+
+    try {
       if (!accessToken) {
-        requestAccessToken(provider);
+        console.log(`[debug] AutProvider: login: accessToken: return`);
+        return;
       }
-    } else {
+      console.log(`[debug] AutProvider: login: accessToken: decoreAccessToken`);
+      decodeAccessToken({ token: accessToken });
+    } catch {
+      console.log(`[debug] AutProvider: login: accessToken: logout`);
       logout();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    cookies.values.authProviderToken,
-    ...providersValues.map((provider) => provider.token),
-  ]);
+  }, [cookies.values.accessToken, logout]);
 
   return (
     <Provider
@@ -170,7 +187,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         login,
         logout,
         switchProjectAuth,
-        token: accessToken,
+        accessToken: accessToken,
         redirectUrl,
         setRedirectUrl,
       }}

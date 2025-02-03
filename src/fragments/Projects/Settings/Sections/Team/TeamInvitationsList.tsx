@@ -5,7 +5,7 @@ import { SettingsBox } from '@/components/SettingsBox/SettingsBox';
 import { useInvitationsQuery } from '@/generated/graphqlClient';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Invitation } from '@/types/TeamProject';
-import { Box, Icon } from '@/ui';
+import { Box, Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
 import {
@@ -13,7 +13,6 @@ import {
   TeamProjectProvider,
   useTeamProjectContext,
 } from './TeamProject.context';
-import { TeamSettingsStyles as S } from './TeamSettings.styles';
 
 export type TeamInvitationsListProps = Pick<
   TeamProjectContext,
@@ -62,20 +61,22 @@ type MemberItemProps = {
 
 const MemberItem: React.FC<MemberItemProps> = ({ invitation }) => {
   return (
-    <S.Item.Container>
-      <Box>
-        <S.Item.Text>{invitation.email || ''}</S.Item.Text>
-        <S.Item.Label>
+    <Box className="flex-row justify-between items-center">
+      <Box className="gap-1">
+        <Text variant="primary">{invitation.email || ''}</Text>
+        <Text size="xs">
           Invited{' '}
           {getDurationUntilNow({
             isoDateString: invitation.createdAt,
             shortFormat: true,
           })}
-        </S.Item.Label>
+        </Text>
       </Box>
-      <BadgeText colorScheme="amber">Pending Invite</BadgeText>
-      <DropdownMenu invitationId={invitation.id} />
-    </S.Item.Container>
+      <Box className="flex-row items-center gap-3">
+        <BadgeText colorScheme="slate">Pending invite</BadgeText>
+        <DropdownMenu invitationId={invitation.id} />
+      </Box>
+    </Box>
   );
 };
 

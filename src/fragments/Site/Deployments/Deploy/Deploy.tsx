@@ -145,11 +145,13 @@ export const DeployAuthorSkeleton: React.FC = () => (
   </AuthorContainer>
 );
 
-const ItemRow: React.FC<ChildrenProps<{ className?: string }>> = ({
-  children,
-  className,
-}) => (
-  <Box className={cn('flex-row justify-between gap-3', className)}>
+const ItemRow: React.FC<
+  ChildrenProps<{ className?: string; testId?: string }>
+> = ({ children, className, testId }) => (
+  <Box
+    data-testid={testId}
+    className={cn('flex-row justify-between gap-3', className)}
+  >
     {children}
   </Box>
 );

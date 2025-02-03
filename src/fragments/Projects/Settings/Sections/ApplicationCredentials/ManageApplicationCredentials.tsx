@@ -11,7 +11,7 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
 import { Credential } from '@/types/Credentials';
 import { LoadingProps } from '@/types/Props';
-import { Box, Divider, Icon, Skeleton, Text } from '@/ui';
+import { Box, Divider, Icon, Text } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 import { parseWhitelistDomains } from '@/utils/whitelistDomains';
@@ -21,7 +21,6 @@ import {
   ApplicationCredentialsProvider,
   useApplicationCredentialsContext,
 } from './ApplicationCredentials.context';
-import { ApplicationCredentialsStyles as S } from './ApplicationCredentials.styles';
 import { ApplicationCredentialsEditModal } from './ApplicationCredentialsEditModal';
 
 export type ManageApplicationCredentialsProps = LoadingProps<
@@ -52,7 +51,7 @@ export const ManageApplicationCredentials: React.FC<
         ) : (
           credentials?.map((credential, index) => {
             return (
-              <Box key={credential.id} role="row">
+              <Box key={credential.id} className="gap-4" role="row">
                 <ApplicationCredentialItem credential={credential} />
                 {index < credentials.length - 1 && <Divider />}
               </Box>
@@ -78,33 +77,23 @@ const Header: React.FC = () => (
 const CredentialsSkeleton: React.FC = () => (
   <SettingsBox.Container role="table">
     <Header />
-    <S.Item.Container isLoading>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+    <Box className="grid grid-cols-2 sm:grid-cols-12">
+      <Box className="col-span-3 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+      <Box className="col-span-4 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Box>
-        <S.Item.TextSkeleton>
-          <Skeleton />
-        </S.Item.TextSkeleton>
-        <S.Item.LabelSkeleton isLoading>
-          <Skeleton />
-        </S.Item.LabelSkeleton>
+      <Box className="col-span-4 gap-2">
+        <SettingsBox.Skeleton variant="title" className="w-1/3" />
+        <SettingsBox.Skeleton variant="text" className="w-1/2" />
       </Box>
-      <Skeleton />
-    </S.Item.Container>
+      <Box className="place-self-end self-center">
+        <SettingsBox.Skeleton variant="button" className="size-6" />
+      </Box>
+    </Box>
   </SettingsBox.Container>
 );
 
@@ -146,8 +135,8 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
   };
 
   return (
-    <S.Item.Container>
-      <S.Item.Name>
+    <Box className="grid grid-cols-2 sm:grid-cols-12">
+      <Box className="col-span-3">
         <Text variant="primary" weight={700}>
           {credential.name}
         </Text>
@@ -157,12 +146,12 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
             shortFormat: true,
           })}
         </Text>
-      </S.Item.Name>
-      <S.Item.DomainsList>
+      </Box>
+      <Box className="col-span-4">
         <Text variant="primary" weight={700}>
           Domains
         </Text>
-        <S.Item.Domains.Container>
+        <Box className="flex-row gap-2 items-center">
           <Text size="xs" className="truncate">
             {whitelistDomains}
           </Text>
@@ -178,9 +167,9 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
               </BadgeText>
             </CustomTooltip>
           )}
-        </S.Item.Domains.Container>
-      </S.Item.DomainsList>
-      <S.Item.ClientId>
+        </Box>
+      </Box>
+      <Box className="col-span-4">
         <Text variant="primary" weight={700}>
           ID
         </Text>
@@ -192,9 +181,11 @@ const ApplicationCredentialItem: React.FC<ApplicationCredentialItemProps> = ({
           {credential.clientId}
           <Icon name="copy" color="slate" />
         </Text>
-      </S.Item.ClientId>
-      <DropdownMenu id={credential.id} />
-    </S.Item.Container>
+      </Box>
+      <Box className="place-self-end">
+        <DropdownMenu id={credential.id} />
+      </Box>
+    </Box>
   );
 };
 

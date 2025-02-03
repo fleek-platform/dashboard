@@ -6,10 +6,9 @@ import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
 import { Folder, Pin } from '@/types/StorageProviders';
-import { Icon } from '@/ui';
+import { Box, Icon } from '@/ui';
 import { getLinkForIPFSDownload } from '@/utils/getLinkForIPFSdownload';
 
-import { StorageRowStyles as S } from './StorageTable.styles';
 import { useStorageTableUtils } from './storageTableUtils';
 
 type RightMenuProps = {
@@ -85,14 +84,14 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
 
   if (!folder && !pin) {
     return (
-      <S.RightMenu.Container>
+      <Box className="place-self-end pr-6">
         <Menu.DropdownMenu side="left" align="center" isDisabled={true} />
-      </S.RightMenu.Container>
+      </Box>
     );
   }
 
   return (
-    <S.RightMenu.Container>
+    <Box className="place-self-end pr-6">
       {isDownloading && (
         <BadgeText colorScheme="slate">
           Downloading <Icon name="spinner" />
@@ -190,6 +189,6 @@ export const RightMenu: React.FC<RightMenuProps> = ({ pin, folder }) => {
           </>
         )}
       </Menu.DropdownMenu>
-    </S.RightMenu.Container>
+    </Box>
   );
 };

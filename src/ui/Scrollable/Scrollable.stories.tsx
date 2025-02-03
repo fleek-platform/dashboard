@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Text } from '../ftw/Text/Text';
 import { Scrollable } from './Scrollable';
 
@@ -21,7 +21,7 @@ export const Customizable: Story = {
   render: (args) => (
     <Scrollable.Root {...args}>
       <Scrollable.Viewport>
-        <Box variant="container" css={{ border: 'none' }}>
+        <Box variant="container" className="border-none">
           <Text as="h2">Tags</Text>
           {Tags.map((tag) => (
             <Box variant="container" key={tag}>

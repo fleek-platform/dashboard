@@ -1,15 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import { useSystemStatus } from '@/hooks/useSystemStatus';
-import { forwardStyledRef } from '@/theme';
-import { Icon, Text } from '@/ui';
+import { Box, Icon, Text } from '@/ui';
 
-import { StatusChipStyles as S } from './StatusChip.styles';
+export type StatusChipProps = React.ComponentProps<typeof Box>;
 
-export type StatusChipProps = React.ComponentProps<typeof S.Container>;
-
-export const StatusChip = forwardStyledRef<HTMLDivElement, StatusChipProps>(
-  S.Container,
+export const StatusChip = forwardRef<HTMLDivElement, StatusChipProps>(
   (props, ref) => {
     const systemStatus = useSystemStatus();
 
@@ -26,7 +22,11 @@ export const StatusChip = forwardStyledRef<HTMLDivElement, StatusChipProps>(
     }, [systemStatus]);
 
     return (
-      <S.Container variant="container" {...props} ref={ref}>
+      <Box
+        className="flex-row items-center gap-2 bg-neutral-3 rounded py-2 px-3 text-sm"
+        {...props}
+        ref={ref}
+      >
         <Text>Status:</Text>
         {systemStatus.isLoading ? (
           <Icon name="spinner" />
@@ -42,7 +42,7 @@ export const StatusChip = forwardStyledRef<HTMLDivElement, StatusChipProps>(
         >
           {text}
         </span>
-      </S.Container>
+      </Box>
     );
   },
 );

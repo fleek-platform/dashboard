@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { IconTooltip } from '@/components';
+import { ChildrenProps } from '@/types/Props';
 import { Box, Text } from '@/ui';
-
-import { StorageTableStyles as S } from './StorageTable.styles';
 
 type SortingHeaderProps = {
   name: string;
@@ -21,46 +20,40 @@ const SortingHeader: React.FC<SortingHeaderProps> = ({ name, onClick }) => {
   };
 
   return (
-    <S.Sort onClick={handleClick}>
-      <Text>{name}</Text>
-      {/* <S.Icon name="arrow-down" active={sort} /> */}
-    </S.Sort>
+    <Text onClick={handleClick} className="cursor-pointer">
+      {name}
+    </Text>
   );
+};
+
+const StorageSubheaderCell: React.FC<ChildrenProps> = ({ children }) => {
+  return <th className="px-6 h-8 text-left">{children}</th>;
 };
 
 export const StorageSubheader: React.FC = () => {
   return (
-    <S.Table.Row>
-      {/* <S.Table.HeaderCell>
-        <Checkbox disabled />
-      </S.Table.HeaderCell> */}
-
-      <S.Table.HeaderCell>
+    <tr>
+      <StorageSubheaderCell>
         <Text>Name</Text>
-      </S.Table.HeaderCell>
-
-      <S.Table.HeaderCell>
+      </StorageSubheaderCell>
+      <StorageSubheaderCell>
         <SortingHeader name="Size" onClick={() => {}} />
-      </S.Table.HeaderCell>
-
-      <S.Table.HeaderCell>
+      </StorageSubheaderCell>
+      <StorageSubheaderCell>
         <SortingHeader name="Uploaded" onClick={() => {}} />
-      </S.Table.HeaderCell>
-
-      <S.Table.HeaderCell>
+      </StorageSubheaderCell>
+      <StorageSubheaderCell>
         <Text>Hash</Text>
-      </S.Table.HeaderCell>
-
-      <S.Table.HeaderCell>
-        <Box css={{ flexDirection: 'row', gap: '$2xs' }}>
+      </StorageSubheaderCell>
+      <StorageSubheaderCell>
+        <Box className="flex-row gap-2">
           <Text>Storage</Text>
-          <IconTooltip side="bottom">
+          <IconTooltip side="bottom" className="text-neutral-11 text-sm">
             Adjust your storage settings in project settings
           </IconTooltip>
         </Box>
-      </S.Table.HeaderCell>
-
-      <S.Table.HeaderCell></S.Table.HeaderCell>
-    </S.Table.Row>
+      </StorageSubheaderCell>
+      <StorageSubheaderCell />
+    </tr>
   );
 };

@@ -1,10 +1,9 @@
 import { useSiteLink } from '@/hooks/useSiteLink';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { SiteListItem } from '@/types/Site';
-import { Pagination } from '@/ui';
+import { Box, Pagination } from '@/ui';
 
 import { SiteCard } from '../SiteCard/SiteCard';
-import { SiteListStyles as S } from './SiteList.styles';
 
 type SiteListProps = {
   sites: SiteListItem[];
@@ -24,13 +23,13 @@ export const SiteList: React.FC<SiteListProps> = ({
 
   return (
     <>
-      <S.SitesGrid>
+      <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {sites?.map((site) => (
           <SiteListCard key={site.id} site={site} projectId={projectId} />
         ))}
-      </S.SitesGrid>
+      </Box>
 
-      <S.PaginationContainer>
+      <Box className="mx-auto">
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -38,7 +37,7 @@ export const SiteList: React.FC<SiteListProps> = ({
             onPageChange={onPageChange}
           />
         )}
-      </S.PaginationContainer>
+      </Box>
     </>
   );
 };
@@ -51,11 +50,11 @@ export const SkeletonList: React.FC<SiteListSkeletonProps> = ({
   count = 9,
 }) => {
   return (
-    <S.SitesGrid>
+    <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {Array.from({ length: count }).map((_, index) => (
         <SiteCard key={index} isLoading />
       ))}
-    </S.SitesGrid>
+    </Box>
   );
 };
 

@@ -16,7 +16,7 @@ export const Layout: React.FC<Layout> = ({ children }) => {
   const session = useSessionContext();
 
   const handleLogIn = () => {
-    if (!session.error && !session.loading && !session.auth.token) {
+    if (!session.error && !session.loading && !session.auth.accessToken) {
       session.auth.login('dynamic', routes.migration());
     }
   };
@@ -26,7 +26,7 @@ export const Layout: React.FC<Layout> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (session.auth.token) {
+  if (session.auth.accessToken) {
     return (
       <>
         <LayoutHead title={LayoutHead.titles.migration} />

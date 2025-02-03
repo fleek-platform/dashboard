@@ -19,7 +19,7 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSiteEnsRecordsQuery } from '@/hooks/useSiteEnsRecordsQuery';
 import { useToast } from '@/hooks/useToast';
-import { Box, Button } from '@/ui';
+import { Button } from '@/ui';
 
 import { EnsMethodSetupModal } from './EnsMethodSetupModal';
 import { EnsRecordsList } from './EnsRecordsList';
@@ -176,16 +176,16 @@ export const EnsRecords: React.FC = () => {
           </SettingsBox.ActionRow>
         </SettingsBox.Container>
 
-        <Box className="p-0 gap-0 bg-neutral-2" variant="container">
+        <SettingsBox.Container className="p-0 gap-0">
           <EnsRecordsList
             isLoading={siteEnsRecordsQuery.fetching}
             ensRecords={siteEnsRecordsQuery.data}
           />
+        </SettingsBox.Container>
 
-          <VerifyEnsRecordManuallyModal />
-          <EnsMethodSetupModal />
-          <EnsSetupAutomaticModal />
-        </Box>
+        <VerifyEnsRecordManuallyModal />
+        <EnsMethodSetupModal />
+        <EnsSetupAutomaticModal />
       </EnsSettingsProvider>
     </Form.Provider>
   );

@@ -30,7 +30,7 @@ const AnalyticsPage: Page = () => {
           </ComingSoon.Skeleton.Box>
 
           <ComingSoon.Skeleton.Box>
-            <ComingSoon.Skeleton.Row variant="small">
+            <ComingSoon.Skeleton.Row small>
               <ComingSoon.Skeleton.TextSkeleton />
               <ComingSoon.Skeleton.TextSkeleton />
             </ComingSoon.Skeleton.Row>
@@ -40,7 +40,7 @@ const AnalyticsPage: Page = () => {
         </ComingSoon.Skeleton.Row>
 
         <ComingSoon.Skeleton.Box>
-          <ComingSoon.Skeleton.Row variant="small">
+          <ComingSoon.Skeleton.Row small>
             <ComingSoon.Skeleton.TextSkeleton />
             <ComingSoon.Skeleton.TextSkeleton />
           </ComingSoon.Skeleton.Row>

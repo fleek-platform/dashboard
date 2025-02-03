@@ -3,13 +3,15 @@ import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { CustomTooltip, CustomTooltipProps } from '@/components';
 import { useDebounce } from '@/hooks/useDebounce';
 import { sizes } from '@/theme/foundations';
-import { createContext } from '@/utils/createContext';
-
 import {
+  Box,
   Icon,
   Input as InputComponent,
   InputFieldProps as InputProps,
-} from '..';
+  Text,
+} from '@/ui';
+import { createContext } from '@/utils/createContext';
+
 import { Divider } from '../Divider/Divider';
 import { IconName } from '../Icon/IconLibrary';
 import { ComboboxStyles as S } from './Combobox.styles';
@@ -79,10 +81,12 @@ const Options = <T,>({
   return (
     <S.Options {...props}>
       {!disableSearch && (
-        <S.InnerSearchContainer>
-          <S.SearchIcon name="magnify" />
-          <Input placeholder="Search..." />
-        </S.InnerSearchContainer>
+        <Box className="border-b border-neutral-6 px-3">
+          <InputComponent.Root variant="ghost">
+            <InputComponent.Icon name="magnify" />
+            <Input placeholder="Search..." />
+          </InputComponent.Root>
+        </Box>
       )}
 
       <S.Scrollable.Root type="auto">
@@ -180,10 +184,10 @@ const Field = <T,>({
 };
 
 const CompoundOption = ({ header, content }: Combobox.CompoundOptionProps) => (
-  <S.CompoundOption.Container>
-    <S.CompoundOption.Header>{header}</S.CompoundOption.Header>
-    <S.CompoundOption.Content>{content}</S.CompoundOption.Content>
-  </S.CompoundOption.Container>
+  <Box className="items-start gap-1">
+    <Box className="flex-row gap-2 items-center">{header}</Box>
+    <Text>{content}</Text>
+  </Box>
 );
 
 export const Combobox = <T,>({

@@ -76,10 +76,12 @@ export const DeleteSite: React.FC<DeleteSiteProps> = ({
   return (
     <Form.Provider value={deleteForm}>
       <SettingsBox.Container>
-        <SettingsBox.Title>Delete Site</SettingsBox.Title>
-        <SettingsBox.Text>
-          Deleting a site is an irreversible action so proceed with caution.
-        </SettingsBox.Text>
+        <SettingsBox.Column>
+          <SettingsBox.Title>Delete site</SettingsBox.Title>
+          <SettingsBox.Text>
+            Deleting a site is an irreversible action so proceed with caution.
+          </SettingsBox.Text>
+        </SettingsBox.Column>
 
         <SettingsBox.ActionRow>
           <LearnMoreMessage
@@ -113,7 +115,7 @@ const DeleteSiteButton = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const children = (
       <Button
-        intent="danger"
+        intent="neutral"
         disabled={!hasDeleteSitePermission}
         {...props}
         ref={ref}

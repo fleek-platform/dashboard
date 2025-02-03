@@ -2,6 +2,7 @@ query gitInstallations($where: GitApiInstallationsWhereInput!) {
   gitApiInstallations(where: $where) {
     avatar
     installationId
+    gitIntegrationId
     name
   }
 }

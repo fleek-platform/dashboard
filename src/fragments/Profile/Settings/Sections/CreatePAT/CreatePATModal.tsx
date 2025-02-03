@@ -1,7 +1,5 @@
-import { AlertBox, CodeSnippet } from '@/components';
+import { AlertBox, CodeSnippet, Modal } from '@/components';
 import { Button, Dialog, Text } from '@/ui';
-
-import { ProfileStyles as S } from '../../../Profile.styles';
 
 export type CreatePATModalProps = {
   closeModal: () => any;
@@ -15,8 +13,7 @@ export const CreatePATModal: React.FC<CreatePATModalProps> = ({
   return (
     <>
       <Dialog.Overlay />
-
-      <S.Settings.Modal.Content>
+      <Modal.Content>
         <Text as="h1" variant="primary" size="xl" weight={700}>
           Personal Access Token
         </Text>
@@ -28,13 +25,12 @@ export const CreatePATModal: React.FC<CreatePATModalProps> = ({
         <AlertBox variant="warning" size="sm">
           This token is only shown during creation.
         </AlertBox>
-
-        <S.Settings.Modal.CTARow>
-          <Button disabled={!patValue} onClick={closeModal} className="flex-1">
+        <Modal.CTARow>
+          <Button disabled={!patValue} onClick={closeModal}>
             Ok, I have copied it
           </Button>
-        </S.Settings.Modal.CTARow>
-      </S.Settings.Modal.Content>
+        </Modal.CTARow>
+      </Modal.Content>
     </>
   );
 };

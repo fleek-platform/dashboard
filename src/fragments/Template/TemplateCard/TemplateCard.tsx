@@ -3,9 +3,8 @@ import { routes } from '@fleek-platform/utils-routes';
 import { forwardStyledRef } from '@/theme';
 import { LoadingProps } from '@/types/Props';
 import { Templates } from '@/types/Template';
-import { Avatar, Card, Icon, Skeleton, Text } from '@/ui';
-
-import { TemplateCardStyles as S } from './TemplateCard.styles';
+import { Avatar, Box, Card, Icon, Image, LinkBox, Skeleton, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 export type TemplateCardProps = LoadingProps<{ template: Templates[0] }>;
 
@@ -18,36 +17,36 @@ export const TemplateCard = forwardStyledRef<
   }
 
   return (
-    <S.RootLink
+    <LinkBox
       {...props}
       ref={ref}
       href={routes.template.indexed({ templateId: template.id! })}
+      className="p-0 gap-0 bg-transparent"
     >
-      <S.Root>
-        <S.Cover src={template.banner} />
-        <S.ContentWrapper>
-          <S.HeadingContainer>
-            <Card.Content.Row>
-              <Text as="h3" variant="primary" size="md" weight={700}>
-                {template.name}
-              </Text>
-              <S.Icon src={template.framework?.avatar}>
-                <Icon name="gear" />
-              </S.Icon>
-            </Card.Content.Row>
-            <Text className="line-clamp-2 break-words">
-              {template.description}
-            </Text>
-          </S.HeadingContainer>
-          <Card.Content.Row>
-            <S.Footer>
-              Added by
-              <AuthorAvatar creator={template.creator!} />
-            </S.Footer>
-          </Card.Content.Row>
-        </S.ContentWrapper>
-      </S.Root>
-    </S.RootLink>
+      <Card.Cover
+        src={template.banner}
+        className="aspect-[16/9] max-h-[8rem] object-cover"
+      />
+      <Box className="p-4">
+        <Box className="flex-row justify-between">
+          <Text as="h3" variant="primary" size="md" weight={700}>
+            {template.name}
+          </Text>
+          <Image
+            src={template.framework?.avatar}
+            alt={template.framework?.name}
+            className="size-[1.75em] rounded bg-neutral-2"
+          >
+            <Icon name="gear" />
+          </Image>
+        </Box>
+        <Text className="line-clamp-2 break-words">{template.description}</Text>
+        <Box className="flex-row gap-2 items-center pt-4">
+          <Text size="xs">Added by</Text>
+          <AuthorAvatar creator={template.creator!} />
+        </Box>
+      </Box>
+    </LinkBox>
   );
 });
 
@@ -62,45 +61,34 @@ const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
     creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
-    <S.AuthorLabel fleek={isFleekAuthored}>
+    <Box
+      className={cn('flex-row gap-2 items-center', {
+        'bg-monochrome-reverse': isFleekAuthored,
+      })}
+    >
       <Avatar
         enableIcon
         icon={isFleekAuthored ? 'fleek' : 'person'}
         src={creator.avatar}
+        className="size-6"
       />
       <Text variant="primary" size="xs">
         {isFleekAuthored ? 'Fleek' : creator.username}
       </Text>
-    </S.AuthorLabel>
+    </Box>
   );
 };
 
 const TemplateCardSkeleton: React.FC = () => (
-  <S.Root>
-    <S.Cover>
-      <Skeleton />
-    </S.Cover>
-    <S.ContentWrapper>
-      <S.HeadingContainer>
-        <Card.Content.Row>
-          <S.HeadingSkeleton>
-            <Skeleton />
-          </S.HeadingSkeleton>
-          <S.Icon isLoading>
-            <Skeleton />
-          </S.Icon>
-        </Card.Content.Row>
-        <S.DescriptionSkeleton>
-          <Skeleton />
-          <Skeleton />
-        </S.DescriptionSkeleton>
-      </S.HeadingContainer>
-      <Card.Content.Row>
-        <S.Footer>
-          <Skeleton />
-          <Skeleton />
-        </S.Footer>
-      </Card.Content.Row>
-    </S.ContentWrapper>
-  </S.Root>
+  <Box variant="container" className="p-0 gap-0 bg-transparent">
+    <Skeleton variant="button" className="h-[8rem] rounded-b-none" />
+    <Box className="p-4 gap-3">
+      <Box className="flex-row items-center justify-between">
+        <Skeleton variant="text" className="w-1/2" />
+        <Skeleton variant="avatar" className="rounded size-[1.75em]" />
+      </Box>
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+    </Box>
+  </Box>
 );

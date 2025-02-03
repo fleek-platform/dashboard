@@ -11,7 +11,6 @@ import { SiteSecret } from '@/types/Site';
 import { Box, FormField, Icon, Text } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
-import { EnvironmentVariablesStyles as S } from './EnvironmentVariables.styles';
 import { ValueField } from './Fields/ValueField';
 import { VisibilityField } from './Fields/VisibilityField';
 import {
@@ -30,12 +29,7 @@ export const ManageEnvironmentVariables: React.FC<
     <ManageEnvironmentVariablesProvider
       value={{ onSubmitDelete, onSubmitUpdate }}
     >
-      <SettingsBox.Container>
-        <SettingsBox.Title>Environment Variables</SettingsBox.Title>
-        <SettingsBox.Text>
-          Edit or remove existing environment variables.
-        </SettingsBox.Text>
-
+      <SettingsBox.Container className="p-0 gap-0">
         <Content {...props} />
       </SettingsBox.Container>
     </ManageEnvironmentVariablesProvider>
@@ -109,6 +103,8 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
     setIsDeleting(false);
   };
 
+  console.log('secret.visibility', secret.visibility);
+
   return (
     <SettingsListItem.FlatRow>
       <SettingsListItem.Data
@@ -122,8 +118,8 @@ const ListItem: React.FC<ListItemProps> = ({ secret, isLoading }) => {
             <Icon
               name={
                 secret.visibility === SecretVisibility.ENCRYPTED
-                  ? 'lock-closed'
-                  : 'lock-open'
+                  ? 'eye-closed'
+                  : 'eye-open'
               }
             />
             <Text as="span" className="truncate">
@@ -195,7 +191,7 @@ const EditingListItem: React.FC<EditingListItemProps> = ({
 
   return (
     <Form.Provider value={editForm}>
-      <S.Editing.FlatRow>
+      <SettingsListItem.FlatRow>
         <SettingsListItem.Data
           title={secret.key}
           subtitle={`Created ${getDurationUntilNow({ isoDateString: secret.updatedAt, shortFormat: true })}`}
@@ -208,20 +204,23 @@ const EditingListItem: React.FC<EditingListItemProps> = ({
           {editForm.isSubmitting ? (
             <Icon name="spinner" />
           ) : (
-            <S.Editing.ActionsBox>
-              <S.Editing.ActionText
-                colorScheme="yellow"
+            <Box className="items-end gap-1">
+              <span
+                className="text-accent-11 text-sm cursor-pointer"
                 onClick={editForm.submit}
               >
                 Save
-              </S.Editing.ActionText>
-              <S.Editing.ActionText colorScheme="slate" onClick={onFinish}>
+              </span>
+              <span
+                className="text-neutral-11 text-sm cursor-pointer"
+                onClick={onFinish}
+              >
                 Cancel
-              </S.Editing.ActionText>
-            </S.Editing.ActionsBox>
+              </span>
+            </Box>
           )}
         </FormField.Root>
-      </S.Editing.FlatRow>
+      </SettingsListItem.FlatRow>
     </Form.Provider>
   );
 };

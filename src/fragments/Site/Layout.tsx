@@ -127,12 +127,6 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
       }),
     },
     {
-      icon: 'pulse',
-      label: 'Audit Log',
-      path: routes.project.site.logs({ projectId, siteId }),
-      hasAccess: true,
-    },
-    {
       icon: 'analytics',
       label: 'Analytics',
       path: routes.project.site.analytics({ projectId, siteId }),

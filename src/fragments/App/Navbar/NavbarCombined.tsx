@@ -6,7 +6,7 @@ import { NavbarUnauthenticated } from './NavbarUnauthenticated';
 export const NavbarCombined: React.FC = () => {
   const session = useSessionContext(true);
 
-  if (session.loading || session.auth.token) {
+  if (session.loading || session.auth.accessToken) {
     return <NavbarProject />;
   }
 

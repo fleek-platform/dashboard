@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGitRepositoriesQuery } from '@/generated/graphqlClient';
-import { Input, Stepper, Text } from '@/ui';
+import { Box, Button, Input, Stepper, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 import { ProviderInstallationMessage } from './ProviderInstallationMessage';
@@ -11,8 +12,13 @@ import { GitUser, UserCombobox } from './UserCombobox';
 
 export const RepositoryStep: React.FC = () => {
   const stepper = Stepper.useContext();
-  const { providerState, setSourceProvider, setGitUser } =
-    useDeploySiteContext();
+  const {
+    providerState,
+    setSourceProvider,
+    setGitUser,
+    refetchGitProviderRequirements,
+  } = useDeploySiteContext();
+
   const [gitRepositoriesQuery, refetchGitRepositoriesQuery] =
     useGitRepositoriesQuery({
       variables: {
@@ -23,6 +29,13 @@ export const RepositoryStep: React.FC = () => {
 
   const [currentUser, setCurrentUser] = useState<GitUser>();
   const [searchValue, setSearchValue] = useState('');
+  const [isRepoListExpanded, setIsRepoListExpanded] = useState(false);
+
+  const inputRef = (node: HTMLInputElement | null) => {
+    if (isRepoListExpanded && node) {
+      node.focus();
+    }
+  };
 
   const handleSetCurrentUser = useCallback(
     (currentUser: GitUser) => {
@@ -30,6 +43,7 @@ export const RepositoryStep: React.FC = () => {
       setGitUser({
         name: currentUser.name,
         avatar: currentUser.avatar,
+        gitIntegrationId: currentUser.gitIntegrationId,
         installationId: currentUser.installationId.toString(),
       });
     },
@@ -69,6 +83,14 @@ export const RepositoryStep: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => setSearchValue(event.target.value);
 
+  const handleRefetch = () => {
+    refetchGitRepositoriesQuery({ requestPolicy: 'network-only' });
+
+    if (refetchGitProviderRequirements) {
+      refetchGitProviderRequirements();
+    }
+  };
+
   const repos = useMemo(() => {
     const repos = currentUser?.repos || undefined;
 
@@ -83,37 +105,49 @@ export const RepositoryStep: React.FC = () => {
   }, [currentUser, searchValue]);
 
   return (
-    <S.Container>
-      <Text
-        as="h2"
-        variant="primary"
-        size="xl"
-        weight={700}
-        className="self-start"
-      >
-        Select Repository
-      </Text>
+    <Box
+      variant="container"
+      className={cn('h-[28rem] relative gap-6 rounded-xl', {
+        'absolute inset-0 h-full transition-all ease-in-out duration-200':
+          isRepoListExpanded,
+      })}
+    >
+      <Box className="flex-row justify-between">
+        <Text
+          as="h2"
+          variant="primary"
+          size="xl"
+          weight={700}
+          className="self-start"
+        >
+          Select repository
+        </Text>
+        <Button
+          intent="ghost"
+          iconLeft={isRepoListExpanded ? 'exit-fullscreen' : 'expand'}
+          onClick={() => setIsRepoListExpanded((prev) => !prev)}
+        />
+      </Box>
 
-      <S.Wrapper>
+      <Box className="relative flex-row gap-3">
         <UserCombobox
           users={gitRepositoriesQuery.data?.gitApiInstallations}
           isLoading={gitRepositoriesQuery.fetching}
           currentUser={currentUser}
           setCurrentUser={handleSetCurrentUser}
-          onRefetch={() =>
-            refetchGitRepositoriesQuery({ requestPolicy: 'network-only' })
-          }
+          onRefetch={handleRefetch}
         />
 
         <Input.Root className="flex-1 h-[2rem]">
           <Input.Icon name="magnify" />
           <Input.Field
+            ref={inputRef}
             placeholder="Search"
             value={searchValue}
             onChange={handleSearchChange}
           />
         </Input.Root>
-      </S.Wrapper>
+      </Box>
 
       <S.List.Scrollable.Root type="auto">
         <RepositoryList
@@ -128,6 +162,6 @@ export const RepositoryStep: React.FC = () => {
           refetchGitRepositoriesQuery({ requestPolicy: 'network-only' })
         }
       />
-    </S.Container>
+    </Box>
   );
 };

@@ -1,7 +1,6 @@
 import { ChildrenProps, LoadingProps } from '@/types/Props';
-import { Text } from '@/ui';
-
-import { ComingSoonStyles as S } from './ComingSoon.styles';
+import { Box, Text } from '@/ui';
+import { cn } from '@/utils/cn';
 
 export type ComingSoonOverlayProps = ChildrenProps<
   LoadingProps<{ title?: string; description: string; className?: string }>
@@ -19,17 +18,17 @@ export const ComingSoonOverlay: React.FC<ComingSoonOverlayProps> = ({
   }
 
   return (
-    <S.Overlay.Wrapper
+    <Box
       onClick={(event) => event.stopPropagation()}
-      className={className}
+      className={cn('relative block', className)}
     >
       {children}
-      <S.Overlay.Overlay>
+      <Box className="text-center justify-center items-center py-6 px-5 gap-1 absolute top-0 left-0 h-full w-full rounded-lg bg-gradient-to-b from-transparent to-monochrome-normal border border-neutral-6">
         <Text as="h2" variant="primary" size="md" weight={700}>
           {title}
         </Text>
         <Text className="max-w-[13rem]">{description}</Text>
-      </S.Overlay.Overlay>
-    </S.Overlay.Wrapper>
+      </Box>
+    </Box>
   );
 };

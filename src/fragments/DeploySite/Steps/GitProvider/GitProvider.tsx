@@ -1,17 +1,16 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
 
-import { BadgeText, RestrictionModal } from '@/components';
+import { BadgeText, ExternalLink, RestrictionModal } from '@/components';
 import { constants } from '@/constants';
 import { SourceProvider } from '@/generated/graphqlClient';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Button, Icon, IconName, Stepper, Text } from '@/ui';
+import { Box, Button, Icon, IconName, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
-import { GitProviderStyles as S } from './GitProvider.styles';
 
 export const GitProviderStep: React.FC = () => {
   const session = useSessionContext();
@@ -57,24 +56,21 @@ export const GitProviderStep: React.FC = () => {
 
     return (
       <>
-        <S.Container>
-          <Text
-            as="h2"
-            variant="primary"
-            size="xl"
-            weight={700}
-            className="self-start"
-          >
+        <Box
+          variant="container"
+          className="relative items-center justify-center gap-9 rounded-xl"
+        >
+          <Text as="h2" variant="primary" size="xl" weight={700}>
             GitHub Installation
           </Text>
 
-          <S.InstallProviderMessage>
+          <Box className="text-center gap-3">
             <Icon name="github" />
             <Text as="h3" variant="primary" weight={500}>
               Connect GitHub Account or Org
             </Text>
             <Text>{textMessage}</Text>
-          </S.InstallProviderMessage>
+          </Box>
 
           <Button
             loading={isPopUpOpen || providerState.requirementsFetching}
@@ -82,7 +78,7 @@ export const GitProviderStep: React.FC = () => {
           >
             Install Fleek {mode === 'template' ? 'Templates' : ''} app on GitHub
           </Button>
-        </S.Container>
+        </Box>
       </>
     );
   }
@@ -94,7 +90,7 @@ export const GitProviderStep: React.FC = () => {
         onOpenChange={setIsModalOpen}
         shouldShowUpgradePlan={hasBillingPermissions}
       />
-      <S.Container>
+      <Box variant="container" className="relative gap-6 rounded-xl">
         <Text
           as="h2"
           variant="primary"
@@ -102,7 +98,7 @@ export const GitProviderStep: React.FC = () => {
           weight={700}
           className="self-start"
         >
-          Select code Location
+          Select code location
         </Text>
 
         <ProviderButton
@@ -111,9 +107,9 @@ export const GitProviderStep: React.FC = () => {
         />
         <ProviderButton provider={SourceProvider['GITLAB']} disabled />
         <ProviderButton provider={SourceProvider['BITBUCKET']} disabled />
-      </S.Container>
+      </Box>
 
-      <S.Message>
+      <Box variant="container" className="inline">
         Do you want to manage your own site deployment using the Fleek
         CLI?&nbsp;
         {hasReachedSitesLimit ? (
@@ -121,7 +117,8 @@ export const GitProviderStep: React.FC = () => {
             Click here
           </Text>
         ) : (
-          <S.Link
+          <ExternalLink
+            variant="accent"
             href={{
               pathname: routes.project.site.new({
                 projectId: session.project.id,
@@ -131,10 +128,10 @@ export const GitProviderStep: React.FC = () => {
             replace
           >
             Click here
-          </S.Link>
+          </ExternalLink>
         )}
         .
-      </S.Message>
+      </Box>
     </>
   );
 };

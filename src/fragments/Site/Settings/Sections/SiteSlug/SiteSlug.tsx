@@ -17,19 +17,21 @@ export const SiteSlug: React.FC<LoadingProps> = ({ isLoading }) => {
 
   return (
     <SettingsBox.Container>
-      <SettingsBox.Title>Site Slug</SettingsBox.Title>
-      <SettingsBox.Text className="flex whitespace-nowrap">
-        The site will be available at: &nbsp;
-        {!isLoading && (
-          <>
-            {protocol}
-            <SettingsBox.Text as="span" variant="primary" weight={500}>
-              {slug}
-            </SettingsBox.Text>
-            {domain}
-          </>
-        )}
-      </SettingsBox.Text>
+      <SettingsBox.Column>
+        <SettingsBox.Title>Site slug</SettingsBox.Title>
+        <SettingsBox.Text className="flex whitespace-nowrap flex-wrap">
+          The site will be available at: &nbsp;
+          {!isLoading && (
+            <>
+              {protocol}
+              <SettingsBox.Text as="span" variant="primary" weight={500}>
+                {slug}
+              </SettingsBox.Text>
+              {domain}
+            </>
+          )}
+        </SettingsBox.Text>
+      </SettingsBox.Column>
 
       <PermissionsTooltip hasAccess={hasEditSlugPermission}>
         <Form.InputField
@@ -42,7 +44,7 @@ export const SiteSlug: React.FC<LoadingProps> = ({ isLoading }) => {
 
       <SettingsBox.ActionRow>
         <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_SITE_NAME}>
-          site slugs
+          site slug
         </LearnMoreMessage>
 
         {isLoading ? (

@@ -25,6 +25,7 @@ export const MainSites: React.FC = () => {
         sortOrder: SortOrder.desc,
       },
     },
+    pause: !session.accesTokenProjectId,
   });
 
   const sites = sitesQuery?.data?.sites.data || [];
@@ -57,10 +58,10 @@ export const MainSites: React.FC = () => {
         </Text>
         <Link
           href={routes.project.site.list({ projectId })}
-          className="flex flex-row gap-1 text-neutral-11"
+          className="flex flex-row gap-1 text-neutral-11 group"
         >
           View all sites
-          <Icon name="arrow-right" />
+          <Icon name="arrow-right" className="group-hover:text-neutral-12" />
         </Link>
       </Box>
       <Site.Elements.List sites={sites} />

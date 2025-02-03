@@ -13,7 +13,7 @@ export default meta;
 
 export const Pending: StoryObj<PerformanceProps> = {
   render: (args: PerformanceProps) => (
-    <Box css={{ maxWidth: '15.125rem' }}>
+    <Box className="max-w-[15.125rem]">
       <Performance {...args} />
     </Box>
   ),
@@ -22,7 +22,7 @@ export const Pending: StoryObj<PerformanceProps> = {
 
 export const Red: StoryObj<PerformanceProps> = {
   render: (args: PerformanceProps) => (
-    <Box css={{ maxWidth: '15.125rem' }}>
+    <Box className="max-w-[15.125rem]">
       <Performance {...args} />
     </Box>
   ),
@@ -33,7 +33,7 @@ export const Red: StoryObj<PerformanceProps> = {
 
 export const Yellow: StoryObj<PerformanceProps> = {
   render: (args: PerformanceProps) => (
-    <Box css={{ maxWidth: '15.125rem' }}>
+    <Box className="max-w-[15.125rem]">
       <Performance {...args} />
     </Box>
   ),
@@ -44,7 +44,7 @@ export const Yellow: StoryObj<PerformanceProps> = {
 
 export const Green: StoryObj<PerformanceProps> = {
   render: (args: PerformanceProps) => (
-    <Box css={{ maxWidth: '15.125rem' }}>
+    <Box className="max-w-[15.125rem]">
       <Performance {...args} />
     </Box>
   ),

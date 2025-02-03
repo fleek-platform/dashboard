@@ -6,6 +6,7 @@ import { useEnsAvatar, useEnsName } from 'wagmi';
 import { constants } from '@/constants';
 import { MeQuery, useMeQuery } from '@/generated/graphqlClient';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
+import { useAuthContext } from '@/providers/AuthProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -55,8 +56,9 @@ const AccountDropdownAvatar: React.FC<AccountDropdownAvatarProps> = ({
 };
 
 export const AccountDropdown: React.FC = () => {
-  const { primaryWallet } = useDynamicContext();
+  const auth = useAuthContext();
   const projectContext = useProjectContext();
+  const { primaryWallet } = useDynamicContext();
 
   const { data: ensName } = useEnsName({
     address: primaryWallet?.address as `0x${string}`,
@@ -67,7 +69,7 @@ export const AccountDropdown: React.FC = () => {
   });
 
   const { theme, toggleTheme } = useTheme();
-  const [meQuery] = useMeQuery();
+  const [meQuery] = useMeQuery({ pause: !auth.accessToken });
 
   const session = useSessionContext();
   const projectId = session.project.id;

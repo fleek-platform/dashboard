@@ -3,7 +3,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { KeyFrames, styled } from '@/theme';
 
 import { Avatar } from '../Avatar/Avatar';
-import { Box } from '../Box/Box';
+import { Box } from '../ftw/Box/Box';
 import { Icon } from '../Icon/Icon';
 import { Scrollable } from '../Scrollable/Scrollable';
 
@@ -23,24 +23,6 @@ export const ComboboxStyles = {
     position: 'absolute',
     inset: 0,
   }),
-
-  CompoundOption: {
-    Container: styled(Box, {
-      gap: '$spacing-1',
-    }),
-    Header: styled(Box, {
-      flexDirection: 'row',
-      gap: '$spacing-2-5',
-      textSize: '$sm',
-      textCategory: '$tertiary',
-      color: '$text-primary',
-    }),
-    Content: styled(Box, {
-      textSize: '$sm',
-      textCategory: '$primary',
-      color: '$text-secondary',
-    }),
-  },
 
   Option: styled('li', {
     width: '$full',

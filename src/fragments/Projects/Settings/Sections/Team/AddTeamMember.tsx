@@ -23,12 +23,11 @@ import {
   CreateInvitationModalState,
   PermissionGroup,
 } from '@/types/TeamProject';
-import { Button, Combobox, FormField } from '@/ui';
+import { Box, Button, Combobox, FormField } from '@/ui';
 import { copyToClipboard } from '@/utils/copyClipboard';
 import { Log } from '@/utils/log';
 
 import { InviteLinkModal } from './InviteLinkModal';
-import { TeamSettingsStyles as S } from './TeamSettings.styles';
 
 type AddTeamMemberProps = {
   isLoading: boolean;
@@ -175,7 +174,7 @@ export const AddTeamMember: React.FC<AddTeamMemberProps> = ({
               invite link.
             </SettingsBox.Text>
 
-            <S.InlineFields>
+            <Box className="flex-row gap-4 items-center">
               <PermissionsTooltip
                 hasAccess={hasAddMemberPermission}
                 isLoading={isLoading as true}
@@ -204,7 +203,7 @@ export const AddTeamMember: React.FC<AddTeamMemberProps> = ({
                   }
                 />
               </PermissionsTooltip>
-            </S.InlineFields>
+            </Box>
 
             <SettingsBox.ActionRow>
               <LearnMoreMessage
@@ -248,7 +247,7 @@ const InviteLinkButton: React.FC<InviteLinkButtonProps> = ({
   handleCreateLinkInvitation,
 }) => {
   if (isLoading) {
-    return <S.ButtonSkeleton variant="button" />;
+    return <SettingsBox.Skeleton variant="button" />;
   }
 
   return (

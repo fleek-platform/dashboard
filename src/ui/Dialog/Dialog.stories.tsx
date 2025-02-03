@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
-import { Box } from '../Box/Box';
 import { FormField } from '../FormField/FormField';
+import { Box } from '../ftw/Box/Box';
 import { Button } from '../ftw/Button/Button';
 import { Input } from '../ftw/Input/Input';
 import { Text } from '../ftw/Text/Text';
@@ -61,14 +61,14 @@ export const CreateProject: Story = (args) => {
           Create a new project to host sites and store files. You can further
           customize your project in settings, including inviting collaborators.
         </Text>
-        <Box css={{ gap: '$xs' }}>
+        <Box className="gap-4">
           <FormField.Label>Project name</FormField.Label>
           <Input.Root>
             <Input.Field placeholder="Project name" />
           </Input.Root>
         </Box>
         <Text>Learn more about Projects</Text>
-        <Box css={{ flexDirection: 'row', gap: '$sm', fontSize: '0.875rem' }}>
+        <Box className="flex-row items-center gap-2 text-xs">
           <Dialog.Close asChild>
             <Button intent="neutral">Cancel</Button>
           </Dialog.Close>
