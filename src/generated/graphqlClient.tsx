@@ -506,6 +506,7 @@ export type CreateSecretDataInput = {
 export type CreateSiteDataInput = {
   baseDirectory?: InputMaybe<Scalars['String']>;
   buildCommand?: InputMaybe<Scalars['String']>;
+  deployOnBranchUpdate?: InputMaybe<Scalars['Boolean']>;
   distDirectory?: InputMaybe<Scalars['String']>;
   dockerImage?: InputMaybe<Scalars['String']>;
   enablePreviews?: InputMaybe<Scalars['Boolean']>;
@@ -3120,6 +3121,7 @@ export type Site = {
   buildDurationLimitSeconds?: Maybe<Scalars['Int']>;
   cpuLimit?: Maybe<Scalars['String']>;
   currentDeployment?: Maybe<Deployment>;
+  deployOnBranchUpdate: Scalars['Boolean'];
   deployments: Array<Deployment>;
   deploymentsPaginated: DeploymentsWithNestedAggregation;
   distDirectory?: Maybe<Scalars['String']>;
@@ -3581,6 +3583,7 @@ export type UpdateSiteDataInput = {
   avatar?: InputMaybe<Scalars['File']>;
   baseDirectory?: InputMaybe<Scalars['String']>;
   buildCommand?: InputMaybe<Scalars['String']>;
+  deployOnBranchUpdate?: InputMaybe<Scalars['Boolean']>;
   distDirectory?: InputMaybe<Scalars['String']>;
   dockerImage?: InputMaybe<Scalars['String']>;
   enablePreviews?: InputMaybe<Scalars['Boolean']>;
@@ -4513,7 +4516,7 @@ export type CreateSiteMutationVariables = Exact<{
 }>;
 
 
-export type CreateSiteMutation = { __typename?: 'Mutation', createSite: { __typename: 'Site', id: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, secretGroup?: { __typename?: 'SecretGroup', id: string } | null } };
+export type CreateSiteMutation = { __typename?: 'Mutation', createSite: { __typename: 'Site', id: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, secretGroup?: { __typename?: 'SecretGroup', id: string } | null } };
 
 export type DeleteSiteMutationVariables = Exact<{
   where: DeleteSiteWhereInput;
@@ -4542,7 +4545,7 @@ export type UpdateSiteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSiteMutation = { __typename?: 'Mutation', updateSite: { __typename?: 'Site', id: string, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null } };
+export type UpdateSiteMutation = { __typename?: 'Mutation', updateSite: { __typename?: 'Site', id: string, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null } };
 
 export type SiteQuotaQueryVariables = Exact<{
   where: SiteQuotaWhereInput;
@@ -4563,7 +4566,7 @@ export type SiteQueryVariables = Exact<{
 }>;
 
 
-export type SiteQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, avatar?: any | null, slug: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, startedAt?: any | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, storageType: StorageType, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, createdAt: any, updatedAt: any, startedAt?: any | null, sourceRef?: string | null, status: DeploymentStatus, previewOnly: boolean } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }>, secretGroup?: { __typename?: 'SecretGroup', id: string, name?: string | null, secrets: Array<{ __typename?: 'Secret', id: string, key: string, value: string, visibility: SecretVisibility, updatedAt: any }> } | null, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, gitIntegration?: { __typename: 'GitIntegration', id: string, gitProvider: { __typename?: 'GitProvider', id: string, name: string, tags: any, enabled: boolean, sourceProvider: SourceProvider }, githubAppInstallation: { __typename?: 'GithubAppInstallation', id: string, installationId?: string | null } } | null } };
+export type SiteQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, avatar?: any | null, slug: string, name: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, startedAt?: any | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceBranch?: string | null, storageType: StorageType, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, createdAt: any, updatedAt: any, startedAt?: any | null, sourceRef?: string | null, status: DeploymentStatus, previewOnly: boolean } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }>, secretGroup?: { __typename?: 'SecretGroup', id: string, name?: string | null, secrets: Array<{ __typename?: 'Secret', id: string, key: string, value: string, visibility: SecretVisibility, updatedAt: any }> } | null, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, framework?: { __typename?: 'SiteFramework', id: string, name: string, avatar: any } | null, gitIntegration?: { __typename: 'GitIntegration', id: string, gitProvider: { __typename?: 'GitProvider', id: string, name: string, tags: any, enabled: boolean, sourceProvider: SourceProvider }, githubAppInstallation: { __typename?: 'GithubAppInstallation', id: string, installationId?: string | null } } | null } };
 
 export type SiteFrameworksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4597,7 +4600,7 @@ export type SitesQueryVariables = Exact<{
 }>;
 
 
-export type SitesQuery = { __typename?: 'Query', sites: { __typename?: 'SitesWithAggregation', pageCount: number, totalCount: number, data: Array<{ __typename: 'Site', id: string, avatar?: any | null, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null } | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }> }> } };
+export type SitesQuery = { __typename?: 'Query', sites: { __typename?: 'SitesWithAggregation', pageCount: number, totalCount: number, data: Array<{ __typename: 'Site', id: string, avatar?: any | null, name: string, slug: string, sourceProvider?: SourceProvider | null, sourceRepositoryId?: string | null, sourceRepositoryOwner?: string | null, sourceRepositoryName?: string | null, sourceBranch?: string | null, githubInstallationId?: number | null, enablePreviews: boolean, deployOnBranchUpdate: boolean, baseDirectory?: string | null, buildCommand?: string | null, distDirectory?: string | null, dockerImage?: string | null, cpuLimit?: string | null, memoryLimit?: string | null, buildDurationLimitSeconds?: number | null, lastDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, siteId: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null } | null, currentDeployment?: { __typename?: 'Deployment', cid?: string | null, id: string, status: DeploymentStatus, createdAt: any, sourceProvider?: SourceProvider | null, sourceAuthor?: string | null, sourceMessage?: string | null, sourceRepositoryName?: string | null, sourceRepositoryOwner?: string | null, previewImageUrl?: string | null, previewOnly: boolean, storageType: StorageType, sourceBranch?: string | null, updatedAt: any, sourceRef?: string | null, functionDeployments: Array<{ __typename?: 'FleekFunctionDeployment', id: string }> } | null, ipnsRecords: Array<{ __typename?: 'IpnsRecord', id: string, hash?: string | null, name: string, ensRecords: Array<{ __typename: 'EnsRecord', createdAt: any, id: string, name: string, status: EnsRecordStatus, updatedAt: any }> }>, domains: Array<{ __typename: 'Domain', id: string, hostname: string, status: DomainStatus, errorMessage?: string | null, isVerified: boolean, createdAt: any, updatedAt: any, dnslinkStatus?: DnslinkStatus | null, zone?: { __typename?: 'Zone', id: string } | null, dnsConfigs: Array<{ __typename: 'DnsConfig', createdAt: any, id: string, name: string, type: DnsConfigType, updatedAt: any, value: string }> }>, primaryDomain?: { __typename?: 'Domain', id: string, hostname: string, isVerified: boolean } | null, zones: Array<{ __typename?: 'SiteZone', id: string, status: ZoneStatus }> }> } };
 
 export type SlugAvailabilityQueryVariables = Exact<{
   where: SlugAvailabilityWhereInput;
@@ -6443,6 +6446,7 @@ export const CreateSiteDocument = gql`
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -6531,6 +6535,7 @@ export const UpdateSiteDocument = gql`
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -6582,6 +6587,7 @@ export const SiteDocument = gql`
     sourceBranch
     githubInstallationId
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory
@@ -6790,6 +6796,7 @@ export const SitesDocument = gql`
       sourceBranch
       githubInstallationId
       enablePreviews
+      deployOnBranchUpdate
       baseDirectory
       buildCommand
       distDirectory

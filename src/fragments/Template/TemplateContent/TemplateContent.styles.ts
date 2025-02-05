@@ -8,6 +8,10 @@ export const TemplateContentStyles = {
 
   Screenshot: {
     Container: styled(Box, {
+      padding: '$spacing-4',
+      gap: '$spacing-4',
+      borderRadius: '$lg',
+      baseBorder: '$border-slate',
       [`> ${Image}, > ${Skeleton}`]: {
         aspectRatio: '4 / 3',
         maxWidth: '$full',

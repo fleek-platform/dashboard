@@ -2,6 +2,7 @@ import { deleteCookie, getCookies, setCookie } from 'cookies-next';
 import { OptionsType } from 'cookies-next/lib/types';
 import { useEffect, useState } from 'react';
 
+import { hostname as cookieDomain } from '@/utils/cookie';
 import { createContext } from '@/utils/createContext';
 import { isServerSide } from '@/utils/isServerSide';
 
@@ -58,7 +59,11 @@ export const CookiesProvider: React.FC<
     }
 
     setCookies((prev) => ({ ...prev, [key]: value }));
-    setCookie(key, value, options);
+    setCookie(key, value, {
+      // Required for cross-domain cookies
+      domain: cookieDomain,
+      ...options,
+    });
   };
 
   const remove: CookiesContext['remove'] = (key) => {
@@ -67,7 +72,10 @@ export const CookiesProvider: React.FC<
 
       return rest;
     });
-    deleteCookie(key);
+    deleteCookie(key, {
+      domain: cookieDomain,
+      path: '/',
+    });
   };
 
   return (

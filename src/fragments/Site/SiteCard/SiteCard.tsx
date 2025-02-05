@@ -59,10 +59,7 @@ export const SiteCard: React.FC<SiteCardProps> = ({
       <Box className="py-3 px-4 gap-3">
         <Box className="flex-row justify-between gap-4">
           <Box className="overflow-hidden">
-            <Text
-              variant="primary"
-              weight={700}
-            >
+            <Text variant="primary" weight={700}>
               {name}
             </Text>
             <Text

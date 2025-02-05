@@ -56,12 +56,16 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     try {
-      console.log(`[debug] ProjectProvider: accessTokenProjectId: decodeAccessToken: 1`);
+      console.log(
+        `[debug] ProjectProvider: accessTokenProjectId: decodeAccessToken: 1`,
+      );
       return (
         decodeAccessToken({ token: auth.accessToken }).projectId ?? undefined
       );
     } catch {
-      console.log(`[debug] ProjectProvider: accessTokenProjectId: decodeAccessToken: catch error`);
+      console.log(
+        `[debug] ProjectProvider: accessTokenProjectId: decodeAccessToken: catch error`,
+      );
       return undefined;
     }
   }, [auth.accessToken]);
@@ -72,7 +76,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const { accessToken } = auth;
 
     if (!data || !accessToken || fetching) {
-      console.log(`[debug] ProjectProvider: project handler: !data || !accessToken || fetching: return`);
+      console.log(
+        `[debug] ProjectProvider: project handler: !data || !accessToken || fetching: return`,
+      );
       return;
     }
 
@@ -109,7 +115,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
       const redirect = async () => {
         const shouldRedirect = router.pathname === routes.home();
-        console.log(`[debug] ProjectProvider: project: shouldRedirect = ${shouldRedirect}`);
+        console.log(
+          `[debug] ProjectProvider: project: shouldRedirect = ${shouldRedirect}`,
+        );
         if (shouldRedirect) {
           // keep query on redirect
           router.push({
@@ -119,12 +127,16 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
         }
 
         const isProjectRoute = router.pathname.includes('[projectId]');
-        console.log(`[debug] ProjectProvider: project: isProjectRoute= ${isProjectRoute}`);
+        console.log(
+          `[debug] ProjectProvider: project: isProjectRoute= ${isProjectRoute}`,
+        );
 
         if (isProjectRoute) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { page, ...parsedProjectQueryRoute } = router.query;
-          console.log(`[debug] ProjectProvider: isProjectRoute: project: newProjectId = ${newProjectId}`);
+          console.log(
+            `[debug] ProjectProvider: isProjectRoute: project: newProjectId = ${newProjectId}`,
+          );
 
           return router.replace({
             query: { ...parsedProjectQueryRoute, projectId: newProjectId },
@@ -142,7 +154,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       try {
-        console.log(`[debug] ProjectProvider: project: newProjectId = ${newProjectId}`);
+        console.log(
+          `[debug] ProjectProvider: project: newProjectId = ${newProjectId}`,
+        );
         await auth.switchProjectAuth(newProjectId);
         await redirect();
         cookies.set('projectId', newProjectId);
@@ -151,7 +165,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
     };
 
-    console.log(`[debug] ProjectProvider: project: original calls change project`);
+    console.log(
+      `[debug] ProjectProvider: project: original calls change project`,
+    );
     // TODO: This seem to be more appropriate to change on:
     // - drop down menu item selection
     // - router project id switch
@@ -176,7 +192,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     if (!cookies.values.accessToken) {
-      console.log('[debug] ProjectProvider: on cookies.values.accessToken: return')
+      console.log(
+        '[debug] ProjectProvider: on cookies.values.accessToken: return',
+      );
       return;
     }
 

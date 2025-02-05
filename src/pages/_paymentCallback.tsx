@@ -2,8 +2,8 @@ import { Callback } from '@/fragments';
 
 const AuthenticationCallbackPage = () => (
   <Callback.Page
-    title="Authentication Complete"
-    description="Your authentication was successful."
+    title="Payment Successful"
+    description="Your payment was successful."
   />
 );
 

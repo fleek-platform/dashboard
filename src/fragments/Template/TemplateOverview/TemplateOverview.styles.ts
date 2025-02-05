@@ -8,6 +8,10 @@ export const TemplateOverviewStyles = {
     gridArea: 'overview',
     overflow: 'hidden',
     flexWrap: 'wrap',
+    baseBorder: '$border-slate',
+    borderRadius: '$lg',
+    padding: '$spacing-4',
+    backgroundColor: '$surface-primary',
 
     variants: {
       variant: {

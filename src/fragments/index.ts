@@ -12,7 +12,7 @@ export * from './Migration/Migration';
 export * from './NotFound/NotFound';
 export * from './BillingCheckout/BillingCheckout';
 export * from './BillingPlans/BillingPlans';
-export * from './AuthenticationCallback/AuthenticationCallback';
+export * from './Callback/Callback';
 export * from './2FA/TwoFactorAuthentication';
 export * from './Functions/Functions';
 export * from './GitIntegration/GitIntegration';

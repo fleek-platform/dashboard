@@ -27,6 +27,7 @@ export const DetailsLayout: React.FC<DetailsLayout> = ({
       <App.Navbar.Combined />
       <App.Content>
         <PageNavigation
+          className="flex-row justify-between items-center flex-wrap"
           items={[
             {
               icon: 'arrow-left',
@@ -40,7 +41,7 @@ export const DetailsLayout: React.FC<DetailsLayout> = ({
         >
           {pageNavContent}
         </PageNavigation>
-        <Box className="grid grid-cols-1 sm:[grid-template-areas:'overview_overview'_'content_details'_'spacer_spacer'_'similar_similar'] sm:grid-cols-[1fr_15.125rem]">
+        <Box className="grid [grid-template-areas:'overview'_'content'_'details'_'spacer'_'similar'] grid-cols-[1fr] sm:[grid-template-areas:'overview_overview'_'content_details'_'spacer_spacer'_'similar_similar'] sm:grid-cols-[1fr_15.125rem] gap-6">
           {children}
         </Box>
       </App.Content>

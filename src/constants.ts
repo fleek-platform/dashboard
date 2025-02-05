@@ -141,6 +141,7 @@ export const constants = {
   SITES_PAGE_SIZE: 21,
   FUNCTIONS_PAGE_SIZE: 25,
   FUNCTIONS_MAX_DISPLAY_BYTES: 5000,
+  AI_AGENTS_PAGE_SIZE: 20,
 
   DEFAULT_DATE_FORMAT_FALLBACK: '-',
   MAX_LOGO_SIZE: 5 * 1024 * 1024, // 5MB
@@ -273,6 +274,13 @@ export const constants = {
     TEMPLATE: {
       CREATE: 'TEMPLATE_CREATE',
     },
+    AGENTS_AI: {
+      CREATE: 'AGENT_CREATE',
+      LIST: 'AGENT_VIEW_LIST',
+      VIEW: 'AGENT_VIEW',
+      EDIT: 'AGENT_UPDATE',
+      DELETE: 'AGENT_DELETE',
+    },
   },
 
   NO_PERMISSION_MESSAGE:
@@ -310,6 +318,8 @@ export const constants = {
   } satisfies Record<StorageProviderValue, StorageProvider>,
 
   PUBLIC_ROUTES: [
+    routes.paymentCallback(),
+    routes.githubCallback(),
     routes.home(),
     routes.template.list(),
     routes.template.indexed({ templateId: '[templateId]' }),
@@ -346,9 +356,8 @@ export const constants = {
 
   ANNOUNCEMENT_BANNER: {
     LOCAL_STORAGE_KEY: 'announcementDismissed',
-    ID: 'fleek-machines-early-access',
-    MESSAGE:
-      'Introducing Fleek Machines (Early access): One-click verified and private compute',
-    HREF: 'https://fleek.xyz/blog/announcements/fleek-machines-fleek-functions/',
+    ID: 'fleek-eliza',
+    MESSAGE: 'Introducing Fleek AI agent creation and hosting',
+    HREF: 'https://fleek.xyz/docs/ai-agents/',
   },
 };

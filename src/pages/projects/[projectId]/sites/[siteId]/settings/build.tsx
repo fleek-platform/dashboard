@@ -76,6 +76,7 @@ const BuildSettingsPage: Page = () => {
     values: {
       sourceBranch: siteQuery.data?.site.sourceBranch || '',
       enablePreviews: siteQuery.data?.site.enablePreviews || false,
+      deployOnBranchUpdate: siteQuery.data?.site.deployOnBranchUpdate || false,
       dockerImage: siteQuery.data?.site.dockerImage || '',
     },
     schema: updateSiteSchema.shape.data,
@@ -98,6 +99,10 @@ const BuildSettingsPage: Page = () => {
 
         if (values.enablePreviews !== site.enablePreviews) {
           updateSiteArgs.enablePreviews = values.enablePreviews;
+        }
+
+        if (values.deployOnBranchUpdate !== site.deployOnBranchUpdate) {
+          updateSiteArgs.deployOnBranchUpdate = values.deployOnBranchUpdate;
         }
 
         await updateSite({

@@ -94,7 +94,7 @@ const TemplateDetail: React.FC<TemplateDetailProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <S.Item.Container>
+      <S.Item.Container className="flex-row">
         <S.Item.SkeletonIcon />
         <S.Item.TextContent>
           <S.Item.ValueSkeleton>
@@ -109,7 +109,7 @@ const TemplateDetail: React.FC<TemplateDetailProps> = ({
   }
 
   return (
-    <S.Item.Container>
+    <S.Item.Container className="flex-row">
       <S.Item.Icon name={iconName} />
       <S.Item.TextContent>
         <Text variant="primary" size="xs" weight={500}>

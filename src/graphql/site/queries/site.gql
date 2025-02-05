@@ -11,6 +11,7 @@ query site($where: SiteWhereInput!) {
     sourceBranch
     githubInstallationId
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory

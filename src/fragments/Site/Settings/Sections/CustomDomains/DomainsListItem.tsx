@@ -114,9 +114,7 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
   }
 
   return (
-    <SettingsListItem.FlatRow
-      className="grid-cols-1"
-    >
+    <SettingsListItem.FlatRow className="grid-cols-1">
       <SettingsListItem
         subtitle={`Added ${getDurationUntilNow({ isoDateString: createdAt, shortFormat: true })}`}
         title={hostname}

@@ -46,13 +46,14 @@ export const PageNavigation = forwardStyledRef<
   PageNavigationProps
 >(S.Wrapper, ({ children, isLoading, items, ...props }, ref) => {
   if (isLoading) {
+    // styles from S.Wrapper and <Box className="..." /> are dead
     return (
       <Box
         className="flex-row justify-between items-center"
         ref={ref}
         {...props}
       >
-        <S.Content>
+        <S.Content className="flex-row">
           <Skeleton variant="button" />
           <Skeleton variant="button" />
           <Skeleton variant="button" />
@@ -60,7 +61,9 @@ export const PageNavigation = forwardStyledRef<
           <Skeleton variant="button" />
         </S.Content>
 
-        {children && <S.SpacedContent>{children}</S.SpacedContent>}
+        {children && (
+          <S.SpacedContent className="flex-row">{children}</S.SpacedContent>
+        )}
       </Box>
     );
   }
@@ -81,7 +84,9 @@ export const PageNavigation = forwardStyledRef<
           />
         ))}
 
-      {children && <S.SpacedContent>{children}</S.SpacedContent>}
+      {children && (
+        <S.SpacedContent className="flex-row">{children}</S.SpacedContent>
+      )}
     </Box>
   );
 });

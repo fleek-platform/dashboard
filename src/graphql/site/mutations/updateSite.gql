@@ -12,6 +12,7 @@ mutation updateSite(
     sourceRepositoryName
     sourceBranch
     enablePreviews
+    deployOnBranchUpdate
     baseDirectory
     buildCommand
     distDirectory

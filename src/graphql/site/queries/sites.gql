@@ -15,6 +15,7 @@ query sites($where: SitesWhereInput!, $filter: SitesPaginationInput) {
       sourceBranch
       githubInstallationId
       enablePreviews
+      deployOnBranchUpdate
       baseDirectory
       buildCommand
       distDirectory

@@ -1,23 +1,35 @@
 import { DateTime, DateTimeFormatOptions } from 'luxon';
 
 type DateFormatArgs = {
-  dateISO: string;
+  dateISO?: string;
+  dateTimestamp?: number;
   format?: DateTimeFormatOptions;
   stringFormat?: string; // i.e 'HH:mm:ss.SSS' to show 15:30:45.123
-  locale?: string;
 };
 
 export const dateFormat = ({
   dateISO,
+  dateTimestamp,
   format,
   stringFormat,
-  locale = 'en-US',
 }: DateFormatArgs) => {
-  if (stringFormat) {
-    return DateTime.fromISO(dateISO).toFormat(stringFormat);
+  let dateTime: DateTime | null = null;
+
+  if (dateTimestamp) {
+    dateTime = DateTime.fromSeconds(dateTimestamp);
+  } else if (dateISO) {
+    dateTime = DateTime.fromISO(dateISO);
   }
 
-  return DateTime.fromISO(dateISO).toLocaleString(format, { locale });
+  if (!dateTime) {
+    return 'Invalid date';
+  }
+
+  if (stringFormat) {
+    return dateTime.toFormat(stringFormat);
+  }
+
+  return dateTime.toLocaleString(format);
 };
 
 export const LOCALIZED_DATE_AND_TIME = 'fff';

@@ -74,6 +74,10 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
       </PermissionsTooltip>
 
       <PermissionsTooltip hasAccess={hasBuildSettingsPermission}>
+        <DeployOnBranchUpdateField isDisabled={!hasBuildSettingsPermission} />
+      </PermissionsTooltip>
+
+      <PermissionsTooltip hasAccess={hasBuildSettingsPermission}>
         <DeployPreviewsField isDisabled={!hasBuildSettingsPermission} />
       </PermissionsTooltip>
 
@@ -127,6 +131,45 @@ const ProductionBranchField: React.FC<ProductionBranchFieldProps> = ({
       </Combobox>
     </FormField.Root>
   );
+};
+
+const DeployOnBranchUpdateField: React.FC<DisabledProps> = ({ isDisabled }) => {
+  const field = Form.useField<boolean>('deployOnBranchUpdate');
+
+  const handleSelect = (value = false) => {
+    field.setValue(value, true);
+  };
+
+  return (
+    <FormField.Root error={field.status === 'invalid'}>
+      <FormField.Label tooltip="When enabled, Fleek will automatically trigger a deployment when a commit is pushed to the production branch.">
+        Automatic Deployments On Branch Update
+      </FormField.Label>
+      <Combobox
+        items={[true, false]}
+        selected={[field.value, handleSelect]}
+        isDisabled={isDisabled}
+      >
+        {({ Field, Options }) => (
+          <>
+            <Field placeholder="Select an option">
+              {DeployOnBranchUpdateOption}
+            </Field>
+
+            <Options disableSearch>{DeployOnBranchUpdateOption}</Options>
+          </>
+        )}
+      </Combobox>
+    </FormField.Root>
+  );
+};
+
+const DeployOnBranchUpdateOption = (isEnabled: boolean) => {
+  if (isEnabled) {
+    return 'Automatically trigger deployments when production branch is updated';
+  }
+
+  return `Manually trigger deployments`;
 };
 
 const DeployPreviewsField: React.FC<DisabledProps> = ({ isDisabled }) => {

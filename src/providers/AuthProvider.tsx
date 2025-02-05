@@ -12,6 +12,7 @@ import {
 import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
+import { isServerSide } from '@/utils/isServerSide';
 
 import { useCookies } from './CookiesProvider';
 
@@ -53,12 +54,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
-      console.log('[debug] AutProvider: login: 1');
       if (redirectUrl) {
-        console.log(`[debug] AutProvider: login: redirectUrl = ${redirectUrl}`);
         setRedirectUrl(redirectUrl);
       }
-      console.log(`[debug] AutProvider: login: providerName = ${providerName}`);
+
       const provider = providers[providerName];
       provider.handleLogin();
     },
@@ -67,9 +66,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const requestAccessToken = useCallback(
     async (provider: AuthWith, projectId?: string) => {
-      console.log(`[debug] AutProvider: login: requestAccessToken: 1`);
       if (loading) {
-        console.log(`[debug] AutProvider: login: requestAccessToken: loading`);
         return;
       }
 
@@ -78,10 +75,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setError(undefined);
 
         const accessToken = await provider.requestAccessToken(projectId);
-        console.log(`[debug] AutProvider: login: accessToken = ${accessToken}`);
         setAccessToken(accessToken);
       } catch (requestError) {
-        console.log(`[debug] AutProvider: login: requestError: logout`);
         logout();
         setError(requestError);
       } finally {
@@ -93,14 +88,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
-      console.log(`[debug] AutProvider: login: switchProjectAuth: 1`);
       const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
-        console.log(`[debug] AutProvider: login: switchProjectAuth: provider: 1`);
         // if in site page, redirect to sites list first
         if (router.query.siteId) {
-          console.log(`[debug] AutProvider: login: switchProjectAuth: router.replace: projectId = ${projectId}`);
           await router.replace(routes.project.site.list({ projectId }));
           delete router.query.siteId;
         }
@@ -114,70 +106,77 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
-    if (!cookies.values.authToken) {
-      console.log('[debug] AuthProvider: on cookies.values.authToken: return')
+    if (!authenticatedProvider && cookies.values.accessToken) {
+      logout();
+
       return;
     }
+
+    if (!authenticatedProvider) {
+      return;
+    }
+
+    const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+
+    // redirect if is in home page
+    if (router.pathname === routes.home()) {
+      // keep query on redirect
+      router.push({
+        pathname: routes.project.home({ projectId }),
+        query: router.query,
+      });
+    }
+
+    // redirect if has a redirect url pending
+    if (redirectUrl) {
+      router.push(redirectUrl.replace('[projectid]', projectId));
+
+      setRedirectUrl(null);
+    }
+
+    // uses the auth provider accessToken to request the access accessToken from graphql
     if (!cookies.values.accessToken) {
       requestAccessToken(authenticatedProvider);
     }
-  }, [cookies.values.authToken]);
-
-  // useEffect(() => {
-  //   if (!authenticatedProvider && cookies.values.accessToken) {
-  //     console.log(`[debug] AutProvider: login: logout`);
-  //     logout();
-
-  //     return;
-  //   }
-
-  //   if (!authenticatedProvider) {
-  //     return;
-  //   }
-  //   console.log(`[debug] AuthProvider: json debug: ${JSON.stringify({
-  //     cookiesValuesProjectId: cookies.values.projectId,
-  //     defaultProjectId: constants.DEFAULT_PROJECT_ID,
-  //   })}`);
-  //   const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
-
-  //   // redirect if is in home page
-  //   if (router.pathname === routes.home()) {
-  //     console.log(`[debug] AutProvider: login: redirect !home`);
-  //     // keep query on redirect
-  //     router.push({
-  //       pathname: routes.project.home({ projectId }),
-  //       query: router.query,
-  //     });
-  //   }
-  //   console.log(`[debug] AutProvider: login: redirectUrl = ${redirectUrl}`);
-
-  //   // redirect if has a redirect url pending
-  //   if (redirectUrl) {
-  //     router.push(redirectUrl.replace('[projectid]', projectId));
-
-  //     setRedirectUrl(null);
-  //   }
-
-  //   // uses the auth provider accessToken to request the access accessToken from graphql if (!cookies.values.accessToken) { console.log(`[debug] AutProvider: login: requestAccessToken: 1`) requestAccessToken(authenticatedProvider); }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [authenticatedProvider]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticatedProvider]);
 
   useEffect(() => {
-    console.log(`[debug] AutProvider: login: accessToken: 1`);
-    const { accessToken } = cookies.values;
+    const { accessToken, authToken, projectId } = cookies.values;
 
     try {
-      if (!accessToken) {
-        console.log(`[debug] AutProvider: login: accessToken: return`);
+      if (!accessToken && !authToken && !projectId) {
+        if (!isServerSide() && router.pathname !== routes.home()) {
+          const invitationHash = router.query.invitation;
+          const homeRoute = routes.home();
+
+          const targetUrl = invitationHash
+            ? `${homeRoute}?invitation=${invitationHash}`
+            : homeRoute;
+
+          window.location.href = targetUrl;
+        }
+
         return;
       }
-      console.log(`[debug] AutProvider: login: accessToken: decoreAccessToken`);
+
+      if (!accessToken && authToken) {
+        // TODO: get accessToken
+      }
+
+      if (!accessToken) {
+        console.error(
+          `Expected to have an accessToken but got ${typeof accessToken}`,
+        );
+
+        return;
+      }
+
       decodeAccessToken({ token: accessToken });
     } catch {
-      console.log(`[debug] AutProvider: login: accessToken: logout`);
       logout();
     }
-  }, [cookies.values.accessToken, logout]);
+  }, [cookies, logout]);
 
   return (
     <Provider
