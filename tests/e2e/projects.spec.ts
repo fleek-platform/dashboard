@@ -1,19 +1,18 @@
 import { test as it, expect } from '@playwright/test';
-import { harFilePaths } from '../utils/har';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 import { getDevServerDetails } from '../utils/devServer';
 const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
+import { me, project, projects, listFolder, templates, sites, version, protectedActions, privateGateways, domainStatus, application, applications, gitProviders, siteDeploymentRequirements, permissionGroups, projectMembers, invitations } from '../data/graphqlClientResponses';
 
 const { hostname, port } = getDevServerDetails();
 
+const validMockToken =
+  'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM4Nzg3NzUzfQ.AXZyXZpg_7y2gWDk3nuhSfIIildWVhciydYrW-3Iki8';
+const projectId = 'cls4v91mt0001l708wu51eozd';
+
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
-    const projectId = 'cls4v91mt0001l708wu51eozd';
-
     beforeEach(async ({ page }) => {
-      const validMockToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM2Nzg0NTkwfQ.CaZJhOgcB0skIM8sRgfs_Om0JpkeI5QHVbRdkkLuFMk';
-
       await page.context().addCookies([
         {
           name: 'accessToken',
@@ -76,14 +75,207 @@ describe('On Project settings page', () => {
       //   url: /fleek.*.xyz\/graphql/,
       //   update: false,
       // });
-      await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
-        url: /fleek.*.xyz\/graphql/,
-        // TODO: Unfortunately multiple doesn't seem to work
-        // url: /fleek.*\.xyz\/(graphql|api\/.*)/,
-        update: false,
+      await page.route('**/graphql', async (route) => {
+        const request = route.request();
+        const { operationName } = request.postDataJSON();
+
+        if (!operationName) {
+          return route.continue();
+        }
+
+        if (operationName === 'me') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: me.data,
+              errors: null
+            })
+          });          
+        }
+
+        if (operationName === 'project') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: project.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'projects') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: projects.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'listFolder') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: listFolder.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'templates') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: templates.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'sites') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: sites.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'version') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: version.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'protectedActions') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: protectedActions.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'privateGateways') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: privateGateways.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'domainStatus') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: domainStatus.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'application') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: application.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'applications') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: applications.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'gitProviders') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: gitProviders.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'siteDeploymentRequirements') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: siteDeploymentRequirements.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'permissionGroups') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: permissionGroups.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'projectMembers') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: projectMembers.data,
+              errors: null
+            })
+          });
+        }
+
+        if (operationName === 'invitations') {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              data: invitations.data,
+              errors: null
+            })
+          });
+        }
       });
 
       await page.goto(`http://${hostname}:${port}/projects/${projectId}/home/`);
+      await page
+        .getByText('Local development',
+        )
+        .waitFor();
     });
 
     afterEach(async ({ page }) => {
@@ -107,6 +299,10 @@ describe('On Project settings page', () => {
         page.getByRole('menuitem', { name: 'settings' }).click();
         const url = `http://${hostname}:${port}/projects/${projectId}/settings/`;
         await page.waitForURL(url);
+        await page
+          .getByText('Local development',
+          )
+          .waitFor();
       });
 
       // afterEach(async ({ page }) => {

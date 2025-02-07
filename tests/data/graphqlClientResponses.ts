@@ -94,6 +94,95 @@ export const me = {
     }
 };
 
+export const project = {
+    "data": {
+        "project": {
+            "__typename": "Project",
+            "id": "cls4v91mt0001l708wu51eozd",
+            "name": "First Project",
+            "backupStorageOnArweave": false,
+            "backupStorageOnFilecoin": true,
+            "allowAccessFromOfacCountries": true,
+            "avatar": null,
+            "updatedAt": "2025-02-06T09:42:15.489Z",
+            "currentUserMembership": {
+                "__typename": "Membership",
+                "permissionGroup": {
+                    "__typename": "PermissionGroup",
+                    "id": "clvuwdf640000cau9t0ppmbri",
+                    "name": "Owner",
+                    "permissions": [
+                        "PROJECT_EDIT_NAME",
+                        "PROJECT_EDIT_AVATAR",
+                        "PROJECT_DELETE",
+                        "PROJECT_EDIT_ACCESS_FROM_OFAC_COUNTRIES",
+                        "STORAGE_EDIT_SETTINGS",
+                        "STORAGE_UPLOAD",
+                        "STORAGE_EDIT_NAME",
+                        "STORAGE_DELETE",
+                        "STORAGE_VIEW_INFORMATION",
+                        "STORAGE_VIEW_LIST",
+                        "PRIVATE_GATEWAY_CREATE",
+                        "PRIVATE_GATEWAY_UPDATE_NAME",
+                        "PRIVATE_GATEWAY_DELETE",
+                        "PRIVATE_GATEWAY_ADD_AND_VERIFY_DOMAIN",
+                        "PRIVATE_GATEWAY_CHANGE_PRIMARY_DOMAIN",
+                        "PRIVATE_GATEWAY_DELETE_DOMAIN",
+                        "PRIVATE_GATEWAY_VIEW",
+                        "SITE_CREATE",
+                        "SITE_DEPLOY",
+                        "SITE_VIEW_OVERVIEW",
+                        "SITE_VIEW_BUILD_SETTINGS",
+                        "SITE_EDIT_BUILD_SETTINGS",
+                        "SITE_VIEW_ENV_VARIABLES",
+                        "SITE_EDIT_ENV_VARIABLES",
+                        "SITE_VIEW_DEPLOYMENTS",
+                        "SITE_VIEW_ANALYTICS",
+                        "SITE_EDIT_NAME",
+                        "SITE_EDIT_SLUG",
+                        "SITE_EDIT_AVATAR",
+                        "SITE_PURGE_CACHE",
+                        "SITE_DELETE",
+                        "SITE_ADD_AND_VERIFY_DOMAIN",
+                        "SITE_CHANGE_PRIMARY_DOMAIN",
+                        "SITE_DELETE_DOMAIN",
+                        "SITE_ADD_AND_VERIFY_ENS",
+                        "SITE_DELETE_ENS",
+                        "SITE_ADD_GIT_INTEGRATION",
+                        "SITE_REMOVE_GIT_INTEGRATION",
+                        "FUNCTION_CREATE",
+                        "FUNCTION_DEPLOY",
+                        "FUNCTION_EDIT_SETTINGS",
+                        "FUNCTION_DELETE",
+                        "FUNCTION_VIEW",
+                        "FUNCTION_VIEW_DEPLOYMENT",
+                        "IPNS_CREATE_RECORD",
+                        "IPNS_PUBLISH_RECORD",
+                        "IPNS_DELETE_RECORD",
+                        "IPNS_VIEW",
+                        "BILLING_VIEW",
+                        "BILLING_MANAGE",
+                        "APPLICATION_VIEW",
+                        "APPLICATION_CREATE",
+                        "APPLICATION_EDIT",
+                        "MEMBER_TEAM_VIEW",
+                        "MEMBER_INVITE",
+                        "MEMBER_CHANGE_PERMISSIONS",
+                        "MEMBER_ASSIGN_OWNER",
+                        "MEMBER_DELETE_OTHERS",
+                        "TEMPLATE_CREATE",
+                        "AGENT_VIEW_LIST",
+                        "AGENT_CREATE",
+                        "AGENT_VIEW",
+                        "AGENT_UPDATE",
+                        "AGENT_DELETE"
+                    ]
+                }
+            }
+        }
+    }
+};
+
 export const projects = {
     "data": {
         "projects": {
@@ -2941,3 +3030,1042 @@ export const version = {
         }
     }
 };
+
+export const protectedActions = {
+    "data": {
+        "twoFactorProtectedActions": {
+            "__typename": "TwoFactorProtectedActionsWithAggregation",
+            "data": [
+                {
+                    "__typename": "TwoFactorProtectedAction",
+                    "id": "cly7fofmr000114ogwx37lejm",
+                    "type": "DELETE_PROJECT",
+                    "name": "Delete Project",
+                    "enabled": false
+                },
+                {
+                    "__typename": "TwoFactorProtectedAction",
+                    "id": "cly7fof9e000014og427z20jh",
+                    "type": "DELETE_SITE",
+                    "name": "Delete Site",
+                    "enabled": false
+                },
+                {
+                    "__typename": "TwoFactorProtectedAction",
+                    "id": "cly7fog67000314ogcqvfvye1",
+                    "type": "DELETE_USER",
+                    "name": "Delete User",
+                    "enabled": false
+                },
+                {
+                    "__typename": "TwoFactorProtectedAction",
+                    "id": "cly7fofwf000214ogut2gn713",
+                    "type": "INVITE_MEMBER",
+                    "name": "Invite Member",
+                    "enabled": false
+                }
+            ]
+        }
+    }
+};
+
+export const privateGateways = {
+    "data": {
+        "privateGateways": {
+            "__typename": "PrivateGatewaysWithAggregation",
+            "data": [
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "clst3i5jk0007l108d4ml1x4q",
+                    "name": "suuuu",
+                    "createdAt": "2024-02-19T15:32:36.369Z",
+                    "domains": [],
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "clst3hznw0005l108jz4dait9"
+                    }
+                },
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "clsyoj5de000fl4080cae2ygj",
+                    "name": "yoplay",
+                    "createdAt": "2024-02-23T13:20:05.619Z",
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "clsyoizfc000dl408afmh4pbw"
+                    },
+                    "domains": [
+                        {
+                            "__typename": "Domain",
+                            "id": "clsyom3yw000hl408pkmxdwpm",
+                            "hostname": "privategateway.dropbeat.co",
+                            "status": "ACTIVE",
+                            "errorMessage": null,
+                            "isVerified": true,
+                            "createdAt": "2024-02-23T13:22:23.768Z",
+                            "updatedAt": "2024-02-23T13:23:24.611Z",
+                            "dnsConfigs": [
+                                {
+                                    "__typename": "DnsConfig",
+                                    "createdAt": "2024-02-23T13:22:28.309Z",
+                                    "id": "clsyom7h10000li0814lm6b2w",
+                                    "name": "hostname",
+                                    "type": "CNAME",
+                                    "updatedAt": "2024-02-23T13:22:28.309Z",
+                                    "value": "clsyoizfc000dl408afmh4pbw.fleekcdn.xyz"
+                                }
+                            ],
+                            "zone": {
+                                "__typename": "Zone",
+                                "id": "clsyoizfc000dl408afmh4pbw"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "cltcxsw320005ju08d43jbmlz",
+                    "name": "sosi",
+                    "createdAt": "2024-03-04T12:48:23.150Z",
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "cltcxspv50003ju08pu4wizon"
+                    },
+                    "domains": [
+                        {
+                            "__typename": "Domain",
+                            "id": "cltcxt14a0007ju0869t26lww",
+                            "hostname": "sosi.cc",
+                            "status": "CREATING_FAILED",
+                            "errorMessage": "The hostname is already registered.",
+                            "isVerified": false,
+                            "createdAt": "2024-03-04T12:48:29.675Z",
+                            "updatedAt": "2024-03-04T12:49:30.185Z",
+                            "dnsConfigs": [],
+                            "zone": {
+                                "__typename": "Zone",
+                                "id": "cltcxspv50003ju08pu4wizon"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "cltcy818z000hl1082ixapywu",
+                    "name": "mimi",
+                    "createdAt": "2024-03-04T13:00:09.684Z",
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "cltcy7vbp000fl108mbgmgxh6"
+                    },
+                    "domains": [
+                        {
+                            "__typename": "Domain",
+                            "id": "cltcy86zt000jl108ge73e2br",
+                            "hostname": "gw-test-1.dropbeat.co",
+                            "status": "CREATING_FAILED",
+                            "errorMessage": "The hostname is already registered.",
+                            "isVerified": false,
+                            "createdAt": "2024-03-04T13:00:17.129Z",
+                            "updatedAt": "2024-03-04T13:01:18.291Z",
+                            "dnsConfigs": [],
+                            "zone": {
+                                "__typename": "Zone",
+                                "id": "cltcy7vbp000fl108mbgmgxh6"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "cltcz3uoe0003l4081g4n2d9j",
+                    "name": "flipart-test-2",
+                    "createdAt": "2024-03-04T13:24:54.159Z",
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "cltcz3owi0001l408qap8dxc2"
+                    },
+                    "domains": []
+                },
+                {
+                    "__typename": "PrivateGateway",
+                    "id": "cltczthfq0003jr08a783tryc",
+                    "name": "flipart202403041344",
+                    "createdAt": "2024-03-04T13:44:50.054Z",
+                    "primaryDomain": {
+                        "__typename": "Domain",
+                        "id": "clsyom3yw000hl408pkmxdwpm",
+                        "hostname": "privategateway.dropbeat.co",
+                        "isVerified": true
+                    },
+                    "zone": {
+                        "__typename": "Zone",
+                        "id": "cltcztbc00001jr08bp3iqogz"
+                    },
+                    "domains": [
+                        {
+                            "__typename": "Domain",
+                            "id": "cltczu3t70005jr08txojrmff",
+                            "hostname": "flipart202403041344.flipart.co.uk",
+                            "status": "CREATING_FAILED",
+                            "errorMessage": "The hostname is already registered.",
+                            "isVerified": false,
+                            "createdAt": "2024-03-04T13:45:19.051Z",
+                            "updatedAt": "2024-03-04T13:46:19.615Z",
+                            "dnsConfigs": [],
+                            "zone": {
+                                "__typename": "Zone",
+                                "id": "cltcztbc00001jr08bp3iqogz"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+};
+
+export const domainStatus = {
+    "data": {
+        "domain": {
+            "__typename": "Domain",
+            "id": "cltcxt14a0007ju0869t26lww",
+            "status": "CREATING_FAILED",
+            "errorMessage": "The hostname is already registered.",
+            "dnsConfigs": []
+        }
+    }
+};
+
+export const applications = {
+    "data": {
+        "applications": {
+            "__typename": "ApplicationsWithAggregation",
+            "data": [
+                {
+                    "__typename": "Application",
+                    "clientId": "client_merCEQdEt9LpM1qvGEJM",
+                    "createdAt": "2024-02-19T13:42:22.695Z",
+                    "id": "clsszkeef0001jn082sf0dvul",
+                    "name": "My application",
+                    "updatedAt": "2024-10-28T10:36:14.428Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "test.co.uk"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "test.co.uk"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_wVAQwRZjlJjV_mS57Nl_",
+                    "createdAt": "2024-03-20T18:07:25.454Z",
+                    "id": "clu048t1q0003l908i08w9ent",
+                    "name": "stg202403201807",
+                    "updatedAt": "2024-03-20T18:07:25.454Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403201807.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403201807.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_YWROS6SetKaXKNUuR_TQ",
+                    "createdAt": "2024-03-20T19:48:35.575Z",
+                    "id": "clu07uws60001jp085kdvqeke",
+                    "name": "stg202403201948nowhitelist",
+                    "updatedAt": "2024-03-20T19:48:35.575Z",
+                    "whitelistDomains": [],
+                    "whiteLabelDomains": []
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_a3hbU1foa-r1WU0EbuYU",
+                    "createdAt": "2024-03-21T00:00:56.050Z",
+                    "id": "clu0gvf8y0003jt086g7do7ba",
+                    "name": "replit",
+                    "updatedAt": "2024-03-21T00:00:56.050Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "replit.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "replit.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_pLWJrJXZbcSSuDEFLXBW",
+                    "createdAt": "2024-03-21T00:42:42.092Z",
+                    "id": "clu0id4x80001i7081fv1mjic",
+                    "name": "stg202403210042nowhitelist",
+                    "updatedAt": "2024-03-21T00:42:42.092Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403210042nowhitelist.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403210042nowhitelist.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_K4OIGbG8bePLDXH5-1CW",
+                    "createdAt": "2024-03-21T16:42:03.514Z",
+                    "id": "clu1gmvll0001jm08vlq2vlo7",
+                    "name": "stg202403211641",
+                    "updatedAt": "2024-03-21T16:42:03.514Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211641.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211641.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_CtCg6Yf3zl4NwyD7Scgm",
+                    "createdAt": "2024-03-21T16:44:37.533Z",
+                    "id": "clu1gq6fx0005jm08okdmd8pe",
+                    "name": "stg202403211644on073",
+                    "updatedAt": "2024-03-21T16:44:37.533Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211644on073.punkbit.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211644on073.punkbit.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_H6hGyxTygxb37P6Ifqzr",
+                    "createdAt": "2024-03-21T17:16:57.626Z",
+                    "id": "clu1hvrfd0001l8089juhagaq",
+                    "name": "stg202403211716",
+                    "updatedAt": "2024-03-21T17:16:57.626Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211716.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211716.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_a8PSClEuVU40zmajaEK3",
+                    "createdAt": "2024-03-21T17:30:31.621Z",
+                    "id": "clu1id7ih0001l908u74kap1c",
+                    "name": "stg202403211730",
+                    "updatedAt": "2024-03-21T17:30:31.621Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211730.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211730.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_Gdt4MhOU3OXu5b0388-v",
+                    "createdAt": "2024-03-21T17:55:20.991Z",
+                    "id": "clu1j94pu0001l508cv6anp7k",
+                    "name": "hgghjgh",
+                    "updatedAt": "2024-03-21T17:55:20.991Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "hgjgjh.hjjh.cc"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "hgjgjh.hjjh.cc"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_dsfJPbGorSC24O_w9mHC",
+                    "createdAt": "2024-03-21T18:00:16.140Z",
+                    "id": "clu1jfggc0005l5084sw2pko1",
+                    "name": "cli073.1",
+                    "updatedAt": "2024-03-21T18:00:16.140Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "cli073.1.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "cli073.1.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_Hz87sN2saluNiSapClOS",
+                    "createdAt": "2024-03-21T18:02:46.306Z",
+                    "id": "clu1jiobm0003l7084pwvifvq",
+                    "name": "cli073c",
+                    "updatedAt": "2024-03-21T18:02:46.306Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "cli073c.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "cli073c.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_1SnOHkCtwVIkE_8f16IU",
+                    "createdAt": "2024-03-21T18:30:12.287Z",
+                    "id": "clu1khyda0003k208us5h6jqm",
+                    "name": "stg202403211830",
+                    "updatedAt": "2024-03-21T18:30:12.287Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211830.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211830.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_3BlI5OniFVzmFzmEql7p",
+                    "createdAt": "2024-03-21T18:31:35.610Z",
+                    "id": "clu1kjqnu0001jz0897p7mlaw",
+                    "name": "stg202403211831",
+                    "updatedAt": "2024-03-21T18:31:35.610Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211831.punkbit.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211831.punkbit.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_LIVAY2ZQ50JHYnX2ScGK",
+                    "createdAt": "2024-03-21T19:20:47.967Z",
+                    "id": "clu1mb0pr0001kz08e253cwfv",
+                    "name": "stg202403211920",
+                    "updatedAt": "2024-03-21T19:20:47.967Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211920.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211920.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_BmDm-QJnMGCs5O0Wf0xc",
+                    "createdAt": "2024-03-21T19:21:57.927Z",
+                    "id": "clu1mcip20005kz08dl4ozb87",
+                    "name": "stg202403211921",
+                    "updatedAt": "2024-03-21T19:21:57.927Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211921.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211921.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_JV1xroEK9594kwRwRkDC",
+                    "createdAt": "2024-03-21T19:23:04.041Z",
+                    "id": "clu1mdxpk0001l508p07grpqd",
+                    "name": "stg202403211923",
+                    "updatedAt": "2024-03-21T19:23:04.041Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211923.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211923.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_Ml0M7GCYLErRDq5mKj3n",
+                    "createdAt": "2024-03-21T19:23:52.112Z",
+                    "id": "clu1meysv0005l50841w4cen0",
+                    "name": "stg202403211924",
+                    "updatedAt": "2024-03-21T19:23:52.112Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211924.dropbeat.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211924.dropbeat.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_4ZvHW-pKA896S18RxgOB",
+                    "createdAt": "2024-03-21T19:25:45.711Z",
+                    "id": "clu1mhege0009l508mpo66x0f",
+                    "name": "stg202403211925",
+                    "updatedAt": "2024-03-21T19:25:45.711Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211925.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211925.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_yIOdsPpBBOPesbKBkgh9",
+                    "createdAt": "2024-03-21T19:35:38.955Z",
+                    "id": "clu1mu47f000dl508z56w0ow8",
+                    "name": "stg202403220936updt",
+                    "updatedAt": "2024-03-22T09:36:50.411Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211935.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211935.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_wjjlyNurEnzenARx8fs8",
+                    "createdAt": "2024-03-21T19:52:15.774Z",
+                    "id": "clu1nfhct0001ky08wo3127tl",
+                    "name": "stg202403220907on073",
+                    "updatedAt": "2024-03-22T09:08:41.036Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403220907on073.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403220907on073.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_vpPlBjSZcxfkDqrRZ1Ef",
+                    "createdAt": "2024-03-21T19:52:58.591Z",
+                    "id": "clu1ngee70005ky08hxsf50gg",
+                    "name": "stg202403211952cli073",
+                    "updatedAt": "2024-03-21T19:52:58.591Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403211952cli073.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403211952cli073.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_8DrDYRvC6DhZ2jYrS29T",
+                    "createdAt": "2024-03-22T09:35:15.080Z",
+                    "id": "clu2gtuo80001jv088l1a45vm",
+                    "name": "stg2024030934updt",
+                    "updatedAt": "2024-03-22T09:36:18.973Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg2024030934.dropband.co"
+                        },
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg2024030934.punkbit.com"
+                        },
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg2024030934.dropbeat.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg2024030934.dropband.co"
+                        },
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg2024030934.punkbit.com"
+                        },
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg2024030934.dropbeat.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_Njad4CptNvXiLbLmfIAb",
+                    "createdAt": "2024-03-22T09:35:51.423Z",
+                    "id": "clu2gumpr0009jv08e13hd7a5",
+                    "name": "stg202403220935on073",
+                    "updatedAt": "2024-03-22T09:35:51.423Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403220935on073.dropband.co"
+                        },
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403220935on073.punkbit.com"
+                        },
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "stg202403220935on073.dropbeat.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403220935on073.dropband.co"
+                        },
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403220935on073.punkbit.com"
+                        },
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "stg202403220935on073.dropbeat.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_HYmgWnxDFnJ3nncxy-WV",
+                    "createdAt": "2024-03-22T09:41:07.584Z",
+                    "id": "clu2h1eo00001l908zyt1zbvg",
+                    "name": "uistg202403220941",
+                    "updatedAt": "2024-03-22T09:44:17.059Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "uistg202403220941.dropband.co"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "uistg202403220941.dropband.co"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_mVHeot9mDm_kMVyFHKuz",
+                    "createdAt": "2024-03-28T09:00:33.923Z",
+                    "id": "club08cua0003l108hwxkxom5",
+                    "name": "foobar322332",
+                    "updatedAt": "2024-03-28T09:00:33.923Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "fooba42332.cc"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "fooba42332.cc"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_am9YRhsYLliEonEPDPW4",
+                    "createdAt": "2024-06-18T15:08:28.493Z",
+                    "id": "clxkjhcct0003ipxjjw6j2psu",
+                    "name": "202406181608",
+                    "updatedAt": "2024-06-18T15:15:36.057Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "202406181608.com"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "202406181608.com"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_1aLOJvzlUtl-SuKNcD0_",
+                    "createdAt": "2024-08-01T09:40:22.347Z",
+                    "id": "clzb34vre0003t2q3ssdsi5f8",
+                    "name": "1aug2k241039",
+                    "updatedAt": "2024-08-01T09:40:22.347Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "fleek-test.network"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "fleek-test.network"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_r_XDtEjvheVYXxpoN3u9",
+                    "createdAt": "2024-08-23T14:23:07.666Z",
+                    "id": "cm06sx8y90003rndbv7magoz9",
+                    "name": "test23aug",
+                    "updatedAt": "2024-08-23T14:23:07.666Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "fleek-test.network"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "fleek-test.network"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_pPBcAEwChNvLPFniS48U",
+                    "createdAt": "2024-08-31T12:27:15.309Z",
+                    "id": "cm0i4b1t90006149teku9guzf",
+                    "name": "fri6sep15h032k24",
+                    "updatedAt": "2024-09-06T14:03:47.402Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "site321.cc"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "site321.cc"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_ueD0zZF9uESvaSUG0vE0",
+                    "createdAt": "2024-10-28T10:48:50.531Z",
+                    "id": "cm2swbwbp00014yh01a9mf3ep",
+                    "name": "hjjhhj",
+                    "updatedAt": "2024-10-28T10:48:50.531Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "goo.py"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "goo.py"
+                        }
+                    ]
+                },
+                {
+                    "__typename": "Application",
+                    "clientId": "client_jkVvSupKLl20Ss-D_AyU",
+                    "createdAt": "2025-01-12T16:47:18.557Z",
+                    "id": "cm5tulmov0001q5zatufxt94p",
+                    "name": "test232323",
+                    "updatedAt": "2025-01-12T16:47:18.557Z",
+                    "whitelistDomains": [
+                        {
+                            "__typename": "ApplicationWhitelistDomain",
+                            "hostname": "sddssdsdds.cc"
+                        }
+                    ],
+                    "whiteLabelDomains": [
+                        {
+                            "__typename": "ApplicationWhiteLabelDomain",
+                            "hostname": "sddssdsdds.cc"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+};
+
+export const application = {
+    "errors": [
+        {
+            "message": "Application not found.",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "application"
+            ],
+            "extensions": {
+                "name": "ApplicationNotFoundError",
+                "data": {
+                    "application": {
+                        "id": ""
+                    }
+                }
+            }
+        }
+    ],
+    "data": null
+};
+
+export const gitProviders = {
+    "data": {
+        "gitProviders": [
+            {
+                "__typename": "GitProvider",
+                "id": "clwzcg4740000krfb09tt2a37",
+                "name": "Fleek Templates STG",
+                "tags": [
+                    "templates"
+                ],
+                "enabled": true,
+                "sourceProvider": "GITHUB",
+                "createdAt": "2024-06-03T19:08:24.256Z"
+            },
+            {
+                "__typename": "GitProvider",
+                "id": "clx33myoa00008rw3jiujwe9e",
+                "name": "Fleek CI STG",
+                "tags": [
+                    "sites"
+                ],
+                "enabled": true,
+                "sourceProvider": "GITHUB",
+                "createdAt": "2024-06-06T10:12:51.849Z"
+            }
+        ]
+    }
+};
+
+export const siteDeploymentRequirements = {
+    "data": {
+        "siteDeploymentRequirements": {
+            "__typename": "SiteDeploymentRequirements",
+            "authorizationUrl": "",
+            "installationUrl": "https://github.com/apps/fleek-templates-stg/installations/new?state=%7B%22userId%22%3A%22cls4v90nr0000l708op4q669h%22%2C%22gitProviderId%22%3A%22clwzcg4740000krfb09tt2a37%22%2C%22hash%22%3A%22fqxQEFh_H3CHlY1dIUPdWJdBEhiu7w8S%22%7D&redirect_uri=https://github3.service.staging.fleeksandbox.xyz/callback",
+            "shouldAuthenticate": false,
+            "shouldInstall": true
+        }
+    }
+};
+
+export const permissionGroups = {
+    "data": {
+        "permissionGroups": {
+            "__typename": "PermissionGroupsWithAggregation",
+            "data": [
+                {
+                    "__typename": "PermissionGroup",
+                    "id": "clvuwdf640000cau9t0ppmbri",
+                    "name": "Owner",
+                    "description": "All permissions"
+                },
+                {
+                    "__typename": "PermissionGroup",
+                    "id": "clvuwdf640001cau99uv6qoji",
+                    "name": "Admin",
+                    "description": "Can create, read, update and delete most data"
+                },
+                {
+                    "__typename": "PermissionGroup",
+                    "id": "clvuwdf640002cau9vzrv9pib",
+                    "name": "Member",
+                    "description": "Can create, read, update and delete some data"
+                },
+                {
+                    "__typename": "PermissionGroup",
+                    "id": "clvuwdf640003cau9dkk98fhw",
+                    "name": "Read Only",
+                    "description": "Can only read data"
+                }
+            ]
+        }
+    }
+};
+
+export const projectMembers = {
+    "data": {
+        "project": {
+            "__typename": "Project",
+            "memberships": [
+                {
+                    "__typename": "Membership",
+                    "id": "cls4v91mt0003l708etg203c7",
+                    "role": "OWNER",
+                    "createdAt": "2024-02-02T16:35:06.245Z",
+                    "permissionGroup": {
+                        "__typename": "PermissionGroup",
+                        "id": "clvuwdf640000cau9t0ppmbri",
+                        "name": "Owner",
+                        "description": "All permissions"
+                    },
+                    "user": {
+                        "__typename": "User",
+                        "id": "cls4v90nr0000l708op4q669h",
+                        "email": "helder+test@fleek.xyz",
+                        "username": "0xB09-3D22"
+                    }
+                }
+            ]
+        }
+    }
+};
+
+export const invitations = {"data":{"invitations":{"__typename":"InvitationsWithAggregation","data":[]}}};
