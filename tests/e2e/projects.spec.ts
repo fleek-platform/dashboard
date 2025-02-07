@@ -83,191 +83,37 @@ describe('On Project settings page', () => {
           return route.continue();
         }
 
-        if (operationName === 'me') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: me.data,
-              errors: null
-            })
-          });          
-        }
+        const operations = [
+          { name: 'me', data: me.data },
+          { name: 'project', data: project.data },
+          { name: 'projects', data: projects.data },
+          { name: 'listFolder', data: listFolder.data },
+          { name: 'templates', data: templates.data },
+          { name: 'sites', data: sites.data },
+          { name: 'version', data: version.data },
+          { name: 'protectedActions', data: protectedActions.data },
+          { name: 'privateGateways', data: privateGateways.data },
+          { name: 'domainStatus', data: domainStatus.data },
+          { name: 'application', data: application.data },
+          { name: 'applications', data: applications.data },
+          { name: 'gitProviders', data: gitProviders.data },
+          { name: 'siteDeploymentRequirements', data: siteDeploymentRequirements.data },
+          { name: 'permissionGroups', data: permissionGroups.data },
+          { name: 'projectMembers', data: projectMembers.data },
+          { name: 'invitations', data: invitations.data }
+        ];
 
-        if (operationName === 'project') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: project.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'projects') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: projects.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'listFolder') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: listFolder.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'templates') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: templates.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'sites') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: sites.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'version') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: version.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'protectedActions') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: protectedActions.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'privateGateways') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: privateGateways.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'domainStatus') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: domainStatus.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'application') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: application.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'applications') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: applications.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'gitProviders') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: gitProviders.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'siteDeploymentRequirements') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: siteDeploymentRequirements.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'permissionGroups') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: permissionGroups.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'projectMembers') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: projectMembers.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'invitations') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: invitations.data,
-              errors: null
-            })
-          });
+        for (const { data, name } of operations) {
+          if (operationName === name) {
+            await route.fulfill({
+              status: 200,
+              contentType: 'application/json',
+              body: JSON.stringify({
+                data,
+                errors: null
+              })
+            });
+          }
         }
       });
 
