@@ -1,6 +1,13 @@
 import { test as it, expect } from '@playwright/test';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
-import { me, projects, listFolder, templates, sites, version } from '../data/graphqlClientResponses';
+import {
+  me,
+  projects,
+  listFolder,
+  templates,
+  sites,
+  version,
+} from '../data/graphqlClientResponses';
 import { getDevServerDetails } from '../utils/devServer';
 
 const { describe, beforeEach, afterEach } = it;
@@ -195,18 +202,15 @@ describe('On Home page', () => {
               contentType: 'application/json',
               body: JSON.stringify({
                 data,
-                errors: null
-              })
+                errors: null,
+              }),
             });
           }
         }
       });
 
       await page.goto(`http://${hostname}:${port}`);
-      await page
-        .getByText('Local development',
-        )
-        .waitFor();
+      await page.getByText('Local development').waitFor();
     });
 
     afterEach(async ({ page }) => {

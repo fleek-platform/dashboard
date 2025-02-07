@@ -2,7 +2,25 @@ import { test as it, expect } from '@playwright/test';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 import { getDevServerDetails } from '../utils/devServer';
 const { describe, beforeEach, afterEach, beforeAll, afterAll } = it;
-import { me, project, projects, listFolder, templates, sites, version, protectedActions, privateGateways, domainStatus, application, applications, gitProviders, siteDeploymentRequirements, permissionGroups, projectMembers, invitations } from '../data/graphqlClientResponses';
+import {
+  me,
+  project,
+  projects,
+  listFolder,
+  templates,
+  sites,
+  version,
+  protectedActions,
+  privateGateways,
+  domainStatus,
+  application,
+  applications,
+  gitProviders,
+  siteDeploymentRequirements,
+  permissionGroups,
+  projectMembers,
+  invitations,
+} from '../data/graphqlClientResponses';
 
 const { hostname, port } = getDevServerDetails();
 
@@ -27,7 +45,7 @@ const operations = [
   { name: 'siteDeploymentRequirements', data: siteDeploymentRequirements.data },
   { name: 'permissionGroups', data: permissionGroups.data },
   { name: 'projectMembers', data: projectMembers.data },
-  { name: 'invitations', data: invitations.data }
+  { name: 'invitations', data: invitations.data },
 ];
 
 describe('On Project settings page', () => {
@@ -106,18 +124,15 @@ describe('On Project settings page', () => {
               contentType: 'application/json',
               body: JSON.stringify({
                 data,
-                errors: null
-              })
+                errors: null,
+              }),
             });
           }
         }
       });
 
       await page.goto(`http://${hostname}:${port}/projects/${projectId}/home/`);
-      await page
-        .getByText('Local development',
-        )
-        .waitFor();
+      await page.getByText('Local development').waitFor();
     });
 
     afterEach(async ({ page }) => {
@@ -141,10 +156,7 @@ describe('On Project settings page', () => {
         page.getByRole('menuitem', { name: 'settings' }).click();
         const url = `http://${hostname}:${port}/projects/${projectId}/settings/`;
         await page.waitForURL(url);
-        await page
-          .getByText('Local development',
-          )
-          .waitFor();
+        await page.getByText('Local development').waitFor();
       });
 
       // afterEach(async ({ page }) => {
