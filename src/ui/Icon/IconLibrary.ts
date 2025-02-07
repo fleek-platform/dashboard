@@ -97,6 +97,7 @@ import { PhoneIcon } from './Custom/PhoneIcon';
 import { PulseIcon } from './Custom/PulseIcon';
 import { QuestionIcon } from './Custom/QuestionIcon';
 import { RefreshIcon } from './Custom/RefreshIcon';
+import { RobotIcon } from './Custom/Robot';
 import { SpinnerIcon } from './Custom/SpinnerIcon';
 import { ThreeDNSIcon } from './Custom/ThreeDNSIcon';
 import { TrashIcon } from './Custom/TrashIcon';
@@ -200,6 +201,7 @@ export const IconLibrary = Object.freeze({
   question: QuestionIcon,
   'question-circle': QuestionMarkCircledIcon,
   refresh: RefreshIcon,
+  robot: RobotIcon,
   spinner: SpinnerIcon,
   sun: SunIcon,
   moon: MoonIcon,
