@@ -10,6 +10,26 @@ const validMockToken =
   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM4Nzg3NzUzfQ.AXZyXZpg_7y2gWDk3nuhSfIIildWVhciydYrW-3Iki8';
 const projectId = 'cls4v91mt0001l708wu51eozd';
 
+const operations = [
+  { name: 'me', data: me.data },
+  { name: 'project', data: project.data },
+  { name: 'projects', data: projects.data },
+  { name: 'listFolder', data: listFolder.data },
+  { name: 'templates', data: templates.data },
+  { name: 'sites', data: sites.data },
+  { name: 'version', data: version.data },
+  { name: 'protectedActions', data: protectedActions.data },
+  { name: 'privateGateways', data: privateGateways.data },
+  { name: 'domainStatus', data: domainStatus.data },
+  { name: 'application', data: application.data },
+  { name: 'applications', data: applications.data },
+  { name: 'gitProviders', data: gitProviders.data },
+  { name: 'siteDeploymentRequirements', data: siteDeploymentRequirements.data },
+  { name: 'permissionGroups', data: permissionGroups.data },
+  { name: 'projectMembers', data: projectMembers.data },
+  { name: 'invitations', data: invitations.data }
+];
+
 describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
@@ -71,10 +91,6 @@ describe('On Project settings page', () => {
         },
       );
 
-      // await page.routeFromHAR(harFilePaths.page.projects.settings.all, {
-      //   url: /fleek.*.xyz\/graphql/,
-      //   update: false,
-      // });
       await page.route('**/graphql', async (route) => {
         const request = route.request();
         const { operationName } = request.postDataJSON();
@@ -82,26 +98,6 @@ describe('On Project settings page', () => {
         if (!operationName) {
           return route.continue();
         }
-
-        const operations = [
-          { name: 'me', data: me.data },
-          { name: 'project', data: project.data },
-          { name: 'projects', data: projects.data },
-          { name: 'listFolder', data: listFolder.data },
-          { name: 'templates', data: templates.data },
-          { name: 'sites', data: sites.data },
-          { name: 'version', data: version.data },
-          { name: 'protectedActions', data: protectedActions.data },
-          { name: 'privateGateways', data: privateGateways.data },
-          { name: 'domainStatus', data: domainStatus.data },
-          { name: 'application', data: application.data },
-          { name: 'applications', data: applications.data },
-          { name: 'gitProviders', data: gitProviders.data },
-          { name: 'siteDeploymentRequirements', data: siteDeploymentRequirements.data },
-          { name: 'permissionGroups', data: permissionGroups.data },
-          { name: 'projectMembers', data: projectMembers.data },
-          { name: 'invitations', data: invitations.data }
-        ];
 
         for (const { data, name } of operations) {
           if (operationName === name) {
@@ -287,7 +283,7 @@ describe('On Project settings page', () => {
         });
       });
 
-      describe.skip('On Settings navigation to Application Credentials (with credentials data)', () => {
+      describe('On Settings navigation to Application Credentials (with credentials data)', () => {
         beforeEach(async ({ page }) => {
           page
             .getByRole('navigation')

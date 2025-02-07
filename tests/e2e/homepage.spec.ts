@@ -11,6 +11,15 @@ const validMockToken =
   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOmNsczR2OTBucjAwMDBsNzA4b3A0cTY2OWgiLCJwcm9qZWN0SWQiOiJjbHM0djkxbXQwMDAxbDcwOHd1NTFlb3pkIiwiZXhwIjoxNzM4Nzg3NzUzfQ.AXZyXZpg_7y2gWDk3nuhSfIIildWVhciydYrW-3Iki8';
 const projectId = 'cls4v91mt0001l708wu51eozd';
 
+const operations = [
+  { name: 'me', data: me.data },
+  { name: 'projects', data: projects.data },
+  { name: 'listFolder', data: listFolder.data },
+  { name: 'templates', data: templates.data },
+  { name: 'sites', data: sites.data },
+  { name: 'version', data: version.data },
+];
+
 describe('On Home page', () => {
   describe('A non-authenticated user', () => {
     beforeEach(async ({ page }) => {
@@ -179,70 +188,17 @@ describe('On Home page', () => {
           return route.continue();
         }
 
-        if (operationName === 'me') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: me.data,
-              errors: null
-            })
-          });          
-        }
-
-        if (operationName === 'projects') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: projects.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'listFolder') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: listFolder.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'templates') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: templates.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'sites') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: sites.data,
-              errors: null
-            })
-          });
-        }
-
-        if (operationName === 'version') {
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify({
-              data: version.data,
-              errors: null
-            })
-          });
+        for (const { data, name } of operations) {
+          if (operationName === name) {
+            await route.fulfill({
+              status: 200,
+              contentType: 'application/json',
+              body: JSON.stringify({
+                data,
+                errors: null
+              })
+            });
+          }
         }
       });
 
