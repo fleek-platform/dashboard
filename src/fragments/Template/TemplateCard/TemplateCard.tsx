@@ -63,7 +63,7 @@ const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
   return (
     <Box
       className={cn('flex-row gap-2 items-center', {
-        'bg-monochrome-reverse': isFleekAuthored,
+        'bg-monochrome': isFleekAuthored,
       })}
     >
       <Avatar
