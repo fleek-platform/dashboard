@@ -146,12 +146,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
     try {
       if (!accessToken && !authToken && !projectId) {
-        if (projectId !== router.query.projectId) {
-          // await switchProjectAuth(projectId);
-
-          return;
-        }
-
         if (!isServerSide() && router.pathname !== routes.home()) {
           const invitationHash = router.query.invitation;
           const homeRoute = routes.home();
