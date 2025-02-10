@@ -7,8 +7,9 @@ export const colors = {
     normal: 'rgb(var(--color-ftw-monochrome-normal) / <alpha-value>)',
     reverse: 'rgb(var(--color-ftw-monochrome-reverse) / <alpha-value>)',
   },
-  app: {
-    bg: 'rgb(var(--color-ftw-app-bg) / <alpha-value>)',
+  surface: {
+    app: 'rgb(var(--color-ftw-surface-1) / <alpha-value>)',
+    content: 'rgb(var(--color-ftw-surface-2) / <alpha-value>)',
   },
   neutral: {
     1: 'rgb(var(--color-ftw-neutral-1) / <alpha-value>)',
