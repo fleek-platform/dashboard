@@ -36,6 +36,8 @@ const useAuthWithDynamic = (): AuthWith => {
   const handleLogin = async () => {
     // handle dynamic being authenticated
     if (dynamic.authToken) {
+                          console.log(`[debug] useAuthProviders.tsx: handleLogin:: 1`)
+
       await dynamic.handleLogOut();
     }
 

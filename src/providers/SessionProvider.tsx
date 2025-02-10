@@ -56,6 +56,8 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   );
 
   useEffect(() => {
+        console.log(`[debug] sessionprovider.tsx: useeffect error dep : 1`, error)
+
     if (error) {
       toast.error({ error, log: 'Session Error' });
       auth.logout();

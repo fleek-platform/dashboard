@@ -174,6 +174,8 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // changeProject(cookies.values.projectId ?? projects[0].id);
 
     if (!cookies.values.projectId) {
+              console.log(`[debug] projectprovider.tsx: useeffect !cookies.values.projectId : 1`)
+
       logout();
     }
 
