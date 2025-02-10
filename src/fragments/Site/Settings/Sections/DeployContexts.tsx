@@ -1,9 +1,4 @@
-import {
-  Form,
-  LearnMoreMessage,
-  PermissionsTooltip,
-  SettingsBox,
-} from '@/components';
+import { Form, LearnMoreMessage, PermissionsTooltip, SettingsBox } from '@/components';
 import { constants } from '@/constants';
 import { useGitBranchesQuery } from '@/generated/graphqlClient';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -18,11 +13,7 @@ export type DeployContextsProps = {
   sourceRepositoryName?: string;
 };
 
-export const DeployContexts: React.FC<DeployContextsProps> = ({
-  site,
-  sourceRepositoryOwner,
-  sourceRepositoryName,
-}) => {
+export const DeployContexts: React.FC<DeployContextsProps> = ({ site, sourceRepositoryOwner, sourceRepositoryName }) => {
   const provider = parseAPISourceProvider(site.sourceProvider);
 
   const gitIntegration = site.gitIntegration;
@@ -35,22 +26,15 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
         sourceRepositoryName: sourceRepositoryName as string,
       },
     },
-    pause:
-      !gitIntegration?.gitProvider?.id ||
-      !sourceRepositoryName ||
-      !sourceRepositoryOwner,
+    pause: !gitIntegration?.gitProvider?.id || !sourceRepositoryName || !sourceRepositoryOwner,
   });
-  const hasBuildSettingsPermission = usePermissions({
-    action: [constants.PERMISSION.SITE.EDIT_BUILD_SETTINGS],
-  });
+  const hasBuildSettingsPermission = usePermissions({ action: [constants.PERMISSION.SITE.EDIT_BUILD_SETTINGS] });
 
   return (
     <SettingsBox.Container>
       <SettingsBox.Column>
         <SettingsBox.Title>Deploy settings</SettingsBox.Title>
-        <SettingsBox.Text>
-          Select the branch Fleek should use to deploy your project.
-        </SettingsBox.Text>
+        <SettingsBox.Text>Select the branch Fleek should use to deploy your project.</SettingsBox.Text>
       </SettingsBox.Column>
 
       {provider && site.sourceRepositoryOwner && site.sourceRepositoryName && (
@@ -82,11 +66,7 @@ export const DeployContexts: React.FC<DeployContextsProps> = ({
       </PermissionsTooltip>
 
       <SettingsBox.ActionRow>
-        <LearnMoreMessage
-          href={constants.EXTERNAL_LINK.FLEEK_DOCS_DEPLOY_CONTEXTS}
-        >
-          deploy settings
-        </LearnMoreMessage>
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_DEPLOY_CONTEXTS}>deploy settings</LearnMoreMessage>
 
         <Form.SubmitButton>Save changes</Form.SubmitButton>
       </SettingsBox.ActionRow>
@@ -99,11 +79,7 @@ type ProductionBranchFieldProps = DisabledProps<{
   isLoading: boolean;
 }>;
 
-const ProductionBranchField: React.FC<ProductionBranchFieldProps> = ({
-  isDisabled,
-  branches,
-  isLoading,
-}) => {
+const ProductionBranchField: React.FC<ProductionBranchFieldProps> = ({ isDisabled, branches, isLoading }) => {
   const field = Form.useField<string>('sourceBranch');
 
   const handleBranchSelect = (value?: string) => {
@@ -121,9 +97,7 @@ const ProductionBranchField: React.FC<ProductionBranchFieldProps> = ({
       >
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select a branch">
-              {(selected) => selected}
-            </Field>
+            <Field placeholder="Select a branch">{(selected) => selected}</Field>
 
             <Options>{(selected) => selected}</Options>
           </>
@@ -145,16 +119,10 @@ const DeployOnBranchUpdateField: React.FC<DisabledProps> = ({ isDisabled }) => {
       <FormField.Label tooltip="When enabled, Fleek will automatically trigger a deployment when a commit is pushed to the production branch.">
         Automatic Deployments On Branch Update
       </FormField.Label>
-      <Combobox
-        items={[true, false]}
-        selected={[field.value, handleSelect]}
-        isDisabled={isDisabled}
-      >
+      <Combobox items={[true, false]} selected={[field.value, handleSelect]} isDisabled={isDisabled}>
         {({ Field, Options }) => (
           <>
-            <Field placeholder="Select an option">
-              {DeployOnBranchUpdateOption}
-            </Field>
+            <Field placeholder="Select an option">{DeployOnBranchUpdateOption}</Field>
 
             <Options disableSearch>{DeployOnBranchUpdateOption}</Options>
           </>
@@ -184,11 +152,7 @@ const DeployPreviewsField: React.FC<DisabledProps> = ({ isDisabled }) => {
       <FormField.Label tooltip="When it's enabled, Fleek will build a preview when a pull request is opened to the production branch.">
         Deploy Previews
       </FormField.Label>
-      <Combobox
-        items={[true, false]}
-        selected={[field.value, handleSelect]}
-        isDisabled={isDisabled}
-      >
+      <Combobox items={[true, false]} selected={[field.value, handleSelect]} isDisabled={isDisabled}>
         {({ Field, Options }) => (
           <>
             <Field placeholder="Select an option">{DeployPreviewsOption}</Field>

@@ -92,6 +92,8 @@ export const Deployments: React.FC = () => {
                   status: lastDeploymentParsedStatus,
                 })}
                 isMostRecentDeployment={currentDeployment?.id === deployment.id}
+                siteId={siteId}
+                projectId={projectId}
               />
               {index < deployments.length - 1 && <Divider />}
             </Box>

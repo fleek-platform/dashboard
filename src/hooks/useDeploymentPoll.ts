@@ -9,10 +9,10 @@ import {
   SiteQuery,
   SiteQueryVariables,
 } from '@/generated/graphqlClient';
-import { DeploymentStatus } from '@/types/Deployment';
+import { type DeploymentStatus } from '@/types/Deployment';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 
-import { usePolling } from './usePolling';
+import { REFETCH_INTERVAL_TIMEOUT, usePolling } from './usePolling';
 
 export type UseDeploymentPollArgs = {
   deploymentId?: string;
@@ -57,14 +57,19 @@ export const useDeploymentPoll = ({
   return usePolling({
     queryKey: ['siteDeploymentPoll', { deploymentId }],
     queryFn,
+    // TODO: What is this trying to do?
+    // notice it sets to false on a previewImageUrl
     stopCondition: (data) => {
-      if (!data?.previewImageUrl) {
-        return false;
-      }
-
       const status = parseAPIDeploymentStatus(data?.status);
+      const hasStatus = COMPLETED_STATUSES.has(status);
 
-      return COMPLETED_STATUSES.has(status);
+      // TODO: This is suspicious, why would a "stopCondition"
+      // have an early return if "previewImageUrl" is falsely?
+      // if (!data?.previewImageUrl) {
+      //   return false;
+      // }
+
+      return hasStatus;
     },
     onStoppedPolling: async (data) => {
       if (data && parseAPIDeploymentStatus(data.status) === 'success') {
@@ -77,7 +82,7 @@ export const useDeploymentPoll = ({
         );
       }
     },
-    refetchInterval: 2_000,
+    refetchInterval: REFETCH_INTERVAL_TIMEOUT,
     options: {
       refetchIntervalInBackground: true,
     },

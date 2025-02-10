@@ -20,6 +20,8 @@ type UsePollingArgs<TQueryFnData, TError, TQueryKey extends QueryKey> = {
   >;
 };
 
+export const REFETCH_INTERVAL_TIMEOUT = 10_000;
+
 export const usePolling = <
   TQueryFnData,
   TError = unknown,
@@ -30,14 +32,15 @@ export const usePolling = <
   stopCondition,
   onFinishedCallback = () => {},
   onStoppedPolling = () => {},
-  refetchInterval = 3_000,
+  refetchInterval = REFETCH_INTERVAL_TIMEOUT,
   options,
-}: UsePollingArgs<TQueryFnData, TError, TQueryKey>): UseQueryResult<
-  TQueryFnData,
-  TError
-> => {
+}: UsePollingArgs<TQueryFnData, TError, TQueryKey>): [
+  UseQueryResult<TQueryFnData, TError>,
+  (arg: boolean) => void,
+] => {
   const [shouldStop, setShouldStop] = useState(false);
   const [hasPolled, setHasPolled] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   const wrappedQueryFn = useCallback(
     async (...args: Parameters<typeof queryFn>) => {
@@ -61,13 +64,17 @@ export const usePolling = <
       return data;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [queryFn, stopCondition],
+    [queryFn, stopCondition, enabled],
   );
 
-  return useQuery({
-    queryKey,
-    queryFn: wrappedQueryFn,
-    refetchInterval: shouldStop ? undefined : refetchInterval,
-    ...options,
-  });
+  return [
+    useQuery({
+      queryKey,
+      queryFn: wrappedQueryFn,
+      refetchInterval,
+      enabled,
+      ...options,
+    }),
+    setEnabled,
+  ];
 };

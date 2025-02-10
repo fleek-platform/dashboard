@@ -3,6 +3,7 @@ import { UseQueryState } from 'urql';
 
 import { AlertBox } from '@/components';
 import { DeploymentStatus, StorageType } from '@/generated/graphqlClient';
+import { useRouter } from '@/hooks/useRouter';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Site } from '@/types/Site';
@@ -28,6 +29,11 @@ export const RecentDeploy: React.FC<RecentDeployProps> = ({
   siteQuery,
   onRedeploy,
 }) => {
+  const router = useRouter();
+
+  const siteId = router.query.siteId!;
+  const projectId = router.query.projectId!;
+
   const mockedDeployment = useMockedDeployment(siteQuery.data?.site);
 
   const recentDeploy = siteQuery.data?.site.lastDeployment;
@@ -47,6 +53,8 @@ export const RecentDeploy: React.FC<RecentDeployProps> = ({
         Recent Deployment
       </Text>
       <Deploy
+        projectId={projectId}
+        siteId={siteId}
         deployment={recentDeploy || mockedDeployment}
         onRedeploy={handleRedeploy}
         isSelfManaged={isSelfManaged}

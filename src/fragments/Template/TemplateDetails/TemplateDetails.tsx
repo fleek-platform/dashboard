@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 import { ExternalLink } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { LoadingProps } from '@/types/Props';
@@ -11,10 +13,7 @@ import { TemplateDetailsStyles as S } from './TemplateDetails.styles';
 
 export type TemplateDetailsProps = LoadingProps<{ template: Template }>;
 
-export const TemplateDetails: React.FC<TemplateDetailsProps> = ({
-  isLoading,
-  template,
-}) => {
+export const TemplateDetails: React.FC<TemplateDetailsProps> = ({ isLoading, template }) => {
   const [meQuery] = useMeQuery();
 
   if (isLoading) {
@@ -30,37 +29,18 @@ export const TemplateDetails: React.FC<TemplateDetailsProps> = ({
         <TemplateDetail
           label="Creation date"
           iconName="calendar"
-          value={dateFormat({
-            dateISO: template.createdAt,
-            stringFormat: 'LLLL, dd, y',
-          })}
+          value={dateFormat({ dateISO: template.createdAt, format: DateTime.DATE_FULL })}
         />
         <S.Item.Divider />
-        <TemplateDetail
-          label="Deployments"
-          iconName="analytics"
-          value={`${template.usageCount}`}
-        />
+        <TemplateDetail label="Deployments" iconName="analytics" value={`${template.usageCount}`} />
         <S.Item.Divider />
-        <TemplateDetail
-          label="Framework"
-          iconName="code"
-          value={firstLetterUpperCase(template.framework?.name || 'Other')}
-        />
+        <TemplateDetail label="Framework" iconName="code" value={firstLetterUpperCase(template.framework?.name || 'Other')} />
         <S.Item.Divider />
-        <TemplateDetail
-          label="Category"
-          iconName="deploy"
-          value={firstLetterUpperCase(template.category.name)}
-        />
+        <TemplateDetail label="Category" iconName="deploy" value={firstLetterUpperCase(template.category.name)} />
         <S.Item.Divider />
         <ExternalLink
           variant="danger"
-          href={getLinkForTemplateReport({
-            templateId: template.id,
-            name: template.name,
-            userEmail: meQuery.data?.user.email,
-          })}
+          href={getLinkForTemplateReport({ templateId: template.id, name: template.name, userEmail: meQuery.data?.user.email })}
         >
           Report template for abuse
         </ExternalLink>
@@ -86,12 +66,7 @@ const TemplateDetailsSkeleton: React.FC = () => (
   </S.Container>
 );
 
-const TemplateDetail: React.FC<TemplateDetailProps> = ({
-  isLoading,
-  iconName,
-  label,
-  value,
-}) => {
+const TemplateDetail: React.FC<TemplateDetailProps> = ({ isLoading, iconName, label, value }) => {
   if (isLoading) {
     return (
       <S.Item.Container className="flex-row">

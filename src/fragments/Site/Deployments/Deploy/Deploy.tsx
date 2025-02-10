@@ -1,8 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
-import { useDeploymentPoll } from '@/hooks/useDeploymentPoll';
-import { useRouter } from '@/hooks/useRouter';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Skeleton, Text } from '@/ui';
@@ -20,6 +18,8 @@ export type DeployProps = {
   canRedeploy: boolean;
   isMostRecentDeployment?: boolean;
   className?: string;
+  siteId: string;
+  projectId: string;
 } & Pick<DropdownMenuProps, 'onRedeploy'>;
 
 export const Deploy: React.FC<DeployProps> = ({
@@ -29,33 +29,26 @@ export const Deploy: React.FC<DeployProps> = ({
   canRedeploy,
   isMostRecentDeployment = false,
   className,
+  siteId,
+  projectId,
 }) => {
-  const router = useRouter();
-  const siteId = router.query.siteId!;
-
-  const deploymentPoll = useDeploymentPoll({
-    deploymentId: deployment.id,
-    siteId,
-  });
-
-  if (deploymentPoll.data) {
-    deployment = deploymentPoll.data;
-  }
-
-  const projectId = router.query.projectId!;
-
   const author = deployment?.sourceAuthor && `by ${deployment.sourceAuthor}`;
 
   const environment = deployment?.previewOnly ? 'Preview' : 'Production';
 
-  return (
-    <ItemRow className={className}>
-      <Link
-        href={routes.project.site.deployments.detail({
+  const deploymentDetailUrl =
+    projectId && siteId
+      ? routes.project.site.deployments.detail({
           projectId,
           siteId,
           deploymentId: deployment.id,
-        })}
+        })
+      : '#';
+
+  return (
+    <ItemRow className={className}>
+      <Link
+        href={deploymentDetailUrl}
         className={cn('grid gap-4 sm:gap-8 justify-between w-full', {
           'sm:[grid-template-columns:2fr_2.5fr_0.5fr]': isSelfManaged,
           'sm:[grid-template-columns:1.5fr_1.5fr_2.5fr_1fr]': !isSelfManaged,

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { BadgeText, PreviewImage } from '@/components';
 import { SiteOverviewBox } from '@/components';
@@ -37,7 +37,7 @@ export const DeploymentOverview: React.FC = () => {
   let deployment = deploymentQuery.data?.deployment;
   const site = siteQuery.data?.site;
 
-  const deploymentPoll = useDeploymentPoll({
+  const [deploymentPoll, setEnabled] = useDeploymentPoll({
     deploymentId: deployment?.id,
     siteId,
   });
@@ -49,6 +49,18 @@ export const DeploymentOverview: React.FC = () => {
   const parsedStatus = parseAPIDeploymentStatus(
     deploymentQuery.data?.deployment.status,
   );
+
+  const disablePollingOnStatusList = ['cancelled', 'failed', 'success'];
+
+  useEffect(() => {
+    if (disablePollingOnStatusList.includes(parsedStatus)) {
+      setEnabled(false);
+
+      return;
+    }
+
+    setEnabled(true);
+  }, [parsedStatus]);
 
   const repositoryOwner = deployment?.sourceRepositoryOwner;
   const provider = parseAPISourceProvider(deployment?.sourceProvider);

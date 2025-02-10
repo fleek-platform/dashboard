@@ -57,7 +57,7 @@ export const MigrationProvider: React.FC<ChildrenProps> = ({ children }) => {
   ] = useCreateMigrationRequestsFromTokenMutation();
   const [, refetchProjectsQuery] = useProjectsQuery();
 
-  const polledMigrationsResult = usePollMigrationRequests({
+  const [polledMigrationsResult] = usePollMigrationRequests({
     migrationRequestIds: createdMigrationRequests.map(
       (migrationRequest) => migrationRequest.id,
     ),
