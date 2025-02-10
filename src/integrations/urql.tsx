@@ -1031,8 +1031,6 @@ export const createUrqlClient = ({
           );
 
           if (isAuthError) {
-                    console.log(`[debug] urql.tsx: isautherror:: 1`)
-
             logout();
           }
         },

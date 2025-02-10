@@ -1,6 +1,4 @@
 export const getTopLevelDomain = (url: string) => {
-  console.log(`[debug] url: getTopLevelDomain: 1`)
-
   if (!url) {
     // eslint-disable-next-line fleek-custom/no-default-error
     throw Error('Oops! Invalid URL');
@@ -15,7 +13,6 @@ export const getTopLevelDomain = (url: string) => {
     // staging -> staging.fleeksandbox.xyz
     // production -> app.fleek.xyz
     const topLevelDomain = hostname.split('.').slice(-2).join('.');
-console.log(`[debug] url: topLevelDomain = ${topLevelDomain}`)
     return topLevelDomain;
   } catch (e) {
     // eslint-disable-next-line fleek-custom/no-default-error
