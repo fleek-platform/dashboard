@@ -12,10 +12,8 @@ import { Form } from '../Form/Form';
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';
 import { Modal } from '../Modal/Modal';
 import { ProjectField } from '../ProjectField/ProjectField';
-import {
-  useAuthProviders,
-} from '@/hooks/useAuthProviders';
-  
+import { useAuthProviders } from '@/hooks/useAuthProviders';
+
 export const CreateProject: React.FC = () => {
   const { isCreateProjectModalOpen: isModalOpen, setIsCreateProjectModalOpen } =
     useProjectContext();
@@ -48,7 +46,9 @@ export const CreateProject: React.FC = () => {
             );
           }
 
-          const accessToken = await providers.dynamic.requestAccessToken(data.createProject.id);
+          const accessToken = await providers.dynamic.requestAccessToken(
+            data.createProject.id,
+          );
 
           cookies.set('accessToken', accessToken);
           cookies.set('projectId', data.createProject.id);
