@@ -43,7 +43,7 @@
     "@ensdomains/content-hash": "^3.0.0",
     "@fleek-platform/errors": "^2.7.0",
     "@fleek-platform/sdk": "^3.5.4",
-    "@fleek-platform/utils-permissions": "^1.0.0",
+    "@fleek-platform/utils-permissions": "^1.0.1",
     "@fleek-platform/utils-token": "^0.2.2",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
