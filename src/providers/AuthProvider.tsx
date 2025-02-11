@@ -105,7 +105,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     [providersValues, requestAccessToken],
   );
 
-  useEffect(() => {
+  useEffect(() => {    
     if (!authenticatedProvider && cookies.values.accessToken) {
       logout();
 
@@ -117,6 +117,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+
+    // TODO: check
+    if (!projectId && !cookies.values.accessToken) {
+      return;
+    }
 
     // redirect if is in home page
     if (router.pathname === routes.home()) {
@@ -139,13 +144,23 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       requestAccessToken(authenticatedProvider);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticatedProvider]);
+  }, [authenticatedProvider, cookies.values.accessToken]);
 
   useEffect(() => {
+    console.log(`[debug] AuthProvider: dep cookies: 1`)
     const { accessToken, authToken, projectId } = cookies.values;
+    console.log(`[debug] AuthProvider: dep cookies: ${
+      JSON.stringify({
+        accessToken,
+        authToken,
+        projectId,
+      })
+    }`)
 
     try {
       if (!accessToken && !authToken && !projectId) {
+        console.log(`[debug] AuthProvider: dep cookies: 2`)
+
         if (!isServerSide() && router.pathname !== routes.home()) {
           const invitationHash = router.query.invitation;
           const homeRoute = routes.home();

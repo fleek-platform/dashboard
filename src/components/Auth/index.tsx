@@ -2,10 +2,11 @@
 
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { constants } from '../../constants';
 import { matchesPathname } from '../../utils/matchesPathname';
 import { FleekLogo } from '../FleekLogo/FleekLogo';
+import { useCookies } from '@/providers/CookiesProvider';
 
 import type { FC, ReactNode } from 'react';
 
@@ -15,44 +16,35 @@ interface AuthProps {
 
 export const Auth: FC<AuthProps> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
+  const cookies =  useCookies();
 
   useEffect(() => {
-    const checkAuth = () => {
-      const authToken = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('authToken='))
-        ?.split('=')[1];
-      const projectId =
-        document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('projectId='))
-          ?.split('=')[1] || constants.DEFAULT_PROJECT_ID;
-      const hasAuthentication = Boolean(authToken);
-      const currentPath = window.location.pathname;
+    setIsChecking(true);
+    
+    const authToken = cookies.values.authToken;
+    const projectId = cookies.values.projectId;
+    const accessToken = cookies.values.accessToken;
 
-      if (hasAuthentication && currentPath === routes.home()) {
-        router.push(routes.project.home({ projectId }));
+    const hasAuthentication = authToken && accessToken;
 
-        setIsChecking(false);
-        return;
-      }
-
-      const isPublicRoute = Boolean(
-        constants.PUBLIC_ROUTES.find((route) =>
-          matchesPathname(route, currentPath),
-        ),
-      );
-
-      if (!hasAuthentication && !isPublicRoute) {
-        router.push(routes.home());
-      }
-
+    if (!hasAuthentication) {
+      router.push(routes.home());
       setIsChecking(false);
-    };
 
-    checkAuth();
-  }, [router]);
+      return;
+    }
+
+    if (pathname === routes.home()) {
+      router.push(routes.project.home({ projectId }));
+      setIsChecking(false);
+
+      return;
+    }
+
+    setIsChecking(false);
+  }, [router, cookies.values]);
 
   if (isChecking) {
     // TODO: place the common loading here

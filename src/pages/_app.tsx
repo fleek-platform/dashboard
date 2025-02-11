@@ -35,6 +35,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     );
   }, []);
 
+  // TODO: maintenance mode not working
   if (maintenanceMode) {
     return <Maintenance.Page />;
   }
@@ -52,7 +53,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       )}
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         <Auth>
-          <h1>{noCanonical}</h1>
           {getLayout(<Component {...pageProps} />)}
           <ToastsContainer />
           <FeedbackModal />
