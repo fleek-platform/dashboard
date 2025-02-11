@@ -26,6 +26,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
   - [Branch Deployment Matrix](#branch-deployment-matrix)
   - [Distribution](#distribution)
   - [Build](#build)
+  - [Preview build](#preview-build)
 * [⚡️ Performance](#performance)
   - [React Performance checks](#react-performance-checks)
 * [💍 Tests](#Tests)
@@ -208,6 +209,16 @@ out
 > The build process requires the environment variables to be populated. If you're building the project locally, you should create a .env.production, otherwise it'll fail to locate the environment variables.
 
 The output directory is where all public files are stored and published.
+
+### Preview build
+
+To preview the build locally, you can run the command:
+
+```sh
+pnpm preview:build
+```
+
+A HTTP server will serve the build output.
 
 ### Code Format
 
