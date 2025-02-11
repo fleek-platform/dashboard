@@ -163,7 +163,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, []);
 
   useEffect(() => {
-    if (!cookies.values.accessToken) {
+    if (!cookies.values.accessToken || !cookies.values.projectId) {
       return;
     }
 
@@ -192,7 +192,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       updatedAt: '',
     };
 
-    if (!data) {
+    if (!data || !cookies.values.projectId) {
       return defaultProject;
     }
 

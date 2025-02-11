@@ -26,6 +26,8 @@ const HomePage: Page = () => {
   const invitationHashQueryParam = router.query.invitation;
   const projectId = router.query.projectId!;
 
+  console.log(`[debug] pages/projects/[projectId]/home.tsx: 1: projectId = ${projectId}`)
+
   // fetch invitation data from hash (when a user is invited through link)
   const [invitationQuery, refetchInvitationQuery] = useInvitationQuery({
     variables: { where: { hash: invitationHashQueryParam || '' } },

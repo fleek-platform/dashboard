@@ -20,6 +20,7 @@ import {
   Text,
 } from '@/ui';
 import { cn } from '@/utils/cn';
+import { useLogout } from '@/hooks/useLogout';
 
 type AccountDropdownAvatarProps = {
   userId: MeQuery['user']['id'] | undefined;
@@ -59,6 +60,7 @@ export const AccountDropdown: React.FC = () => {
   const auth = useAuthContext();
   const projectContext = useProjectContext();
   const { primaryWallet } = useDynamicContext();
+  const { logout } = useLogout();
 
   const { data: ensName } = useEnsName({
     address: primaryWallet?.address as `0x${string}`,
@@ -83,6 +85,12 @@ export const AccountDropdown: React.FC = () => {
       isAvatarLoading,
     [meQuery, projectContext, isAvatarLoading],
   );
+
+  const disconnectHandler = () => {
+    console.log(`[debug] disconnectHandler: 1`)
+
+    logout();
+  }
 
   if (isLoading) {
     return (
@@ -146,7 +154,7 @@ export const AccountDropdown: React.FC = () => {
             Fleek homepage
           </SidebarDropdown.Item>
           <SidebarDropdown.Separator />
-          <SidebarDropdown.Item onClick={session.auth.logout} iconRight="exit">
+          <SidebarDropdown.Item onClick={disconnectHandler} iconRight="exit">
             Disconnect
           </SidebarDropdown.Item>
         </Box>
