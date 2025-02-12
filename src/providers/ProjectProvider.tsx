@@ -1,6 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { constants } from '@/constants';
 import {
@@ -36,6 +37,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const auth = useAuthContext();
   const router = useRouter();
+  const pathname = usePathname();
   const cookies = useCookies();
   const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
     pause: !auth.accessToken,
@@ -102,6 +104,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
       const redirect = async () => {
         const shouldRedirect = router.pathname === routes.home();
+
         if (shouldRedirect) {
           // keep query on redirect
           router.push({
@@ -110,7 +113,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
           });
         }
 
-        const isProjectRoute = router.pathname.includes('[projectId]');
+        const isProjectRoute = pathname.includes('[projectId]');
 
         if (isProjectRoute) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -167,7 +170,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       return;
     }
 
-    if (router.pathname === routes.home()) {
+    if (pathname === routes.home()) {
       const { projectId } = cookies.values;
       // keep query on redirect
       router.push({

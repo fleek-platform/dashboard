@@ -1,5 +1,3 @@
-#!/usr/bin/env bun
-
 const port = 3003;
 
 // TODO: Check if out distribution directory is populated

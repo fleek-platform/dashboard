@@ -1,3 +1,5 @@
+'use client';
+
 import '@/styles/globals.css';
 
 import LogRocket from 'logrocket';
@@ -11,12 +13,17 @@ import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
+import { useRouter } from '@/hooks/useRouter';
+import { usePathname } from 'next/navigation';
+import { isServerSide } from '@/utils/isServerSide';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
   const [noCanonical, setNoCanonical] = useState(false);
   const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (secrets.TEST_MODE) {
@@ -39,6 +46,13 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   if (maintenanceMode) {
     return <Maintenance.Page />;
   }
+
+  // Client-side router for page refresh
+  // otherwise, single page app will fail to locate pages
+  useEffect(() => {
+    if (!isServerSide()) return;
+    router.push(pathname);
+  }, []);
 
   return (
     <>

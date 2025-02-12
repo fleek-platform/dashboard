@@ -7,8 +7,13 @@ export const useLogout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (cookies.values.accessToken || cookies.values.authToken || router.pathname.includes('/projects')) return;
-      cookies.remove('projectId');
+    if (
+      cookies.values.accessToken ||
+      cookies.values.authToken ||
+      router.pathname.includes('/projects')
+    )
+      return;
+    cookies.remove('projectId');
   }, [cookies.values.accessToken, cookies.values.authToken, router.pathname]);
 
   const handleLogout = () => {

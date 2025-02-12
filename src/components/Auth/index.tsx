@@ -18,11 +18,11 @@ export const Auth: FC<AuthProps> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
-  const cookies =  useCookies();
+  const cookies = useCookies();
 
   useEffect(() => {
     setIsChecking(true);
-    
+
     const authToken = cookies.values.authToken;
     const projectId = cookies.values.projectId;
     const accessToken = cookies.values.accessToken;

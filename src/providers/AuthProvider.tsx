@@ -11,6 +11,7 @@ import {
 } from '@/hooks/useAuthProviders';
 import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
+import { usePathname } from 'next/navigation';
 import { createContext } from '@/utils/createContext';
 import { isServerSide } from '@/utils/isServerSide';
 
@@ -44,6 +45,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
+
+  const pathname = usePathname();
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
@@ -105,7 +108,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     [providersValues, requestAccessToken],
   );
 
-  useEffect(() => {    
+  useEffect(() => {
     if (!authenticatedProvider && cookies.values.accessToken) {
       logout();
 
@@ -124,7 +127,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     // redirect if is in home page
-    if (router.pathname === routes.home()) {
+    if (pathname === routes.home()) {
       // keep query on redirect
       router.push({
         pathname: routes.project.home({ projectId }),
@@ -147,20 +150,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, [authenticatedProvider, cookies.values.accessToken]);
 
   useEffect(() => {
-    console.log(`[debug] AuthProvider: dep cookies: 1`)
     const { accessToken, authToken, projectId } = cookies.values;
-    console.log(`[debug] AuthProvider: dep cookies: ${
-      JSON.stringify({
-        accessToken,
-        authToken,
-        projectId,
-      })
-    }`)
 
     try {
       if (!accessToken && !authToken && !projectId) {
-        console.log(`[debug] AuthProvider: dep cookies: 2`)
-
         if (!isServerSide() && router.pathname !== routes.home()) {
           const invitationHash = router.query.invitation;
           const homeRoute = routes.home();
@@ -179,11 +172,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         // TODO: get accessToken
       }
 
+      // TODO: This can be removed?
       if (!accessToken) {
-        console.error(
-          `Expected to have an accessToken but got ${typeof accessToken}`,
-        );
-
         return;
       }
 
