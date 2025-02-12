@@ -18,7 +18,7 @@ export const useAsync = () => {
         setError(null);
         try {
           setLoading(true);
-          const result = await fn(...args);
+          const result = await fn(...(args as unknown[]));
 
           return result;
         } catch (e: any) {

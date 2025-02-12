@@ -56,7 +56,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       query[key] = value;
     }
 
-    router.push({pathname, query});
+    router.push({ pathname, query });
   }, []);
 
   return (
