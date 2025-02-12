@@ -1,3 +1,5 @@
+'use client'
+
 import '@/styles/globals.css';
 
 import LogRocket from 'logrocket';
@@ -11,12 +13,17 @@ import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
+import IpfsPage from '@/pages/ipfs';
+import { useRouter } from '@/hooks/useRouter';
+import { usePathname } from 'next/navigation';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
   const [noCanonical, setNoCanonical] = useState(false);
   const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (secrets.TEST_MODE) {
@@ -40,6 +47,8 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     return <Maintenance.Page />;
   }
 
+  console.log(`[debug] _app.tsx: router.pathname = ${router.pathname}, pathname = ${pathname}`)
+
   return (
     <>
       {!noCanonical && (
@@ -53,13 +62,65 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       )}
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         <Auth>
-          {getLayout(<Component {...pageProps} />)}
+          {
+            pathname && pathname.startsWith('/ipfs')
+            ? getLayout(<IpfsPage {...pageProps} />)
+            : getLayout(<Component {...pageProps} />)
+          }
           <ToastsContainer />
           <FeedbackModal />
         </Auth>
       </Providers>
     </>
   );
+
+  // return (
+  //   <>
+  //     {!noCanonical && (
+  //       <Head>
+  //         <link
+  //           rel="canonical"
+  //           href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+  //           key="canonical"
+  //         />
+  //       </Head>
+  //     )}
+  //     <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
+  //       <Auth>
+  //         {
+  //           pathname && pathname.startsWith('/ipfs')
+  //           ? getLayout(<IpfsPage {...pageProps} />)
+  //           : getLayout(<Component {...pageProps} />)
+  //         }
+  //         <ToastsContainer />
+  //         <FeedbackModal />
+  //       </Auth>
+  //     </Providers>
+  //   </>
+  // );
+
+  // return (
+  //   <>
+  //     {!noCanonical && (
+  //       <Head>
+  //         <link
+  //           rel="canonical"
+  //           href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+  //           key="canonical"
+  //         />
+  //       </Head>
+  //     )}
+  //     <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
+  //       <Auth>
+  //         {
+  //           getLayout(<IpfsPage {...pageProps} />)
+  //         }
+  //         <ToastsContainer />
+  //         <FeedbackModal />
+  //       </Auth>
+  //     </Providers>
+  //   </>
+  // );
 };
 
 export default App;

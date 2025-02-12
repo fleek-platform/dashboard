@@ -30,6 +30,7 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     const hasAuthentication = authToken && accessToken;
 
     if (!hasAuthentication) {
+      console.log(`[debug] Auth: !hasAuthentication`)
       router.push(routes.home());
       setIsChecking(false);
 
@@ -37,6 +38,8 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     }
 
     if (pathname === routes.home()) {
+      console.log(`[debug] Auth: pathname === routes.home()`)
+
       router.push(routes.project.home({ projectId }));
       setIsChecking(false);
 

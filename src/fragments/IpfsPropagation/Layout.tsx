@@ -53,11 +53,12 @@ export const IpfsPropagationLayout: React.FC<ChildrenProps> = ({
 };
 
 const Content: React.FC<ChildrenProps> = ({ children }) => {
-  const session = useSessionContext();
+  // const session = useSessionContext();
 
-  if (session.auth.accessToken) {
-    return <App.Content>{children}</App.Content>;
-  }
+  // TODO: What was the original author planning here?
+  // if (session.auth.accessToken) {
+  //   return <App.Content>{children}</App.Content>;
+  // }
 
   return <App.Content>{children}</App.Content>;
 };

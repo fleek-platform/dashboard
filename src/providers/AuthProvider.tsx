@@ -11,6 +11,7 @@ import {
 } from '@/hooks/useAuthProviders';
 import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
+import { usePathname } from 'next/navigation';
 import { createContext } from '@/utils/createContext';
 import { isServerSide } from '@/utils/isServerSide';
 
@@ -44,6 +45,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
+
+  const pathname = usePathname();
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
@@ -105,7 +108,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     [providersValues, requestAccessToken],
   );
 
-  useEffect(() => {    
+  useEffect(() => {
+    console.log(`[debug] AuthProvider: useEffect: 1`)
     if (!authenticatedProvider && cookies.values.accessToken) {
       logout();
 
@@ -124,7 +128,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     // redirect if is in home page
-    if (router.pathname === routes.home()) {
+    if (pathname === routes.home()) {
+      console.log(`[debug] AuthProvider: useEffect: router.pathname = ${router.pathname}, pathname = ${pathname}`)
       // keep query on redirect
       router.push({
         pathname: routes.project.home({ projectId }),
@@ -134,6 +139,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
     // redirect if has a redirect url pending
     if (redirectUrl) {
+      console.log(`[debug] AuthProvider: useEffect: redirectUrl = ${redirectUrl}`)
+
       router.push(redirectUrl.replace('[projectid]', projectId));
 
       setRedirectUrl(null);
@@ -151,9 +158,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const { accessToken, authToken, projectId } = cookies.values;
     console.log(`[debug] AuthProvider: dep cookies: ${
       JSON.stringify({
-        accessToken,
-        authToken,
-        projectId,
+        accessToken: accessToken.substring(0, 3),
+        authToken: authToken.substring(0, 3),
+        projectId: projectId.substring(0, 3),
       })
     }`)
 
@@ -168,6 +175,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
           const targetUrl = invitationHash
             ? `${homeRoute}?invitation=${invitationHash}`
             : homeRoute;
+        console.log(`[debug] AuthProvider: dep cookies: targetUrl = ${targetUrl}`)
 
           window.location.href = targetUrl;
         }

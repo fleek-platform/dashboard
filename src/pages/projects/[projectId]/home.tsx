@@ -127,7 +127,7 @@ const HomePage: Page = () => {
       return new Promise((resolve) => {
         setTimeout(() => {
           toast.success({ message: 'Invitation declined' });
-
+console.log(`[debug] pages/projects/[pid]/home: accept invitation: promise : 1`)
           router.replace(routes.project.home({ projectId }));
 
           resolve(true);

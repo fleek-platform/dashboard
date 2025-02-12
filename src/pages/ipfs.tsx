@@ -10,13 +10,13 @@ export const metadata = {
 
 const IpfsPropagationPage: Page = () => {
   return (
-    <IpfsPropagation.Provider
-      publicGateways={constants.IPFS_PROPAGATION_TOOL.DEFAULT_PUBLIC_GATEWAYS}
-    >
-      <IpfsPropagation.Hero />
-      <IpfsPropagation.CreateGatewayButton />
-      <IpfsPropagation.GatewaysTable />
-    </IpfsPropagation.Provider>
+      <IpfsPropagation.Provider
+        publicGateways={constants.IPFS_PROPAGATION_TOOL.DEFAULT_PUBLIC_GATEWAYS}
+      >
+        <IpfsPropagation.Hero />
+        <IpfsPropagation.CreateGatewayButton />
+        <IpfsPropagation.GatewaysTable />
+      </IpfsPropagation.Provider>
   );
 };
 

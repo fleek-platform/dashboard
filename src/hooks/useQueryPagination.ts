@@ -24,11 +24,16 @@ export const useQueryPagination = ({
   };
 
   useEffect(() => {
+    console.log(`[debug] useQueryPagination: 1`)
     if (!matchesPathname(router.pathname, pathname)) {
       return;
     }
 
     if (page && !queryPage) {
+      console.log(`[debug] useQueryPagination: router.replace, { pathname, query: getQueryParam(page) }, undefined, {
+        shallow: true,
+      }`)
+
       router.replace({ pathname, query: getQueryParam(page) }, undefined, {
         shallow: true,
       });
