@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import '@/styles/globals.css';
 
@@ -67,9 +67,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       )}
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         <Auth>
-          {
-            getLayout(<Component {...pageProps} />)
-          }
+          {getLayout(<Component {...pageProps} />)}
           <ToastsContainer />
           <FeedbackModal />
         </Auth>

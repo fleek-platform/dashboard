@@ -87,10 +87,10 @@ export const AccountDropdown: React.FC = () => {
   );
 
   const disconnectHandler = () => {
-    console.log(`[debug] disconnectHandler: 1`)
+    console.log(`[debug] disconnectHandler: 1`);
 
     logout();
-  }
+  };
 
   if (isLoading) {
     return (

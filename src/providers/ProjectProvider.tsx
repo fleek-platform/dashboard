@@ -37,7 +37,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const auth = useAuthContext();
   const router = useRouter();
-  const pathname =usePathname();
+  const pathname = usePathname();
   const cookies = useCookies();
   const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
     pause: !auth.accessToken,
@@ -93,7 +93,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     //   return;
     // }
 
-    const changeProject = async (newProjectId: string) => {      
+    const changeProject = async (newProjectId: string) => {
       const allowedProject = projects.find(
         (project) => project.id === newProjectId,
       );
