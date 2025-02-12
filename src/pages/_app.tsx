@@ -50,7 +50,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   // Client-side router for page refresh
   // otherwise, single page app will fail to locate pages
   useEffect(() => {
-    if (!isServerSide()) return;
+    // if (!isServerSide()) return;
     router.push(pathname);
   }, []);
 
