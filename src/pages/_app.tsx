@@ -15,6 +15,7 @@ import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
+import { isServerSide } from '@/utils/isServerSide';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -49,6 +50,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   // Client-side router for page refresh
   // otherwise, single page app will fail to locate pages
   useEffect(() => {
+    if (!isServerSide()) return;
     router.push(pathname);
   }, []);
 

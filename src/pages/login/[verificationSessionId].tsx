@@ -25,7 +25,6 @@ const LoginWithSessionPage: Page = () => {
   };
 
   const handleRedirect = useCallback(() => {
-    console.log(`[debug] pages/login/verificationSessionId: 1`)
     return router.replace(
       routes.project.home({ projectId: session.project.id }),
     );

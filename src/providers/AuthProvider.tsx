@@ -109,7 +109,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
-    console.log(`[debug] AuthProvider: useEffect: 1`)
     if (!authenticatedProvider && cookies.values.accessToken) {
       logout();
 
@@ -129,7 +128,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
     // redirect if is in home page
     if (pathname === routes.home()) {
-      console.log(`[debug] AuthProvider: useEffect: router.pathname = ${router.pathname}, pathname = ${pathname}`)
       // keep query on redirect
       router.push({
         pathname: routes.project.home({ projectId }),
@@ -139,8 +137,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
     // redirect if has a redirect url pending
     if (redirectUrl) {
-      console.log(`[debug] AuthProvider: useEffect: redirectUrl = ${redirectUrl}`)
-
       router.push(redirectUrl.replace('[projectid]', projectId));
 
       setRedirectUrl(null);
@@ -154,20 +150,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, [authenticatedProvider, cookies.values.accessToken]);
 
   useEffect(() => {
-    console.log(`[debug] AuthProvider: dep cookies: 1`)
     const { accessToken, authToken, projectId } = cookies.values;
-    console.log(`[debug] AuthProvider: dep cookies: ${
-      JSON.stringify({
-        accessToken: accessToken.substring(0, 3),
-        authToken: authToken.substring(0, 3),
-        projectId: projectId.substring(0, 3),
-      })
-    }`)
 
     try {
       if (!accessToken && !authToken && !projectId) {
-        console.log(`[debug] AuthProvider: dep cookies: 2`)
-
         if (!isServerSide() && router.pathname !== routes.home()) {
           const invitationHash = router.query.invitation;
           const homeRoute = routes.home();
@@ -175,7 +161,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
           const targetUrl = invitationHash
             ? `${homeRoute}?invitation=${invitationHash}`
             : homeRoute;
-        console.log(`[debug] AuthProvider: dep cookies: targetUrl = ${targetUrl}`)
 
           window.location.href = targetUrl;
         }
@@ -187,11 +172,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         // TODO: get accessToken
       }
 
+      // TODO: This can be removed?
       if (!accessToken) {
-        console.error(
-          `Expected to have an accessToken but got ${typeof accessToken}`,
-        );
-
         return;
       }
 
