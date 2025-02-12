@@ -86,12 +86,6 @@ export const AccountDropdown: React.FC = () => {
     [meQuery, projectContext, isAvatarLoading],
   );
 
-  const disconnectHandler = () => {
-    console.log(`[debug] disconnectHandler: 1`);
-
-    logout();
-  };
-
   if (isLoading) {
     return (
       <Box className="flex-row items-center gap-3 h-7 px-3 py-1">
@@ -154,7 +148,7 @@ export const AccountDropdown: React.FC = () => {
             Fleek homepage
           </SidebarDropdown.Item>
           <SidebarDropdown.Separator />
-          <SidebarDropdown.Item onClick={disconnectHandler} iconRight="exit">
+          <SidebarDropdown.Item onClick={() => logout()} iconRight="exit">
             Disconnect
           </SidebarDropdown.Item>
         </Box>
