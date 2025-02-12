@@ -93,9 +93,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     //   return;
     // }
 
-    const changeProject = async (newProjectId: string) => {
-      console.log(`[debug] ProjectProvider: changeProject: 1`)
-      
+    const changeProject = async (newProjectId: string) => {      
       const allowedProject = projects.find(
         (project) => project.id === newProjectId,
       );
@@ -105,15 +103,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       const redirect = async () => {
-        console.log(`[debug] ProjectProvider: changeProject: redirect: 1: ${JSON.stringify({
-          pathname,
-          routesHome: routes.home(),
-          routerPathname: router.pathname,
-        })}`);
-
         const shouldRedirect = router.pathname === routes.home();
-
-        console.log(`[debug] ProjectProvider: changeProject: redirect: shouldRedirect = ${shouldRedirect}`)
 
         if (shouldRedirect) {
           // keep query on redirect
@@ -126,8 +116,6 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
         const isProjectRoute = pathname.includes('[projectId]');
 
         if (isProjectRoute) {
-                  console.log(`[debug] ProjectProvider: changeProject: redirect: isProjectRoute = ${isProjectRoute}`)
-
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { page, ...parsedProjectQueryRoute } = router.query;
 
@@ -183,7 +171,6 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
 
     if (pathname === routes.home()) {
-      console.log(`[debug] ProjectProvider: useEffect: cookie accessstoken+projectId: pathname equals home`)
       const { projectId } = cookies.values;
       // keep query on redirect
       router.push({
