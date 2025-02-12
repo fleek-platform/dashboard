@@ -14,7 +14,7 @@ import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { useRouter } from '@/hooks/useRouter';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { isServerSide } from '@/utils/isServerSide';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
@@ -24,6 +24,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (secrets.TEST_MODE) {
@@ -50,8 +51,12 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   // Client-side router for page refresh
   // otherwise, single page app will fail to locate pages
   useEffect(() => {
-    // if (!isServerSide()) return;
-    router.push(pathname);
+    const query = {};
+    for (const [key, value] of searchParams) {
+      query[key] = value;
+    }
+
+    router.push({pathname, query});
   }, []);
 
   return (
