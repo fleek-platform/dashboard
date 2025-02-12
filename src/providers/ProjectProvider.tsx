@@ -105,9 +105,13 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       const redirect = async () => {
-        console.log(`[debug] ProjectProvider: changeProject: redirect: 1`)
+        console.log(`[debug] ProjectProvider: changeProject: redirect: 1: ${JSON.stringify({
+          pathname,
+          routesHome: routes.home(),
+          routerPathname: router.pathname,
+        })}`);
 
-        const shouldRedirect = pathname === routes.home();
+        const shouldRedirect = router.pathname === routes.home();
 
         console.log(`[debug] ProjectProvider: changeProject: redirect: shouldRedirect = ${shouldRedirect}`)
 

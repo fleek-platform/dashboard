@@ -13,7 +13,6 @@ import { Providers } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
-import IpfsPage from '@/pages/ipfs';
 import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
 
@@ -47,7 +46,11 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     return <Maintenance.Page />;
   }
 
-  console.log(`[debug] _app.tsx: router.pathname = ${router.pathname}, pathname = ${pathname}`)
+  // Client-side router for page refresh
+  // otherwise, single page app will fail to locate pages
+  useEffect(() => {
+    router.push(pathname);
+  }, []);
 
   return (
     <>
@@ -63,9 +66,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         <Auth>
           {
-            pathname && pathname.startsWith('/ipfs')
-            ? getLayout(<IpfsPage {...pageProps} />)
-            : getLayout(<Component {...pageProps} />)
+            getLayout(<Component {...pageProps} />)
           }
           <ToastsContainer />
           <FeedbackModal />
@@ -73,54 +74,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       </Providers>
     </>
   );
-
-  // return (
-  //   <>
-  //     {!noCanonical && (
-  //       <Head>
-  //         <link
-  //           rel="canonical"
-  //           href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
-  //           key="canonical"
-  //         />
-  //       </Head>
-  //     )}
-  //     <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
-  //       <Auth>
-  //         {
-  //           pathname && pathname.startsWith('/ipfs')
-  //           ? getLayout(<IpfsPage {...pageProps} />)
-  //           : getLayout(<Component {...pageProps} />)
-  //         }
-  //         <ToastsContainer />
-  //         <FeedbackModal />
-  //       </Auth>
-  //     </Providers>
-  //   </>
-  // );
-
-  // return (
-  //   <>
-  //     {!noCanonical && (
-  //       <Head>
-  //         <link
-  //           rel="canonical"
-  //           href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
-  //           key="canonical"
-  //         />
-  //       </Head>
-  //     )}
-  //     <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
-  //       <Auth>
-  //         {
-  //           getLayout(<IpfsPage {...pageProps} />)
-  //         }
-  //         <ToastsContainer />
-  //         <FeedbackModal />
-  //       </Auth>
-  //     </Providers>
-  //   </>
-  // );
 };
 
 export default App;
