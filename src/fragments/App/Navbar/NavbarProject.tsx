@@ -37,7 +37,7 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const deploymentId = router.query.deploymentId!;
 
   const [projectsQuery] = useProjectsQuery({
-    pause: !projectContext.accessTokenProjectId,
+    pause: !projectContext.project.id,
     variables: {},
   });
   const [siteQuery] = useSiteQuery({

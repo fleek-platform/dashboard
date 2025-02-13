@@ -2,7 +2,6 @@ import { routes } from '@fleek-platform/utils-routes';
 import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useCallback, useEffect, useState } from 'react';
 
-import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
   AuthProviders,
@@ -51,9 +50,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
-  const authenticatedProvider = providersValues.find(
-    (provider) => provider.authToken,
-  );
   const router = useRouter();
 
   const login = useCallback(
