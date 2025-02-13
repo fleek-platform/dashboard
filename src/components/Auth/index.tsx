@@ -37,6 +37,7 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     }
 
     if (pathname === routes.home()) {
+      console.log(`[debug] components/Auth: useEffect: pathname === home: 1`)
       router.push(routes.project.home({ projectId }));
       setIsChecking(false);
 

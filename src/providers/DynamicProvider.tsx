@@ -9,6 +9,9 @@ import { useMeQuery, useUpdateUserMutation } from '@/generated/graphqlClient';
 import { secrets } from '@/secrets';
 
 import { useCookies } from './CookiesProvider';
+import {
+  useGenerateUserSessionDetailsMutation,
+} from '@/generated/graphqlClient';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -18,6 +21,8 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
   const cookies = useCookies();
   const [, updateUser] = useUpdateUserMutation();
   const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
+  const [, generateUserSessionDetails] =
+    useGenerateUserSessionDetailsMutation();
 
   return (
     <DynamicContextProvider
@@ -25,8 +30,18 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         environmentId: secrets.NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID,
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
-          onAuthSuccess: (data) => {
-            cookies.set('authToken', data.authToken);
+          onAuthSuccess: async ({ authToken }) => {
+            // TODO: Solved accessToken and projectId here
+            // thus, remove previous handling elsewhere
+            const { data, error } = await generateUserSessionDetails({
+              data: { authToken },
+            });
+
+            if (!data?.generateUserSessionDetails?.projectId) throw Error('TODO: onAuthSuccess failed');
+            
+            cookies.set('accessToken', data.generateUserSessionDetails.accessToken);
+            cookies.set('projectId', data.generateUserSessionDetails.projectId);
+            cookies.set('authToken', authToken);
           },
           onLinkSuccess: async (args) => {
             // for now we want to save the first wallet linked

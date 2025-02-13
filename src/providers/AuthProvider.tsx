@@ -57,6 +57,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
+      console.log(`[debug] AuthProvider: login cb: 1`, redirectUrl)
       if (redirectUrl) {
         setRedirectUrl(redirectUrl);
       }
@@ -109,17 +110,16 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
-    if (!authenticatedProvider && cookies.values.accessToken) {
+    if (!authenticatedProvider || !cookies.values.accessToken || !cookies.values.authToken || !cookies.values.projectId) {
       logout();
 
       return;
     }
 
-    if (!authenticatedProvider) {
-      return;
-    }
+    // const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+    const projectId = decodeAccessToken({ token: cookies.values.accessToken }).projectId;
 
-    const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
+    console.log(`[debug] AuthProvider: projectId = ${projectId} `)
 
     // TODO: check
     if (!projectId && !cookies.values.accessToken) {
