@@ -31,6 +31,8 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
           onAuthSuccess: async ({ authToken }) => {
+            // TODO: Solved accessToken and projectId here
+            // thus, remove previous handling elsewhere
             const { data, error } = await generateUserSessionDetails({
               data: { authToken },
             });
