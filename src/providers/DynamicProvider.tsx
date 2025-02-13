@@ -37,7 +37,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
               data: { authToken },
             });
 
-            if (!data?.generateUserSessionDetails?.projectId) throw Error('TODO: onAuthSuccess failed');
+            if (error || !data?.generateUserSessionDetails?.projectId) throw Error('TODO: onAuthSuccess failed');
             
             cookies.set('accessToken', data.generateUserSessionDetails.accessToken);
             cookies.set('projectId', data.generateUserSessionDetails.projectId);

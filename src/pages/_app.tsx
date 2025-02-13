@@ -16,6 +16,7 @@ import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
 import { isServerSide } from '@/utils/isServerSide';
+import { getQueryParamsToObj } from '@/utils/url';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -50,15 +51,16 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   // Client-side router for page refresh
   // otherwise, single page app will fail to locate pages
   useEffect(() => {
-    const searchParams = !isServerSide()
-      ? new URLSearchParams(window.location.search)
-      : [];
-    const query = {};
-    for (const [key, value] of searchParams) {
-      query[key] = value;
-    }
-
-    router.push({ pathname, query });
+    const search = !isServerSide()
+     ? window.location.search
+     : '';
+    
+    const query = getQueryParamsToObj(search);
+    
+    router.push({
+      pathname,
+      query,
+    });
   }, []);
 
   return (

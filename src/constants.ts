@@ -11,6 +11,7 @@ export const constants = {
   VERSION: Package.version,
 
   FIRST_PROJECT_NAME: 'First Project',
+  // TODO: We shouldn't need this one
   DEFAULT_PROJECT_ID: 'new-project',
 
   EXTERNAL_LINK: {

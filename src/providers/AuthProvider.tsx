@@ -13,6 +13,7 @@ import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
 import { createContext } from '@/utils/createContext';
+import { getQueryParamsToObj } from '@/utils/url';
 import { isServerSide } from '@/utils/isServerSide';
 
 import { useCookies } from './CookiesProvider';
@@ -57,7 +58,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
-      console.log(`[debug] AuthProvider: login cb: 1`, redirectUrl)
       if (redirectUrl) {
         setRedirectUrl(redirectUrl);
       }
@@ -116,14 +116,24 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       return;
     }
 
-    // const projectId = cookies.values.projectId || constants.DEFAULT_PROJECT_ID;
     const projectId = decodeAccessToken({ token: cookies.values.accessToken }).projectId;
 
-    console.log(`[debug] AuthProvider: projectId = ${projectId} `)
-
     // TODO: check
-    if (!projectId && !cookies.values.accessToken) {
+    if (!projectId) {
+      logout();
+
       return;
+    }
+
+    // TODO: The list of redirections
+    // might be more benefitial to be placed in entry point
+    // as early as possible in the app
+
+    // redirect if has a redirect url pending
+    if (redirectUrl) {
+      router.push(redirectUrl.replace('[projectid]', projectId));
+
+      setRedirectUrl(null);
     }
 
     // redirect if is in home page
@@ -135,53 +145,55 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       });
     }
 
-    // redirect if has a redirect url pending
-    if (redirectUrl) {
-      router.push(redirectUrl.replace('[projectid]', projectId));
-
-      setRedirectUrl(null);
+    if (pathname !== routes.home()) {
+      const search = !isServerSide()
+       ? window.location.search
+       : '';
+      
+      const query = getQueryParamsToObj(search);
+      
+      router.push({
+        pathname: routes.home(),
+        query,
+      });
     }
-
-    // uses the auth provider accessToken to request the access accessToken from graphql
-    if (!cookies.values.accessToken) {
-      requestAccessToken(authenticatedProvider);
-    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticatedProvider, cookies.values.accessToken]);
+  }, [authenticatedProvider, cookies.values.accessToken, redirectUrl]);
 
-  useEffect(() => {
-    const { accessToken, authToken, projectId } = cookies.values;
+  // useEffect(() => {
+  //   const { accessToken, authToken, projectId } = cookies.values;
 
-    try {
-      if (!accessToken && !authToken && !projectId) {
-        if (!isServerSide() && router.pathname !== routes.home()) {
-          const invitationHash = router.query.invitation;
-          const homeRoute = routes.home();
+  //   try {
+  //     if (!accessToken && !authToken && !projectId) {
+  //       if (!isServerSide() && router.pathname !== routes.home()) {
+  //         const invitationHash = router.query.invitation;
+  //         const homeRoute = routes.home();
 
-          const targetUrl = invitationHash
-            ? `${homeRoute}?invitation=${invitationHash}`
-            : homeRoute;
+  //         const targetUrl = invitationHash
+  //           ? `${homeRoute}?invitation=${invitationHash}`
+  //           : homeRoute;
 
-          window.location.href = targetUrl;
-        }
+  //         window.location.href = targetUrl;
+  //       }
 
-        return;
-      }
+  //       return;
+  //     }
 
-      if (!accessToken && authToken) {
-        // TODO: get accessToken
-      }
+  //     if (!accessToken && authToken) {
+  //       // TODO: get accessToken
+  //     }
 
-      // TODO: This can be removed?
-      if (!accessToken) {
-        return;
-      }
+  //     // TODO: This can be removed?
+  //     if (!accessToken) {
+  //       return;
+  //     }
 
-      decodeAccessToken({ token: accessToken });
-    } catch (err) {
-      logout();
-    }
-  }, [cookies, logout]);
+  //     decodeAccessToken({ token: accessToken });
+  //   } catch (err) {
+  //     logout();
+  //   }
+  // }, [cookies, logout]);
 
   return (
     <Provider

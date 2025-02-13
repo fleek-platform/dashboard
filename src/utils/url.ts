@@ -1,3 +1,5 @@
+import { isServerSide } from '@/utils/isServerSide';
+
 export const getTopLevelDomain = (url: string) => {
   if (!url) {
     // eslint-disable-next-line fleek-custom/no-default-error
@@ -19,3 +21,14 @@ export const getTopLevelDomain = (url: string) => {
     throw Error('Oops! Failed to parse the URL');
   }
 };
+
+export const getQueryParamsToObj = (search: string) => {
+    const searchParams = !isServerSide()
+      ? new URLSearchParams(search)
+      : [];
+    const query: Record<string, string> = {};
+    for (const [key, value] of searchParams) {
+      query[key] = value;
+    }
+    return query;
+}
