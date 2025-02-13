@@ -110,90 +110,64 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
-    if (!authenticatedProvider || !cookies.values.accessToken || !cookies.values.authToken || !cookies.values.projectId) {
-      logout();
+    // TODO: Always get projectId from decoding cookie
+    // remove need for cookies.values.projectId
+    // wherever found
+    // this will require changes in the login-button
+    // which seems to already do it but sets projectId
+    // in the state
+    if (!cookies.values.accessToken || !cookies.values.authToken || !cookies.values.projectId) {
+      if (pathname !== routes.home()) {
+        const search = !isServerSide()
+         ? window.location.search
+         : '';
+      
+        const query = getQueryParamsToObj(search);
+      
+        router.push({
+          pathname: routes.home(),
+          query,
+        });
+      }
 
       return;
     }
 
     const projectId = decodeAccessToken({ token: cookies.values.accessToken }).projectId;
 
-    // TODO: check
     if (!projectId) {
       logout();
 
       return;
     }
 
-    // TODO: The list of redirections
-    // might be more benefitial to be placed in entry point
-    // as early as possible in the app
-
-    // redirect if has a redirect url pending
+    // TODO: Check in which circumstances the redirectURl
+    // is set
     if (redirectUrl) {
       router.push(redirectUrl.replace('[projectid]', projectId));
 
       setRedirectUrl(null);
+
+      return;
     }
 
-    // redirect if is in home page
+    // At this stage the user is determined
+    // to have a "valid" accessToken
+    // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      // keep query on redirect
-      router.push({
-        pathname: routes.project.home({ projectId }),
-        query: router.query,
-      });
-    }
-
-    if (pathname !== routes.home()) {
       const search = !isServerSide()
        ? window.location.search
        : '';
-      
+  
       const query = getQueryParamsToObj(search);
-      
+
+      // keep query on redirect
       router.push({
-        pathname: routes.home(),
+        pathname: routes.project.home({ projectId }),
         query,
       });
     }
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticatedProvider, cookies.values.accessToken, redirectUrl]);
-
-  // useEffect(() => {
-  //   const { accessToken, authToken, projectId } = cookies.values;
-
-  //   try {
-  //     if (!accessToken && !authToken && !projectId) {
-  //       if (!isServerSide() && router.pathname !== routes.home()) {
-  //         const invitationHash = router.query.invitation;
-  //         const homeRoute = routes.home();
-
-  //         const targetUrl = invitationHash
-  //           ? `${homeRoute}?invitation=${invitationHash}`
-  //           : homeRoute;
-
-  //         window.location.href = targetUrl;
-  //       }
-
-  //       return;
-  //     }
-
-  //     if (!accessToken && authToken) {
-  //       // TODO: get accessToken
-  //     }
-
-  //     // TODO: This can be removed?
-  //     if (!accessToken) {
-  //       return;
-  //     }
-
-  //     decodeAccessToken({ token: accessToken });
-  //   } catch (err) {
-  //     logout();
-  //   }
-  // }, [cookies, logout]);
+  }, [cookies.values.accessToken, redirectUrl, router, logout]);
 
   return (
     <Provider
