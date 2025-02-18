@@ -2,10 +2,7 @@ import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
-import {
-  useProjectsQuery,
-  useProjectQuery,
-} from '@/generated/graphqlClient';
+import { useProjectsQuery, useProjectQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
@@ -65,13 +62,16 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     if (!pathname || !cookies.values.projectId) return;
-    
+
     const isProjectRoute = pathname.includes('[projectId]');
 
     if (isProjectRoute) {
       const { page, ...parsedProjectQueryRoute } = router.query;
       router.replace({
-        query: { ...parsedProjectQueryRoute, projectId: cookies.values.projectId },
+        query: {
+          ...parsedProjectQueryRoute,
+          projectId: cookies.values.projectId,
+        },
       });
     }
   }, [cookies.values.projectId, pathname]);

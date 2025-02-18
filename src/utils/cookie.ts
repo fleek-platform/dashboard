@@ -32,16 +32,25 @@ const defaultOptions: CookieOptions = {
 
 export type AppCookies = 'authToken' | 'accessToken' | 'projectId';
 
-const requiredAuthKeys: AppCookies[] = ['accessToken', 'authToken', 'projectId'];
+const requiredAuthKeys: AppCookies[] = [
+  'accessToken',
+  'authToken',
+  'projectId',
+];
 
-const setCookie = (name: string, value: string, options: CookieOptions = {}) => {
+const setCookie = (
+  name: string,
+  value: string,
+  options: CookieOptions = {},
+) => {
   const opts = { ...defaultOptions, ...options };
   let cookie = `${name}=${encodeURIComponent(value)}`;
 
   if (opts.path) cookie += `; path=${opts.path}`;
   if (opts.domain) cookie += `; domain=${opts.domain}`;
   if (opts.maxAge) cookie += `; max-age=${opts.maxAge}`;
-  if (opts.expires) cookie += `; expires=${new Date(opts.expires).toUTCString()}`;
+  if (opts.expires)
+    cookie += `; expires=${new Date(opts.expires).toUTCString()}`;
   if (opts.secure) cookie += '; secure';
   if (opts.sameSite) cookie += `; samesite=${opts.sameSite}`;
 
@@ -51,7 +60,8 @@ const setCookie = (name: string, value: string, options: CookieOptions = {}) => 
 const getCookie = (name: string): string | undefined => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return decodeURIComponent(parts.pop()?.split(';').shift() || '');
+  if (parts.length === 2)
+    return decodeURIComponent(parts.pop()?.split(';').shift() || '');
 };
 
 const deleteCookie = (name: string, options: CookieOptions = {}) => {

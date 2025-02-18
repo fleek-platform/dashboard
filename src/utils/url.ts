@@ -23,12 +23,10 @@ export const getTopLevelDomain = (url: string) => {
 };
 
 export const getQueryParamsToObj = (search: string) => {
-    const searchParams = !isServerSide()
-      ? new URLSearchParams(search)
-      : [];
-    const query: Record<string, string> = {};
-    for (const [key, value] of searchParams) {
-      query[key] = value;
-    }
-    return query;
-}
+  const searchParams = !isServerSide() ? new URLSearchParams(search) : [];
+  const query: Record<string, string> = {};
+  for (const [key, value] of searchParams) {
+    query[key] = value;
+  }
+  return query;
+};

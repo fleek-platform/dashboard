@@ -9,9 +9,7 @@ import { useMeQuery, useUpdateUserMutation } from '@/generated/graphqlClient';
 import { secrets } from '@/secrets';
 
 import { useCookies } from './CookiesProvider';
-import {
-  useGenerateUserSessionDetailsMutation,
-} from '@/generated/graphqlClient';
+import { useGenerateUserSessionDetailsMutation } from '@/generated/graphqlClient';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -37,9 +35,13 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
               data: { authToken },
             });
 
-            if (error || !data?.generateUserSessionDetails?.projectId) throw Error('TODO: onAuthSuccess failed');
-            
-            cookies.set('accessToken', data.generateUserSessionDetails.accessToken);
+            if (error || !data?.generateUserSessionDetails?.projectId)
+              throw Error('TODO: onAuthSuccess failed');
+
+            cookies.set(
+              'accessToken',
+              data.generateUserSessionDetails.accessToken,
+            );
             cookies.set('projectId', data.generateUserSessionDetails.projectId);
             cookies.set('authToken', authToken);
           },

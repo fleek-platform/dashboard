@@ -61,9 +61,7 @@ export const LandingPageProvider: React.FC<ProvidersProps> = ({
       <QueryClientProvider>
         <ThemeProvider forcedTheme={forcedTheme}>
           <DynamicProvider>
-            <SessionProviderMin>
-              {children}
-            </SessionProviderMin>
+            <SessionProviderMin>{children}</SessionProviderMin>
           </DynamicProvider>
         </ThemeProvider>
       </QueryClientProvider>

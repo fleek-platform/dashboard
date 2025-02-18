@@ -54,25 +54,25 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   // Client-side router for page refresh
   // otherwise, single page app will fail to locate pages
   useEffect(() => {
-    const search = !isServerSide()
-     ? window.location.search
-     : '';
-    
+    const search = !isServerSide() ? window.location.search : '';
+
     const query = getQueryParamsToObj(search);
-    
+
     router.push({
       pathname,
       query,
     });
   }, []);
 
-  const isAuthenticated = !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+  const isAuthenticated =
+    !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
-  if (!isAuthenticated) return (
-    <LandingPageProvider forcedTheme={forcedTheme}>
-      <HomePage />
-    </LandingPageProvider>
-  );
+  if (!isAuthenticated)
+    return (
+      <LandingPageProvider forcedTheme={forcedTheme}>
+        <HomePage />
+      </LandingPageProvider>
+    );
 
   return (
     <>

@@ -1,6 +1,4 @@
-const IllustrationIcon = ({
-  ...props
-}) => {
+const IllustrationIcon = ({ ...props }) => {
   return (
     <svg
       role="img"
