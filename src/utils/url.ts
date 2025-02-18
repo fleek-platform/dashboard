@@ -27,11 +27,7 @@ export const getTopLevelDomain = (url: string) => {
  * @param {boolean} omitTrailingSlash - Set to true for images. Default `false`.
  * @returns {string} URL string or an empty string if input is invalid. Use `omitTrailingSlash` argument to control trailing slash.
  */
-export const joinUrl = (
-  base: string,
-  segment: string | undefined,
-  omitTrailingSlash = false,
-): string | '' => {
+export const joinUrl = (base: string, segment: string | undefined, omitTrailingSlash = false): string | '' => {
   try {
     if (typeof base !== 'string' || !base.startsWith('http')) {
       console.error(`Invalid base URL: ${base}`);
@@ -52,9 +48,7 @@ export const joinUrl = (
 
     const cleanedSegment = removeLeadingAndTrailingSlashes(segment);
     const segmentWithTrailingSlash = cleanedSegment + '/';
-    const finalSegment = omitTrailingSlash
-      ? cleanedSegment
-      : segmentWithTrailingSlash;
+    const finalSegment = omitTrailingSlash ? cleanedSegment : segmentWithTrailingSlash;
 
     // base must have trailing slash for correct segment concatenation
     return new URL(finalSegment, baseWithTrailingSlash).toString();
@@ -66,5 +60,4 @@ export const joinUrl = (
 };
 
 /** Removes leading or trailing slash or both. */
-export const removeLeadingAndTrailingSlashes = (segment: string) =>
-  segment.replace(/^\/+|\/+$/g, '');
+export const removeLeadingAndTrailingSlashes = (segment: string) => segment.replace(/^\/+|\/+$/g, '');
