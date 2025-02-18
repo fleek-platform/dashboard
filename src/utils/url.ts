@@ -1,3 +1,5 @@
+import { isServerSide } from '@/utils/isServerSide';
+
 export const getTopLevelDomain = (url: string) => {
   if (!url) {
     // eslint-disable-next-line fleek-custom/no-default-error
@@ -21,12 +23,6 @@ export const getTopLevelDomain = (url: string) => {
   }
 };
 
-/**
- * Constructs a valid absolute URL by properly handling missing or extra slashes.
- *
- * @param {boolean} omitTrailingSlash - Set to true for images. Default `false`.
- * @returns {string} URL string or an empty string if input is invalid. Use `omitTrailingSlash` argument to control trailing slash.
- */
 export const joinUrl = (
   base: string,
   segment: string | undefined,
@@ -68,3 +64,12 @@ export const joinUrl = (
 /** Removes leading or trailing slash or both. */
 export const removeLeadingAndTrailingSlashes = (segment: string) =>
   segment.replace(/^\/+|\/+$/g, '');
+
+export const getQueryParamsToObj = (search: string) => {
+  const searchParams = !isServerSide() ? new URLSearchParams(search) : [];
+  const query: Record<string, string> = {};
+  for (const [key, value] of searchParams) {
+    query[key] = value;
+  }
+  return query;
+};
