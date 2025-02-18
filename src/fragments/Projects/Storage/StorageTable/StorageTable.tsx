@@ -152,10 +152,11 @@ export const StorageTable: React.FC = () => {
     let successCount = 0;
 
     for (const pin of pinsToDownload) {
-      let filename;
+      // TODO: Fix type
+      let filename: any;
 
       try {
-        filename = await downloadPin(pin);
+        filename = await downloadPin(pin as unknown as any);
 
         if (!filename) {
           continue;
