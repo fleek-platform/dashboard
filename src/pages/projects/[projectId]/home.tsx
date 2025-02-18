@@ -1,163 +1,131 @@
 import { routes } from '@fleek-platform/utils-routes';
+import { useState } from 'react';
+import { useClient } from 'urql';
 
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
 import {
+  ProjectsDocument,
   useAcceptInvitationMutation,
   useDeclineInvitationMutation,
   useInvitationQuery,
   useListFolderQuery,
   useMeQuery,
-  useProjectsQuery,
   useSitesQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useAuthContext } from '@/providers/AuthProvider';
+import { useCookies } from '@/providers/CookiesProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Page } from '@/types/App';
 
-const HomePage: Page = () => {
+const useFetchInvitation = () => {
   const auth = useAuthContext();
-  const session = useSessionContext();
   const router = useRouter();
-  const toast = useToast();
 
-  const invitationHashQueryParam = router.query.invitation;
-  const projectId = router.query.projectId!;
+  const invitationHash = router.query.invitation;
+  const [cachedInvitationHash, setCachedInvitationHash] = useState(invitationHash);
+
+  if (invitationHash && invitationHash !== cachedInvitationHash) {
+    // this is safe
+    setCachedInvitationHash(invitationHash);
+  }
 
   // fetch invitation data from hash (when a user is invited through link)
-  const [invitationQuery, refetchInvitationQuery] = useInvitationQuery({
-    variables: { where: { hash: invitationHashQueryParam || '' } },
-    pause: !invitationHashQueryParam,
+  const [invitationQuery] = useInvitationQuery({
+    variables: { where: { hash: cachedInvitationHash! } },
+    pause: !cachedInvitationHash,
   });
+
+  const linkInvitation = invitationQuery.data?.invitation;
 
   // fetch invitation data when is invited through email
-  const [meQuery, refetchMeQuery] = useMeQuery({ pause: !auth.accessToken });
+  const [meQuery] = useMeQuery({ pause: !auth.accessToken });
 
-  useSitesQuery({
-    variables: {
-      where: {},
-      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
-    },
-    pause: !session.accesTokenProjectId,
-  });
+  // TODO really we should show all invitations, not only the first one
+  const userPendingInvitation = meQuery.data?.user?.pendingInvitations?.[0];
+
+  return {
+    invitation: linkInvitation ?? userPendingInvitation,
+    isFetchingInvitation: invitationQuery.fetching || meQuery.fetching,
+  };
+};
+
+const HomePage: Page = () => {
+  const session = useSessionContext();
+  const toast = useToast();
+  const router = useRouter();
+  const cookies = useCookies();
+
+  const projectId = router.query.projectId!;
+
+  useSitesQuery({ variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } }, pause: !session.accesTokenProjectId });
   useListFolderQuery({
-    variables: {
-      where: {},
-      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
-    },
+    variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } },
     pause: !session.accesTokenProjectId,
   });
 
-  const [, refetchProjectsQuery] = useProjectsQuery({
-    pause: !auth.accessToken,
-    variables: {},
-  });
+  const client = useClient();
 
   const [, acceptInvitation] = useAcceptInvitationMutation();
   const [, declineInvitation] = useDeclineInvitationMutation();
 
-  const handleAcceptInvitation = async (invitationHash: string) => {
+  const { invitation, isFetchingInvitation } = useFetchInvitation();
+
+  const [hideInvitation, setHideInvitation] = useState(false);
+
+  const handleAcceptInvitation = async () => {
     try {
-      const acceptInvitationResult = await acceptInvitation({
-        where: { hash: invitationHash },
-      });
+      const acceptInvitationResult = await acceptInvitation({ where: { hash: invitation!.hash } });
 
       if (!acceptInvitationResult.data?.acceptInvitation) {
-        throw (
-          acceptInvitationResult.error ||
-          new Error('Error trying to accept invitation')
-        );
+        throw acceptInvitationResult.error || new Error('Error trying to accept invitation');
       }
 
-      // TODO handle this through cache update
-      if (invitationHashQueryParam) {
-        // means it's through link invitation
-        refetchInvitationQuery({ requestPolicy: 'network-only' });
-      } else {
-        // means it's through email invitation
-        refetchMeQuery({ requestPolicy: 'network-only' });
-      }
+      toast.success({ message: 'Invitation accepted' });
 
-      // update projects list
-      refetchProjectsQuery({ requestPolicy: 'network-only' });
+      await client.query(
+        ProjectsDocument,
+        {},
+        {
+          requestPolicy: 'network-only',
+        }
+      );
 
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          toast.success({ message: 'Invitation accepted' });
-
-          router.replace(routes.project.home({ projectId }));
-
-          resolve(true);
-        }, 2000);
-      });
+      setHideInvitation(true);
+      cookies.set('projectId', invitation!.projectId);
     } catch (error) {
       toast.error({ error, log: 'Accept invitation failed' });
     }
   };
 
-  const handleDeclineInvitation = async (invitationHash: string) => {
+  const handleDeclineInvitation = async () => {
     try {
-      const declineInvitationResult = await declineInvitation({
-        where: { hash: invitationHash },
-      });
+      const declineInvitationResult = await declineInvitation({ where: { hash: invitation!.hash } });
 
       if (!declineInvitationResult.data?.declineInvitation) {
-        throw (
-          declineInvitationResult.error ||
-          new Error('Error trying to accept invitation')
-        );
+        throw declineInvitationResult.error || new Error('Error trying to accept invitation');
       }
 
-      // TODO handle this through cache update
-      if (invitationHashQueryParam) {
-        // means it's through link invitation
-        refetchInvitationQuery({ requestPolicy: 'network-only' });
-      } else {
-        // means it's through email invitation
-        refetchMeQuery({ requestPolicy: 'network-only' });
-      }
-
-      // update projects list
-      refetchProjectsQuery({ requestPolicy: 'network-only' });
-
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          toast.success({ message: 'Invitation declined' });
-          router.replace(routes.project.home({ projectId }));
-
-          resolve(true);
-        }, 2000);
-      });
+      setHideInvitation(true);
+      toast.success({ message: 'Invitation declined' });
+      router.replace(routes.project.home({ projectId }));
     } catch (error) {
       toast.error({ error, log: 'Decline invitation failed' });
     }
   };
 
-  // TODO handle error for fetching invitation
-
-  const userPendingInvitations = meQuery.data?.user.pendingInvitations || [];
+  const showInvitation = (isFetchingInvitation || !!invitation) && !hideInvitation;
 
   return (
     <>
-      {(invitationQuery.fetching ||
-        invitationQuery.data?.invitation ||
-        userPendingInvitations.length > 0) && (
+      {showInvitation && (
         <Projects.Home.Sections.Invitation
-          isLoading={invitationQuery.fetching}
-          invitationHash={
-            invitationHashQueryParam || userPendingInvitations[0]?.hash
-          }
-          projectId={invitationQuery.data?.invitation.projectId}
-          projectName={
-            invitationQuery.data?.invitation.projectName ||
-            userPendingInvitations[0]?.projectName
-          }
-          avatarSrc={
-            invitationQuery.data?.invitation.projectAvatar ||
-            userPendingInvitations[0]?.projectAvatar
-          }
+          isLoading={isFetchingInvitation}
+          projectId={invitation?.projectId}
+          projectName={invitation?.projectName}
+          avatarSrc={invitation?.projectAvatar}
           onAcceptInvitation={handleAcceptInvitation}
           onDeclineInvitation={handleDeclineInvitation}
         />
@@ -178,8 +146,6 @@ const PageNavContent: React.FC = () => {
   return <Projects.Home.AddNewDropdown />;
 };
 
-HomePage.getLayout = (page) => (
-  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
-);
+HomePage.getLayout = (page) => <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>;
 
 export default HomePage;

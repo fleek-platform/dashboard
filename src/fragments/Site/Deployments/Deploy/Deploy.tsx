@@ -1,6 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
+import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Skeleton, Text } from '@/ui';
@@ -37,16 +38,13 @@ export const Deploy: React.FC<DeployProps> = ({
   const environment = deployment?.previewOnly ? 'Preview' : 'Production';
 
   const deploymentDetailUrl =
-    projectId && siteId
-      ? routes.project.site.deployments.detail({
-          projectId,
-          siteId,
-          deploymentId: deployment.id,
-        })
-      : '#';
-
+    projectId
+    && siteId
+    ? routes.project.site.deployments.detail({ projectId, siteId, deploymentId: deployment.id })
+    : '#';
+    
   return (
-    <ItemRow className={className}>
+    <ItemRow testId={TEST_ID.DEPLOYMENT_CONTAINER} className={className}>
       <Link
         href={deploymentDetailUrl}
         className={cn('grid gap-4 sm:gap-8 justify-between w-full', {
@@ -58,16 +56,11 @@ export const Deploy: React.FC<DeployProps> = ({
           <Text variant="primary" weight={700}>
             {shortStringFormat({ str: deployment?.id, index: 6 })}
           </Text>
-          <Text size="xs">
-            {isSelfManaged ? 'Deployed from CLI' : environment}
-          </Text>
+          <Text size="xs">{isSelfManaged ? 'Deployed from CLI' : environment}</Text>
         </ItemContainer>
 
         <ItemContainer>
-          <DeployStatus
-            deployment={deployment}
-            isMostRecentDeployment={isMostRecentDeployment}
-          />
+          <DeployStatus deployment={deployment} isMostRecentDeployment={isMostRecentDeployment} />
         </ItemContainer>
 
         {!isSelfManaged && (
@@ -92,12 +85,7 @@ export const Deploy: React.FC<DeployProps> = ({
         </AuthorContainer>
       </Link>
       {deployment && (
-        <DropdownMenu
-          isSelfManaged={isSelfManaged}
-          deployment={deployment}
-          onRedeploy={onRedeploy}
-          canRedeploy={canRedeploy}
-        />
+        <DropdownMenu isSelfManaged={isSelfManaged} deployment={deployment} onRedeploy={onRedeploy} canRedeploy={canRedeploy} />
       )}
     </ItemRow>
   );
@@ -108,10 +96,7 @@ type DeploymentProps = {
 };
 
 const TimeElapsed: React.FC<DeploymentProps> = ({ deployment }) => {
-  const timeElapsed = getDurationUntilNow({
-    isoDateString: deployment?.createdAt,
-    shortFormat: true,
-  });
+  const timeElapsed = getDurationUntilNow({ isoDateString: deployment?.createdAt, shortFormat: true });
 
   return <>{timeElapsed}</>;
 };
@@ -120,10 +105,9 @@ type DeploySkeletonProps = ChildrenProps<{
   className?: string;
 }>;
 
-export const DeploySkeleton: React.FC<DeploySkeletonProps> = ({
-  children,
-  className,
-}) => <ItemRow className={className}>{children}</ItemRow>;
+export const DeploySkeleton: React.FC<DeploySkeletonProps> = ({ children, className }) => (
+  <ItemRow className={className}>{children}</ItemRow>
+);
 
 export const DeployItemSkeleton: React.FC = () => (
   <ItemContainer>
@@ -138,20 +122,13 @@ export const DeployAuthorSkeleton: React.FC = () => (
   </AuthorContainer>
 );
 
-const ItemRow: React.FC<
-  ChildrenProps<{ className?: string; testId?: string }>
-> = ({ children, className, testId }) => (
-  <Box
-    data-testid={testId}
-    className={cn('flex-row justify-between gap-3', className)}
-  >
+const ItemRow: React.FC<ChildrenProps<{ className?: string; testId?: string }>> = ({ children, className, testId }) => (
+  <Box data-testid={testId} className={cn('flex-row justify-between gap-3', className)}>
     {children}
   </Box>
 );
 
-const ItemContainer: React.FC<ChildrenProps> = ({ children }) => (
-  <Box className="justify-between gap-2 min-w-[10%]">{children}</Box>
-);
+const ItemContainer: React.FC<ChildrenProps> = ({ children }) => <Box className="justify-between gap-2 min-w-[10%]">{children}</Box>;
 
 const AuthorContainer: React.FC<ChildrenProps> = ({ children }) => (
   <Box className="flex-col items-end self-center min-w-[10%]">{children}</Box>

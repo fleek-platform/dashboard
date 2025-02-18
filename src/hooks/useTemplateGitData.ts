@@ -1,14 +1,12 @@
 import { useMemo } from 'react';
 
 import { GitProvider } from '@/integrations/git';
-import { Template } from '@/types/Template';
+import { TemplatePart } from '@/types/Template';
 import { parseAPISourceProvider } from '@/utils/parseAPISourceProvider';
 
-export type UseTemplateGitDataArgs = Pick<Template, 'deployment'>;
+export type UseTemplateGitDataArgs = TemplatePart;
 
-export const useTemplateGitData = (
-  template?: UseTemplateGitDataArgs,
-): TemplateGitData => {
+export const useTemplateGitData = (template?: UseTemplateGitDataArgs): TemplateGitData => {
   return useMemo(() => {
     const deployment = template?.deployment;
 
@@ -27,8 +25,6 @@ export const useTemplateGitData = (
       buildCommand: nonNull(deployment.build?.buildCommand),
       dockerImage: nonNull(deployment.build?.dockerImage),
       distDirectory: nonNull(deployment.build?.distDirectory),
-
-      preview: nonNull(deployment.previewImageUrl),
     };
   }, [template]);
 };
@@ -46,6 +42,4 @@ type TemplateGitData = Partial<{
   buildCommand: string;
   dockerImage: string;
   distDirectory: string;
-
-  preview: string;
 }>;

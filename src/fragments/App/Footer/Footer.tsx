@@ -1,4 +1,3 @@
-import { routes } from '@fleek-platform/utils-routes';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ExternalLink, FleekLogo, StatusChip } from '@/components';
@@ -7,6 +6,7 @@ import { constants } from '@/constants';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { Box, Icon, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
+import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
 
 type Link = {
   title: string;
@@ -35,7 +35,7 @@ const Sections: SectionsType = [
       },
       {
         title: 'Templates',
-        url: routes.template.list(),
+        url: FLEEK_TEMPLATES_URLS.templatesUrl,
       },
     ],
   },
@@ -119,10 +119,7 @@ const Sections: SectionsType = [
 
 const Section: React.FC<SectionType> = ({ title, links }) => {
   return (
-    <Box
-      className="gap-3 text-sm"
-      style={{ gridArea: `${title.toLowerCase()}` }}
-    >
+    <Box className="gap-3 text-sm" style={{ gridArea: `${title.toLowerCase()}` }}>
       <Text variant="primary" weight={500}>
         {title}
       </Text>
@@ -139,11 +136,7 @@ const SectionsFragment: React.FC = () => {
   return (
     <Box className="grid [grid-template-areas:'product_developers_resources_company'] gap-6 md:gap-9">
       {Sections.map((section) => (
-        <Section
-          key={section.title}
-          title={section.title}
-          links={section.links}
-        />
+        <Section key={section.title} title={section.title} links={section.links} />
       ))}
     </Box>
   );
@@ -171,10 +164,7 @@ const LeftFragment: React.FC = () => {
 
   useEffect(() => {
     // on the client side, show versions if not prod or user is internal
-    if (
-      !isServerSide() &&
-      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
-    ) {
+    if (!isServerSide() && (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)) {
       setShowVersion(true);
     }
   }, [flags]);

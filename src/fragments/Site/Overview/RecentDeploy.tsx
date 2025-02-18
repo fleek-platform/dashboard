@@ -11,24 +11,14 @@ import { Box, Skeleton, Text } from '@/ui';
 import { canRedeploySite } from '@/utils/canRedeploySite';
 import { parseAPIDeploymentStatus } from '@/utils/parseAPIDeploymentStatus';
 
-import {
-  Deploy,
-  DeployAuthorSkeleton,
-  DeployItemSkeleton,
-  DeployProps,
-  DeploySkeleton,
-} from '../Deployments/Deploy/Deploy';
+import { Deploy, DeployAuthorSkeleton, DeployItemSkeleton, DeployProps, DeploySkeleton } from '../Deployments/Deploy/Deploy';
 
 export type RecentDeployProps = Pick<DeployProps, 'onRedeploy'> & {
   isSelfManaged: boolean;
   siteQuery: UseQueryState<{ site: Site }, { where: { id: string } }>;
 };
 
-export const RecentDeploy: React.FC<RecentDeployProps> = ({
-  isSelfManaged,
-  siteQuery,
-  onRedeploy,
-}) => {
+export const RecentDeploy: React.FC<RecentDeployProps> = ({ isSelfManaged, siteQuery, onRedeploy }) => {
   const router = useRouter();
 
   const siteId = router.query.siteId!;
@@ -62,18 +52,14 @@ export const RecentDeploy: React.FC<RecentDeployProps> = ({
         isMostRecentDeployment
       />
       <AlertBox size="xs" variant="ghost" className="bg-transparent">
-        To update your production deployment, push to the &quot;main&quot;
-        branch.
+        To update your production deployment, push to the &quot;main&quot; branch.
       </AlertBox>
     </BaseBox>
   );
 };
 
 const BaseBox: React.FC<ChildrenProps> = ({ children }) => (
-  <Box
-    variant="container"
-    className="bg-surface-content gap-5 min-h-[11.0625rem]"
-  >
+  <Box variant="container" className="bg-surface-content gap-5 min-h-[11.0625rem]">
     {children}
   </Box>
 );
@@ -114,5 +100,5 @@ const useMockedDeployment = (site?: UseMockedDeploymentProps): Deployment =>
       sourceRef: '-',
       previewOnly: false,
     }),
-    [site],
+    [site]
   );

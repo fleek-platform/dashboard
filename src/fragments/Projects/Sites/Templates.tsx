@@ -1,9 +1,12 @@
-import { routes } from '@fleek-platform/utils-routes';
+import { useMemo } from 'react';
 
+import { AlertBox } from '@/components';
 import { Link } from '@/components';
 import { Template } from '@/fragments';
-import { useTemplatesQuery } from '@/generated/graphqlClient';
+import { useTemplates } from '@/hooks/useTemplates';
 import { Box, Button, Text } from '@/ui';
+import { randomizeArray, templatePartToTemplateCardPart } from '@/utils/template';
+import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
 
 export const Templates: React.FC = () => (
   <Box className="gap-5">
@@ -11,7 +14,7 @@ export const Templates: React.FC = () => (
       <Text as="h3" variant="primary" size="xl" weight={700}>
         Use a template
       </Text>
-      <Link href={routes.template.list()}>
+      <Link href={FLEEK_TEMPLATES_URLS.templatesUrl}>
         <Button intent="ghost" iconRight="arrow-right">
           Browse all templates
         </Button>
@@ -23,12 +26,17 @@ export const Templates: React.FC = () => (
 );
 
 export const TemplatesList: React.FC = () => {
-  const [templatesQuery] = useTemplatesQuery({
-    variables: { where: {}, filter: { take: 3 } },
-  });
-  const templates = templatesQuery.data?.templates.data || [];
+  const templates = useTemplates();
 
-  if (templatesQuery.fetching) {
+  const threeRandomTemplates = useMemo(() => {
+    if (templates.error || !templates.data) {
+      return [];
+    }
+
+    return randomizeArray(templates.data).slice(0, 3);
+  }, [templates.data, templates.error]);
+
+  if (templates.isLoading) {
     return (
       <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <Template.Elements.Card isLoading />
@@ -38,10 +46,18 @@ export const TemplatesList: React.FC = () => {
     );
   }
 
+  if (templates.error || !(threeRandomTemplates.length > 0)) {
+    return (
+      <AlertBox variant="danger" size="lg">
+        Error fetching templates.
+      </AlertBox>
+    );
+  }
+
   return (
     <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {templates.map((template) => (
-        <Template.Elements.Card key={template.name} template={template} />
+      {threeRandomTemplates.map((template) => (
+        <Template.Elements.Card key={template.name} template={templatePartToTemplateCardPart(template)} />
       ))}
     </Box>
   );

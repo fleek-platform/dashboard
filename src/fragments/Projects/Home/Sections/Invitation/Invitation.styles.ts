@@ -3,7 +3,6 @@ import { Avatar, Box, Skeleton } from '@/ui';
 
 export const InvitationStyles = {
   Container: styled(Box, {
-    flexDirection: 'row',
     alignItems: 'center',
 
     variants: {
@@ -12,6 +11,8 @@ export const InvitationStyles = {
           padding: '$spacing-4',
           gap: '$spacing-4',
           background: '$surface-monochrome',
+          borderRadius: '$lg',
+          baseBorder: '$border-slate',
         },
       },
     },
@@ -28,7 +29,6 @@ export const InvitationStyles = {
 
   Buttons: {
     Container: styled(Box, {
-      flexDirection: 'row',
       gap: '$spacing-3',
     }),
   },

@@ -10,12 +10,7 @@ type DeleteAgentModalProps = {
   onDeleteConfirm?: () => void | Promise<void>;
 };
 
-export const DeleteAgentModal: React.FC<DeleteAgentModalProps> = ({
-  agentName,
-  open,
-  onOpenChange,
-  onDeleteConfirm,
-}) => {
+export const DeleteAgentModal: React.FC<DeleteAgentModalProps> = ({ agentName, open, onOpenChange, onDeleteConfirm }) => {
   const form = Form.useForm({
     values: { name: '' },
     schema: zod.object({
@@ -28,29 +23,26 @@ export const DeleteAgentModal: React.FC<DeleteAgentModalProps> = ({
         await onDeleteConfirm();
       }
 
-      onOpenChange(false);
+      handleOpenChange(false);
     },
   });
 
+  const handleOpenChange = (isOpen: boolean) => {
+    onOpenChange(isOpen);
+
+    if (!isOpen) {
+      form.resetForm();
+    }
+  };
+
   return (
     <Form.Provider value={form}>
-      <SettingsDeleteModal
-        open={open}
-        onOpenChange={(nextOpen) => {
-          onOpenChange(nextOpen);
-
-          if (!nextOpen) {
-            form.resetForm();
-          }
-        }}
-      >
-        <SettingsDeleteModal.Heading>
-          Confirm Agent Deletion
-        </SettingsDeleteModal.Heading>
+      <SettingsDeleteModal open={open} onOpenChange={handleOpenChange}>
+        <SettingsDeleteModal.Heading>Confirm Agent Deletion</SettingsDeleteModal.Heading>
 
         <Text>
-          If you are positive you want to delete this agent, use the field below
-          to confirm and then click <CodeBlock>Delete agent</CodeBlock>.
+          If you are positive you want to delete this agent, use the field below to confirm and then click{' '}
+          <CodeBlock>Delete agent</CodeBlock>.
         </Text>
 
         <Form.InputField
