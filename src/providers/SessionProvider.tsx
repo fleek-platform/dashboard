@@ -103,11 +103,7 @@ export const SessionProvider: React.FC<React.PropsWithChildren<{}>> = ({
 export const SessionProviderMin: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  return (
-    <AuthProvider>
-      {children}
-    </AuthProvider>
-  );
+  return <AuthProvider>{children}</AuthProvider>;
 };
 
 export const useSessionContext = useContext;

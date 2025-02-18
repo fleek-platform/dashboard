@@ -116,14 +116,16 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // this will require changes in the login-button
     // which seems to already do it but sets projectId
     // in the state
-    if (!cookies.values.accessToken || !cookies.values.authToken || !cookies.values.projectId) {
+    if (
+      !cookies.values.accessToken ||
+      !cookies.values.authToken ||
+      !cookies.values.projectId
+    ) {
       if (pathname !== routes.home()) {
-        const search = !isServerSide()
-         ? window.location.search
-         : '';
-      
+        const search = !isServerSide() ? window.location.search : '';
+
         const query = getQueryParamsToObj(search);
-      
+
         router.push({
           pathname: routes.home(),
           query,
@@ -133,7 +135,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       return;
     }
 
-    const projectId = decodeAccessToken({ token: cookies.values.accessToken }).projectId;
+    const projectId = decodeAccessToken({
+      token: cookies.values.accessToken,
+    }).projectId;
 
     if (!projectId) {
       logout();
@@ -155,10 +159,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // to have a "valid" accessToken
     // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      const search = !isServerSide()
-       ? window.location.search
-       : '';
-  
+      const search = !isServerSide() ? window.location.search : '';
+
       const query = getQueryParamsToObj(search);
 
       // keep query on redirect

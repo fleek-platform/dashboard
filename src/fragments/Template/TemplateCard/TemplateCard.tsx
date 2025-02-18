@@ -12,7 +12,10 @@ export type TemplateCardProps = LoadingProps<{
 
 const { websiteBaseUrl, templatesUrl } = FLEEK_TEMPLATES_URLS;
 
-export const TemplateCard = forwardStyledRef<HTMLAnchorElement, TemplateCardProps>(Card.Root, ({ isLoading, template, ...props }, ref) => {
+export const TemplateCard = forwardStyledRef<
+  HTMLAnchorElement,
+  TemplateCardProps
+>(Card.Root, ({ isLoading, template, ...props }, ref) => {
   if (isLoading) {
     return <TemplateCardSkeleton />;
   }
@@ -21,17 +24,33 @@ export const TemplateCard = forwardStyledRef<HTMLAnchorElement, TemplateCardProp
   const templateUrl = joinUrl(templatesUrl, template.siteSlug);
 
   const templateBanner = joinUrl(websiteBaseUrl, template.banner, true);
-  const frameworkAvatar = joinUrl(websiteBaseUrl, template.framework?.avatar, true);
+  const frameworkAvatar = joinUrl(
+    websiteBaseUrl,
+    template.framework?.avatar,
+    true,
+  );
 
   return (
-    <LinkBox {...props} ref={ref} href={templateUrl} className="p-0 gap-0 bg-transparent">
-      <Card.Cover src={templateBanner} className="aspect-[16/9] max-h-[8rem] object-cover" />
+    <LinkBox
+      {...props}
+      ref={ref}
+      href={templateUrl}
+      className="p-0 gap-0 bg-transparent"
+    >
+      <Card.Cover
+        src={templateBanner}
+        className="aspect-[16/9] max-h-[8rem] object-cover"
+      />
       <Box className="p-4">
         <Box className="flex-row justify-between">
           <Text as="h3" variant="primary" size="md" weight={700}>
             {template.name}
           </Text>
-          <Image src={frameworkAvatar} alt={template.framework?.name} className="size-[1.75em] rounded bg-neutral-2">
+          <Image
+            src={frameworkAvatar}
+            alt={template.framework?.name}
+            className="size-[1.75em] rounded bg-neutral-2"
+          >
             <Icon name="gear" />
           </Image>
         </Box>
@@ -49,11 +68,18 @@ type AuthorAvatarProps = {
   creator: TemplateCardPart['creator'];
 };
 
-const AuthorAvatar: React.FC<AuthorAvatarProps> = ({ creator = {} as AuthorAvatarProps['creator'] }) => {
-  const isFleekAuthored = creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
+const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
+  creator = {} as AuthorAvatarProps['creator'],
+}) => {
+  const isFleekAuthored =
+    creator.username === 'fleekxyz' || creator.username === 'fleek-platform';
 
   return (
-    <Box className={cn('flex-row gap-2 items-center', { 'bg-monochrome-reverse': isFleekAuthored })}>
+    <Box
+      className={cn('flex-row gap-2 items-center', {
+        'bg-monochrome-reverse': isFleekAuthored,
+      })}
+    >
       <Avatar
         //
         enableIcon

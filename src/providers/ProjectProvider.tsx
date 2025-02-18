@@ -3,7 +3,10 @@ import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
 
 import { constants } from '@/constants';
-import { useCreateProjectMutation, useProjectsQuery } from '@/generated/graphqlClient';
+import {
+  useCreateProjectMutation,
+  useProjectsQuery,
+} from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
@@ -27,13 +30,18 @@ const [Provider, useContext] = createContext<ProjectContext>({
   providerName: 'ProjectProvider',
 });
 
-export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const auth = useAuthContext();
   const router = useRouter();
   const cookies = useCookies();
-  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({ pause: !auth.accessToken });
+  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
+    pause: !auth.accessToken,
+  });
   const [, createProject] = useCreateProjectMutation();
-  const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] = useState(false);
+  const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
+    useState(false);
 
   const accessTokenProjectId = useMemo(() => {
     if (!auth.accessToken) {
@@ -41,7 +49,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ childre
     }
 
     try {
-      return decodeAccessToken({ token: auth.accessToken }).projectId ?? undefined;
+      return (
+        decodeAccessToken({ token: auth.accessToken }).projectId ?? undefined
+      );
     } catch {
       return undefined;
     }
@@ -74,7 +84,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ childre
     }
 
     const changeProject = async (newProjectId: string) => {
-      const allowedProject = projects.find((project) => project.id === newProjectId);
+      const allowedProject = projects.find(
+        (project) => project.id === newProjectId,
+      );
 
       if (!allowedProject) {
         newProjectId = projects[0].id;
@@ -98,11 +110,14 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ childre
           delete parsedProjectQueryRoute.page;
           delete parsedProjectQueryRoute.invitation;
 
-          return router.replace({ query: { ...parsedProjectQueryRoute, projectId: newProjectId } });
+          return router.replace({
+            query: { ...parsedProjectQueryRoute, projectId: newProjectId },
+          });
         }
       };
 
-      const sameProject = decodeAccessToken({ token: accessToken }).projectId === newProjectId;
+      const sameProject =
+        decodeAccessToken({ token: accessToken }).projectId === newProjectId;
 
       if (sameProject && allowedProject) {
         await redirect();
@@ -152,7 +167,10 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ childre
 
     const projects = data.projects.data;
 
-    return projects.find((project) => project.id === cookies.values.projectId) || defaultProject;
+    return (
+      projects.find((project) => project.id === cookies.values.projectId) ||
+      defaultProject
+    );
   }, [cookies.values.projectId, projectsQuery, router]);
 
   const isLoading = useMemo(() => {
@@ -166,8 +184,15 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({ childre
       return true;
     }
 
-    return !projectsQuery.data?.projects.data.some((listProject) => project.id === listProject.id);
-  }, [projectsQuery.data, project.id, auth.accessToken, cookies.values.authToken]);
+    return !projectsQuery.data?.projects.data.some(
+      (listProject) => project.id === listProject.id,
+    );
+  }, [
+    projectsQuery.data,
+    project.id,
+    auth.accessToken,
+    cookies.values.authToken,
+  ]);
 
   return (
     <Provider

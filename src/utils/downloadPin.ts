@@ -4,13 +4,19 @@ import { getLinkForIPFSDownload } from '@/utils/getLinkForIPFSdownload';
 type DownloadPinArgs = Pin;
 
 // can throw
-export const downloadPin = async (pin: DownloadPinArgs): Promise<string | undefined> => {
+export const downloadPin = async (
+  pin: DownloadPinArgs,
+): Promise<string | undefined> => {
   if (!pin) {
     return;
   }
 
   const filename = `${pin.filename}.${pin.extension}`;
-  const fileUrl = getLinkForIPFSDownload({ cid: pin.cid, filename, isFolder: !pin.extension });
+  const fileUrl = getLinkForIPFSDownload({
+    cid: pin.cid,
+    filename,
+    isFolder: !pin.extension,
+  });
 
   const response = await fetch(fileUrl);
 

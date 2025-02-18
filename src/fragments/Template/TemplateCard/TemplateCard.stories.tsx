@@ -27,7 +27,8 @@ export const Customizable: Story = {
       id: 'template-id',
       name: 'React',
       description: 'This is the template description',
-      banner: 'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
+      banner:
+        'https://ipfs.io/ipfs/bafybeiee6fyejfhcex3veoxv2d75drz2eibzynagfd6mygtnrhegimg2kq',
       siteSlug: 'fleek',
       creator: {
         username: 'Kanishk Khurana',

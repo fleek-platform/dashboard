@@ -44,7 +44,9 @@ export const transformTemplate = (templateJson: TemplateJson): TemplatePart => {
 };
 
 // eslint-disable-next-line fleek-custom/valid-argument-types
-export const templatePartToTemplateCardPart = (templatePart: TemplatePart): TemplateCardPart => {
+export const templatePartToTemplateCardPart = (
+  templatePart: TemplatePart,
+): TemplateCardPart => {
   const { deployment: _, ...templateCardPart } = templatePart;
 
   return templateCardPart;

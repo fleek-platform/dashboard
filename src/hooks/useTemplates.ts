@@ -12,7 +12,8 @@ export const useTemplates = () => {
 
       return data as TemplateJsonObject;
     },
-    select: (data) => (Object.values(data) as TemplateJson[]).map(transformTemplate),
+    select: (data) =>
+      (Object.values(data) as TemplateJson[]).map(transformTemplate),
     refetchOnMount: false,
   });
 };

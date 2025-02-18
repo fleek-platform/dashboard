@@ -5,7 +5,10 @@ import { Link } from '@/components';
 import { Template } from '@/fragments';
 import { useTemplates } from '@/hooks/useTemplates';
 import { Box, Button, Text } from '@/ui';
-import { randomizeArray, templatePartToTemplateCardPart } from '@/utils/template';
+import {
+  randomizeArray,
+  templatePartToTemplateCardPart,
+} from '@/utils/template';
 import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
 
 export const Templates: React.FC = () => (
@@ -57,7 +60,10 @@ export const TemplatesList: React.FC = () => {
   return (
     <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {threeRandomTemplates.map((template) => (
-        <Template.Elements.Card key={template.name} template={templatePartToTemplateCardPart(template)} />
+        <Template.Elements.Card
+          key={template.name}
+          template={templatePartToTemplateCardPart(template)}
+        />
       ))}
     </Box>
   );

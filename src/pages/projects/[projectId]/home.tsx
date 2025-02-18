@@ -25,7 +25,8 @@ const useFetchInvitation = () => {
   const router = useRouter();
 
   const invitationHash = router.query.invitation;
-  const [cachedInvitationHash, setCachedInvitationHash] = useState(invitationHash);
+  const [cachedInvitationHash, setCachedInvitationHash] =
+    useState(invitationHash);
 
   if (invitationHash && invitationHash !== cachedInvitationHash) {
     // this is safe
@@ -60,9 +61,18 @@ const HomePage: Page = () => {
 
   const projectId = router.query.projectId!;
 
-  useSitesQuery({ variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } }, pause: !session.accesTokenProjectId });
+  useSitesQuery({
+    variables: {
+      where: {},
+      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
+    },
+    pause: !session.accesTokenProjectId,
+  });
   useListFolderQuery({
-    variables: { where: {}, filter: { take: constants.SITES_PAGE_SIZE, page: 1 } },
+    variables: {
+      where: {},
+      filter: { take: constants.SITES_PAGE_SIZE, page: 1 },
+    },
     pause: !session.accesTokenProjectId,
   });
 
@@ -77,10 +87,15 @@ const HomePage: Page = () => {
 
   const handleAcceptInvitation = async () => {
     try {
-      const acceptInvitationResult = await acceptInvitation({ where: { hash: invitation!.hash } });
+      const acceptInvitationResult = await acceptInvitation({
+        where: { hash: invitation!.hash },
+      });
 
       if (!acceptInvitationResult.data?.acceptInvitation) {
-        throw acceptInvitationResult.error || new Error('Error trying to accept invitation');
+        throw (
+          acceptInvitationResult.error ||
+          new Error('Error trying to accept invitation')
+        );
       }
 
       toast.success({ message: 'Invitation accepted' });
@@ -90,7 +105,7 @@ const HomePage: Page = () => {
         {},
         {
           requestPolicy: 'network-only',
-        }
+        },
       );
 
       setHideInvitation(true);
@@ -102,10 +117,15 @@ const HomePage: Page = () => {
 
   const handleDeclineInvitation = async () => {
     try {
-      const declineInvitationResult = await declineInvitation({ where: { hash: invitation!.hash } });
+      const declineInvitationResult = await declineInvitation({
+        where: { hash: invitation!.hash },
+      });
 
       if (!declineInvitationResult.data?.declineInvitation) {
-        throw declineInvitationResult.error || new Error('Error trying to accept invitation');
+        throw (
+          declineInvitationResult.error ||
+          new Error('Error trying to accept invitation')
+        );
       }
 
       setHideInvitation(true);
@@ -116,7 +136,8 @@ const HomePage: Page = () => {
     }
   };
 
-  const showInvitation = (isFetchingInvitation || !!invitation) && !hideInvitation;
+  const showInvitation =
+    (isFetchingInvitation || !!invitation) && !hideInvitation;
 
   return (
     <>
@@ -146,6 +167,8 @@ const PageNavContent: React.FC = () => {
   return <Projects.Home.AddNewDropdown />;
 };
 
-HomePage.getLayout = (page) => <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>;
+HomePage.getLayout = (page) => (
+  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
+);
 
 export default HomePage;

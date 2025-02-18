@@ -119,7 +119,10 @@ const Sections: SectionsType = [
 
 const Section: React.FC<SectionType> = ({ title, links }) => {
   return (
-    <Box className="gap-3 text-sm" style={{ gridArea: `${title.toLowerCase()}` }}>
+    <Box
+      className="gap-3 text-sm"
+      style={{ gridArea: `${title.toLowerCase()}` }}
+    >
       <Text variant="primary" weight={500}>
         {title}
       </Text>
@@ -136,7 +139,11 @@ const SectionsFragment: React.FC = () => {
   return (
     <Box className="grid [grid-template-areas:'product_developers_resources_company'] gap-6 md:gap-9">
       {Sections.map((section) => (
-        <Section key={section.title} title={section.title} links={section.links} />
+        <Section
+          key={section.title}
+          title={section.title}
+          links={section.links}
+        />
       ))}
     </Box>
   );
@@ -164,7 +171,10 @@ const LeftFragment: React.FC = () => {
 
   useEffect(() => {
     // on the client side, show versions if not prod or user is internal
-    if (!isServerSide() && (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)) {
+    if (
+      !isServerSide() &&
+      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
+    ) {
       setShowVersion(true);
     }
   }, [flags]);

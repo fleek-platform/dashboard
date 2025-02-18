@@ -2,7 +2,10 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import Package from '../package.json';
 import { secrets } from './secrets';
-import { StorageProvider, StorageProviderValue } from './types/StorageProviders';
+import {
+  StorageProvider,
+  StorageProviderValue,
+} from './types/StorageProviders';
 
 export const constants = {
   VERSION: Package.version,
@@ -19,56 +22,83 @@ export const constants = {
     FLEEK_DOCS_INFRASTRUCTURE: 'https://fleek.xyz/docs/infrastructure/',
     FLEEK_SUPPORT: 'https://support.fleek.xyz/hc/en-us',
     FLEEK_SUPPORT_NEW_TICKET: 'https://support.fleek.xyz/hc/en-us/requests/new',
-    FLEEK_SUPPORT_TICKET: 'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049246996237',
-    FLEEK_SUPPORT_ABUSE: 'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16807535390093',
+    FLEEK_SUPPORT_TICKET:
+      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049246996237',
+    FLEEK_SUPPORT_ABUSE:
+      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16807535390093',
     FLEEK_DOCS_CLI: 'https://fleek.xyz/docs/cli/',
     FLEEK_DOCS_BASE_TEMPLATES: 'https://fleek.xyz/templates/',
     FLEEK_DOCS_SDK: 'https://fleek.xyz/docs/sdk/',
     FLEEK_GUIDES: 'https://fleek.xyz/guides/',
     FLEEK_DOCS_PROJECTS: 'https://fleek.xyz/docs/platform/projects/',
     FLEEK_DOCS_SITE_NAME: 'https://fleek.xyz/docs/platform/hosting/',
-    FLEEK_DOCS_DELETE_SITE: 'https://fleek.xyz/docs/platform/deployments#deleting-a-site',
-    FLEEK_DOCS_DELETE_ACCOUNT: 'https://fleek.xyz/docs/platform/accounts#deleting-an-account',
-    FLEEK_DOCS_PURGE_CACHE: 'https://fleek.xyz/docs/platform/deployments#purging-the-cache',
+    FLEEK_DOCS_DELETE_SITE:
+      'https://fleek.xyz/docs/platform/deployments#deleting-a-site',
+    FLEEK_DOCS_DELETE_ACCOUNT:
+      'https://fleek.xyz/docs/platform/accounts#deleting-an-account',
+    FLEEK_DOCS_PURGE_CACHE:
+      'https://fleek.xyz/docs/platform/deployments#purging-the-cache',
     FLEEK_DOCS_PRIVATE_GATEWAYS: 'https://fleek.xyz/docs/platform/gateways/',
-    FLEEK_DOCS_PROJECT_NAME: 'https://fleek.xyz/docs/platform/projects#changing-project-name',
-    FLEEK_DOCS_DELETE_PROJECT: 'https://fleek.xyz/docs/platform/projects#deleting-a-project',
-    FLEEK_DOCS_CUSTOM_DOMAIN: 'https://fleek.xyz/docs/platform/domains#adding-a-custom-domain',
+    FLEEK_DOCS_PROJECT_NAME:
+      'https://fleek.xyz/docs/platform/projects#changing-project-name',
+    FLEEK_DOCS_DELETE_PROJECT:
+      'https://fleek.xyz/docs/platform/projects#deleting-a-project',
+    FLEEK_DOCS_CUSTOM_DOMAIN:
+      'https://fleek.xyz/docs/platform/domains#adding-a-custom-domain',
     FLEEK_DOCS_ENS_NAME: 'https://fleek.xyz/docs/platform/domains#ens',
-    FLEEK_DOCS_BUILD_SETTINGS: 'https://fleek.xyz/docs/platform/hosting#configure-your-build-settings',
-    FLEEK_DOCS_TEAM_PROJECT_MEMBERS: 'https://fleek.xyz/docs/platform/projects#invitations',
-    FLEEK_DOCS_DEPLOY_CONTEXTS: 'https://fleek.xyz/docs/platform/deployments#configure-your-build-settings',
+    FLEEK_DOCS_BUILD_SETTINGS:
+      'https://fleek.xyz/docs/platform/hosting#configure-your-build-settings',
+    FLEEK_DOCS_TEAM_PROJECT_MEMBERS:
+      'https://fleek.xyz/docs/platform/projects#invitations',
+    FLEEK_DOCS_DEPLOY_CONTEXTS:
+      'https://fleek.xyz/docs/platform/deployments#configure-your-build-settings',
     FLEEK_DOCS_USERNAME: 'https://fleek.xyz/docs/platform/accounts#usernames',
-    FLEEK_DOCS_TEMPLATES: 'https://fleek.xyz/docs/platform/frameworks#using-framework-templates-to-get-started',
-    FLEEK_DOCS_EMAIL: 'https://fleek.xyz/docs/platform/accounts#email-addresses',
-    FLEEK_DOCS_PAT: 'https://fleek.xyz/docs/platform/accounts#personal-access-tokens-pats',
+    FLEEK_DOCS_TEMPLATES:
+      'https://fleek.xyz/docs/platform/frameworks#using-framework-templates-to-get-started',
+    FLEEK_DOCS_EMAIL:
+      'https://fleek.xyz/docs/platform/accounts#email-addresses',
+    FLEEK_DOCS_PAT:
+      'https://fleek.xyz/docs/platform/accounts#personal-access-tokens-pats',
     FLEEK_DOCS_CLOUD_STORAGE: 'https://fleek.xyz/docs/platform/storage/',
-    FLEEK_DOCS_ENVIRONMENT_VARIABLES: 'https://fleek.xyz/docs/platform/deployments#configure-your-build-settings',
+    FLEEK_DOCS_ENVIRONMENT_VARIABLES:
+      'https://fleek.xyz/docs/platform/deployments#configure-your-build-settings',
     FLEEK_DOCS_TOS: 'https://fleek.xyz/legal/terms-of-service/',
     FLEEK_DOCS_PRIVACY: 'https://fleek.xyz/legal/privacy-policy',
     FLEEK_BLOG: 'https://fleek.xyz/blog/',
     FLEEK_DISCORD: 'https://discord.gg/fleek',
     FLEEK_TWITTER: 'https://x.com/fleek',
     FLEEK_GITHUB: 'https://github.com/fleek-platform',
-    FLEEK_GET_DEMO: 'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049464260109',
+    FLEEK_GET_DEMO:
+      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049464260109',
     FLEEK_STATUS: 'https://status.fleek.xyz/',
     FLEEK_PRICING: 'https://fleek.xyz/pricing/',
     FLEEK_NETWORK: 'https://fleek.network/',
     FLEEK_CHANGELOG: 'https://fleek.xyz/changelog/',
-    FLEEK_DOCS_LOGIN_CONNECTIONS: 'https://fleek.xyz/docs/platform/accounts#log-in-methods',
-    FLEEK_DOCS_SELF_MANAGED_SITE: 'https://fleek.xyz/docs/platform/hosting#self-managed-deployments',
+    FLEEK_DOCS_LOGIN_CONNECTIONS:
+      'https://fleek.xyz/docs/platform/accounts#log-in-methods',
+    FLEEK_DOCS_SELF_MANAGED_SITE:
+      'https://fleek.xyz/docs/platform/hosting#self-managed-deployments',
     THREE_DNS_BUY_DOMAIN: 'https://app.3dns.box/',
-    FLEEK_DOCS_APPLICATION_CREDENTIALS: 'https://fleek.xyz/docs/sdk#applicationaccesstokenservice',
+    FLEEK_DOCS_APPLICATION_CREDENTIALS:
+      'https://fleek.xyz/docs/sdk#applicationaccesstokenservice',
     FLEEK_DOCS_DNS_LINK: 'https://fleek.xyz/docs/platform/domains#dns',
-    FLEEK_DOCS_2FA_EDIT: 'https://fleek.xyz/docs/platform/security-with-2fa#managing-two-factor-authentication',
-    FLEEK_DOCS_2FA_SETUP: 'https://fleek.xyz/docs/platform/security-with-2fa#configuring-two-factor-authentication',
-    FLEEK_DOCS_2FA_RECOVERY_CODES: 'https://fleek.xyz/docs/platform/security-with-2fa#configuring-two-factor-authentication',
-    FLEEK_DOCS_2FA_ACTIONS: 'https://fleek.xyz/docs/platform/security-with-2fa#two-factor-authentication-settings',
-    FLEEK_DOCS_FUNCTIONS_LEARN_MORE: 'https://fleek.xyz/docs/platform/fleek-functions/',
-    FLEEK_DOCS_FUNCTIONS_FUTURE: 'https://fleek.xyz/docs/platform/fleek-functions#moving-fleek-functions-from-alpha-to-production',
-    FLEEK_DOCS_GIT_INTEGRATIONS: 'https://fleek.xyz/docs/platform/git_integrations/',
+    FLEEK_DOCS_2FA_EDIT:
+      'https://fleek.xyz/docs/platform/security-with-2fa#managing-two-factor-authentication',
+    FLEEK_DOCS_2FA_SETUP:
+      'https://fleek.xyz/docs/platform/security-with-2fa#configuring-two-factor-authentication',
+    FLEEK_DOCS_2FA_RECOVERY_CODES:
+      'https://fleek.xyz/docs/platform/security-with-2fa#configuring-two-factor-authentication',
+    FLEEK_DOCS_2FA_ACTIONS:
+      'https://fleek.xyz/docs/platform/security-with-2fa#two-factor-authentication-settings',
+    FLEEK_DOCS_FUNCTIONS_LEARN_MORE:
+      'https://fleek.xyz/docs/platform/fleek-functions/',
+    FLEEK_DOCS_FUNCTIONS_FUTURE:
+      'https://fleek.xyz/docs/platform/fleek-functions#moving-fleek-functions-from-alpha-to-production',
+    FLEEK_DOCS_GIT_INTEGRATIONS:
+      'https://fleek.xyz/docs/platform/git_integrations/',
     FLEEK_DOCS_IPFS: 'https://docs.ipfs.tech/',
-    MEDIA_KIT: 'https://fleek.notion.site/Fleek-Brand-Kit-9a2bcf7eb40740a9b7e951fc951b478a',
+    MEDIA_KIT:
+      'https://fleek.notion.site/Fleek-Brand-Kit-9a2bcf7eb40740a9b7e951fc951b478a',
   },
 
   ASSET_URL: {
@@ -142,8 +172,10 @@ export const constants = {
 
   ENS_TEXTS: {
     AUTOMATIC_DISABLED: {
-      DEFAULT: 'Automatic ENS setup is disabled, login with the wallet that owns the ENS name to enable it.',
-      WALLET_HAS_LINKED: 'Automatic ENS setup is disabled, the current wallet connected does not own the ENS name',
+      DEFAULT:
+        'Automatic ENS setup is disabled, login with the wallet that owns the ENS name to enable it.',
+      WALLET_HAS_LINKED:
+        'Automatic ENS setup is disabled, the current wallet connected does not own the ENS name',
     },
     WALLET_LOGGED_LINKED_WALLET:
       'You are currently connected to a wallet that does not own the ENS name. Another wallet linked to your Fleek account owns the ENS name, switch to that wallet to proceed.',
@@ -178,7 +210,8 @@ export const constants = {
       DELETE: 'PROJECT_DELETE',
       EDIT_NAME: 'PROJECT_EDIT_NAME',
       EDIT_AVATAR: 'PROJECT_EDIT_AVATAR',
-      EDIT_ACCESS_FROM_OFAC_COUNTRIES: 'PROJECT_EDIT_ACCESS_FROM_OFAC_COUNTRIES',
+      EDIT_ACCESS_FROM_OFAC_COUNTRIES:
+        'PROJECT_EDIT_ACCESS_FROM_OFAC_COUNTRIES',
     },
     STORAGE: {
       UPLOAD: 'STORAGE_UPLOAD',
@@ -255,10 +288,12 @@ export const constants = {
     },
   },
 
-  NO_PERMISSION_MESSAGE: "You don't have permission to do this, contact an owner to adjust your permissions",
+  NO_PERMISSION_MESSAGE:
+    "You don't have permission to do this, contact an owner to adjust your permissions",
 
   CONTRACTS: {
-    ENS_REGISTAR_CONTROLLER: '0x253553366Da8546fC250F225fe3d25d0C782303b' as `0x${string}`,
+    ENS_REGISTAR_CONTROLLER:
+      '0x253553366Da8546fC250F225fe3d25d0C782303b' as `0x${string}`,
   },
 
   BILLING: {
@@ -275,13 +310,15 @@ export const constants = {
       value: 'filecoin',
       label: 'Filecoin',
       icons: ['filecoin'],
-      disclaimer: 'Filecoin Deal ID’s can take up to 48 hours to propagate and display per file.',
+      disclaimer:
+        'Filecoin Deal ID’s can take up to 48 hours to propagate and display per file.',
     },
     all: {
       value: 'all',
       label: 'Filecoin & Arweave',
       icons: ['filecoin', 'arweave'],
-      disclaimer: 'Filecoin Deal ID’s can take up to 48 hours to propagate and display per file.',
+      disclaimer:
+        'Filecoin Deal ID’s can take up to 48 hours to propagate and display per file.',
     },
   } satisfies Record<StorageProviderValue, StorageProvider>,
 

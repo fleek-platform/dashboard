@@ -23,10 +23,15 @@ export const useSiteStopDeploy = () => {
   const cancelDeploy = useCallback(
     async (args: CancelDeployArgs) => {
       try {
-        const resultRedeploy = await stopDeployment({ where: { deploymentId: args.deploymentId } });
+        const resultRedeploy = await stopDeployment({
+          where: { deploymentId: args.deploymentId },
+        });
 
         if (!resultRedeploy.data?.stopDeployment) {
-          throw resultRedeploy.error || new Error(`Error cancelling deployment ${args.deploymentId}`);
+          throw (
+            resultRedeploy.error ||
+            new Error(`Error cancelling deployment ${args.deploymentId}`)
+          );
         }
 
         toast.success({ message: 'The deployment has been canceled' });
@@ -40,7 +45,7 @@ export const useSiteStopDeploy = () => {
         toast.error({ error, log: 'Failed to cancel deploy' });
       }
     },
-    [client, stopDeployment, toast]
+    [client, stopDeployment, toast],
   );
 
   return useMutation({ mutationFn: cancelDeploy });

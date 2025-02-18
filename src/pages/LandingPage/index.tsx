@@ -14,9 +14,7 @@ import { routes } from '@fleek-platform/utils-routes';
 import { constants } from '@/constants';
 
 const LoginButton = ({ title, handleLogIn }) => (
-  <Button onClick={handleLogIn}>
-    {title}
-  </Button>
+  <Button onClick={handleLogIn}>{title}</Button>
 );
 
 const HomePage = () => {
@@ -33,18 +31,18 @@ const HomePage = () => {
   return (
     <LandingPageProvider>
       <LayoutHead title={LayoutHead.titles.home} />
-       <Navbar.Container layout="template">
-         <Link href={routes.home()}>
-           <FleekLogo showTypography />
-         </Link>
+      <Navbar.Container layout="template">
+        <Link href={routes.home()}>
+          <FleekLogo showTypography />
+        </Link>
 
-         <Box className="flex-row gap-3 [grid-area:login]">
-           <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
-             <Button intent="neutral">Read docs</Button>
-           </ExternalLink>
-           <LoginButton title="Sign in" handleLogIn={handleLogIn} />
-         </Box>
-       </Navbar.Container>
+        <Box className="flex-row gap-3 [grid-area:login]">
+          <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
+            <Button intent="neutral">Read docs</Button>
+          </ExternalLink>
+          <LoginButton title="Sign in" handleLogIn={handleLogIn} />
+        </Box>
+      </Navbar.Container>
 
       <HomeStyles.Background.Wrapper>
         <HomeStyles.Background.Image />
@@ -54,7 +52,7 @@ const HomePage = () => {
       </HomeStyles.Background.Wrapper>
       <App.Footer />
     </LandingPageProvider>
-  )
+  );
 };
 
 HomePage.theme = 'dark';
