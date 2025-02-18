@@ -22,7 +22,7 @@
     "lint:unsafe": "pnpm exec biome lint --write --unsafe --changed --no-errors-on-unmatched ./src",
     "migrate:sync_from_monorepo": ".scripts/sync_code_from_monorepo",
     "perf:scan": ".scripts/perf_react_scan",
-    "preview:build": "pnpm exec bun .scripts/preview-server.ts",
+    "preview": "pnpm exec bun .scripts/preview-server.ts",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build -o .storybook/out",

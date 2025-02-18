@@ -215,7 +215,7 @@ The output directory is where all public files are stored and published.
 To preview the build locally, you can run the command:
 
 ```sh
-pnpm preview:build
+pnpm preview
 ```
 
 A HTTP server will serve the build output.
