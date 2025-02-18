@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { Auth } from '@/components/Auth';
 import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
-import { Providers } from '@/providers/Providers';
+import { Providers, LandingPageProvider } from '@/providers/Providers';
 import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
@@ -17,6 +17,9 @@ import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
 import { isServerSide } from '@/utils/isServerSide';
 import { getQueryParamsToObj } from '@/utils/url';
+// TODO: Rename the util as `cookies` (plural)
+import { cookies } from '@/utils/cookie';
+import HomePage from '@/pages/LandingPage';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -62,6 +65,14 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       query,
     });
   }, []);
+
+  const isAuthenticated = !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+
+  if (!isAuthenticated) return (
+    <LandingPageProvider forcedTheme={forcedTheme}>
+      <HomePage />
+    </LandingPageProvider>
+  );
 
   return (
     <>

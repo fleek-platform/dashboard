@@ -21,6 +21,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
   trailingSlash: true,
+  experimental: {
+    esmExternals: true,
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       return {
