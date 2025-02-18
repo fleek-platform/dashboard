@@ -1,19 +1,18 @@
-import { routes } from '@fleek-platform/utils-routes';
 import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
-import { constants } from '@/constants';
 import {
-  useCreateProjectMutation,
   useProjectsQuery,
+  useProjectQuery,
 } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
-import { Log } from '@/utils/log';
 
 import { useAuthContext } from './AuthProvider';
 import { useCookies } from './CookiesProvider';
+import { LoadingFullScreen } from '@/components/Loading';
 
 export type ProjectContext = {
   loading: boolean;
@@ -35,11 +34,18 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const auth = useAuthContext();
   const router = useRouter();
+  const pathname = usePathname();
   const cookies = useCookies();
-  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
+  const [projectsQuery] = useProjectsQuery({
     pause: !auth.accessToken,
+    variables: {
+      filter: {},
+    },
   });
-  const [, createProject] = useCreateProjectMutation();
+  const [projectQuery] = useProjectQuery({
+    variables: { where: { id: router.query.projectId! } },
+    pause: !router.query.projectId,
+  });
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
 
@@ -58,141 +64,25 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, [auth.accessToken]);
 
   useEffect(() => {
-    const { data, fetching } = projectsQuery;
-    const { accessToken } = auth;
+    if (!pathname || !cookies.values.projectId) return;
+    
+    const isProjectRoute = pathname.includes('[projectId]');
 
-    if (!data || !accessToken || fetching) {
-      return;
+    if (isProjectRoute) {
+      const { page, ...parsedProjectQueryRoute } = router.query;
+      router.replace({
+        query: { ...parsedProjectQueryRoute, projectId: cookies.values.projectId },
+      });
     }
-
-    const projects = data.projects.data;
-
-    if (projects.length === 0) {
-      const createInitialProject = async () => {
-        try {
-          await createProject({ data: { name: constants.FIRST_PROJECT_NAME } });
-          refetchProjectsQuery({ requestPolicy: 'network-only' });
-        } catch (error) {
-          // TODO: handle error
-          Log.error('Failed to create initial project', error);
-        }
-      };
-
-      createInitialProject();
-
-      return;
-    }
-
-    const changeProject = async (newProjectId: string) => {
-      const allowedProject = projects.find(
-        (project) => project.id === newProjectId,
-      );
-
-      if (!allowedProject) {
-        newProjectId = projects[0].id;
-      }
-
-      const redirect = async () => {
-        const shouldRedirect = router.pathname === routes.home();
-
-        if (shouldRedirect) {
-          // keep query on redirect
-          router.push({
-            pathname: routes.project.home({ projectId: newProjectId }),
-            query: router.query,
-          });
-        }
-
-        const isProjectRoute = router.pathname.includes('[projectId]');
-
-        if (isProjectRoute) {
-          const parsedProjectQueryRoute = { ...router.query };
-          delete parsedProjectQueryRoute.page;
-          delete parsedProjectQueryRoute.invitation;
-
-          return router.replace({
-            query: { ...parsedProjectQueryRoute, projectId: newProjectId },
-          });
-        }
-      };
-
-      const sameProject =
-        decodeAccessToken({ token: accessToken }).projectId === newProjectId;
-
-      if (sameProject && allowedProject) {
-        await redirect();
-
-        return;
-      }
-
-      try {
-        await auth.switchProjectAuth(newProjectId);
-        await redirect();
-        cookies.set('projectId', newProjectId);
-      } catch (error) {
-        Log.error('Failed to switch project', error);
-      }
-    };
-
-    changeProject(cookies.values.projectId ?? projects[0].id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookies.values.projectId, projectsQuery]);
-
-  useEffect(() => {
-    if (router.query.projectId) {
-      cookies.set('projectId', router.query.projectId);
-    }
-    // Update cookie on first run if it is present in the url
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cookies.values.projectId, pathname]);
 
   const project = useMemo(() => {
-    const { data } = projectsQuery;
-    const defaultProject = {
-      id: router.query.projectId || '',
-      name: 'Project',
-      currentUserMembership: {
-        permissionGroup: {
-          id: '',
-          name: '',
-          permissions: [],
-        },
-      },
-      updatedAt: '',
-    };
+    return projectQuery?.data?.project;
+  }, [cookies.values.projectId, projectQuery]);
 
-    if (!data) {
-      return defaultProject;
-    }
+  const isLoading = projectQuery.fetching || !projectQuery.data;
 
-    const projects = data.projects.data;
-
-    return (
-      projects.find((project) => project.id === cookies.values.projectId) ||
-      defaultProject
-    );
-  }, [cookies.values.projectId, projectsQuery, router]);
-
-  const isLoading = useMemo(() => {
-    if (!cookies.values.authToken) {
-      delete projectsQuery.data; // this is forcing a cache clean for when it has logout
-
-      return false;
-    }
-
-    if (cookies.values.authToken && !auth.accessToken) {
-      return true;
-    }
-
-    return !projectsQuery.data?.projects.data.some(
-      (listProject) => project.id === listProject.id,
-    );
-  }, [
-    projectsQuery.data,
-    project.id,
-    auth.accessToken,
-    cookies.values.authToken,
-  ]);
+  if (isLoading) return <LoadingFullScreen />;
 
   return (
     <Provider
