@@ -72,7 +72,7 @@ export const getQueryParamsToObj = (search: string) => {
   const query: Record<string, string> = {};
   for (const [key, value] of searchParams) {
     if (excludeQueryValues.includes(value)) continue;
-    
+
     query[key] = value;
   }
   return query;

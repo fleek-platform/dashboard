@@ -97,5 +97,5 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 };
 
 export default dynamic(() => Promise.resolve(App), {
-  ssr: false
+  ssr: false,
 });

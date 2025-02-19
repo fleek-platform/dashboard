@@ -77,7 +77,10 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       });
     }
 
-    if (!pathname.includes('[projectId]') && !pathname.includes(cookies.values.projectId)) {
+    if (
+      !pathname.includes('[projectId]') &&
+      !pathname.includes(cookies.values.projectId)
+    ) {
       router.push({
         pathname: routes.project.home({
           projectId: cookies.values.projectId,
