@@ -24,6 +24,9 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
+  // TODO: Check if build time lowers
+  // as long it doesn't cause issues
+  outputFileTracing: false,
   webpack: (config, { isServer }) => {
     if (!isServer) {
       return {
