@@ -1,3 +1,5 @@
+import { routes } from '@fleek-platform/utils-routes';
+
 import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -63,9 +65,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   useEffect(() => {
     if (!pathname || !cookies.values.projectId) return;
 
-    const isProjectRoute = pathname.includes('[projectId]');
-
-    if (isProjectRoute) {
+    if (pathname.includes('[projectId]')) {
       const { page, ...parsedProjectQueryRoute } = router.query;
       router.replace({
         query: {
@@ -73,7 +73,16 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
           projectId: cookies.values.projectId,
         },
       });
+
+      return;
     }
+
+    router.push({
+      pathname: routes.project.home({
+        projectId: cookies.values.projectId,
+      }),
+      query: router.query,
+    });
   }, [cookies.values.projectId, pathname]);
 
   const project = useMemo(() => {
