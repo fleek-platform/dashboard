@@ -1,8 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
-import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useCallback, useEffect, useState } from 'react';
 
-import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
 import {
   AuthProviders,
@@ -10,13 +8,12 @@ import {
   useAuthProviders,
 } from '@/hooks/useAuthProviders';
 import { useLogout } from '@/hooks/useLogout';
-import { useRouter } from '@/hooks/useRouter';
-import { usePathname } from 'next/navigation';
 import { createContext } from '@/utils/createContext';
-import { getQueryParamsToObj } from '@/utils/url';
-import { isServerSide } from '@/utils/isServerSide';
+import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
+import { getQueryParamsToObj } from '@/utils/url';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export type AuthContext = {
   loading: boolean;
@@ -43,18 +40,15 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { logout } = useLogout();
   const cookies = useCookies();
-
+console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  const pathname = usePathname();
-
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
-  const authenticatedProvider = providersValues.find(
-    (provider) => provider.authToken,
-  );
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
@@ -92,14 +86,18 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
+      console.log(`[debug] AuthProvider: switchProjectAuth: 1`)
       const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
+        console.log(`[debug] AuthProvider: switchProjectAuth: 2`)
+        // TODO: Should pass query/search?
         // if in site page, redirect to sites list first
-        if (router.query.siteId) {
-          await router.replace(routes.project.site.list({ projectId }));
-          delete router.query.siteId;
-        }
+        // if (router.query.siteId) {
+        //   console.log(`[debug] AuthProvider: switchProjectAuth: 3`)
+        //   await router.replace(routes.project.site.list({ projectId }));
+        //   delete router.query.siteId;
+        // }
 
         return requestAccessToken(provider, projectId);
       }
@@ -116,60 +114,80 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // this will require changes in the login-button
     // which seems to already do it but sets projectId
     // in the state
+    // if (
+    //   !cookies.values.accessToken ||
+    //   !cookies.values.authToken ||
+    //   !cookies.values.projectId
+    // ) {
+    //   if (pathname !== routes.home()) {
+    //     const search = !isServerSide() ? window.location.search : '';
+
+    //     const query = getQueryParamsToObj(search);
+
+    //     console.log(`[debug] AuthProvider: query = ${JSON.stringify(query)}`)
+    //     console.log(`[debug] AuthProvider: search = ${JSON.stringify(search)}`)
+
+    //     router.push({
+    //       pathname: routes.home(),
+    //       query,
+    //     });
+    //   }
+
+    //   return;
+    // }
     if (
       !cookies.values.accessToken ||
       !cookies.values.authToken ||
       !cookies.values.projectId
     ) {
-      if (pathname !== routes.home()) {
-        const search = !isServerSide() ? window.location.search : '';
-
-        const query = getQueryParamsToObj(search);
-
-        router.push({
-          pathname: routes.home(),
-          query,
-        });
-      }
+      console.log(`[debug] AuthProvider: return`)
 
       return;
     }
 
-    const projectId = decodeAccessToken({
-      token: cookies.values.accessToken,
-    }).projectId;
+    // const projectId = decodeAccessToken({
+    //   token: cookies.values.accessToken,
+    // }).projectId;
 
-    if (!projectId) {
-      logout();
+    // if (!projectId) {
+    //   logout();
 
-      return;
-    }
+    //   return;
+    // }
 
     // TODO: Check in which circumstances the redirectURl
     // is set
-    if (redirectUrl) {
-      router.push(redirectUrl.replace('[projectid]', projectId));
+    // if (redirectUrl) {
+    //   console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
 
-      setRedirectUrl(null);
+    //   router.push(redirectUrl.replace('[projectid]', projectId));
 
-      return;
-    }
+    //   setRedirectUrl(null);
+
+    //   return;
+    // }
 
     // At this stage the user is determined
     // to have a "valid" accessToken
     // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      const search = !isServerSide() ? window.location.search : '';
+      const search = window.location.search;
 
       const query = getQueryParamsToObj(search);
 
+      console.log(`[debug] AuthProvider: path == home: query = ${JSON.stringify(query)}`)
+
       // keep query on redirect
-      router.push({
-        pathname: routes.project.home({ projectId }),
-        query,
-      });
+      // router.push({
+      //   pathname: routes.project.home({ projectId: cookies.values.projectId }),
+      //   query: {
+      //     foobarium: 90909090,
+      //     dolarium: 145221221,
+      //   },
+      // });
+      window.location.href = `${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
-  }, [cookies.values.accessToken, redirectUrl, router, logout]);
+  }, [cookies.values.accessToken, router, logout]);
 
   return (
     <Provider
