@@ -81,6 +81,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !pathname.includes('[projectId]') &&
       !pathname.includes(cookies.values.projectId)
     ) {
+      setIsLoading(true);
       router.push({
         pathname: routes.project.home({
           projectId: cookies.values.projectId,
