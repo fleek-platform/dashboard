@@ -12,8 +12,7 @@ import { createContext } from '@/utils/createContext';
 import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
-import { getQueryParamsToObj } from '@/utils/url';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router'
 
 export type AuthContext = {
   loading: boolean;
@@ -40,14 +39,12 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { logout } = useLogout();
   const cookies = useCookies();
-console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const login = useCallback(
@@ -86,11 +83,9 @@ console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
-      console.log(`[debug] AuthProvider: switchProjectAuth: 1`)
       const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
-        console.log(`[debug] AuthProvider: switchProjectAuth: 2`)
         // TODO: Should pass query/search?
         // if in site page, redirect to sites list first
         // if (router.query.siteId) {
@@ -108,86 +103,27 @@ console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
   );
 
   useEffect(() => {
-    // TODO: Always get projectId from decoding cookie
-    // remove need for cookies.values.projectId
-    // wherever found
-    // this will require changes in the login-button
-    // which seems to already do it but sets projectId
-    // in the state
-    // if (
-    //   !cookies.values.accessToken ||
-    //   !cookies.values.authToken ||
-    //   !cookies.values.projectId
-    // ) {
-    //   if (pathname !== routes.home()) {
-    //     const search = !isServerSide() ? window.location.search : '';
-
-    //     const query = getQueryParamsToObj(search);
-
-    //     console.log(`[debug] AuthProvider: query = ${JSON.stringify(query)}`)
-    //     console.log(`[debug] AuthProvider: search = ${JSON.stringify(search)}`)
-
-    //     router.push({
-    //       pathname: routes.home(),
-    //       query,
-    //     });
-    //   }
-
-    //   return;
-    // }
     if (
       !cookies.values.accessToken ||
       !cookies.values.authToken ||
       !cookies.values.projectId
-    ) {
-      console.log(`[debug] AuthProvider: return`)
+    )  {
+      if (pathname !== routes.home()) {
+        router.push({
+          pathname: routes.home(),
+        });
+      }
 
       return;
-    }
-
-    // const projectId = decodeAccessToken({
-    //   token: cookies.values.accessToken,
-    // }).projectId;
-
-    // if (!projectId) {
-    //   logout();
-
-    //   return;
-    // }
-
-    // TODO: Check in which circumstances the redirectURl
-    // is set
-    // if (redirectUrl) {
-    //   console.log(`[debug] AuthProvider: redirectUrl = ${redirectUrl}`)
-
-    //   router.push(redirectUrl.replace('[projectid]', projectId));
-
-    //   setRedirectUrl(null);
-
-    //   return;
-    // }
+    };
 
     // At this stage the user is determined
     // to have a "valid" accessToken
     // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      const search = window.location.search;
-
-      const query = getQueryParamsToObj(search);
-
-      console.log(`[debug] AuthProvider: path == home: query = ${JSON.stringify(query)}`)
-
-      // keep query on redirect
-      // router.push({
-      //   pathname: routes.project.home({ projectId: cookies.values.projectId }),
-      //   query: {
-      //     foobarium: 90909090,
-      //     dolarium: 145221221,
-      //   },
-      // });
       window.location.href = `${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
-  }, [cookies.values.accessToken, router, logout]);
+  }, [cookies.values.accessToken, router, logout, pathname]);
 
   return (
     <Provider

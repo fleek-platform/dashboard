@@ -58,7 +58,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     const search = !isServerSide() ? window.location.search : '';
 
     const query = getQueryParamsToObj(search);
-
     router.push({
       pathname,
       query,

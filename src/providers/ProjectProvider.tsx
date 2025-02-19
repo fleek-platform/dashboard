@@ -12,6 +12,7 @@ import { createContext } from '@/utils/createContext';
 import { useAuthContext } from './AuthProvider';
 import { useCookies } from './CookiesProvider';
 import { LoadingFullScreen } from '@/components/Loading';
+import { getQueryParamsToObj } from '@/utils/url';
 
 const LOADING_MIN_TIMEOUT = 800;
 
@@ -69,12 +70,10 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     if (!pathname || !cookies.values.projectId) return;
 
     if (pathname.includes('[projectId]')) {
-      const { page, ...parsedProjectQueryRoute } = router.query;
+      const query = getQueryParamsToObj(window.location.search);
       router.replace({
-        query: {
-          ...parsedProjectQueryRoute,
-          projectId: cookies.values.projectId,
-        },
+        query,
+        pathname: pathname.replace('[projectId]', cookies.values.projectId),
       });
     }
 

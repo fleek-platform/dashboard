@@ -23,7 +23,6 @@ import { Page } from '@/types/App';
 const useFetchInvitation = () => {
   const auth = useAuthContext();
   const router = useRouter();
-
   const invitationHash = router.query.invitation;
   const [cachedInvitationHash, setCachedInvitationHash] =
     useState(invitationHash);
@@ -68,6 +67,7 @@ const HomePage: Page = () => {
     },
     pause: !session.accesTokenProjectId,
   });
+
   useListFolderQuery({
     variables: {
       where: {},

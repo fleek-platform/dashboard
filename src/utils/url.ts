@@ -65,10 +65,14 @@ export const joinUrl = (
 export const removeLeadingAndTrailingSlashes = (segment: string) =>
   segment.replace(/^\/+|\/+$/g, '');
 
+const excludeQueryValues = ['[projectId]'];
+
 export const getQueryParamsToObj = (search: string) => {
   const searchParams = !isServerSide() ? new URLSearchParams(search) : [];
   const query: Record<string, string> = {};
   for (const [key, value] of searchParams) {
+    if (excludeQueryValues.includes(value)) continue;
+    
     query[key] = value;
   }
   return query;
