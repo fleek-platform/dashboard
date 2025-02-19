@@ -13,6 +13,8 @@ import { useAuthContext } from './AuthProvider';
 import { useCookies } from './CookiesProvider';
 import { LoadingFullScreen } from '@/components/Loading';
 
+const LOADING_MIN_TIMEOUT = 800;
+
 export type ProjectContext = {
   loading: boolean;
   project: ProjectList[0];
@@ -31,6 +33,7 @@ const [Provider, useContext] = createContext<ProjectContext>({
 export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const auth = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
@@ -73,23 +76,29 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
           projectId: cookies.values.projectId,
         },
       });
-
-      return;
     }
 
-    router.push({
-      pathname: routes.project.home({
-        projectId: cookies.values.projectId,
-      }),
-      query: router.query,
-    });
+    if (!pathname.includes('[projectId]') && !pathname.includes(cookies.values.projectId)) {
+      router.push({
+        pathname: routes.project.home({
+          projectId: cookies.values.projectId,
+        }),
+        query: router.query,
+      });
+    }
   }, [cookies.values.projectId, pathname]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(projectQuery.fetching || !projectQuery.data);
+    }, LOADING_MIN_TIMEOUT);
+
+    return () => clearTimeout(timer);
+  }, [projectQuery.fetching, projectQuery.data]);
 
   const project = useMemo(() => {
     return projectQuery?.data?.project;
   }, [cookies.values.projectId, projectQuery]);
-
-  const isLoading = projectQuery.fetching || !projectQuery.data;
 
   if (isLoading) return <LoadingFullScreen />;
 

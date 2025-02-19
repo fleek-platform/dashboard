@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 import LogRocket from 'logrocket';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import { Auth } from '@/components/Auth';
 import { FeedbackModal, ToastsContainer } from '@/components';
@@ -96,4 +97,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   );
 };
 
-export default App;
+export default dynamic(() => Promise.resolve(App), {
+  ssr: false
+});
