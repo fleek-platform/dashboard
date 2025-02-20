@@ -4,7 +4,7 @@ import { getLinkPartsForSiteSlug, getLinkForSiteSlug } from './siteSlugLinks';
 vi.mock('../secrets', () => ({
   secrets: {
     NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN: 'on-fleek.app',
-  }
+  },
 }));
 
 describe('Utils siteSlugLinks', () => {

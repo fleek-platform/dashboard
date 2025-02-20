@@ -105,8 +105,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const loading =
-        !project && projectsQuery.fetching;
+      const loading = !project && projectsQuery.fetching;
       setIsLoading(loading);
     }, LOADING_MIN_TIMEOUT);
 
