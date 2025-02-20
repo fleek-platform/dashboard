@@ -48,7 +48,7 @@ const operations = [
   { name: 'invitations', data: invitations.data },
 ];
 
-describe.skip('On Project settings page', () => {
+describe('On Project settings page', () => {
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
       await page.context().addCookies([
@@ -156,7 +156,7 @@ describe.skip('On Project settings page', () => {
         page.getByRole('menuitem', { name: 'settings' }).click();
         const url = `http://${hostname}:${port}/projects/${projectId}/settings/`;
         await page.waitForURL(url);
-        await page.getByText('Local development').waitFor();
+        await page.getByText('Project Name').first().waitFor();
       });
 
       // afterEach(async ({ page }) => {
