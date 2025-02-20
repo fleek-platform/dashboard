@@ -2,6 +2,7 @@ import { test as it, expect } from '@playwright/test';
 import { latestBlogPosts } from '../data/fleekWebsiteJsonApi';
 import {
   me,
+  project,
   projects,
   listFolder,
   templates,
@@ -20,6 +21,7 @@ const projectId = 'cls4v91mt0001l708wu51eozd';
 
 const operations = [
   { name: 'me', data: me.data },
+  { name: 'project', data: project.data },
   { name: 'projects', data: projects.data },
   { name: 'listFolder', data: listFolder.data },
   { name: 'templates', data: templates.data },

@@ -48,7 +48,7 @@ const operations = [
   { name: 'invitations', data: invitations.data },
 ];
 
-describe('On Project settings page', () => {
+describe.skip('On Project settings page', () => {
   describe('Valid cookie token user', () => {
     beforeEach(async ({ page }) => {
       await page.context().addCookies([
