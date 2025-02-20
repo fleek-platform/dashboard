@@ -71,7 +71,9 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // which causes data to have to be available
     // for this reason the lookup is in list of projects
     // instead of projectQuery.data.project
-    return projectsQuery?.data?.projects?.data.find((project) => project.id === cookies.values.projectId);
+    return projectsQuery?.data?.projects?.data.find(
+      (project) => project.id === cookies.values.projectId,
+    );
   })();
 
   useEffect(() => {
@@ -107,7 +109,8 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const loading = !project && (projectQuery.fetching || projectsQuery.fetching);
+      const loading =
+        !project && (projectQuery.fetching || projectsQuery.fetching);
       setIsLoading(loading);
     }, LOADING_MIN_TIMEOUT);
 
