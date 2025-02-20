@@ -12,7 +12,7 @@ import { createContext } from '@/utils/createContext';
 import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 export type AuthContext = {
   loading: boolean;
@@ -107,7 +107,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.accessToken ||
       !cookies.values.authToken ||
       !cookies.values.projectId
-    )  {
+    ) {
       if (pathname !== routes.home()) {
         router.push({
           pathname: routes.home(),
@@ -115,7 +115,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       return;
-    };
+    }
 
     // At this stage the user is determined
     // to have a "valid" accessToken
