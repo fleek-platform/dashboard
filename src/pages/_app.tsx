@@ -7,7 +7,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-import { Auth } from '@/components/Auth';
 import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers, LandingPageProvider } from '@/providers/Providers';
