@@ -13,6 +13,10 @@ export const FLEEK_TEMPLATES_URLS = {
   templatesUrl: joinUrl(websiteBaseUrl, templatesUrl),
 };
 
+console.log(`[debug] src/utils/template: FLEEK_TEMPLATES_URLS  = `, JSON.stringify({
+  FLEEK_TEMPLATES_URLS,
+}))
+
 // eslint-disable-next-line fleek-custom/valid-argument-types
 export const transformTemplate = (templateJson: TemplateJson): TemplatePart => {
   return {
