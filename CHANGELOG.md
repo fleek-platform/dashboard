@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.3.1
+
+### Patch Changes
+
+- cbac449: Amend home and project test specs
+
 ## 0.3.0
 
 ### Minor Changes
