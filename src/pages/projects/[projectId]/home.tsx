@@ -116,7 +116,6 @@ const HomePage: Page = () => {
   };
 
   const handleDeclineInvitation = async () => {
-    console.log(`[debug] [projectId]/home.tsx: handleDeclineInvitation: 1`)
     try {
       const declineInvitationResult = await declineInvitation({
         where: { hash: invitation!.hash },

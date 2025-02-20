@@ -74,8 +74,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       </LandingPageProvider>
     );
 
-  console.log(`[debug] _app.tsx: pathname = ${pathname}`);
-
   return (
     <>
       {!noCanonical && (

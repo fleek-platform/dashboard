@@ -46,7 +46,6 @@ export const ManageProjects: React.FC = () => {
   }
 
   const handleViewProject = ({ projectId }: HandleViewProjectProps) => {
-    console.log(`[debug] src/fragments/Profile/Settings/Sections/ManageProjects.tsx: handleViewProject: 1`)
     cookies.set('projectId', projectId);
     router.push(routes.project.home({ projectId }));
   };

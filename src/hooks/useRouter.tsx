@@ -5,6 +5,7 @@ import { NextRouter } from 'next/router';
 export const useRouter = () => {
   const router: NextRouter & {
     query: {
+      // TODO: This is suspicious. Do we need projectId as URL query param?
       projectId?: string;
       siteId?: string;
       domainId?: string;

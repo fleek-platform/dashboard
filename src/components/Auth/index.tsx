@@ -14,7 +14,6 @@ interface AuthProps {
 
 // TODO: This component can be deleted?
 export const Auth: FC<AuthProps> = ({ children }) => {
-  console.log(`[debug] src/components/Auth: 1`)
   const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);

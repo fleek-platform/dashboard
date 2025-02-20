@@ -12,7 +12,7 @@ import { createContext } from '@/utils/createContext';
 import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 export type AuthContext = {
   loading: boolean;
@@ -35,7 +35,6 @@ const [Provider, useContext] = createContext<AuthContext>({
 export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  console.log(`[debug] AuthProvider.tsx: 1`)
   const [accessToken, setAccessToken] = useAuthCookie();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { logout } = useLogout();
@@ -50,7 +49,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const login = useCallback(
     (providerName: AuthProviders, redirectUrl?: string) => {
-        console.log(`[debug] AuthProvider.tsx: login: 1`)
       if (redirectUrl) {
         setRedirectUrl(redirectUrl);
       }
@@ -63,8 +61,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const requestAccessToken = useCallback(
     async (provider: AuthWith, projectId?: string) => {
-        console.log(`[debug] AuthProvider.tsx: requestAccessToken`)
-
       if (loading) {
         return;
       }
@@ -87,7 +83,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   const switchProjectAuth = useCallback(
     async (projectId: string) => {
-      console.log(`[debug] AuthProvider.tsx: switchProjectAuth: 1`)
       const provider = providersValues.find((provider) => provider.authToken);
 
       if (provider) {
@@ -98,7 +93,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         //   await router.replace(routes.project.site.list({ projectId }));
         //   delete router.query.siteId;
         // }
-        console.log(`[debug] AuthProvider.tsx: switchProjectAuth: requestAccessToken`)
 
         return requestAccessToken(provider, projectId);
       }
@@ -113,8 +107,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.accessToken ||
       !cookies.values.authToken ||
       !cookies.values.projectId
-    ) {
-      console.log(`[debug] AuthProvider.tsx: AuthProvider: !cookies accessToken,authToken,projectId: 1`)
+    )  {
       if (pathname !== routes.home()) {
         router.push({
           pathname: routes.home(),
@@ -122,19 +115,15 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       }
 
       return;
-    }
+    };
 
     // At this stage the user is determined
     // to have a "valid" accessToken
     // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      console.log(`[debug] AuthProvider.tsx: AuthProvider: !not home: 1`)
-
       window.location.href = `${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
   }, [cookies.values.accessToken, router, logout, pathname]);
-
-  console.log(`[debug] AuthProvider.tsx: before return <></>`)
 
   return (
     <Provider
