@@ -45,32 +45,32 @@ jobs:
       # generated after a succesful test
       # We can use this information to prevent
       # executing test runs for unchanged source
-      - name: Check for test run hash
-        id: has_test_run_hash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ghToken="$GITHUB_TOKEN"
-          orgRepo="fleek-platform/dashboard"
-          targetArtifactFilename="test_run_hash"
+      # - name: Check for test run hash
+      #   id: has_test_run_hash
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     ghToken="$GITHUB_TOKEN"
+      #     orgRepo="fleek-platform/dashboard"
+      #     targetArtifactFilename="test_run_hash"
 
-          if ! .scripts/download_artifact "$ghToken" "$orgRepo" "$targetArtifactFilename"; then
-            echo "👹 Oops! Failed to download artifact $targetArtifactFilename"
-            exit 1
-          fi
+      #     if ! .scripts/download_artifact "$ghToken" "$orgRepo" "$targetArtifactFilename"; then
+      #       echo "👹 Oops! Failed to download artifact $targetArtifactFilename"
+      #       exit 1
+      #     fi
 
-          source .scripts/test_runner_vars
-          current_hash=$(.scripts/hash_dir "$csv_paths")
-          expected="[TEST_RUN] $current_hash"
-          artifact_content=$(cat "$targetArtifactFilename")
+      #     source .scripts/test_runner_vars
+      #     current_hash=$(.scripts/hash_dir "$csv_paths")
+      #     expected="[TEST_RUN] $current_hash"
+      #     artifact_content=$(cat "$targetArtifactFilename")
 
-          if [[ "$artifact_content" = "$expected" ]]; then
-            echo "match=true" >> "$GITHUB_OUTPUT"
-            echo "✅ Found a test run hash"
-          else
-            echo "match=false" >> "$GITHUB_OUTPUT"
-            echo "⚠️A test run hash wasn't found"
-          fi
+      #     if [[ "$artifact_content" = "$expected" ]]; then
+      #       echo "match=true" >> "$GITHUB_OUTPUT"
+      #       echo "✅ Found a test run hash"
+      #     else
+      #       echo "match=false" >> "$GITHUB_OUTPUT"
+      #       echo "⚠️A test run hash wasn't found"
+      #     fi
 
       # It checks if a test has already run
       # for the current source state

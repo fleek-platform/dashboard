@@ -1,0 +1,69 @@
+name: 'Setup Deployment Environment'
+description: 'Prepares the environment for deployment including Doppler, Fleek, and other configurations'
+
+inputs:
+  doppler-token:
+    required: true
+    description: 'Doppler token for authentication'
+  doppler-project:
+    required: true
+    description: 'Doppler project name'
+  doppler-config:
+    required: true
+    description: 'Doppler configuration name'
+  fleek-slug:
+    required: true
+    description: 'Fleek site slug'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - uses: ./.github/actions/setup-nodejs
+
+    - name: Install Doppler CLI
+      uses: dopplerhq/cli-action@v3
+
+    - name: Setup Doppler
+      shell: bash
+      run: |
+        doppler configure set token ${{ inputs.doppler-token }}
+        doppler configure set project ${{ inputs.doppler-project }}
+        doppler configure set config ${{ inputs.doppler-config }}
+
+    - name: Env vars health check
+      shell: bash
+      run: |
+        if ! doppler run -- printenv | grep -q 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL'; then
+          echo "👹 Oops! Missing required environment variable during health check..."
+          exit 1           
+        fi
+        echo "🚑 Doppler envVars seem healthy!"
+
+    - name: Setup dotenv
+      shell: bash
+      run: .scripts/setup-ci-dotenv
+
+    - name: Install Fleek CLI
+      shell: bash
+      run: pnpm i -g @fleek-platform/cli
+
+    - name: Install Packages
+      shell: bash
+      run: pnpm install
+
+    - name: Setup fleek.config.json
+      shell: bash
+      run: |
+        DIST="out"
+        BUILD="pnpm run build"
+        
+        .scripts/setup-fleek-config \
+          "${{ inputs.fleek-slug }}" \
+          "$DIST" \
+          "$BUILD"
