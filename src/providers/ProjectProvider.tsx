@@ -66,6 +66,14 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     }
   }, [auth.accessToken]);
 
+  const project = (() => {
+    // WARNING: Unfortunately, app uses waterfall architecture
+    // which causes data to have to be available
+    // for this reason the lookup is in list of projects
+    // instead of projectQuery.data.project
+    return projectsQuery?.data?.projects?.data.find((project) => project.id === cookies.values.projectId);
+  })();
+
   useEffect(() => {
     if (!pathname || !cookies.values.projectId) return;
 
@@ -99,15 +107,12 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(projectQuery.fetching || !projectQuery.data);
+      const loading = !project && (projectQuery.fetching || projectsQuery.fetching);
+      setIsLoading(loading);
     }, LOADING_MIN_TIMEOUT);
 
     return () => clearTimeout(timer);
-  }, [projectQuery.fetching, projectQuery.data]);
-
-  const project = useMemo(() => {
-    return projectQuery?.data?.project;
-  }, [cookies.values.projectId, projectQuery]);
+  }, [project, projectQuery.fetching, projectQuery.data]);
 
   if (isLoading) return <LoadingFullScreen />;
 
