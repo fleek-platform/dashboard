@@ -69,16 +69,17 @@ jobs:
 
           echo "[debug] test-runner: current_hash = $current_hash"
           echo "[debug] test-runner: targetartifactfilename = $targetartifactfilename"
+          echo "[debug] test-runner: GITHUB_OUTPUT= $GITHUB_OUTPUT"
 
           expected="[test_run] $current_hash"
           artifact_content=$(cat "$targetartifactfilename")
           echo "[debug] test-runner: 2"
 
           if [[ "$artifact_content" = "$expected" ]]; then
-            echo "match=true" >> "$github_output"
+            echo "match=true" >> "$GITHUB_OUTPUT"
             echo "✅ found a test run hash"
           else
-            echo "match=false" >> "$github_output"
+            echo "match=false" >> "$GITHUB_OUTPUT"
             echo "⚠️a test run hash wasn't found"
           fi
 
