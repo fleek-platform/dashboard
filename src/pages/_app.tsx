@@ -74,6 +74,8 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       </LandingPageProvider>
     );
 
+  console.log(`[debug] _app.tsx: pathname = ${pathname}`);
+
   return (
     <>
       {!noCanonical && (
@@ -86,11 +88,9 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         </Head>
       )}
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
-        <Auth>
-          {getLayout(<Component {...pageProps} />)}
-          <ToastsContainer />
-          <FeedbackModal />
-        </Auth>
+        {getLayout(<Component {...pageProps} />)}
+        <ToastsContainer />
+        <FeedbackModal />
       </Providers>
     </>
   );

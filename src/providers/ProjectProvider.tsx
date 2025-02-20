@@ -69,7 +69,11 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   useEffect(() => {
     if (!pathname || !cookies.values.projectId) return;
 
+    console.log(`[debug] ProjectProvider: useEffect: 1`)
+
+    // TODO: AuthProvider already has a concurrent method?
     if (pathname.includes('[projectId]')) {
+      console.log(`[debug] ProjectProvider: useEffect: 2`)
       const query = getQueryParamsToObj(window.location.search);
       router.replace({
         query,
@@ -81,6 +85,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !pathname.includes('[projectId]') &&
       !pathname.includes(cookies.values.projectId)
     ) {
+      console.log(`[debug] ProjectProvider: useEffect: 3`)
       setIsLoading(true);
       router.push({
         pathname: routes.project.home({
@@ -89,6 +94,8 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
         query: router.query,
       });
     }
+
+    console.log(`[debug] ProjectProvider: pathname = ${pathname}`)
   }, [cookies.values.projectId, pathname]);
 
   useEffect(() => {
