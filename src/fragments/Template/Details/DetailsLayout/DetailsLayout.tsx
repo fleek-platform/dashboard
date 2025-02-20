@@ -6,6 +6,7 @@ import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { Box } from '@/ui';
 
 import { SubmitFooter } from '../../SubmitFooter/SubmitFooter';
+import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
 
 export type DetailsLayout = React.PropsWithChildren<{
   nav?: React.ReactNode | React.ReactNode[];
@@ -32,7 +33,7 @@ export const DetailsLayout: React.FC<DetailsLayout> = ({
             {
               icon: 'arrow-left',
               label: 'Go back',
-              path: routes.template.list(),
+              path: FLEEK_TEMPLATES_URLS.templatesUrl,
               isExact: true,
               variant: 'primary',
               hasAccess: true,

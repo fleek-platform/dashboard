@@ -7,6 +7,7 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Button, Menu } from '@/ui';
+import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
 
 export const AddNewDropdown: React.FC = () => {
   const session = useSessionContext();
@@ -55,7 +56,7 @@ export const AddNewDropdown: React.FC = () => {
               <DropdownItem
                 text="Use a template"
                 icon="dashboard"
-                href={routes.template.list()}
+                href={FLEEK_TEMPLATES_URLS.templatesUrl}
                 isBillingRestricted={billingRestriction.hasReachedLimit}
                 openRestrictionModal={() => setIsModalOpen(true)}
               />

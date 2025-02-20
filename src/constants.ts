@@ -326,7 +326,6 @@ export const constants = {
     routes.paymentCallback(),
     routes.githubCallback(),
     routes.home(),
-    routes.template.list(),
     routes.template.indexed({ templateId: '[templateId]' }),
     routes.migration(),
     routes.ipfsPropagation.index(),
