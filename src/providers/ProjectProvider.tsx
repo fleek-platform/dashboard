@@ -4,7 +4,7 @@ import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
-import { useProjectsQuery, useProjectQuery } from '@/generated/graphqlClient';
+import { useProjectsQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
@@ -44,10 +44,6 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     variables: {
       filter: {},
     },
-  });
-  const [projectQuery] = useProjectQuery({
-    variables: { where: { id: router.query.projectId! } },
-    pause: !router.query.projectId,
   });
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
@@ -110,12 +106,12 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       const loading =
-        !project && (projectQuery.fetching || projectsQuery.fetching);
+        !project && projectsQuery.fetching;
       setIsLoading(loading);
     }, LOADING_MIN_TIMEOUT);
 
     return () => clearTimeout(timer);
-  }, [project, projectQuery.fetching, projectQuery.data]);
+  }, [project, projectsQuery.data]);
 
   if (isLoading) return <LoadingFullScreen />;
 
