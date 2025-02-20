@@ -14,7 +14,7 @@ import { useCookies } from './CookiesProvider';
 import { LoadingFullScreen } from '@/components/Loading';
 import { getQueryParamsToObj } from '@/utils/url';
 
-const LOADING_MIN_TIMEOUT = 800;
+const LOADING_MIN_TIMEOUT = 400;
 
 export type ProjectContext = {
   loading: boolean;
