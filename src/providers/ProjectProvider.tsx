@@ -1,21 +1,20 @@
 import { routes } from '@fleek-platform/utils-routes';
+
 import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
-import { constants } from '@/constants';
-import {
-  useCreateProjectMutation,
-  useProjectsQuery,
-} from '@/generated/graphqlClient';
+import { useProjectsQuery, useProjectQuery } from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { ProjectList } from '@/types/Project';
 import { createContext } from '@/utils/createContext';
-import { Log } from '@/utils/log';
 
 import { useAuthContext } from './AuthProvider';
 import { useCookies } from './CookiesProvider';
-import { useLogout } from '@/hooks/useLogout';
+import { LoadingFullScreen } from '@/components/Loading';
+import { getQueryParamsToObj } from '@/utils/url';
+
+const LOADING_MIN_TIMEOUT = 400;
 
 export type ProjectContext = {
   loading: boolean;
@@ -35,18 +34,21 @@ const [Provider, useContext] = createContext<ProjectContext>({
 export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const auth = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
   const cookies = useCookies();
-  const [projectsQuery, refetchProjectsQuery] = useProjectsQuery({
+  const [projectsQuery] = useProjectsQuery({
     pause: !auth.accessToken,
     variables: {
       filter: {},
     },
   });
-  const { logout } = useLogout();
-  const [, createProject] = useCreateProjectMutation();
+  const [projectQuery] = useProjectQuery({
+    variables: { where: { id: router.query.projectId! } },
+    pause: !router.query.projectId,
+  });
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
 
@@ -65,198 +67,51 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, [auth.accessToken]);
 
   useEffect(() => {
-    const { data, fetching } = projectsQuery;
-    const { accessToken } = auth;
+    if (!pathname || !cookies.values.projectId) return;
 
-    if (!data || !accessToken || fetching) {
-      return;
+    console.log(`[debug] ProjectProvider: useEffect: 1`)
+
+    // TODO: AuthProvider already has a concurrent method?
+    if (pathname.includes('[projectId]')) {
+      console.log(`[debug] ProjectProvider: useEffect: 2`)
+      const query = getQueryParamsToObj(window.location.search);
+      router.replace({
+        query,
+        pathname: pathname.replace('[projectId]', cookies.values.projectId),
+      });
     }
 
-    const projects = data.projects.data;
-
-    // TODO: This should be removed?
-    // given the introduction of the new endpoint
-    // to replace loginWithDynamic
-    // if (projects.length === 0) {
-    //   const createInitialProject = async () => {
-    //     try {
-    //       await createProject({ data: { name: constants.FIRST_PROJECT_NAME } });
-    //       refetchProjectsQuery({ requestPolicy: 'network-only' });
-    //     } catch (error) {
-    //       // TODO: handle error
-    //       Log.error('Failed to create initial project', error);
-    //     }
-    //   };
-
-    //   createInitialProject();
-
-    //   return;
-    // }
-
-    const changeProject = async (newProjectId: string) => {
-      console.log(`[debug] ProjectProvider: changeProject: 1`)
-      const allowedProject = projects.find(
-        (project) => project.id === newProjectId,
-      );
-      console.log(`[debug] ProjectProvider: changeProject: 2`)
-
-      if (!allowedProject) {
-        newProjectId = projects[0].id;
-      }
-      console.log(`[debug] ProjectProvider: changeProject: 3`)
-
-      const redirect = async () => {
-              console.log(`[debug] ProjectProvider: changeProject: redirect: 1`)
-
-        const shouldRedirect = router.pathname === routes.home();
-              console.log(`[debug] ProjectProvider: changeProject: redirect: shouldR`, shouldRedirect)
-
-        if (shouldRedirect) {
-          // keep query on redirect
-          router.push({
-            pathname: routes.project.home({ projectId: newProjectId }),
-            query: router.query,
-          });
-        }
-              console.log(`[debug] ProjectProvider: changeProject: redirect: 2:`, {
-                pathname,
-                routerPathname: router.pathname,
-              })
-
-        const isProjectRoute = pathname.includes('[projectId]');
-        // const isProjectRoute = router.pathname.includes('[projectId]');
-
-              console.log(`[debug] ProjectProvider: changeProject: redirect: 3: isProjR`, isProjectRoute)
-
-        if (isProjectRoute) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { page, ...parsedProjectQueryRoute } = router.query;
-              console.log(`[debug] ProjectProvider: changeProject: redirect: 4`)
-
-          return router.replace({
-            query: { ...parsedProjectQueryRoute, projectId: newProjectId },
-          });
-        }
-      };
-
-      const sameProject =
-        decodeAccessToken({ token: accessToken }).projectId === newProjectId;
-              console.log(`[debug] ProjectProvider: changeProject: redirect: 4.5: `, {
-                sameProject,
-                newProjectId,
-                allowedProject,
-                routerPathname: router.pathname,
-              })
-
-      if (sameProject && allowedProject) {
-        await redirect();
-
-        return;
-      }
-
-      // if (sameProject && allowedProject) {
-      //   router.push({
-      //     pathname: routes.project.home({ projectId: newProjectId, }),
-      //     query: router.query,
-      //   });
-
-      //   return;
-      // }
-
-      try {
-      console.log(`[debug] ProjectProvider: changeProject: 5`)
-        await auth.switchProjectAuth(newProjectId);
-        await redirect();
-        cookies.set('projectId', newProjectId);
-      } catch (error) {
-        Log.error('Failed to switch project', error);
-      }
-    };
-
-    // TODO: This seem to be more appropriate to change on:
-    // - drop down menu item selection
-    // - router project id switch
-    // changeProject(cookies.values.projectId ?? projects[0].id);
-
-    if (!cookies.values.projectId) {
-      logout();
-    }
-console.log(`[debug] ProjectProvider: useEffect: changeProject`)
-    changeProject(cookies.values.projectId);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookies.values.projectId, projectsQuery]);
-
-  useEffect(() => {
-    if (router.query.projectId) {
-      cookies.set('projectId', router.query.projectId);
-    }
-    // Update cookie on first run if it is present in the url
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!cookies.values.accessToken || !cookies.values.projectId) {
-      return;
-    }
-
-    if (pathname === routes.home()) {
-      const { projectId } = cookies.values;
-      // keep query on redirect
+    if (
+      pathname.startsWith('/projects') &&
+      !pathname.includes('[projectId]') &&
+      !pathname.includes(cookies.values.projectId)
+    ) {
+      console.log(`[debug] ProjectProvider: useEffect: 3`)
+      setIsLoading(true);
       router.push({
-        pathname: routes.project.home({ projectId }),
+        pathname: routes.project.home({
+          projectId: cookies.values.projectId,
+        }),
         query: router.query,
       });
     }
-  }, [cookies.values.accessToken, cookies.values.projectId]);
+
+    console.log(`[debug] ProjectProvider: pathname = ${pathname}`)
+  }, [cookies.values.projectId, pathname]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(projectQuery.fetching || !projectQuery.data);
+    }, LOADING_MIN_TIMEOUT);
+
+    return () => clearTimeout(timer);
+  }, [projectQuery.fetching, projectQuery.data]);
 
   const project = useMemo(() => {
-    const { data } = projectsQuery;
-    const defaultProject = {
-      id: router.query.projectId || '',
-      name: 'Project',
-      currentUserMembership: {
-        permissionGroup: {
-          id: '',
-          name: '',
-          permissions: [],
-        },
-      },
-      updatedAt: '',
-    };
+    return projectQuery?.data?.project;
+  }, [cookies.values.projectId, projectQuery]);
 
-    if (!data || !cookies.values.projectId) {
-      return defaultProject;
-    }
-
-    const projects = data.projects.data;
-
-    return (
-      projects.find((project) => project.id === cookies.values.projectId) ||
-      defaultProject
-    );
-  }, [cookies.values.projectId, projectsQuery, router]);
-
-  const isLoading = useMemo(() => {
-    if (!cookies.values.authToken) {
-      delete projectsQuery.data; // this is forcing a cache clean for when it has logout
-
-      return false;
-    }
-
-    if (cookies.values.authToken && !auth.accessToken) {
-      return true;
-    }
-
-    return !projectsQuery.data?.projects.data.some(
-      (listProject) => project.id === listProject.id,
-    );
-  }, [
-    projectsQuery.data,
-    project.id,
-    auth.accessToken,
-    cookies.values.authToken,
-  ]);
+  if (isLoading) return <LoadingFullScreen />;
 
   return (
     <Provider
