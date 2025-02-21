@@ -18,7 +18,11 @@ type ProvidersProps = ChildrenProps<{
   forcedTheme?: string;
 }>;
 
-export const Providers: React.FC<ProvidersProps> = ({ children, requestCookies, forcedTheme }) => {
+export const Providers: React.FC<ProvidersProps> = ({
+  children,
+  requestCookies,
+  forcedTheme,
+}) => {
   return (
     <CookiesProvider requestCookies={requestCookies}>
       <UrqlProvider>
@@ -31,7 +35,9 @@ export const Providers: React.FC<ProvidersProps> = ({ children, requestCookies, 
                     <ToastProvider>
                       <SessionProvider>
                         <UploadProvider>
-                          <FeedbackModalProvider>{children}</FeedbackModalProvider>
+                          <FeedbackModalProvider>
+                            {children}
+                          </FeedbackModalProvider>
                         </UploadProvider>
                       </SessionProvider>
                     </ToastProvider>

@@ -1,6 +1,12 @@
 import { routes } from '@fleek-platform/utils-routes';
 
-import { BreadcrumbItem, ProjectDropdown, RootLayout, SubNavigationItem, SubNavigationLayout } from '@/components';
+import {
+  BreadcrumbItem,
+  ProjectDropdown,
+  RootLayout,
+  SubNavigationItem,
+  SubNavigationLayout,
+} from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
@@ -9,7 +15,9 @@ import { ChildrenProps } from '@/types/Props';
 
 export type ProfileSettingsLayoutProps = ChildrenProps;
 
-export const ProfileSettingsLayout: React.FC<ProfileSettingsLayoutProps> = ({ children }) => {
+export const ProfileSettingsLayout: React.FC<ProfileSettingsLayoutProps> = ({
+  children,
+}) => {
   const flags = useFeatureFlags();
   const session = useSessionContext();
   const [meQuery] = useMeQuery();
@@ -72,7 +80,10 @@ export const ProfileSettingsLayout: React.FC<ProfileSettingsLayoutProps> = ({ ch
         isNavigationLoading={session.loading}
         breadcrumbs={breadcrumbs}
       >
-        <SubNavigationLayout navigation={subNavigation} isNavigationLoading={session.loading}>
+        <SubNavigationLayout
+          navigation={subNavigation}
+          isNavigationLoading={session.loading}
+        >
           {children}
         </SubNavigationLayout>
       </RootLayout.Page>

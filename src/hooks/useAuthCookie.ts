@@ -8,7 +8,11 @@ import { useCookies } from '../providers/CookiesProvider';
 
 const key = 'accessToken';
 
-export const useAuthCookie = (): [string | undefined, (value: string) => void, () => void] => {
+export const useAuthCookie = (): [
+  string | undefined,
+  (value: string) => void,
+  () => void,
+] => {
   const cookies = useCookies();
 
   const set = (jwt: string) => {

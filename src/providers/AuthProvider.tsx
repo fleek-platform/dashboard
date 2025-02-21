@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { constants } from '@/constants';
 import { useAuthCookie } from '@/hooks/useAuthCookie';
-import { AuthProviders, AuthWith, useAuthProviders } from '@/hooks/useAuthProviders';
+import {
+  AuthProviders,
+  AuthWith,
+  useAuthProviders,
+} from '@/hooks/useAuthProviders';
 import { useLogout } from '@/hooks/useLogout';
 import { useRouter } from '@/hooks/useRouter';
 import { createContext } from '@/utils/createContext';
@@ -30,7 +34,9 @@ const [Provider, useContext] = createContext<AuthContext>({
   providerName: 'AuthProvider',
 });
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const [accessToken, setAccessToken] = useAuthCookie();
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { logout } = useLogout();
@@ -41,7 +47,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
 
   const providers = useAuthProviders();
   const providersValues = Object.values(providers);
-  const authenticatedProvider = providersValues.find((provider) => provider.authToken);
+  const authenticatedProvider = providersValues.find(
+    (provider) => provider.authToken,
+  );
   const router = useRouter();
 
   const login = useCallback(
@@ -53,7 +61,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
       const provider = providers[providerName];
       provider.handleLogin();
     },
-    [providers]
+    [providers],
   );
 
   const requestAccessToken = useCallback(
@@ -75,7 +83,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
         setLoading(false);
       }
     },
-    [setAccessToken, loading, logout]
+    [setAccessToken, loading, logout],
   );
 
   const switchProjectAuth = useCallback(
@@ -94,7 +102,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providersValues, requestAccessToken]
+    [providersValues, requestAccessToken],
   );
 
   useEffect(() => {
@@ -142,7 +150,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
           const invitationHash = router.query.invitation;
           const homeRoute = routes.home();
 
-          const targetUrl = invitationHash ? `${homeRoute}?invitation=${invitationHash}` : homeRoute;
+          const targetUrl = invitationHash
+            ? `${homeRoute}?invitation=${invitationHash}`
+            : homeRoute;
 
           window.location.href = targetUrl;
         }
@@ -155,7 +165,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
       }
 
       if (!accessToken) {
-        console.error(`Expected to have an accessToken but got ${typeof accessToken}`);
+        console.error(
+          `Expected to have an accessToken but got ${typeof accessToken}`,
+        );
 
         return;
       }

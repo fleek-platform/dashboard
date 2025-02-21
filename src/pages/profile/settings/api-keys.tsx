@@ -22,12 +22,17 @@ const ApiKeysPage: Page = () => {
   const toast = useToast();
   const apiTokensQuery = useGetApiTokens();
 
-  const [createApiTokenModalState, setCreateApiTokenModalState] = useState<CreateApiTokenModalState>({ isOpen: false });
-  const closeCreateApiTokenModal = () => setCreateApiTokenModalState({ isOpen: false });
+  const [createApiTokenModalState, setCreateApiTokenModalState] =
+    useState<CreateApiTokenModalState>({ isOpen: false });
+  const closeCreateApiTokenModal = () =>
+    setCreateApiTokenModalState({ isOpen: false });
 
   const createApiTokenMutation = useCreateApiToken({
     onSuccess: (value?: ApiToken) => {
-      setCreateApiTokenModalState({ isOpen: true, apiTokenValue: value?.token ?? '' });
+      setCreateApiTokenModalState({
+        isOpen: true,
+        apiTokenValue: value?.token ?? '',
+      });
       createApiTokenForm.resetForm();
     },
     onError: () => toast.error({ message: 'Failed to create API Token!' }),
@@ -37,11 +42,17 @@ const ApiKeysPage: Page = () => {
       apiTokenName: '',
     },
     schema: zod.object({
-      apiTokenName: zod.string().min(3, { message: 'Minimum of 3 characters' }).max(50, { message: 'Maximum of 50 characters' }),
+      apiTokenName: zod
+        .string()
+        .min(3, { message: 'Minimum of 3 characters' })
+        .max(50, { message: 'Maximum of 50 characters' }),
     }),
     extraValidations: {
       apiTokenName: async (apiTokenName: string) => {
-        const isUnique = isUniqueName({ name: apiTokenName, list: apiTokensQuery?.data || [] });
+        const isUnique = isUniqueName({
+          name: apiTokenName,
+          list: apiTokensQuery?.data || [],
+        });
 
         return { status: isUnique ? 'valid' : 'invalid' };
       },
@@ -98,6 +109,8 @@ const ApiKeysPage: Page = () => {
   );
 };
 
-ApiKeysPage.getLayout = (page) => <Profile.Settings.Layout>{page}</Profile.Settings.Layout>;
+ApiKeysPage.getLayout = (page) => (
+  <Profile.Settings.Layout>{page}</Profile.Settings.Layout>
+);
 
 export default ApiKeysPage;

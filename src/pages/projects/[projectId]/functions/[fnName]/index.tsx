@@ -9,4 +9,7 @@ const FunctionDetail: Page = () => {
 
 FunctionDetail.getLayout = (page) => <F.DetailLayout>{page}</F.DetailLayout>;
 
-export default withAccess({ Component: FunctionDetail, requiredPermissions: [constants.PERMISSION.FUNCTIONS.VIEW] });
+export default withAccess({
+  Component: FunctionDetail,
+  requiredPermissions: [constants.PERMISSION.FUNCTIONS.VIEW],
+});

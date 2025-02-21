@@ -31,7 +31,11 @@ export const AddNewDropdown: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
+      <RestrictionModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        shouldShowUpgradePlan={hasManageBillingPermission}
+      />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>
@@ -61,7 +65,11 @@ export const AddNewDropdown: React.FC = () => {
             </>
           )}
           {hasUploadStoragePermission && (
-            <DropdownItem text="Store files" icon="archive" href={routes.project.storage({ projectId: session.project.id })} />
+            <DropdownItem
+              text="Store files"
+              icon="archive"
+              href={routes.project.storage({ projectId: session.project.id })}
+            />
           )}
         </Menu.Content>
       </Menu.Root>
