@@ -1,3 +1,5 @@
+import { routes } from '@fleek-platform/utils-routes';
+
 import Package from '../package.json';
 import { secrets } from './secrets';
 import {
@@ -321,6 +323,17 @@ export const constants = {
     },
   } satisfies Record<StorageProviderValue, StorageProvider>,
 
+  // TODO: Can this be removed now?
+  PUBLIC_ROUTES: [	
+    routes.paymentCallback(),	
+    routes.githubCallback(),	
+    routes.home(),	
+    routes.template.indexed({ templateId: '[templateId]' }),	
+    routes.migration(),	
+    routes.ipfsPropagation.index(),	
+    routes.billing.plans(),	
+    routes.login.cli({ verificationSessionId: '[verificationSessionId]' }),	
+  ],
   ZENDESK: {
     PROXY_BASE: secrets.ZENDESK_PROXY_API,
     ROUTES: {
