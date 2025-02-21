@@ -24,8 +24,13 @@ type ManageApiTokensProps = LoadingProps<{
   isError?: boolean;
 }>;
 
-export const ManageApiTokens: React.FC<ManageApiTokensProps> = ({ isLoading, apiTokenList, isError }) => {
-  const [deleteModalState, setDeleteModalState] = useState<DeleteApiTokenModalState>({ isOpen: false, apiToken: null });
+export const ManageApiTokens: React.FC<ManageApiTokensProps> = ({
+  isLoading,
+  apiTokenList,
+  isError,
+}) => {
+  const [deleteModalState, setDeleteModalState] =
+    useState<DeleteApiTokenModalState>({ isOpen: false, apiToken: null });
   const form = Form.useContext();
 
   const openDeleteForm: openDeleteFormType = (apiToken) => {
@@ -42,7 +47,11 @@ export const ManageApiTokens: React.FC<ManageApiTokensProps> = ({ isLoading, api
     return (
       <SettingsBox.Container>
         <SettingsBox.Title>Manage API Tokens</SettingsBox.Title>
-        <SettingsBox.EmptyContent showIcon={false} title="Error" description="An error occurred while fetching your API tokens" />
+        <SettingsBox.EmptyContent
+          showIcon={false}
+          title="Error"
+          description="An error occurred while fetching your API tokens"
+        />
       </SettingsBox.Container>
     );
   }
@@ -64,9 +73,18 @@ export const ManageApiTokens: React.FC<ManageApiTokensProps> = ({ isLoading, api
       <SettingsBox.Title>Manage API Tokens</SettingsBox.Title>
       <SettingsBox.Text>Remove existing tokens.</SettingsBox.Text>
       {apiTokenList?.length ? (
-        apiTokenList.map((apiToken) => <ApiTokenItem key={apiToken.id} handleDeleteApiToken={openDeleteForm} apiToken={apiToken} />)
+        apiTokenList.map((apiToken) => (
+          <ApiTokenItem
+            key={apiToken.id}
+            handleDeleteApiToken={openDeleteForm}
+            apiToken={apiToken}
+          />
+        ))
       ) : (
-        <SettingsBox.EmptyContent title="No Tokens" description="Once you add tokens, they will appear here." />
+        <SettingsBox.EmptyContent
+          title="No Tokens"
+          description="Once you add tokens, they will appear here."
+        />
       )}
       <DeleteApiTokenModal
         apiToken={deleteModalState.apiToken}
@@ -83,7 +101,11 @@ type ApiTokenItemProps = LoadingProps<{
   handleDeleteApiToken: openDeleteFormType;
 }>;
 
-const ApiTokenItem: React.FC<ApiTokenItemProps> = ({ apiToken, handleDeleteApiToken, isLoading }) => {
+const ApiTokenItem: React.FC<ApiTokenItemProps> = ({
+  apiToken,
+  handleDeleteApiToken,
+  isLoading,
+}) => {
   if (isLoading) {
     return (
       <SettingsListItem.FlatRow className="border-b border-neutral-6 pb-4 last:border-none last:pb-0">
@@ -97,12 +119,21 @@ const ApiTokenItem: React.FC<ApiTokenItemProps> = ({ apiToken, handleDeleteApiTo
     <SettingsListItem.FlatRow className="border-b border-neutral-6 pb-4 pr-2.5 last:border-none last:pb-0">
       <SettingsListItem.Data
         title={apiToken.name || 'Unnamed'}
-        subtitle={getDurationUntilNow({ isoDateString: apiToken.created_at, shortFormat: true })}
+        subtitle={getDurationUntilNow({
+          isoDateString: apiToken.created_at,
+          shortFormat: true,
+        })}
       />
-      <SettingsListItem.Data title="Masked Value" subtitle={`flk_${apiToken.token_prefix}_*************`} />
+      <SettingsListItem.Data
+        title="Masked Value"
+        subtitle={`flk_${apiToken.token_prefix}_*************`}
+      />
 
       <SettingsListItem.DropdownMenu>
-        <SettingsListItem.DropdownMenuItem icon="trash" onClick={() => handleDeleteApiToken(apiToken)}>
+        <SettingsListItem.DropdownMenuItem
+          icon="trash"
+          onClick={() => handleDeleteApiToken(apiToken)}
+        >
           Delete
         </SettingsListItem.DropdownMenuItem>
       </SettingsListItem.DropdownMenu>

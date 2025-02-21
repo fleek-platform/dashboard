@@ -2,7 +2,13 @@ import { routes } from '@fleek-platform/utils-routes';
 import { useMemo, useState } from 'react';
 
 import { BadgeText, SettingsBox, SettingsListItem } from '@/components';
-import { Project, Role, useLeaveProjectMutation, useMeQuery, useProjectsQuery } from '@/generated/graphqlClient';
+import {
+  Project,
+  Role,
+  useLeaveProjectMutation,
+  useMeQuery,
+  useProjectsQuery,
+} from '@/generated/graphqlClient';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useCookies } from '@/providers/CookiesProvider';
@@ -21,13 +27,18 @@ export const ManageProjects: React.FC = () => {
 
   const projects = projectsQuery.data?.projects.data;
 
-  const isLoading = useMemo(() => meQuery.fetching || projectsQuery.fetching, [meQuery.fetching, projectsQuery.fetching]);
+  const isLoading = useMemo(
+    () => meQuery.fetching || projectsQuery.fetching,
+    [meQuery.fetching, projectsQuery.fetching],
+  );
 
   if (isLoading) {
     return (
       <SettingsBox.Container>
         <SettingsBox.Title>Manage Projects</SettingsBox.Title>
-        <SettingsBox.Text>Manage projects you own, or that you are a part of.</SettingsBox.Text>
+        <SettingsBox.Text>
+          Manage projects you own, or that you are a part of.
+        </SettingsBox.Text>
         <SettingsListItem.Skeleton enableAvatar />
         <SettingsListItem.Skeleton enableAvatar />
         <SettingsListItem.Skeleton enableAvatar />
@@ -56,10 +67,15 @@ export const ManageProjects: React.FC = () => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Manage Projects</SettingsBox.Title>
-      <SettingsBox.Text>Manage projects you own, or that you are a part of.</SettingsBox.Text>
+      <SettingsBox.Text>
+        Manage projects you own, or that you are a part of.
+      </SettingsBox.Text>
       {projects?.map((project) => {
-        const projectMembershipRole = project.currentUserMembership.permissionGroup.name || '';
-        const membershipLabel = firstLetterUpperCase(projectMembershipRole.toLowerCase());
+        const projectMembershipRole =
+          project.currentUserMembership.permissionGroup.name || '';
+        const membershipLabel = firstLetterUpperCase(
+          projectMembershipRole.toLowerCase(),
+        );
 
         return (
           <SettingsListItem
@@ -76,8 +92,13 @@ export const ManageProjects: React.FC = () => {
               </BadgeText>
             )}
             {projects?.length > 1 && (
-              <SettingsListItem.DropdownMenu isDisabled={leavingProjects.includes(project.id)}>
-                <SettingsListItem.DropdownMenuItem icon="arrow-up-right" onClick={() => handleViewProject({ projectId: project.id })}>
+              <SettingsListItem.DropdownMenu
+                isDisabled={leavingProjects.includes(project.id)}
+              >
+                <SettingsListItem.DropdownMenuItem
+                  icon="arrow-up-right"
+                  onClick={() => handleViewProject({ projectId: project.id })}
+                >
                   View
                 </SettingsListItem.DropdownMenuItem>
 
@@ -88,7 +109,12 @@ export const ManageProjects: React.FC = () => {
                 {projectMembershipRole.toUpperCase() !== Role.OWNER && (
                   <>
                     <SettingsListItem.DropdownMenuSeparator />
-                    <SettingsListItem.DropdownMenuItem icon="close-circle" onClick={() => handleLeaveProject({ projectId: project.id })}>
+                    <SettingsListItem.DropdownMenuItem
+                      icon="close-circle"
+                      onClick={() =>
+                        handleLeaveProject({ projectId: project.id })
+                      }
+                    >
                       Leave Project
                     </SettingsListItem.DropdownMenuItem>
                   </>

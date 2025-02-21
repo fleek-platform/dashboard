@@ -7,7 +7,11 @@ export type DeletePATModalProps = {
   close: () => void;
 } & React.ComponentPropsWithoutRef<typeof Dialog.Root>;
 
-export const DeletePATModal: React.FC<DeletePATModalProps> = ({ pat, close, ...props }) => {
+export const DeletePATModal: React.FC<DeletePATModalProps> = ({
+  pat,
+  close,
+  ...props
+}) => {
   if (!pat) {
     return null;
   }
@@ -61,7 +65,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ close }) => {
   };
 
   return (
-    <Button intent="danger" type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmitForm}>
+    <Button
+      intent="danger"
+      type="submit"
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmitForm}
+    >
       Delete token
     </Button>
   );

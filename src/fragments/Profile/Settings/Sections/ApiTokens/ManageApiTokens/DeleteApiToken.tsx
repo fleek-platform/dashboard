@@ -8,7 +8,11 @@ export type DeleteApiTokenModalProps = {
   close: () => void;
 } & React.ComponentPropsWithoutRef<typeof Dialog.Root>;
 
-export const DeleteApiTokenModal: React.FC<DeleteApiTokenModalProps> = ({ apiToken, close, ...props }) => {
+export const DeleteApiTokenModal: React.FC<DeleteApiTokenModalProps> = ({
+  apiToken,
+  close,
+  ...props
+}) => {
   if (!apiToken) {
     return null;
   }
@@ -31,7 +35,8 @@ export const DeleteApiTokenModal: React.FC<DeleteApiTokenModalProps> = ({ apiTok
           name="name"
           label={
             <>
-              Enter the API token name <b>{apiToken.name || 'Unnamed'}</b> to continue
+              Enter the API token name <b>{apiToken.name || 'Unnamed'}</b> to
+              continue
             </>
           }
           placeholder={apiToken.name || 'Unnamed'}
@@ -62,7 +67,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ close }) => {
   };
 
   return (
-    <Button intent="danger" type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmitForm}>
+    <Button
+      intent="danger"
+      type="submit"
+      loading={isSubmitting}
+      disabled={shouldDisableSubmit}
+      onClick={handleSubmitForm}
+    >
       Delete API token
     </Button>
   );

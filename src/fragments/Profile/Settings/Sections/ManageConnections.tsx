@@ -1,4 +1,8 @@
-import { useDynamicContext, useUserUpdateRequest, useUserWallets } from '@dynamic-labs/sdk-react-core';
+import {
+  useDynamicContext,
+  useUserUpdateRequest,
+  useUserWallets,
+} from '@dynamic-labs/sdk-react-core';
 import { useEffect, useState } from 'react';
 import { useEnsName } from 'wagmi';
 
@@ -44,7 +48,10 @@ export const ManageConnections: React.FC<LoadingProps> = () => {
       <SettingsBox.Container>
         <SettingsBox.Title>Manage Connections</SettingsBox.Title>
 
-        <SettingsBox.Text>Manage your available connections here and easily remove any you no longer need.</SettingsBox.Text>
+        <SettingsBox.Text>
+          Manage your available connections here and easily remove any you no
+          longer need.
+        </SettingsBox.Text>
 
         {!sdkHasLoaded && (
           <>
@@ -55,17 +62,35 @@ export const ManageConnections: React.FC<LoadingProps> = () => {
         {sdkHasLoaded &&
           verifiedConnections.length > 0 &&
           verifiedConnections.map((connection) => {
-            if (connection.format === 'email' && connection.email === userEmail) {
-              return <EmailCredential key={connection.id} connection={connection} handleOpenEditEmailModal={handleOpenModalChange} />;
+            if (
+              connection.format === 'email' &&
+              connection.email === userEmail
+            ) {
+              return (
+                <EmailCredential
+                  key={connection.id}
+                  connection={connection}
+                  handleOpenEditEmailModal={handleOpenModalChange}
+                />
+              );
             }
 
             if (connection.format === 'blockchain') {
-              return <BlockchainCredential key={connection.id} connection={connection} />;
+              return (
+                <BlockchainCredential
+                  key={connection.id}
+                  connection={connection}
+                />
+              );
             }
           })}
       </SettingsBox.Container>
 
-      <UserEmailModal isOpen={isEditModalOpen} closeModal={handleOpenModalChange} isEditing />
+      <UserEmailModal
+        isOpen={isEditModalOpen}
+        closeModal={handleOpenModalChange}
+        isEditing
+      />
     </>
   );
 };
@@ -78,12 +103,26 @@ type VerifiedCredentialProps = ChildrenProps<{
   isLoading: boolean;
 }>;
 
-const VerifiedCredential: React.FC<VerifiedCredentialProps> = ({ children, title, avatarSrc, avatarIcon, isActive, isLoading }) => {
+const VerifiedCredential: React.FC<VerifiedCredentialProps> = ({
+  children,
+  title,
+  avatarSrc,
+  avatarIcon,
+  isActive,
+  isLoading,
+}) => {
   return (
-    <SettingsListItem title={title} avatarSrc={avatarSrc} avatarIcon={avatarIcon}>
+    <SettingsListItem
+      title={title}
+      avatarSrc={avatarSrc}
+      avatarIcon={avatarIcon}
+    >
       <Box className="flex-row gap-3 items-center">
         {isActive && <BadgeText colorScheme="green">Active</BadgeText>}
-        <SettingsListItem.DropdownMenu isDisabled={isLoading} isLoading={isLoading}>
+        <SettingsListItem.DropdownMenu
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        >
           {children}
         </SettingsListItem.DropdownMenu>
       </Box>
@@ -95,7 +134,9 @@ type BlockchainCredentialProps = {
   connection: any;
 };
 
-const BlockchainCredential: React.FC<BlockchainCredentialProps> = ({ connection }) => {
+const BlockchainCredential: React.FC<BlockchainCredentialProps> = ({
+  connection,
+}) => {
   const { primaryWallet, user, handleUnlinkWallet } = useDynamicContext();
   const toast = useToast();
   const [isUnlinkingWallet, setIsUnlinkingWallet] = useState(false);
@@ -139,11 +180,17 @@ const BlockchainCredential: React.FC<BlockchainCredentialProps> = ({ connection 
       isActive={Boolean(primaryWallet)}
       isLoading={isUnlinkingWallet}
     >
-      <SettingsListItem.DropdownMenuItem icon="copy" onClick={() => handleCopyAddress(connection.address)}>
+      <SettingsListItem.DropdownMenuItem
+        icon="copy"
+        onClick={() => handleCopyAddress(connection.address)}
+      >
         Copy Address
       </SettingsListItem.DropdownMenuItem>
       {ensName && (
-        <SettingsListItem.DropdownMenuItem icon="copy" onClick={() => handleCopyAddress(ensName)}>
+        <SettingsListItem.DropdownMenuItem
+          icon="copy"
+          onClick={() => handleCopyAddress(ensName)}
+        >
           Copy ENS
         </SettingsListItem.DropdownMenuItem>
       )}
@@ -160,7 +207,10 @@ const BlockchainCredential: React.FC<BlockchainCredentialProps> = ({ connection 
           </Box>
         </Menu.Item>
       ) : (
-        <SettingsListItem.DropdownMenuItem icon="exit" onClick={handleUnlinkWalletOnClick}>
+        <SettingsListItem.DropdownMenuItem
+          icon="exit"
+          onClick={handleUnlinkWalletOnClick}
+        >
           Unlink Wallet
         </SettingsListItem.DropdownMenuItem>
       )}
@@ -173,7 +223,10 @@ type EmailCredentialProps = {
   handleOpenEditEmailModal: () => void;
 };
 
-const EmailCredential: React.FC<EmailCredentialProps> = ({ connection, handleOpenEditEmailModal }) => {
+const EmailCredential: React.FC<EmailCredentialProps> = ({
+  connection,
+  handleOpenEditEmailModal,
+}) => {
   const { updateUser: updateDynamicUser } = useUserUpdateRequest();
   const { primaryWallet } = useDynamicContext();
   const { update: updateUser } = useUpdateUser();
@@ -185,7 +238,10 @@ const EmailCredential: React.FC<EmailCredentialProps> = ({ connection, handleOpe
       setIsDeletingEmail(true);
 
       await updateDynamicUser({ email: '' });
-      await updateUser({ updateUserArgs: { email: null }, successMessage: 'Email removed successfully' });
+      await updateUser({
+        updateUserArgs: { email: null },
+        successMessage: 'Email removed successfully',
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -194,8 +250,16 @@ const EmailCredential: React.FC<EmailCredentialProps> = ({ connection, handleOpe
   };
 
   return (
-    <VerifiedCredential title={connection.email} avatarIcon="email" isActive={!primaryWallet} isLoading={isDeletingEmail}>
-      <SettingsListItem.DropdownMenuItem icon="pencil" onClick={handleOpenEditEmailModal}>
+    <VerifiedCredential
+      title={connection.email}
+      avatarIcon="email"
+      isActive={!primaryWallet}
+      isLoading={isDeletingEmail}
+    >
+      <SettingsListItem.DropdownMenuItem
+        icon="pencil"
+        onClick={handleOpenEditEmailModal}
+      >
         Change Email
       </SettingsListItem.DropdownMenuItem>
       {userWallets.length === 0 || !primaryWallet ? (
@@ -210,7 +274,10 @@ const EmailCredential: React.FC<EmailCredentialProps> = ({ connection, handleOpe
           </Box>
         </Menu.Item>
       ) : (
-        <SettingsListItem.DropdownMenuItem icon="trash" onClick={handleDeleteEmail}>
+        <SettingsListItem.DropdownMenuItem
+          icon="trash"
+          onClick={handleDeleteEmail}
+        >
           Delete
         </SettingsListItem.DropdownMenuItem>
       )}

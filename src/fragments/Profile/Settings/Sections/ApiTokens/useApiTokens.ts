@@ -14,9 +14,14 @@ export type ApiToken = {
   token_prefix: string;
 };
 
-export const useGetApiTokens = (options?: { onSuccess?: (value?: ApiToken[]) => void; onError?: (error?: unknown) => void }) => {
+export const useGetApiTokens = (options?: {
+  onSuccess?: (value?: ApiToken[]) => void;
+  onError?: (error?: unknown) => void;
+}) => {
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
+  const backendApi = new BackendApiClient({
+    accessToken: cookies.values.accessToken,
+  });
 
   const getApiTokens = async (): Promise<ApiToken[] | undefined> => {
     try {
@@ -51,14 +56,25 @@ export type CreateApiTokenArgs = {
   name: string;
 };
 
-export const useCreateApiToken = (options?: { onSuccess?: (value?: ApiToken) => void; onError?: (error?: unknown) => void }) => {
+export const useCreateApiToken = (options?: {
+  onSuccess?: (value?: ApiToken) => void;
+  onError?: (error?: unknown) => void;
+}) => {
   const queryClient = useQueryClient();
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
+  const backendApi = new BackendApiClient({
+    accessToken: cookies.values.accessToken,
+  });
 
-  const createApiToken = async (payload: CreateApiTokenArgs): Promise<ApiToken | undefined> => {
+  const createApiToken = async (
+    payload: CreateApiTokenArgs,
+  ): Promise<ApiToken | undefined> => {
     try {
-      const response = await backendApi.fetch({ url: '/api/v1/tokens', method: 'POST', body: JSON.stringify(payload) });
+      const response = await backendApi.fetch({
+        url: '/api/v1/tokens',
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
         throw response.statusText;
@@ -74,34 +90,47 @@ export const useCreateApiToken = (options?: { onSuccess?: (value?: ApiToken) => 
     }
   };
 
-  return useMutation(async (payload: CreateApiTokenArgs) => createApiToken(payload), {
-    onSuccess: (value) => {
-      queryClient.invalidateQueries(['tokens']);
+  return useMutation(
+    async (payload: CreateApiTokenArgs) => createApiToken(payload),
+    {
+      onSuccess: (value) => {
+        queryClient.invalidateQueries(['tokens']);
 
-      if (typeof options?.onSuccess === 'function') {
-        options.onSuccess(value);
-      }
+        if (typeof options?.onSuccess === 'function') {
+          options.onSuccess(value);
+        }
+      },
+      onError: (error) => {
+        if (typeof options?.onError === 'function') {
+          options.onError(error);
+        }
+      },
     },
-    onError: (error) => {
-      if (typeof options?.onError === 'function') {
-        options.onError(error);
-      }
-    },
-  });
+  );
 };
 
 export type DeleteApiTokenArgs = {
   id: string;
 };
 
-export const useDeleteApiToken = (options?: { onSuccess?: () => void; onError?: (error?: unknown) => void }) => {
+export const useDeleteApiToken = (options?: {
+  onSuccess?: () => void;
+  onError?: (error?: unknown) => void;
+}) => {
   const queryClient = useQueryClient();
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
+  const backendApi = new BackendApiClient({
+    accessToken: cookies.values.accessToken,
+  });
 
-  const deleteApiToken = async ({ id }: DeleteApiTokenArgs): Promise<undefined> => {
+  const deleteApiToken = async ({
+    id,
+  }: DeleteApiTokenArgs): Promise<undefined> => {
     try {
-      const response = await backendApi.fetch({ url: `/api/v1/tokens/${id}`, method: 'DELETE' });
+      const response = await backendApi.fetch({
+        url: `/api/v1/tokens/${id}`,
+        method: 'DELETE',
+      });
 
       if (!response.ok) {
         throw response.statusText;
@@ -115,20 +144,23 @@ export const useDeleteApiToken = (options?: { onSuccess?: () => void; onError?: 
     }
   };
 
-  return useMutation(async (tokenId: string) => deleteApiToken({ id: tokenId }), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['tokens']);
+  return useMutation(
+    async (tokenId: string) => deleteApiToken({ id: tokenId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['tokens']);
 
-      if (typeof options?.onSuccess === 'function') {
-        options.onSuccess();
-      }
+        if (typeof options?.onSuccess === 'function') {
+          options.onSuccess();
+        }
+      },
+      onError: (error) => {
+        if (typeof options?.onError === 'function') {
+          options.onError(error);
+        }
+      },
     },
-    onError: (error) => {
-      if (typeof options?.onError === 'function') {
-        options.onError(error);
-      }
-    },
-  });
+  );
 };
 
 const useApiKeys = {
