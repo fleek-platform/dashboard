@@ -6,10 +6,7 @@ export type DeleteSiteModalProps = ChildrenProps<{
   username?: string;
 }>;
 
-export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({
-  children,
-  username,
-}) => {
+export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({ children, username }) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
@@ -19,14 +16,10 @@ export const DeleteSiteModal: React.FC<DeleteSiteModalProps> = ({
         <Text as="h1" variant="primary" size="xl" weight={700}>
           Delete Account
         </Text>
-        <Text>
-          Your account will be permanently deleted, including your projects,
-          sites and files.
-        </Text>
+        <Text>Your account will be permanently deleted, including your projects, sites and files.</Text>
 
         <AlertBox variant="danger" size="sm">
-          Are you sure you want to proceed? This action is irreversible, and
-          cannot be undone.
+          Are you sure you want to proceed? This action is irreversible, and cannot be undone.
         </AlertBox>
 
         <Form.InputField

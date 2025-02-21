@@ -1,9 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 
-import type {
-  NotificationChannel,
-  NotificationType,
-} from '@/generated/graphqlClient';
+import type { NotificationChannel, NotificationType } from '@/generated/graphqlClient';
 
 type ChannelMap = Record<NotificationChannel, boolean>;
 export type NotificationsState = Partial<Record<NotificationType, ChannelMap>>;
@@ -15,9 +12,7 @@ export const NotificationsContext = React.createContext<{
 
 type UseNotificationsContextArgs = [NotificationType];
 
-export const useNotificationsContext = (
-  ...args: UseNotificationsContextArgs
-) => {
+export const useNotificationsContext = (...args: UseNotificationsContextArgs) => {
   const [type] = args;
   const { state, setState } = useContext(NotificationsContext)!;
 
@@ -27,10 +22,7 @@ export const useNotificationsContext = (
     return [
       channelMap,
       function toggle(channel) {
-        return setState({
-          ...state,
-          [type]: { ...channelMap, [channel]: !channelMap[channel] },
-        });
+        return setState({ ...state, [type]: { ...channelMap, [channel]: !channelMap[channel] } });
       },
     ];
   }, [type, state, setState]);

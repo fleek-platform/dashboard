@@ -2,16 +2,10 @@ import { groupBy, mapValues } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
 import { SettingsBox } from '@/components';
-import {
-  NotificationType,
-  useNotificationsQuery,
-} from '@/generated/graphqlClient';
+import { NotificationType, useNotificationsQuery } from '@/generated/graphqlClient';
 import { Box, Text } from '@/ui';
 
-import {
-  type NotificationsState,
-  NotificationsContext,
-} from './NotificationsContext';
+import { type NotificationsState, NotificationsContext } from './NotificationsContext';
 import { NotificationToggle } from './NotificationToggle';
 
 export const ManageNotifications: React.FC = () => {
@@ -23,17 +17,15 @@ export const ManageNotifications: React.FC = () => {
 
     if (notificationSettings) {
       setState(
-        mapValues(
-          groupBy(notificationSettings, 'notificationType'),
-          (settings) =>
-            settings.reduce(
-              (acc, setting) => ({
-                ...acc,
-                [setting.notificationChannel]: setting.isEnabled,
-              }),
-              {},
-            ),
-        ),
+        mapValues(groupBy(notificationSettings, 'notificationType'), (settings) =>
+          settings.reduce(
+            (acc, setting) => ({
+              ...acc,
+              [setting.notificationChannel]: setting.isEnabled,
+            }),
+            {}
+          )
+        )
       );
     }
   }, [notificationsQuery.data]);
@@ -62,9 +54,7 @@ export const ManageNotifications: React.FC = () => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Manage Notifications</SettingsBox.Title>
-      <SettingsBox.Text>
-        Indicate which notification types you would like to receive.
-      </SettingsBox.Text>
+      <SettingsBox.Text>Indicate which notification types you would like to receive.</SettingsBox.Text>
       <NotificationsContext.Provider value={{ state, setState }}>
         <Box className="gap-6">
           <Box className="gap-2.5">
@@ -72,25 +62,15 @@ export const ManageNotifications: React.FC = () => {
               <Text>Deployments</Text>
               <Text>Email</Text>
             </Box>
-            <NotificationToggle
-              type={NotificationType.DEPLOYMENT_FAILED}
-              label="A deployment has failed"
-            />
-            <NotificationToggle
-              type={NotificationType.DEPLOYMENT_COMPLETED}
-              label="A deployment has completed"
-            />
+            <NotificationToggle type={NotificationType.DEPLOYMENT_FAILED} label="A deployment has failed" />
+            <NotificationToggle type={NotificationType.DEPLOYMENT_COMPLETED} label="A deployment has completed" />
           </Box>
           <Box className="gap-2.5">
             <Box className="border-b border-neutral-6 pb-2 flex-row justify-between">
               <Text>Team</Text>
               <Text>Email</Text>
             </Box>
-            <NotificationToggle
-              type={NotificationType.MEMBER_INVITE}
-              label="Member invite"
-              disabled
-            />
+            <NotificationToggle type={NotificationType.MEMBER_INVITE} label="Member invite" disabled />
           </Box>
         </Box>
       </NotificationsContext.Provider>

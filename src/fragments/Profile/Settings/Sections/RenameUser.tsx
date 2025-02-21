@@ -10,14 +10,8 @@ export const RenameUser: React.FC<LoadingProps> = ({ isLoading }) => (
     <Form.InputField name="username" isLoading={isLoading} />
 
     <SettingsBox.ActionRow>
-      <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_USERNAME}>
-        username
-      </LearnMoreMessage>
-      {isLoading ? (
-        <SettingsBox.Skeleton variant="button" />
-      ) : (
-        <Form.SubmitButton>Save Changes</Form.SubmitButton>
-      )}
+      <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_USERNAME}>username</LearnMoreMessage>
+      {isLoading ? <SettingsBox.Skeleton variant="button" /> : <Form.SubmitButton>Save Changes</Form.SubmitButton>}
     </SettingsBox.ActionRow>
   </SettingsBox.Container>
 );

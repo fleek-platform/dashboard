@@ -1,8 +1,4 @@
-import {
-  DynamicMultiWalletPromptsWidget,
-  useDynamicContext,
-  useUserWallets,
-} from '@dynamic-labs/sdk-react-core';
+import { DynamicMultiWalletPromptsWidget, useDynamicContext, useUserWallets } from '@dynamic-labs/sdk-react-core';
 import { useState } from 'react';
 
 import { Form, LearnMoreMessage, SettingsBox } from '@/components';
@@ -31,8 +27,7 @@ export const LoginConnections: React.FC = () => {
         <SettingsBox.Title>Login Connections</SettingsBox.Title>
 
         <SettingsBox.Text>
-          Choose your preferred login method below to seamlessly access your
-          account in the way that works best for you.
+          Choose your preferred login method below to seamlessly access your account in the way that works best for you.
         </SettingsBox.Text>
 
         <Box className="flex-row gap-2.5">
@@ -50,20 +45,13 @@ export const LoginConnections: React.FC = () => {
         </Box>
 
         <SettingsBox.ActionRow>
-          <LearnMoreMessage
-            href={constants.EXTERNAL_LINK.FLEEK_DOCS_LOGIN_CONNECTIONS}
-          >
-            login connections
-          </LearnMoreMessage>
+          <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_LOGIN_CONNECTIONS}>login connections</LearnMoreMessage>
         </SettingsBox.ActionRow>
       </SettingsBox.Container>
 
       <DynamicMultiWalletPromptsWidget />
 
-      <UserEmailModal
-        isOpen={isAddEmailModalOpen}
-        closeModal={handleOpenModalChange}
-      />
+      <UserEmailModal isOpen={isAddEmailModalOpen} closeModal={handleOpenModalChange} />
     </>
   );
 };
@@ -77,11 +65,7 @@ const AddWalletButton: React.FC = () => {
   };
 
   return (
-    <Button
-      iconLeft="wallet"
-      onClick={handleLogIn}
-      disabled={userWallets.length > 0}
-    >
+    <Button iconLeft="wallet" onClick={handleLogIn} disabled={userWallets.length > 0}>
       Add Ethereum wallet
     </Button>
   );

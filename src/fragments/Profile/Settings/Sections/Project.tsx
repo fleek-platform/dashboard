@@ -13,14 +13,10 @@ export const Project: React.FC = () => {
   return (
     <SettingsBox.Container>
       <SettingsBox.Title>Projects</SettingsBox.Title>
-      <SettingsBox.Text>
-        Projects are used to organize your sites and storage on Fleek.
-      </SettingsBox.Text>
+      <SettingsBox.Text>Projects are used to organize your sites and storage on Fleek.</SettingsBox.Text>
 
       <SettingsBox.ActionRow>
-        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PROJECTS}>
-          Projects
-        </LearnMoreMessage>
+        <LearnMoreMessage href={constants.EXTERNAL_LINK.FLEEK_DOCS_PROJECTS}>Projects</LearnMoreMessage>
         <Button onClick={handleCreateProject}>Create project</Button>
       </SettingsBox.ActionRow>
     </SettingsBox.Container>

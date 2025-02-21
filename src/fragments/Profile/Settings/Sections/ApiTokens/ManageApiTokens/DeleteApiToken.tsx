@@ -1,14 +1,15 @@
 import { AlertBox, Form, Modal } from '@/components';
-import { PersonalAccessToken } from '@/generated/graphqlClient';
 import { Button, Dialog, Text } from '@/ui';
 
-export type DeletePATModalProps = {
-  pat?: PersonalAccessToken;
+import type { ApiToken } from '../useApiTokens';
+
+export type DeleteApiTokenModalProps = {
+  apiToken?: ApiToken | null;
   close: () => void;
 } & React.ComponentPropsWithoutRef<typeof Dialog.Root>;
 
-export const DeletePATModal: React.FC<DeletePATModalProps> = ({ pat, close, ...props }) => {
-  if (!pat) {
+export const DeleteApiTokenModal: React.FC<DeleteApiTokenModalProps> = ({ apiToken, close, ...props }) => {
+  if (!apiToken) {
     return null;
   }
 
@@ -18,9 +19,9 @@ export const DeletePATModal: React.FC<DeletePATModalProps> = ({ pat, close, ...p
 
       <Modal.Content>
         <Text as="h1" variant="primary" size="xl" weight={700}>
-          Delete Personal Access Token
+          Delete API Token
         </Text>
-        <Text>This personal access token will be deleted.</Text>
+        <Text>This API token will be deleted.</Text>
 
         <AlertBox variant="danger" size="sm">
           Warning: This action is irreversible.
@@ -30,10 +31,10 @@ export const DeletePATModal: React.FC<DeletePATModalProps> = ({ pat, close, ...p
           name="name"
           label={
             <>
-              Enter the PAT name <b>{pat.name || 'Unnamed'}</b> to continue
+              Enter the API token name <b>{apiToken.name || 'Unnamed'}</b> to continue
             </>
           }
-          placeholder={pat.name || 'Unnamed'}
+          placeholder={apiToken.name || 'Unnamed'}
           disableValidMessage
         />
 
@@ -62,7 +63,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ close }) => {
 
   return (
     <Button intent="danger" type="submit" loading={isSubmitting} disabled={shouldDisableSubmit} onClick={handleSubmitForm}>
-      Delete token
+      Delete API token
     </Button>
   );
 };
