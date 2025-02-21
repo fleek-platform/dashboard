@@ -1,7 +1,6 @@
 import { routes } from '@fleek-platform/utils-routes';
 
 import { Link } from '@/components';
-import { TEST_ID } from '@/test/testId';
 import { Deployment } from '@/types/Deployment';
 import { ChildrenProps } from '@/types/Props';
 import { Box, Icon, Skeleton, Text } from '@/ui';
@@ -47,7 +46,7 @@ export const Deploy: React.FC<DeployProps> = ({
       : '#';
 
   return (
-    <ItemRow testId={TEST_ID.DEPLOYMENT_CONTAINER} className={className}>
+    <ItemRow className={className}>
       <Link
         href={deploymentDetailUrl}
         className={cn('grid gap-4 sm:gap-8 justify-between w-full', {
