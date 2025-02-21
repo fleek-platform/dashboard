@@ -7,6 +7,7 @@ import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Button, Menu } from '@/ui';
+
 import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
 
 export const AddNewDropdown: React.FC = () => {
@@ -30,11 +31,7 @@ export const AddNewDropdown: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        shouldShowUpgradePlan={hasManageBillingPermission}
-      />
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>
@@ -64,11 +61,7 @@ export const AddNewDropdown: React.FC = () => {
             </>
           )}
           {hasUploadStoragePermission && (
-            <DropdownItem
-              text="Store files"
-              icon="archive"
-              href={routes.project.storage({ projectId: session.project.id })}
-            />
+            <DropdownItem text="Store files" icon="archive" href={routes.project.storage({ projectId: session.project.id })} />
           )}
         </Menu.Content>
       </Menu.Root>

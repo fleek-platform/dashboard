@@ -6,7 +6,7 @@ import { FeedbackModalProvider } from './FeedbackModalProvider';
 import { LaunchDarklyProvider } from './LaunchDarklyProvider';
 import { LogRocketProvider } from './LogRocketProvider';
 import { QueryClientProvider } from './QueryClientProvider';
-import { SessionProvider, SessionProviderMin } from './SessionProvider';
+import { SessionProvider } from './SessionProvider';
 import { ThemeProvider } from './ThemeProvider';
 import { ToastProvider } from './ToastProvider';
 import { UploadProvider } from './UploadProvider';
@@ -18,11 +18,7 @@ type ProvidersProps = ChildrenProps<{
   forcedTheme?: string;
 }>;
 
-export const Providers: React.FC<ProvidersProps> = ({
-  children,
-  requestCookies,
-  forcedTheme,
-}) => {
+export const Providers: React.FC<ProvidersProps> = ({ children, requestCookies, forcedTheme }) => {
   return (
     <CookiesProvider requestCookies={requestCookies}>
       <UrqlProvider>
@@ -35,9 +31,7 @@ export const Providers: React.FC<ProvidersProps> = ({
                     <ToastProvider>
                       <SessionProvider>
                         <UploadProvider>
-                          <FeedbackModalProvider>
-                            {children}
-                          </FeedbackModalProvider>
+                          <FeedbackModalProvider>{children}</FeedbackModalProvider>
                         </UploadProvider>
                       </SessionProvider>
                     </ToastProvider>
@@ -51,20 +45,3 @@ export const Providers: React.FC<ProvidersProps> = ({
     </CookiesProvider>
   );
 };
-
-export const LandingPageProvider: React.FC<ProvidersProps> = ({
-  children,
-  forcedTheme,
-}) => (
-  <CookiesProvider>
-    <UrqlProvider>
-      <QueryClientProvider>
-        <ThemeProvider forcedTheme={forcedTheme}>
-          <DynamicProvider>
-            <SessionProviderMin>{children}</SessionProviderMin>
-          </DynamicProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </UrqlProvider>
-  </CookiesProvider>
-);

@@ -41,11 +41,7 @@ export const AddSiteDropdown: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        shouldShowUpgradePlan={hasManageBillingPermission}
-      />
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>

@@ -1,4 +1,6 @@
 import { ProfileSettingsLayout } from './Settings/Layout';
+import { CreateApiToken } from './Settings/Sections/ApiTokens/CreateApiToken/CreateApiToken';
+import { ManageApiTokens } from './Settings/Sections/ApiTokens/ManageApiTokens/ManageApiTokens';
 import { ChangeAvatar } from './Settings/Sections/ChangeAvatar';
 import { CreatePAT } from './Settings/Sections/CreatePAT/CreatePAT';
 import { DeleteUser } from './Settings/Sections/DeleteUser/DeleteUser';
@@ -21,7 +23,9 @@ export const Profile = {
       Project,
       ManageProjects,
       CreatePAT,
+      CreateApiToken,
       ManagePAT,
+      ManageApiTokens,
       LoginConnections,
       ManageConnections,
       ManageNotifications,

@@ -10,14 +10,10 @@ type UseAgentStatusArgs = {
 
 export const useAgentStatus = ({ agentId }: UseAgentStatusArgs) => {
   const cookies = useCookies();
-  const backendApi = new BackendApiClient({
-    accessToken: cookies.values.accessToken,
-  });
+  const backendApi = new BackendApiClient({ accessToken: cookies.values.accessToken });
 
   const fetchAgentStatus = async (): Promise<AgentStatus> => {
-    const response = await backendApi.fetch({
-      url: `/api/v1/ai-agents/${agentId}/status`,
-    });
+    const response = await backendApi.fetch({ url: `/api/v1/ai-agents/${agentId}/status` });
 
     if (!response.ok) {
       throw response.statusText;

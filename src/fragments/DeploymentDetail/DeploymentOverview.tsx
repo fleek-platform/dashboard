@@ -26,9 +26,7 @@ export const DeploymentOverview: React.FC = () => {
   const siteId = router.query.siteId!;
   const projectId = router.query.projectId!;
 
-  const [deploymentQuery] = useDeploymentQuery({
-    variables: { where: { id: deploymentId } },
-  });
+  const [deploymentQuery] = useDeploymentQuery({ variables: { where: { id: deploymentId } } });
   const [siteQuery] = useSiteQuery({ variables: { where: { id: siteId } } });
 
   const currentDeployment = getSiteCurrentDeployment(siteQuery.data?.site);
@@ -46,9 +44,7 @@ export const DeploymentOverview: React.FC = () => {
     deployment = deploymentPoll.data;
   }
 
-  const parsedStatus = parseAPIDeploymentStatus(
-    deploymentQuery.data?.deployment.status,
-  );
+  const parsedStatus = parseAPIDeploymentStatus(deploymentQuery.data?.deployment.status);
 
   const disablePollingOnStatusList = ['cancelled', 'failed', 'success'];
 
@@ -106,25 +102,16 @@ export const DeploymentOverview: React.FC = () => {
   return (
     <>
       <SiteOverviewBox.Container>
-        <PreviewImage
-          status={statusData.imageStatus}
-          text={statusData.imageText}
-          src={deployment?.previewImageUrl || ''}
-        />
+        <PreviewImage status={statusData.imageStatus} text={statusData.imageText} src={deployment?.previewImageUrl || ''} />
         <SiteOverviewBox.DetailsContainer>
           <SiteOverviewBox.StatusRow>
-            <DeployStatus
-              deployment={deployment}
-              isMostRecentDeployment={isMostRecentDeployment}
-            />
+            <DeployStatus deployment={deployment} isMostRecentDeployment={isMostRecentDeployment} />
           </SiteOverviewBox.StatusRow>
           <Box>
             <Text as="h2" variant="primary" size="2xl" weight={700}>
               {shortStringFormat({ str: deployment.id, index: 6 })}
             </Text>
-            <Text size="sm">
-              {isSelfManaged ? 'Deployed from CLI' : environment}
-            </Text>
+            <Text size="sm">{isSelfManaged ? 'Deployed from CLI' : environment}</Text>
           </Box>
 
           <SiteOverviewBox.ProviderWrapper>
@@ -135,15 +122,11 @@ export const DeploymentOverview: React.FC = () => {
               repositoryName={repositoryName || undefined}
               repositoryOwner={repositoryOwner || undefined}
             />
-            {!isSelfManaged && (
-              <BadgeText colorScheme="slate">{`branch: ${deployment.sourceBranch || 'Not found'}`}</BadgeText>
-            )}
+            {!isSelfManaged && <BadgeText colorScheme="slate">{`branch: ${deployment.sourceBranch || 'Not found'}`}</BadgeText>}
           </SiteOverviewBox.ProviderWrapper>
 
           {/* Commit message */}
-          {!isSelfManaged && (
-            <SiteOverviewBox.GitCommit message={commitMessage} />
-          )}
+          {!isSelfManaged && <SiteOverviewBox.GitCommit message={commitMessage} />}
 
           <SiteOverviewBox.Domain
             siteId={siteId}
@@ -222,18 +205,12 @@ const AccordionSkeleton: React.FC = () => (
   </Accordion.Root>
 );
 
-const HeaderSkeleton: React.FC = () => (
-  <Skeleton className="w-1/3 h-[1.15rem] my-[0.175rem]" />
-);
+const HeaderSkeleton: React.FC = () => <Skeleton className="w-1/3 h-[1.15rem] my-[0.175rem]" />;
 
 const TextRowSkeleton: React.FC = () => <Skeleton className="h-5 w-[15%]" />;
 
-const TextMessageSkeleton: React.FC = () => (
-  <Skeleton className="h-5 w-[90%]" />
-);
+const TextMessageSkeleton: React.FC = () => <Skeleton className="h-5 w-[90%]" />;
 
 const LogRowSkeleton: React.FC<ChildrenProps> = ({ children }) => (
-  <Box className="flex-row py-2.5 px-4 bg-monochrome-normal gap-6">
-    {children}
-  </Box>
+  <Box className="flex-row py-2.5 px-4 bg-monochrome-normal gap-6">{children}</Box>
 );
