@@ -119,7 +119,7 @@ jobs:
     - name: Dispatch Event
       env:
         PAT: ${{ secrets.GITHUB_TOKEN }}
-        ENDPOINT: 'https://api.github.com/repos/${{ github.repository_owner }}/${{ github.repository }}/dispatches'
+        ENDPOINT: 'https://api.github.com/repos/${{ github.repository }}/dispatches'
         EVENT_NAME: 'Release'
       run: |
         if ! curl -H "Accept: application/vnd.github+json" \
