@@ -28,10 +28,18 @@ jobs:
       RELEASE_BRANCH: main
       PREPARE_RELEASE_BRANCH: prepare_release
     steps:
+    - name: Debug Inputs
+      run: |
+        echo "DEBUG: dateSafeGuard='${{ inputs.dateSafeGuard }}'"
+
     - name: Date safe-guard verification
+      env:
+        DATE_SAFE_GUARD: ${{ inputs.dateSafeGuard }}
       run: |
         currDate=$(date +%Y/%m/%d)
-        inputDate="${{ inputs.dateSafeGuard }}"
+        inputDate="$(echo ${{ inputs.dateSafeGuard }})"
+
+        echo "[debug] DATE_SAFE_GUARD = $DATE_SAFE_GUARD"
         
         if [[ "$currDate" == "$inputDate" ]]; then
           echo "✅ Date safe-guard is ok!"
