@@ -31,11 +31,12 @@ jobs:
     - name: Date safe-guard verification
       run: |
         currDate=$(date +%Y/%m/%d)
+        inputDate="${{ inputs.dateSafeGuard }}"
         
-        if [[ "$currDate" == "${{ inputs.dateSafeGuard }}" ]]; then
+        if [[ "$currDate" == "$inputDate" ]]; then
           echo "✅ Date safe-guard is ok!"
         else
-          echo "👹 Oops! The date provided ${currDate} doesn't correspond to ${{ inputs.dateSafeGuard }}"
+          echo "👹 Oops! The date provided ${currDate} doesn't correspond to ${inputDate}"
 
           exit 1
         fi
