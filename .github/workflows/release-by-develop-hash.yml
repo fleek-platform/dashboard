@@ -30,7 +30,8 @@ jobs:
     steps:
     - name: Debug Inputs
       run: |
-        echo "DEBUG: dateSafeGuard='${{ inputs.dateSafeGuard }}'"
+        echo "[debug] dateSafeGuard=${{ inputs.dateSafeGuard }}"
+        echo "[debug] agreement = ${{ inputs.agreement }}"
 
     - name: Date safe-guard verification
       env:
