@@ -5,12 +5,22 @@ if [[ -z "$1" ]]; then
   exit 1
 fi
 
+# Required dotenv utils
+source .scripts/dotenv_utils
+
+dot_env_ls=$(getDotEnvs)
+
+if [[ ! -f "$dot_env_ls" ]]; then
+  echo "👹 Oops! Expected dotenv file $dot_env_ls but was not found!"
+  exit 1
+fi
+
+basePath=$(pnpm exec dotenv -f "$dot_env_ls" get NEXT_PUBLIC_BASE_PATH 2>/dev/null)
 max_count=10
 count=0
 timeout=15
-dev_server_url="http://localhost:$1"
+dev_server_url="http://localhost:$1/$basePath"
 http_success_status="HTTP/1.1 200 OK"
-
 
 echo "🤖 Await for development server at $dev_server_url"
 
