@@ -1,5 +1,8 @@
 /* eslint-disable no-process-env */
 
+// TODO: Deprecate this file as it is not "secrets"
+// Use a concepto closer to `getDefined`, with support for overrides
+
 // The `process.env` variables starting with `NEXT_PUBLIC_` are inlined during the build process.
 export const secrets = {
   TEST_MODE: Boolean(process.env.NEXT_PUBLIC_TEST_MODE),
@@ -32,6 +35,7 @@ export const secrets = {
   // TODO: Switch to app.fleek.xyz or whichever address
   // is decided as client facing. At the moment using *.on-fleek.app for prd
   NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
+  NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
 };
 
 export const getMutableSecrets = () => {

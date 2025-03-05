@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
+import { secrets } from '../secrets';
 
 export type AuthContext = {
   loading: boolean;
@@ -121,7 +122,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     // to have a "valid" accessToken
     // this, should redirect to dashboard project overview
     if (pathname === routes.home()) {
-      window.location.href = `${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
+      // TODO: Create an utility, include related unit test
+      window.location.href = `${secrets.NEXT_PUBLIC_BASE_PATH}/${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
   }, [cookies.values.accessToken, router, logout, pathname]);
 
