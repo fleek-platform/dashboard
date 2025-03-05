@@ -7,6 +7,15 @@ import { getCssText } from '@/theme';
 const Document = () => (
   <Html>
     <Head>
+      {/* Critical styles, e.g. prevent white page */}
+      <style>
+        {`
+          html {
+            background-color: #000;
+            color: #fff;
+          }
+        `}
+      </style>
       <style id="stitches" dangerouslySetInnerHTML={{ __html: getCssText() }} />{' '}
       {/* Usage for SSR */}
       <Script id="google-tag-manager" strategy="afterInteractive">
