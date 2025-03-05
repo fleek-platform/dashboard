@@ -1,3 +1,6 @@
+// TODO: This page can be removed
+// to favour redirection to website
+// the user can login from website
 import { useEffect } from 'react';
 
 import { Home } from '@/fragments/Home/Home';
