@@ -94,6 +94,7 @@ NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL="https://uploads.service.fleek.xyz",
 NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
 NEXT_DASHBOARD_WEBSITE_URL="https://fleek.xyz/dashboard"
 NEXT_PUBLIC_WEBSITE_URL="https://fleek.xyz"
+NEXT_PUBLIC_BASE_PATH="/dashboard"
 ```
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
@@ -291,6 +292,12 @@ main                |  https://fleek-dashboard-production.on-fleek.app
 ### Distribution
 
 To enable support for redirects, single-page-applications, custom 404 pages on IPFS-backed hosting, we use f the [_redirects](https://docs.ipfs.tech/how-to/websites-on-ipfs/redirects-and-custom-404s/#evaluation).
+
+Also, set the environment variable `NEXT_PUBLIC_BASE_PATH`, as the base forward path in `_redirects`:
+
+```
+/* /dashboard/index.html 200
+```
 
 ## Performance
 
