@@ -69,6 +69,10 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
               updateUser({ data: { walletAddress: null, walletChain: null } });
             }
           },
+          onLogout: () => {
+            // TODO: Use the appropriate routing/navigation process
+            window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
+          },
         },
       }}
     >
