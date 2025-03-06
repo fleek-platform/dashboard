@@ -10,19 +10,31 @@ on:
       base_path:
         required: true
         type: string
+    secrets:
+      fleek_token:
+        required: true
+        type: string
+      fleek_slug:
+        required: true
+        type: string
+      fleek_project_id:
+        required: true
+        type: string
+      doppler_token:
+        required: true
+        type: string
 
 jobs:
   deploy-to-fleek:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     env:
-      FLEEK_TOKEN: ${{ secrets.FLEEK_TOKEN }}
-      # TODO: Project Id and Slug should move to env vars
-      FLEEK_PROJECT_ID: ${{ secrets.FLEEK_PROJECT_ID }}
-      FLEEK_SLUG: ${{ secrets.FLEEK_SLUG }}
-      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
-      TARGET_ENVIRONMENT: ${{ inputs.environment }}
       NEXT_PUBLIC_BASE_PATH: ${{ inputs.base_path }}
+      FLEEK_PROJECT_ID: ${{ inputs.fleek_project_id }}
+      FLEEK_SLUG: ${{ inputs.fleek_slug }}
+      FLEEK_TOKEN: ${{ secrets.fleek_token }}
+      DOPPLER_TOKEN: ${{ secrets.doppler_token }}
+      TARGET_ENVIRONMENT: ${{ inputs.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

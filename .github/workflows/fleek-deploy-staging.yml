@@ -18,3 +18,5 @@ jobs:
     secrets:
       fleek_token: ${{ secrets.FLEEK_TOKEN }}
       doppler_token: ${{ secrets.DOPPLER_TOKEN }}
+      fleek_project_id: ${{ secrets.FLEEK_PROJECT_ID }}
+      fleek_slug: ${{ secrets.FLEEK_SLUG }}
