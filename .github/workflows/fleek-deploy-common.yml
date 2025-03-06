@@ -13,16 +13,12 @@ on:
     secrets:
       fleek_token:
         required: true
-        type: string
       fleek_slug:
         required: true
-        type: string
       fleek_project_id:
         required: true
-        type: string
       doppler_token:
         required: true
-        type: string
 
 jobs:
   deploy-to-fleek:
