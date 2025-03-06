@@ -7,6 +7,9 @@ on:
       environment:
         required: true
         type: string
+      base_path:
+        required: true
+        type: string
 
 jobs:
   deploy-to-fleek:
@@ -14,10 +17,12 @@ jobs:
     environment: ${{ inputs.environment }}
     env:
       FLEEK_TOKEN: ${{ secrets.FLEEK_TOKEN }}
+      # TODO: Project Id and Slug should move to env vars
       FLEEK_PROJECT_ID: ${{ secrets.FLEEK_PROJECT_ID }}
       FLEEK_SLUG: ${{ secrets.FLEEK_SLUG }}
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       TARGET_ENVIRONMENT: ${{ inputs.environment }}
+      NEXT_PUBLIC_BASE_PATH: ${{ inputs.base_path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
