@@ -26,7 +26,7 @@ jobs:
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
       # TODO: This one will be overriden in the doppler step
       # it's excluded in the `scripts/setup-ci-dotenv`
-      NEXT_PUBLIC_WEBSITE_URL: $${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
+      NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
