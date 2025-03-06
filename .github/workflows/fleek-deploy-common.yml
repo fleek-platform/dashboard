@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "FLEEK_PROJECT_ID: ${{ inputs.fleek_project_id }}"
           echo "FLEEK_SLUG: ${{ inputs.fleek_slug }}"
-          echo "BASE_PATH: ${{ inputs.base_path }}
+          echo "BASE_PATH: ${{ inputs.base_path }}"
 
       - name: Checkout
         uses: actions/checkout@v4
