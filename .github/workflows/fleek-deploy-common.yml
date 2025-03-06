@@ -7,15 +7,6 @@ on:
       environment:
         required: true
         type: string
-      base_path:
-        required: true
-        type: string
-      fleek_slug:
-        required: true
-        type: string
-      fleek_project_id:
-        required: true
-        type: string
     secrets:
       fleek_token:
         required: true
@@ -27,12 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     env:
-      NEXT_PUBLIC_BASE_PATH: ${{ inputs.base_path }}
-      FLEEK_PROJECT_ID: ${{ inputs.fleek_project_id }}
-      FLEEK_SLUG: ${{ inputs.fleek_slug }}
       FLEEK_TOKEN: ${{ secrets.fleek_token }}
       DOPPLER_TOKEN: ${{ secrets.doppler_token }}
       TARGET_ENVIRONMENT: ${{ inputs.environment }}
+      FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
+      FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
+      PUBLIC_DASHBOARD_BASE_PATH: ${{ vars.PUBLIC_DASHBOARD_BASE_PATH }}
     steps:
       - name: Debug
         run: |
