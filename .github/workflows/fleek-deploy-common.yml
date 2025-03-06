@@ -23,7 +23,7 @@ jobs:
       TARGET_ENVIRONMENT: ${{ inputs.environment }}
       FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
       FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
-      PUBLIC_DASHBOARD_BASE_PATH: ${{ vars.PUBLIC_DASHBOARD_BASE_PATH }}
+      PUBLIC_DASHBOARD_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
     steps:
       - name: Debug
         run: |
