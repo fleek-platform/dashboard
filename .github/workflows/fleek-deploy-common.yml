@@ -34,6 +34,12 @@ jobs:
       DOPPLER_TOKEN: ${{ secrets.doppler_token }}
       TARGET_ENVIRONMENT: ${{ inputs.environment }}
     steps:
+      - name: Debug
+        run: |
+          echo "FLEEK_PROJECT_ID: ${{ inputs.fleek_project_id }}"
+          echo "FLEEK_SLUG: ${{ inputs.fleek_slug }}"
+          echo "BASE_PATH: ${{ inputs.base_path }}
+
       - name: Checkout
         uses: actions/checkout@v4
 
