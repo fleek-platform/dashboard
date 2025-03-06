@@ -11,9 +11,9 @@ jobs:
     uses: ./.github/workflows/fleek-deploy-common.yml
     with:
       environment: staging
-      fleek_project_id: ${{ vars.FLEEK_PROJECT_ID }}
-      fleek_slug: ${{ vars.FLEEK_SLUG }}
-      github_source_repo: ${{ github.repository }}
+      # TODO: Move secrets and make them vars
+      # fleek_project_id: ${{ vars.FLEEK_PROJECT_ID }}
+      # fleek_slug: ${{ vars.FLEEK_SLUG }}
       base_path: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
     secrets:
       fleek_token: ${{ secrets.FLEEK_TOKEN }}
