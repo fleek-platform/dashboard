@@ -25,12 +25,6 @@ jobs:
       FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
     steps:
-      - name: Debug
-        run: |
-          echo "FLEEK_PROJECT_ID: ${{ inputs.fleek_project_id }}"
-          echo "FLEEK_SLUG: ${{ inputs.fleek_slug }}"
-          echo "BASE_PATH: ${{ inputs.base_path }}"
-
       - name: Checkout
         uses: actions/checkout@v4
 
