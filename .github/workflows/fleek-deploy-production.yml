@@ -10,8 +10,10 @@ on:
     types: [Release]
 
 jobs:
-  deploy-to-staging:
+  deploy-to-production:
     uses: ./.github/workflows/fleek-deploy-common.yml
     with:
       environment: production
-    secrets: inherit
+    secrets:
+      fleek_token: ${{ secrets.FLEEK_TOKEN }}
+      doppler_token: ${{ secrets.DOPPLER_TOKEN }}
