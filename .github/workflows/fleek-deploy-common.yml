@@ -82,7 +82,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: build-output-fleek-xyz-$TARGET_ENVIRONMENT
+          name: build-output-fleek-xyz-${{ env.TARGET_ENVIRONMENT }}
           path: out
 
       - name: Clear
