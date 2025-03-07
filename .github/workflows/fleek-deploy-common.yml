@@ -97,6 +97,8 @@ jobs:
           
           if [[ "$TARGET_ENVIRONMENT" == 'production' ]]; then
             tag="latest"
+          else
+            ./.scripts/set_package_rc_version          
           fi
 
           pnpm publish \

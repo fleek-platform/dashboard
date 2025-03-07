@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SHORT_HASH=$(git rev-parse --short HEAD)
+
+VERSION=$(jq -r .version package.json)
+
+if [[ "$VERSION" =~ -rc.* ]]; then
+  echo "👹 Oops! The package is already versioned with -rc e.g. $VERSION"
+
+  exit 1
+fi
+
+if ! jq --arg hash "$SHORT_HASH" \
+  '.version = .version + "-rc." + $hash' \
+  package.json > temp.json; then
+  echo "👹 Oops! Failed to set the rc version for some reason..."
+
+  exit 1
+fi
+  
+mv temp.json package.json
+
+echo "👍 Done! Updated to version $(jq -r .version package.json)"
