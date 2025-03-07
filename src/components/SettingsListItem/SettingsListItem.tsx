@@ -2,17 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { ExternalLink, SettingsBox } from '@/components';
 import { ChildrenProps, DisabledProps, LoadingProps } from '@/types/Props';
-import {
-  Avatar,
-  AvatarMarble,
-  Box,
-  BoxProps,
-  Button,
-  Icon,
-  IconName,
-  Menu,
-  Text,
-} from '@/ui';
+import { Avatar, AvatarMarble, Box, BoxProps, Button, Icon, IconName, Menu, Text } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { PermissionsTooltip } from '../PermissionsTooltip/PermissionsTooltip';
@@ -24,6 +14,7 @@ export type SettingsListItemProps = ChildrenProps<
     marbleSrc?: string;
     testId?: string;
     className?: string;
+    leftBoxClassName?: string;
   } & DataProps
 >;
 
@@ -37,76 +28,38 @@ export const SettingsListItem = ({
   testId,
   marbleSrc,
   className,
+  leftBoxClassName,
 }: SettingsListItemProps) => {
   return (
     <Container className={className} data-testid={testId}>
-      <Box className="flex-row gap-4">
+      <Box className={cn('flex-row gap-4', leftBoxClassName)}>
         {avatarSrc || avatarIcon ? (
-          <Avatar
-            src={avatarSrc}
-            icon={avatarIcon}
-            enableIcon={true}
-            className="bg-neutral-5 text-lg"
-          />
+          <Avatar src={avatarSrc} icon={avatarIcon} enableIcon={true} className="bg-neutral-5 text-lg" />
         ) : (
-          marbleSrc && (
-            <Avatar
-              as={AvatarMarble}
-              name={marbleSrc}
-              className="bg-neutral-5 text-lg rounded-full"
-            />
-          )
+          marbleSrc && <Avatar as={AvatarMarble} name={marbleSrc} className="bg-neutral-5 text-lg rounded-full" />
         )}
-        <SettingsListItem.Data
-          title={title}
-          subtitle={subtitle}
-          titleSuffix={titleSuffix}
-        />
+        <SettingsListItem.Data title={title} subtitle={subtitle} titleSuffix={titleSuffix} />
       </Box>
       {children}
     </Container>
   );
 };
 
-const Container = forwardRef<HTMLDivElement, BoxProps>(
-  ({ children, className, ...props }, ref) => (
-    <Box
-      variant="container"
-      ref={ref}
-      className={cn(
-        'flex-row justify-between items-center gap-3 p-4 bg-transparent',
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Box>
-  ),
-);
+const Container = forwardRef<HTMLDivElement, BoxProps>(({ children, className, ...props }, ref) => (
+  <Box variant="container" ref={ref} className={cn('flex-row justify-between items-center gap-3 p-4 bg-transparent', className)} {...props}>
+    {children}
+  </Box>
+));
 
-type SkeletonProps = {
-  enableAvatar?: boolean;
-  disableTitle?: boolean;
-  disableSubtitle?: boolean;
-};
+type SkeletonProps = { enableAvatar?: boolean; disableTitle?: boolean; disableSubtitle?: boolean };
 
-SettingsListItem.Skeleton = ({
-  enableAvatar,
-  disableTitle,
-  disableSubtitle,
-}: SkeletonProps) => {
+SettingsListItem.Skeleton = ({ enableAvatar, disableTitle, disableSubtitle }: SkeletonProps) => {
   return (
     <Container>
-      {enableAvatar && (
-        <SettingsBox.Skeleton variant="avatar" className="size-7" />
-      )}
+      {enableAvatar && <SettingsBox.Skeleton variant="avatar" className="size-7" />}
       <Box className="flex-1 gap-1">
-        {!disableTitle && (
-          <SettingsBox.Skeleton variant="title" className="w-1/3" />
-        )}
-        {!disableSubtitle && (
-          <SettingsBox.Skeleton variant="text" className="w-1/2" />
-        )}
+        {!disableTitle && <SettingsBox.Skeleton variant="title" className="w-1/3" />}
+        {!disableSubtitle && <SettingsBox.Skeleton variant="text" className="w-1/2" />}
       </Box>
     </Container>
   );
@@ -127,26 +80,13 @@ SettingsListItem.DropdownMenu = ({
   ...props
 }: DropdownMenuProps) => {
   if (isLoading) {
-    return (
-      <Button
-        intent="ghost"
-        size="sm"
-        loading
-        disabled
-        className="self-center p-1"
-      />
-    );
+    return <Button intent="ghost" size="sm" loading disabled className="self-center p-1" />;
   }
 
   if (isDisabled) {
     return (
       <PermissionsTooltip hasAccess={hasAccess} asChild>
-        <Button
-          color="ghost"
-          size="sm"
-          disabled={isDisabled}
-          className="self-center p-1"
-        >
+        <Button color="ghost" size="sm" disabled={isDisabled} className="self-center p-1">
           <Icon name="ellipsis-vertical" />
         </Button>
       </PermissionsTooltip>
@@ -156,12 +96,7 @@ SettingsListItem.DropdownMenu = ({
   return (
     <Menu.Root {...props}>
       <Menu.Trigger asChild>
-        <Button
-          intent="ghost"
-          size="sm"
-          loading={isLoading}
-          className="self-center p-1"
-        >
+        <Button intent="ghost" size="sm" loading={isLoading} className="self-center p-1">
           <Icon name="ellipsis-vertical" />
         </Button>
       </Menu.Trigger>
@@ -181,12 +116,7 @@ type DropdownMenuItemProps = ChildrenProps<{
 }> &
   Omit<React.ComponentProps<typeof Menu.Item>, 'children'>;
 
-SettingsListItem.DropdownMenuItem = ({
-  icon,
-  children,
-  href,
-  ...props
-}: DropdownMenuItemProps) => {
+SettingsListItem.DropdownMenuItem = ({ icon, children, href, ...props }: DropdownMenuItemProps) => {
   const content = (
     <Menu.Item {...props}>
       {children}
@@ -210,12 +140,7 @@ type DataProps = {
   className?: string;
 };
 
-SettingsListItem.Data = ({
-  title,
-  subtitle,
-  titleSuffix,
-  className,
-}: DataProps) => (
+SettingsListItem.Data = ({ title, subtitle, titleSuffix, className }: DataProps) => (
   <Box className={cn('gap-1', className)}>
     <Text as="h3" variant="primary" weight={500}>
       {title}
@@ -236,16 +161,9 @@ SettingsListItem.DataSkeleton = () => (
   </Box>
 );
 
-SettingsListItem.FlatRow = ({
-  children,
-  className,
-  testId,
-}: BoxProps & { testId?: string }) => (
+SettingsListItem.FlatRow = ({ children, className, testId }: BoxProps & { testId?: string }) => (
   <Box
-    className={cn(
-      'grid grid-cols-[3fr_3fr_1rem] gap-4 p-4 items-center [&:not(:last-child)]:border-b-[1px] border-b-neutral-6',
-      className,
-    )}
+    className={cn('grid grid-cols-[3fr_3fr_1rem] gap-4 p-4 items-center [&:not(:last-child)]:border-b-[1px] border-b-neutral-6', className)}
     data-testid={testId}
   >
     {children}

@@ -17,40 +17,28 @@ const DESCRIPTION_MAP: Record<GitProviderTags, string> = {
 };
 
 export type ProviderDetailsProps = {
-  provider: Pick<
-    GitProvidersQuery['gitProviders'][0],
-    'id' | 'enabled' | 'name' | 'tags'
-  >;
+  provider: Pick<GitProvidersQuery['gitProviders'][0], 'id' | 'enabled' | 'name' | 'tags'>;
   onClose?: () => void;
 };
 
-export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
-  provider,
-  onClose,
-}) => {
+export const ProviderDetails: React.FC<ProviderDetailsProps> = ({ provider, onClose }) => {
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
   const [errorFetching, setErrorFetching] = useState<boolean>(false);
   const [status, setStatus] = useState<SiteDeploymentRequirements>();
   const isFetching = useRef(false);
 
-  const [, siteDeploymentRequirements] =
-    useSiteDeploymentRequirementsMutation();
+  const [, siteDeploymentRequirements] = useSiteDeploymentRequirementsMutation();
 
   const fetchStatus = useCallback(async () => {
     isFetching.current = true;
     setLoading(true);
 
     try {
-      const result = await siteDeploymentRequirements({
-        where: { gitProviderId: provider.id },
-      });
+      const result = await siteDeploymentRequirements({ where: { gitProviderId: provider.id } });
 
       if (result.error || !result.data?.siteDeploymentRequirements) {
-        throw (
-          result.error ||
-          new Error('Unexpected error getting provider requirements')
-        );
+        throw result.error || new Error('Unexpected error getting provider requirements');
       } else {
         setStatus((prevStatus) => {
           if (prevStatus !== result.data?.siteDeploymentRequirements) {
@@ -63,10 +51,7 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
     } catch (error) {
       setErrorFetching(true);
 
-      toast.error({
-        error,
-        log: 'Unexpected error happened when getting provider requirements',
-      });
+      toast.error({ error, log: 'Unexpected error happened when getting provider requirements' });
     }
 
     isFetching.current = false;
@@ -104,10 +89,7 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       });
     } catch (error) {
       setLoading(false);
-      toast.error({
-        error,
-        log: 'Unexpected error happened when trying to install',
-      });
+      toast.error({ error, log: 'Unexpected error happened when trying to install' });
     }
   };
 
@@ -132,23 +114,14 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       });
     } catch (error) {
       setLoading(false);
-      toast.error({
-        error,
-        log: 'Unexpected error happened when trying to authenticate',
-      });
+      toast.error({ error, log: 'Unexpected error happened when trying to authenticate' });
     }
   };
 
   const renderContent = () => {
     if (errorFetching) {
       return (
-        <Button
-          size="sm"
-          iconLeft="refresh"
-          intent="danger"
-          onClick={fetchStatus}
-          loading={isLoading}
-        >
+        <Button size="sm" iconLeft="refresh" intent="danger" onClick={fetchStatus} loading={isLoading}>
           Retry
         </Button>
       );
@@ -182,11 +155,7 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       <>
         <BadgeText colorScheme="green">Active</BadgeText>
         <SettingsListItem.DropdownMenu>
-          <SettingsListItem.DropdownMenuItem
-            className="items-center gap-4"
-            icon="pencil"
-            onSelect={handleInstallationButtonClick}
-          >
+          <SettingsListItem.DropdownMenuItem className="items-center gap-4" icon="pencil" onSelect={handleInstallationButtonClick}>
             Edit integration permissions
           </SettingsListItem.DropdownMenuItem>
         </SettingsListItem.DropdownMenu>
@@ -199,6 +168,7 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       title={provider.name}
       subtitle={DESCRIPTION_MAP[provider.tags as GitProviderTags] || ''}
       avatarIcon="github"
+      leftBoxClassName="mr-auto"
     >
       {renderContent()}
     </SettingsListItem>

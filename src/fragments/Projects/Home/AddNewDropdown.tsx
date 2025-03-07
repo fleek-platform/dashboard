@@ -6,9 +6,12 @@ import { constants } from '@/constants';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { secrets } from '@/secrets';
 import { Button, Menu } from '@/ui';
 
 import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
+
+const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
 
 export const AddNewDropdown: React.FC = () => {
   const session = useSessionContext();
@@ -21,21 +24,20 @@ export const AddNewDropdown: React.FC = () => {
   const hasManageBillingPermission = usePermissions({
     action: [constants.PERMISSION.BILLING.MANAGE],
   });
+  const hasCreateAgentPermission = usePermissions({
+    action: [constants.PERMISSION.AGENTS_AI.CREATE],
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const billingRestriction = useSiteRestriction();
 
-  if (!hasDeployPermissions && !hasUploadStoragePermission) {
+  if (!hasDeployPermissions && !hasUploadStoragePermission && !hasCreateAgentPermission) {
     return null;
   }
 
   return (
     <>
-      <RestrictionModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        shouldShowUpgradePlan={hasManageBillingPermission}
-      />
+      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>
@@ -54,6 +56,16 @@ export const AddNewDropdown: React.FC = () => {
                 openRestrictionModal={() => setIsModalOpen(true)}
               />
               <Menu.Separator />
+            </>
+          )}
+          {hasCreateAgentPermission && (
+            <>
+              <DropdownItem isExternalLink text="Create an AI Agent" icon="robot" href={WEBSITE_ELIZA_URL} />
+              <Menu.Separator />
+            </>
+          )}
+          {hasDeployPermissions && (
+            <>
               <DropdownItem
                 text="Use a template"
                 icon="dashboard"
@@ -65,11 +77,9 @@ export const AddNewDropdown: React.FC = () => {
             </>
           )}
           {hasUploadStoragePermission && (
-            <DropdownItem
-              text="Store files"
-              icon="archive"
-              href={routes.project.storage({ projectId: session.project.id })}
-            />
+            <>
+              <DropdownItem text="Store files" icon="archive" href={routes.project.storage({ projectId: session.project.id })} />
+            </>
           )}
         </Menu.Content>
       </Menu.Root>
