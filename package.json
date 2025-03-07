@@ -1,6 +1,10 @@
 {
   "name": "@fleek-platform/dashboard",
   "version": "0.3.1",
+  "files": [
+    "README.md",
+    "out"
+  ],
   "scripts": {
     "build": ".scripts/build_static_site",
     "build:ci": "pnpm run build",

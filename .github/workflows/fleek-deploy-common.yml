@@ -12,6 +12,8 @@ on:
         required: true
       doppler_token:
         required: true
+      npm_token:
+        required: true
 
 jobs:
   deploy-to-fleek:
@@ -24,6 +26,8 @@ jobs:
       FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
       FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+      NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
+      NPM_TOKEN: ${{ secrets.npm_token }}
       # TODO: This one will be overriden in the doppler step
       # it's excluded in the `scripts/setup-ci-dotenv`
       NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
@@ -81,6 +85,24 @@ jobs:
         with:
           name: build-output-fleek-xyz-${{ env.TARGET_ENVIRONMENT }}
           path: out
+
+      - name: Create .npmrc file
+        run: |
+          echo "//$NPM_REGISTRY_HOST/:_authToken=$NPM_TOKEN" > .npmrc
+          cat .npmrc
+
+      - name: Publish NPM package
+        run: |
+          tag="prerelease"
+          
+          if [[ "$TARGET_ENVIRONMENT" == 'production' ]]; then
+            tag="latest"
+          fi
+
+          pnpm publish \
+            --access=public \
+            --no-git-checks \
+            --tag "$tag"
 
       - name: Clear
         run: |
