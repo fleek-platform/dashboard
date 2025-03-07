@@ -24,6 +24,7 @@ export type SettingsListItemProps = ChildrenProps<
     marbleSrc?: string;
     testId?: string;
     className?: string;
+    leftBoxClassName?: string;
   } & DataProps
 >;
 
@@ -37,10 +38,11 @@ export const SettingsListItem = ({
   testId,
   marbleSrc,
   className,
+  leftBoxClassName,
 }: SettingsListItemProps) => {
   return (
     <Container className={className} data-testid={testId}>
-      <Box className="flex-row gap-4">
+      <Box className={cn('flex-row gap-4', leftBoxClassName)}>
         {avatarSrc || avatarIcon ? (
           <Avatar
             src={avatarSrc}

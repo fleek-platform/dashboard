@@ -44,8 +44,18 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
     );
   }
 
-  const hasOtherMembers =
-    projectMembers.filter((member) => member.user.id !== userId).length > 0;
+  // eslint-disable-next-line fleek-custom/valid-argument-types
+  const hasOwnerPermission = (member: ProjectMember) =>
+    member.permissionGroup.name === 'Owner';
+
+  const owners = projectMembers.filter(hasOwnerPermission);
+
+  // eslint-disable-next-line fleek-custom/valid-argument-types
+  const getDisableEdit = (member: ProjectMember) => {
+    const isTheOnlyOwner = hasOwnerPermission(member) && owners.length === 1;
+
+    return isTheOnlyOwner;
+  };
 
   return (
     <TeamProjectProvider
@@ -68,25 +78,19 @@ export const TeamProjectList: React.FC<TeamProjectListProps> = ({
             </SettingsBox.Text>
           </>
         )}
-        {hasOtherMembers ? (
-          projectMembers.map((projectMember) => (
-            <Box
-              key={projectMember.id}
-              className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none"
-            >
-              <MemberItem
-                projectMember={projectMember}
-                onUpdateRole={onUpdateRole}
-                isCurrentUser={projectMember.user.id === userId}
-              />
-            </Box>
-          ))
-        ) : (
-          <SettingsBox.EmptyContent
-            title="No Members"
-            description="Once members are added, they will appear here."
-          />
-        )}
+        {projectMembers.map((projectMember) => (
+          <Box
+            key={projectMember.id}
+            className="border-b border-neutral-6 pb-4 last:pb-0 last:border-none"
+          >
+            <MemberItem
+              projectMember={projectMember}
+              onUpdateRole={onUpdateRole}
+              isCurrentUser={projectMember.user.id === userId}
+              disableEdit={getDisableEdit(projectMember)}
+            />
+          </Box>
+        ))}
       </SettingsBox.Container>
     </TeamProjectProvider>
   );
@@ -97,11 +101,13 @@ const MembersSkeleton: React.FC = () => <Skeleton variant="text" />;
 type MemberItemProps = {
   projectMember: ProjectMember;
   isCurrentUser: boolean;
+  disableEdit?: boolean;
 } & Pick<TeamProjectContext, 'onUpdateRole'>;
 
 const MemberItem: React.FC<MemberItemProps> = ({
   projectMember,
   isCurrentUser,
+  disableEdit,
   onUpdateRole,
 }) => {
   const [selectedRole, setSelectedRole] = useState(
@@ -109,9 +115,10 @@ const MemberItem: React.FC<MemberItemProps> = ({
   );
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const hasEditRolePermission = usePermissions({
-    action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS],
-  });
+  const hasEditRolePermission =
+    usePermissions({
+      action: [constants.PERMISSION.TEAM.CHANGE_PERMISSIONS],
+    }) && !disableEdit;
 
   const handleRoleChange = async (
     selectedRole: PermissionGroup | undefined,
@@ -160,7 +167,10 @@ const MemberItem: React.FC<MemberItemProps> = ({
             isDisabled={!hasEditRolePermission || isUpdating}
           />
         </PermissionsTooltip>
-        <DropdownMenu memberId={projectMember.user.id} />
+        <DropdownMenu
+          memberId={projectMember.user.id}
+          disableEdit={disableEdit}
+        />
       </Box>
     </Box>
   );
@@ -168,15 +178,20 @@ const MemberItem: React.FC<MemberItemProps> = ({
 
 type DropdownMenuProps = {
   memberId: string;
+  disableEdit?: boolean;
 };
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ memberId }) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  memberId,
+  disableEdit,
+}) => {
   const { onSubmitDelete } = useTeamProjectContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  const hasDeleteMemberPermission = usePermissions({
-    action: [constants.PERMISSION.TEAM.DELETE_EXCEPT_OWNER],
-  });
+  const hasDeleteMemberPermission =
+    usePermissions({
+      action: [constants.PERMISSION.TEAM.DELETE_EXCEPT_OWNER],
+    }) && !disableEdit;
 
   if (isLoading) {
     // needed cause the forwardStyledRef

@@ -199,6 +199,7 @@ export const ProviderDetails: React.FC<ProviderDetailsProps> = ({
       title={provider.name}
       subtitle={DESCRIPTION_MAP[provider.tags as GitProviderTags] || ''}
       avatarIcon="github"
+      leftBoxClassName="mr-auto"
     >
       {renderContent()}
     </SettingsListItem>

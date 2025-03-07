@@ -6,10 +6,12 @@ import { constants } from '@/constants';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { secrets } from '@/secrets';
 import { Text } from '@/ui';
-import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
 
 import { SectionsStyles as S } from './Sections.styles';
+
+const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
 
 export const Main: React.FC = () => {
   const session = useSessionContext();
@@ -22,6 +24,9 @@ export const Main: React.FC = () => {
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
   const hasManageBillingPermission = usePermissions({
     action: [constants.PERMISSION.BILLING.MANAGE],
+  });
+  const hasCreateAgentPermission = usePermissions({
+    action: [constants.PERMISSION.AGENTS_AI.CREATE],
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,15 +60,14 @@ export const Main: React.FC = () => {
               isRestricted={hasReachedSitesLimit}
             />
           </PermissionsTooltip>
-          <PermissionsTooltip hasAccess={hasCreateSitePermission}>
+          <PermissionsTooltip hasAccess={hasCreateAgentPermission}>
             <ActionBox
-              onClick={onActionBoxClick}
-              href={FLEEK_TEMPLATES_URLS.templatesUrl}
-              icon="grid"
-              title="Deploy a template"
-              description="Browse our gallery of frontend templates and deploy any of them."
-              isDisabled={!hasCreateSitePermission}
-              isRestricted={hasReachedSitesLimit}
+              isExternalLink
+              href={WEBSITE_ELIZA_URL}
+              icon="robot"
+              title="Create an AI agent"
+              description="Build an AI agent using the Eliza framework."
+              isDisabled={!hasCreateAgentPermission}
             />
           </PermissionsTooltip>
           <PermissionsTooltip hasAccess={hasStoragePermissions} side="bottom">
