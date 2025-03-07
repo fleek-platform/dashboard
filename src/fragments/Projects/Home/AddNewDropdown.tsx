@@ -48,14 +48,16 @@ export const AddNewDropdown: React.FC = () => {
       />
       <Menu.Root>
         <Menu.Trigger asChild>
-          <Button iconRight="chevron-down">Add new</Button>
+          <Button iconRight="chevron-down" iconLeft="plus">
+            Create new
+          </Button>
         </Menu.Trigger>
 
         <Menu.Content align="end">
           {hasDeployPermissions && (
             <>
               <DropdownItem
-                text="Deploy my site"
+                text="Site"
                 icon="deploy"
                 href={routes.project.site.new({
                   projectId: session.project.id,
@@ -70,7 +72,7 @@ export const AddNewDropdown: React.FC = () => {
             <>
               <DropdownItem
                 isExternalLink
-                text="Create an AI Agent"
+                text="AI agent"
                 icon="robot"
                 href={WEBSITE_ELIZA_URL}
               />
@@ -80,7 +82,7 @@ export const AddNewDropdown: React.FC = () => {
           {hasDeployPermissions && (
             <>
               <DropdownItem
-                text="Use a template"
+                text="Template site"
                 icon="dashboard"
                 href={FLEEK_TEMPLATES_URLS.templatesUrl}
                 isBillingRestricted={billingRestriction.hasReachedLimit}
@@ -92,7 +94,7 @@ export const AddNewDropdown: React.FC = () => {
           {hasUploadStoragePermission && (
             <>
               <DropdownItem
-                text="Store files"
+                text="Storage file"
                 icon="archive"
                 href={routes.project.storage({ projectId: session.project.id })}
               />
