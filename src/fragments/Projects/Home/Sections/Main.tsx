@@ -15,11 +15,19 @@ const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
 
 export const Main: React.FC = () => {
   const session = useSessionContext();
-  const hasCreateSitePermission = usePermissions({ action: [constants.PERMISSION.SITE.CREATE] });
-  const hasStoragePermissions = usePermissions({ action: [constants.PERMISSION.STORAGE.UPLOAD] });
+  const hasCreateSitePermission = usePermissions({
+    action: [constants.PERMISSION.SITE.CREATE],
+  });
+  const hasStoragePermissions = usePermissions({
+    action: [constants.PERMISSION.STORAGE.UPLOAD],
+  });
   const hasReachedSitesLimit = useSiteRestriction().hasReachedLimit;
-  const hasManageBillingPermission = usePermissions({ action: [constants.PERMISSION.BILLING.MANAGE] });
-  const hasCreateAgentPermission = usePermissions({ action: [constants.PERMISSION.AGENTS_AI.CREATE] });
+  const hasManageBillingPermission = usePermissions({
+    action: [constants.PERMISSION.BILLING.MANAGE],
+  });
+  const hasCreateAgentPermission = usePermissions({
+    action: [constants.PERMISSION.AGENTS_AI.CREATE],
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,7 +39,11 @@ export const Main: React.FC = () => {
 
   return (
     <>
-      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
+      <RestrictionModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        shouldShowUpgradePlan={hasManageBillingPermission}
+      />
       <S.Main.GridArea>
         <Text as="h2" size="xl" weight={500}>
           Get on Fleek!

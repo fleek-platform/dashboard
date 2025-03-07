@@ -13,11 +13,20 @@ type DropdownItemProps = React.ComponentProps<typeof Menu.Item> & {
 };
 
 export const DropdownItem: React.FC<DropdownItemProps> = (props) => {
-  const { isBillingRestricted = false, openRestrictionModal, text, icon, ...menuItemProps } = props;
+  const {
+    isBillingRestricted = false,
+    openRestrictionModal,
+    text,
+    icon,
+    ...menuItemProps
+  } = props;
 
   return (
     <DropdownItemWrapper {...props}>
-      <Menu.Item {...menuItemProps} onSelect={isBillingRestricted ? openRestrictionModal : undefined}>
+      <Menu.Item
+        {...menuItemProps}
+        onSelect={isBillingRestricted ? openRestrictionModal : undefined}
+      >
         {text}
         <Icon name={icon} />
       </Menu.Item>

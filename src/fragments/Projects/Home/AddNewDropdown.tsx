@@ -31,13 +31,21 @@ export const AddNewDropdown: React.FC = () => {
 
   const billingRestriction = useSiteRestriction();
 
-  if (!hasDeployPermissions && !hasUploadStoragePermission && !hasCreateAgentPermission) {
+  if (
+    !hasDeployPermissions &&
+    !hasUploadStoragePermission &&
+    !hasCreateAgentPermission
+  ) {
     return null;
   }
 
   return (
     <>
-      <RestrictionModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} shouldShowUpgradePlan={hasManageBillingPermission} />
+      <RestrictionModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        shouldShowUpgradePlan={hasManageBillingPermission}
+      />
       <Menu.Root>
         <Menu.Trigger asChild>
           <Button iconRight="chevron-down">Add new</Button>
@@ -60,7 +68,12 @@ export const AddNewDropdown: React.FC = () => {
           )}
           {hasCreateAgentPermission && (
             <>
-              <DropdownItem isExternalLink text="Create an AI Agent" icon="robot" href={WEBSITE_ELIZA_URL} />
+              <DropdownItem
+                isExternalLink
+                text="Create an AI Agent"
+                icon="robot"
+                href={WEBSITE_ELIZA_URL}
+              />
               <Menu.Separator />
             </>
           )}
@@ -78,7 +91,11 @@ export const AddNewDropdown: React.FC = () => {
           )}
           {hasUploadStoragePermission && (
             <>
-              <DropdownItem text="Store files" icon="archive" href={routes.project.storage({ projectId: session.project.id })} />
+              <DropdownItem
+                text="Store files"
+                icon="archive"
+                href={routes.project.storage({ projectId: session.project.id })}
+              />
             </>
           )}
         </Menu.Content>
