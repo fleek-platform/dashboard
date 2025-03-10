@@ -79,7 +79,7 @@ jobs:
 
       - name: Build & deploy
         env:
-          NEXT_PUBLIC_BASE_PATH: '/'
+          NEXT_PUBLIC_BASE_PATH: ''
         run: |
           fleek sites deploy
 
