@@ -42,7 +42,9 @@ export const secrets = {
     process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN === 'true',
 };
 
-console.log(`[debug] secrets.ts:::: process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN)
+console.log(`[debug] secrets.ts: process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN)
+
+console.log(`[debug] secrets.ts: secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN)
 
 export const getMutableSecrets = () => {
   if (!secrets.TEST_MODE) {
