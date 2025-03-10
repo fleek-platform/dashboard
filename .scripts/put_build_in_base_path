@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+OUTPUT_DIR="out"
+TEMP_DIR="$OUTPUT_DIR.bak"
+DEST_DIR="$OUTPUT_DIR/$NEXT_PUBLIC_BASE_PATH"
+
+if [[ ! -f "out" ]]; then
+  echo "Error: Source file 'out' does not exist."
+  exit 1
+fi
+
+mv "$OUTPUT_DIR" "$TEMP_DIR" || exit 1
+echo "✅ Moved $OUTPUT_DIR to $TEMP_DIR"
+
+mkdir -p "$DEST_DIR" || exit 1
+echo "✅ Created $DEST_DIR"
+
+cp -r "$TEMP_DIR/" "$DEST_DIR"
+echo "✅ Copied files from $TEMP_DIR to $DEST_DIR"
+
+if [[ -d "$DEST_DIR" && "$(ls -A $DEST_DIR)" ]]; then
+  echo "✅ Created $DEST_DIR"
+else
+  echo "👹 Oops! Failed to create $DEST_DIR for some reason..."
+  exit 1
+fi

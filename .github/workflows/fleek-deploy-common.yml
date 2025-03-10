@@ -68,9 +68,11 @@ jobs:
         run: pnpm install
 
       - name: Setup fleek.config.json
+        env:
+          NEXT_ALLOW_LANDING_PAGE_LOGIN: 'true'
         run: |
           DIST="out"
-          BUILD="pnpm run build"
+          BUILD="pnpm run build && ./.scripts/put_build_in_base_path"
           
           .scripts/setup-fleek-config \
             "$FLEEK_SLUG" \
@@ -78,9 +80,6 @@ jobs:
             "$BUILD"
 
       - name: Build & deploy
-        env:
-          NEXT_PUBLIC_BASE_PATH: ''
-          NEXT_ALLOW_LANDING_PAGE_LOGIN: 'true'
         run: |
           fleek sites deploy
 
@@ -93,12 +92,6 @@ jobs:
         run: |
           echo "//$NPM_REGISTRY_HOST/:_authToken=$NPM_TOKEN" > .npmrc
           cat .npmrc
-
-      # TODO: Should this be moved to a separate job?
-      - name: Build release version
-        env:
-          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
-        run: pnpm run build
 
       - name: Publish NPM package
         run: |
