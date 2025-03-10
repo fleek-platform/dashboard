@@ -6,8 +6,9 @@ OUTPUT_DIR="out"
 TEMP_DIR="$OUTPUT_DIR.bak"
 DEST_DIR="$OUTPUT_DIR/$NEXT_PUBLIC_BASE_PATH"
 
-if [[ ! -f "out" ]]; then
-  echo "Error: Source file 'out' does not exist."
+if [[ ! -d "$OUTPUT_DIR" ]]; then
+  echo "👹 Oops! The output dir $OUT_DIR doesn not exist"
+
   exit 1
 fi
 
