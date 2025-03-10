@@ -1,7 +1,7 @@
 const port = 3003;
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-if (!basePath) throw Error('Missing base path!');
+if (typeof basePath === 'undefined') throw Error('Missing base path!');
 
 Bun.serve({
   port,
