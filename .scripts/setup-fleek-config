@@ -31,4 +31,3 @@ cat "$fleekConfigPath"
 echo
 
 echo "✅ Completed fleek config setup!"
-

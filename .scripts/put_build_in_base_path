@@ -24,7 +24,7 @@ echo "✅ Moved $OUTPUT_DIR to $TEMP_DIR"
 mkdir -p "$DEST_DIR" || exit 1
 echo "✅ Created $DEST_DIR"
 
-cp -r "$TEMP_DIR/" "$DEST_DIR"
+cp -r "$TEMP_DIR/*" "$DEST_DIR"
 echo "✅ Moved files from $TEMP_DIR to $DEST_DIR"
 
 rm -rf "$TEMP_DIR" || exit 1
@@ -37,4 +37,3 @@ else
 
   exit 1
 fi
-
