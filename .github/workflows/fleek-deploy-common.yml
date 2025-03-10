@@ -78,6 +78,8 @@ jobs:
             "$BUILD"
 
       - name: Build & deploy
+        env:
+          NEXT_PUBLIC_BASE_PATH: '/'
         run: |
           fleek sites deploy
 
@@ -90,6 +92,12 @@ jobs:
         run: |
           echo "//$NPM_REGISTRY_HOST/:_authToken=$NPM_TOKEN" > .npmrc
           cat .npmrc
+
+      # TODO: Should this be moved to a separate job?
+      - name: Build release version
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+        run: pnpm run build
 
       - name: Publish NPM package
         run: |
