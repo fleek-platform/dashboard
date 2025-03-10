@@ -67,7 +67,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
   if (!isAuthenticated) {
-    if (secrets.NEXT_IS_LOCAL_DEV) {
+    if (secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN) {
       return (
         <LandingPageProvider forcedTheme={forcedTheme}>
           <HomePage />

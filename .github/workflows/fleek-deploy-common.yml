@@ -80,6 +80,7 @@ jobs:
       - name: Build & deploy
         env:
           NEXT_PUBLIC_BASE_PATH: ''
+          NEXT_ALLOW_LANDING_PAGE_LOGIN: 'true'
         run: |
           fleek sites deploy
 

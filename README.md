@@ -95,7 +95,7 @@ NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
 NEXT_DASHBOARD_WEBSITE_URL="https://fleek.xyz/dashboard"
 NEXT_PUBLIC_WEBSITE_URL="https://fleek.xyz"
 NEXT_PUBLIC_BASE_PATH="/dashboard"
-NEXT_IS_LOCAL_DEV="true"
+NEXT_ALLOW_LANDING_PAGE_LOGIN="true"
 ```
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
