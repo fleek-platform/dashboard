@@ -10,6 +10,7 @@ import { secrets } from '@/secrets';
 
 import { useCookies } from './CookiesProvider';
 import { useGenerateUserSessionDetailsMutation } from '@/generated/graphqlClient';
+import { useRouter } from 'next/router';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -21,6 +22,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
   const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
   const [, generateUserSessionDetails] =
     useGenerateUserSessionDetailsMutation();
+  const router = useRouter();
 
   return (
     <DynamicContextProvider
@@ -68,10 +70,6 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
             ) {
               updateUser({ data: { walletAddress: null, walletChain: null } });
             }
-          },
-          onLogout: () => {
-            // TODO: Use the appropriate routing/navigation process
-            window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
           },
         },
       }}

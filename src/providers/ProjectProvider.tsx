@@ -112,7 +112,7 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     return () => clearTimeout(timer);
   }, [project, projectsQuery.data]);
 
-  if (isLoading) return <LoadingFullScreen />;
+  if (isLoading || !auth.accessToken) return <LoadingFullScreen />;
 
   return (
     <Provider
