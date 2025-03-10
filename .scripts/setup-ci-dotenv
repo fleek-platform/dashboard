@@ -11,7 +11,7 @@ doppler secrets download \
 echo "[debug] setup-ci-dotenv: NEXT_ALLOW_LANDING_PAGE_LOGIN=$NEXT_ALLOW_LANDING_PAGE_LOGIN"
 
 if [[ ! -z "$NEXT_ALLOW_LANDING_PAGE_LOGIN" ]]; then
-  echo "NEXT_ALLOW_LANDING_PAGE_LOGIN=$NEXT_ALLOW_LANDING_PAGE_LOGIN" >> "$targetEnvPath"
+  echo "NEXT_ALLOW_LANDING_PAGE_LOGIN=\"$NEXT_ALLOW_LANDING_PAGE_LOGIN\"" >> "$targetEnvPath"
 fi
 
 echo "[debug] cat targetEnvPath:"
