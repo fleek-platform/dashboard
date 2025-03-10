@@ -84,12 +84,46 @@ jobs:
         run: |
           fleek sites deploy
 
-      - uses: actions/upload-artifact@v4
+      - name: Cache build directories and source
+        uses: actions/checkout@v4
+        id: build-cache
         with:
-          name: build-output-fleek-xyz-${{ env.TARGET_ENVIRONMENT }}
-          path: out
+          path: |
+            .
+          key: ${{ runner.os }}-build-${{ env.TARGET_ENVIRONMENT }}-${{ github.sha }}
 
-      # TODO: Move to its own job
+  build-npm-package:
+    needs: deploy-to-fleek
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      FLEEK_TOKEN: ${{ secrets.fleek_token }}
+      DOPPLER_TOKEN: ${{ secrets.doppler_token }}
+      TARGET_ENVIRONMENT: ${{ inputs.environment }}
+      FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
+      FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
+      NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+      NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
+      NPM_TOKEN: ${{ secrets.npm_token }}
+      # TODO: This one will be overriden in the doppler step
+      # it's excluded in the `scripts/setup-ci-dotenv`
+      NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
+      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
+    steps:
+      - name: Restore workspace
+        uses: actions/checkout@v4
+        id: build-cache
+        with:
+          path: |
+            .
+          key: ${{ runner.os }}-build-${{ env.TARGET_ENVIRONMENT }}-${{ github.sha }}
+          
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: ./.github/actions/setup-nodejs
+
       - name: Build NPM package
         run: |
           pnpm run build
@@ -116,4 +150,4 @@ jobs:
 
       - name: Clear
         run: |
-          rm .env
+          rm -f .env
