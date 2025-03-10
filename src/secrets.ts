@@ -38,7 +38,10 @@ export const secrets = {
   // is decided as client facing. At the moment using *.on-fleek.app for prd
   NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
-  NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ['true', '"true"', true].includes(process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN || (!isServerSide() && window.location.hostname.includes('localhost')) || ''),
+  NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: 
+    ['true', '"true"'].includes(process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN || '') || 
+    String(process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN).toLowerCase() === 'true' ||
+    (!isServerSide() && window.location.hostname.includes('localhost')),
 };
 
 console.log(`[debug] secrets.ts: process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN= `, process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN)
