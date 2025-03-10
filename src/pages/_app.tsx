@@ -67,7 +67,8 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
   if (!isAuthenticated) {
-    if (secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN) {
+    console.log(`[debug] _app.tsx: NEXT_ALLOW_LANDING_PAGE_LOGIN = `, secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN)
+    if (secrets.NEXT_ALLOW_LANDING_PAGE_LOGIN || window.location.hostname.includes('fleek-dashboard-staging')) {
       return (
         <LandingPageProvider forcedTheme={forcedTheme}>
           <HomePage />
