@@ -40,7 +40,7 @@ export const secrets = {
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
   NEXT_ALLOW_LANDING_PAGE_LOGIN:
     process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN === 'true' ||
-    (!isServerSide() && window.location.hostname.includes('localhost')) || (!isServerSide() && window.location.hostname.startsWith('fleek-dashboard-staging')),
+    (!isServerSide() && window.location.hostname.includes('localhost')),
 };
 
 console.log(`[debug] secrets.ts: process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN)
