@@ -1,5 +1,7 @@
 /* eslint-disable no-process-env */
 
+import { isServerSide } from '@/utils/isServerSide';
+
 // TODO: Deprecate this file as it is not "secrets"
 // Use a concepto closer to `getDefined`, with support for overrides
 
@@ -36,6 +38,7 @@ export const secrets = {
   // is decided as client facing. At the moment using *.on-fleek.app for prd
   NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
+  NEXT_IS_LOCAL_DEV: process.env.NEXT_IS_LOCAL_DEV === 'true' || !isServerSide() && window.location.hostname.includes('localhost'),
 };
 
 export const getMutableSecrets = () => {

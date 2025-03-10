@@ -110,7 +110,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.projectId
     ) {
       if (pathname !== routes.home()) {
-        window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
+        router.push('/');
       }
 
       return;

@@ -66,12 +66,19 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const isAuthenticated =
     !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
-  if (!isAuthenticated)
-    return (
-      <LandingPageProvider forcedTheme={forcedTheme}>
-        <HomePage />
-      </LandingPageProvider>
-    );
+  if (!isAuthenticated) {
+    if (secrets.NEXT_IS_LOCAL_DEV) {
+      return (
+        <LandingPageProvider forcedTheme={forcedTheme}>
+          <HomePage />
+        </LandingPageProvider>
+      );
+    }
+
+    window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
+
+    return <></>;
+  }
 
   return (
     <>
