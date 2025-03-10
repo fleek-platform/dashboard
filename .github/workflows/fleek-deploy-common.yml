@@ -15,22 +15,24 @@ on:
       npm_token:
         required: true
 
+env:
+  FLEEK_TOKEN: ${{ secrets.fleek_token }}
+  DOPPLER_TOKEN: ${{ secrets.doppler_token }}
+  TARGET_ENVIRONMENT: ${{ inputs.environment }}
+  FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
+  FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
+  NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+  NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
+  NPM_TOKEN: ${{ secrets.npm_token }}
+  # TODO: This one will be overriden in the doppler step
+  # it's excluded in the `scripts/setup-ci-dotenv`
+  NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
+
 jobs:
   deploy-to-fleek:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     env:
-      FLEEK_TOKEN: ${{ secrets.fleek_token }}
-      DOPPLER_TOKEN: ${{ secrets.doppler_token }}
-      TARGET_ENVIRONMENT: ${{ inputs.environment }}
-      FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
-      FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
-      NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
-      NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
-      NPM_TOKEN: ${{ secrets.npm_token }}
-      # TODO: This one will be overriden in the doppler step
-      # it's excluded in the `scripts/setup-ci-dotenv`
-      NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
       NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
     steps:
       - name: Checkout
@@ -85,7 +87,7 @@ jobs:
           fleek sites deploy
 
       - name: Cache build directories and source
-        uses: actions/checkout@v4
+        uses: actions/cache@v3
         id: build-cache
         with:
           path: |
@@ -96,22 +98,9 @@ jobs:
     needs: deploy-to-fleek
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    env:
-      FLEEK_TOKEN: ${{ secrets.fleek_token }}
-      DOPPLER_TOKEN: ${{ secrets.doppler_token }}
-      TARGET_ENVIRONMENT: ${{ inputs.environment }}
-      FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
-      FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
-      NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
-      NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
-      NPM_TOKEN: ${{ secrets.npm_token }}
-      # TODO: This one will be overriden in the doppler step
-      # it's excluded in the `scripts/setup-ci-dotenv`
-      NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
-      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
     steps:
       - name: Restore workspace
-        uses: actions/checkout@v4
+        uses: actions/cache@v3
         id: build-cache
         with:
           path: |
