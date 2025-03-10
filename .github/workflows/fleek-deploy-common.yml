@@ -69,7 +69,7 @@ jobs:
 
       - name: Setup fleek.config.json
         run: |
-          DIST="out"
+          DIST="out/$NEXT_PUBLIC_BASE_PATH"
           BUILD="pnpm run build"
           
           .scripts/setup-fleek-config \
@@ -78,8 +78,6 @@ jobs:
             "$BUILD"
 
       - name: Build & deploy
-        env:
-          NEXT_PUBLIC_BASE_PATH: ''
         run: |
           fleek sites deploy
 
