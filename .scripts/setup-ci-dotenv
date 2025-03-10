@@ -8,8 +8,6 @@ doppler secrets download \
   --no-file \
   --format env > "$targetEnvPath"
 
-echo "[debug] setup-ci-dotenv: NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN=$NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN"
-
 if [[ ! -z "$NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN" ]]; then
   echo "NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN=\"$NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN\"" >> "$targetEnvPath"
 fi
@@ -34,8 +32,5 @@ for item in "${EXCLUDE_CSV[@]}"; do
     exit 1
   fi
 done
-
-echo "[debug] tail targetEnvPath"
-tail "$targetEnvPath"
 
 echo "✅ Completed dot env setup!"

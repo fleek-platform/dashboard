@@ -43,12 +43,6 @@ export const secrets = {
     (!isServerSide() && window.location.hostname.includes('localhost')),
 };
 
-console.log(`[debug] secrets.ts: process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN= `, process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN)
-
-console.log(`[debug] secrets.ts: secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN= `, secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN)
-
-console.log(`[debug] secrets.ts: !!secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN= `, !!secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN)
-
 export const getMutableSecrets = () => {
   if (!secrets.TEST_MODE) {
     return;
