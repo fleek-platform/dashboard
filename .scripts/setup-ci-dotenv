@@ -8,6 +8,10 @@ doppler secrets download \
   --no-file \
   --format env > "$targetEnvPath"
 
+if [[ ! -z "$NEXT_ALLOW_LANDING_PAGE_LOGIN" ]]; then
+  echo "NEXT_ALLOW_LANDING_PAGE_LOGIN=$NEXT_ALLOW_LANDING_PAGE_LOGIN" >> "$targetEnvPath"
+fi
+
 # The Fleek CLI supports envVars overrides
 # also other cases such as the website url
 # for this reason, we should exclude some vars
