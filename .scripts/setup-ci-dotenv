@@ -35,4 +35,7 @@ for item in "${EXCLUDE_CSV[@]}"; do
   fi
 done
 
+echo "[debug] tail targetEnvPath"
+tail "$targetEnvPath"
+
 echo "✅ Completed dot env setup!"

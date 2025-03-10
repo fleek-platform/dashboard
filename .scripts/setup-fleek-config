@@ -17,13 +17,9 @@ if ! jq --arg slug "$1" --arg distDir "$2" --arg buildCommand "$3" '
   exit 1
 fi
 
-if ! mv "$fleekConfigPath.tmp" "$fleekConfigPath"; then
+if ! mv "$temp" "$fleekConfigPath"; then
   echo "👹 Oops! Failed to override the $fleekConfigPath"
   exit 1
-fi
-
-if ! rm "$temp"; then
-  echo "⚠️ WARNING: Failed to remove $temp file"
 fi
 
 echo "🔍 The $fleekConfigPath content is:"
