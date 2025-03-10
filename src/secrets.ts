@@ -39,11 +39,10 @@ export const secrets = {
   NEXT_DASHBOARD_WEBSITE_URL: process.env.NEXT_DASHBOARD_WEBSITE_URL,
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
   NEXT_ALLOW_LANDING_PAGE_LOGIN:
-    process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN === 'true' ||
-    (!isServerSide() && window.location.hostname.includes('localhost')) || (!isServerSide() && window.location.hostname.startsWith('fleek-dashboard-staging')),
+    process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN === 'true',
 };
 
-console.log(`[debug] secrets.ts: process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN)
+console.log(`[debug] secrets.ts:::: process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN = `, process.env.NEXT_ALLOW_LANDING_PAGE_LOGIN)
 
 export const getMutableSecrets = () => {
   if (!secrets.TEST_MODE) {
