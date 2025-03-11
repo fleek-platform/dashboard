@@ -98,6 +98,8 @@ jobs:
     needs: deploy-to-fleek
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    env:
+      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
     steps:
       - name: Restore workspace
         uses: actions/cache@v3
