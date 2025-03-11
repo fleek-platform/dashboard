@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/dashboard",
-  "version": "0.3.33",
+  "version": "0.3.33-rc.2",
   "files": [
     "README.md",
     "out"
@@ -20,6 +20,7 @@
     "format:tests": "pnpm run format:e2e",
     "format:e2e": "pnpm exec biome format --write ./tests/e2e",
     "format:unsafe": "pnpm exec biome check --write --unsafe ./src",
+    "generate:local_package": "pnpm build && .scripts/generate_npm_package",
     "generate:sitemap": "pnpm exec bun run .scripts/generate_sitemap.ts",
     "lint": "pnpm exec biome lint --write --changed --no-errors-on-unmatched ./src",
     "lint:check": "pnpm exec biome lint ./src",

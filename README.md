@@ -22,6 +22,7 @@ The Dashboard is the interface for managing all Fleek platform services, which i
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
   - [Changeset](#changeset)
+  - [Local Package Test](#local-package-test)
   - [Regression Suite](#regression-suite)
   - [Branch Deployment Matrix](#branch-deployment-matrix)
   - [Distribution](#distribution)
@@ -269,6 +270,35 @@ Declare an intent to release by executing the command and answering the wizard's
 ```sh
 pnpm changeset:add
 ```
+
+### Local Package Test
+
+Since npm link is a command-line tool for symlinking a local package as a dependency during development. It is commonly used for testing packages before publishing them. But it's common to cause confusion and unexpected behaviour.
+
+Instead of using `pnpm link` for local package testing, use the following command, that's closer to release install.
+
+```sh
+pnpm generate:local_package
+```
+
+Once successful, the console will display an install command that you can copy and run in your project.
+
+Here's an example that uses npm:
+
+```sh
+npm i --no-save <GENERATED_FILE_PATH>
+```
+
+> [!WARNING]
+> Remove concurrent package name from package.json, e.g. @fleek-platform/dashboard. The local install doesn't save or modify the package.json. The package.json and lockfiles are only for existing registry versions. You might have to run the clean command to remove any conflicting packages from node_modules, locks, etc.
+
+Alternatively, if you're using an npm-compatible package manager like pnpm, avoid saving or modifying the lock file, e.g:
+
+```sh
+npm_config_save=false npm_config_lockfile=false pnpm i <GENERATED_FILE_PATH>
+```
+
+Another option is to use the GitHub registry to push any packages you might want to test. Find more about it [here](#override-organisation-registry).
 
 ### Regression Suite
 

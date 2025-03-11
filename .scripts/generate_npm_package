@@ -1,0 +1,34 @@
+#!/bin/bash
+
+echo "🎁 Generating NPM Package for local installs..."
+echo
+
+DEST_DIR=".install"
+package=""
+
+mkdir -p "$DEST_DIR"
+
+# Currently, running `pnpm` executes the "prepare" script
+# causing husky to display output that interfere with
+# the instructions shown to end users.
+# Thus, use `npm` fallback due to ignore script support
+filepath=$(npm pack -s --ignore-scripts --pack-destination "$DEST_DIR")
+
+if [[ -z "$filepath" ]]; then
+  echo "👹 Oops! Failed to generate package in $DEST_DIR"
+
+  exit 1
+fi
+
+package=$(echo "$filepath" | rev | cut -d '/' -f1 | rev)
+
+abs_filepath="$(pwd)/$DEST_DIR/$filepath"
+
+echo "✅ Packaged successfully in $DEST_DIR/$package"
+echo "💡 Copy and paste the command to install in your project. You can use the universal npm in any project:"
+echo
+echo "npm i --no-save $abs_filepath"
+echo
+echo "Alternatively, when using a npm compatible package manager, e.g. pnpm, do not save or modify the lock file:"
+echo
+echo "npm_config_save=false npm_config_lockfile=false pnpm i $abs_filepath"
