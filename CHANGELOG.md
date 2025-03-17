@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.4.1
+
+### Patch Changes
+
+- ea39b45: Remove missing feature flag bits
+
 ## 0.4.0
 
 ### Minor Changes
