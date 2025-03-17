@@ -7,7 +7,6 @@ import {
   useProjectsQuery,
   useSiteQuery,
 } from '@/generated/graphqlClient';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
 import { useRouter } from '@/hooks/useRouter';
 import { useFeedbackModal } from '@/providers/FeedbackModalProvider';
@@ -27,7 +26,6 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
   const router = useRouter();
   const projectContext = useProjectContext();
   const session = useSessionContext();
-  const flags = useFeatureFlags();
   const { openModalWithTab } = useFeedbackModal();
 
   const [enableNavigation, setEnableNavigation] = useState(true);
@@ -83,9 +81,7 @@ export const NavbarProject: React.FC<NavbarProjectProps> = ({ children }) => {
 
       {enableNavigation && (
         <Box className="flex-row gap-3 text-sm font-medium">
-          {flags.isInternalUser && (
-            <BadgeText colorScheme="yellow">Internal User</BadgeText>
-          )}
+          <BadgeText colorScheme="yellow">Internal User</BadgeText>
           <ExternalLink href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
             Docs
           </ExternalLink>

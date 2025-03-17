@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { ExternalLink, Link, LinkButton } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';
 import { constants } from '@/constants';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useIsActivePage } from '@/hooks/useIsActivePage';
 import { useMediaQueryWindow } from '@/hooks/useMediaQueryWindow';
 import { usePaymentExpiration } from '@/hooks/usePaymentExpiration';
@@ -33,6 +32,7 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { secrets } from '@/secrets';
 
 export type NavigationItem = {
   icon: IconName;
@@ -166,23 +166,6 @@ const FeedbackModalLink: React.FC = () => {
 };
 
 const VersionTagsWrapper: React.FC = () => {
-  const [showVersions, setShowVersion] = useState(false);
-  const flags = useFeatureFlags();
-
-  useEffect(() => {
-    // on the client side, show versions if not prod or user is internal
-    if (
-      !isServerSide() &&
-      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
-    ) {
-      setShowVersion(true);
-    }
-  }, [flags]);
-
-  if (!showVersions) {
-    return null;
-  }
-
   return <VersionTags />;
 };
 

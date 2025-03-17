@@ -1,11 +1,9 @@
 import { routes } from '@fleek-platform/utils-routes';
-import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 
 import { ComingSoon } from '@/components';
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
@@ -15,21 +13,14 @@ import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const BillingPage: Page = () => {
-  const flags = useFeatureFlags();
-
-  if (isEmpty(flags)) {
-    return null;
-  }
-
-  if (flags.enableBilling) {
-    return <FeaturePage />;
-  }
+  // if (false) {
+  //   return <FeaturePage />;
+  // }
 
   return <ComingSoonPage />;
 };
 
 const FeaturePage: React.FC = () => {
-  const flags = useFeatureFlags();
   const router = useRouter();
   const session = useSessionContext();
   const toast = useToast();
