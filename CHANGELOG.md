@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.3.35
+
+### Patch Changes
+
+- ddfbab3: TIAS build update
+
 ## 0.3.1
 
 ### Patch Changes
