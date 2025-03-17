@@ -53,5 +53,4 @@ MigrationPage.getLayout = (page) => <Migration.Layout>{page}</Migration.Layout>;
 export default withAccess({
   Component: MigrationPage,
   requiredPermissions: null,
-  featureFlagName: 'enableMigrationFlow',
 });

@@ -13,10 +13,6 @@ import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 const BillingPage: Page = () => {
-  // if (false) {
-  //   return <FeaturePage />;
-  // }
-
   return <ComingSoonPage />;
 };
 
@@ -48,15 +44,11 @@ const FeaturePage: React.FC = () => {
 
   return (
     <>
-      {flags.billingPlan && (
         <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
-      )}
-      {flags.billingPayment && (
         <Projects.Settings.Sections.Billing.PaymentMethod
           isLoading={session.loading}
         />
-      )}
-      {flags.billingInvoices && <Projects.Settings.Sections.Billing.Invoices />}
+      <Projects.Settings.Sections.Billing.Invoices />
     </>
   );
 };

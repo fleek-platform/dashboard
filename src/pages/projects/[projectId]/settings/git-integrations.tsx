@@ -79,5 +79,4 @@ GitProviders.getLayout = (page) => (
 
 export default withAccess({
   Component: GitProviders,
-  featureFlagName: 'enableGitIntegrationsView',
 });
