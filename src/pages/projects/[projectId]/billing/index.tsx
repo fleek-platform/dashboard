@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Page } from '@/types/App';
+import type { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
 import { joinBase } from '@/utils/paths';
@@ -33,7 +33,7 @@ const FeaturePage: React.FC = () => {
       toast.error({ message: 'Error fetching team data. Please try again' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team.error]);
+  }, [team.error, toast.error]);
 
   useEffect(() => {
     if (success) {
@@ -42,7 +42,7 @@ const FeaturePage: React.FC = () => {
 
     router.replace(routes.project.billing({ projectId: session.project.id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, canceled]);
+  }, [success, toast.success, session.project.id, router.replace]);
 
   return (
     <>
@@ -60,15 +60,15 @@ const ComingSoonPage: React.FC = () => {
 
   return (
     <ComingSoon.Modal
-      imgSrc={joinBase(`/assets/static/${resolvedTheme}/billing-coming-soon.png`)}
+      imgSrc={joinBase(
+        `/assets/static/${resolvedTheme}/billing-coming-soon.png`,
+      )}
       modalContent={
-        <>
-          <ComingSoon.Modal.Description>
-            Soon we will introduce a credit-based billing system to Fleek, with
-            a usage-based model. Pay storage, hosting, and other Fleek services
-            granularly and only by usage with crypto or credit-card.
-          </ComingSoon.Modal.Description>
-        </>
+        <ComingSoon.Modal.Description>
+          Soon we will introduce a credit-based billing system to Fleek, with a
+          usage-based model. Pay storage, hosting, and other Fleek services
+          granularly and only by usage with crypto or credit-card.
+        </ComingSoon.Modal.Description>
       }
     >
       <ComingSoon.Skeleton.Container>
