@@ -372,7 +372,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           />
         )}
 
-      { shouldShowDnsLinkItems &&
+      {shouldShowDnsLinkItems &&
         match(dnsLinkStatus)
           .with(DnslinkStatus.CREATED, () => (
             <>

@@ -43,7 +43,7 @@ export const withAccess = ({
           ? true
           : hasRequiredPermissions({ permissions, requiredPermissions });
 
-        return hasPermission;
+      return hasPermission;
     }, [permissions, session.loading]);
 
     if (hasAccess || session.loading) {
