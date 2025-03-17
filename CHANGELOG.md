@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.4.0
+
+### Minor Changes
+
+- d32b6aa: Remove Darkly and LogRocket
+
 ## 0.3.35
 
 ### Patch Changes
