@@ -33,8 +33,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       const environment = getMutableSecrets();
       // Override secrets with environment variables on test mode
       Object.assign(secrets, environment);
-    } else {
-      LogRocket.init(secrets.NEXT_PUBLIC_UI__LOG_ROCKET_ID);
     }
 
     setMaintenanceMode(getMaintenanceMode());
