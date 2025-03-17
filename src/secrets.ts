@@ -43,11 +43,6 @@ export const secrets = {
     (!isServerSide() && window.location.hostname.includes('localhost')),
 };
 
-console.log(`[debug] secrets.ts: `, JSON.stringify({
-  allowLandingPageLoginIsTrue: process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN === 'true',
-  raw: process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN,
-}))
-
 export const getMutableSecrets = () => {
   if (!secrets.TEST_MODE) {
     return;

@@ -1,7 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useGetPaymentMethod } from '@/hooks/useGetPaymentMethod';
 import { useGetSubscription } from '@/hooks/useGetSubscription';
 import { useGetTeam } from '@/hooks/useGetTeam';
@@ -44,8 +43,6 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
     subscriptionId: team.data?.subscriptionId ?? undefined,
   });
 
-  const { enableBilling } = useFeatureFlags();
-
   const plan = useMemo(() => {
     if (!team.isLoading) {
       if (team.data?.subscriptionId) {
@@ -60,7 +57,7 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
     resource: keyof PlanRestriction,
     currentResourceCount: number,
   ) => {
-    if (enableBilling && plan) {
+    if (plan) {
       const restrictions = PlanRestrictions[plan];
 
       return {

@@ -8,7 +8,6 @@ import {
   SubNavigationLayout,
 } from '@/components';
 import { useMeQuery } from '@/generated/graphqlClient';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useMainNavigationItems } from '@/hooks/useMainNavigationItems';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps } from '@/types/Props';
@@ -18,7 +17,6 @@ export type ProfileSettingsLayoutProps = ChildrenProps;
 export const ProfileSettingsLayout: React.FC<ProfileSettingsLayoutProps> = ({
   children,
 }) => {
-  const flags = useFeatureFlags();
   const session = useSessionContext();
   const [meQuery] = useMeQuery();
 
@@ -62,7 +60,7 @@ export const ProfileSettingsLayout: React.FC<ProfileSettingsLayoutProps> = ({
     {
       label: 'Two-Factor Authentication',
       path: routes.profile.settings.twoFactorAuthentication(),
-      hasAccess: flags.enableTwoFactorAuthentication,
+      hasAccess: true,
     },
     {
       label: 'Notifications',

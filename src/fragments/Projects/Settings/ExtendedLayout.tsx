@@ -2,7 +2,6 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { SubNavigationItem, SubNavigationLayout } from '@/components';
 import { constants } from '@/constants';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { ChildrenProps } from '@/types/Props';
@@ -13,7 +12,6 @@ export type ExtendedLayoutProps = ChildrenProps;
 
 export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
   const session = useSessionContext();
-  const featureFlags = useFeatureFlags();
 
   const projectId = session.project.id;
 
@@ -53,7 +51,7 @@ export const ExtendedLayout: React.FC<ExtendedLayoutProps> = ({ children }) => {
     {
       label: 'Git integrations',
       path: routes.project.settings.gitIntegrations({ projectId }),
-      hasAccess: featureFlags.enableGitIntegrationsView,
+      hasAccess: true,
     },
     {
       label: 'Team',

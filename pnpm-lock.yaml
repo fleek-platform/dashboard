@@ -128,15 +128,9 @@ importers:
       jose:
         specifier: 4.11.2
         version: 4.11.2
-      launchdarkly-react-client-sdk:
-        specifier: ^3.0.10
-        version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lodash.isequal:
         specifier: ^4.5.0
         version: 4.5.0
-      logrocket:
-        specifier: ^6.0.0
-        version: 6.0.2
       luxon:
         specifier: ^3.1.1
         version: 3.5.0
@@ -8006,9 +8000,6 @@ packages:
   logkitty@0.7.1:
     resolution: {integrity: sha512-/3ER20CTTbahrCrpYfPn7Xavv9diBROZpoXGVZDWMw4b/X4uuUwAC0ki85tgsdMRONURyIJbcOvS94QsUBYPbQ==}
     hasBin: true
-
-  logrocket@6.0.2:
-    resolution: {integrity: sha512-eKqWr/xJO+t7uddzv+pkFT68URqrmBaPta1PKbkOGM0QJ1fFjCNBR4AyWpLUeymSH/rRufuJenvQmN0uDvAb7Q==}
 
   long@4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
@@ -21881,8 +21872,6 @@ snapshots:
       ansi-fragments: 0.2.1
       dayjs: 1.11.13
       yargs: 15.4.1
-
-  logrocket@6.0.2: {}
 
   long@4.0.0: {}
 

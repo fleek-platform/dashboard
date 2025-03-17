@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ExternalLink, FleekLogo, StatusChip } from '@/components';
 import { VersionTags } from '@/components/Version/VersionTags';
 import { constants } from '@/constants';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { Box, Icon, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
 import { FLEEK_TEMPLATES_URLS } from '@/utils/template';
@@ -166,25 +165,12 @@ const SocialLinks: React.FC = () => {
 };
 
 const LeftFragment: React.FC = () => {
-  const [showVersions, setShowVersion] = useState(false);
-  const flags = useFeatureFlags();
-
-  useEffect(() => {
-    // on the client side, show versions if not prod or user is internal
-    if (
-      !isServerSide() &&
-      (location.hostname !== 'app.fleek.xyz' || flags.isInternalUser)
-    ) {
-      setShowVersion(true);
-    }
-  }, [flags]);
-
   return (
     <Box className="gap-6">
       <Box className="gap-5 max-w-[14rem]">
         <Box className="flex-row gap-4 items-center">
           <FleekLogo />
-          {showVersions && <VersionTags />}
+          <VersionTags />
         </Box>
 
         <Text>The edge-optimized cloud platform</Text>

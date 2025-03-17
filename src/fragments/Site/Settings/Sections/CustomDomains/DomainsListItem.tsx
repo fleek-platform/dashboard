@@ -14,7 +14,6 @@ import {
   useCreateDnsConfigMutation,
   useDomainStatusQuery,
 } from '@/generated/graphqlClient';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { SiteDomain } from '@/types/Site';
@@ -60,7 +59,6 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
     requestPolicy: 'network-only',
     pause: initialStatus === DomainStatus.ACTIVE,
   });
-  const flags = useFeatureFlags();
 
   const { status = initialStatus } = domainStatusQuery.data?.domain || {};
 
@@ -122,7 +120,7 @@ export const DomainsListItem: React.FC<DomainsListItemProps> = ({
         className="p-0 border-none w-full"
       >
         <Box className="flex-row gap-3 items-center">
-          {flags.enableDnsLink && dnslinkStatus && (
+          {dnslinkStatus && (
             <DnsLinkBadge
               domainId={id}
               dnsLinkStatus={dnslinkStatus}
@@ -230,7 +228,6 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
   const toast = useToast();
-  const flags = useFeatureFlags();
 
   const [, createDnsConfig] = useCreateDnsConfigMutation();
 
@@ -375,8 +372,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           />
         )}
 
-      {flags.enableDnsLink &&
-        shouldShowDnsLinkItems &&
+      { shouldShowDnsLinkItems &&
         match(dnsLinkStatus)
           .with(DnslinkStatus.CREATED, () => (
             <>

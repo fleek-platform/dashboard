@@ -2,14 +2,11 @@ import { routes } from '@fleek-platform/utils-routes';
 
 import { LinkButton } from '@/components';
 import { constants } from '@/constants';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
 import { Box, Button, Text } from '@/ui';
 
 export const Hero: React.FC = () => {
-  const flags = useFeatureFlags();
-
   return (
     <Box className="[grid-area:hero] items-center gap-2.5">
       <Text size="md" weight={500}>
@@ -30,7 +27,7 @@ export const Hero: React.FC = () => {
           Learn more
         </LinkButton>
 
-        {flags.enableTemplateCreation && <SubmitTemplateButton />}
+        <SubmitTemplateButton />
       </Box>
     </Box>
   );

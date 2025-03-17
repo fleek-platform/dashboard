@@ -11,7 +11,6 @@ import {
   ListFolderQueryVariables,
   useCreateFolderMutation,
 } from '@/generated/graphqlClient';
-import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
@@ -40,7 +39,6 @@ export const StorageUploadDropdown: React.FC = () => {
   const hasUploadPermissions = usePermissions({
     action: [constants.PERMISSION.STORAGE.UPLOAD],
   });
-  const flags = useFeatureFlags();
   const toast = useToast();
   const router = useRouter();
 
@@ -126,16 +124,14 @@ export const StorageUploadDropdown: React.FC = () => {
           <Button iconRight="chevron-down">Add new</Button>
         </Menu.Trigger>
         <Menu.Content align="end">
-          {flags.storageFoldersFeature && (
-            <>
-              <DropdownItem
-                text="New folder"
-                icon="add-circle"
-                onClick={handleCreateFolder}
-              />
-              <Menu.Separator />
-            </>
-          )}
+          <>
+            <DropdownItem
+              text="New folder"
+              icon="add-circle"
+              onClick={handleCreateFolder}
+            />
+            <Menu.Separator />
+          </>
           <DropdownItem
             text="File(s) upload"
             icon="file"

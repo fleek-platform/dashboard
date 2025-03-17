@@ -2,7 +2,6 @@
 
 import '@/styles/globals.css';
 
-import LogRocket from 'logrocket';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
