@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.5.1
+
+### Patch Changes
+
+- 86c1d6e: TIAS Image component
+
 ## 0.5.0
 
 ### Minor Changes
