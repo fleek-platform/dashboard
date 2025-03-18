@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { forwardStyledRef } from '@/theme';
-import { isServerSide } from '@/utils/isServerSide';
 
 import { Icon } from '../Icon/Icon';
 import { Skeleton } from '../Skeleton/Skeleton';
@@ -17,7 +16,7 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
     const [loading, setLoading] = useState(() => {
       // defines whether image is loading or not on initial render
 
-      if (!src || isServerSide()) {
+      if (!src) {
         return false;
       }
 
@@ -30,11 +29,6 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
     const [error, setError] = useState(!src);
 
     useEffect(() => {
-      if (isServerSide()) {
-        return;
-      }
-
-      // updates states when src changes
       if (!src) {
         setError(true);
 
