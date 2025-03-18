@@ -1,17 +1,17 @@
 #!/bin/bash
 
-BASE_BRANCH="develop"
+changesetArtifactsRegex="\.changeset/.*\.md$"
 
-CHANGED_FILES=$(git diff --name-only $BASE_BRANCH...HEAD)
+pendingChangesetList=$(find .changeset -type f -name "*.md" ! -name "README.md")
 
-NON_CHANGESET_CHANGES=$(echo "$CHANGED_FILES" | grep -v "^\.changeset/" | wc -l | tr -d ' ')
+if [[ -n "$pendingChangesetList" ]]; then
+  echo "⚠️ There are pending changeset files:"
+  echo "$pendingChangesetList"
+fi
 
-CHANGESET_CHANGES=$(echo "$CHANGED_FILES" | grep "^\.changeset/.*\.md$" | grep -v "^\.changeset/README\.md$" | wc -l | tr -d ' ')
+if ! echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
+  echo "👹 Oops! Couldn't locate any changeset. Did you forget to include one? Run the command pnpm changeset:add"
 
-echo "🤖 Found $NON_CHANGESET_CHANGES files changed outside the changeset directory and $CHANGESET_CHANGES files in the changeset directory."
-
-if [[ $NON_CHANGESET_CHANGES -gt 0 && $CHANGESET_CHANGES -eq 0 ]]; then
-  echo "👹 Oops! Changes detected but no changeset file found. Did you forget to include or commit the changeset?"
   exit 1
 fi
 
