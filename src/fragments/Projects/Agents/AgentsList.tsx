@@ -58,8 +58,8 @@ export const AgentsList = () => {
   return (
     <Box className="m-auto items-center justify-center gap-3 top-1/2 relative -translate-y-1/4">
       <Image
-        src={joinBase(`/assets/static/${resolvedTheme}/empty-state/agents.svg`)}
-        alt="emtpy list illustration"
+        src={joinBase(`/assets/static/${resolvedTheme}/empty-state/agents.svg?url`)}
+        alt="empty list illustration"
         className="w-1/2"
       />
       <Text
