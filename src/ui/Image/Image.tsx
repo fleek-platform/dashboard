@@ -1,9 +1,7 @@
-// import { useEffect, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { forwardStyledRef } from '@/theme';
-
 import { Icon } from '../Icon/Icon';
-// import { Skeleton } from '../Skeleton/Skeleton';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { ImageStyles as S } from './Image.styles';
 
 export type ImageProps = React.ComponentProps<typeof S.Image> & {
@@ -13,67 +11,60 @@ export type ImageProps = React.ComponentProps<typeof S.Image> & {
 export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
   S.Image,
   ({ src, children, ...props }, ref) => {
-    // TODO: Fix the image loading
+    const [loading, setLoading] = useState(() => {
+      if (!src) return false;
 
-    // const [loading, setLoading] = useState(() => {
-    //   // defines whether image is loading or not on initial render
+      const img = new Image();
+      img.src = src;
+      return !img.complete;
+    });
 
-    //   if (!src) {
-    //     return false;
-    //   }
+    const [error, setError] = useState(!src);
 
-    //   const img = document.createElement('img');
-    //   img.src = src;
+    useEffect(() => {
+      if (!src) {
+        setError(true);
+        return;
+      }
 
-    //   return !img.complete;
-    // });
+      const img = new Image();
+      img.src = src;
 
-    // const [error, setError] = useState(!src);
+      if (img.complete) {
+        setLoading(false);
+        setError(false);
+        return;
+      }
 
-    // useEffect(() => {
-    //   if (!src) {
-    //     setError(true);
+      setLoading(true);
 
-    //     return;
-    //   }
+      img.onload = () => {
+        setLoading(false);
+        setError(false);
+      };
 
-    //   const img = document.createElement('img');
-    //   img.src = src;
+      img.onerror = () => {
+        setError(true);
+        setLoading(false);
+      };
 
-    //   // if image is cached
-    //   if (img.complete) {
-    //     setLoading(false);
-    //     setError(false);
+      return () => {
+        img.onload = null;
+        img.onerror = null;
+      };
+    }, [src]);
 
-    //     return;
-    //   }
+    if (error) {
+      return (
+        <Error ref={ref} {...props}>
+          {children}
+        </Error>
+      );
+    }
 
-    //   setLoading(true);
-
-    //   img.onload = () => {
-    //     setLoading(false);
-    //     setError(false);
-    //   };
-
-    //   img.onerror = () => {
-    //     setError(true);
-    //     setLoading(false);
-    //   };
-    // }, [src]);
-
-    // if (error) {
-    //   return (
-    //     <Error ref={ref} {...props}>
-    //       {children}
-    //     </Error>
-    //   );
-    // }
-
-    // if (loading) {
-    //   return <Skeleton ref={ref} {...props} />;
-    // }
-
-    console.log(`[debug] ui/Image/src = ${src}`);
+    if (loading) {
+      return <Skeleton ref={ref} {...props} />;
+    }
 
     return <S.Image ref={ref} {...props} src={src} />;
   },
@@ -87,7 +78,7 @@ const Error = forwardStyledRef<HTMLImageElement, ErrorProps>(
     <S.Error
       {...props}
       ref={ref}
-      className={`${Image.selector.slice(1)} ${props.className}`}
+      className={`${Image.selector?.slice(1) || ''} ${props.className || ''}`}
     >
       {children || <Icon name="image" />}
     </S.Error>
