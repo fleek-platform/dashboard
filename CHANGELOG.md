@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.6.1
+
+### Patch Changes
+
+- c18bf88: Normalize image pathname
+- 2caf6ab: Add changeset verification
+
 ## 0.6.0
 
 ### Minor Changes
