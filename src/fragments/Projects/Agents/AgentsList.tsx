@@ -9,6 +9,8 @@ import { isServerSide } from '@/utils/isServerSide';
 import { AgentItem } from './AgentItem';
 import { useListAgents } from './useListAgents';
 
+import { joinBase } from '@/utils/paths';
+
 const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
 
 export const AgentsList = () => {
@@ -56,7 +58,7 @@ export const AgentsList = () => {
   return (
     <Box className="m-auto items-center justify-center gap-3 top-1/2 relative -translate-y-1/4">
       <Image
-        src={`/assets/static/${resolvedTheme}/empty-state/agents.svg`}
+        src={joinBase(`/assets/static/${resolvedTheme}/empty-state/agents.svg`)}
         alt="emtpy list illustration"
         className="w-1/2"
       />

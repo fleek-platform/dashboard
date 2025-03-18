@@ -4,6 +4,8 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { LoadingProps } from '@/types/Props';
 import { Box, Button, Image, Skeleton, Text } from '@/ui';
 
+import { joinBase } from '@/utils/paths';
+
 export const Analytics: React.FC<LoadingProps> = ({ isLoading }) => {
   const { resolvedTheme = 'dark' } = useTheme();
 
@@ -35,7 +37,7 @@ export const Analytics: React.FC<LoadingProps> = ({ isLoading }) => {
         )}
       </Box>
       <Image
-        src={`/assets/static/${resolvedTheme}/analytics-chart.png`}
+        src={joinBase(`/assets/static/${resolvedTheme}/analytics-chart.png`)}
         alt="chart"
       />
       <Box className="flex-row justify-around w-full">

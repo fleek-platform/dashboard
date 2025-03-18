@@ -12,6 +12,8 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { Page } from '@/types/App';
 import { withAccess } from '@/utils/withAccess';
 
+import { joinBase } from '@/utils/paths';
+
 const BillingPage: Page = () => {
   return <ComingSoonPage />;
 };
@@ -58,7 +60,7 @@ const ComingSoonPage: React.FC = () => {
 
   return (
     <ComingSoon.Modal
-      imgSrc={`/assets/static/${resolvedTheme}/billing-coming-soon.png`}
+      imgSrc={joinBase(`/assets/static/${resolvedTheme}/billing-coming-soon.png`)}
       modalContent={
         <>
           <ComingSoon.Modal.Description>

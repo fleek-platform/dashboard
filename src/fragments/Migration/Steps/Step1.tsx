@@ -5,6 +5,8 @@ import { Button, Text } from '@/ui';
 import { useMigrationContext } from '../Migration.context';
 import { MigrationStyles as S } from '../Migration.styles';
 
+import { joinBase } from '@/utils/paths';
+
 export const Step1: React.FC = () => {
   const session = useSessionContext();
   const {
@@ -20,7 +22,7 @@ export const Step1: React.FC = () => {
     <S.Content.Container>
       <S.Content.BannerImage
         alt="The new fleek"
-        src="/assets/static/migration.png"
+        src={joinBase('/assets/static/migration.png')}
       />
       <Text>
         This is the process to migrate your projects and data from our legacy
