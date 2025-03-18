@@ -2,6 +2,8 @@ import { ExternalLink } from '@/components';
 import { styled } from '@/theme';
 import { Box } from '@/ui';
 
+import { joinBase } from '@/utils/paths';
+
 export const HomeStyles = {
   Background: {
     Wrapper: styled(Box, {
@@ -11,7 +13,7 @@ export const HomeStyles = {
     }),
     Image: styled(Box, {
       position: 'absolute',
-      background: 'url(/assets/static/home-background.png)',
+      background: `url(${joinBase('/assets/static/home-background.png')})`,
       backgroundSize: 'contain',
       backgroundPositionX: 'center',
       backgroundPositionY: 'bottom',

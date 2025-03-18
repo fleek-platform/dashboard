@@ -4,6 +4,7 @@ import {
   StorageProvider,
   StorageProviderValue,
 } from './types/StorageProviders';
+import { joinBase } from '@/utils/paths';
 
 export const constants = {
   VERSION: Package.version,
@@ -102,28 +103,28 @@ export const constants = {
 
   ASSET_URL: {
     FRAMEWORK_LOGOS: {
-      REACT: '/assets/framework-logos/react.svg',
-      VUE: '/assets/framework-logos/vue.svg',
-      SVELTE: '/assets/framework-logos/svelte.svg',
-      HUGO: '/assets/framework-logos/hugo.svg',
-      GATSBY: '/assets/framework-logos/gatsby.svg',
-      GRIDSOME: '/assets/framework-logos/gridsome.svg',
-      MKDOCS: '/assets/framework-logos/mkdocs.png',
-      NEXT: '/assets/framework-logos/next.svg',
-      WASMPACK: '/assets/framework-logos/wasm.svg',
-      NUXT: '/assets/framework-logos/nuxt.svg',
-      WORDPRESS: '/assets/framework-logos/wordpress.svg',
-      SAPPER: '/assets/framework-logos/sapper.svg',
-      JEKYLL: '/assets/framework-logos/jekyll.svg',
-      VITE: '/assets/framework-logos/vite.svg',
-      ASTRO: '/assets/framework-logos/astro.svg',
+      REACT: joinBase('/assets/framework-logos/react.svg'),
+      VUE: joinBase('/assets/framework-logos/vue.svg'),
+      SVELTE: joinBase('/assets/framework-logos/svelte.svg'),
+      HUGO: joinBase('/assets/framework-logos/hugo.svg'),
+      GATSBY: joinBase('/assets/framework-logos/gatsby.svg'),
+      GRIDSOME: joinBase('/assets/framework-logos/gridsome.svg'),
+      MKDOCS: joinBase('/assets/framework-logos/mkdocs.png'),
+      NEXT: joinBase('/assets/framework-logos/next.svg'),
+      WASMPACK: joinBase('/assets/framework-logos/wasm.svg'),
+      NUXT: joinBase('/assets/framework-logos/nuxt.svg'),
+      WORDPRESS: joinBase('/assets/framework-logos/wordpress.svg'),
+      SAPPER: joinBase('/assets/framework-logos/sapper.svg'),
+      JEKYLL: joinBase('/assets/framework-logos/jekyll.svg'),
+      VITE: joinBase('/assets/framework-logos/vite.svg'),
+      ASTRO: joinBase('/assets/framework-logos/astro.svg'),
     },
-    ETHEREUM_LOGO: '/assets/ethereum.svg',
-    GITHUB: '/assets/github.svg',
-    MAIL_LOGO: '/assets/mail.svg',
+    ETHEREUM_LOGO: joinBase('/assets/ethereum.svg'),
+    GITHUB: joinBase('/assets/github.svg'),
+    MAIL_LOGO: joinBase('/assets/mail.svg'),
     VIDEOS: {
-      FLASH_HEADER_SAFARI: '/assets/videos/flash-header-safari.mp4',
-      FLASH_HEADER_CHROME: '/assets/videos/flash-header-chrome.webm',
+      FLASH_HEADER_SAFARI: joinBase('/assets/videos/flash-header-safari.mp4'),
+      FLASH_HEADER_CHROME: joinBase('/assets/videos/flash-header-chrome.webm'),
     },
   },
 
