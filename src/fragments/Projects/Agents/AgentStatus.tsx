@@ -1,19 +1,24 @@
 import { BadgeText, SettingsListItem } from '@/components';
 import { useToast } from '@/hooks/useToast';
-import { Icon, IconName, Skeleton } from '@/ui';
+import { Icon, type IconName, Skeleton } from '@/ui';
 
 import { useUpdateAgentStatus } from './useUpdateAgentStatus';
+import type { AgentLifecycleStatus } from '@/types/Agent';
+import type { ComponentProps } from 'react';
+import { isAgentActive } from '@/utils/agent';
 
 type Status = 'true' | 'false';
 
 type StatusBadgeProps = {
   isLoading: boolean;
   status?: Status;
+  lifecycleStatus: AgentLifecycleStatus;
 };
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   isLoading,
   status,
+  lifecycleStatus,
 }) => {
   if (isLoading) {
     return (
@@ -23,13 +28,30 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     );
   }
 
-  const isActive = status === 'true';
+  const getBadge = (): ComponentProps<typeof BadgeText> => {
+    if (!isAgentActive(lifecycleStatus)) {
+      return {
+        colorScheme: 'slate',
+        children: lifecycleStatus,
+      };
+    }
 
-  return (
-    <BadgeText colorScheme={isActive ? 'green' : 'red'}>
-      {isActive ? 'Active' : 'Inactive'}
-    </BadgeText>
-  );
+    if (status === 'true') {
+      return {
+        colorScheme: 'green',
+        children: 'Active',
+      };
+    }
+
+    return {
+      colorScheme: 'red',
+      children: 'Inactive',
+    };
+  };
+
+  const { children, colorScheme } = getBadge();
+
+  return <BadgeText colorScheme={colorScheme}>{children}</BadgeText>;
 };
 
 type StatusUpdateMenuItem = {

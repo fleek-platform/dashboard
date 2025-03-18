@@ -31,9 +31,7 @@ export const Providers: React.FC<ProvidersProps> = ({
                 <ToastProvider>
                   <SessionProvider>
                     <UploadProvider>
-                      <FeedbackModalProvider>
-                        {children}
-                      </FeedbackModalProvider>
+                      <FeedbackModalProvider>{children}</FeedbackModalProvider>
                     </UploadProvider>
                   </SessionProvider>
                 </ToastProvider>

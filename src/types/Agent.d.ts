@@ -8,7 +8,16 @@ export type Agent = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
+  status: AgentLifecycleStatus;
 };
+
+export type AgentLifecycleStatus =
+  | 'Draft'
+  | 'Created'
+  | 'Pending'
+  | 'Running'
+  | 'Stopped'
+  | 'Failed';
 
 export type AgentStatus = {
   status: 'true' | 'false';

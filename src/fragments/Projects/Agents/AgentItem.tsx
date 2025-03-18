@@ -4,7 +4,7 @@ import { SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useToast } from '@/hooks/useToast';
-import { Agent } from '@/types/Agent';
+import type { Agent } from '@/types/Agent';
 import { Box } from '@/ui';
 import { getDurationUntilNow } from '@/utils/getDurationUntilNow';
 
@@ -13,6 +13,7 @@ import { StatusBadge, StatusUpdateMenuItem } from './AgentStatus';
 import { DeleteAgentModal } from './DeleteAgent';
 import { useAgentStatus } from './useAgentStatus';
 import { useDeleteAgent } from './useDeleteAgent';
+import { isAgentActive } from '@/utils/agent';
 
 type AgentItemProps = {
   agent: Agent;
@@ -54,31 +55,39 @@ export const AgentItem: React.FC<AgentItemProps> = ({ agent }) => {
       />
 
       <Box className="flex-row gap-2 justify-end items-center">
-        <StatusBadge isLoading={isLoading} status={statusResponse?.status} />
+        <StatusBadge
+          isLoading={isLoading}
+          status={statusResponse?.status}
+          lifecycleStatus={agent.status}
+        />
       </Box>
 
       <SettingsListItem.DropdownMenu
         isDisabled={isLoading}
         hasAccess={hasDeletePermission}
       >
-        <StatusUpdateMenuItem
-          agentId={agent.id}
-          isLoading={isLoading}
-          status={statusResponse?.status}
-        />
-        <SettingsListItem.DropdownMenuItem
-          icon={isLogsExpanded ? 'eye-closed' : 'expand'}
-          onClick={toggleLogsExpanded}
-        >
-          {isLogsExpanded ? 'Hide logs' : 'View logs'}
-        </SettingsListItem.DropdownMenuItem>
+        {isAgentActive(agent.status) && (
+          <>
+            <StatusUpdateMenuItem
+              agentId={agent.id}
+              isLoading={isLoading}
+              status={statusResponse?.status}
+            />
+            <SettingsListItem.DropdownMenuItem
+              icon={isLogsExpanded ? 'eye-closed' : 'expand'}
+              onClick={toggleLogsExpanded}
+            >
+              {isLogsExpanded ? 'Hide logs' : 'View logs'}
+            </SettingsListItem.DropdownMenuItem>
+          </>
+        )}
         {hasDeletePermission && (
           <SettingsListItem.DropdownMenuItem
             icon="trash"
             disabled={isDeleting}
             onClick={() => setIsDeleteModalOpen(true)}
           >
-            Delete agent
+            Delete {agent.status === 'Draft' ? 'draft' : 'agent'}
           </SettingsListItem.DropdownMenuItem>
         )}
       </SettingsListItem.DropdownMenu>

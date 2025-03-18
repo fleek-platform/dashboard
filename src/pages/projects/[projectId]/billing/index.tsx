@@ -44,10 +44,10 @@ const FeaturePage: React.FC = () => {
 
   return (
     <>
-        <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
-        <Projects.Settings.Sections.Billing.PaymentMethod
-          isLoading={session.loading}
-        />
+      <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
+      <Projects.Settings.Sections.Billing.PaymentMethod
+        isLoading={session.loading}
+      />
       <Projects.Settings.Sections.Billing.Invoices />
     </>
   );
