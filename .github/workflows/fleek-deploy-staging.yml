@@ -1,10 +1,13 @@
 name: ⚡️ Deploy Dashboard (Staging)
 
 on:
-  workflow_dispatch:
-  push:
+  workflow_run:
+    workflows: ["🪡 Changeset (Version Management)"]
+    types:
+      - completed
     branches:
       - develop
+  workflow_dispatch:
 
 jobs:
   deploy-to-staging:
