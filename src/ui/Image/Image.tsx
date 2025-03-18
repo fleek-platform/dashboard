@@ -13,63 +13,65 @@ export type ImageProps = React.ComponentProps<typeof S.Image> & {
 export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
   S.Image,
   ({ src, children, ...props }, ref) => {
-    const [loading, setLoading] = useState(() => {
-      // defines whether image is loading or not on initial render
+    // const [loading, setLoading] = useState(() => {
+    //   // defines whether image is loading or not on initial render
 
-      if (!src) {
-        return false;
-      }
+    //   if (!src) {
+    //     return false;
+    //   }
 
-      const img = document.createElement('img');
-      img.src = src;
+    //   const img = document.createElement('img');
+    //   img.src = src;
 
-      return !img.complete;
-    });
+    //   return !img.complete;
+    // });
 
-    const [error, setError] = useState(!src);
+    // const [error, setError] = useState(!src);
 
-    useEffect(() => {
-      if (!src) {
-        setError(true);
+    // useEffect(() => {
+    //   if (!src) {
+    //     setError(true);
 
-        return;
-      }
+    //     return;
+    //   }
 
-      const img = document.createElement('img');
-      img.src = src;
+    //   const img = document.createElement('img');
+    //   img.src = src;
 
-      // if image is cached
-      if (img.complete) {
-        setLoading(false);
-        setError(false);
+    //   // if image is cached
+    //   if (img.complete) {
+    //     setLoading(false);
+    //     setError(false);
 
-        return;
-      }
+    //     return;
+    //   }
 
-      setLoading(true);
+    //   setLoading(true);
 
-      img.onload = () => {
-        setLoading(false);
-        setError(false);
-      };
+    //   img.onload = () => {
+    //     setLoading(false);
+    //     setError(false);
+    //   };
 
-      img.onerror = () => {
-        setError(true);
-        setLoading(false);
-      };
-    }, [src]);
+    //   img.onerror = () => {
+    //     setError(true);
+    //     setLoading(false);
+    //   };
+    // }, [src]);
 
-    if (error) {
-      return (
-        <Error ref={ref} {...props}>
-          {children}
-        </Error>
-      );
-    }
+    // if (error) {
+    //   return (
+    //     <Error ref={ref} {...props}>
+    //       {children}
+    //     </Error>
+    //   );
+    // }
 
-    if (loading) {
-      return <Skeleton ref={ref} {...props} />;
-    }
+    // if (loading) {
+    //   return <Skeleton ref={ref} {...props} />;
+    // }
+
+    console.log(`[debug] ui/Image/src = ${src}`)
 
     return <S.Image ref={ref} {...props} src={src} />;
   },
