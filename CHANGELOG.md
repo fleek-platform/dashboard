@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.6.2
+
+### Patch Changes
+
+- e32f183: Improve Utils Paths
+
 ## 0.6.1
 
 ### Patch Changes
