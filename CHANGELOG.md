@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.6.3
+
+### Patch Changes
+
+- 09acd13: Put back UI Image with preloader
+
 ## 0.6.2
 
 ### Patch Changes
