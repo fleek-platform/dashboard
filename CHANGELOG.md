@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.6.4
+
+### Patch Changes
+
+- 22b2b88: Fix missing storage fallback image
+
 ## 0.6.3
 
 ### Patch Changes
