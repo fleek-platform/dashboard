@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.5.0
+
+### Minor Changes
+
+- 9dbe4a8: Fix Image UI
+
 ## 0.4.3
 
 ### Patch Changes
