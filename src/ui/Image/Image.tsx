@@ -13,8 +13,8 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
   ({ src, children, ...props }, ref) => {
     const [loading, setLoading] = useState(() => {
       if (!src) return false;
-
-      const img = new Image();
+      
+      const img = document.createElement('img');
       img.src = src;
       return !img.complete;
     });
@@ -27,7 +27,7 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
         return;
       }
 
-      const img = new Image();
+      const img = document.createElement('img');
       img.src = src;
 
       if (img.complete) {
