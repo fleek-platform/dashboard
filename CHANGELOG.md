@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.4.3
+
+### Patch Changes
+
+- b7eba1a: Fix assets paths by applying base path
+
 ## 0.4.2
 
 ### Patch Changes
