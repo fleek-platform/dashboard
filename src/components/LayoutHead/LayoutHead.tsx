@@ -1,5 +1,7 @@
 import Head from 'next/head';
 
+import { secrets } from '@/secrets';
+
 export type LayoutHeadProps = {
   title: string;
   description?: string;
@@ -12,8 +14,8 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
     'Access and manage your apps or start new projects with the Fleek app. All the tools you need in one seamless workflow. Functions, hosting, storage and more.';
   const image =
     'https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta';
-  // TODO: Use environment var
-  const url = 'https://app.fleek.xyz/';
+
+  const url = secrets.NEXT_DASHBOARD_WEBSITE_URL;
 
   return (
     <Head>
