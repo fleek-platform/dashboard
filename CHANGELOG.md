@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.6.0
+
+### Minor Changes
+
+- 0c77ac7: Add invoices list functionality
+
 ## 0.5.1
 
 ### Patch Changes
