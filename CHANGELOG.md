@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.4.2
+
+### Patch Changes
+
+- 3f18897: Handle agent drafts
+
 ## 0.4.1
 
 ### Patch Changes
