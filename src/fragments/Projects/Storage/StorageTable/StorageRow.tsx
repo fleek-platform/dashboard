@@ -71,7 +71,7 @@ export const StorageRow: React.FC<StorageRowProps> = ({
           {folder || isIpfsFolder ? (
             <Icon name="archive" className="text-sm text-neutral-11" />
           ) : (
-            <Image alt="preview" className="p-0 text-sm" />
+            <Icon name="image" />
           )}
           <Box className="w-full max-w-[12rem]">
             {folder ? (
