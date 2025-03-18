@@ -11,6 +11,7 @@
     "changeset:add": "pnpm exec changeset",
     "changeset:status": "pnpm exec changeset status",
     "changeset:version": "pnpm exec changeset version",
+    "changeset:verify": ".scripts/include-changeset-verification",
     "clean": "rm -rf node_modules src/generated",
     "dev": ".scripts/start_dev_server",
     "dev:check_required": ".scripts/local_requirements",

@@ -40,6 +40,14 @@ else
   exit 1
 fi
 
+if pnpm run changeset:verify; then
+  echo "✅ Changeset file's included!"
+else
+  echo "⚠️ WARNING: You must include a changeset!"
+  echo "💡 Use the command pnpm changeset:add"
+  exit 1
+fi
+
 # TODO: There are several linter warnings
 # Can't auto-fix, have to be revised manually
 # if pnpm run lint:check; then

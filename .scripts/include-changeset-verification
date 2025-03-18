@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BASE_BRANCH="develop"
+
+CHANGED_FILES=$(git diff --name-only $BASE_BRANCH...HEAD)
+
+NON_CHANGESET_CHANGES=$(echo "$CHANGED_FILES" | grep -v "^\.changeset/" | wc -l | tr -d ' ')
+
+CHANGESET_CHANGES=$(echo "$CHANGED_FILES" | grep "^\.changeset/.*\.md$" | grep -v "^\.changeset/README\.md$" | wc -l | tr -d ' ')
+
+echo "🤖 Found $NON_CHANGESET_CHANGES files changed outside the changeset directory and $CHANGESET_CHANGES files in the changeset directory."
+
+if [[ $NON_CHANGESET_CHANGES -gt 0 && $CHANGESET_CHANGES -eq 0 ]]; then
+  echo "👹 Oops! Changes detected but no changeset file found. Did you forget to include or commit the changeset?"
+  exit 1
+fi
+
+echo "✅ Changeset included!"
