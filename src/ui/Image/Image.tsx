@@ -71,7 +71,7 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
     //   return <Skeleton ref={ref} {...props} />;
     // }
 
-    console.log(`[debug] ui/Image/src = ${src}`)
+    console.log(`[debug] ui/Image/src = ${src}`);
 
     return <S.Image ref={ref} {...props} src={src} />;
   },
