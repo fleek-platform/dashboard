@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
 import { forwardStyledRef } from '@/theme';
 
 import { Icon } from '../Icon/Icon';
-import { Skeleton } from '../Skeleton/Skeleton';
+// import { Skeleton } from '../Skeleton/Skeleton';
 import { ImageStyles as S } from './Image.styles';
 
 export type ImageProps = React.ComponentProps<typeof S.Image> & {
@@ -13,6 +13,8 @@ export type ImageProps = React.ComponentProps<typeof S.Image> & {
 export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
   S.Image,
   ({ src, children, ...props }, ref) => {
+    // TODO: Fix the image loading
+
     // const [loading, setLoading] = useState(() => {
     //   // defines whether image is loading or not on initial render
 
@@ -71,7 +73,7 @@ export const Image = forwardStyledRef<HTMLImageElement, ImageProps>(
     //   return <Skeleton ref={ref} {...props} />;
     // }
 
-    console.log(`[debug] ui/Image/src = ${src}`)
+    console.log(`[debug] ui/Image/src = ${src}`);
 
     return <S.Image ref={ref} {...props} src={src} />;
   },

@@ -9,7 +9,6 @@ import { CodeBlock } from '../CodeBlock/CodeBlock';
 import { Text } from '../Text/Text';
 import { emptyStateIllustrations, Section } from './emptyStateIllustrations';
 
-
 type ImageProps = ComponentProps<typeof ImageComponent> & {
   section: Section;
 };
@@ -17,10 +16,9 @@ type ImageProps = ComponentProps<typeof ImageComponent> & {
 const Image: React.FC<ImageProps> = ({ section, ...props }) => {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
-  const src = 
-    secrets.NEXT_PUBLIC_BASE_PATH
+  const src = secrets.NEXT_PUBLIC_BASE_PATH
     ? `${secrets.NEXT_PUBLIC_BASE_PATH}/${emptyStateIllustrations[theme][section]}`
-    : emptyStateIllustrations[theme][section]
+    : emptyStateIllustrations[theme][section];
 
   return (
     <Box className="min-h-[120px] justify-center">

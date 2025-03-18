@@ -60,7 +60,9 @@ const ComingSoonPage: React.FC = () => {
 
   return (
     <ComingSoon.Modal
-      imgSrc={joinBase(`/assets/static/${resolvedTheme}/billing-coming-soon.png`)}
+      imgSrc={joinBase(
+        `/assets/static/${resolvedTheme}/billing-coming-soon.png`,
+      )}
       modalContent={
         <>
           <ComingSoon.Modal.Description>
