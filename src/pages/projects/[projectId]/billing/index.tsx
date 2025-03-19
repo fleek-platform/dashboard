@@ -15,7 +15,7 @@ import { withAccess } from '@/utils/withAccess';
 import { joinBase } from '@/utils/paths';
 
 const BillingPage: Page = () => {
-  return <ComingSoonPage />;
+  return <FeaturePage />;
 };
 
 const FeaturePage: React.FC = () => {
