@@ -64,21 +64,11 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
   if (!isAuthenticated) {
-    console.log(
-      `[debug] _app.tsx: NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN = `,
-      secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN,
+    return (
+      <LandingPageProvider forcedTheme={forcedTheme}>
+        <HomePage />
+      </LandingPageProvider>
     );
-    if (secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN) {
-      return (
-        <LandingPageProvider forcedTheme={forcedTheme}>
-          <HomePage />
-        </LandingPageProvider>
-      );
-    }
-
-    window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
-
-    return <></>;
   }
 
   return (
