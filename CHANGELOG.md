@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.7.0
+
+### Minor Changes
+
+- 2ac2cc4: Fix billing
+
 ## 0.6.5
 
 ### Patch Changes
