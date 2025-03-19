@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.6.5
+
+### Patch Changes
+
+- 13b8a3f: Show landingpage to all users
+
 ## 0.6.4
 
 ### Patch Changes
