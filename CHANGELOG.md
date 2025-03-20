@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.7.1
+
+### Patch Changes
+
+- 4a396ca: Billing function type and URL trigger
+
 ## 0.7.0
 
 ### Minor Changes
