@@ -15,6 +15,8 @@ import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
 import { secrets } from '../secrets';
 
+import { cookies } from '../utils/cookie';
+
 export type AuthContext = {
   loading: boolean;
   error?: unknown;
@@ -71,7 +73,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setError(undefined);
 
         const accessToken = await provider.requestAccessToken(projectId);
-        setAccessToken(accessToken);
+        cookies.set('accessToken', accessToken);
       } catch (requestError) {
         logout();
         setError(requestError);

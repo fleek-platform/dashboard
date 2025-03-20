@@ -63,7 +63,8 @@ const InnerProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
-  const setProject = (newProjectId: string) => {
+  const setProject = async (newProjectId: string) => {
+    await auth.switchProjectAuth(newProjectId);
     cookies.set('projectId', newProjectId);
   };
 
