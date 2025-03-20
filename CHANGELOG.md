@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.8.0
+
+### Minor Changes
+
+- d57ab04: Failed to update access token with project id
+
 ## 0.7.1
 
 ### Patch Changes
