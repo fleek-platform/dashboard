@@ -49,7 +49,10 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     try {
       const response = await checkout.mutateAsync();
 
-      router.replace(response.url);
+      // TODO: This fails for some reason
+      // router.replace(response.url);
+
+      window.location.href = response.url;
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }
@@ -166,7 +169,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 type ButtonsContainerProps = {
   currentPlan?: string;
   isCanceled?: boolean;
-  onUpgradePlan: () => void;
+  onUpgradePlan: () => Promise<void>;
   onCancelPlan: () => void;
 };
 
