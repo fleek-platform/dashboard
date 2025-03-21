@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.9.2
+
+### Patch Changes
+
+- 1411404: Switch promotekit with tolt as referral affiliate tool
+
 ## 0.9.0
 
 ### Minor Changes
