@@ -53,7 +53,7 @@ export const useFleekCheckout = () => {
           projectId,
           planId,
           metadata: {
-            referralId: window.tolt_referral,
+            referralId,
           },
         }),
       });
