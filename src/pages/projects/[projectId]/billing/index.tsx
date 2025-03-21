@@ -1,4 +1,4 @@
-import { routes } from '@fleek-platform/utils-routes';
+import { routes, useRef } from '@fleek-platform/utils-routes';
 import { useEffect } from 'react';
 
 import { ComingSoon } from '@/components';
@@ -23,6 +23,7 @@ const FeaturePage: React.FC = () => {
   const session = useSessionContext();
   const toast = useToast();
   const { team } = useBillingContext();
+  const toastShownRef = useRef(false);
 
   const success = router.query.success;
   const canceled = router.query.canceled;
@@ -36,13 +37,12 @@ const FeaturePage: React.FC = () => {
   }, [team.error, toast.error]);
 
   useEffect(() => {
-    if (success) {
-      toast.success({ message: 'Plan upgraded successfully' });
-    }
-
+    if (!success ||toastShownRef.current) return;
+    
+    toast.success({ message: 'Plan upgraded successfully' });
     router.replace(routes.project.billing({ projectId: session.project.id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success, toast.success, session.project.id, router.replace]);
+  }, [success, session.project.id]);
 
   return (
     <>
