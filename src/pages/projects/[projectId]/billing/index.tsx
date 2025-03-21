@@ -37,8 +37,8 @@ const FeaturePage: React.FC = () => {
   }, [team.error, toast.error]);
 
   useEffect(() => {
-    if (!success ||toastShownRef.current) return;
-    
+    if (!success || toastShownRef.current) return;
+
     toast.success({ message: 'Plan upgraded successfully' });
     router.replace(routes.project.billing({ projectId: session.project.id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
