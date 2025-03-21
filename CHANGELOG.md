@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.9.0
+
+### Minor Changes
+
+- 1e82c51: Prevent recurring plan upgraded toast messages on payment subscription
+
 ## 0.8.0
 
 ### Minor Changes
