@@ -1,5 +1,5 @@
-import { routes, useRef } from '@fleek-platform/utils-routes';
-import { useEffect } from 'react';
+import { routes } from '@fleek-platform/utils-routes';
+import { useEffect, useRef } from 'react';
 
 import { ComingSoon } from '@/components';
 import { constants } from '@/constants';
