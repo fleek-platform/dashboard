@@ -10,7 +10,7 @@ import { useRouter } from './useRouter';
 
 declare global {
   interface Window {
-    promotekit_referral: unknown;
+    tolt_referral: string | undefined;
   }
 }
 
@@ -43,6 +43,8 @@ export const useFleekCheckout = () => {
         throw new Error('Plan not found');
       }
 
+      const referralId = window.tolt_referral || '';
+
       const response = await backendApi.fetch({
         url: '/api/v1/subscriptions/checkout',
         method: 'POST',
@@ -51,7 +53,7 @@ export const useFleekCheckout = () => {
           projectId,
           planId,
           metadata: {
-            referralId: window.promotekit_referral,
+            referralId: window.tolt_referral,
           },
         }),
       });
