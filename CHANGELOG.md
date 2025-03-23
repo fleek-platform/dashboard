@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.9.3
+
+### Patch Changes
+
+- e530356: Update env vars
+
 ## 0.9.2
 
 ### Patch Changes
