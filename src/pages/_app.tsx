@@ -19,6 +19,7 @@ import { getQueryParamsToObj } from '@/utils/url';
 // TODO: Rename the util as `cookies` (plural)
 import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
+import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -86,6 +87,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         {getLayout(<Component {...pageProps} />)}
         <ToastsContainer />
         <FeedbackModal />
+        <LegacyPlanUpgradeModal />
       </Providers>
     </>
   );
