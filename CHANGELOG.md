@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.10.1
+
+### Patch Changes
+
+- 1b5b45b: Get referral id from cookies
+
 ## 0.10.0
 
 ### Minor Changes
