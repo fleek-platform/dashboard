@@ -8,6 +8,7 @@ import { useAuthContext } from '@/providers/AuthProvider';
 import { useFleekCheckout } from '@/hooks/useFleekCheckout';
 import { useToast } from '@/hooks/useToast';
 import { Icon } from '@/ui';
+import { useBillingContext } from '@/providers/BillingProvider';
 
 const PERKS = [
   'Unlimited team members',
@@ -19,25 +20,39 @@ const PERKS = [
 // TODO add link to blog post later
 const LEARN_MORE_LINK = undefined;
 
+const SHOWN_KEY_PREFIX = 'legacy_plan_modal_shown_';
+
 export const LegacyPlanUpgradeModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const auth = useAuthContext();
-  const shownKey = `legacy_plan_modal_shown_${auth.accessToken}`;
+  const shownKey = `${SHOWN_KEY_PREFIX}${auth.accessToken}`;
   const checkout = useFleekCheckout();
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
+  const { billingPlan } = useBillingContext();
 
   useEffect(() => {
+    if (billingPlan !== 'free') return;
     const shown = localStorage.getItem(shownKey);
-    if (!shown) {
-      setIsOpen(true);
+    if (shown) return;
+    setIsOpen(true);
+  }, [shownKey, billingPlan]);
+
+  const flagAsShown = () => {
+    // clean any previous flags
+    for (const key in localStorage) {
+      if (key.startsWith(SHOWN_KEY_PREFIX)) {
+        localStorage.removeItem(key);
+      }
     }
-  }, [shownKey]);
+    // add new flag
+    localStorage.setItem(shownKey, 'true');
+  };
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
-      localStorage.setItem(shownKey, 'true');
+      flagAsShown();
     }
   };
 
@@ -50,7 +65,7 @@ export const LegacyPlanUpgradeModal = () => {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }
     setLoading(false);
-    localStorage.setItem(shownKey, 'true');
+    flagAsShown();
   };
 
   return (
