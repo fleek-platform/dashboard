@@ -4,11 +4,11 @@ import { DividerElement } from '@/ui/Divider/Divider.styles';
 import { FleekLogo } from '../FleekLogo/FleekLogo';
 import { Link } from '../ftw/Link/Link';
 import { useEffect, useState } from 'react';
-import { useAuthContext } from '@/providers/AuthProvider';
 import { useFleekCheckout } from '@/hooks/useFleekCheckout';
 import { useToast } from '@/hooks/useToast';
 import { Icon } from '@/ui';
 import { useBillingContext } from '@/providers/BillingProvider';
+import { useSessionContext } from '@/providers/SessionProvider';
 
 const PERKS = [
   'Unlimited team members',
@@ -20,12 +20,12 @@ const PERKS = [
 // TODO add link to blog post later
 const LEARN_MORE_LINK = undefined;
 
-const SHOWN_KEY_PREFIX = 'legacy_plan_modal_shown_';
+const SHOWN_KEY_PREFIX = 'fleek-xyz-legacy_plan_modal_shown_';
 
 export const LegacyPlanUpgradeModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const auth = useAuthContext();
-  const shownKey = `${SHOWN_KEY_PREFIX}${auth.accessToken}`;
+  const session = useSessionContext();
+  const shownKey = `${SHOWN_KEY_PREFIX}${session.project.id}`;
   const checkout = useFleekCheckout();
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
@@ -39,13 +39,6 @@ export const LegacyPlanUpgradeModal = () => {
   }, [shownKey, billingPlan]);
 
   const flagAsShown = () => {
-    // clean any previous flags
-    for (const key in localStorage) {
-      if (key.startsWith(SHOWN_KEY_PREFIX)) {
-        localStorage.removeItem(key);
-      }
-    }
-    // add new flag
     localStorage.setItem(shownKey, 'true');
   };
 
