@@ -65,7 +65,10 @@ export const LegacyPlanUpgradeModal = () => {
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Overlay />
       <Dialog.Portal>
-        <Modal.Content>
+        <Modal.Content
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           <Box className="gap-4">
             <Modal.Heading className="flex justify-between items-center">
               <Box>Upgrade your plan</Box>
