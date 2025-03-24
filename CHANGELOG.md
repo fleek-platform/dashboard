@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.10.2
+
+### Patch Changes
+
+- cc2e030: Prevent close of modal on click outside
+
 ## 0.10.1
 
 ### Patch Changes
