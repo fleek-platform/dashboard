@@ -1,11 +1,13 @@
 import { Box, Button, Dialog, Text } from '@/ui';
 import { Modal } from '../Modal/Modal';
-import { CloseIcon } from '@dynamic-labs/sdk-react-core';
 import { DividerElement } from '@/ui/Divider/Divider.styles';
 import { FleekLogo } from '../FleekLogo/FleekLogo';
 import { Link } from '../ftw/Link/Link';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '@/providers/AuthProvider';
+import { useFleekCheckout } from '@/hooks/useFleekCheckout';
+import { useToast } from '@/hooks/useToast';
+import { Icon } from '@/ui';
 
 const PERKS = [
   'Unlimited team members',
@@ -21,6 +23,9 @@ export const LegacyPlanUpgradeModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const auth = useAuthContext();
   const shownKey = `legacy_plan_modal_shown_${auth.accessToken}`;
+  const checkout = useFleekCheckout();
+  const toast = useToast();
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const shown = localStorage.getItem(shownKey);
@@ -36,6 +41,18 @@ export const LegacyPlanUpgradeModal = () => {
     }
   };
 
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const response = await checkout.mutateAsync();
+      window.location.href = response.url;
+    } catch (error) {
+      toast.error({ error, log: 'Error upgrading plan. Please try again' });
+    }
+    setLoading(false);
+    localStorage.setItem(shownKey, 'true');
+  };
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Overlay />
@@ -46,7 +63,7 @@ export const LegacyPlanUpgradeModal = () => {
               <Box>Upgrade your plan</Box>
               <Dialog.Close asChild>
                 <Button size="xs" intent="ghost" className="size-6">
-                  <CloseIcon className="size-4 shrink-0" />
+                  <Icon name="close" className="size-4 shrink-0" />
                 </Button>
               </Dialog.Close>
             </Modal.Heading>
@@ -92,12 +109,11 @@ export const LegacyPlanUpgradeModal = () => {
               </Text>
             </Box>
             <Button
-              loading={false}
-              disabled={false}
+              loading={isLoading}
               intent="accent"
               size="md"
-              className="px-8"
-              onClick={() => {}}
+              className="min-w-[150px]"
+              onClick={handleCheckout}
             >
               Upgrade
             </Button>
