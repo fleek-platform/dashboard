@@ -14,6 +14,15 @@ declare global {
   }
 }
 
+const getCookie = (name: string): string | null => {
+  const cookie = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${name}=`))
+    ?.split('=')[1];
+
+  return cookie ? decodeURIComponent(cookie) : null;
+};
+
 export const useFleekCheckout = () => {
   const router = useRouter();
   const projectId = router.query.projectId!;
@@ -43,7 +52,10 @@ export const useFleekCheckout = () => {
         throw new Error('Plan not found');
       }
 
-      const referralId = window.tolt_referral || '';
+      const referralId =
+        window.tolt_referral || getCookie('tolt_referral') || '';
+
+      console.log(`[🤖 debug]: ${referralId}`);
 
       const response = await backendApi.fetch({
         url: '/api/v1/subscriptions/checkout',
