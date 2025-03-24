@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.10.0
+
+### Minor Changes
+
+- 8dd11d4: Add free plan phasing out modal
+
 ## 0.9.3
 
 ### Patch Changes
