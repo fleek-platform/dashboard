@@ -23,7 +23,7 @@ export const HomeStyles = {
 
       height: '120vh',
       width: '90vw',
-      bottom: '-80%',
+      bottom: '-95%',
     }),
   },
   Hero: {
