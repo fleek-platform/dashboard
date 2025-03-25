@@ -75,7 +75,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
     window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
 
-    return <></>;
+    return null;
   }
 
   return (
