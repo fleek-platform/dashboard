@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.11.0
+
+### Minor Changes
+
+- d81be80: Unauthorised users show be redirected to marketing website in non-prod envs
+
 ## 0.10.3
 
 ### Patch Changes
