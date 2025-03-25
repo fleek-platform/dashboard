@@ -83,7 +83,7 @@ export type SubscriptionResponse = {
   status: SubscriptionStatus;
   startDate: string;
   periodEndDate: string;
-  trialEndDate: string;
+  trialEndDate: string | null;
   endDate: string | null;
 };
 
