@@ -16,17 +16,30 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
-import { Plan } from '@/types/Billing';
-import { LoadingProps } from '@/types/Props';
+import type { Plan } from '@/types/Billing';
+import type { LoadingProps } from '@/types/Props';
 import { Box, Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
 
+type PlanWithTrial = Plan | 'trial';
+
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
   const router = useRouter();
-  const { subscription } = useBillingContext();
+  const { subscription, paymentMethod } = useBillingContext();
+  const billingPlan: PlanWithTrial = useMemo(() => {
+    if (subscription.data?.status === 'Active') {
+      return 'pro';
+    }
+
+    if (subscription.data?.status === 'Trialing') {
+      return 'trial';
+    }
+
+    return 'none';
+  }, [subscription.data?.status]);
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
@@ -70,13 +83,6 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     }
   };
 
-  const currentPlan =
-    subscription.data?.status === 'Active' && subscription.data?.id
-      ? 'pro'
-      : 'free';
-
-  const planData = plansData[currentPlan as Plan];
-
   const endPlanDate = useMemo(() => {
     if (subscription.data?.endDate) {
       return dateFormat({
@@ -111,15 +117,18 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     return null;
   }, [subscription.data?.endDate]);
 
-  const { title, description, price } = planData;
+  const trialEndDate = useMemo(() => {
+    if (subscription.data?.trialEndDate) {
+      return dateFormat({
+        dateISO: subscription.data.trialEndDate,
+        format: DateTime.DATE_FULL,
+      });
+    }
 
-  const auxDescription = useMemo(
-    () =>
-      endPlanDate
-        ? `${description} Your Pro Plan expires on ${endPlanDate}.`
-        : description,
-    [endPlanDate, description],
-  );
+    return '';
+  }, [subscription.data?.trialEndDate]);
+
+  const { title, description, price } = getPlanData(billingPlan, endPeriodDate);
 
   return (
     <>
@@ -135,10 +144,19 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
           {endPlanDate}.
         </AlertBox>
       )}
+
+      {billingPlan === 'trial' && !isLoading && (
+        <AlertBox size="sm" className="font-medium">
+          Your trial period expires on {trialEndDate}.{' '}
+          {paymentMethod.data?.id
+            ? 'You will be charged for a period after that date.'
+            : `Don't forget to add your Billing info until that date.`}
+        </AlertBox>
+      )}
       <Billing.HorizontalPlanCard
         isLoading={isLoading}
         title={title}
-        description={auxDescription}
+        description={description}
         price={price}
       >
         <SettingsBox.ActionRow>
@@ -153,10 +171,11 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
               />
             ) : (
               <ButtonsContainer
-                currentPlan={currentPlan}
+                currentPlan={billingPlan}
                 onUpgradePlan={handleCheckout}
                 onCancelPlan={() => setIsCancelModalOpen(true)}
                 isCanceled={Boolean(subscription.data?.endDate)}
+                hasPaymentMethod={Boolean(paymentMethod.data?.id)}
               />
             )}
           </Box>
@@ -167,8 +186,9 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 };
 
 type ButtonsContainerProps = {
-  currentPlan?: string;
-  isCanceled?: boolean;
+  currentPlan: PlanWithTrial;
+  isCanceled: boolean;
+  hasPaymentMethod: boolean;
   onUpgradePlan: () => Promise<void>;
   onCancelPlan: () => void;
 };
@@ -176,6 +196,7 @@ type ButtonsContainerProps = {
 const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
   currentPlan,
   isCanceled,
+  hasPaymentMethod,
   onUpgradePlan,
   onCancelPlan,
 }) => {
@@ -190,7 +211,7 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
     setIsLoading(false);
   };
 
-  if (currentPlan === 'pro') {
+  if (currentPlan === 'pro' || (currentPlan === 'trial' && hasPaymentMethod)) {
     return (
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
         <Button
@@ -226,7 +247,7 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
           loading={isLoading}
           disabled={!hasManageBillingPermission}
         >
-          Upgrade to Pro
+          {currentPlan === 'trial' ? 'Add billing info' : 'Upgrade to Pro'}
         </Button>
       </PermissionsTooltip>
     </>
@@ -236,18 +257,25 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
 type PlanData = {
   title: string;
   description: string;
-  price: string;
+  price: string | null;
 };
 
-const plansData: Record<Plan, PlanData> = {
-  free: {
-    title: 'Free Plan',
-    description: 'Our most popular plan for hobby developers.',
-    price: '0',
-  },
-  pro: {
-    title: 'Pro Plan',
-    description: 'Our most popular plan for professional developers.',
-    price: '20',
-  },
+const getPlanData = (plan: PlanWithTrial, endPlanDate?: string): PlanData => {
+  return {
+    none: {
+      title: 'No subscription',
+      description: 'Subscribe to continue enjoying our features.',
+      price: null,
+    },
+    trial: {
+      title: 'Pro Plan - Trial period',
+      description: 'Try full palette of our features as you were on Pro Plan.',
+      price: '0',
+    },
+    pro: {
+      title: 'Pro Plan',
+      description: `Our most popular plan for professional developers.${endPlanDate ? ` Your Pro Plan expires on ${endPlanDate}` : ''}`,
+      price: '20',
+    },
+  }[plan];
 };

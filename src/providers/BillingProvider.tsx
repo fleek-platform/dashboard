@@ -1,17 +1,17 @@
-import { UseQueryResult } from '@tanstack/react-query';
+import type { UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { useGetPaymentMethod } from '@/hooks/useGetPaymentMethod';
 import { useGetSubscription } from '@/hooks/useGetSubscription';
 import { useGetTeam } from '@/hooks/useGetTeam';
-import {
+import type {
   PaymentMethodResponse,
   Plan,
   PlanRestriction,
   SubscriptionResponse,
   TeamResponse,
 } from '@/types/Billing';
-import { ChildrenProps } from '@/types/Props';
+import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 
 export type BillingContext = {
@@ -44,14 +44,17 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
   });
 
   const plan = useMemo(() => {
-    if (!team.isLoading) {
-      if (team.data?.subscriptionId) {
+    if (!subscription.isLoading) {
+      if (
+        subscription.data?.status === 'Active' ||
+        subscription.data?.status === 'Trialing'
+      ) {
         return 'pro';
       }
 
-      return 'free';
+      return 'none';
     }
-  }, [team.data, team.isLoading]);
+  }, [subscription.isLoading, subscription.data]);
 
   const hasReachedLimit = (
     resource: keyof PlanRestriction,
@@ -115,17 +118,17 @@ const PlanRestrictions: Record<Plan, PlanRestriction> = {
       resource: 'members',
     },
   },
-  free: {
+  none: {
     sites: {
-      limit: 3,
+      limit: 0,
       resource: 'sites',
     },
     customDomains: {
-      limit: 1,
+      limit: 0,
       resource: 'domains',
     },
     members: {
-      limit: 1,
+      limit: 0,
       resource: 'members',
     },
   },

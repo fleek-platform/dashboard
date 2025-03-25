@@ -1,5 +1,5 @@
 import { BadgeText } from '@/components';
-import { ChildrenProps, LoadingProps } from '@/types/Props';
+import type { ChildrenProps, LoadingProps } from '@/types/Props';
 import { Box, Skeleton, Text } from '@/ui';
 
 import { PriceTag } from './PriceTag';
@@ -21,7 +21,7 @@ export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({
 type HeaderProps = LoadingProps<{
   title: string;
   description: string;
-  price: string;
+  price: string | null;
   isActive?: boolean;
   withOverload?: boolean;
 }>;
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({
       </Box>
 
       <Box>
-        <PriceTag>{price}</PriceTag>
+        {price && <PriceTag>{price}</PriceTag>}
         {withOverload && <Text>&nbsp;(+ overage)</Text>}
       </Box>
     </Box>
