@@ -269,7 +269,8 @@ const getPlanData = (plan: PlanWithTrial, endPlanDate?: string): PlanData => {
     },
     trial: {
       title: 'Pro Plan - Trial period',
-      description: 'Try full palette of our features as you were on Pro Plan.',
+      description: 'Enjoy full Pro access during your free trial period.'
+',
       price: '0',
     },
     pro: {
