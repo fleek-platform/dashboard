@@ -10,6 +10,7 @@ import { ToastProvider } from './ToastProvider';
 import { UploadProvider } from './UploadProvider';
 import { UrqlProvider } from './UrqlProvider';
 import { WagmiProvider } from './WagmiProvider';
+import { LoadingProvider } from './LoadingProvider';
 
 type ProvidersProps = ChildrenProps<{
   requestCookies?: CookiesContext['values'];
@@ -24,21 +25,25 @@ export const Providers: React.FC<ProvidersProps> = ({
   return (
     <CookiesProvider requestCookies={requestCookies}>
       <UrqlProvider>
-        <DynamicProvider>
-          <QueryClientProvider>
-            <WagmiProvider>
-              <ThemeProvider forcedTheme={forcedTheme}>
-                <ToastProvider>
-                  <SessionProvider>
-                    <UploadProvider>
-                      <FeedbackModalProvider>{children}</FeedbackModalProvider>
-                    </UploadProvider>
-                  </SessionProvider>
-                </ToastProvider>
-              </ThemeProvider>
-            </WagmiProvider>
-          </QueryClientProvider>
-        </DynamicProvider>
+        <LoadingProvider>
+          <DynamicProvider>
+            <QueryClientProvider>
+              <WagmiProvider>
+                <ThemeProvider forcedTheme={forcedTheme}>
+                  <ToastProvider>
+                    <SessionProvider>
+                      <UploadProvider>
+                        <FeedbackModalProvider>
+                          {children}
+                        </FeedbackModalProvider>
+                      </UploadProvider>
+                    </SessionProvider>
+                  </ToastProvider>
+                </ThemeProvider>
+              </WagmiProvider>
+            </QueryClientProvider>
+          </DynamicProvider>
+        </LoadingProvider>
       </UrqlProvider>
     </CookiesProvider>
   );
@@ -52,9 +57,11 @@ export const LandingPageProvider: React.FC<ProvidersProps> = ({
     <UrqlProvider>
       <QueryClientProvider>
         <ThemeProvider forcedTheme={forcedTheme}>
-          <DynamicProvider>
-            <SessionProviderMin>{children}</SessionProviderMin>
-          </DynamicProvider>
+          <LoadingProvider>
+            <DynamicProvider>
+              <SessionProviderMin>{children}</SessionProviderMin>
+            </DynamicProvider>
+          </LoadingProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </UrqlProvider>

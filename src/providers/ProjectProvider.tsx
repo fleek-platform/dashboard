@@ -13,6 +13,7 @@ import { useAuthContext } from './AuthProvider';
 import { useCookies } from './CookiesProvider';
 import { LoadingFullScreen } from '@/components/Loading';
 import { getQueryParamsToObj } from '@/utils/url';
+import { useLoading } from './LoadingProvider';
 
 const LOADING_MIN_TIMEOUT = 1800;
 
@@ -34,6 +35,7 @@ const [Provider, useContext] = createContext<ProjectContext>({
 export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
+  const { hideLoading } = useLoading();
   const [isLoading, setIsLoading] = useState(true);
   const auth = useAuthContext();
   const router = useRouter();
@@ -112,7 +114,11 @@ export const ProjectProvider: React.FC<React.PropsWithChildren<{}>> = ({
     return () => clearTimeout(timer);
   }, [project, projectsQuery.data]);
 
-  if (isLoading || !auth.accessToken) return <LoadingFullScreen />;
+  if (isLoading || !auth.accessToken) {
+    return <LoadingFullScreen />;
+  }
+
+  hideLoading();
 
   return (
     <Provider

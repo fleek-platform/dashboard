@@ -10,7 +10,7 @@ import { secrets } from '@/secrets';
 
 import { useCookies } from './CookiesProvider';
 import { useGenerateUserSessionDetailsMutation } from '@/generated/graphqlClient';
-import { useRouter } from 'next/router';
+import { useLoading } from './LoadingProvider';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -22,7 +22,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
   const [meQuery] = useMeQuery({ pause: !cookies.values.accessToken });
   const [, generateUserSessionDetails] =
     useGenerateUserSessionDetailsMutation();
-  const router = useRouter();
+  const { showLoading } = useLoading();
 
   return (
     <DynamicContextProvider
@@ -31,6 +31,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
           onAuthSuccess: async ({ authToken }) => {
+            showLoading();
             // TODO: Solved accessToken and projectId here
             // thus, remove previous handling elsewhere
             const { data, error } = await generateUserSessionDetails({
