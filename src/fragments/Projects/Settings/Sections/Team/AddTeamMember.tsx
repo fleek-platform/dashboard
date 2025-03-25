@@ -89,7 +89,7 @@ export const AddTeamMember: React.FC<AddTeamMemberProps> = ({
       },
     },
     schema: zod.object({
-      email: zod.string().email(),
+      email: zod.string().trim().email(),
       message: zod.string(),
     }),
     onSubmit: async (values) => {
