@@ -150,7 +150,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
           Your trial period expires on {trialEndDate}.{' '}
           {paymentMethod.data?.id
             ? 'You will be charged for a period after that date.'
-            : `Don't forget to add your Billing info until that date.`}
+            : "Don't forget to add your Billing info until that date."}
         </AlertBox>
       )}
       <Billing.HorizontalPlanCard
