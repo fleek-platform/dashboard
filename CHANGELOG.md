@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.10.3
+
+### Patch Changes
+
+- 32ce99b: Trim invitation email
+
 ## 0.10.2
 
 ### Patch Changes
