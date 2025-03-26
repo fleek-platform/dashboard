@@ -150,7 +150,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
           Your trial period expires on {trialEndDate}.{' '}
           {paymentMethod.data?.id
             ? 'You will be billed after that date.'
-            : "Be sure to add your billing info before your trial ends."}
+            : 'Be sure to add your billing info before your trial ends.'}
         </AlertBox>
       )}
       <Billing.HorizontalPlanCard
@@ -264,7 +264,7 @@ const getPlanData = (plan: PlanWithTrial, endPlanDate?: string): PlanData => {
   return {
     none: {
       title: 'No subscription',
-      description: 'Subscribe to continue using Fleek's platform.',
+      description: `Subscribe to continue using Fleek's platform.`,
       price: null,
     },
     trial: {
