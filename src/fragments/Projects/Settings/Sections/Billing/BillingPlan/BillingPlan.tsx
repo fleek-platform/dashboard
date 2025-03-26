@@ -264,7 +264,7 @@ const getPlanData = (plan: PlanWithTrial, endPlanDate?: string): PlanData => {
   return {
     none: {
       title: 'No subscription',
-      description: 'Subscribe to continue enjoying our features.',
+      description: 'Subscribe to continue using Fleek's platform.',
       price: null,
     },
     trial: {
