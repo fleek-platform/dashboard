@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.12.0
+
+### Minor Changes
+
+- e229738: Free plan deprecation, changes in billing section
+
 ## 0.11.0
 
 ### Minor Changes
