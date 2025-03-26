@@ -67,13 +67,24 @@ export type TeamResponse = {
   paymentMethodId: string | null;
 };
 
+/** A project with Active or Trialing statuses is considered to be subscribed. Any other status means the project is unsubscribed. */
+export type SubscriptionStatus =
+  | 'Incomplete'
+  | 'IncompleteExpired'
+  | 'Active'
+  | 'Trialing'
+  | 'Unpaid'
+  | 'Canceled'
+  | 'PastDue'
+  | 'Paused';
+
 export type SubscriptionResponse = {
   id: string;
-  status: string;
+  status: SubscriptionStatus;
   startDate: string;
   periodEndDate: string;
+  trialEndDate: string | null;
   endDate: string | null;
-  plan: PlanResponse;
 };
 
 export type PlanResponse = {
@@ -98,7 +109,7 @@ export type CheckoutResponse = {
   url: string;
 };
 
-export type Plan = 'free' | 'pro';
+export type Plan = 'pro' | 'none';
 
 type Restriction = {
   limit: number;

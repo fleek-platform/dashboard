@@ -32,7 +32,7 @@ export const LegacyPlanUpgradeModal = () => {
   const { billingPlan } = useBillingContext();
 
   useEffect(() => {
-    if (billingPlan !== 'free') return;
+    if (billingPlan !== 'none') return;
     const shown = localStorage.getItem(shownKey);
     if (shown) return;
     setIsOpen(true);

@@ -31,7 +31,7 @@ export const CancelPlanModal: React.FC<CancelPlanModalProps> = ({
         <Modal.Heading>We&apos;re sorry to see you go!</Modal.Heading>
         <Text>
           Are you sure you want to end your subscription? If you cancel today,
-          it will be converted to a Free plan on {dueDate}.
+          your access to Fleek features will be limited on {dueDate}.
         </Text>
 
         <Modal.CTARow>
