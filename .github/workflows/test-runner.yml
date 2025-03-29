@@ -134,6 +134,7 @@ jobs:
       NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL: "https://uploads.service.staging.fleeksandbox.xyz"
       NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME: "storage-ipfs.internal.staging.fleeksandbox.xyz"
       NEXT_PUBLIC_WEBSITE_URL: "https://fleek-xyz-staging.fleeksandbox.xyz"
+      NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE: "2025-04-17"
       NEXT_DEV_SERVER_PORT: 3001
       NEXT_PUBLIC_TEST_MODE: 1
       NODE_ENV: 'development'
