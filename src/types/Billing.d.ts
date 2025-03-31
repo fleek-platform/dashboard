@@ -109,7 +109,7 @@ export type CheckoutResponse = {
   url: string;
 };
 
-export type Plan = 'pro' | 'none';
+export type BillingPlanType = 'pro' | 'trial' | 'free' | 'none';
 
 type Restriction = {
   limit: number;

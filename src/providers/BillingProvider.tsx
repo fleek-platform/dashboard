@@ -6,18 +6,19 @@ import { useGetSubscription } from '@/hooks/useGetSubscription';
 import { useGetTeam } from '@/hooks/useGetTeam';
 import type {
   PaymentMethodResponse,
-  Plan,
+  BillingPlanType,
   PlanRestriction,
   SubscriptionResponse,
   TeamResponse,
 } from '@/types/Billing';
 import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
+import { DateTime } from 'luxon';
+import { secrets } from '@/secrets';
 
 export type BillingContext = {
   loading: boolean;
-  billingPlan: Plan | undefined;
-
+  billingPlanType: BillingPlanType | undefined;
   team: UseQueryResult<TeamResponse | null, unknown>;
   subscription: UseQueryResult<SubscriptionResponse | null, unknown>;
   paymentMethod: UseQueryResult<PaymentMethodResponse | null, unknown>;
@@ -43,25 +44,35 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
     subscriptionId: team.data?.subscriptionId ?? undefined,
   });
 
-  const plan = useMemo(() => {
-    if (!subscription.isLoading) {
-      if (
-        subscription.data?.status === 'Active' ||
-        subscription.data?.status === 'Trialing'
-      ) {
-        return 'pro';
-      }
-
+  const billingPlanType = useMemo(() => {
+    if (subscription.isLoading) {
       return 'none';
     }
+
+    if (subscription.data?.status === 'Active') {
+      return 'pro';
+    }
+
+    if (subscription.data?.status === 'Trialing') {
+      return 'trial';
+    }
+
+    if (
+      DateTime.now() <
+      DateTime.fromISO(secrets.NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE)
+    ) {
+      return 'free';
+    }
+
+    return 'none';
   }, [subscription.isLoading, subscription.data]);
 
   const hasReachedLimit = (
     resource: keyof PlanRestriction,
     currentResourceCount: number,
   ) => {
-    if (plan) {
-      const restrictions = PlanRestrictions[plan];
+    if (billingPlanType) {
+      const restrictions = PlanRestrictions[billingPlanType];
 
       return {
         hasReachedLimit: currentResourceCount >= restrictions[resource].limit,
@@ -86,7 +97,7 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
     <Provider
       value={{
         loading: isLoading,
-        billingPlan: plan,
+        billingPlanType,
         team,
         subscription,
         paymentMethod,
@@ -103,7 +114,7 @@ export const useBillingContext = useContext;
 const restrictionMessage = (resource: string) =>
   `To add additional ${resource}, you need to upgrade your plan.`;
 
-const PlanRestrictions: Record<Plan, PlanRestriction> = {
+const PlanRestrictions: Record<BillingPlanType, PlanRestriction> = {
   pro: {
     sites: {
       limit: 1000,
@@ -115,6 +126,34 @@ const PlanRestrictions: Record<Plan, PlanRestriction> = {
     },
     members: {
       limit: 1000,
+      resource: 'members',
+    },
+  },
+  trial: {
+    sites: {
+      limit: 1000,
+      resource: 'sites',
+    },
+    customDomains: {
+      limit: 1000,
+      resource: 'domains',
+    },
+    members: {
+      limit: 1000,
+      resource: 'members',
+    },
+  },
+  free: {
+    sites: {
+      limit: 3,
+      resource: 'sites',
+    },
+    customDomains: {
+      limit: 1,
+      resource: 'domains',
+    },
+    members: {
+      limit: 1,
       resource: 'members',
     },
   },

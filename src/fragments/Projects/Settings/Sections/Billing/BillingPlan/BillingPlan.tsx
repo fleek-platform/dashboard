@@ -16,30 +16,18 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
-import type { Plan } from '@/types/Billing';
+import type { BillingPlanType } from '@/types/Billing';
 import type { LoadingProps } from '@/types/Props';
 import { Box, Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
-
-type PlanWithTrial = Plan | 'trial';
+import { secrets } from '@/secrets';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
   const router = useRouter();
-  const { subscription, paymentMethod } = useBillingContext();
-  const billingPlan: PlanWithTrial = useMemo(() => {
-    if (subscription.data?.status === 'Active') {
-      return 'pro';
-    }
-
-    if (subscription.data?.status === 'Trialing') {
-      return 'trial';
-    }
-
-    return 'none';
-  }, [subscription.data?.status]);
+  const { subscription, billingPlanType, paymentMethod } = useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
@@ -128,7 +116,10 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     return '';
   }, [subscription.data?.trialEndDate]);
 
-  const { title, description, price } = getPlanData(billingPlan, endPeriodDate);
+  const { title, description, price } = getPlanData(
+    billingPlanType,
+    endPeriodDate,
+  );
 
   return (
     <>
@@ -145,7 +136,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
         </AlertBox>
       )}
 
-      {billingPlan === 'trial' && !isLoading && (
+      {billingPlanType === 'trial' && !isLoading && (
         <AlertBox size="sm" className="font-medium">
           Your trial period expires on {trialEndDate}.{' '}
           {paymentMethod.data?.id
@@ -171,7 +162,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
               />
             ) : (
               <ButtonsContainer
-                currentPlan={billingPlan}
+                billingPlanType={billingPlanType}
                 onUpgradePlan={handleCheckout}
                 onCancelPlan={() => setIsCancelModalOpen(true)}
                 isCanceled={Boolean(subscription.data?.endDate)}
@@ -186,7 +177,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 };
 
 type ButtonsContainerProps = {
-  currentPlan: PlanWithTrial;
+  billingPlanType: BillingPlanType;
   isCanceled: boolean;
   hasPaymentMethod: boolean;
   onUpgradePlan: () => Promise<void>;
@@ -194,7 +185,7 @@ type ButtonsContainerProps = {
 };
 
 const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
-  currentPlan,
+  billingPlanType,
   isCanceled,
   hasPaymentMethod,
   onUpgradePlan,
@@ -211,7 +202,10 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
     setIsLoading(false);
   };
 
-  if (currentPlan === 'pro' || (currentPlan === 'trial' && hasPaymentMethod)) {
+  if (
+    billingPlanType === 'pro' ||
+    (billingPlanType === 'trial' && hasPaymentMethod)
+  ) {
     return (
       <PermissionsTooltip hasAccess={hasManageBillingPermission}>
         <Button
@@ -247,7 +241,7 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
           loading={isLoading}
           disabled={!hasManageBillingPermission}
         >
-          {currentPlan === 'trial' ? 'Add billing info' : 'Upgrade to Pro'}
+          {billingPlanType === 'trial' ? 'Add billing info' : 'Upgrade to Pro'}
         </Button>
       </PermissionsTooltip>
     </>
@@ -260,12 +254,22 @@ type PlanData = {
   price: string | null;
 };
 
-const getPlanData = (plan: PlanWithTrial, endPlanDate?: string): PlanData => {
+const getPlanData = (plan: BillingPlanType, endPlanDate?: string): PlanData => {
+  const freePlanDeprecationDate = dateFormat({
+    dateISO: secrets.NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE,
+    format: DateTime.DATE_FULL,
+  });
+
   return {
     none: {
       title: 'No subscription',
       description: `Subscribe to continue using Fleek's platform.`,
       price: null,
+    },
+    free: {
+      title: 'Free plan',
+      description: `Will be deprecated on ${freePlanDeprecationDate}. Subscribe to continue using Fleek's platform.`,
+      price: '0',
     },
     trial: {
       title: 'Pro Plan - Trial period',

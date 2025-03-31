@@ -97,6 +97,7 @@ NEXT_DASHBOARD_WEBSITE_URL="https://fleek.xyz/dashboard"
 NEXT_PUBLIC_WEBSITE_URL="https://fleek.xyz"
 NEXT_PUBLIC_BASE_PATH="/dashboard"
 NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN="true"
+NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE="2025-04-17"
 ```
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
