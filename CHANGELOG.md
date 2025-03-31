@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.13.0
+
+### Minor Changes
+
+- 3493473: add configurable Free plan deprecation date
+
 ## 0.12.0
 
 ### Minor Changes
