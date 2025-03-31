@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.13.2
+
+### Patch Changes
+
+- 50469d2: Configurable Free plan deprecation
+
 ## 0.13.0
 
 ### Minor Changes
