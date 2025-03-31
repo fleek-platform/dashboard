@@ -112,11 +112,14 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   );
 };
 
-export default dynamic<AppProps>(async () => {
-  await loadConfig();
-  
-  return App;
-}, {
-  ssr: false,
-  loading: () => <LoadingFullScreen />
-});
+export default dynamic<AppProps>(
+  async () => {
+    await loadConfig();
+
+    return App;
+  },
+  {
+    ssr: false,
+    loading: () => <LoadingFullScreen />,
+  },
+);

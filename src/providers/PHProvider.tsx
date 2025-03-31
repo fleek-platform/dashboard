@@ -14,7 +14,7 @@ import { CustomPostHogProvider } from './CustomPostHogProvider';
 if (!isServerSide()) {
   posthogJs.init(getDefined('NEXT_PUBLIC_UI__POSTHOG_KEY')!, {
     api_host:
-      getDefined('NEXT_PUBLIC_UI__POSTHOG_HOST')|| 'https://us.i.posthog.com',
+      getDefined('NEXT_PUBLIC_UI__POSTHOG_HOST') || 'https://us.i.posthog.com',
     person_profiles: 'identified_only',
     capture_performance: true,
     capture_pageview: true,

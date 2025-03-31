@@ -1,7 +1,9 @@
 import { getDefined } from '@/defined';
 
 export class BackendApiClient {
-  private baseURL: string | undefined = getDefined('NEXT_PUBLIC_UI_FLEEK_REST_API_URL');
+  private baseURL: string | undefined = getDefined(
+    'NEXT_PUBLIC_UI_FLEEK_REST_API_URL',
+  );
   private headers: HeadersInit;
 
   constructor(args: BackendApiClient.Arguments) {
