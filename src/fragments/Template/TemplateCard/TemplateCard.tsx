@@ -24,11 +24,7 @@ export const TemplateCard = forwardStyledRef<
   const templateUrl = joinUrl(templatesUrl, template.siteSlug);
 
   const templateBanner = joinUrl(websiteUrl, template.banner, true);
-  const frameworkAvatar = joinUrl(
-    websiteUrl,
-    template.framework?.avatar,
-    true,
-  );
+  const frameworkAvatar = joinUrl(websiteUrl, template.framework?.avatar, true);
 
   return (
     <LinkBox

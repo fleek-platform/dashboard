@@ -11,7 +11,6 @@ import { useListAgents } from './useListAgents';
 import { joinBase } from '@/utils/paths';
 import { getAgentsUrl } from '@/utils/url';
 
-
 const agentsUrl = getAgentsUrl();
 
 export const AgentsList = () => {

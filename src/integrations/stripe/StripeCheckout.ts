@@ -33,7 +33,9 @@ export class StripeCheckout {
   initialize: StripeCheckout.Initialize = async ({ theme, domSelector }) => {
     this.setState('initial');
 
-    this.stripe = await loadStripe(getDefined('NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY'));
+    this.stripe = await loadStripe(
+      getDefined('NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY'),
+    );
 
     if (!this.stripe) {
       throw new StripeCheckoutError('Failed to load Stripe');

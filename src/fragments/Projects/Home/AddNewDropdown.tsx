@@ -11,7 +11,7 @@ import { Button, Menu } from '@/ui';
 import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
 import { getAgentsUrl } from '@/utils/url';
 
-const agentsUrl =getAgentsUrl();
+const agentsUrl = getAgentsUrl();
 
 export const AddNewDropdown: React.FC = () => {
   const session = useSessionContext();

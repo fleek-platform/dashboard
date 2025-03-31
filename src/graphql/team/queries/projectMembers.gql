@@ -1,5 +1,6 @@
 query projectMembers($where: ProjectWhereInput!) {
   project(where: $where) {
+    id
     memberships {
       id
       role

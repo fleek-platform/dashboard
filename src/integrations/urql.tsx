@@ -147,6 +147,7 @@ export const createUrqlClient = ({
     keys: {
       SitesWithAggregation: () => null,
       ProjectsWithAggregation: () => null,
+      Project: (data) => `${data.id}`,
       Site: (data) => `${data.id}`,
       DeploymentsWithAggregation: () => null,
       TemplatesWithAggregation: () => null,
