@@ -15,6 +15,7 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
   const image =
     'https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta';
 
+  // TODO: Form the URL based in the site url and base
   const url = secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL;
 
   return (

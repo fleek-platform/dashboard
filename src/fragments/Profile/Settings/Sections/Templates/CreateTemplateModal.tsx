@@ -107,6 +107,8 @@ const Step2: React.FC = () => {
     stepper.prevStep();
   };
 
+  // TODO: Form the URL based in the site url and base
+  // see NEXT_PUBLIC_DASHBOARD_WEBSITE_URL
   return (
     <>
       <SettingsModal.Heading>Add template details</SettingsModal.Heading>
