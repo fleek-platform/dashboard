@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 // Simplest method to generate a single index.html
 // WARNING: This has been deprecated
 // https://nextjs.org/docs/pages/api-reference/config/next-config-js/exportPathMap
