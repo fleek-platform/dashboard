@@ -73,9 +73,17 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       );
     }
 
-    window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
+    const currentParams = new URLSearchParams(window.location.search);
+  
+    const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
+  
+    currentParams.forEach((value, key) => {
+      targetUrl.searchParams.append(key, value);
+    });
+  
+    window.location.assign(targetUrl.toString());
 
-    return null;
+    return <></>;
   }
 
   return (
