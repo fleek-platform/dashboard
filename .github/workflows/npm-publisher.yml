@@ -1,0 +1,77 @@
+name: 🚀 NPM Package Publisher
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+  # The workflow's dispatched on Release by develop hash
+  repository_dispatch:
+    types: [Release]
+    branches:
+      - main
+
+env:
+  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+  TARGET_ENVIRONMENT: 'production'
+  NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  build-npm-package:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: ./.github/actions/setup-nodejs
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Setup Doppler
+        run: |
+          doppler configure set token "$DOPPLER_TOKEN"
+
+      - name: Env vars health check
+        run: |
+          if ! doppler run -- printenv | grep -q 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL'; then
+            echo "👹 Oops! Missing required environment variable during health check..."
+            exit 1           
+          fi
+
+          echo "🚑 Doppler envVars seem healthy!"
+
+      - name: Setup dotenv
+        run: |
+          .scripts/setup-ci-dotenv
+
+      - name: Install Packages
+        run: pnpm install
+
+      - name: Build NPM package
+        run: |
+          pnpm run build
+
+      - name: Create .npmrc file
+        run: |
+          echo "//$NPM_REGISTRY_HOST/:_authToken=$NPM_TOKEN" > .npmrc
+          cat .npmrc
+
+      - name: Publish NPM package
+        run: |
+          tag="latest"
+
+          pnpm publish \
+            --access=public \
+            --no-git-checks \
+            --tag "$tag"
+
+      - name: Clear
+        run: |
+          rm -f .env

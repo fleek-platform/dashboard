@@ -12,22 +12,20 @@ on:
         required: true
       doppler_token:
         required: true
-      npm_token:
-        required: true
 
 env:
-  FLEEK_TOKEN: ${{ secrets.fleek_token }}
   DOPPLER_TOKEN: ${{ secrets.doppler_token }}
   TARGET_ENVIRONMENT: ${{ inputs.environment }}
   FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
+  FLEEK_TOKEN: ${{ secrets.fleek_token }}
   FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
   NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
   NEXT_PUBLIC_AGENTS_AI_PATH: ${{ vars.NEXT_PUBLIC_AGENTS_AI_PATH }}
-  NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
-  NPM_TOKEN: ${{ secrets.npm_token }}
   # TODO: This one will be overriden in the doppler step
   # it's excluded in the `scripts/setup-ci-dotenv`
   NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
+  NEXT_PUBLIC_DASHBOARD_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL }}
+  NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
 
 jobs:
   deploy-to-fleek:
@@ -94,51 +92,6 @@ jobs:
           path: |
             .
           key: ${{ runner.os }}-build-${{ env.TARGET_ENVIRONMENT }}-${{ github.sha }}
-
-  build-npm-package:
-    needs: deploy-to-fleek
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    env:
-      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
-    steps:
-      - name: Restore workspace
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            .
-          key: ${{ runner.os }}-build-${{ env.TARGET_ENVIRONMENT }}-${{ github.sha }}
-          
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - uses: ./.github/actions/setup-nodejs
-
-      - name: Build NPM package
-        run: |
-          pnpm run build
-
-      - name: Create .npmrc file
-        run: |
-          echo "//$NPM_REGISTRY_HOST/:_authToken=$NPM_TOKEN" > .npmrc
-          cat .npmrc
-
-      - name: Publish NPM package
-        run: |
-          tag="prerelease"
-          
-          if [[ "$TARGET_ENVIRONMENT" == 'production' ]]; then
-            tag="latest"
-          else
-            ./.scripts/set_package_rc_version          
-          fi
-
-          pnpm publish \
-            --access=public \
-            --no-git-checks \
-            --tag "$tag"
 
       - name: Clear
         run: |
