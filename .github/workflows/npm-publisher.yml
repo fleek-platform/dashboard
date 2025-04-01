@@ -19,6 +19,7 @@ env:
 jobs:
   build-npm-package:
     runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'repository_dispatch' && github.event.action == 'Release' && 'production' || (github.ref == 'refs/heads/main' && 'production') }}
     env:
       NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
     steps:
