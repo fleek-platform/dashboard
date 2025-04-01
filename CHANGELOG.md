@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.13.3
+
+### Patch Changes
+
+- 6631597: On redirect none authenticated users, include query/search params in the redirection URL
+
 ## 0.13.2
 
 ### Patch Changes
