@@ -54,3 +54,6 @@ node_modules/
 
 # pnpm
 .pnpm-store
+
+# Overrides
+public/defined_overrides.json

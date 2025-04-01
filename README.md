@@ -93,12 +93,13 @@ NEXT_PUBLIC_UI__ZENDESK_PROXY_API="https://support-prod-eu-lon-1-01.flkservices.
 NEXT_PUBLIC_ZENDESK_PROXY_HOSTNAME="support-prod-eu-lon-1-01.flkservices.io"
 NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL="https://uploads.service.fleek.xyz",
 NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME="storage-ipfs.internal.fleek.xyz"
-NEXT_DASHBOARD_WEBSITE_URL="https://fleek.xyz/dashboard"
+NEXT_PUBLIC_DASHBOARD_WEBSITE_URL="https://fleek.xyz/dashboard"
 NEXT_PUBLIC_WEBSITE_URL="https://fleek.xyz"
 NEXT_PUBLIC_BASE_PATH="/dashboard"
 NEXT_PUBLIC_AGENTS_AI_PATH="/eliza"
 NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN="true"
 NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE="2025-04-17"
+NEXT_PUBLIC_UI__COMMIT_HASH="dev.hash"
 ```
 
 💡 The variables above point to our production environment, the same you interact with as an end-user. Internal development team have access to private environments. Because the environment most users have access to is production which mismatches the filename .env.development this can be replaced by `.env` if that's sounder to you.
@@ -214,6 +215,20 @@ out
 > The build process requires the environment variables to be populated. If you're building the project locally, you should create a .env.production, otherwise it'll fail to locate the environment variables.
 
 The output directory is where all public files are stored and published.
+
+Optionally, if you need to override the environment variable defined values create a `defined_overrides.json` file in the public directory.
+
+```sh
+touch public/defined_overrides.json
+```
+
+Declare any overrides for [src/defined.ts](./src/defined.ts) as follows:
+
+```sh
+NEXT_PUBLIC_WEBSITE_URL="https://custom.hostname"
+```
+
+You may only find this useful to control the prebuild distribution package, e.g. when hosting the application alongside other, such as [website](https://github.com/fleek-platform/website) where you'd need to control the environment to play along. You'd also have to put the file in the distribution files.
 
 ### Preview build
 

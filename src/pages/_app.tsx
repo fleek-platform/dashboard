@@ -20,23 +20,50 @@ import { getQueryParamsToObj } from '@/utils/url';
 import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
+import { LoadingFullScreen } from '@/components/Loading';
+import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
   const [noCanonical, setNoCanonical] = useState(false);
   const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [isConfigLoaded, setIsConfigLoaded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (secrets.TEST_MODE) {
-      const environment = getMutableSecrets();
-      // Override secrets with environment variables on test mode
-      Object.assign(secrets, environment);
-    }
+  const isAuthenticated =
+    !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
 
-    setMaintenanceMode(getMaintenanceMode());
+  useEffect(() => {
+    const loadConfig = async () => {
+      const overridesJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+
+      try {
+        const response = await fetch(overridesJson);
+
+        if (!response.ok) {
+          throw new Error(`Failed to load config: ${response.status}`);
+        }
+        const config = await response.json();
+
+        setDefined(config);
+
+        if (secrets.TEST_MODE) {
+          const environment = getMutableSecrets();
+          Object.assign(secrets, environment);
+        }
+
+        setMaintenanceMode(getMaintenanceMode());
+        setIsConfigLoaded(true);
+      } catch (error) {
+        console.warn(`Couldn\'t find ${overridesJson}`, error);
+      } finally {
+        setIsConfigLoaded(true);
+      }
+    };
+
+    loadConfig();
 
     const pathname = window.location.pathname;
     setNoCanonical(
@@ -44,16 +71,11 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     );
   }, []);
 
-  // TODO: maintenance mode not working
-  if (maintenanceMode) {
-    return <Maintenance.Page />;
-  }
-
-  // Client-side router for page refresh
-  // otherwise, single page app will fail to locate pages
   useEffect(() => {
-    const search = !isServerSide() ? window.location.search : '';
+    if (!isAuthenticated) return;
 
+    // TODO: replace by useSearchParams
+    const search = window.location.search;
     const query = getQueryParamsToObj(search);
     router.push({
       pathname,
@@ -61,8 +83,31 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     });
   }, []);
 
-  const isAuthenticated =
-    !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+  useEffect(() => {
+    if (
+      !isServerSide() &&
+      !isAuthenticated &&
+      !secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN &&
+      isConfigLoaded
+    ) {
+      const currentParams = new URLSearchParams(window.location.search);
+      const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
+
+      currentParams.forEach((value, key) => {
+        targetUrl.searchParams.append(key, value);
+      });
+
+      window.location.assign(targetUrl.toString());
+    }
+  }, [isAuthenticated, isConfigLoaded]);
+
+  if (!isConfigLoaded) {
+    return <LoadingFullScreen />;
+  }
+
+  if (maintenanceMode) {
+    return <Maintenance.Page />;
+  }
 
   if (!isAuthenticated) {
     if (secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN) {
@@ -92,7 +137,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         <Head>
           <link
             rel="canonical"
-            href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+            href={secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL}
             key="canonical"
           />
         </Head>
