@@ -16,6 +16,8 @@ jobs:
     environment: staging
     env:
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+      NEXT_PUBLIC_BASE_PATH: "dry.run"
+      NEXT_PUBLIC_DASHBOARD_WEBSITE_URL: "dry.run"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
