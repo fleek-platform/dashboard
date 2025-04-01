@@ -305,7 +305,7 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
       />
       <Scrollable.VerticalBar />
       <Scrollable.Viewport className="w-full h-full" onScroll={handleScroll}>
-        <Box className="flex flex-col gap-5 p-4 pt-0 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
+        <Box className="flex flex-col gap-5 p-4 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
           {children}
         </Box>
       </Scrollable.Viewport>
@@ -347,7 +347,7 @@ const Header: React.FC<HeaderProps> = ({
   }
 
   return (
-    <Box className="flex-row items-center flex-wrap justify-between gap-2 p-4 md:gap-0 md:h-10 max-w-[82rem] w-full self-center">
+    <Box className="flex-row items-center flex-wrap justify-between gap-2 p-4 md:gap-0 md:p-0 md:py-3 max-w-[82rem] w-full self-center">
       <Breadcrumbs
         breadcrumbs={
           breadcrumbs || [
@@ -376,20 +376,20 @@ const Page: React.FC<PageProps> = ({
   breadcrumbs,
   children,
 }) => (
-  <Box className="relative lg:flex-row">
+  <Box className="relative lg:flex-row lg:flex-1">
     <SidebarWrapper
       slotSidebar={slotSidebar}
       navigation={navigation}
       isNavigationLoading={isNavigationLoading}
     />
-    <Box className="flex-1 p-2.5 pl-0">
-      <Box className="lg:rounded-lg lg:bg-neutral-1 lg:border lg:border-neutral-6">
-        <Header
-          navigation={navigation}
-          isNavigationLoading={isNavigationLoading}
-          slotPage={slotPage}
-          breadcrumbs={breadcrumbs}
-        />
+    <Box className="flex-1 pr-2.5 pb-2.5">
+      <Header
+        navigation={navigation}
+        isNavigationLoading={isNavigationLoading}
+        slotPage={slotPage}
+        breadcrumbs={breadcrumbs}
+      />
+      <Box className="lg:rounded-lg lg:bg-neutral-1 lg:border lg:border-neutral-6 lg:flex-1">
         <Content>{children}</Content>
       </Box>
     </Box>
