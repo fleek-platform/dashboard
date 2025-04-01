@@ -9,7 +9,7 @@ import { VersionTagsStyles } from './VersionTags.styles';
 const InternalComponent: React.FC = () => {
   const [versionQuery] = useVersionQuery();
 
-  const version = `${secrets?.COMMIT_HASH?.slice(0, 7) ?? '...'} / ${versionQuery.data?.version.commitHash?.slice(0, 7) ?? '...'}`;
+  const version = `${secrets?.NEXT_PUBLIC_UI__COMMIT_HASH?.slice(0, 7) ?? '...'} / ${versionQuery.data?.version.commitHash?.slice(0, 7) ?? '...'}`;
 
   return <VersionTagsStyles.Text>{version}</VersionTagsStyles.Text>;
 };

@@ -21,6 +21,7 @@ export type Defined = {
   NEXT_PUBLIC_AGENTS_AI_PATH?: string;
   NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN?: string;
   NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE?: string;
+  NEXT_PUBLIC_UI__COMMIT_HASH?: string;
 };
 
 export const defined: Defined = {
@@ -61,6 +62,7 @@ export const defined: Defined = {
     process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN,
   NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE:
     process.env.NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE,
+  NEXT_PUBLIC_UI__COMMIT_HASH: process.env.NEXT_PUBLIC_UI__COMMIT_HASH,
 };
 
 export const getDefined = (key: keyof typeof defined): string => {
