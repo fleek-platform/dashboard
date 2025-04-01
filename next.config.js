@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Simplest method to generate a single index.html
 // WARNING: This has been deprecated
