@@ -22,6 +22,7 @@ env:
   FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
   FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
   NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+  NEXT_PUBLIC_AGENTS_AI_PATH: ${{ vars.NEXT_PUBLIC_AGENTS_AI_PATH }}
   NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
   NPM_TOKEN: ${{ secrets.npm_token }}
   # TODO: This one will be overriden in the doppler step
