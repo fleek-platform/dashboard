@@ -32,7 +32,6 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
-import { secrets } from '@/secrets';
 
 export type NavigationItem = {
   icon: IconName;
@@ -41,6 +40,8 @@ export type NavigationItem = {
   hasAccess: boolean;
   isExact?: boolean;
   showNewTag?: boolean;
+  isExternal?: boolean;
+  target?: '_self' | '_blank' | '_parent' | '_top' | string
 };
 
 const BillingBanner: React.FC = () => {
@@ -84,11 +85,13 @@ const Container: React.FC<ChildrenProps> = ({ children }) => {
 type SidebarItemProps = {
   navItem: NavigationItem;
   isExact?: boolean;
+  isExternal?: boolean;
 };
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
   navItem,
   isExact = false,
+  isExternal,
 }) => {
   const isActivePage = useIsActivePage({ path: navItem.path, isExact });
 
@@ -102,6 +105,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       className="w-full justify-between px-3 group"
       role="menuitem"
       aria-label={navItem.label}
+      isExternalLink={isExternal}
+      target={navItem.target}
     >
       <Box className="flex flex-row gap-3 items-center">
         <Icon name={navItem.icon} className="size-4" />
@@ -222,6 +227,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     key={navItem.path}
                     navItem={navItem}
                     isExact={navItem.isExact}
+                    isExternal={navItem.isExternal}
                   />
                 ))}
             </>

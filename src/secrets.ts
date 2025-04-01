@@ -43,6 +43,7 @@ export const secrets = {
   NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN:
     process.env.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN === 'true' ||
     (!isServerSide() && window.location.hostname.includes('localhost')),
+  NEXT_PUBLIC_AGENTS_AI_PATH: process.env.NEXT_PUBLIC_AGENTS_AI_PATH,
 };
 
 export const getMutableSecrets = () => {

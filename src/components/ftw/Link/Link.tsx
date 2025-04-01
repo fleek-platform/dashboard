@@ -38,3 +38,14 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     );
   },
 );
+
+export const LinkExternal = forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ variant, children, className, ...props }, ref) => {
+    return (
+      <a ref={ref} href={props.href.toString()} target={props.target} rel="noopener noreferrer" className={cn(linkVariants({ variant }), className)}
+      >
+        {children}
+      </a>
+    );
+  },
+);

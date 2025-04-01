@@ -5,6 +5,8 @@ import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { usePermissions } from './usePermissions';
+import { secrets } from '@/secrets';
+import { joinUrl } from '@/utils/url';
 
 export const useMainNavigationItems = () => {
   const session = useSessionContext();
@@ -105,11 +107,11 @@ export const useMainNavigationItems = () => {
     {
       icon: 'robot',
       label: 'AI Agents',
-      path: routes.project.agents({ projectId }),
-      hasAccess: usePermissions({
-        action: [constants.PERMISSION.AGENTS_AI.LIST],
-      }),
+      path: joinUrl(secrets.NEXT_PUBLIC_WEBSITE_URL, secrets.NEXT_PUBLIC_AGENTS_AI_PATH, true),
+      hasAccess: true,
       showNewTag: true,
+      isExternal: true,
+      target: '_self',
     },
     {
       icon: 'credit-card',
