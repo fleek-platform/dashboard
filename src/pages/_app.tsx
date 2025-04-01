@@ -36,10 +36,10 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   
   useEffect(() => {
     const loadConfig = async () => {
-      const configJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+      const overridesJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
       
       try {
-        const response = await fetch(configJson);
+        const response = await fetch(overridesJson);
 
         if (!response.ok) {
           throw new Error(`Failed to load config: ${response.status}`);
@@ -56,7 +56,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         setMaintenanceMode(getMaintenanceMode());
         setIsConfigLoaded(true);
       } catch (error) {
-        console.warn(`Couldn\'t find ${configJson}`, error);
+        console.warn(`Couldn\'t find ${overridesJson}`, error);
       } finally {
         setIsConfigLoaded(true);
       }
