@@ -119,8 +119,17 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       );
     }
 
-    // Return a loading indicator while the redirect happens
-    return <LoadingFullScreen />;
+    const currentParams = new URLSearchParams(window.location.search);
+
+    const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
+
+    currentParams.forEach((value, key) => {
+      targetUrl.searchParams.append(key, value);
+    });
+
+    window.location.assign(targetUrl.toString());
+
+    return <></>;
   }
 
   return (
