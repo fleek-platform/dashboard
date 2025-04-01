@@ -227,7 +227,7 @@ Declare any overrides for [src/defined.ts](./src/defined.ts) as follows:
 NEXT_PUBLIC_WEBSITE_URL="https://custom.hostname"
 ```
 
-You may only find this useful when hosting the application alongside other, such as [website](https://github.com/fleek-platform/website) where you'd need to control the environment to play along.
+You may only find this useful to control the prebuild distribution package, e.g. when hosting the application alongside other, such as [website](https://github.com/fleek-platform/website) where you'd need to control the environment to play along. You'd also have to put the file in the distribution files.
 
 ### Preview build
 
