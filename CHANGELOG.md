@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.14.0
+
+### Minor Changes
+
+- a6d8e1b: Provide support for defined with overrides
+
 ## 0.13.5
 
 ### Patch Changes
