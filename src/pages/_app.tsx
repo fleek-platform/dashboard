@@ -83,7 +83,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     });
   }, []);
 
-  // External redirection effect for unauthenticated users
   useEffect(() => {
     if (
       !isServerSide() &&
