@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.13.5
+
+### Patch Changes
+
+- e15e0c1: Missing env var in CI
+
 ## 0.13.4
 
 ### Patch Changes
