@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.13.4
+
+### Patch Changes
+
+- e3ea314: Sidebar menu AI Agents should open app same window
+
 ## 0.13.3
 
 ### Patch Changes
