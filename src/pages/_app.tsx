@@ -31,13 +31,14 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const [isConfigLoaded, setIsConfigLoaded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  
-  const isAuthenticated = !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
-  
+
+  const isAuthenticated =
+    !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+
   useEffect(() => {
     const loadConfig = async () => {
       const overridesJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
-      
+
       try {
         const response = await fetch(overridesJson);
 
@@ -47,7 +48,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         const config = await response.json();
 
         setDefined(config);
-        
+
         if (secrets.TEST_MODE) {
           const environment = getMutableSecrets();
           Object.assign(secrets, environment);
@@ -69,7 +70,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       ['/templates', '/templates/[templateId]'].includes(pathname),
     );
   }, []);
-  
+
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -81,17 +82,22 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       query,
     });
   }, []);
-  
+
   // External redirection effect for unauthenticated users
   useEffect(() => {
-    if (!isServerSide() && !isAuthenticated && !secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN && isConfigLoaded) {
+    if (
+      !isServerSide() &&
+      !isAuthenticated &&
+      !secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN &&
+      isConfigLoaded
+    ) {
       const currentParams = new URLSearchParams(window.location.search);
       const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
-      
+
       currentParams.forEach((value, key) => {
         targetUrl.searchParams.append(key, value);
       });
-      
+
       window.location.assign(targetUrl.toString());
     }
   }, [isAuthenticated, isConfigLoaded]);
@@ -112,7 +118,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         </LandingPageProvider>
       );
     }
-    
+
     // Return a loading indicator while the redirect happens
     return <LoadingFullScreen />;
   }

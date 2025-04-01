@@ -41,7 +41,7 @@ export type NavigationItem = {
   isExact?: boolean;
   showNewTag?: boolean;
   isExternal?: boolean;
-  target?: '_self' | '_blank' | '_parent' | '_top' | string
+  target?: '_self' | '_blank' | '_parent' | '_top' | string;
 };
 
 const BillingBanner: React.FC = () => {
