@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.15.0
+
+### Minor Changes
+
+- 7b3242c: Align topbar to figma
+
 ## 0.14.0
 
 ### Minor Changes
