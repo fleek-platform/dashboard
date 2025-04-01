@@ -70,3 +70,5 @@ export const setDefined = (settings: Partial<Defined>) => {
   const override = { ...defined, ...settings };
   Object.assign(defined, override);
 };
+
+export const DEFINED_OVERRIDES_FILENAME = 'defined_overrides.json';

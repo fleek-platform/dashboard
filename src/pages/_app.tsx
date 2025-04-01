@@ -21,7 +21,7 @@ import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
-import { setDefined } from '../defined';
+import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -31,12 +31,16 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const [isConfigLoaded, setIsConfigLoaded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-
+  
+  const isAuthenticated = !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+  
   useEffect(() => {
     const loadConfig = async () => {
-      const configJson = 'config.json';
+      const configJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+      
       try {
         const response = await fetch(configJson);
+
         if (!response.ok) {
           throw new Error(`Failed to load config: ${response.status}`);
         }
@@ -65,30 +69,40 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       ['/templates', '/templates/[templateId]'].includes(pathname),
     );
   }, []);
-
-  if (!isConfigLoaded) {
-    return <LoadingFullScreen />;
-  }
-
-  // TODO: maintenance mode not working
-  if (maintenanceMode) {
-    return <Maintenance.Page />;
-  }
-
-  // Client-side router for page refresh
-  // otherwise, single page app will fail to locate pages
+  
   useEffect(() => {
-    const search = !isServerSide() ? window.location.search : '';
+    if (!isAuthenticated) return;
 
+    // TODO: replace by useSearchParams
+    const search = window.location.search;
     const query = getQueryParamsToObj(search);
     router.push({
       pathname,
       query,
     });
   }, []);
+  
+  // External redirection effect for unauthenticated users
+  useEffect(() => {
+    if (!isServerSide() && !isAuthenticated && !secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN && isConfigLoaded) {
+      const currentParams = new URLSearchParams(window.location.search);
+      const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
+      
+      currentParams.forEach((value, key) => {
+        targetUrl.searchParams.append(key, value);
+      });
+      
+      window.location.assign(targetUrl.toString());
+    }
+  }, [isAuthenticated, isConfigLoaded]);
 
-  const isAuthenticated =
-    !isServerSide() && typeof cookies.get('accessToken') !== 'undefined';
+  if (!isConfigLoaded) {
+    return <LoadingFullScreen />;
+  }
+
+  if (maintenanceMode) {
+    return <Maintenance.Page />;
+  }
 
   if (!isAuthenticated) {
     if (secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN) {
@@ -98,18 +112,9 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         </LandingPageProvider>
       );
     }
-
-    const currentParams = new URLSearchParams(window.location.search);
-  
-    const targetUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL);
-  
-    currentParams.forEach((value, key) => {
-      targetUrl.searchParams.append(key, value);
-    });
-  
-    window.location.assign(targetUrl.toString());
-
-    return <></>;
+    
+    // Return a loading indicator while the redirect happens
+    return <LoadingFullScreen />;
   }
 
   return (
