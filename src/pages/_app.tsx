@@ -20,29 +20,55 @@ import { getQueryParamsToObj } from '@/utils/url';
 import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
+import { LoadingFullScreen } from '@/components/Loading';
+import { setDefined } from '../defined';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   const forcedTheme = Component.theme || undefined;
   const [noCanonical, setNoCanonical] = useState(false);
   const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [isConfigLoaded, setIsConfigLoaded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (secrets.TEST_MODE) {
-      const environment = getMutableSecrets();
-      // Override secrets with environment variables on test mode
-      Object.assign(secrets, environment);
-    }
+    const loadConfig = async () => {
+      const configJson = 'config.json';
+      try {
+        const response = await fetch(configJson);
+        if (!response.ok) {
+          throw new Error(`Failed to load config: ${response.status}`);
+        }
+        const config = await response.json();
 
-    setMaintenanceMode(getMaintenanceMode());
+        setDefined(config);
+        
+        if (secrets.TEST_MODE) {
+          const environment = getMutableSecrets();
+          Object.assign(secrets, environment);
+        }
+
+        setMaintenanceMode(getMaintenanceMode());
+        setIsConfigLoaded(true);
+      } catch (error) {
+        console.warn(`Couldn\'t find ${configJson}`, error);
+      } finally {
+        setIsConfigLoaded(true);
+      }
+    };
+
+    loadConfig();
 
     const pathname = window.location.pathname;
     setNoCanonical(
       ['/templates', '/templates/[templateId]'].includes(pathname),
     );
   }, []);
+
+  if (!isConfigLoaded) {
+    return <LoadingFullScreen />;
+  }
 
   // TODO: maintenance mode not working
   if (maintenanceMode) {
@@ -92,7 +118,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         <Head>
           <link
             rel="canonical"
-            href={secrets.NEXT_DASHBOARD_WEBSITE_URL}
+            href={secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL}
             key="canonical"
           />
         </Head>

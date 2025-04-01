@@ -116,7 +116,7 @@ const Step2: React.FC = () => {
         <ExternalLink
           className="inline-flex"
           variant="accent"
-          href={`${secrets.NEXT_DASHBOARD_WEBSITE_URL}/templates`}
+          href={`${secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL}/templates`}
         >
           Templates
         </ExternalLink>{' '}
