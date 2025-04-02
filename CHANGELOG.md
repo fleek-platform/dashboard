@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.4
+
+### Patch Changes
+
+- ff41b81: Remove dynamic site URLs
+
 ## 0.16.3
 
 ### Patch Changes
