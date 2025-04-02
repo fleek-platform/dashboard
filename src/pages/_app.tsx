@@ -126,6 +126,8 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       targetUrl.searchParams.append(key, value);
     });
 
+    console.log(`[debug] _app.tsx: targetUrl = ${targetUrl}`);
+
     window.location.assign(targetUrl.toString());
 
     return <></>;
