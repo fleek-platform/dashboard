@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.18.3
+
+### Patch Changes
+
+- a1025d3: Template site URL support for repo's env
+
 ## 0.18.2
 
 ### Patch Changes
