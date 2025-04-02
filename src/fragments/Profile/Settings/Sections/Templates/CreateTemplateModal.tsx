@@ -17,6 +17,8 @@ import { secrets } from '@/secrets';
 
 export type CreateTemplateModalProps = ChildrenProps;
 
+const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_BASE_PATH}`
+
 export const CreateTemplateModal: React.FC<CreateTemplateModalProps> = ({
   children,
 }) => {
@@ -107,8 +109,6 @@ const Step2: React.FC = () => {
     stepper.prevStep();
   };
 
-  // TODO: Form the URL based in the site url and base
-  // see NEXT_PUBLIC_DASHBOARD_WEBSITE_URL
   return (
     <>
       <SettingsModal.Heading>Add template details</SettingsModal.Heading>
@@ -118,7 +118,7 @@ const Step2: React.FC = () => {
         <ExternalLink
           className="inline-flex"
           variant="accent"
-          href={`${secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL}/templates`}
+          href={`${dashboardUrl}/templates`}
         >
           Templates
         </ExternalLink>{' '}

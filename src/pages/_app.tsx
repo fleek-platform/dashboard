@@ -133,15 +133,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
   return (
     <>
-      {!noCanonical && (
-        <Head>
-          <link
-            rel="canonical"
-            href={secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL}
-            key="canonical"
-          />
-        </Head>
-      )}
+      <meta name="robots" content="noindex, nofollow" />
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         {getLayout(<Component {...pageProps} />)}
         <ToastsContainer />

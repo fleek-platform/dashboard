@@ -8,9 +8,6 @@ import { isServerSide } from '@/utils/isServerSide';
 
 export const secrets = {
   TEST_MODE: Boolean(process.env.NEXT_PUBLIC_TEST_MODE), // Keeping this as is since it might not be in defined.ts
-  NEXT_PUBLIC_UI__WEB3AUTH_CLIENT_ID: getDefined(
-    'NEXT_PUBLIC_UI__WEB3AUTH_CLIENT_ID',
-  ),
   NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID: getDefined(
     'NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID',
   ),
@@ -20,15 +17,8 @@ export const secrets = {
   NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN: getDefined(
     'NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN',
   ),
-  NEXT_PUBLIC_UI__FEEDBACK_FISH_PROJECT_ID: getDefined(
-    'NEXT_PUBLIC_UI__FEEDBACK_FISH_PROJECT_ID',
-  ),
   NEXT_PUBLIC_UI__GTM_ID: getDefined('NEXT_PUBLIC_UI__GTM_ID'),
-  NEXT_PUBLIC_UI__LOG_ROCKET_ID: getDefined('NEXT_PUBLIC_UI__LOG_ROCKET_ID'),
   NEXT_PUBLIC_WEBSITE_URL: getDefined('NEXT_PUBLIC_WEBSITE_URL'),
-  NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID: getDefined(
-    'NEXT_PUBLIC_UI__LAUNCH_DARKLY_CLIENT_ID',
-  ),
   STRIPE_PUBLIC_KEY: getDefined('NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY'),
   NEXT_PUBLIC_UI__COMMIT_HASH: getDefined('NEXT_PUBLIC_UI__COMMIT_HASH'),
   ZENDESK_PROXY_API: getDefined('NEXT_PUBLIC_UI__ZENDESK_PROXY_API'),
@@ -40,11 +30,6 @@ export const secrets = {
   ),
   NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME: getDefined(
     'NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME',
-  ),
-  // TODO: Switch to app.fleek.xyz or whichever address
-  // is decided as client facing. At the moment using *.on-fleek.app for prd
-  NEXT_PUBLIC_DASHBOARD_WEBSITE_URL: getDefined(
-    'NEXT_PUBLIC_DASHBOARD_WEBSITE_URL',
   ),
   NEXT_PUBLIC_BASE_PATH: getDefined('NEXT_PUBLIC_BASE_PATH'),
   NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE: getDefined(

@@ -17,6 +17,7 @@ jobs:
     env:
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+      # TODO: Remove from app, can be formed by site + base
       NEXT_PUBLIC_DASHBOARD_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL }}
       NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
 

@@ -15,8 +15,8 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
   const image =
     'https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta';
 
-  // TODO: Form the URL based in the site url and base
-  const url = secrets.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL;
+  // Dashboard URL
+  const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_BASE_PATH}`;
 
   return (
     <Head>
@@ -27,7 +27,7 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
 
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={dashboardUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
