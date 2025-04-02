@@ -3,7 +3,7 @@ import { joinBase } from './paths';
 
 vi.mock('@/secrets', () => ({
   secrets: {
-    NEXT_PUBLIC_BASE_PATH: '',
+    NEXT_PUBLIC_DASHBOARD_BASE_PATH: '',
   },
 }));
 
@@ -15,7 +15,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should correctly join base path with assets directory', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard';
 
     expect(joinBase('/assets/images/logo.png')).toBe(
       '/dashboard/assets/images/logo.png',
@@ -26,7 +26,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should handle image paths with query parameters', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard/';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard/';
 
     expect(joinBase('/assets/images/banner.jpg?width=1200')).toBe(
       '/dashboard/assets/images/banner.jpg?width=1200',
@@ -37,7 +37,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should normalize paths with double slashes in asset paths', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '';
 
     expect(joinBase('//assets//images/icon.svg')).toBe(
       '/assets/images/icon.svg',
@@ -48,7 +48,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should work with nested image directories', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '///dashboard/';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '///dashboard/';
 
     expect(joinBase('/assets/images/products/item1.jpg')).toBe(
       '/dashboard/assets/images/products/item1.jpg',
@@ -59,7 +59,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should handle different image formats correctly', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard';
 
     expect(joinBase('/assets/images/hero.jpg')).toBe(
       '/dashboard/assets/images/hero.jpg',
@@ -76,7 +76,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should work when base path includes an environment indicator', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard';
 
     expect(joinBase('/assets/images/logo.png')).toBe(
       '/dashboard/assets/images/logo.png',
@@ -84,14 +84,14 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should handle empty base path with asset directories', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '';
 
     expect(joinBase('/assets/images/logo.png')).toBe('/assets/images/logo.png');
     expect(joinBase('assets/images/logo.png')).toBe('assets/images/logo.png');
   });
 
   it('should handle base path with trailing slash and asset paths', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard/';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard/';
 
     expect(joinBase('/assets/images/logo.png')).toBe(
       '/dashboard/assets/images/logo.png',
@@ -99,7 +99,7 @@ describe('joinBase with assets directory', () => {
   });
 
   it('should handle complex cases with assets directory', () => {
-    secrets.NEXT_PUBLIC_BASE_PATH = '/dashboard/';
+    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH = '/dashboard/';
 
     expect(joinBase('//assets///images/products/featured//item.jpg')).toBe(
       '/dashboard/assets/images/products/featured/item.jpg',

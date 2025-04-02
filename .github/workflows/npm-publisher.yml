@@ -15,19 +15,13 @@ env:
   TARGET_ENVIRONMENT: 'production'
   NPM_REGISTRY_HOST: ${{ vars.NPM_REGISTRY_HOST }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
-  NEXT_PUBLIC_AGENTS_AI_PATH: ${{ vars.NEXT_PUBLIC_AGENTS_AI_PATH }}
-  # TODO: This one will be overriden in the doppler step
-  # it's excluded in the `scripts/setup-ci-dotenv`
-  NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
   NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
+  NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
 
 jobs:
   build-npm-package:
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'repository_dispatch' && github.event.action == 'Release' && 'production' || (github.ref == 'refs/heads/main' && 'production') }}
-    env:
-      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v4

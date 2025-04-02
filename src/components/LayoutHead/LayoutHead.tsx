@@ -16,7 +16,7 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
     'https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta';
 
   // Dashboard URL
-  const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_BASE_PATH}`;
+  const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}`;
 
   return (
     <Head>

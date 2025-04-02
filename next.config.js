@@ -13,8 +13,8 @@ const exportPathMap = async () => {
 const nextConfig = {
   output: 'export',
   exportPathMap,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH,
+  basePath: process.env.NEXT_PUBLIC_DASHBOARD_BASE_PATH,
+  assetPrefix: process.env.NEXT_PUBLIC_DASHBOARD_BASE_PATH,
   // TODO: replace instances of next/image'
   // or do image optimization on build
   // by utilizing a different method

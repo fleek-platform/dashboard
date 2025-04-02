@@ -19,20 +19,15 @@ env:
   FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
   FLEEK_TOKEN: ${{ secrets.fleek_token }}
   FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
-  NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
   NEXT_PUBLIC_AGENTS_AI_PATH: ${{ vars.NEXT_PUBLIC_AGENTS_AI_PATH }}
-  # TODO: This one will be overriden in the doppler step
-  # it's excluded in the `scripts/setup-ci-dotenv`
-  NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
   # TODO: Remove from app, can be formed by site + base
   NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
+  NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
 
 jobs:
   deploy-to-fleek:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    env:
-      NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -80,8 +75,6 @@ jobs:
             "$BUILD"
 
       - name: Build & deploy
-        env:
-          NEXT_PUBLIC_BASE_PATH: ""
         run: |
           fleek sites deploy
 

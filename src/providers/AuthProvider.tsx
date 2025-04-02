@@ -124,7 +124,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     if (pathname === routes.home()) {
       // TODO: Create an utility, include related unit test
       // use utils to form URL correctly/conventions
-      window.location.href = `${secrets.NEXT_PUBLIC_BASE_PATH}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
+      window.location.href = `${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
   }, [cookies.values.accessToken, router, logout, pathname]);
 

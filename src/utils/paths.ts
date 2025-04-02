@@ -13,11 +13,11 @@ const normalizePathname = (pathname: string) => {
 };
 
 export const joinBase = (pathname: string) => {
-  if (!secrets.NEXT_PUBLIC_BASE_PATH) {
+  if (!secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH) {
     return normalizePathname(pathname);
   }
 
-  const normalizedBase = normalizePathname(secrets.NEXT_PUBLIC_BASE_PATH);
+  const normalizedBase = normalizePathname(secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH);
   const normalizedPath = normalizePathname(pathname);
 
   const pathWithoutLeadingSlash = normalizedPath.startsWith('/')

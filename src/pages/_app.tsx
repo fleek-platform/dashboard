@@ -37,7 +37,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
   useEffect(() => {
     const loadConfig = async () => {
-      const overridesJson = `${getDefined('NEXT_PUBLIC_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+      const overridesJson = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
 
       try {
         const response = await fetch(overridesJson);
