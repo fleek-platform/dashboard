@@ -37,7 +37,9 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
   useEffect(() => {
     const loadConfig = async () => {
+      console.log('[debug] _app.tsx: 1')
       const overridesJson = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+      console.log(`[debug] _app.tsx: overridesJson = ${overridesJson}`);
 
       try {
         const response = await fetch(overridesJson);
@@ -46,6 +48,8 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
           throw new Error(`Failed to load config: ${response.status}`);
         }
         const config = await response.json();
+
+      console.log(`[debug] _app.tsx: config:`, JSON.stringify(config));
 
         setDefined(config);
 
