@@ -6,12 +6,12 @@ import { constants } from '@/constants';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { secrets } from '@/secrets';
 import { Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';
+import { getAgentsUrlByCurrentHostname } from '@/utils/url';
 
-const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
+const elizaUrl = getAgentsUrlByCurrentHostname();
 
 export const Main: React.FC = () => {
   const session = useSessionContext();
@@ -63,7 +63,7 @@ export const Main: React.FC = () => {
           <PermissionsTooltip hasAccess={hasCreateAgentPermission}>
             <ActionBox
               isExternalLink
-              href={WEBSITE_ELIZA_URL}
+              href={elizaUrl}
               icon="robot"
               title="Create an AI agent"
               description="Build an AI agent using the Eliza framework."

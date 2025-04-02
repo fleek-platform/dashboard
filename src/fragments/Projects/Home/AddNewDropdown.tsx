@@ -6,12 +6,12 @@ import { constants } from '@/constants';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { secrets } from '@/secrets';
 import { Button, Menu } from '@/ui';
 
 import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
+import { getAgentsUrlByCurrentHostname } from '@/utils/url';
 
-const WEBSITE_ELIZA_URL = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/eliza/`;
+const elizaUrl = getAgentsUrlByCurrentHostname();
 
 export const AddNewDropdown: React.FC = () => {
   const session = useSessionContext();
@@ -74,7 +74,7 @@ export const AddNewDropdown: React.FC = () => {
                 isExternalLink
                 text="AI agent"
                 icon="robot"
-                href={WEBSITE_ELIZA_URL}
+                href={elizaUrl}
               />
               <Menu.Separator />
             </>

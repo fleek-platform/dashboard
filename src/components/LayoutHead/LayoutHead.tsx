@@ -1,11 +1,13 @@
 import Head from 'next/head';
 
-import { secrets } from '@/secrets';
+import { getDashboardUrlByCurrentHostname } from '@/utils/url';
 
 export type LayoutHeadProps = {
   title: string;
   description?: string;
 };
+
+const dashboardUrl = getDashboardUrlByCurrentHostname();
 
 export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
   const title = `${props.title} - Fleek`;
@@ -14,9 +16,6 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
     'Access and manage your apps or start new projects with the Fleek app. All the tools you need in one seamless workflow. Functions, hosting, storage and more.';
   const image =
     'https://prod-gw.fleekdemos.online/ipfs/bafkreiew7vkryh4nuqv7cby5wnoqrbpahbx5kgtrlxlxbmtyvz7rwtxeta';
-
-  // Dashboard URL
-  const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}`;
 
   return (
     <Head>

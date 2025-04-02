@@ -1,4 +1,5 @@
 import { isServerSide } from '@/utils/isServerSide';
+import { getDefined } from '../defined';
 
 export const getTopLevelDomain = (url: string) => {
   if (!url) {
@@ -77,3 +78,9 @@ export const getQueryParamsToObj = (search: string) => {
   }
   return query;
 };
+
+export const getSiteUrlByCurrentHostname = () => `https://${window.location.hostname}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
+
+export const getDashboardUrlByCurrentHostname = () => `${getSiteUrlByCurrentHostname()}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
+
+export const getAgentsUrlByCurrentHostname = () => `${getSiteUrlByCurrentHostname()}/${getDefined('NEXT_PUBLIC_AGENTS_AI_PATH')}`;

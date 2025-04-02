@@ -3,12 +3,30 @@
 # Required vars (shared)
 source .scripts/test_runner_vars
 
+outputDir="out"
+outputBakDir="$outputDir.bak"
+outputWithBaseDir="$outputDir/$NEXT_PUBLIC_DASHBOARD_BASE_PATH"
+indexForRedirectBaseDir="$outputDir/index.html"
+
 echo "👷 Build Static site..."
 
 echo "🤖 Run next build..."
+
 if ! next build; then
   echo "👹 Oops! Nextjs build failed"
   exit 1
+fi
+
+if [[ ! -z "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" ]]; then
+  mv "$outputDir" "$outputBakDir"
+  mkdir -p "$outputWithBaseDir"
+
+  if ! cp -r "$outputBakDir/" "$outputWithBaseDir"; then
+    echo "👹 Oops! Failed to copy $outputDir to $outputWithBaseDir for some reason..."
+    exit 1
+  fi
+
+  echo "<html><head><script>window.location.href=\"$NEXT_PUBLIC_DASHBOARD_BASE_PATH\";</script></head></html>" > "$indexForRedirectBaseDir"
 fi
 
 echo "🤖 Generate sitemap..."

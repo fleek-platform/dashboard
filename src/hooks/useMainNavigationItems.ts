@@ -5,8 +5,7 @@ import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { usePermissions } from './usePermissions';
-import { secrets } from '@/secrets';
-import { joinUrl } from '@/utils/url';
+import { getAgentsUrlByCurrentHostname } from '@/utils/url';
 
 export const useMainNavigationItems = () => {
   const session = useSessionContext();
@@ -107,11 +106,7 @@ export const useMainNavigationItems = () => {
     {
       icon: 'robot',
       label: 'AI Agents',
-      path: joinUrl(
-        secrets.NEXT_PUBLIC_WEBSITE_URL,
-        secrets.NEXT_PUBLIC_AGENTS_AI_PATH,
-        true,
-      ),
+      path: getAgentsUrlByCurrentHostname(),
       hasAccess: true,
       showNewTag: true,
       isExternal: true,

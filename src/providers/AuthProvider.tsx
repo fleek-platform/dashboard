@@ -15,7 +15,9 @@ import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
 import { secrets } from '../secrets';
 
-import { cookies } from '../utils/cookie';
+import { getSiteUrlByCurrentHostname } from '@/utils/url';
+
+const websiteUrl = getSiteUrlByCurrentHostname();
 
 export type AuthContext = {
   loading: boolean;
@@ -112,7 +114,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.projectId
     ) {
       if (pathname !== routes.home()) {
-        window.location.href = secrets.NEXT_PUBLIC_WEBSITE_URL;
+        window.location.href = websiteUrl;
       }
 
       return;

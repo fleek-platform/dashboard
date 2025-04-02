@@ -1,11 +1,11 @@
 import { constants } from '@/constants';
-import { secrets } from '@/secrets';
 import { TemplateCardPart, TemplateJson, TemplatePart } from '@/types/Template';
 import { joinUrl } from '@/utils/url';
 
 const { templatesAPI, templatesUrl } = constants.FLEEK_TEMPLATES_RELATIVE_PATHS;
+import { getSiteUrlByCurrentHostname } from '@/utils/url';
 
-const websiteBaseUrl = new URL(secrets.NEXT_PUBLIC_WEBSITE_URL).toString();
+const websiteBaseUrl = getSiteUrlByCurrentHostname();
 
 export const FLEEK_TEMPLATES_URLS = {
   websiteBaseUrl,

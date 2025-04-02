@@ -19,7 +19,6 @@ env:
   FLEEK_PROJECT_ID: ${{ vars.FLEEK_PROJECT_ID }}
   FLEEK_TOKEN: ${{ secrets.fleek_token }}
   FLEEK_SLUG: ${{ vars.FLEEK_SLUG }}
-  NEXT_PUBLIC_AGENTS_AI_PATH: ${{ vars.NEXT_PUBLIC_AGENTS_AI_PATH }}
   # TODO: Remove from app, can be formed by site + base
   NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
   NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
