@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.2
+
+### Patch Changes
+
+- a87432d: Fixes copy of base to backup dir
+
 ## 0.16.1
 
 ### Patch Changes
