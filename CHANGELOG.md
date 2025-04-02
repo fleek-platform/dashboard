@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.18.1
+
+### Patch Changes
+
+- 1bea707: Remove console logs
+
 ## 0.18.0
 
 ### Minor Changes
