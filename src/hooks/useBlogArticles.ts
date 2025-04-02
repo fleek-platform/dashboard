@@ -30,7 +30,7 @@ const fetchBlogArticles = async (
     const parsedArticles: ArticleItemProps[] = slicedData.map((article) => ({
       title: article.title,
       description: article.description,
-      href: joinUrl(getDefined('NEXT_PUBLIC_WEBSITE_URL'), article.slug),
+      href: joinUrl(getDefined('NEXT_PUBLIC_WEBSITE_URL'), `/blog/${article.slug}`),
       imgSrc: joinUrl(getDefined('NEXT_PUBLIC_WEBSITE_URL'), article.imageSrc),
     }));
 
