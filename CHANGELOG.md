@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.0
+
+### Minor Changes
+
+- be7deef: Revise base directory build for repo staging
+
 ## 0.15.5
 
 ### Patch Changes
