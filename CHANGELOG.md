@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.8
+
+### Patch Changes
+
+- 9fc613c: Move override to build and deploy
+
 ## 0.16.7
 
 ### Patch Changes
