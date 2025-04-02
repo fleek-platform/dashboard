@@ -37,9 +37,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
   useEffect(() => {
     const loadConfig = async () => {
-      console.log('[debug] _app.tsx: 1')
       const overridesJson = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
-      console.log(`[debug] _app.tsx: overridesJson = ${overridesJson}`);
 
       try {
         const response = await fetch(overridesJson);
@@ -49,14 +47,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         }
         const config = await response.json();
 
-      console.log(`[debug] _app.tsx: config: BEFORE setDefined:`, JSON.stringify(config));
-
         setDefined(config);
-
-        // Verify the changes were applied
-        console.log(`[debug] After override, NEXT_PUBLIC_WEBSITE_URL = ${getDefined('NEXT_PUBLIC_WEBSITE_URL')}`);
-
-      console.log(`[debug] _app.tsx: config: AFTER setDefined:`, JSON.stringify(defined));
 
         if (secrets.TEST_MODE) {
           const environment = getMutableSecrets();
@@ -134,8 +125,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     currentParams.forEach((value, key) => {
       targetUrl.searchParams.append(key, value);
     });
-
-    console.log(`[debug] _app.tsx: targetUrl = ${targetUrl}`);
 
     window.location.assign(targetUrl.toString());
 
