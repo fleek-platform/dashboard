@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.3
+
+### Patch Changes
+
+- 43c1cc5: Template requires env var website URL, not dynamic
+
 ## 0.16.2
 
 ### Patch Changes
