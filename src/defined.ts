@@ -69,15 +69,10 @@ export const getDefined = (key: keyof typeof defined): string => {
   return value;
 };
 
-const originalValues = { ...defined };
-
 export const setDefined = (settings: Partial<Defined>) => {
-  console.log('[debug] setDefined called with:', JSON.stringify(settings));
-  
   Object.keys(settings).forEach(key => {
     if (key in defined) {
       defined[key as keyof Defined] = settings[key as keyof Defined];
-      console.log(`[debug] Overriding ${key}: ${originalValues[key as keyof Defined]} -> ${defined[key as keyof Defined]}`);
     }
   });
 };
