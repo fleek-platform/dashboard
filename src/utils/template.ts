@@ -1,10 +1,18 @@
 import { constants } from '@/constants';
 import { TemplateCardPart, TemplateJson, TemplatePart } from '@/types/Template';
 import { joinUrl, getWebsiteUrl } from '@/utils/url';
+import { isServerSide } from '@/utils/isServerSide';
 
 const { templatesAPI, templatesUrl } = constants.FLEEK_TEMPLATES_RELATIVE_PATHS;
 
-const websiteUrl = getWebsiteUrl();
+// Note: For repo's environments
+// we must use the `fleek.xyz`
+// this is due to site URL being overriden
+// for the repo's environment fleek-dashboard-
+const websiteUrl = 
+  !isServerSide() && !window.location.hostname.startsWith('fleek-dashboard-')
+  ? getWebsiteUrl()
+  : 'https://fleek.xyz'
 
 export const FLEEK_TEMPLATES_URLS = {
   websiteUrl,
