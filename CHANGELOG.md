@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.15
+
+### Patch Changes
+
+- 3321d19: Remove dev console logs
+
 ## 0.16.9
 
 ### Patch Changes
