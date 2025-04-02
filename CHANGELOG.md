@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.15.3
+
+### Patch Changes
+
+- 6ce889c: Environment variables revised
+
 ## 0.15.2
 
 ### Patch Changes
