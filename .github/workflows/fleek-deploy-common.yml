@@ -22,9 +22,6 @@ env:
   # TODO: Remove from app, can be formed by site + base
   NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
   NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
-  # Overrides the website URL for repository staging only
-  # Note: modified doppler's env vars setup to not override this one. This is only meaningful for fleek-dashboard-<environment> NOT site's staging and prod.
-  NEXT_PUBLIC_WEBSITE_URL: "https://${{ vars.FLEEK_SLUG }}.fleeksandbox.xyz"
 
 jobs:
   deploy-to-fleek:
@@ -77,6 +74,10 @@ jobs:
             "$BUILD"
 
       - name: Build & deploy
+        env:
+          # Overrides the website URL for repository staging only
+          # Note: modified doppler's env vars setup to not override this one. This is only meaningful for fleek-dashboard-<environment> NOT site's staging and prod. This is only applied in the build deply step, as we must not override for npm publisher
+          NEXT_PUBLIC_WEBSITE_URL: "https://${{ vars.FLEEK_SLUG }}.fleeksandbox.xyz"
         run: |
           fleek sites deploy
 
