@@ -21,7 +21,7 @@ if [[ ! -z "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" ]]; then
   mv "$outputDir" "$outputBakDir"
   mkdir -p "$outputWithBaseDir"
 
-  if ! cp -r "$outputBakDir/" "$outputWithBaseDir"; then
+  if ! cp -r "$outputBakDir"/* "$outputWithBaseDir"; then
     echo "👹 Oops! Failed to copy $outputDir to $outputWithBaseDir for some reason..."
     exit 1
   fi
