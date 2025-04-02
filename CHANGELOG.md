@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.6
+
+### Patch Changes
+
+- ade07d9: fix templates website base url name
+
 ## 0.16.5
 
 ### Patch Changes
