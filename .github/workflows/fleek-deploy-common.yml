@@ -25,7 +25,6 @@ env:
   # it's excluded in the `scripts/setup-ci-dotenv`
   NEXT_PUBLIC_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_WEBSITE_URL }}
   # TODO: Remove from app, can be formed by site + base
-  NEXT_PUBLIC_DASHBOARD_WEBSITE_URL: ${{ vars.NEXT_PUBLIC_DASHBOARD_WEBSITE_URL }}
   NEXT_PUBLIC_UI__COMMIT_HASH: ${{ github.sha }}
 
 jobs:
