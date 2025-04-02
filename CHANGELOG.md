@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.18.2
+
+### Patch Changes
+
+- e91f89b: Latest blog articles URL
+
 ## 0.18.1
 
 ### Patch Changes
