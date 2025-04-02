@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.15.5
+
+### Patch Changes
+
+- f1bfa67: Missing redirects base path
+
 ## 0.15.4
 
 ### Patch Changes
