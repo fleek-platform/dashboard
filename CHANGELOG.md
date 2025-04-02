@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.16.5
+
+### Patch Changes
+
+- 2a8e609: Override website URL for repo env
+- b938efb: Fix template website url param
+
 ## 0.16.4
 
 ### Patch Changes
