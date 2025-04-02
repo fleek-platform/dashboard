@@ -233,7 +233,7 @@ export const CreateTemplateFromRepositoryStep: React.FC = () => {
   }, [form.isSubmitting, isLoading]);
 
   const frameworkAvatar = joinUrl(
-    FLEEK_TEMPLATES_URLS.websiteBaseUrl,
+    FLEEK_TEMPLATES_URLS.websiteUrl,
     template?.framework?.avatar,
     true,
   );
