@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.17.0
+
+### Minor Changes
+
+- 3cc1998: Reduce secrets.ts liability, in favour of getDefined
+
 ## 0.16.15
 
 ### Patch Changes
