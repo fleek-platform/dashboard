@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.18.4
+
+### Patch Changes
+
+- 1d8e179: AI Agents sidebar URL
+
 ## 0.18.3
 
 ### Patch Changes
