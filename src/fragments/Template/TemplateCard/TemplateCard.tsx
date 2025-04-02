@@ -10,7 +10,7 @@ export type TemplateCardProps = LoadingProps<{
   template: TemplateCardPart;
 }>;
 
-const { websiteBaseUrl, templatesUrl } = FLEEK_TEMPLATES_URLS;
+const { websiteUrl, templatesUrl } = FLEEK_TEMPLATES_URLS;
 
 export const TemplateCard = forwardStyledRef<
   HTMLAnchorElement,
@@ -23,9 +23,9 @@ export const TemplateCard = forwardStyledRef<
   // link from dashboard (https://app.fleek.xyz/) to website (https://fleek.xyz/), by slug, not by id
   const templateUrl = joinUrl(templatesUrl, template.siteSlug);
 
-  const templateBanner = joinUrl(websiteBaseUrl, template.banner, true);
+  const templateBanner = joinUrl(websiteUrl, template.banner, true);
   const frameworkAvatar = joinUrl(
-    websiteBaseUrl,
+    websiteUrl,
     template.framework?.avatar,
     true,
   );
@@ -83,7 +83,7 @@ const AuthorAvatar: React.FC<AuthorAvatarProps> = ({
       <Avatar
         //
         enableIcon
-        src={`${websiteBaseUrl}${creator.avatar}`}
+        src={`${websiteUrl}${creator.avatar}`}
         icon={isFleekAuthored ? 'fleek' : 'person'}
         className="size-6"
       />
