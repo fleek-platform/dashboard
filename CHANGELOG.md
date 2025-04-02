@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.15.2
+
+### Patch Changes
+
+- 232678a: Head URL
+
 ## 0.15.1
 
 ### Patch Changes
