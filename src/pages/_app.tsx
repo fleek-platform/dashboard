@@ -20,7 +20,7 @@ import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
-import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
+import { setDefined, getDefined, defined, DEFINED_OVERRIDES_FILENAME } from '../defined';
 import { websiteUrl } from '@/utils/url';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
@@ -49,9 +49,14 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
         }
         const config = await response.json();
 
-      console.log(`[debug] _app.tsx: config:`, JSON.stringify(config));
+      console.log(`[debug] _app.tsx: config: BEFORE setDefined:`, JSON.stringify(config));
 
         setDefined(config);
+
+        // Verify the changes were applied
+        console.log(`[debug] After override, NEXT_PUBLIC_WEBSITE_URL = ${getDefined('NEXT_PUBLIC_WEBSITE_URL')}`);
+
+      console.log(`[debug] _app.tsx: config: AFTER setDefined:`, JSON.stringify(defined));
 
         if (secrets.TEST_MODE) {
           const environment = getMutableSecrets();
