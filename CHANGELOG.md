@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.9
+
+### Patch Changes
+
+- b7cfe0e: Amend URL utils
+
 ## 0.16.8
 
 ### Patch Changes
