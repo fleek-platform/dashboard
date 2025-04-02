@@ -15,7 +15,7 @@ import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
 import { secrets } from '../secrets';
 
-import { websiteUrl } from '@/utils/url';
+import { getWebsiteUrl } from '@/utils/url';
 
 export type AuthContext = {
   loading: boolean;
@@ -112,7 +112,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.projectId
     ) {
       if (pathname !== routes.home()) {
-        window.location.href = websiteUrl;
+        window.location.href = getWebsiteUrl();
       }
 
       return;

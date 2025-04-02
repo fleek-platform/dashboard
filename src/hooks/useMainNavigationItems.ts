@@ -5,7 +5,9 @@ import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { usePermissions } from './usePermissions';
-import { agentsUrl } from '@/utils/url';
+import { getAgentsUrl } from '@/utils/url';
+
+const agentsUrl = getAgentsUrl();
 
 export const useMainNavigationItems = () => {
   const session = useSessionContext();

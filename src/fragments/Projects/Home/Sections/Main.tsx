@@ -9,7 +9,9 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';
-import { agentsUrl } from '@/utils/url';
+import { getAgentsUrl } from '@/utils/url';
+
+const agentsUrl = getAgentsUrl();
 
 export const Main: React.FC = () => {
   const session = useSessionContext();

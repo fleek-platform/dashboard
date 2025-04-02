@@ -13,7 +13,7 @@ import { Project } from '@/types/Project';
 import { ChildrenProps } from '@/types/Props';
 import { SiteListItem } from '@/types/Site';
 import { Avatar, Box, Button, Combobox, FormField, Stepper, Text } from '@/ui';
-import { dashboardUrl } from '@/utils/url';
+import { getDashboardUrl } from '@/utils/url';
 
 export type CreateTemplateModalProps = ChildrenProps;
 
@@ -116,7 +116,7 @@ const Step2: React.FC = () => {
         <ExternalLink
           className="inline-flex"
           variant="accent"
-          href={`${dashboardUrl}/templates`}
+          href={`${getDashboardUrl()}/templates`}
         >
           Templates
         </ExternalLink>{' '}

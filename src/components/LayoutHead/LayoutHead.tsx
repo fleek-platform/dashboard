@@ -1,11 +1,13 @@
 import Head from 'next/head';
 
-import { dashboardUrl } from '@/utils/url';
+import { getDashboardUrl } from '@/utils/url';
 
 export type LayoutHeadProps = {
   title: string;
   description?: string;
 };
+
+const dashboardUrl = getDashboardUrl();
 
 export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
   const title = `${props.title} - Fleek`;

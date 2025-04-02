@@ -1,8 +1,10 @@
 import { constants } from '@/constants';
 import { TemplateCardPart, TemplateJson, TemplatePart } from '@/types/Template';
-import { joinUrl, websiteUrl } from '@/utils/url';
+import { joinUrl, getWebsiteUrl } from '@/utils/url';
 
 const { templatesAPI, templatesUrl } = constants.FLEEK_TEMPLATES_RELATIVE_PATHS;
+
+const websiteUrl = getWebsiteUrl();
 
 export const FLEEK_TEMPLATES_URLS = {
   websiteUrl,

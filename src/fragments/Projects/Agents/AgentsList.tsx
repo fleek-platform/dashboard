@@ -10,7 +10,10 @@ import { AgentItem } from './AgentItem';
 import { useListAgents } from './useListAgents';
 
 import { joinBase } from '@/utils/paths';
-import { agentsUrl } from '@/utils/url';
+import { getAgentsUrl } from '@/utils/url';
+
+
+const agentsUrl = getAgentsUrl();
 
 export const AgentsList = () => {
   const { resolvedTheme = 'dark' } = useTheme();
