@@ -17,7 +17,7 @@ import { secrets } from '@/secrets';
 
 export type CreateTemplateModalProps = ChildrenProps;
 
-const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}`
+const dashboardUrl = `${secrets.NEXT_PUBLIC_WEBSITE_URL}/${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}`;
 
 export const CreateTemplateModal: React.FC<CreateTemplateModalProps> = ({
   children,
