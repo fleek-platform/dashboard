@@ -21,7 +21,7 @@ import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
 import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
-import { getSiteUrlByCurrentHostname } from '@/utils/url';
+import { websiteUrl } from '@/utils/url';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -91,7 +91,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       isConfigLoaded
     ) {
       const currentParams = new URLSearchParams(window.location.search);
-      const targetUrl = new URL(getSiteUrlByCurrentHostname());
+      const targetUrl = new URL(websiteUrl);
 
       currentParams.forEach((value, key) => {
         targetUrl.searchParams.append(key, value);
@@ -120,7 +120,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
     const currentParams = new URLSearchParams(window.location.search);
 
-    const targetUrl = new URL(getSiteUrlByCurrentHostname());
+    const targetUrl = new URL(websiteUrl);
 
     currentParams.forEach((value, key) => {
       targetUrl.searchParams.append(key, value);

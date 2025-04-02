@@ -10,9 +10,7 @@ import { AgentItem } from './AgentItem';
 import { useListAgents } from './useListAgents';
 
 import { joinBase } from '@/utils/paths';
-import { getAgentsUrlByCurrentHostname } from '@/utils/url';
-
-const elizaUrl = getAgentsUrlByCurrentHostname();
+import { agentsUrl } from '@/utils/url';
 
 export const AgentsList = () => {
   const { resolvedTheme = 'dark' } = useTheme();
@@ -22,12 +20,12 @@ export const AgentsList = () => {
 
   const createAgentHandler = () => {
     if (isServerSide()) {
-      router.push(elizaUrl);
+      router.push(agentsUrl);
 
       return;
     }
 
-    window.open(elizaUrl, '_blank');
+    window.open(agentsUrl, '_blank');
   };
 
   if (isLoading || !agentsList) {

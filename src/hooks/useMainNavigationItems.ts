@@ -5,7 +5,7 @@ import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { usePermissions } from './usePermissions';
-import { getAgentsUrlByCurrentHostname } from '@/utils/url';
+import { agentsUrl } from '@/utils/url';
 
 export const useMainNavigationItems = () => {
   const session = useSessionContext();
@@ -106,7 +106,7 @@ export const useMainNavigationItems = () => {
     {
       icon: 'robot',
       label: 'AI Agents',
-      path: getAgentsUrlByCurrentHostname(),
+      path: agentsUrl,
       hasAccess: true,
       showNewTag: true,
       isExternal: true,

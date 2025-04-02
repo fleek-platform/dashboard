@@ -1,21 +1,13 @@
 import { constants } from '@/constants';
 import { TemplateCardPart, TemplateJson, TemplatePart } from '@/types/Template';
-import { joinUrl } from '@/utils/url';
+import { joinUrl, websiteUrl } from '@/utils/url';
 
 const { templatesAPI, templatesUrl } = constants.FLEEK_TEMPLATES_RELATIVE_PATHS;
-import { getDefined } from '../defined';
-
-// The template data's feched from website's URL
-// here we dismiss getSiteUrlByCurrentHostname
-// to favour the env var instead.
-// The getSiteUrlByCurrentHostname is only useful for
-// the repository environment.
-const websiteBaseUrl = getDefined('NEXT_PUBLIC_WEBSITE_URL');
 
 export const FLEEK_TEMPLATES_URLS = {
-  websiteBaseUrl,
-  templatesAPI: joinUrl(websiteBaseUrl, templatesAPI),
-  templatesUrl: joinUrl(websiteBaseUrl, templatesUrl),
+  websiteUrl,
+  templatesAPI: joinUrl(websiteUrl, templatesAPI),
+  templatesUrl: joinUrl(websiteUrl, templatesUrl),
 };
 
 // eslint-disable-next-line fleek-custom/valid-argument-types

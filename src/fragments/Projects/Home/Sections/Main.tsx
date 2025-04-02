@@ -9,9 +9,7 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Text } from '@/ui';
 
 import { SectionsStyles as S } from './Sections.styles';
-import { getAgentsUrlByCurrentHostname } from '@/utils/url';
-
-const elizaUrl = getAgentsUrlByCurrentHostname();
+import { agentsUrl } from '@/utils/url';
 
 export const Main: React.FC = () => {
   const session = useSessionContext();
@@ -63,7 +61,7 @@ export const Main: React.FC = () => {
           <PermissionsTooltip hasAccess={hasCreateAgentPermission}>
             <ActionBox
               isExternalLink
-              href={elizaUrl}
+              href={agentsUrl}
               icon="robot"
               title="Create an AI agent"
               description="Build an AI agent using the Eliza framework."

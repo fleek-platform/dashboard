@@ -15,9 +15,7 @@ import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
 import { secrets } from '../secrets';
 
-import { getSiteUrlByCurrentHostname } from '@/utils/url';
-
-const websiteUrl = getSiteUrlByCurrentHostname();
+import { websiteUrl } from '@/utils/url';
 
 export type AuthContext = {
   loading: boolean;

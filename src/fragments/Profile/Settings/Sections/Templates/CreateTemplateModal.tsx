@@ -13,11 +13,9 @@ import { Project } from '@/types/Project';
 import { ChildrenProps } from '@/types/Props';
 import { SiteListItem } from '@/types/Site';
 import { Avatar, Box, Button, Combobox, FormField, Stepper, Text } from '@/ui';
-import { getDashboardUrlByCurrentHostname } from '@/utils/url';
+import { dashboardUrl } from '@/utils/url';
 
 export type CreateTemplateModalProps = ChildrenProps;
-
-const dashboardUrl = getDashboardUrlByCurrentHostname();
 
 export const CreateTemplateModal: React.FC<CreateTemplateModalProps> = ({
   children,

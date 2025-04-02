@@ -9,9 +9,7 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { Button, Menu } from '@/ui';
 
 import { FLEEK_TEMPLATES_URLS } from '../../../utils/template';
-import { getAgentsUrlByCurrentHostname } from '@/utils/url';
-
-const elizaUrl = getAgentsUrlByCurrentHostname();
+import { agentsUrl } from '@/utils/url';
 
 export const AddNewDropdown: React.FC = () => {
   const session = useSessionContext();
@@ -74,7 +72,7 @@ export const AddNewDropdown: React.FC = () => {
                 isExternalLink
                 text="AI agent"
                 icon="robot"
-                href={elizaUrl}
+                href={agentsUrl}
               />
               <Menu.Separator />
             </>

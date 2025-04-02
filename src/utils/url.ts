@@ -79,11 +79,6 @@ export const getQueryParamsToObj = (search: string) => {
   return query;
 };
 
-export const getSiteUrlByCurrentHostname = () => 
-  !isServerSide()
-  ? `https://${window.location.hostname}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`
-  : `${getDefined('NEXT_PUBLIC_WEBSITE_URL')}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
-
-export const getDashboardUrlByCurrentHostname = () => `${getSiteUrlByCurrentHostname()}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
-
-export const getAgentsUrlByCurrentHostname = () => `${getSiteUrlByCurrentHostname()}/${getDefined('NEXT_PUBLIC_AGENTS_AI_PATH')}`;
+export const websiteUrl = getDefined('NEXT_PUBLIC_WEBSITE_URL');
+export const dashboardUrl = `${websiteUrl}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
+export const agentsUrl = `${websiteUrl}/${getDefined('NEXT_PUBLIC_AGENTS_AI_PATH')}`;
