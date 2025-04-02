@@ -22,7 +22,7 @@ import { Box, Button } from '@/ui';
 import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
-import { secrets } from '@/secrets';
+import { getDefined } from '@/defined';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
@@ -256,7 +256,7 @@ type PlanData = {
 
 const getPlanData = (plan: BillingPlanType, endPlanDate?: string): PlanData => {
   const freePlanDeprecationDate = dateFormat({
-    dateISO: secrets.NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE,
+    dateISO: getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'),
     format: DateTime.DATE_FULL,
   });
 

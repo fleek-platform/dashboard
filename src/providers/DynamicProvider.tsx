@@ -6,11 +6,11 @@ import {
 import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
 
 import { useMeQuery, useUpdateUserMutation } from '@/generated/graphqlClient';
-import { secrets } from '@/secrets';
 
 import { useCookies } from './CookiesProvider';
 import { useGenerateUserSessionDetailsMutation } from '@/generated/graphqlClient';
 import { useRouter } from 'next/router';
+import { getDefined } from '../defined';
 
 export type DynamicProviderProps = React.PropsWithChildren<{}>;
 
@@ -27,7 +27,7 @@ export const DynamicProvider: React.FC<DynamicProviderProps> = ({
   return (
     <DynamicContextProvider
       settings={{
-        environmentId: secrets.NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID,
+        environmentId: getDefined('NEXT_PUBLIC_UI__DYNAMIC_ENVIRONMENT_ID'),
         walletConnectors: [EthereumWalletConnectors],
         eventsCallbacks: {
           onAuthSuccess: async ({ authToken }) => {

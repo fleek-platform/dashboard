@@ -1,11 +1,10 @@
 import type { AnyZodObject } from 'zod';
 import zod from 'zod';
 
-import { secrets } from '@/secrets';
 
 const DEFAULT_OPTIONS: FormController.FormOptions = {
   validateNotDirty: false,
-  validationDebounce: secrets.TEST_MODE ? 0 : 700,
+  validationDebounce: 700,
   partial: false,
 };
 

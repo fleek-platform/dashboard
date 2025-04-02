@@ -2,7 +2,6 @@ import { SettingsBox, SettingsListItem } from '@/components';
 import { constants } from '@/constants';
 import { useRouter } from '@/hooks/useRouter';
 import { useTheme } from '@/providers/ThemeProvider';
-import { secrets } from '@/secrets';
 import { Box, Button, Image, Text } from '@/ui';
 import { isServerSide } from '@/utils/isServerSide';
 

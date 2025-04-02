@@ -1,4 +1,4 @@
-import { secrets } from '@/secrets';
+import { getDefined } from '@/defined';
 
 const normalizePathname = (pathname: string) => {
   const [path, query] = pathname.split('?');
@@ -13,12 +13,12 @@ const normalizePathname = (pathname: string) => {
 };
 
 export const joinBase = (pathname: string) => {
-  if (!secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH) {
+  if (!getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')) {
     return normalizePathname(pathname);
   }
 
   const normalizedBase = normalizePathname(
-    secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH,
+    getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH'),
   );
   const normalizedPath = normalizePathname(pathname);
 

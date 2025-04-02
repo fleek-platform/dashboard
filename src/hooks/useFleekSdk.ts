@@ -2,8 +2,8 @@ import { SecretNotFoundError } from '@fleek-platform/errors';
 import { useState, useEffect } from 'react';
 
 import { useCookies } from '@/providers/CookiesProvider';
-import { secrets } from '@/secrets';
 import { isServerSide } from '@/utils/isServerSide';
+import { getDefined } from '@/defined';
 
 import type { FleekSdk } from '@fleek-platform/sdk';
 
@@ -11,7 +11,7 @@ export const useFleekSdk = () => {
   const cookies = useCookies();
   const [fleekSdk, setFleekSdk] = useState<FleekSdk | null>(null);
 
-  if (!secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL) {
+  if (!getDefined('NEXT_PUBLIC_SDK__AUTHENTICATION_URL')) {
     throw new SecretNotFoundError({
       secret: {
         id: 'NEXT_PUBLIC_SDK__AUTHENTICATION_URL',
@@ -36,10 +36,10 @@ export const useFleekSdk = () => {
 
         const client = new FleekSdk({
           accessTokenService,
-          graphqlServiceApiUrl: secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL,
-          uploadProxyApiUrl: secrets.NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL,
+          graphqlServiceApiUrl: getDefined('NEXT_PUBLIC_SDK__AUTHENTICATION_URL'),
+          uploadProxyApiUrl: getDefined('NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL'),
           ipfsStorageApiUrl:
-            secrets.NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME,
+            getDefined('NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME'),
         });
 
         setFleekSdk(client);

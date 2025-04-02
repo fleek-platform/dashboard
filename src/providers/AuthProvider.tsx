@@ -13,9 +13,10 @@ import { usePathname } from 'next/navigation';
 
 import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
-import { secrets } from '../secrets';
 
 import { getWebsiteUrl } from '@/utils/url';
+
+import { getDefined } from '@/defined';
 
 export type AuthContext = {
   loading: boolean;
@@ -124,7 +125,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     if (pathname === routes.home()) {
       // TODO: Create an utility, include related unit test
       // use utils to form URL correctly/conventions
-      window.location.href = `${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
+      window.location.href = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
   }, [cookies.values.accessToken, router, logout, pathname]);
 

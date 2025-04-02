@@ -1,13 +1,14 @@
 import React, { ComponentProps } from 'react';
 
 import { useTheme } from '@/providers/ThemeProvider';
-import { secrets } from '@/secrets';
 import { Box, Image as ImageComponent } from '@/ui';
 import { cn } from '@/utils/cn';
 
 import { CodeBlock } from '../CodeBlock/CodeBlock';
 import { Text } from '../Text/Text';
 import { emptyStateIllustrations, Section } from './emptyStateIllustrations';
+
+import { getDefined } from '@/defined';
 
 type ImageProps = ComponentProps<typeof ImageComponent> & {
   section: Section;
@@ -16,8 +17,8 @@ type ImageProps = ComponentProps<typeof ImageComponent> & {
 const Image: React.FC<ImageProps> = ({ section, ...props }) => {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
-  const src = secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH
-    ? `${secrets.NEXT_PUBLIC_DASHBOARD_BASE_PATH}/${emptyStateIllustrations[theme][section]}`
+  const src = getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')
+    ? `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}/${emptyStateIllustrations[theme][section]}`
     : emptyStateIllustrations[theme][section];
 
   return (

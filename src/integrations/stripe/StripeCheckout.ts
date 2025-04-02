@@ -6,9 +6,9 @@ import {
 } from '@stripe/stripe-js';
 
 import { ThemeHook } from '@/providers/ThemeProvider';
-import { secrets } from '@/secrets';
 import { BillingPlan } from '@/types/Billing';
 import { Log } from '@/utils/log';
+import { getDefined } from '@/defined';
 
 import { createElementsAppearance, ThemeArgs } from './createElementsArguments';
 
@@ -33,7 +33,7 @@ export class StripeCheckout {
   initialize: StripeCheckout.Initialize = async ({ theme, domSelector }) => {
     this.setState('initial');
 
-    this.stripe = await loadStripe(secrets.STRIPE_PUBLIC_KEY);
+    this.stripe = await loadStripe(getDefined('NEXT_PUBLIC_UI__STRIPE_PUBLIC_KEY'));
 
     if (!this.stripe) {
       throw new StripeCheckoutError('Failed to load Stripe');

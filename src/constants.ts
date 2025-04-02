@@ -1,10 +1,10 @@
 import Package from '../package.json';
-import { secrets } from './secrets';
 import {
   StorageProvider,
   StorageProviderValue,
 } from './types/StorageProviders';
 import { joinBase } from '@/utils/paths';
+import { getDefined } from '@/defined';
 
 export const constants = {
   VERSION: Package.version,
@@ -323,7 +323,7 @@ export const constants = {
   } satisfies Record<StorageProviderValue, StorageProvider>,
 
   ZENDESK: {
-    PROXY_BASE: secrets.ZENDESK_PROXY_API,
+    PROXY_BASE: getDefined('NEXT_PUBLIC_UI__ZENDESK_PROXY_API'),
     ROUTES: {
       HEALTH: '/health',
     },

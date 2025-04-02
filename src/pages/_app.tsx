@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 import { FeedbackModal, ToastsContainer } from '@/components';
 import { Maintenance } from '@/fragments';
 import { Providers, LandingPageProvider } from '@/providers/Providers';
-import { getMutableSecrets, secrets } from '@/secrets';
 import { AppProps } from '@/types/App';
 import { getMaintenanceMode } from '@/utils/getMaintenanceMode';
 import { useRouter } from '@/hooks/useRouter';
@@ -49,11 +48,6 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
         setDefined(config);
 
-        if (secrets.TEST_MODE) {
-          const environment = getMutableSecrets();
-          Object.assign(secrets, environment);
-        }
-
         setMaintenanceMode(getMaintenanceMode());
         setIsConfigLoaded(true);
       } catch (error) {
@@ -87,7 +81,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
     if (
       !isServerSide() &&
       !isAuthenticated &&
-      !secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN &&
+      !getDefined('NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN') &&
       isConfigLoaded
     ) {
       const currentParams = new URLSearchParams(window.location.search);
@@ -110,7 +104,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   }
 
   if (!isAuthenticated) {
-    if (secrets.NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN) {
+    if (getDefined('NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN')) {
       return (
         <LandingPageProvider forcedTheme={forcedTheme}>
           <HomePage />

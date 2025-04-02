@@ -5,7 +5,6 @@ import {
   useLoginWithDynamicMutation,
 } from '@/generated/graphqlClient';
 import { useCookies } from '@/providers/CookiesProvider';
-import { secrets } from '@/secrets';
 
 export type AuthProviders = 'dynamic';
 
@@ -21,7 +20,6 @@ export const useAuthProviders = (): Record<AuthProviders, AuthWith> => {
 
   return {
     dynamic,
-    ...(secrets.TEST_MODE ? { mocked: getMockedProvider() } : {}),
   };
 };
 

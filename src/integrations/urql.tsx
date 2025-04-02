@@ -89,7 +89,7 @@ import { UpdateSecretKeyMutationVariables } from '@/generated/graphqlClient';
 import { Pin } from '@/types/StorageProviders';
 import { isServerSide } from '@/utils/isServerSide';
 
-import { secrets } from '../secrets';
+import { getDefined } from '@/defined';
 
 type AuthState = { token?: string | null };
 
@@ -1017,7 +1017,7 @@ export const createUrqlClient = ({
   });
 
   return createClient({
-    url: secrets.NEXT_PUBLIC_SDK__AUTHENTICATION_URL,
+    url: getDefined('NEXT_PUBLIC_SDK__AUTHENTICATION_URL'),
     exchanges: [
       cache,
       ssr,

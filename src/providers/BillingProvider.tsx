@@ -14,7 +14,7 @@ import type {
 import type { ChildrenProps } from '@/types/Props';
 import { createContext } from '@/utils/createContext';
 import { DateTime } from 'luxon';
-import { secrets } from '@/secrets';
+import { getDefined } from '@/defined';
 
 export type BillingContext = {
   loading: boolean;
@@ -59,7 +59,7 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
 
     if (
       DateTime.now() <
-      DateTime.fromISO(secrets.NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE)
+      DateTime.fromISO(getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'))
     ) {
       return 'free';
     }

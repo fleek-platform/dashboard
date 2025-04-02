@@ -1,4 +1,4 @@
-import { secrets } from '@/secrets';
+import { getDefined } from '@/defined';
 
 export type LinkParts = {
   protocol: string;
@@ -16,7 +16,7 @@ export const getLinkPartsForSiteSlug = ({
   slug,
 }: GetLinkPartsForSiteSlugArgs): LinkParts => {
   const protocol = 'https://';
-  const domain = `.${secrets.NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN}`;
+  const domain = `.${getDefined('NEXT_PUBLIC_UI__SITE_SLUG_DOMAIN')}`;
 
   return {
     protocol,

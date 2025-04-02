@@ -1,8 +1,8 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
-import { secrets } from '@/secrets';
 import { getCssText } from '@/theme';
+import { getDefined } from '@/defined';
 
 const Document = () => (
   <Html>
@@ -24,14 +24,14 @@ const Document = () => (
        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-       })(window,document,'script','dataLayer','${secrets.NEXT_PUBLIC_UI__GTM_ID}');
+       })(window,document,'script','dataLayer','${getDefined('NEXT_PUBLIC_UI__GTM_ID')}');
       `}
       </Script>
     </Head>
     <body>
       <noscript
         dangerouslySetInnerHTML={{
-          __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${secrets.NEXT_PUBLIC_UI__GTM_ID}" height="0" width="0" style="display: none; visibility: hidden;" />`,
+          __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${getDefined('NEXT_PUBLIC_UI__GTM_ID')}" height="0" width="0" style="display: none; visibility: hidden;" />`,
         }}
       />
       <Main />
