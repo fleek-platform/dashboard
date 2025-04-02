@@ -24,7 +24,7 @@ env:
   NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN: "true"
   # Overrides the website URL for repository staging only
   # Note: modified doppler's env vars setup to not override this one. This is only meaningful for fleek-dashboard-<environment> NOT site's staging and prod.
-  NEXT_PUBLIC_WEBSITE_URL: "${{ vars.FLEEK_SLUG }}.fleeksandbox.xyz"
+  NEXT_PUBLIC_WEBSITE_URL: "https://${{ vars.FLEEK_SLUG }}.fleeksandbox.xyz"
 
 jobs:
   deploy-to-fleek:
