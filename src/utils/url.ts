@@ -80,5 +80,5 @@ export const getQueryParamsToObj = (search: string) => {
 };
 
 export const websiteUrl = getDefined('NEXT_PUBLIC_WEBSITE_URL');
-export const dashboardUrl = `${websiteUrl}/${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}`;
-export const agentsUrl = `${websiteUrl}/${getDefined('NEXT_PUBLIC_AGENTS_AI_PATH')}`;
+export const dashboardUrl = joinUrl(websiteUrl, getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH'));
+export const agentsUrl = joinUrl(websiteUrl, getDefined('NEXT_PUBLIC_AGENTS_AI_PATH'));
