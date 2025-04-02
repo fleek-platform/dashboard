@@ -33,7 +33,7 @@ export const LayoutHead = (props: LayoutHeadProps): JSX.Element => {
       <meta property="og:image" content={image} />
 
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
+      <meta property="twitter:url" content={dashboardUrl} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
