@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.16.7
+
+### Patch Changes
+
+- 6f248c4: Missing CI http protocol in override
+
 ## 0.16.6
 
 ### Patch Changes
