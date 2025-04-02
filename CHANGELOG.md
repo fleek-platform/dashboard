@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.18.0
+
+### Minor Changes
+
+- 32afecf: Latest blogs missing images
+
 ## 0.17.0
 
 ### Minor Changes
