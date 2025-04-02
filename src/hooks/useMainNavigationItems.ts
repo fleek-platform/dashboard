@@ -7,8 +7,6 @@ import { useSessionContext } from '@/providers/SessionProvider';
 import { usePermissions } from './usePermissions';
 import { getAgentsUrl } from '@/utils/url';
 
-const agentsUrl = getAgentsUrl();
-
 export const useMainNavigationItems = () => {
   const session = useSessionContext();
 
@@ -108,7 +106,7 @@ export const useMainNavigationItems = () => {
     {
       icon: 'robot',
       label: 'AI Agents',
-      path: agentsUrl,
+      path: getAgentsUrl(),
       hasAccess: true,
       showNewTag: true,
       isExternal: true,
