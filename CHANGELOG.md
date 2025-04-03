@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.19.4
+
+### Patch Changes
+
+- b13b6a4: Fix missing variables for put build in base path
+
 ## 0.19.3
 
 ### Patch Changes
