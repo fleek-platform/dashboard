@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.19.0
+
+### Minor Changes
+
+- 4f622d4: Use next's dynamic loading for loading config
+
 ## 0.18.4
 
 ### Patch Changes
