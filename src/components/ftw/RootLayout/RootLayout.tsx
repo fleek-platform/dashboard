@@ -305,7 +305,7 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
       />
       <Scrollable.VerticalBar />
       <Scrollable.Viewport className="w-full h-full" onScroll={handleScroll}>
-        <Box className="flex flex-col gap-5 p-4 max-w-[82rem] min-h-[calc(100vh-5.938rem)] mx-auto">
+        <Box className="flex flex-col gap-5 p-4 min-h-[calc(100vh-5.938rem)] mx-auto">
           {children}
         </Box>
       </Scrollable.Viewport>
@@ -314,7 +314,7 @@ const Content: React.FC<ChildrenProps> = ({ children }) => {
 };
 
 const HeaderSkeleton: React.FC = () => (
-  <Box className="flex-row items-center justify-between px-4 md:p-4 h-10 max-w-[82rem] w-full self-center">
+  <Box className="flex-row items-center justify-between px-4 md:p-4 h-10 w-full self-center">
     <Box className="flex-row gap-2 items-center h-[2rem] w-1/6">
       <Skeleton className="size-4 rounded-sm shrink-0" />
       <Skeleton variant="text" className="shrink-0" />
@@ -347,7 +347,7 @@ const Header: React.FC<HeaderProps> = ({
   }
 
   return (
-    <Box className="flex-row items-center flex-wrap justify-between gap-2 p-4 md:gap-0 md:p-0 md:py-3 max-w-[82rem] w-full self-center">
+    <Box className="flex-row items-center flex-wrap justify-between gap-2 p-4 md:gap-0 md:p-0 md:py-3 w-full self-center">
       <Breadcrumbs
         breadcrumbs={
           breadcrumbs || [
