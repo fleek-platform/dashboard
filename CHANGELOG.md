@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.19.6
+
+### Patch Changes
+
+- cc61f0e: Fix output dir name
+
 ## 0.19.5
 
 ### Patch Changes
