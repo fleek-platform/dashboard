@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.19.7
+
+### Patch Changes
+
+- 679ec81: copy redirects
+- f0ac0fd: Fix output dir name
+
 ## 0.19.6
 
 ### Patch Changes
