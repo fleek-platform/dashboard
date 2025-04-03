@@ -185,8 +185,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   navigation,
   isNavigationLoading,
 }) => {
-  const version = `Beta v${constants.VERSION}`;
-
   return (
     <Box
       className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
@@ -199,7 +197,6 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link href="/">
               <FleekLogo className="text-sm" />
             </Link>
-            <BadgeText colorScheme="slate">{version}</BadgeText>
           </Box>
           {slotSidebar}
         </Box>
