@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.19.5
+
+### Patch Changes
+
+- 3a78303: Missing env var
+- a539cfe: Fix missing variables for put build in base path
+
 ## 0.19.4
 
 ### Patch Changes
