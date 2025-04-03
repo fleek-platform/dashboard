@@ -8,6 +8,10 @@ if [[ -z "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && -z "$CI" ]]; then
   exit 0
 fi
 
+outputDir="out"
+outputBakDir="$outputDir.bak"
+indexForRedirectBaseDir="$outputDir/index.html"
+
 if [[ -n "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" != '/' ]]; then
   echo "🤖 Must copy files to base path $NEXT_PUBLIC_DASHBOARD_BASE_PATH..."
   
