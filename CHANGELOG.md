@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.19.2
+
+### Patch Changes
+
+- 8808652: Remove beta tag
+- 94409c8: Remove beta tag
+
 ## 0.19.1
 
 ### Patch Changes
