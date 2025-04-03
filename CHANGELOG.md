@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.19.1
+
+### Patch Changes
+
+- 6d93106: Remove max width in container header
+
 ## 0.19.0
 
 ### Minor Changes
