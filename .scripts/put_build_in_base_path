@@ -13,6 +13,7 @@ outputBakDir="$outputDir.bak"
 outputWithBaseDir="$outputDir/$NEXT_PUBLIC_DASHBOARD_BASE_PATH"
 indexForRedirectBaseDir="$outputDir/index.html"
 indexForMainApp="$outputDir/$NEXT_PUBLIC_DASHBOARD_BASE_PATH/index.html"
+redirectsFilepath="public/_redirects"
 
 if [[ -n "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" != '/' ]]; then
   echo "🤖 Must copy files to base path $NEXT_PUBLIC_DASHBOARD_BASE_PATH..."
@@ -26,6 +27,9 @@ if [[ -n "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && "$NEXT_PUBLIC_DASHBOARD_BASE_PATH
   else
     echo "✅ Copied output files to $outputWithBaseDir"
   fi
+
+  echo "🤖 Copy redirects file to root"
+  cp "$redirectsFilepath" "$outputDir"
 
   echo "<html><head><script>window.location.href=\"$NEXT_PUBLIC_DASHBOARD_BASE_PATH\";</script></head></html>" > "$indexForRedirectBaseDir"
 fi
