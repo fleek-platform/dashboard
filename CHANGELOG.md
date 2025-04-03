@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.19.3
+
+### Patch Changes
+
+- 6900754: Put build in base path only for repo's staging environment
+
 ## 0.19.2
 
 ### Patch Changes
