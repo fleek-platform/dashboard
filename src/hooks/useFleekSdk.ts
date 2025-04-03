@@ -36,10 +36,13 @@ export const useFleekSdk = () => {
 
         const client = new FleekSdk({
           accessTokenService,
-          graphqlServiceApiUrl: getDefined('NEXT_PUBLIC_SDK__AUTHENTICATION_URL'),
+          graphqlServiceApiUrl: getDefined(
+            'NEXT_PUBLIC_SDK__AUTHENTICATION_URL',
+          ),
           uploadProxyApiUrl: getDefined('NEXT_PUBLIC_UI__UPLOAD_PROXY_API_URL'),
-          ipfsStorageApiUrl:
-            getDefined('NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME'),
+          ipfsStorageApiUrl: getDefined(
+            'NEXT_PUBLIC_UI__INTERNAL_IPFS_STORAGE_HOSTNAME',
+          ),
         });
 
         setFleekSdk(client);

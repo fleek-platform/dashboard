@@ -19,7 +19,12 @@ import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
-import { setDefined, getDefined, defined, DEFINED_OVERRIDES_FILENAME } from '../defined';
+import {
+  setDefined,
+  getDefined,
+  defined,
+  DEFINED_OVERRIDES_FILENAME,
+} from '../defined';
 import { getWebsiteUrl } from '@/utils/url';
 
 const App = ({ Component, pageProps, requestCookies }: AppProps) => {

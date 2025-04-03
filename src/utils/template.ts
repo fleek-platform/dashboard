@@ -9,10 +9,10 @@ const { templatesAPI, templatesUrl } = constants.FLEEK_TEMPLATES_RELATIVE_PATHS;
 // we must use the `fleek.xyz`
 // this is due to site URL being overriden
 // for the repo's environment fleek-dashboard-
-const websiteUrl = 
+const websiteUrl =
   !isServerSide() && !window.location.hostname.startsWith('fleek-dashboard-')
-  ? getWebsiteUrl()
-  : 'https://fleek.xyz'
+    ? getWebsiteUrl()
+    : 'https://fleek.xyz';
 
 export const FLEEK_TEMPLATES_URLS = {
   websiteUrl,

@@ -2,14 +2,13 @@ import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { updateUserSchema } from '@fleek-platform/utils-validation';
 import { useClient } from 'urql';
 import { useEnsAvatar, useEnsName } from 'wagmi';
-import zod from 'zod';
 
 import { Form } from '@/components';
 import { Profile } from '@/fragments';
 import { useMeQuery } from '@/generated/graphqlClient';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
-import { Page } from '@/types/App';
-import { HandleLogoUploadProps } from '@/types/Logo';
+import type { Page } from '@/types/App';
+import type { HandleLogoUploadProps } from '@/types/Logo';
 
 const GeneralSettingsPage: Page = () => {
   const [meQuery] = useMeQuery();
@@ -55,25 +54,6 @@ const GeneralSettingsPage: Page = () => {
     });
   };
 
-  const deleteForm = Form.useForm({
-    values: {
-      username: '',
-    },
-    schema: zod.object({
-      username: zod.literal(user?.username, {
-        errorMap: () => ({ message: 'Incorrect username' }),
-      }),
-    }),
-    // TODO: add validation
-    onSubmit: async () => {
-      return new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 3000);
-      });
-    },
-  });
-
   return (
     <>
       <Form.Provider value={renameForm}>
@@ -86,12 +66,7 @@ const GeneralSettingsPage: Page = () => {
         isLoading={meQuery.fetching}
       />
 
-      <Form.Provider value={deleteForm}>
-        <Profile.Settings.Sections.DeleteUser
-          username={user?.username || ''}
-          isLoading={meQuery.fetching}
-        />
-      </Form.Provider>
+      <Profile.Settings.Sections.DeleteUser />
     </>
   );
 };

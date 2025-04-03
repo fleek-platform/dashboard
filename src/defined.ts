@@ -70,7 +70,7 @@ export const getDefined = (key: keyof typeof defined): string => {
 };
 
 export const setDefined = (settings: Partial<Defined>) => {
-  Object.keys(settings).forEach(key => {
+  Object.keys(settings).forEach((key) => {
     if (key in defined) {
       defined[key as keyof Defined] = settings[key as keyof Defined];
     }
