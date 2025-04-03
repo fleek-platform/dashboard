@@ -8,7 +8,7 @@ if [[ -z "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && -z "$CI" ]]; then
   exit 0
 fi
 
-outputDir="dist"
+outputDir="out"
 outputBakDir="$outputDir.bak"
 outputWithBaseDir="$outputDir/$NEXT_PUBLIC_DASHBOARD_BASE_PATH"
 indexForRedirectBaseDir="$outputDir/index.html"
