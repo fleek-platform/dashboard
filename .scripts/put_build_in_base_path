@@ -1,39 +1,28 @@
 #!/bin/bash
 
-set -e
+echo "👷 Put build in base path (if required)..."
 
-if [[ -z "$1" ]]; then
-  echo "👹 Oops! Missing arguments required for base path NEXT_PUBLIC_BASE_PATH"
-  exit 1
+if [[ -z "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && -z "$CI" ]]; then
+  echo "🦖 Skipping build static files due to be running outside CI. The dev server should suggest the address with base path for you!"
+
+  exit 0
 fi
 
-NEXT_PUBLIC_BASE_PATH="$1"
-OUTPUT_DIR="out"
-TEMP_DIR="$OUTPUT_DIR.bak"
-DEST_DIR="$OUTPUT_DIR/$NEXT_PUBLIC_BASE_PATH"
+if [[ -n "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" != '/' ]]; then
+  echo "🤖 Must copy files to base path $NEXT_PUBLIC_DASHBOARD_BASE_PATH..."
+  
+  mv "$outputDir" "$outputBakDir"
+  mkdir -p "$outputWithBaseDir"
 
-if [[ ! -d "$OUTPUT_DIR" ]]; then
-  echo "👹 Oops! The output dir $OUT_DIR doesn not exist"
+  if ! cp -r "$outputBakDir"/* "$outputWithBaseDir"; then
+    echo "👹 Oops! Failed to copy $outputDir to $outputWithBaseDir for some reason..."
+    exit 1
+  else
+    echo "✅ Copied output files to $outputWithBaseDir"
+  fi
 
-  exit 1
+  echo "<html><head><script>window.location.href=\"$NEXT_PUBLIC_DASHBOARD_BASE_PATH\";</script></head></html>" > "$indexForRedirectBaseDir"
 fi
 
-mv "$OUTPUT_DIR" "$TEMP_DIR" || exit 1
-echo "✅ Moved $OUTPUT_DIR to $TEMP_DIR"
-
-mkdir -p "$DEST_DIR" || exit 1
-echo "✅ Created $DEST_DIR"
-
-cp -r "$TEMP_DIR"/* "$DEST_DIR"
-echo "✅ Moved files from $TEMP_DIR to $DEST_DIR"
-
-rm -rf "$TEMP_DIR" || exit 1
-echo "✅ Removed $TEMP_DIR"
-
-if [[ -d "$DEST_DIR" && "$(ls -A $DEST_DIR)" ]]; then
-  echo "✅ Created $DEST_DIR"
-else
-  echo "👹 Oops! Failed to create $DEST_DIR for some reason..."
-
-  exit 1
-fi
+echo
+echo "👍 Put build in base path completed!"
