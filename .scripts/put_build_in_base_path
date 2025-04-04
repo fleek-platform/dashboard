@@ -35,6 +35,8 @@ if [[ -n "$NEXT_PUBLIC_DASHBOARD_BASE_PATH" && "$NEXT_PUBLIC_DASHBOARD_BASE_PATH
 
   echo "<html><head><script>window.location.href=\"$NEXT_PUBLIC_DASHBOARD_BASE_PATH\";</script></head></html>" > "$indexForRedirectBaseDir"
 
+  mkdir -p "$agentsDir"
+
   echo "<html><body><h1>Repository environment only</h1><p>This is a repository environment. Visit the website environment instead to cross link to Agents, e.g. here's <a href=\"https://fleek-xys-staging.fleeksandbox.xyz/$NEXT_PUBLIC_DASHBOARD_BASE_PATH\">fleek-xyz-staging</a> or alternative visit the agents repository environment <a href=\"https://fleek-agents-staging.fleeksandbox.xyz/$NEXT_PUBLIC_AGENTS_AI_PATH\">fleek-agents-staging</a></p></body></html>" > "$indexForAgentsBasePath"
 fi
 
