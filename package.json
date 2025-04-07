@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/dashboard",
-  "version": "0.19.7",
+  "version": "0.20.0",
   "files": [
     "README.md",
     "out"

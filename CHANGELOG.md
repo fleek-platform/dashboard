@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.0
+
+### Minor Changes
+
+- 6c488ff: Implement account deletion with safety checks
+
 ## 0.19.7
 
 ### Patch Changes
