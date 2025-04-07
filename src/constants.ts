@@ -19,12 +19,12 @@ export const constants = {
     FLEEK_DOCS: 'https://fleek.xyz/docs/',
     FLEEK_DOCS_PLATFORM: 'https://fleek.xyz/docs/platform/',
     FLEEK_DOCS_INFRASTRUCTURE: 'https://fleek.xyz/docs/infrastructure/',
-    FLEEK_SUPPORT: 'https://support.fleek.xyz/hc/en-us',
-    FLEEK_SUPPORT_NEW_TICKET: 'https://support.fleek.xyz/hc/en-us/requests/new',
+    FLEEK_SUPPORT: 'https://fleek.xyz/support',
+    FLEEK_SUPPORT_NEW_TICKET: 'https://fleek.xyz/requests/new',
     FLEEK_SUPPORT_TICKET:
-      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049246996237',
+      'https://fleek.xyz/requests/new?ticket_form_id=16049246996237',
     FLEEK_SUPPORT_ABUSE:
-      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16807535390093',
+      'https://fleek.xyz/requests/report-site?ticket_form_id=16807535390093',
     FLEEK_DOCS_CLI: 'https://fleek.xyz/docs/cli/',
     FLEEK_DOCS_BASE_TEMPLATES: 'https://fleek.xyz/templates/',
     FLEEK_DOCS_SDK: 'https://fleek.xyz/docs/sdk/',
@@ -68,8 +68,6 @@ export const constants = {
     FLEEK_DISCORD: 'https://discord.gg/fleek',
     FLEEK_TWITTER: 'https://x.com/fleek',
     FLEEK_GITHUB: 'https://github.com/fleek-platform',
-    FLEEK_GET_DEMO:
-      'https://support.fleek.xyz/hc/en-us/requests/new?ticket_form_id=16049464260109',
     FLEEK_STATUS: 'https://status.fleek.xyz/',
     FLEEK_PRICING: 'https://fleek.xyz/pricing/',
     FLEEK_NETWORK: 'https://fleek.network/',
