@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.1
+
+### Patch Changes
+
+- 4b41370: Fix support links
+
 ## 0.20.0
 
 ### Minor Changes
