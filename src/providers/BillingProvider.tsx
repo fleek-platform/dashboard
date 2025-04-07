@@ -59,7 +59,9 @@ export const BillingProvider: React.FC<ChildrenProps> = ({ children }) => {
 
     if (
       DateTime.now() <
-      DateTime.fromISO(getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'))
+      DateTime.fromISO(
+        getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'),
+      )
     ) {
       return 'free';
     }

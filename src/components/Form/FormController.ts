@@ -1,7 +1,6 @@
 import type { AnyZodObject } from 'zod';
 import zod from 'zod';
 
-
 const DEFAULT_OPTIONS: FormController.FormOptions = {
   validateNotDirty: false,
   validationDebounce: 700,
