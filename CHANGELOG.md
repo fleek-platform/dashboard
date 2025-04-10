@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.2
+
+### Patch Changes
+
+- de5bc42: Retry on upgrade failure attempt up to 3 times
+
 ## 0.20.1
 
 ### Patch Changes
