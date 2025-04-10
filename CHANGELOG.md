@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.3
+
+### Patch Changes
+
+- 1a0d21b: fix free plan upgrade modal race condition
+
 ## 0.20.2
 
 ### Patch Changes
