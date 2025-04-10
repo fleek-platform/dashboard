@@ -29,10 +29,10 @@ export const LegacyPlanUpgradeModal = () => {
   const checkout = useFleekCheckout();
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
-  const { billingPlanType } = useBillingContext();
+  const { billingPlanType, loading: billingPlanTypeLoading } = useBillingContext();
 
   useEffect(() => {
-    if (billingPlanType !== 'none' && billingPlanType !== 'free') return;
+    if (billingPlanTypeLoading || billingPlanType !== 'none' && billingPlanType !== 'free') return;
     const shown = localStorage.getItem(shownKey);
     if (shown) return;
     setIsOpen(true);
