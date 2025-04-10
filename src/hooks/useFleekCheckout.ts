@@ -7,6 +7,7 @@ import { useCookies } from '@/providers/CookiesProvider';
 import { CheckoutResponse, PlanResponse } from '@/types/Billing';
 
 import { useRouter } from './useRouter';
+import { sleep } from '../utils/timeout';
 
 declare global {
   interface Window {
@@ -23,6 +24,9 @@ const getCookie = (name: string): string | null => {
   return cookie ? decodeURIComponent(cookie) : null;
 };
 
+const FLEEK_CHECKOUT_MAX_RETRIES = 3;
+const FLEEK_CHECKOUT_RETRY_DELAY_MS = 1800;
+
 export const useFleekCheckout = () => {
   const router = useRouter();
   const projectId = router.query.projectId!;
@@ -32,56 +36,63 @@ export const useFleekCheckout = () => {
   });
 
   const checkout = async () => {
-    try {
-      const plan = await backendApi.fetch({
-        url: '/api/v1/plans',
-      });
+    let attempts = 0;
 
-      if (!plan.ok) {
-        throw plan.statusText;
-      }
+    while (attempts < FLEEK_CHECKOUT_MAX_RETRIES) {
+      try {
+        const plan = await backendApi.fetch({
+          url: '/api/v1/plans',
+        });
 
-      const PlansResponse: PlanResponse[] = await plan.json();
+        if (!plan.ok) {
+          throw plan.statusText;
+        }
 
-      // always keep the plan name aligned with what's on stripe plan name
-      const planId = PlansResponse.find(
-        (plan) => plan.name.toUpperCase() === 'PRO',
-      )?.id;
+        const PlansResponse: PlanResponse[] = await plan.json();
+        const planId = PlansResponse.find(
+          (plan) => plan.name.toUpperCase() === 'PRO',
+        )?.id;
 
-      if (!planId) {
-        throw new Error('Plan not found');
-      }
+        if (!planId) {
+          throw new Error('Plan not found');
+        }
 
-      const referralId =
-        window.tolt_referral || getCookie('tolt_referral') || '';
+        const referralId =
+          window.tolt_referral || getCookie('tolt_referral') || '';
 
-      console.log(`[🤖 debug]: ${referralId}`);
+        const response = await backendApi.fetch({
+          url: '/api/v1/subscriptions/checkout',
+          method: 'POST',
+          redirect: 'follow',
+          body: JSON.stringify({
+            projectId,
+            planId,
+            metadata: {
+              referralId,
+            },
+          }),
+        });
 
-      const response = await backendApi.fetch({
-        url: '/api/v1/subscriptions/checkout',
-        method: 'POST',
-        redirect: 'follow',
-        body: JSON.stringify({
-          projectId,
-          planId,
-          metadata: {
-            referralId,
-          },
-        }),
-      });
+        if (!response.ok) {
+          throw new Error(
+            'There was an error trying to upgrade your plan. Please try again.',
+          );
+        }
 
-      if (!response.ok) {
-        throw new Error(
-          'There was an error trying to upgrade your plan. Please try again.',
-        );
-      }
+        const result: CheckoutResponse = await response.json();
 
-      const result: CheckoutResponse = await response.json();
+        return result;
+      } catch (error) {
+        attempts++;
+      
+        if (attempts >= FLEEK_CHECKOUT_MAX_RETRIES) {
+          console.error(`Checkout failed after ${attempts} attempts:`, error);
+          throw error;
+        }
 
-      return result;
-    } catch (error) {
-      throw error;
-    }
+        await sleep(FLEEK_CHECKOUT_RETRY_DELAY_MS);
+      } 
+    }    
   };
 
   return useMutation({
