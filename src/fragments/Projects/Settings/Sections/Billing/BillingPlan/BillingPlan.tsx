@@ -13,7 +13,6 @@ import { constants } from '@/constants';
 import { useCancelMockedMutation } from '@/hooks/useCancelSubscription';
 import { useFleekCheckout } from '@/hooks/useFleekCheckout';
 import { usePermissions } from '@/hooks/usePermissions';
-import { useRouter } from '@/hooks/useRouter';
 import { useToast } from '@/hooks/useToast';
 import { useBillingContext } from '@/providers/BillingProvider';
 import type { BillingPlanType } from '@/types/Billing';
@@ -23,10 +22,10 @@ import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
 import { getDefined } from '@/defined';
+import { useCreditsCheckout } from '@/hooks/useCredits';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
-  const router = useRouter();
   const { subscription, billingPlanType, paymentMethod } = useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
@@ -71,17 +70,6 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     }
   };
 
-  const endPlanDate = useMemo(() => {
-    if (subscription.data?.endDate) {
-      return dateFormat({
-        dateISO: subscription.data.endDate,
-        format: DateTime.DATE_FULL,
-      });
-    }
-
-    return '';
-  }, [subscription.data?.endDate]);
-
   const endPeriodDate = useMemo(() => {
     if (subscription.data?.periodEndDate) {
       return dateFormat({
@@ -93,57 +81,19 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     return '';
   }, [subscription.data?.periodEndDate]);
 
-  const shouldShowCancellationBanner = useMemo(() => {
-    if (subscription.data?.endDate) {
-      const targetTime = DateTime.fromISO(subscription.data.endDate);
-      const currentTime = DateTime.now();
-      const diff = targetTime.diff(currentTime);
-
-      return Math.floor(diff.as('months')) <= 1;
-    }
-
-    return null;
-  }, [subscription.data?.endDate]);
-
-  const trialEndDate = useMemo(() => {
-    if (subscription.data?.trialEndDate) {
-      return dateFormat({
-        dateISO: subscription.data.trialEndDate,
-        format: DateTime.DATE_FULL,
-      });
-    }
-
-    return '';
-  }, [subscription.data?.trialEndDate]);
-
   const { title, description, price } = getPlanData(
     billingPlanType,
     endPeriodDate,
   );
 
   return (
-    <>
+    <Box className="w-full">
       <CancelPlanModal
         isOpen={isCancelModalOpen}
         onOpenChange={setIsCancelModalOpen}
         onCancelPlan={handleCancelPlan}
         dueDate={endPeriodDate}
       />
-      {shouldShowCancellationBanner && !isLoading && (
-        <AlertBox size="sm" className="font-medium">
-          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
-          {endPlanDate}.
-        </AlertBox>
-      )}
-
-      {billingPlanType === 'trial' && !isLoading && (
-        <AlertBox size="sm" className="font-medium">
-          Your trial period expires on {trialEndDate}.{' '}
-          {paymentMethod.data?.id
-            ? 'You will be billed after that date.'
-            : 'Be sure to add your billing info before your trial ends.'}
-        </AlertBox>
-      )}
       <Billing.HorizontalPlanCard
         isLoading={isLoading}
         title={title}
@@ -172,7 +122,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
           </Box>
         </SettingsBox.ActionRow>
       </Billing.HorizontalPlanCard>
-    </>
+    </Box>
   );
 };
 
@@ -192,6 +142,7 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
   onCancelPlan,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { handleAddCredits, isCreatingCheckout } = useCreditsCheckout();
   const hasManageBillingPermission = usePermissions({
     action: [constants.PERMISSION.BILLING.MANAGE],
   });
@@ -244,6 +195,13 @@ const ButtonsContainer: React.FC<ButtonsContainerProps> = ({
           {billingPlanType === 'trial' ? 'Add billing info' : 'Upgrade to Pro'}
         </Button>
       </PermissionsTooltip>
+      <Button
+        size="sm"
+        onClick={() => handleAddCredits()}
+        loading={isCreatingCheckout}
+      >
+        Add credits
+      </Button>
     </>
   );
 };
@@ -282,4 +240,61 @@ const getPlanData = (plan: BillingPlanType, endPlanDate?: string): PlanData => {
       price: '20',
     },
   }[plan];
+};
+
+export const Banners = ({ isLoading }: LoadingProps) => {
+  const { subscription, billingPlanType, paymentMethod } = useBillingContext();
+  const shouldShowCancellationBanner = useMemo(() => {
+    if (subscription.data?.endDate) {
+      const targetTime = DateTime.fromISO(subscription.data.endDate);
+      const currentTime = DateTime.now();
+      const diff = targetTime.diff(currentTime);
+
+      return Math.floor(diff.as('months')) <= 1;
+    }
+
+    return null;
+  }, [subscription.data?.endDate]);
+
+  const trialEndDate = useMemo(() => {
+    if (subscription.data?.trialEndDate) {
+      return dateFormat({
+        dateISO: subscription.data.trialEndDate,
+        format: DateTime.DATE_FULL,
+      });
+    }
+
+    return '';
+  }, [subscription.data?.trialEndDate]);
+
+  const endPlanDate = useMemo(() => {
+    if (subscription.data?.endDate) {
+      return dateFormat({
+        dateISO: subscription.data.endDate,
+        format: DateTime.DATE_FULL,
+      });
+    }
+
+    return '';
+  }, [subscription.data?.endDate]);
+
+  return (
+    <>
+      {shouldShowCancellationBanner && !isLoading && (
+        <AlertBox size="sm" className="font-medium">
+          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
+          {endPlanDate}.
+        </AlertBox>
+      )}
+
+      {billingPlanType === 'trial' && !isLoading && (
+        <AlertBox size="sm" className="font-medium">
+          Your trial period expires on {trialEndDate}.{' '}
+          {paymentMethod.data?.id
+            ? 'You will be billed after that date.'
+            : 'Be sure to add your billing info before your trial ends.'}
+        </AlertBox>
+      )}
+    </>
+  );
 };
