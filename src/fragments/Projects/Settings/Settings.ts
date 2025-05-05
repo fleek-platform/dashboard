@@ -3,8 +3,12 @@ import { AllowAccessFromOfacCountriesSwitch } from '@/fragments/Settings/AllowAc
 import { ExtendedLayout } from './ExtendedLayout';
 import { AddApplicationCredentials } from './Sections/ApplicationCredentials/AddApplicationCredentials';
 import { ManageApplicationCredentials } from './Sections/ApplicationCredentials/ManageApplicationCredentials';
-import { BillingPlan } from './Sections/Billing/BillingPlan/BillingPlan';
+import {
+  BillingPlan,
+  Banners,
+} from './Sections/Billing/BillingPlan/BillingPlan';
 import { CurrentUsage } from './Sections/Billing/CurrentUsage/CurrentUsage';
+import { Credits } from './Sections/Billing/Credits';
 import { Invoices } from './Sections/Billing/Invoices/Invoices';
 import { PaymentMethod } from './Sections/Billing/PaymentMethod/PaymentMethod';
 import { DeleteProject } from './Sections/DeleteProject/DeleteProject';
@@ -61,7 +65,9 @@ export const Settings = {
     },
 
     Billing: {
+      Credits,
       CurrentUsage,
+      Banners: Banners,
       Plan: BillingPlan,
       PaymentMethod,
       Invoices,
