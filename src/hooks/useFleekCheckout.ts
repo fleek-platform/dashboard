@@ -84,15 +84,15 @@ export const useFleekCheckout = () => {
         return result;
       } catch (error) {
         attempts++;
-      
+
         if (attempts >= FLEEK_CHECKOUT_MAX_RETRIES) {
           console.error(`Checkout failed after ${attempts} attempts:`, error);
           throw error;
         }
 
         await sleep(FLEEK_CHECKOUT_RETRY_DELAY_MS);
-      } 
-    }    
+      }
+    }
   };
 
   return useMutation({
