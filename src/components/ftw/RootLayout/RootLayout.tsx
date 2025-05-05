@@ -32,6 +32,7 @@ import { LayoutHead } from '../../LayoutHead/LayoutHead';
 import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
+import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
 
 export type NavigationItem = {
   icon: IconName;
@@ -174,6 +175,38 @@ const VersionTagsWrapper: React.FC = () => {
   return <VersionTags />;
 };
 
+const Credits = () => {
+  const { credits, isCreditsLoading } = useCredits();
+  const { handleAddCredits, isCreatingCheckout } = useCreditsCheckout();
+
+  return (
+    <Box className="flex-row justify-between items-center border border-neutral-6 bg-neutral-2 rounded-t-lg p-3">
+      <Text
+        className="text-neutral-12"
+        variant="tertiary"
+        size="sm"
+        weight={500}
+      >
+        {isCreditsLoading ? (
+          <Skeleton variant="text" />
+        ) : (
+          credits.positiveFormatted
+        )}
+      </Text>
+      <Button
+        className="py-0 h-auto"
+        variant="outline"
+        intent="ghost"
+        onClick={handleAddCredits as () => void}
+      >
+        <Text className="text-neutral-11" variant="tertiary" size="sm">
+          {isCreatingCheckout ? <Icon name="spinner" /> : 'Buy credits'}
+        </Text>
+      </Button>
+    </Box>
+  );
+};
+
 type SidebarProps = {
   slotSidebar: React.ReactNode;
   navigation: NavigationItem[];
@@ -235,16 +268,20 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Box className="gap-2.5">
         <VersionTagsWrapper />
         <Announcement />
-        <Box className="border border-neutral-6 py-2 pt-2.5 rounded-lg">
-          <FeedbackModalLink />
-          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
-            Documentation
-          </ExternalLinkWrapper>
-          <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>
-            Support
-          </ExternalLinkWrapper>
-          <Box className="h-[1px] my-2.5 mx-3 bg-neutral-6" />
-          <AccountDropdown />
+
+        <Box className="gap-0">
+          <Credits />
+          <Box className="border-b border-x border-neutral-6 py-2 pt-2.5 rounded-b-lg">
+            <FeedbackModalLink />
+            <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
+              Documentation
+            </ExternalLinkWrapper>
+            <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_SUPPORT}>
+              Support
+            </ExternalLinkWrapper>
+            <Box className="h-[1px] my-2.5 mx-3 bg-neutral-6" />
+            <AccountDropdown />
+          </Box>
         </Box>
       </Box>
     </Box>

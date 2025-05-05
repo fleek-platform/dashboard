@@ -123,7 +123,7 @@ export const useCredits = () => {
     queryKey: ['credits'],
     queryFn: getCredits,
     select: (data) => {
-      const balance = data?.balance / 100;
+      const balance = (data?.balance ?? 0) / 100;
       const formatted = formatCurrency(balance);
       const positiveBalance = Math.max(balance, 0);
 
