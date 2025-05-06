@@ -33,6 +33,7 @@ import { AccountDropdown } from '../AccountDropdown/AccountDropdown';
 import { Announcement } from '../Announcement/Announcement';
 import { BreadcrumbItem, Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
 import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
+import { usePermissions } from '@/hooks/usePermissions';
 
 export type NavigationItem = {
   icon: IconName;
@@ -218,6 +219,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   navigation,
   isNavigationLoading,
 }) => {
+  const hasBillingPermission = usePermissions({
+    action: [constants.PERMISSION.BILLING.MANAGE],
+  });
+
   return (
     <Box
       className="w-[15.938rem] pt-4 pb-2.5 px-3 gap-2 justify-between shrink-0 h-full"
@@ -270,8 +275,15 @@ const Sidebar: React.FC<SidebarProps> = ({
         <Announcement />
 
         <Box className="gap-0">
-          <Credits />
-          <Box className="border-b border-x border-neutral-6 py-2 pt-2.5 rounded-b-lg">
+          {hasBillingPermission && <Credits />}
+          <Box
+            className={cn(
+              'border-neutral-6 py-2 pt-2.5 rounded-b-lg',
+              hasBillingPermission
+                ? 'border-b border-x rounded-b-lg'
+                : 'border rounded-lg',
+            )}
+          >
             <FeedbackModalLink />
             <ExternalLinkWrapper href={constants.EXTERNAL_LINK.FLEEK_DOCS}>
               Documentation

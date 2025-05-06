@@ -128,6 +128,7 @@ export const useCredits = () => {
       const positiveBalance = Math.max(balance, 0);
 
       return {
+        rawBalance: data?.balance,
         balance,
         formatted,
         positiveBalance,
