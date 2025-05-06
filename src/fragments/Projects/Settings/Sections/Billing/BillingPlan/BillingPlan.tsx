@@ -22,7 +22,7 @@ import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
 import { getDefined } from '@/defined';
-import { useCreditsCheckout } from '@/hooks/useCredits';
+import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
@@ -30,6 +30,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const { refetchCredits } = useCredits();
 
   const checkout = useFleekCheckout();
   // eslint-disable-next-line fleek-custom/valid-gql-hooks-destructuring
