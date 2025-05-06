@@ -22,13 +22,14 @@ import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
 import { getDefined } from '@/defined';
-import { useCreditsCheckout } from '@/hooks/useCredits';
+import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
   const { subscription, billingPlanType, paymentMethod } = useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const { refetchCredits } = useCredits();
 
   const checkout = useFleekCheckout();
   // eslint-disable-next-line fleek-custom/valid-gql-hooks-destructuring
@@ -51,8 +52,9 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
       // TODO: This fails for some reason
       // router.replace(response.url);
-
-      window.location.href = response.url;
+      if (response.type === 'CHECKOUT') {
+        window.location.href = response.content.url;
+      }
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }

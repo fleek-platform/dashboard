@@ -58,7 +58,9 @@ export const LegacyPlanUpgradeModal = () => {
     setLoading(true);
     try {
       const response = await checkout.mutateAsync();
-      window.location.href = response.url;
+      if (response.type === 'CHECKOUT') {
+        window.location.href = response.content.url;
+      }
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }
