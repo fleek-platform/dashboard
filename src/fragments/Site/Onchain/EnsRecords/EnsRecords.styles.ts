@@ -1,4 +1,4 @@
-import { Modal } from '@/components';
+import { Modal } from '@/components/Modal/Modal';
 import { styled } from '@/theme';
 import { Box, Icon, Text } from '@/ui';
 
