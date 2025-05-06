@@ -26,7 +26,8 @@ import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
-  const { subscription, billingPlanType, paymentMethod } = useBillingContext();
+  const { subscription, billingPlanType, paymentMethod, team } =
+    useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const { refetchCredits } = useCredits();
@@ -52,9 +53,15 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
 
       // TODO: This fails for some reason
       // router.replace(response.url);
+
       if (response.type === 'CHECKOUT') {
         window.location.href = response.content.url;
+
+        return;
       }
+
+      await Promise.all([subscription.refetch(), team.refetch()]);
+      toast.success({ message: 'Subscribed successfully!' });
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }

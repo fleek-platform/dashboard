@@ -29,8 +29,12 @@ export const LegacyPlanUpgradeModal = () => {
   const checkout = useFleekCheckout();
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
-  const { billingPlanType, loading: billingPlanTypeLoading } =
-    useBillingContext();
+  const {
+    billingPlanType,
+    loading: billingPlanTypeLoading,
+    subscription,
+    team,
+  } = useBillingContext();
 
   useEffect(() => {
     if (
@@ -58,9 +62,13 @@ export const LegacyPlanUpgradeModal = () => {
     setLoading(true);
     try {
       const response = await checkout.mutateAsync();
+
       if (response.type === 'CHECKOUT') {
         window.location.href = response.content.url;
       }
+
+      await Promise.all([subscription.refetch(), team.refetch()]);
+      toast.success({ message: 'Subscribed successfully!' });
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
     }
