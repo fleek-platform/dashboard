@@ -90,6 +90,7 @@ export type SubscriptionResponse = {
 export type PlanResponse = {
   id: string;
   name: string;
+  price: number;
   description: string;
   createdAt: string;
   updatedAt: string;

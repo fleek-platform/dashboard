@@ -11,7 +11,7 @@ export const HorizontalPlanCard: React.FC<HorizontalPlanCardProps> = ({
   ...headerProps
 }) => {
   return (
-    <Box variant="container">
+    <Box variant="container" className="h-full justify-between">
       <Header {...headerProps} />
       {children}
     </Box>

@@ -1,6 +1,7 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useRef } from 'react';
 
+import { Box } from '@/ui';
 import { ComingSoon } from '@/components';
 import { constants } from '@/constants';
 import { Projects } from '@/fragments';
@@ -46,7 +47,11 @@ const FeaturePage: React.FC = () => {
 
   return (
     <>
-      <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
+      <Projects.Settings.Sections.Billing.Banners isLoading={session.loading} />
+      <Box className="flex-row gap-5 w-full">
+        <Projects.Settings.Sections.Billing.Plan isLoading={session.loading} />
+        <Projects.Settings.Sections.Billing.Credits />
+      </Box>
       <Projects.Settings.Sections.Billing.PaymentMethod
         isLoading={session.loading}
       />

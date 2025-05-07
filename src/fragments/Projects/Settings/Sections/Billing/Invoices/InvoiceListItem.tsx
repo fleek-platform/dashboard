@@ -3,6 +3,7 @@ import type { LoadingProps } from '@/types/Props';
 import { dateFormat } from '@/utils/dateFormats';
 
 import useInvoicesHelpers from './useInvoicesHelpers';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 type InvoiceListItemProps = LoadingProps<{
   value: number;
@@ -29,7 +30,7 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
   }
 
   const subtitle = `${formatDate(dateFrom)} - ${formatDate(dateTo)}`;
-  const formattedValue = formatMoney(value);
+  const formattedValue = formatCurrency(value);
 
   const handleDownload = () => {
     if (invoiceDocumentUrl) {
@@ -81,11 +82,6 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
     </SettingsListItem>
   );
 };
-
-const formatMoney = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-}).format;
 
 const formatDate = (date: string) =>
   dateFormat({ dateISO: date, stringFormat: 'MMM dd, yyyy' });
