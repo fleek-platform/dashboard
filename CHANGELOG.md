@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.5
+
+### Patch Changes
+
+- 5e5d9a9: Adds credit support
+
 ## 0.20.3
 
 ### Patch Changes
