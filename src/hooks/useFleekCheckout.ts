@@ -62,7 +62,7 @@ export const useFleekCheckout = () => {
           (plan) => plan.name.toUpperCase() === 'PRO',
         );
 
-        const planId = plan.id;
+        const planId = plan?.id;
 
         if (!planId) {
           throw new Error('Plan not found');
