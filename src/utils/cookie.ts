@@ -1,12 +1,12 @@
 import { isServerSide } from '@/utils/isServerSide';
-import { getTopLevelDomain } from '@/utils/url';
+import { getHostname } from '@/utils/url';
 
 // We must specify the domain where the cookie is available
 // to allow it to work cross-domain
 // https://nextjs.org/docs/app/api-reference/functions/cookies#options
 // OBS: The application fails to provide enviroment hostname settings. Thus, using the runtime URL but this can change in the future.
 export const hostname = !isServerSide()
-  ? getTopLevelDomain(window.location.href)
+  ? getHostname(window.location.href)
   : '';
 
 type CookieOptions = {
@@ -23,7 +23,7 @@ const isClient = !isServerSide();
 // Refers to the application hostname
 // during runtime
 // TODO: Might want to get this as a prop instead
-const domain = isClient ? getTopLevelDomain(window.location.href) : '';
+const domain = isClient ? getHostname(window.location.href) : '';
 
 const defaultOptions: CookieOptions = {
   domain,

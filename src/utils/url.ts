@@ -84,3 +84,5 @@ export const getDashboardUrl = () =>
   joinUrl(getWebsiteUrl(), getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH'));
 export const getAgentsUrl = () =>
   joinUrl(getWebsiteUrl(), getDefined('NEXT_PUBLIC_AGENTS_AI_PATH'));
+
+export const getHostname = (url: string) => window.location.hostname;
