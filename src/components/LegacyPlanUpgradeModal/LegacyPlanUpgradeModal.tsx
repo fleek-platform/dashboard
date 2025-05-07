@@ -52,20 +52,21 @@ export const LegacyPlanUpgradeModal = () => {
   } = useBillingContext();
 
   useEffect(() => {
-    if (isFreeTierDeprecated) {
+    if (billingPlanTypeLoading) return;
+
+    if (isFreeTierDeprecated && !['pro', 'trial'].includes(billingPlanType)) {
       setIsOpen(true);
+      return;
     }
 
-    if (
-      billingPlanTypeLoading ||
-      (billingPlanType !== 'none' && billingPlanType !== 'free')
-    )
-      return;
+    if (billingPlanType !== 'none' && billingPlanType !== 'free') return;
+
     const shown = localStorage.getItem(shownKey);
+
     if (shown) return;
 
     setIsOpen(true);
-  }, [shownKey, billingPlanType, isFreeTierDeprecated]);
+  }, [shownKey, billingPlanType, isFreeTierDeprecated, billingPlanTypeLoading]);
 
   const flagAsShown = () => {
     localStorage.setItem(shownKey, 'true');
@@ -88,6 +89,7 @@ export const LegacyPlanUpgradeModal = () => {
       }
 
       await Promise.all([subscription.refetch(), team.refetch()]);
+      setIsOpen(false);
       toast.success({ message: 'Subscribed successfully!' });
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
