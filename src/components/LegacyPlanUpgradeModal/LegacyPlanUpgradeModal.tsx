@@ -9,6 +9,9 @@ import { useToast } from '@/hooks/useToast';
 import { Icon } from '@/ui';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { getDefined } from '@/defined';
+import { useCreditsCheckout } from '@/hooks/useCredits';
+import { useProPlan } from '@/hooks/useProPlan';
 
 const PERKS = [
   'Unlimited team members',
@@ -27,8 +30,20 @@ export const LegacyPlanUpgradeModal = () => {
   const session = useSessionContext();
   const shownKey = `${SHOWN_KEY_PREFIX}${session.project.id}`;
   const checkout = useFleekCheckout();
+
+  const isFreeTierDeprecated =
+    Date.now() >=
+    Date.parse(getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'));
+
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
+  const { hasAvailableCredits } = useProPlan({
+    onError: () =>
+      toast.error({
+        message: 'Unexpected error fetching pro plan, please try again later.',
+      }),
+  });
+  const { handleAddCredits, isCreatingCheckout } = useCreditsCheckout();
   const {
     billingPlanType,
     loading: billingPlanTypeLoading,
@@ -37,15 +52,21 @@ export const LegacyPlanUpgradeModal = () => {
   } = useBillingContext();
 
   useEffect(() => {
-    if (
-      billingPlanTypeLoading ||
-      (billingPlanType !== 'none' && billingPlanType !== 'free')
-    )
+    if (billingPlanTypeLoading) return;
+
+    if (isFreeTierDeprecated && !['pro', 'trial'].includes(billingPlanType)) {
+      setIsOpen(true);
       return;
+    }
+
+    if (billingPlanType !== 'none' && billingPlanType !== 'free') return;
+
     const shown = localStorage.getItem(shownKey);
+
     if (shown) return;
+
     setIsOpen(true);
-  }, [shownKey, billingPlanType]);
+  }, [shownKey, billingPlanType, isFreeTierDeprecated, billingPlanTypeLoading]);
 
   const flagAsShown = () => {
     localStorage.setItem(shownKey, 'true');
@@ -68,6 +89,7 @@ export const LegacyPlanUpgradeModal = () => {
       }
 
       await Promise.all([subscription.refetch(), team.refetch()]);
+      setIsOpen(false);
       toast.success({ message: 'Subscribed successfully!' });
     } catch (error) {
       toast.error({ error, log: 'Error upgrading plan. Please try again' });
@@ -78,7 +100,7 @@ export const LegacyPlanUpgradeModal = () => {
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <Dialog.Overlay />
+      <Dialog.Overlay className="opacity-80" />
       <Dialog.Portal>
         <Modal.Content
           onPointerDownOutside={(e) => e.preventDefault()}
@@ -87,16 +109,19 @@ export const LegacyPlanUpgradeModal = () => {
           <Box className="gap-4">
             <Modal.Heading className="flex justify-between items-center">
               <Box>Upgrade your plan</Box>
-              <Dialog.Close asChild>
-                <Button size="xs" intent="ghost" className="size-6">
-                  <Icon name="close" className="size-4 shrink-0" />
-                </Button>
-              </Dialog.Close>
+              {!isFreeTierDeprecated && (
+                <Dialog.Close asChild>
+                  <Button size="xs" intent="ghost" className="size-6">
+                    <Icon name="close" className="size-4 shrink-0" />
+                  </Button>
+                </Dialog.Close>
+              )}
             </Modal.Heading>
             <Text variant="secondary">
-              Your legacy Free Plan is being phased out. To continue hosting on
+              {`${!isFreeTierDeprecated ? 'Your legacy Free Plan is being phased out. ' : ''}To continue hosting on
               Fleek without interruption, please upgrade your plan as soon as
               possible.
+              `}
               {LEARN_MORE_LINK && (
                 <>
                   {' '}
@@ -120,7 +145,7 @@ export const LegacyPlanUpgradeModal = () => {
             </ul>
           </Box>
           <DividerElement />
-          <Box className="flex-row items-center justify-between">
+          <Box className="flex-row items-start justify-between">
             <Box>
               <Box className="flex-row items-center gap-1">
                 <Text variant="primary" size="lg" weight={700}>
@@ -134,15 +159,30 @@ export const LegacyPlanUpgradeModal = () => {
                 + resource usage
               </Text>
             </Box>
-            <Button
-              loading={isLoading}
-              intent="accent"
-              size="md"
-              className="min-w-[150px]"
-              onClick={handleCheckout}
-            >
-              Upgrade
-            </Button>
+            <Box className="items-end gap-2">
+              <Button
+                loading={isLoading || isCreatingCheckout}
+                intent="accent"
+                size="md"
+                className="min-w-[150px]"
+                onClick={handleCheckout}
+              >
+                {hasAvailableCredits ? 'Continue with credits' : 'Upgrade'}
+              </Button>
+              {!hasAvailableCredits && (
+                <Text className="flex items-center">
+                  Want to pay with crypto?&nbsp;
+                  <Text
+                    className="hover:underline text-accent-9 cursor-pointer"
+                    variant="primary"
+                    onClick={handleAddCredits as () => void}
+                  >
+                    Add credits
+                  </Text>
+                  .
+                </Text>
+              )}
+            </Box>
           </Box>
         </Modal.Content>
       </Dialog.Portal>

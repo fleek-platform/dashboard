@@ -22,7 +22,7 @@ import { dateFormat } from '@/utils/dateFormats';
 
 import { CancelPlanModal } from './CancelPlanModal';
 import { getDefined } from '@/defined';
-import { useCreditsCheckout } from '@/hooks/useCredits';
+import { useCredits, useCreditsCheckout } from '@/hooks/useCredits';
 
 export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
   const toast = useToast();
@@ -30,6 +30,7 @@ export const BillingPlan: React.FC<LoadingProps> = ({ isLoading }) => {
     useBillingContext();
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const { refetchCredits } = useCredits();
 
   const checkout = useFleekCheckout();
   // eslint-disable-next-line fleek-custom/valid-gql-hooks-destructuring
@@ -290,8 +291,7 @@ export const Banners = ({ isLoading }: LoadingProps) => {
     <>
       {shouldShowCancellationBanner && !isLoading && (
         <AlertBox size="sm" className="font-medium">
-          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
-          {endPlanDate}.
+          Your Pro Plan is expiring on {endPlanDate}.
         </AlertBox>
       )}
 
@@ -300,7 +300,7 @@ export const Banners = ({ isLoading }: LoadingProps) => {
           Your trial period expires on {trialEndDate}.{' '}
           {paymentMethod.data?.id
             ? 'You will be billed after that date.'
-            : 'Be sure to add your billing info before your trial ends.'}
+            : 'Be sure to add your billing info or add credits before your trial ends.'}
         </AlertBox>
       )}
     </>
