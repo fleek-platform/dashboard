@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/useToast';
 import { Icon } from '@/ui';
 import { useBillingContext } from '@/providers/BillingProvider';
 import { useSessionContext } from '@/providers/SessionProvider';
+import { getDefined } from '@/defined';
 
 const PERKS = [
   'Unlimited team members',
@@ -27,6 +28,10 @@ export const LegacyPlanUpgradeModal = () => {
   const session = useSessionContext();
   const shownKey = `${SHOWN_KEY_PREFIX}${session.project.id}`;
   const checkout = useFleekCheckout();
+  const isFreeTierDeprecated =
+    Date.now() >=
+    Date.parse(getDefined('NEXT_PUBLIC_BILLING_FREE_PLAN_DEPRECATION_DATE'));
+
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
   const {
@@ -37,6 +42,10 @@ export const LegacyPlanUpgradeModal = () => {
   } = useBillingContext();
 
   useEffect(() => {
+    if (isFreeTierDeprecated) {
+      setIsOpen(true);
+    }
+
     if (
       billingPlanTypeLoading ||
       (billingPlanType !== 'none' && billingPlanType !== 'free')
@@ -44,8 +53,9 @@ export const LegacyPlanUpgradeModal = () => {
       return;
     const shown = localStorage.getItem(shownKey);
     if (shown) return;
+
     setIsOpen(true);
-  }, [shownKey, billingPlanType]);
+  }, [shownKey, billingPlanType, isFreeTierDeprecated]);
 
   const flagAsShown = () => {
     localStorage.setItem(shownKey, 'true');
@@ -78,7 +88,7 @@ export const LegacyPlanUpgradeModal = () => {
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <Dialog.Overlay />
+      <Dialog.Overlay className="opacity-80" />
       <Dialog.Portal>
         <Modal.Content
           onPointerDownOutside={(e) => e.preventDefault()}
@@ -87,16 +97,19 @@ export const LegacyPlanUpgradeModal = () => {
           <Box className="gap-4">
             <Modal.Heading className="flex justify-between items-center">
               <Box>Upgrade your plan</Box>
-              <Dialog.Close asChild>
-                <Button size="xs" intent="ghost" className="size-6">
-                  <Icon name="close" className="size-4 shrink-0" />
-                </Button>
-              </Dialog.Close>
+              {!isFreeTierDeprecated && (
+                <Dialog.Close asChild>
+                  <Button size="xs" intent="ghost" className="size-6">
+                    <Icon name="close" className="size-4 shrink-0" />
+                  </Button>
+                </Dialog.Close>
+              )}
             </Modal.Heading>
             <Text variant="secondary">
-              Your legacy Free Plan is being phased out. To continue hosting on
+              {`${!isFreeTierDeprecated ? 'Your legacy Free Plan is being phased out. ' : ''}To continue hosting on
               Fleek without interruption, please upgrade your plan as soon as
               possible.
+              `}
               {LEARN_MORE_LINK && (
                 <>
                   {' '}
