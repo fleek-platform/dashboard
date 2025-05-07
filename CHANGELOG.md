@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.7
+
+### Patch Changes
+
+- ea1550a: Set cookie in hostname, deprecating top-level domain
+
 ## 0.20.6
 
 ### Patch Changes
