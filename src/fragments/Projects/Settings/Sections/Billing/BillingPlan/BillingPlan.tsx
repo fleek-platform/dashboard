@@ -291,8 +291,7 @@ export const Banners = ({ isLoading }: LoadingProps) => {
     <>
       {shouldShowCancellationBanner && !isLoading && (
         <AlertBox size="sm" className="font-medium">
-          Your Pro Plan is expiring. You will be converted to a Free plan on{' '}
-          {endPlanDate}.
+          Your Pro Plan is expiring on {endPlanDate}.
         </AlertBox>
       )}
 
@@ -301,7 +300,7 @@ export const Banners = ({ isLoading }: LoadingProps) => {
           Your trial period expires on {trialEndDate}.{' '}
           {paymentMethod.data?.id
             ? 'You will be billed after that date.'
-            : 'Be sure to add your billing info before your trial ends.'}
+            : 'Be sure to add your billing info or add credits before your trial ends.'}
         </AlertBox>
       )}
     </>
