@@ -1,5 +1,12 @@
 # @fleek-platform/dashboard
 
+## 0.20.6
+
+### Patch Changes
+
+- 32317c6: Deprecate free-tier
+- 32317c6: Adds credit support
+
 ## 0.20.5
 
 ### Patch Changes
