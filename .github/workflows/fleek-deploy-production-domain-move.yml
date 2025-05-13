@@ -11,7 +11,7 @@ jobs:
   deploy-to-production:
     uses: ./.github/workflows/fleek-deploy-common.yml
     with:
-      environment: production
+      environment: domain-move
     secrets:
       fleek_token: ${{ secrets.FLEEK_TOKEN }}
       doppler_token: ${{ secrets.DOPPLER_TOKEN }}
