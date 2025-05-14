@@ -1,14 +1,15 @@
 import { routes } from '@fleek-platform/utils-routes';
 import { useEffect, useState } from 'react';
 
-import { BadgeText, ExternalLink, RestrictionModal } from '@/components';
+import { BadgeText, RestrictionModal } from '@/components';
+import { Link } from '@/components/ftw/Link/Link';
 import { constants } from '@/constants';
 import { SourceProvider } from '@/generated/graphqlClient';
 import { useSiteRestriction } from '@/hooks/useBillingRestriction';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useRouter } from '@/hooks/useRouter';
 import { useSessionContext } from '@/providers/SessionProvider';
-import { Box, Button, Icon, IconName, Stepper, Text } from '@/ui';
+import { Box, Button, Icon, type IconName, Stepper, Text } from '@/ui';
 
 import { useDeploySiteContext, useStepSetup } from '../../DeploySite.context';
 
@@ -102,11 +103,11 @@ export const GitProviderStep: React.FC = () => {
         </Text>
 
         <ProviderButton
-          provider={SourceProvider['GITHUB']}
+          provider={SourceProvider.GITHUB}
           isRestricted={hasReachedSitesLimit || session.loading}
         />
-        <ProviderButton provider={SourceProvider['GITLAB']} disabled />
-        <ProviderButton provider={SourceProvider['BITBUCKET']} disabled />
+        <ProviderButton provider={SourceProvider.GITLAB} disabled />
+        <ProviderButton provider={SourceProvider.BITBUCKET} disabled />
       </Box>
 
       <Box variant="container" className="inline">
@@ -117,7 +118,7 @@ export const GitProviderStep: React.FC = () => {
             Click here
           </Text>
         ) : (
-          <ExternalLink
+          <Link
             variant="accent"
             href={{
               pathname: routes.project.site.new({
@@ -128,7 +129,7 @@ export const GitProviderStep: React.FC = () => {
             replace
           >
             Click here
-          </ExternalLink>
+          </Link>
         )}
         .
       </Box>
