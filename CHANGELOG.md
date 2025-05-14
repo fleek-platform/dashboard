@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.8
+
+### Patch Changes
+
+- cc70860: fix git provider link to use cli
+
 ## 0.20.7
 
 ### Patch Changes
