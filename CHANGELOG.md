@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.9
+
+### Patch Changes
+
+- 53c04ee: fix urls due to domain change
+
 ## 0.20.8
 
 ### Patch Changes
