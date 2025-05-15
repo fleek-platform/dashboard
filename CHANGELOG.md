@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.10
+
+### Patch Changes
+
+- fdde468: fix remaining links
+
 ## 0.20.9
 
 ### Patch Changes
