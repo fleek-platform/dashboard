@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { constants } from '@/constants';
 import { ArticleItemProps } from '@/fragments/Projects/Home/Sections/Articles';
 import { Log } from '@/utils/log';
-import { joinUrl } from '@/utils/url';
+import { joinUrl, getWebsiteUrl } from '@/utils/url';
 import { getDefined } from '@/defined';
 
 const MAX_CACHED_TIME = 24 * 60 * 60 * 1000;
@@ -22,6 +22,7 @@ export const useBlogArticles = (sliceCount = 4) => {
 const fetchBlogArticles = async (
   sliceCount: number,
 ): Promise<ArticleItemProps[]> => {
+  const websiteUrl = getWebsiteUrl();
   try {
     const response = await fetch(constants.FLEEK_BLOG_API.postsAPI);
     const jsonData: RawArticleItem[] = await response.json();
@@ -30,11 +31,8 @@ const fetchBlogArticles = async (
     const parsedArticles: ArticleItemProps[] = slicedData.map((article) => ({
       title: article.title,
       description: article.description,
-      href: joinUrl(
-        getDefined('NEXT_PUBLIC_WEBSITE_URL'),
-        `/blog/${article.slug}`,
-      ),
-      imgSrc: joinUrl(getDefined('NEXT_PUBLIC_WEBSITE_URL'), article.imageSrc),
+      href: joinUrl(websiteUrl, `/blog/${article.slug}`),
+      imgSrc: joinUrl(websiteUrl, article.imageSrc),
     }));
 
     return parsedArticles;
