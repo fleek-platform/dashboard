@@ -1,4 +1,5 @@
 import { getDefined } from '@/defined';
+import { getDashboardUrl } from './url';
 
 const normalizePathname = (pathname: string) => {
   const [path, query] = pathname.split('?');
@@ -6,20 +7,19 @@ const normalizePathname = (pathname: string) => {
   const segments = path.split('/').filter(Boolean);
 
   const normalizedPath = pathname.startsWith('/')
-    ? '/' + segments.join('/')
+    ? `/${segments.join('/')}`
     : segments.join('/');
 
   return query ? `${normalizedPath}?${query}` : normalizedPath;
 };
 
 export const joinBase = (pathname: string) => {
-  if (!getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')) {
+  const dashboardBasePath = getDashboardUrl();
+  if (!dashboardBasePath) {
     return normalizePathname(pathname);
   }
 
-  const normalizedBase = normalizePathname(
-    getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH'),
-  );
+  const normalizedBase = normalizePathname(dashboardBasePath);
   const normalizedPath = normalizePathname(pathname);
 
   const pathWithoutLeadingSlash = normalizedPath.startsWith('/')
@@ -28,6 +28,6 @@ export const joinBase = (pathname: string) => {
 
   return (
     normalizedBase +
-    (pathWithoutLeadingSlash ? '/' + pathWithoutLeadingSlash : '')
+    (pathWithoutLeadingSlash ? `/${pathWithoutLeadingSlash}` : '')
   );
 };

@@ -11,7 +11,7 @@ import { AppProps } from '@/types/App';
 import { useRouter } from '@/hooks/useRouter';
 import { usePathname } from 'next/navigation';
 import { isServerSide } from '@/utils/isServerSide';
-import { getQueryParamsToObj } from '@/utils/url';
+import { getDashboardUrl, getQueryParamsToObj } from '@/utils/url';
 // TODO: Rename the util as `cookies` (plural)
 import { cookies } from '@/utils/cookie';
 import HomePage from '@/pages/LandingPage';
@@ -21,7 +21,8 @@ import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
 import { getWebsiteUrl } from '@/utils/url';
 
 const loadConfig = async (): Promise<boolean> => {
-  const overridesJson = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}/${DEFINED_OVERRIDES_FILENAME}`;
+  const dashboardBasePath = getDashboardUrl();
+  const overridesJson = `${dashboardBasePath}/${DEFINED_OVERRIDES_FILENAME}`;
 
   try {
     const response = await fetch(overridesJson);

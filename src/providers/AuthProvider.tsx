@@ -14,7 +14,7 @@ import { usePathname } from 'next/navigation';
 import { useCookies } from './CookiesProvider';
 import { useRouter } from 'next/router';
 
-import { getWebsiteUrl } from '@/utils/url';
+import { getDashboardUrl, getWebsiteUrl } from '@/utils/url';
 
 import { getDefined } from '@/defined';
 
@@ -107,6 +107,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
+    const dashboardBasePath = getDashboardUrl();
     if (
       !cookies.values.accessToken ||
       !cookies.values.authToken ||
@@ -125,7 +126,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     if (pathname === routes.home()) {
       // TODO: Create an utility, include related unit test
       // use utils to form URL correctly/conventions
-      window.location.href = `${getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH')}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
+      window.location.href = `${dashboardBasePath}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
   }, [cookies.values.accessToken, router, logout, pathname]);
 
