@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.11
+
+### Patch Changes
+
+- 3a775e0: Fix urls
+
 ## 0.20.10
 
 ### Patch Changes
