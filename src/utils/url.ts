@@ -93,6 +93,7 @@ export const getDashboardUrl = () => {
   const dashboardUrl = joinUrl(
     getWebsiteUrl(),
     getDefined('NEXT_PUBLIC_DASHBOARD_BASE_PATH'),
+    true,
   );
   if (!isServerSide() && window.location.hostname.startsWith('hosting.')) {
     return 'https://hosting.fleek.xyz';
@@ -104,6 +105,7 @@ export const getAgentsUrl = () => {
   const agentsUrl = joinUrl(
     getWebsiteUrl(),
     getDefined('NEXT_PUBLIC_AGENTS_AI_PATH'),
+    true,
   );
   if (!isServerSide() && window.location.hostname.startsWith('hosting.')) {
     return 'https://eliza.fleek.xyz';
