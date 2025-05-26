@@ -1,18 +1,20 @@
-import { createProjectSchema } from '@fleek-platform/utils-validation';
-import { useClient } from 'urql';
+import { createProjectSchema } from "@fleek-platform/utils-validation";
+import { useClient } from "urql";
 
-import { constants } from '@/constants';
-import { useCreateProjectMutation } from '@/generated/graphqlClient';
-import { useToast } from '@/hooks/useToast';
-import { useCookies } from '@/providers/CookiesProvider';
-import { useProjectContext } from '@/providers/ProjectProvider';
-import { Button, Dialog, Text } from '@/ui';
+import { constants } from "@/constants";
+import { useCreateProjectMutation } from "@/generated/graphqlClient";
+import { useToast } from "@/hooks/useToast";
+import { useCookies } from "@/providers/CookiesProvider";
+import { useProjectContext } from "@/providers/ProjectProvider";
+import { Button, Dialog, Text } from "@/ui";
+import { useRouter } from "@/hooks/useRouter";
 
-import { Form } from '../Form/Form';
-import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';
-import { Modal } from '../Modal/Modal';
-import { ProjectField } from '../ProjectField/ProjectField';
-import { useAuthProviders } from '@/hooks/useAuthProviders';
+import { Form } from "../Form/Form";
+import { LearnMoreMessage } from "../LearnMoreMessage/LearnMoreMessage";
+import { Modal } from "../Modal/Modal";
+import { ProjectField } from "../ProjectField/ProjectField";
+import { useAuthProviders } from "@/hooks/useAuthProviders";
+import { routes } from "@fleek-platform/utils-routes";
 
 export const CreateProject: React.FC = () => {
   const { isCreateProjectModalOpen: isModalOpen, setIsCreateProjectModalOpen } =
@@ -24,10 +26,11 @@ export const CreateProject: React.FC = () => {
 
   const [, createProject] = useCreateProjectMutation();
   const providers = useAuthProviders();
+  const router = useRouter();
 
   const createProjectForm = Form.useForm({
     values: {
-      name: '',
+      name: "",
     },
     schema: createProjectSchema.shape.data,
     extraValidations: {
@@ -42,7 +45,7 @@ export const CreateProject: React.FC = () => {
 
           if (error || !data?.createProject?.id) {
             throw (
-              error || new Error('There was an error creating the new project')
+              error || new Error("There was an error creating the new project")
             );
           }
 
@@ -50,10 +53,12 @@ export const CreateProject: React.FC = () => {
             data.createProject.id,
           );
 
-          cookies.set('accessToken', accessToken);
-          cookies.set('projectId', data.createProject.id);
+          cookies.set("accessToken", accessToken);
+          cookies.set("projectId", data.createProject.id);
 
-          handleModalChange(false);
+          await router.replace(
+            routes.project.home({ projectId: data.createProject.id }),
+          );
         } catch (error) {
           toast.error({
             error,
@@ -72,7 +77,7 @@ export const CreateProject: React.FC = () => {
 
   const handleModalChange = (isOpen: boolean): void => {
     if (!isOpen) {
-      createProjectForm.resetForm({ name: '' });
+      createProjectForm.resetForm({ name: "" });
     }
 
     setIsCreateProjectModalOpen(isOpen);
