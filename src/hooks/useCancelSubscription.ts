@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 
 import { BackendApiClient } from '@/integrations/new-be/BackendApi';
 import { useCookies } from '@/providers/CookiesProvider';
-import { SubscriptionResponse } from '@/types/Billing';
 import { Log } from '@/utils/log';
 
 type UseCancelMockedMutationArgs = {
@@ -32,10 +31,6 @@ export const useCancelMockedMutation = ({
       if (!response.ok) {
         throw response.statusText;
       }
-
-      const result: SubscriptionResponse = await response.json();
-
-      return result;
     } catch (error) {
       Log.error('Failed to fetch subscription data', error);
 
