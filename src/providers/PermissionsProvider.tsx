@@ -22,7 +22,7 @@ export const PermissionsProvider: React.FC<ChildrenProps> = ({ children }) => {
       value={{
         loading,
         permissions:
-          data.currentUserMembership.permissionGroup.permissions.slice() ?? [],
+          data?.currentUserMembership.permissionGroup.permissions.slice() ?? [],
       }}
     >
       {children}
