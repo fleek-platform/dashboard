@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.20.12
+
+### Patch Changes
+
+- 24faa18: fix project management issues
+
 ## 0.20.11
 
 ### Patch Changes
