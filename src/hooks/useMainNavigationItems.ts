@@ -50,6 +50,10 @@ export const useMainNavigationItems = () => {
 
   const projectId = session.project?.id;
 
+  if (!projectId) {
+    return;
+  }
+
   const getProjectSettingsURL = () => {
     if (hasGeneralSettingsPermission) {
       return routes.project.settings.general({ projectId });

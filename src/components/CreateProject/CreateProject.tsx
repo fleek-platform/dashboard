@@ -7,12 +7,14 @@ import { useToast } from '@/hooks/useToast';
 import { useCookies } from '@/providers/CookiesProvider';
 import { useProjectContext } from '@/providers/ProjectProvider';
 import { Button, Dialog, Text } from '@/ui';
+import { useRouter } from '@/hooks/useRouter';
 
 import { Form } from '../Form/Form';
 import { LearnMoreMessage } from '../LearnMoreMessage/LearnMoreMessage';
 import { Modal } from '../Modal/Modal';
 import { ProjectField } from '../ProjectField/ProjectField';
 import { useAuthProviders } from '@/hooks/useAuthProviders';
+import { routes } from '@fleek-platform/utils-routes';
 
 export const CreateProject: React.FC = () => {
   const { isCreateProjectModalOpen: isModalOpen, setIsCreateProjectModalOpen } =
@@ -24,6 +26,7 @@ export const CreateProject: React.FC = () => {
 
   const [, createProject] = useCreateProjectMutation();
   const providers = useAuthProviders();
+  const router = useRouter();
 
   const createProjectForm = Form.useForm({
     values: {
@@ -53,7 +56,9 @@ export const CreateProject: React.FC = () => {
           cookies.set('accessToken', accessToken);
           cookies.set('projectId', data.createProject.id);
 
-          handleModalChange(false);
+          await router.replace(
+            routes.project.home({ projectId: data.createProject.id }),
+          );
         } catch (error) {
           toast.error({
             error,
