@@ -164,7 +164,7 @@ export const constants = {
     IPFS_IO: 'ipfs.io',
     DWEB_LINK: 'dweb.link',
     FLEEK_COOL: 'fleek.cool',
-    FLEEK_GW: 'flk-ipfs.xyz',
+    FLEEK_GW: 'w3s.link',
     FLEEK_TEST: 'fleek-test.network/services/0',
   },
 
