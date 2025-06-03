@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.0
+
+### Minor Changes
+
+- fc1a1be: Change public IPFS gateway URL to w3s.link
+
 ## 0.20.12
 
 ### Patch Changes
