@@ -18,7 +18,6 @@ import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
 import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
-import { getWebsiteUrl } from '@/utils/url';
 
 const loadConfig = async (): Promise<boolean> => {
   const dashboardBasePath = getDashboardUrl();
@@ -68,7 +67,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
       !getDefined('NEXT_PUBLIC_ALLOW_LANDING_PAGE_LOGIN')
     ) {
       const currentParams = new URLSearchParams(window.location.search);
-      const targetUrl = new URL(getWebsiteUrl());
+      const targetUrl = new URL(getDashboardUrl());
 
       currentParams.forEach((value, key) => {
         targetUrl.searchParams.append(key, value);
@@ -89,7 +88,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
 
     const currentParams = new URLSearchParams(window.location.search);
 
-    const targetUrl = new URL(getWebsiteUrl());
+    const targetUrl = new URL(getDashboardUrl());
 
     currentParams.forEach((value, key) => {
       targetUrl.searchParams.append(key, value);
