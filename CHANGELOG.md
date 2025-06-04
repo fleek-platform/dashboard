@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.1
+
+### Patch Changes
+
+- ad3133c: fix redirecting of unlogged users
+
 ## 0.21.0
 
 ### Minor Changes
