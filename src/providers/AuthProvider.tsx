@@ -114,7 +114,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.projectId
     ) {
       if (pathname !== routes.home()) {
-        window.location.href = getDashboardUrl();
+        window.location.href = getDashboardUrl() + '/';
       }
 
       return;
