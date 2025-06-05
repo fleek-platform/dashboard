@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.3
+
+### Patch Changes
+
+- 93e5af1: add trailing slash
+
 ## 0.21.2
 
 ### Patch Changes
