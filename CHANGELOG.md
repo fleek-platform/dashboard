@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.2
+
+### Patch Changes
+
+- e735548: fix wrong redirection url when no auth cookies exist
+
 ## 0.21.1
 
 ### Patch Changes
