@@ -109,13 +109,11 @@ export const LegacyPlanUpgradeModal = () => {
           <Box className="gap-4">
             <Modal.Heading className="flex justify-between items-center">
               <Box>Upgrade your plan</Box>
-              {!isFreeTierDeprecated && (
-                <Dialog.Close asChild>
-                  <Button size="xs" intent="ghost" className="size-6">
-                    <Icon name="close" className="size-4 shrink-0" />
-                  </Button>
-                </Dialog.Close>
-              )}
+              <Dialog.Close asChild>
+                <Button size="xs" intent="ghost" className="size-6">
+                  <Icon name="close" className="size-4 shrink-0" />
+                </Button>
+              </Dialog.Close>
             </Modal.Heading>
             <Text variant="secondary">
               {`${!isFreeTierDeprecated ? 'Your legacy Free Plan is being phased out. ' : ''}To continue hosting on
