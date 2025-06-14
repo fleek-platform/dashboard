@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.4
+
+### Patch Changes
+
+- 45ece0d: fix: show close for upgrade modal in all cases"
+
 ## 0.21.3
 
 ### Patch Changes
