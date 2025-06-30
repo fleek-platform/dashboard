@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.5
+
+### Patch Changes
+
+- 83791b2: Fix redirection
+
 ## 0.21.4
 
 ### Patch Changes
