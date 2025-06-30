@@ -113,8 +113,17 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       !cookies.values.authToken ||
       !cookies.values.projectId
     ) {
+      console.log(
+        'dashboardBasePath',
+        dashboardBasePath,
+        'pathname',
+        pathname,
+        'routes.home()',
+        routes.home(),
+      );
+
       if (pathname !== routes.home()) {
-        window.location.href = getDashboardUrl() + '/';
+        window.location.href = `${dashboardBasePath}${routes.home()}`;
       }
 
       return;
@@ -128,7 +137,14 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       // use utils to form URL correctly/conventions
       window.location.href = `${dashboardBasePath}${routes.project.home({ projectId: cookies.values.projectId })}/${window.location.search}`;
     }
-  }, [cookies.values.accessToken, router, logout, pathname]);
+  }, [
+    cookies.values.accessToken,
+    cookies.values.authToken,
+    cookies.values.projectId,
+    router,
+    logout,
+    pathname,
+  ]);
 
   return (
     <Provider
