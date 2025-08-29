@@ -14,7 +14,6 @@ export * from './BillingCheckout/BillingCheckout';
 export * from './BillingPlans/BillingPlans';
 export * from './Callback/Callback';
 export * from './2FA/TwoFactorAuthentication';
-export * from './Functions/Functions';
 export * from './GitIntegration/GitIntegration';
 export * from './Settings/Settings';
 export * from './IpfsPropagation/IpfsPropagation';

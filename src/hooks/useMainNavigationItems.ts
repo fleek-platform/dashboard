@@ -5,7 +5,6 @@ import { constants } from '@/constants';
 import { useSessionContext } from '@/providers/SessionProvider';
 
 import { usePermissions } from './usePermissions';
-import { getAgentsUrl } from '@/utils/url';
 
 export const useMainNavigationItems = () => {
   const session = useSessionContext();
@@ -100,21 +99,6 @@ export const useMainNavigationItems = () => {
       hasAccess: usePermissions({
         action: [constants.PERMISSION.STORAGE.VIEW_LIST],
       }),
-    },
-    {
-      icon: 'globe-filled',
-      label: 'Functions',
-      path: routes.project.function.list({ projectId }),
-      hasAccess: true,
-    },
-    {
-      icon: 'robot',
-      label: 'AI Agents',
-      path: getAgentsUrl(),
-      hasAccess: true,
-      showNewTag: true,
-      isExternal: true,
-      target: '_self',
     },
     {
       icon: 'credit-card',

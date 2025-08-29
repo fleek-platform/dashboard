@@ -1,7 +1,6 @@
 import { AppStyles as S } from './App.styles';
 import { Footer } from './Footer/Footer';
 import { DeployBreadcrumb } from './Navbar/Breadcrumbs/DeploymentBreadcrumb';
-import { FunctionBreadcrumb } from './Navbar/Breadcrumbs/FunctionBreadcrumb';
 import { SiteBreadcrumb } from './Navbar/Breadcrumbs/SiteBreadcrumb';
 import { NavbarCombined } from './Navbar/NavbarCombined';
 import { NavbarMaintenance } from './Navbar/NavbarMaintenance';
@@ -18,7 +17,6 @@ export const App = {
     Breadcrumbs: {
       Site: SiteBreadcrumb,
       Deployment: DeployBreadcrumb,
-      Function: FunctionBreadcrumb,
     },
     Maintenance: NavbarMaintenance,
   },
