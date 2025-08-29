@@ -107,7 +107,7 @@ export const createExtraValidation = {
 
       const viemClient = createPublicClient({
         chain: mainnet,
-        transport: http(),
+        transport: http('https://rpc.ankr.com/eth/629287b99a3f9953297946a763f2b38f2b8c23d657da96d844903ae91aa0cdb3'),
       });
 
       const normalizedName = normalize(name).split('.');
@@ -152,6 +152,8 @@ export const createExtraValidation = {
 
       return { status: 'valid' };
     } catch (error) {
+      console.error(error);
+
       return { status: 'invalid', message: 'Could not validate ENS name' };
     }
   },
