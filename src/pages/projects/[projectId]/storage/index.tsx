@@ -13,12 +13,8 @@ const Storage: Page = () => {
   );
 };
 
-const PageNavContent: React.FC = () => {
-  return <Projects.Storage.StorageUploadDropdown />;
-};
-
 Storage.getLayout = (page) => (
-  <Projects.Layout nav={<PageNavContent />}>{page}</Projects.Layout>
+  <Projects.Layout>{page}</Projects.Layout>
 );
 
 export default withAccess({
