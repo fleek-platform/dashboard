@@ -17,6 +17,7 @@ import { ButtonsContainer } from './Storage/ButtonsContainer';
 import { StorageProvider } from './Storage/Storage.context';
 import { StorageTable } from './Storage/StorageTable/StorageTable';
 import { StorageUploadDropdown } from './Storage/StorageUploadDropdown';
+import { SunsetMessage } from './Storage/SunsetMessage';
 import { Widget } from './Storage/Widget';
 
 export const Projects = {
@@ -34,6 +35,7 @@ export const Projects = {
     StorageUploadDropdown,
     StorageTable,
     Widget,
+    SunsetMessage,
 
     //context
     Provider: StorageProvider,
