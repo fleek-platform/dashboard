@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.6
+
+### Patch Changes
+
+- ff2c0cd: add service shutdown banner
+
 ## 0.21.5
 
 ### Patch Changes
