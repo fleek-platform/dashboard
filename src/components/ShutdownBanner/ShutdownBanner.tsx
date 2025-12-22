@@ -41,9 +41,8 @@ export const ShutdownBanner = () => {
             <ExternalLink
               href="https://resources.fleek.xyz/requests/new/"
               className="font-bold underline hover:opacity-80 transition-opacity"
-              style={{ color: '#fcd34d' }}
             >
-              contact support
+              <span style={{ color: '#ffd79d' }}>contact support</span>
             </ExternalLink>
             .
           </span>
