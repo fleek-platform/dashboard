@@ -14,9 +14,7 @@ const Storage: Page = () => {
   );
 };
 
-Storage.getLayout = (page) => (
-  <Projects.Layout>{page}</Projects.Layout>
-);
+Storage.getLayout = (page) => <Projects.Layout>{page}</Projects.Layout>;
 
 export default withAccess({
   Component: Storage,
