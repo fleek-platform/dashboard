@@ -18,6 +18,7 @@ import HomePage from '@/pages/LandingPage';
 import { LegacyPlanUpgradeModal } from '@/components/LegacyPlanUpgradeModal/LegacyPlanUpgradeModal';
 import { LoadingFullScreen } from '@/components/Loading';
 import { setDefined, getDefined, DEFINED_OVERRIDES_FILENAME } from '../defined';
+import { ShutdownBanner } from '@/components/ShutdownBanner';
 
 const loadConfig = async (): Promise<boolean> => {
   const dashboardBasePath = getDashboardUrl();
@@ -102,6 +103,7 @@ const App = ({ Component, pageProps, requestCookies }: AppProps) => {
   return (
     <>
       <meta name="robots" content="noindex, nofollow" />
+      <ShutdownBanner />
       <Providers requestCookies={requestCookies} forcedTheme={forcedTheme}>
         {getLayout(<Component {...pageProps} />)}
         <ToastsContainer />
