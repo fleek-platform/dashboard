@@ -1,5 +1,11 @@
 # @fleek-platform/dashboard
 
+## 0.21.7
+
+### Patch Changes
+
+- a4bb5ad: fix the hosting url
+
 ## 0.21.6
 
 ### Patch Changes
