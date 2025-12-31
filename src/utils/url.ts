@@ -96,7 +96,7 @@ export const getDashboardUrl = () => {
     true,
   );
   if (!isServerSide() && window.location.hostname.startsWith('hosting.')) {
-    return 'http://hosting.fleek.xyz';
+    return 'https://hosting.fleek.xyz';
   }
   return dashboardUrl;
 };
